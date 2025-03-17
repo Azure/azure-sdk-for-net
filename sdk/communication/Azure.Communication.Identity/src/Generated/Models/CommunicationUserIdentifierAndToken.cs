@@ -13,17 +13,5 @@ namespace Azure.Communication.Identity
     /// <summary> A communication identity with access token. </summary>
     public partial class CommunicationUserIdentifierAndToken
     {
-        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierAndToken"/>. </summary>
-        /// <param name="identity"> A communication identity. </param>
-        /// <param name="internalAccessToken"> An access token. </param>
-        /// <param name="lastTokenIssuedAt"> Last time a token has been issued for the identity. </param>
-        internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity, CommunicationIdentityAccessToken internalAccessToken, DateTimeOffset? lastTokenIssuedAt)
-        {
-            Identity = identity;
-            InternalAccessToken = internalAccessToken;
-            LastTokenIssuedAt = lastTokenIssuedAt;
-        }
-        /// <summary> Last time a token has been issued for the identity. </summary>
-        public DateTimeOffset? LastTokenIssuedAt { get; }
     }
 }

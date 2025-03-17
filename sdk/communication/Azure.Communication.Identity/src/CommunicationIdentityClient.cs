@@ -221,7 +221,7 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
         {
-            return CreateUserAndToken(default, scopes, default, cancellationToken);
+            return CreateUserAndToken(default, scopes, tokenExpiresIn, cancellationToken);
         }
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
@@ -467,7 +467,7 @@ namespace Azure.Communication.Identity
             var responseId = response.Value.Id;
             var lastTokenIssuedAt = response.Value.LastTokenIssuedAt;
 
-            return Response.FromValue(new CommunicationIdentity(responseId, externalId, lastTokenIssuedAt), response.GetRawResponse());
+            return Response.FromValue(new CommunicationIdentity(externalId, responseId, lastTokenIssuedAt), response.GetRawResponse());
         }
 
         private static int? GetTokenExpirationInMinutes(TimeSpan tokenExpiresIn, string paramName)
