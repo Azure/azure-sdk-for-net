@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Displays the counts of pooled container groups in each state, as known by the StandbyPool resource provider. </summary>
-    public partial class PoolContainerGroupStateCount
+    /// <summary> Displays the counts of pooled resources in each state, as known by the StandbyPool resource provider. </summary>
+    public partial class PoolResourceStateCount
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,37 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PoolContainerGroupStateCount"/>. </summary>
-        /// <param name="state"> The state that the pooled container groups count is for. </param>
-        /// <param name="count"> The count of pooled container groups in the given state. </param>
-        internal PoolContainerGroupStateCount(PoolContainerGroupState state, long count)
+        /// <summary> Initializes a new instance of <see cref="PoolResourceStateCount"/>. </summary>
+        /// <param name="state"> The state that the pooled resources count is for. </param>
+        /// <param name="count"> The count of pooled resources in the given state. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="state"/> is null. </exception>
+        internal PoolResourceStateCount(string state, long count)
         {
+            Argument.AssertNotNull(state, nameof(state));
+
             State = state;
             Count = count;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PoolContainerGroupStateCount"/>. </summary>
-        /// <param name="state"> The state that the pooled container groups count is for. </param>
-        /// <param name="count"> The count of pooled container groups in the given state. </param>
+        /// <summary> Initializes a new instance of <see cref="PoolResourceStateCount"/>. </summary>
+        /// <param name="state"> The state that the pooled resources count is for. </param>
+        /// <param name="count"> The count of pooled resources in the given state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PoolContainerGroupStateCount(PoolContainerGroupState state, long count, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PoolResourceStateCount(string state, long count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Count = count;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PoolContainerGroupStateCount"/> for deserialization. </summary>
-        internal PoolContainerGroupStateCount()
+        /// <summary> Initializes a new instance of <see cref="PoolResourceStateCount"/> for deserialization. </summary>
+        internal PoolResourceStateCount()
         {
         }
 
-        /// <summary> The state that the pooled container groups count is for. </summary>
-        public PoolContainerGroupState State { get; }
-        /// <summary> The count of pooled container groups in the given state. </summary>
+        /// <summary> The state that the pooled resources count is for. </summary>
+        public string State { get; }
+        /// <summary> The count of pooled resources in the given state. </summary>
         public long Count { get; }
     }
 }

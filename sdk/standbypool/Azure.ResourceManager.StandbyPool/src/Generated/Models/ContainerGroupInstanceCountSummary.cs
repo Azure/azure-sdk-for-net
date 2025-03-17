@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.StandbyPool.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceCountSummary"/>. </summary>
-        /// <param name="instanceCountsByState"> The count of pooled container groups in each state for the given zone. </param>
+        /// <param name="instanceCountsByState"> The count of pooled resources in each state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceCountsByState"/> is null. </exception>
-        internal ContainerGroupInstanceCountSummary(IEnumerable<PoolContainerGroupStateCount> instanceCountsByState)
+        internal ContainerGroupInstanceCountSummary(IEnumerable<PoolResourceStateCount> instanceCountsByState)
         {
             Argument.AssertNotNull(instanceCountsByState, nameof(instanceCountsByState));
 
@@ -57,12 +57,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceCountSummary"/>. </summary>
-        /// <param name="zone"> The zone that the provided counts are in. It will not have a value if zones are not enabled. </param>
-        /// <param name="instanceCountsByState"> The count of pooled container groups in each state for the given zone. </param>
+        /// <param name="instanceCountsByState"> The count of pooled resources in each state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupInstanceCountSummary(long? zone, IReadOnlyList<PoolContainerGroupStateCount> instanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupInstanceCountSummary(IReadOnlyList<PoolResourceStateCount> instanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Zone = zone;
             InstanceCountsByState = instanceCountsByState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -72,9 +70,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
         }
 
-        /// <summary> The zone that the provided counts are in. It will not have a value if zones are not enabled. </summary>
-        public long? Zone { get; }
-        /// <summary> The count of pooled container groups in each state for the given zone. </summary>
-        public IReadOnlyList<PoolContainerGroupStateCount> InstanceCountsByState { get; }
+        /// <summary> The count of pooled resources in each state. </summary>
+        public IReadOnlyList<PoolResourceStateCount> InstanceCountsByState { get; }
     }
 }

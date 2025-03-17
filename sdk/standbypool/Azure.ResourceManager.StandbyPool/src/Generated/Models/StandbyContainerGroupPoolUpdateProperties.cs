@@ -48,19 +48,16 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
         public StandbyContainerGroupPoolUpdateProperties()
         {
-            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
         /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
         /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
-        /// <param name="zones"> Specifies zones of standby container group pools. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ElasticityProfile = elasticityProfile;
             ContainerGroupProperties = containerGroupProperties;
-            Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,7 +65,5 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
         /// <summary> Specifies container group properties of standby container group pools. </summary>
         public StandbyContainerGroupProperties ContainerGroupProperties { get; set; }
-        /// <summary> Specifies zones of standby container group pools. </summary>
-        public IList<string> Zones { get; }
     }
 }

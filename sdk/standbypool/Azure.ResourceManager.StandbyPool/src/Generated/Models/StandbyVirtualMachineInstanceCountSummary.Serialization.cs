@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             long? zone = default;
-            IReadOnlyList<PoolVirtualMachineStateCount> instanceCountsByState = default;
+            IReadOnlyList<PoolResourceStateCount> instanceCountsByState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
                 if (property.NameEquals("instanceCountsByState"u8))
                 {
-                    List<PoolVirtualMachineStateCount> array = new List<PoolVirtualMachineStateCount>();
+                    List<PoolResourceStateCount> array = new List<PoolResourceStateCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PoolVirtualMachineStateCount.DeserializePoolVirtualMachineStateCount(item, options));
+                        array.Add(PoolResourceStateCount.DeserializePoolResourceStateCount(item, options));
                     }
                     instanceCountsByState = array;
                     continue;

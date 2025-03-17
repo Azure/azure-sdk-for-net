@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetStandbyVirtualMachinePools_StandbyVirtualMachinePoolsListBySubscription()
         {
-            // Generated from example definition: 2025-03-01/StandbyVirtualMachinePools_ListBySubscription.json
+            // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_ListBySubscription.json
             // this example is just showing the usage of "StandbyVirtualMachinePoolResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetStandbyContainerGroupPools_StandbyContainerGroupPoolsListBySubscription()
         {
-            // Generated from example definition: 2025-03-01/StandbyContainerGroupPools_ListBySubscription.json
+            // Generated from example definition: 2024-03-01/StandbyContainerGroupPools_ListBySubscription.json
             // this example is just showing the usage of "StandbyContainerGroupPoolResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
