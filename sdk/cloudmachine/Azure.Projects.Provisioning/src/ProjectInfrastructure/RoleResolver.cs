@@ -40,7 +40,7 @@ internal class RoleResolver(string id, Dictionary<Provisionable, List<FeatureRol
                         string roleKey = $"{resource.BicepIdentifier}_{userPrincipal.Value.ToString()}_{role.Name}";
                         if (roleCount.TryGetValue(roleKey, out int count))
                         {
-                            count = count + 1;
+                            count++;
                         }
                         else
                         {
@@ -48,7 +48,9 @@ internal class RoleResolver(string id, Dictionary<Provisionable, List<FeatureRol
                         }
                         roleCount[roleKey] = count;
 
-                        yield return new RoleAssignment($"{resource.BicepIdentifier}_{count}_{role.Name}")
+                        string bicepId = $"{resource.BicepIdentifier}_admin_{role.Name}";
+                        if (count > 1) bicepId = $"{resource.BicepIdentifier}_admin_{role.Name}_{count}";
+                        yield return new RoleAssignment(bicepId)
                         {
                             Name = BicepFunction.CreateGuid(resource.BicepIdentifier, id, userPrincipal, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.Id)),
                             Scope = new IdentifierExpression(resource.BicepIdentifier),
