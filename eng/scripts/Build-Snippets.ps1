@@ -8,7 +8,7 @@ param(
     [Parameter(Mandatory=$false)]
     [string] $DiagnosticArguments
 )
-. $PSScriptRoot/generate-dependency-functions.ps1
+. $PSScriptRoot/splittestdependencies/generate-dependency-functions.ps1
 
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version 4
