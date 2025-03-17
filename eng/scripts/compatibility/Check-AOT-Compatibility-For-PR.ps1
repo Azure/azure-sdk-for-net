@@ -36,6 +36,7 @@ $filteredPackages = Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Fil
 $failedAotChecks = $false
 foreach ($package in $filteredPackages) {
     if ($package.CIParameters.CheckAOTCompat -and $package.CIParameters.AOTTestInputs) {
+        Write-Host "Running Check-AOT-Compatibility.ps1 for Package: $($package.ArtifactName) Service $($package.ServiceDirectory)"
         $aotDetails = $package.CIParameters.AOTTestInputs
         & $PSScriptRoot/Check-AOT-Compatibility.ps1 `
             -PackageName $package.ArtifactName `
