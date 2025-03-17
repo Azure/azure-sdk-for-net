@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// RAT Type
-    /// Serialized Name: RatType
-    /// </summary>
+    /// <summary> RAT Type. </summary>
     public readonly partial struct RatType : IEquatable<RatType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string FourGValue = "4G";
         private const string FiveGValue = "5G";
 
-        /// <summary>
-        /// 4G
-        /// Serialized Name: RatType.4G
-        /// </summary>
+        /// <summary> 4G. </summary>
         public static RatType FourG { get; } = new RatType(FourGValue);
-        /// <summary>
-        /// 5G
-        /// Serialized Name: RatType.5G
-        /// </summary>
+        /// <summary> 5G. </summary>
         public static RatType FiveG { get; } = new RatType(FiveGValue);
         /// <summary> Determines if two <see cref="RatType"/> values are the same. </summary>
         public static bool operator ==(RatType left, RatType right) => left.Equals(right);
