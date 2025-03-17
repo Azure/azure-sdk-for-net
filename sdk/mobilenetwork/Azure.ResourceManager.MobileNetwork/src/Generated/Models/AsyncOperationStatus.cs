@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The current status of an async operation.
-    /// Serialized Name: AsyncOperationStatus
-    /// </summary>
+    /// <summary> The current status of an async operation. </summary>
     public partial class AsyncOperationStatus
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AsyncOperationStatus"/>. </summary>
-        /// <param name="status">
-        /// The operation status.
-        /// Serialized Name: AsyncOperationStatus.status
-        /// </param>
+        /// <param name="status"> The operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal AsyncOperationStatus(string status)
         {
@@ -62,42 +56,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AsyncOperationStatus"/>. </summary>
-        /// <param name="id">
-        /// Fully qualified ID for the async operation.
-        /// Serialized Name: AsyncOperationStatus.id
-        /// </param>
-        /// <param name="name">
-        /// Name of the async operation.
-        /// Serialized Name: AsyncOperationStatus.name
-        /// </param>
-        /// <param name="status">
-        /// The operation status.
-        /// Serialized Name: AsyncOperationStatus.status
-        /// </param>
-        /// <param name="resourceId">
-        /// Fully qualified ID for the resource that this async operation status relates to.
-        /// Serialized Name: AsyncOperationStatus.resourceId
-        /// </param>
-        /// <param name="startOn">
-        /// The start time of the operation.
-        /// Serialized Name: AsyncOperationStatus.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time of the operation.
-        /// Serialized Name: AsyncOperationStatus.endTime
-        /// </param>
-        /// <param name="percentComplete">
-        /// Percentage of the operation that is complete.
-        /// Serialized Name: AsyncOperationStatus.percentComplete
-        /// </param>
-        /// <param name="properties">
-        /// Properties returned by the resource provider on a successful operation
-        /// Serialized Name: AsyncOperationStatus.properties
-        /// </param>
-        /// <param name="error">
-        /// If present, details of the operation error.
-        /// Serialized Name: AsyncOperationStatus.error
-        /// </param>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> The operation status. </param>
+        /// <param name="resourceId"> Fully qualified ID for the resource that this async operation status relates to. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="percentComplete"> Percentage of the operation that is complete. </param>
+        /// <param name="properties"> Properties returned by the resource provider on a successful operation. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AsyncOperationStatus(string id, string name, string status, string resourceId, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, BinaryData properties, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -118,51 +85,29 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// Fully qualified ID for the async operation.
-        /// Serialized Name: AsyncOperationStatus.id
-        /// </summary>
+        /// <summary> Fully qualified ID for the async operation. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// Name of the async operation.
-        /// Serialized Name: AsyncOperationStatus.name
-        /// </summary>
+        /// <summary> Name of the async operation. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// The operation status.
-        /// Serialized Name: AsyncOperationStatus.status
-        /// </summary>
+        /// <summary> The operation status. </summary>
         [WirePath("status")]
         public string Status { get; }
-        /// <summary>
-        /// Fully qualified ID for the resource that this async operation status relates to.
-        /// Serialized Name: AsyncOperationStatus.resourceId
-        /// </summary>
+        /// <summary> Fully qualified ID for the resource that this async operation status relates to. </summary>
         [WirePath("resourceId")]
         public string ResourceId { get; }
-        /// <summary>
-        /// The start time of the operation.
-        /// Serialized Name: AsyncOperationStatus.startTime
-        /// </summary>
+        /// <summary> The start time of the operation. </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// The end time of the operation.
-        /// Serialized Name: AsyncOperationStatus.endTime
-        /// </summary>
+        /// <summary> The end time of the operation. </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Percentage of the operation that is complete.
-        /// Serialized Name: AsyncOperationStatus.percentComplete
-        /// </summary>
+        /// <summary> Percentage of the operation that is complete. </summary>
         [WirePath("percentComplete")]
         public double? PercentComplete { get; }
         /// <summary>
         /// Properties returned by the resource provider on a successful operation
-        /// Serialized Name: AsyncOperationStatus.properties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -193,10 +138,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         [WirePath("properties")]
         public BinaryData Properties { get; }
-        /// <summary>
-        /// If present, details of the operation error.
-        /// Serialized Name: AsyncOperationStatus.error
-        /// </summary>
+        /// <summary> If present, details of the operation error. </summary>
         [WirePath("error")]
         public ResponseError Error { get; }
     }
