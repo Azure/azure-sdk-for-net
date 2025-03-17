@@ -41,6 +41,11 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("data"u8);
             writer.WriteObjectValue(Data, options);
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                writer.WriteObjectValue(Target, options);
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -130,6 +135,7 @@ namespace Azure.AI.Projects
             }
             string id = default;
             InputData data = default;
+            EvaluationTarget target = default;
             string displayName = default;
             string description = default;
             SystemData systemData = default;
@@ -149,6 +155,15 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("data"u8))
                 {
                     data = InputData.DeserializeInputData(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    target = EvaluationTarget.DeserializeEvaluationTarget(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -222,6 +237,7 @@ namespace Azure.AI.Projects
             return new Evaluation(
                 id,
                 data,
+                target,
                 displayName,
                 description,
                 systemData,

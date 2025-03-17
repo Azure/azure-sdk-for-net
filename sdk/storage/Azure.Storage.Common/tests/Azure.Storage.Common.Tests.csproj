@@ -7,6 +7,9 @@
     <IsPackable>false</IsPackable>
     <RootNamespace>Azure.Storage.Tests</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net462'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
@@ -22,8 +25,10 @@
   </ItemGroup>
   <ItemGroup>
     <!-- To test shared resources that aren't included in Azure.Storage.Common itself. -->
+    <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\AuthenticatedRegionCryptoStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\IAuthenticatedCryptographicTransform.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\GcmAuthenticatedCryptographicTransform.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\TransformMode.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
