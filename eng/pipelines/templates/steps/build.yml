@@ -181,6 +181,8 @@ steps:
   - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
     parameters:
       Artifacts: ${{ parameters.Artifacts }}
+      ${ if eq(parameters.ServiceDirectory, 'auto') }}:
+        ArtifactName: BuildPackagesArtifact
 
   - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
     parameters:
