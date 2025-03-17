@@ -12,6 +12,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
+
+    <!--
+      Disallow project references. The extensions package is intentionally
+      locked to a specific version to ensure compatibility with the Azure
+      Functions runtime.
+
+      Newer versions are known to break the runtime.
+    -->
+    <ExcludeFromProjectReferenceToConversion Include="Microsoft.Extensions.Azure" />
   </ItemGroup>
 
 </Project>
