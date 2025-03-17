@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Azure.Generator.Tests.Common
 {
-    internal static class Helpers
+    public static class Helpers
     {
         public static string GetExpectedFromFile(
             string? parameters = null,

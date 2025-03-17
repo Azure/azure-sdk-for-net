@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -9,7 +8,6 @@ using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using Azure.Generator.Primitives;
 
 namespace Azure.Generator;
 
@@ -30,9 +28,6 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
-    /// <inheritdoc/>
-    public override AzureInputLibrary InputLibrary { get; }
-
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>
@@ -40,7 +35,6 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     [ImportingConstructor]
     public AzureClientPlugin(GeneratorContext context) : base(context)
     {
-        InputLibrary = new AzureInputLibrary(Configuration.OutputDirectory);
         TypeFactory = new AzureTypeFactory();
         _instance = this;
     }
@@ -56,13 +50,6 @@ public class AzureClientPlugin : ScmCodeModelPlugin
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientPlugin).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
         AddVisitor(new NamespaceVisitor());
-        if (IsAzureArm.Value)
-        {
-            // Include Azure.ResourceManager
-            AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
-            AddVisitor(new RestClientVisitor());
-            AddVisitor(new ResourceVisitor());
-        }
     }
 
     /// <summary>
@@ -76,5 +63,5 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     /// <summary>
     /// Identify if the input is generated for Azure ARM.
     /// </summary>
-    internal Lazy<bool> IsAzureArm => new Lazy<bool>(() => InputLibrary.InputNamespace.Clients.Any(c => c.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmProviderNamespace))));
+    internal Lazy<bool> IsAzureArm => new Lazy<bool>(() => InputLibrary.InputNamespace.Clients.Any(c => c.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armProviderNamespace"))));
 }

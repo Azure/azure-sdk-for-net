@@ -1,26 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Providers;
+using Azure.Generator.Mgmt.Providers;
+using Azure.Generator.Mgmt.Tests.TestHelpers;
 using Azure.Generator.Tests.Common;
-using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
 
-namespace Azure.Generator.Tests.Providers
+namespace Azure.Generator.Mgmt.Tests.Providers
 {
-    internal class LongRunningOperationProviderTests
+    internal class MgmtLongRunningOperationProviderTests
     {
         [SetUp]
         public void SetUp()
         {
-            MockHelpers.LoadMockPlugin();
+            MgmtMockHelpers.LoadMockPlugin();
         }
 
         [TestCase]
         public void Verify_NonGeneric_LROProviderGeneration()
         {
-            var nonGenericLROProvider = new LongRunningOperationProvider(false);
+            var nonGenericLROProvider = new MgmtLongRunningOperationProvider(false);
             var codeFile = new TypeProviderWriter(nonGenericLROProvider).Write();
             var result = codeFile.Content;
 
@@ -32,7 +32,7 @@ namespace Azure.Generator.Tests.Providers
         [TestCase]
         public void Verify_Generic_LROProviderGeneration()
         {
-            var genericLROProvider = new LongRunningOperationProvider(true);
+            var genericLROProvider = new MgmtLongRunningOperationProvider(true);
             var codeFile = new TypeProviderWriter(genericLROProvider).Write();
             var result = codeFile.Content;
 

@@ -2,18 +2,16 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Providers;
+using Azure.Generator.Mgmt.Providers;
+using Azure.Generator.Mgmt.Tests.Common;
+using Azure.Generator.Mgmt.Tests.TestHelpers;
 using Azure.Generator.Tests.Common;
-using Azure.Generator.Tests.TestHelpers;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Azure.Generator.Tests.Providers
+namespace Azure.Generator.Mgmt.Tests.Providers
 {
     internal class ResourceClientProviderTests
     {
@@ -47,7 +45,7 @@ namespace Azure.Generator.Tests.Providers
         private static ResourceClientProvider GetResourceClientProvider()
         {
             var (client, models) = InputResourceData.ClientWithResource();
-            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var plugin = MgmtMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
             Assert.NotNull(resourceProvider);
             return resourceProvider!;

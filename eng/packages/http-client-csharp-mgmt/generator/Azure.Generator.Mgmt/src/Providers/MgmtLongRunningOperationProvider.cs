@@ -3,7 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Utilities;
+using Azure.Generator.Mgmt.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -17,9 +17,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Providers
+namespace Azure.Generator.Mgmt.Providers
 {
-    internal class LongRunningOperationProvider : TypeProvider
+    internal class MgmtLongRunningOperationProvider : TypeProvider
     {
         private class Template<T> { }
         private readonly CSharpType _t = typeof(Template<>).GetGenericArguments()[0];
@@ -30,7 +30,7 @@ namespace Azure.Generator.Providers
         private FieldProvider _nextLinkOperationField;
         private FieldProvider _operationIdField;
 
-        public LongRunningOperationProvider(bool isGeneric)
+        public MgmtLongRunningOperationProvider(bool isGeneric)
         {
             _isGeneric = isGeneric;
             _operationField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, isGeneric ? new CSharpType(typeof(OperationInternal<>), _t) : typeof(OperationInternal), "_operation", this);
@@ -39,7 +39,7 @@ namespace Azure.Generator.Providers
             _operationIdField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(string), "_operationId", this);
         }
 
-        private readonly string _serviceName = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Name.Split('.').Last();
+        private readonly string _serviceName = MgmtClientPlugin.Instance.InputLibrary.InputNamespace.Name.Split('.').Last();
         protected override string BuildName() => $"{_serviceName}ArmOperation";
 
         protected override CSharpType[] GetTypeArguments() => _isGeneric ? new CSharpType[] { _t } : base.GetTypeArguments();

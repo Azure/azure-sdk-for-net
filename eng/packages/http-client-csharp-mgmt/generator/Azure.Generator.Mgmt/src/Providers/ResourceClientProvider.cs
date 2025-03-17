@@ -4,8 +4,8 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Mgmt.Models;
-using Azure.Generator.Primitives;
-using Azure.Generator.Utilities;
+using Azure.Generator.Mgmt.Primitives;
+using Azure.Generator.Mgmt.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -24,7 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Providers
+namespace Azure.Generator.Mgmt.Providers
 {
     /// <summary>
     /// Provides a resource client type.
@@ -48,14 +48,14 @@ namespace Azure.Generator.Providers
             _isSingleton = _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<string>() == "true" : false;
             var resourceType = resourceMetadata.Arguments?[KnownDecorators.ResourceType].ToObjectFromJson<string>()!;
             _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
-            var resourceModel = AzureClientPlugin.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(codeModelId)!;
+            var resourceModel = MgmtClientPlugin.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(codeModelId)!;
             SpecName = resourceModel.Name;
 
             // We should be able to assume that all operations in the resource client are for the same resource
             var requestPath = new RequestPath(inputClient.Operations.First().Path);
             _resourceOperations = inputClient.Operations;
-            ResourceData = AzureClientPlugin.Instance.TypeFactory.CreateModel(resourceModel)!;
-            _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient)!;
+            ResourceData = MgmtClientPlugin.Instance.TypeFactory.CreateModel(resourceModel)!;
+            _clientProvider = MgmtClientPlugin.Instance.TypeFactory.CreateClient(inputClient)!;
             _contextualParameters = GetContextualParameters(requestPath);
 
             _dataField = new FieldProvider(FieldModifiers.Private, ResourceData.Type, "_data", this);
@@ -268,7 +268,7 @@ namespace Azure.Generator.Providers
             if (isLongRunningOperation)
             {
                 var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
-                var responseBodyType = response?.BodyType is null ? null : AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(response.BodyType);
+                var responseBodyType = response?.BodyType is null ? null : MgmtClientPlugin.Instance.TypeFactory.CreateCSharpType(response.BodyType);
                 if (responseBodyType is null)
                 {
                     return isAsync ? new CSharpType(typeof(Task<>), typeof(ArmOperation)) : typeof(ArmOperation);
@@ -308,7 +308,7 @@ namespace Azure.Generator.Providers
 
             if (isLongRunning)
             {
-                var armOperationType = !isGeneric ? AzureClientPlugin.Instance.OutputLibrary.ArmOperation.Type : AzureClientPlugin.Instance.OutputLibrary.GenericArmOperation.Type.MakeGenericType([Type]);
+                var armOperationType = !isGeneric ? MgmtClientPlugin.Instance.OutputLibrary.ArmOperation.Type : MgmtClientPlugin.Instance.OutputLibrary.GenericArmOperation.Type.MakeGenericType([Type]);
                 ValueExpression[] armOperationArguments = [_clientDiagonosticsField, This.Property("Pipeline"), messageVariable.Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())];
                 var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, isGeneric ? [New.Instance(Source.Type, This.Property("Client")), .. armOperationArguments] : armOperationArguments), out var operationVariable);
 

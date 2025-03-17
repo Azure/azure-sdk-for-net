@@ -5,16 +5,16 @@ using Microsoft.TypeSpec.Generator.Input;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Generator
+namespace Azure.Generator.Mgmt
 {
     /// <inheritdoc/>
-    public class AzureInputLibrary : InputLibrary
+    public class MgmtInputLibrary : InputLibrary
     {
         private IReadOnlyDictionary<string, InputModelType>? _inputModelsByCrossLanguageDefinitionId = null;
         private IReadOnlyDictionary<string, InputModelType> InputModelsByCrossLanguageDefinitionId => _inputModelsByCrossLanguageDefinitionId ??= InputNamespace.Models.DistinctBy(x => x.CrossLanguageDefinitionId).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
         /// <inheritdoc/>
-        public AzureInputLibrary(string configPath) : base(configPath)
+        public MgmtInputLibrary(string configPath) : base(configPath)
         {
         }
 

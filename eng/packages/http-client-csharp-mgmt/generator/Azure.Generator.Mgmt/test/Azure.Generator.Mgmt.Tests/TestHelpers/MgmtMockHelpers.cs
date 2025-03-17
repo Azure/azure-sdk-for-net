@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator;
+using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -10,19 +11,16 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.SourceInput;
 using Moq;
 using Moq.Protected;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 
-namespace Azure.Generator.Tests.TestHelpers
+namespace Azure.Generator.Mgmt.Tests.TestHelpers
 {
-    internal class MockHelpers
+    internal class MgmtMockHelpers
     {
         private static readonly string _configFilePath = Path.Combine(AppContext.BaseDirectory, TestHelpersFolder);
         private const string TestHelpersFolder = "TestHelpers";
 
-        public static Mock<AzureClientPlugin> LoadMockPlugin(
+        public static Mock<MgmtClientPlugin> LoadMockPlugin(
             Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
             Func<InputType, CSharpType>? createCSharpTypeCore = null,
             Func<InputApiKeyAuth>? apiKeyAuth = null,
@@ -39,6 +37,7 @@ namespace Azure.Generator.Tests.TestHelpers
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
             IReadOnlyList<InputClient> inputNsClients = clients?.Invoke() ?? [];
             IReadOnlyList<InputModelType> inputNsModels = inputModels?.Invoke() ?? [];
+            var mgmtInstance = typeof(MgmtClientPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             InputAuth inputNsAuth = new InputAuth(apiKeyAuth?.Invoke(), oauth2Auth?.Invoke());
             var mockInputNs = new Mock<InputNamespace>(
                 "Samples",
@@ -48,13 +47,13 @@ namespace Azure.Generator.Tests.TestHelpers
                 inputNsClients,
                 inputNsAuth,
                 null);
-            var mockInputLibrary = new Mock<InputLibrary>(_configFilePath);
+            var mockInputLibrary = new Mock<MgmtInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
-            Mock<AzureTypeFactory>? mockTypeFactory = null;
+            Mock<MgmtTypeFactory>? mockTypeFactory = null;
             if (createCSharpTypeCore is not null)
             {
-                mockTypeFactory = new Mock<AzureTypeFactory>() { CallBase = true };
+                mockTypeFactory = new Mock<MgmtTypeFactory>() { CallBase = true };
                 mockTypeFactory.Protected().Setup<CSharpType>("CreateCSharpTypeCore", ItExpr.IsAny<InputType>()).Returns(createCSharpTypeCore);
             }
 
@@ -67,7 +66,7 @@ namespace Azure.Generator.Tests.TestHelpers
             object?[] parameters = [_configFilePath, null];
             var config = loadMethod?.Invoke(null, parameters);
             var mockGeneratorContext = new Mock<GeneratorContext>(config!);
-            var mockPluginInstance = new Mock<AzureClientPlugin>(mockGeneratorContext.Object) { CallBase = true };
+            var mockPluginInstance = new Mock<MgmtClientPlugin>(mockGeneratorContext.Object) { CallBase = true };
             codeModelInstance!.SetValue(null, mockPluginInstance.Object);
             clientModelInstance!.SetValue(null, mockPluginInstance.Object);
             azureInstance!.SetValue(null, mockPluginInstance.Object);
