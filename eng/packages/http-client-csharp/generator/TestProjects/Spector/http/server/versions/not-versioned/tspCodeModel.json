@@ -8,7 +8,7 @@
   {
    "$id": "2",
    "Name": "NotVersionedClient",
-   "ClientNamespace": "Server.Versions.NotVersioned",
+   "Namespace": "Server.Versions.NotVersioned",
    "Doc": "Illustrates not-versioned server.",
    "Operations": [
     {
@@ -23,13 +23,11 @@
        "StatusCodes": [
         200
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "HEAD",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/server/versions/not-versioned/without-api-version",
      "BufferResponse": true,
@@ -72,13 +70,11 @@
        "StatusCodes": [
         200
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "HEAD",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/server/versions/not-versioned/with-query-api-version",
      "BufferResponse": true,
@@ -121,13 +117,11 @@
        "StatusCodes": [
         200
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "HEAD",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/server/versions/not-versioned/with-path-api-version/{apiVersion}",
      "BufferResponse": true,
@@ -163,7 +157,8 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Server.Versions.NotVersioned"
   }
  ]
 }

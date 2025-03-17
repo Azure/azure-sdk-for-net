@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "Bird",
-   "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
+   "namespace": "Type.Model.Inheritance.SingleDiscriminator",
    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Bird",
    "usage": "Input,Output,Json",
    "doc": "This is base model for polymorphic single level inheritance with a discriminator.",
@@ -76,7 +76,7 @@
      "$id": "12",
      "kind": "model",
      "name": "SeaGull",
-     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
+     "namespace": "Type.Model.Inheritance.SingleDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.SeaGull",
      "usage": "Input,Output,Json",
      "doc": "The second level model in polymorphic single level inheritance.",
@@ -124,7 +124,7 @@
      "$id": "18",
      "kind": "model",
      "name": "Sparrow",
-     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
+     "namespace": "Type.Model.Inheritance.SingleDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Sparrow",
      "usage": "Input,Output,Json",
      "doc": "The second level model in polymorphic single level inheritance.",
@@ -172,7 +172,7 @@
      "$id": "24",
      "kind": "model",
      "name": "Goose",
-     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
+     "namespace": "Type.Model.Inheritance.SingleDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Goose",
      "usage": "Input,Output,Json",
      "doc": "The second level model in polymorphic single level inheritance.",
@@ -220,7 +220,7 @@
      "$id": "30",
      "kind": "model",
      "name": "Eagle",
-     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
+     "namespace": "Type.Model.Inheritance.SingleDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle",
      "usage": "Input,Output,Json",
      "doc": "The second level model in polymorphic single levels inheritance which contains references to other polymorphic instances.",
@@ -367,7 +367,7 @@
    "$id": "48",
    "kind": "model",
    "name": "Dinosaur",
-   "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
+   "namespace": "Type.Model.Inheritance.SingleDiscriminator",
    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Dinosaur",
    "usage": "Output,Json",
    "doc": "Define a base class in the legacy way. Discriminator property is not explicitly defined in the model.",
@@ -436,7 +436,7 @@
      "$id": "58",
      "kind": "model",
      "name": "TRex",
-     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
+     "namespace": "Type.Model.Inheritance.SingleDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.TRex",
      "usage": "Output,Json",
      "doc": "The second level legacy model in polymorphic single level inheritance.",
@@ -490,7 +490,7 @@
   {
    "$id": "64",
    "Name": "SingleDiscriminatorClient",
-   "ClientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
+   "Namespace": "Type.Model.Inheritance.SingleDiscriminator",
    "Doc": "Illustrates inheritance with single discriminator.",
    "Operations": [
     {
@@ -536,7 +536,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -545,7 +544,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/single-discriminator/model",
      "BufferResponse": true,
@@ -612,13 +610,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/single-discriminator/model",
      "RequestMediaTypes": [
@@ -673,7 +669,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -682,7 +677,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/single-discriminator/recursivemodel",
      "BufferResponse": true,
@@ -749,13 +743,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/single-discriminator/recursivemodel",
      "RequestMediaTypes": [
@@ -810,7 +802,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -819,7 +810,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/single-discriminator/missingdiscriminator",
      "BufferResponse": true,
@@ -871,7 +861,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -880,7 +869,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/single-discriminator/wrongdiscriminator",
      "BufferResponse": true,
@@ -932,7 +920,6 @@
        "BodyType": {
         "$ref": "48"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -941,7 +928,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/single-discriminator/legacy-model",
      "BufferResponse": true,
@@ -987,7 +973,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator"
   }
  ]
 }

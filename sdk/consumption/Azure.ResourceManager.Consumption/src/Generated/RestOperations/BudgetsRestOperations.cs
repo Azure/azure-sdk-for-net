@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         BudgetsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BudgetsListResult.DeserializeBudgetsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         BudgetsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BudgetsListResult.DeserializeBudgetsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionBudgetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumptionBudgetData.DeserializeConsumptionBudgetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionBudgetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumptionBudgetData.DeserializeConsumptionBudgetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Consumption
                 case 201:
                     {
                         ConsumptionBudgetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumptionBudgetData.DeserializeConsumptionBudgetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Consumption
                 case 201:
                     {
                         ConsumptionBudgetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumptionBudgetData.DeserializeConsumptionBudgetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         BudgetsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BudgetsListResult.DeserializeBudgetsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         BudgetsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BudgetsListResult.DeserializeBudgetsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
