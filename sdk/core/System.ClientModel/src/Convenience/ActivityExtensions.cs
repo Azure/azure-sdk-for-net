@@ -11,8 +11,8 @@ namespace System.ClientModel.Primitives;
 /// common Open Telemetry tracing functionality for clients built on System.ClientModel.
 /// </summary>
 /// <remarks>These APIs should only be used by client library authors and should not
-/// be used by consuming applications. Applications should only use methods on
-/// <see cref="Activity"/> and <see cref="ActivitySource"/> for tracing.</remarks>
+/// be used by consuming applications. Applications should use the System.Diagnostics package
+/// to implement distributed tracing.</remarks>
 public static class ActivityExtensions
 {
     private const string ScmScopeLabel = "scm.sdk.scope";
@@ -21,18 +21,20 @@ public static class ActivityExtensions
     /// <summary>
     /// Creates and starts a new <see cref="Activity"/> with the specified name and kind.
     /// </summary>
-    /// <param name="activitySource"></param>
-    /// <param name="isDistributedTracingEnabled"></param>
-    /// <param name="name"></param>
-    /// <param name="kind"></param>
-    /// <param name="context"></param>
-    /// <param name="tags"></param>
-    /// <returns></returns>
+    /// <remarks>This extension method is intended to be used by client library authors only. Applications
+    /// should use one of the overloads of <see cref="ActivitySource.StartActivity(string, ActivityKind)"/>
+    /// to create and start <see cref="Activity"/> instances.</remarks>
+    /// <param name="activitySource">The <see cref="ActivitySource"/> to use to create the <see cref="Activity"/>.</param>
+    /// <param name="isDistributedTracingEnabled">Whether distributed tracing is enabled in the client.</param>
+    /// <param name="name">The operation name of the activity.</param>
+    /// <param name="kind">The activity kind.</param>
+    /// <param name="parentContext">The parent <see cref="ActivityContext"/> object to initialize the created Activity object with.</param>
+    /// <param name="tags">The optional tags list to initialize the created Activity object with.</param>
     public static Activity? StartClientActivity(this ActivitySource activitySource,
                                                 bool isDistributedTracingEnabled,
                                                 string name,
                                                 ActivityKind kind = ActivityKind.Internal,
-                                                ActivityContext context = default,
+                                                ActivityContext parentContext = default,
                                                 IEnumerable<KeyValuePair<string, object?>>? tags = null)
     {
         if (!isDistributedTracingEnabled)
@@ -40,13 +42,14 @@ public static class ActivityExtensions
             return null;
         }
 
+        bool shouldSuppressNested = kind == ActivityKind.Client || kind == ActivityKind.Internal;
         bool isInnerSpan = ScmScopeValue.Equals(Activity.Current?.GetCustomProperty(ScmScopeLabel));
-        if (isInnerSpan)
+        if (shouldSuppressNested && isInnerSpan)
         {
             return null;
         }
 
-        Activity? activity = activitySource.StartActivity(name, kind, context, tags);
+        Activity? activity = activitySource.StartActivity(name, kind, parentContext, tags);
 
         if (activity?.IsAllDataRequested == true)
         {
@@ -59,15 +62,27 @@ public static class ActivityExtensions
     /// <summary>
     /// Marks the <paramref name="activity"/> as failed.
     /// </summary>
-    /// <param name="activity"></param>
-    /// <param name="exception"></param>
+    /// <remarks>This method should only be used by client library authors and should not
+    /// be used by consuming applications. Applications should use the System.Diagnostics package
+    /// to implement distributed tracing.</remarks>
+    /// <param name="activity">The activity to mark as failed.</param>
+    /// <param name="exception">The <see cref="Exception"/> encountered during the operation.</param>
     public static void MarkFailed(this Activity activity, Exception? exception)
     {
         if (activity == null)
         {
             return;
         }
-        activity.SetTag("error.type", exception?.GetType().FullName);
+
+        string? errorCode = null;
+        if (exception is ClientResultException clientResultException)
+        {
+            errorCode = clientResultException.Status.ToString();
+        }
+        errorCode ??= exception?.GetType().FullName;
+        errorCode ??= "_OTHER";
+
+        activity.SetTag("error.type", errorCode);
         activity.SetStatus(ActivityStatusCode.Error, exception?.Message);
     }
 }

@@ -19,7 +19,7 @@ public class MapsClient
     private readonly string _apiVersion;
     private readonly bool _enableDistributedTracing;
 
-    internal static ActivitySource ActivitySource { get; } = new(typeof(MapsClient).FullName!, "1.0.0");
+    internal static ActivitySource ActivitySource { get; } = new(typeof(MapsClient).FullName!);
 
     public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions? options = default)
     {
@@ -182,7 +182,7 @@ public class MapsClient
         return message;
     }
 
-    // Fake method used to illlustrate creating input content in ClientModel
+    // Fake method used to illustrate creating input content in ClientModel
     // samples. No such operation exists on the Azure Maps service, and this
     // operation implementation will not succeed against a live service.
 

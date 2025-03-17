@@ -1,0 +1,167 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using ClientModel.Tests;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
+
+namespace System.ClientModel.Primitives.Tests;
+
+[NonParallelizable]
+public class ActivityExtensionsTests
+{
+    private const string ScmScopeLabel = "scm.sdk.scope";
+    private static readonly string ScmScopeValue = bool.TrueString;
+
+    [Test]
+    public void ActivityIsStarted()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+
+        Activity? activity = activitySource.StartClientActivity(true, "Client.Method");
+
+        Assert.NotNull(activity);
+        Assert.AreEqual("Client.Method", activity!.OperationName);
+        Assert.AreEqual(ActivityKind.Internal, activity.Kind); // default
+        Assert.AreEqual(ScmScopeValue, activity.GetCustomProperty(ScmScopeLabel));
+        Assert.AreEqual(activity, Activity.Current);
+
+        activity.Dispose();
+        Assert.AreEqual(1, listener.Activities.Count);
+
+        listener.Activities.TryDequeue(out Activity? listenerActivity);
+        Assert.NotNull(listenerActivity);
+        Assert.AreEqual(activity, listenerActivity);
+    }
+
+    [Test]
+    public void DistributedTracingDisabled()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+
+        using Activity? activity = activitySource.StartClientActivity(false, "Client.Method");
+
+        Assert.IsNull(Activity.Current);
+        Assert.IsNull(activity);
+        Assert.AreEqual(0, listener.Activities.Count);
+    }
+
+    [Test]
+    public void CanSetKind()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+
+        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method", ActivityKind.Client);
+
+        Assert.NotNull(activity);
+        Assert.NotNull(Activity.Current);
+        Assert.AreEqual(ActivityKind.Client, activity!.Kind);
+    }
+
+    [Test]
+    public void CanSetContext()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+
+        ActivityTraceId traceId = ActivityTraceId.CreateRandom();
+        ActivitySpanId spanId = ActivitySpanId.CreateRandom();
+        ActivityContext context = new(traceId, spanId, ActivityTraceFlags.Recorded);
+        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method", ActivityKind.Internal, context);
+
+        Assert.NotNull(activity);
+        Assert.AreEqual(spanId, activity!.ParentSpanId);
+        StringAssert.Contains(traceId.ToString(), activity.ParentId);
+    }
+
+    [Test]
+    public void CanSetTags()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+
+        KeyValuePair<string, object?>[] tags =
+        [
+            new KeyValuePair<string, object?>("tag1", "value1"),
+            new KeyValuePair<string, object?>("tag2", "value2"),
+        ];
+
+        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method", tags: tags);
+
+        Assert.NotNull(activity);
+        Assert.AreEqual(2, activity!.Tags.Count());
+        Assert.AreEqual("value1", activity.Tags.Single(t => t.Key == "tag1").Value);
+        Assert.AreEqual("value2", activity.Tags.Single(t => t.Key == "tag2").Value);
+    }
+
+    [Test]
+    public void FailureIsMarkedWithStatus()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+
+        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method");
+
+        string message = "Client failed";
+        MockPipelineResponse response = new(500, "Internal Server error");
+        ClientResultException exception = new(message, response);
+
+        activity?.MarkFailed(exception);
+
+        Assert.NotNull(activity);
+        Assert.AreEqual(message, activity!.StatusDescription);
+        Assert.AreEqual("500", activity.Tags.Single(kv => kv.Key == "error.type").Value);
+    }
+
+    [Test]
+    public void FailureIsMarkedWithExceptionType()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+
+        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method");
+
+        ArgumentNullException exception = new("parameter");
+        string message = "Value cannot be null. (Parameter 'parameter')";
+
+        activity?.MarkFailed(exception);
+
+        Assert.NotNull(activity);
+        Assert.AreEqual(message, activity!.StatusDescription);
+        Assert.AreEqual("System.ArgumentNullException", activity.Tags.Single(kv => kv.Key == "error.type").Value);
+    }
+
+    [Test]
+    public void FailureIsMarkedWithOther()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+
+        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method");
+
+        activity?.MarkFailed(null);
+
+        Assert.NotNull(activity);
+        Assert.AreEqual(null, activity!.StatusDescription);
+        Assert.AreEqual("_OTHER", activity.Tags.Single(kv => kv.Key == "error.type").Value);
+    }
+
+    [Test]
+    public void NestedSpansAreSuppressed()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+
+        using Activity? parent = activitySource.StartClientActivity(true, "Client.Method", ActivityKind.Client);
+        using Activity? child = activitySource.StartClientActivity(true, "Client.Method", ActivityKind.Internal);
+
+        Assert.NotNull(parent);
+        Assert.Null(child);
+    }
+}
