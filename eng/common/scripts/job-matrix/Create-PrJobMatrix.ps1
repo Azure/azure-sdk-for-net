@@ -253,14 +253,14 @@ if ($directPackages) {
   foreach($artifact in $directPackages) {
     Write-Host "-> $($artifact.ArtifactName)"
   }
-  $OverallResult += GeneratePRMatrixForBatch -Packages $directPackages
+  $OverallResult += (GeneratePRMatrixForBatch -Packages $directPackages) ?? @()
 }
 if ($indirectPackages) {
   Write-Host "Discovered $($indirectPackages.Length) indirect packages"
   foreach($artifact in $indirectPackages) {
     Write-Host "-> $($artifact.ArtifactName)"
   }
-  $OverallResult += GeneratePRMatrixForBatch -Packages $indirectPackages -FullSparseMatrix (-not $SparseIndirect)
+  $OverallResult += (GeneratePRMatrixForBatch -Packages $indirectPackages -FullSparseMatrix (-not $SparseIndirect)) ?? @()
 }
 $serialized = SerializePipelineMatrix $OverallResult
 
