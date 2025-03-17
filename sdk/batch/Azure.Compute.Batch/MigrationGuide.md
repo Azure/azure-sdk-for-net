@@ -73,7 +73,7 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
       - [GetRemoteLoginSettings](#getremoteloginsettings)
       - [UploadComputeNodeBatchServiceLogs](#uploadcomputenodebatchservicelogs)
   - [Certificate Operations](#certificate-operations)
-      - [CreateCertificateFromCer](#createCertificateFromCer)
+      - [CreateCertificateFromCer](#createcertificatefromcer)
       - [CreateCertificateFromPfx](#createcertificatefrompfx)
       - [GetCertificate](#getcertificate)
       - [ListCertificates](#listcertificates)
