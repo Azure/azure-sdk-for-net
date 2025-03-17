@@ -49,15 +49,4 @@ public class AccessToken
     /// Gets the time when the token should be refreshed.
     /// </summary>
     public DateTimeOffset? RefreshOn { get; }
-
-    /// <summary>
-    /// Indicates whether the token can be refreshed.
-    /// </summary>
-    public virtual bool IsRefreshSupported => false;
-
-    /// <summary>
-    /// Refreshes the token if <see cref="IsRefreshSupported"/> returns true.
-    /// <exception cref="InvalidOperationException">When <see cref="IsRefreshSupported"/> is false.</exception>
-    /// </summary>
-    public virtual Task<AccessToken> RefreshAsync(CancellationToken cancellationToken) => throw new InvalidOperationException("This token cannot be refreshed.");
 }

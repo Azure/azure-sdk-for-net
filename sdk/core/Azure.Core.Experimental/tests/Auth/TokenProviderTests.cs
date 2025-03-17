@@ -214,10 +214,6 @@ public class TokenProviderTests
             _provider = provider;
             this.properties = properties;
         }
-        public override async Task<AccessToken> RefreshAsync(CancellationToken cancellationToken)
-        {
-            return await _provider.GetTokenAsync(properties, cancellationToken);
-        }
     }
 
     public class MockHttpMessageHandler : HttpMessageHandler

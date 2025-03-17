@@ -136,11 +136,9 @@ namespace System.ClientModel.Primitives
     {
         public AccessToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
-        public virtual bool IsRefreshSupported { get { throw null; } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string TokenType { get { throw null; } }
         public string TokenValue { get { throw null; } }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.AccessToken> RefreshAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class GetTokenOptions
     {
