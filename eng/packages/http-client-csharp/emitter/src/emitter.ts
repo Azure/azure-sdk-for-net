@@ -5,8 +5,7 @@ import { EmitContext } from "@typespec/compiler";
 
 import {
   $onEmit as $onMTGEmit,
-  CSharpEmitterOptions,
-  setSDKContextOptions
+  CSharpEmitterOptions
 } from "@typespec/http-client-csharp";
 
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
