@@ -21,7 +21,7 @@
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Core" />
 
-    <!-- Override removal tracked by ##48425-->
+    <!-- Override removal tracked by #48425-->
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" VersionOverride="8.0.2" />
