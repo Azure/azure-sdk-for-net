@@ -68,8 +68,8 @@ namespace Azure.Generator.Providers.Abstraction
                 new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", options.NullConditional().Property("ErrorOptions"), options.NoThrow()).NotEqual(options.NoThrow())))
                 {
                     isAsync
-                    ? Throw(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
-                    : Throw(New.Instance(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ClientResponseExceptionType, message.Response()))
+                    ? Throw(AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
+                    : Throw(New.Instance(AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseExceptionType, message.Response()))
                 },
                 MethodBodyStatement.EmptyLine,
                 Return(message.Response())

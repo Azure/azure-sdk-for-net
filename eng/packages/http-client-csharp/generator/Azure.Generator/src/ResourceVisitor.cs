@@ -27,7 +27,7 @@ namespace Azure.Generator
 
         private static void TransformResource(TypeProvider type)
         {
-            if (type is ModelProvider && AzureClientPlugin.Instance.OutputLibrary.IsResource(type.Name))
+            if (type is ModelProvider && AzureClientGenerator.Instance.OutputLibrary.IsResource(type.Name))
             {
                 type.Update(relativeFilePath: TransformRelativeFilePath(type));
                 type.Type.Update(TransformName(type));

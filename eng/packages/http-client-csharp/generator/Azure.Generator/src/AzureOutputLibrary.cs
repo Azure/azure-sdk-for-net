@@ -29,7 +29,7 @@ namespace Azure.Generator
             var result = new Dictionary<string, HashSet<OperationSet>>();
             foreach (var operationSet in _pathToOperationSetMap.Values)
             {
-                if (AzureClientPlugin.Instance.ResourceDetection.TryGetResourceDataSchema(operationSet, out var resourceSpecName, out var resourceSchema))
+                if (AzureClientGenerator.Instance.ResourceDetection.TryGetResourceDataSchema(operationSet, out var resourceSpecName, out var resourceSchema))
                 {
                     // if this operation set corresponds to a SDK resource, we add it to the map
                     if (!result.TryGetValue(resourceSpecName!, out HashSet<OperationSet>? value))
@@ -47,7 +47,7 @@ namespace Azure.Generator
         private Dictionary<string, OperationSet> CategorizeClients()
         {
             var result = new Dictionary<string, OperationSet>();
-            foreach (var inputClient in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
+            foreach (var inputClient in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
                 var requestPathList = new HashSet<string>();
                 foreach (var operation in inputClient.Operations)
@@ -78,14 +78,14 @@ namespace Azure.Generator
         // TODO: generate resources and collections
         protected override TypeProvider[] BuildTypeProviders()
         {
-            if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
+            if (AzureClientGenerator.Instance.IsAzureArm.Value == true)
             {
                 var armOperation = new MgmtLongRunningOperationProvider(false);
                 var genericArmOperation = new MgmtLongRunningOperationProvider(true);
 
                 // TODO: remove them once they are referenced in Resource operation implementation
-                AzureClientPlugin.Instance.AddTypeToKeep(armOperation.Name);
-                AzureClientPlugin.Instance.AddTypeToKeep(genericArmOperation.Name);
+                AzureClientGenerator.Instance.AddTypeToKeep(armOperation.Name);
+                AzureClientGenerator.Instance.AddTypeToKeep(genericArmOperation.Name);
                 return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), armOperation, genericArmOperation];
             }
             return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
