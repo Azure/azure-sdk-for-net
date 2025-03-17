@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> The updatable properties of the StandbyContainerGroupPoolResource. </summary>
-    public partial class StandbyContainerGroupPoolUpdateProperties
+    /// <summary> Displays the counts of pooled virtual machines in each state, as known by the StandbyPool resource provider. </summary>
+    public partial class PoolVirtualMachineStateCount
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,30 +45,34 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
-        public StandbyContainerGroupPoolUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="PoolVirtualMachineStateCount"/>. </summary>
+        /// <param name="state"> The state that the pooled virtual machines count is for. </param>
+        /// <param name="count"> The count of pooled virtual machines in the given state. </param>
+        internal PoolVirtualMachineStateCount(PoolVirtualMachineState state, long count)
         {
-            Zones = new ChangeTrackingList<string>();
+            State = state;
+            Count = count;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
-        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
-        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
-        /// <param name="zones"> Specifies zones of standby container group pools. </param>
+        /// <summary> Initializes a new instance of <see cref="PoolVirtualMachineStateCount"/>. </summary>
+        /// <param name="state"> The state that the pooled virtual machines count is for. </param>
+        /// <param name="count"> The count of pooled virtual machines in the given state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PoolVirtualMachineStateCount(PoolVirtualMachineState state, long count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ElasticityProfile = elasticityProfile;
-            ContainerGroupProperties = containerGroupProperties;
-            Zones = zones;
+            State = state;
+            Count = count;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies elasticity profile of standby container group pools. </summary>
-        public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
-        /// <summary> Specifies container group properties of standby container group pools. </summary>
-        public StandbyContainerGroupProperties ContainerGroupProperties { get; set; }
-        /// <summary> Specifies zones of standby container group pools. </summary>
-        public IList<string> Zones { get; }
+        /// <summary> Initializes a new instance of <see cref="PoolVirtualMachineStateCount"/> for deserialization. </summary>
+        internal PoolVirtualMachineStateCount()
+        {
+        }
+
+        /// <summary> The state that the pooled virtual machines count is for. </summary>
+        public PoolVirtualMachineState State { get; }
+        /// <summary> The count of pooled virtual machines in the given state. </summary>
+        public long Count { get; }
     }
 }

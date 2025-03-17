@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> The updatable properties of the StandbyContainerGroupPoolResource. </summary>
-    public partial class StandbyContainerGroupPoolUpdateProperties
+    /// <summary> Displays StandbyPool status. </summary>
+    public partial class PoolStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,30 +45,32 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
-        public StandbyContainerGroupPoolUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="PoolStatus"/>. </summary>
+        /// <param name="code"> Displays the healthy state of the StandbyPool. </param>
+        internal PoolStatus(HealthStateCode code)
         {
-            Zones = new ChangeTrackingList<string>();
+            Code = code;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
-        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
-        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
-        /// <param name="zones"> Specifies zones of standby container group pools. </param>
+        /// <summary> Initializes a new instance of <see cref="PoolStatus"/>. </summary>
+        /// <param name="code"> Displays the healthy state of the StandbyPool. </param>
+        /// <param name="message"> Displays the StandbyPool health state details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PoolStatus(HealthStateCode code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ElasticityProfile = elasticityProfile;
-            ContainerGroupProperties = containerGroupProperties;
-            Zones = zones;
+            Code = code;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies elasticity profile of standby container group pools. </summary>
-        public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
-        /// <summary> Specifies container group properties of standby container group pools. </summary>
-        public StandbyContainerGroupProperties ContainerGroupProperties { get; set; }
-        /// <summary> Specifies zones of standby container group pools. </summary>
-        public IList<string> Zones { get; }
+        /// <summary> Initializes a new instance of <see cref="PoolStatus"/> for deserialization. </summary>
+        internal PoolStatus()
+        {
+        }
+
+        /// <summary> Displays the healthy state of the StandbyPool. </summary>
+        public HealthStateCode Code { get; }
+        /// <summary> Displays the StandbyPool health state details. </summary>
+        public string Message { get; }
     }
 }

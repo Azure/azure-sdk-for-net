@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> The updatable properties of the StandbyContainerGroupPoolResource. </summary>
-    public partial class StandbyContainerGroupPoolUpdateProperties
+    /// <summary> Displays the forecast information of the standby pool. </summary>
+    internal partial class StandbyContainerGroupPoolForecastValues
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,30 +46,28 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
-        public StandbyContainerGroupPoolUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolForecastValues"/>. </summary>
+        /// <param name="instancesRequestedCount"> Displays the predicted count of instances to be requested from the standby pool. </param>
+        internal StandbyContainerGroupPoolForecastValues(IEnumerable<long> instancesRequestedCount)
         {
-            Zones = new ChangeTrackingList<string>();
+            InstancesRequestedCount = instancesRequestedCount.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
-        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
-        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
-        /// <param name="zones"> Specifies zones of standby container group pools. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolForecastValues"/>. </summary>
+        /// <param name="instancesRequestedCount"> Displays the predicted count of instances to be requested from the standby pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolForecastValues(IReadOnlyList<long> instancesRequestedCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ElasticityProfile = elasticityProfile;
-            ContainerGroupProperties = containerGroupProperties;
-            Zones = zones;
+            InstancesRequestedCount = instancesRequestedCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies elasticity profile of standby container group pools. </summary>
-        public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
-        /// <summary> Specifies container group properties of standby container group pools. </summary>
-        public StandbyContainerGroupProperties ContainerGroupProperties { get; set; }
-        /// <summary> Specifies zones of standby container group pools. </summary>
-        public IList<string> Zones { get; }
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolForecastValues"/> for deserialization. </summary>
+        internal StandbyContainerGroupPoolForecastValues()
+        {
+        }
+
+        /// <summary> Displays the predicted count of instances to be requested from the standby pool. </summary>
+        public IReadOnlyList<long> InstancesRequestedCount { get; }
     }
 }
