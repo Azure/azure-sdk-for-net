@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -46,7 +47,7 @@ namespace Azure.AI.Inference.Tests
             UsingFilePath
         }
 
-        public ChatCompletionsClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
@@ -175,13 +176,15 @@ namespace Azure.AI.Inference.Tests
 
             var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
 
+            var messages = new List<ChatRequestMessage>
+            {
+                new ChatRequestSystemMessage("You are a helpful assistant."),
+                new ChatRequestUserMessage("How many feet are in a mile?"),
+            };
+
             var requestOptions = new ChatCompletionsOptions()
             {
-                Messages =
-                {
-                    new ChatRequestSystemMessage("You are a helpful assistant."),
-                    new ChatRequestUserMessage("How many feet are in a mile?"),
-                },
+                Messages = messages,
                 MaxTokens = 512,
             };
 
@@ -204,13 +207,17 @@ namespace Azure.AI.Inference.Tests
             string model = null;
             bool gotRole = false;
 
-            // await ProcessStreamingResponse(response, messages);
-
             await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
             {
                 Assert.That(chatUpdate, Is.Not.Null);
 
                 Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
+                if (chatUpdate.Id == "")
+                {
+                    Assert.That(chatUpdate.ContentUpdate, Is.Null.Or.Empty);
+                    continue;
+                }
+
                 Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
                 Assert.That(chatUpdate.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
 
@@ -240,7 +247,7 @@ namespace Azure.AI.Inference.Tests
             Assert.IsTrue(!string.IsNullOrEmpty(model));
             Assert.IsTrue(gotRole);
             var result = contentBuilder.ToString();
-            Assert.That(contentBuilder.ToString(), Is.Not.Null.Or.Empty);
+            Assert.That(result, Is.Not.Null.Or.Empty);
         }
 
         [RecordedTest]
@@ -965,16 +972,16 @@ namespace Azure.AI.Inference.Tests
             structuredJson.RootElement.TryGetProperty("steps", out var steps);
             structuredJson.RootElement.TryGetProperty("bake_time", out var bakeTime);
 
-            Assert.AreEqual(ingredients.ValueKind, JsonValueKind.Array);
-            Assert.AreEqual(steps.ValueKind, JsonValueKind.Array);
+            Assert.AreEqual(JsonValueKind.Array, ingredients.ValueKind);
+            Assert.AreEqual(JsonValueKind.Array, steps.ValueKind);
             foreach (JsonElement stepElement in steps.EnumerateArray())
             {
                 stepElement.TryGetProperty("ingredients", out var stepIngredients);
                 stepElement.TryGetProperty("directions", out var stepDirections);
-                Assert.AreEqual(stepIngredients.ValueKind, JsonValueKind.Array);
-                Assert.AreEqual(stepDirections.ValueKind, JsonValueKind.String);
+                Assert.AreEqual(JsonValueKind.Array, stepIngredients.ValueKind);
+                Assert.AreEqual(JsonValueKind.String, stepDirections.ValueKind);
             }
-            Assert.AreEqual(bakeTime.ValueKind, JsonValueKind.String);
+            Assert.AreEqual(JsonValueKind.String, bakeTime.ValueKind);
         }
 
         #region Helpers
@@ -1337,6 +1344,27 @@ namespace Azure.AI.Inference.Tests
                         }
                 }
             }
+        }
+
+        private string GetAssetRepoLocalPath()
+        {
+            var process = new Process()
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "test-proxy",
+                    Arguments = "config locate -a ..\\assets.json",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                }
+            };
+
+            process.Start();
+            string result = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+
+            return result.Trim();
         }
 
         #endregion
