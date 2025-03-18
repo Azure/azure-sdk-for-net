@@ -146,7 +146,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
 #endif
-#endregion
+            #endregion Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
