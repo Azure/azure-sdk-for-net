@@ -136,8 +136,6 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         Assert.AreEqual(TagValueEnv, resource.Data.Tags[TagKeyEnv]);
         Assert.AreEqual(ProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
 
-        var bla = new SchedulerPropertiesUpdate();
-        bla.IPAllowlist.Add("test");
         // Update select Scheduler properties (Patch)
         SchedulerPatch patchSchedulerData = new()
         {
