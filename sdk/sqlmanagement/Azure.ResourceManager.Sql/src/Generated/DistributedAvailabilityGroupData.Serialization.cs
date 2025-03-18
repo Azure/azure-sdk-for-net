@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -40,55 +41,65 @@ namespace Azure.ResourceManager.Sql
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetDatabase))
+            if (options.Format != "W" && Optional.IsDefined(DistributedAvailabilityGroupName))
             {
-                writer.WritePropertyName("targetDatabase"u8);
-                writer.WriteStringValue(TargetDatabase);
-            }
-            if (Optional.IsDefined(SourceEndpoint))
-            {
-                writer.WritePropertyName("sourceEndpoint"u8);
-                writer.WriteStringValue(SourceEndpoint);
-            }
-            if (Optional.IsDefined(PrimaryAvailabilityGroupName))
-            {
-                writer.WritePropertyName("primaryAvailabilityGroupName"u8);
-                writer.WriteStringValue(PrimaryAvailabilityGroupName);
-            }
-            if (Optional.IsDefined(SecondaryAvailabilityGroupName))
-            {
-                writer.WritePropertyName("secondaryAvailabilityGroupName"u8);
-                writer.WriteStringValue(SecondaryAvailabilityGroupName);
-            }
-            if (Optional.IsDefined(ReplicationMode))
-            {
-                writer.WritePropertyName("replicationMode"u8);
-                writer.WriteStringValue(ReplicationMode.Value.ToString());
+                writer.WritePropertyName("distributedAvailabilityGroupName"u8);
+                writer.WriteStringValue(DistributedAvailabilityGroupName);
             }
             if (options.Format != "W" && Optional.IsDefined(DistributedAvailabilityGroupId))
             {
                 writer.WritePropertyName("distributedAvailabilityGroupId"u8);
                 writer.WriteStringValue(DistributedAvailabilityGroupId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceReplicaId))
+            if (Optional.IsDefined(ReplicationMode))
             {
-                writer.WritePropertyName("sourceReplicaId"u8);
-                writer.WriteStringValue(SourceReplicaId.Value);
+                writer.WritePropertyName("replicationMode"u8);
+                writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetReplicaId))
+            if (options.Format != "W" && Optional.IsDefined(PartnerLinkRole))
             {
-                writer.WritePropertyName("targetReplicaId"u8);
-                writer.WriteStringValue(TargetReplicaId.Value);
+                writer.WritePropertyName("partnerLinkRole"u8);
+                writer.WriteStringValue(PartnerLinkRole.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkState))
+            if (Optional.IsDefined(PartnerAvailabilityGroupName))
             {
-                writer.WritePropertyName("linkState"u8);
-                writer.WriteStringValue(LinkState);
+                writer.WritePropertyName("partnerAvailabilityGroupName"u8);
+                writer.WriteStringValue(PartnerAvailabilityGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastHardenedLsn))
+            if (Optional.IsDefined(PartnerEndpoint))
             {
-                writer.WritePropertyName("lastHardenedLsn"u8);
-                writer.WriteStringValue(LastHardenedLsn);
+                writer.WritePropertyName("partnerEndpoint"u8);
+                writer.WriteStringValue(PartnerEndpoint);
+            }
+            if (Optional.IsDefined(InstanceLinkRole))
+            {
+                writer.WritePropertyName("instanceLinkRole"u8);
+                writer.WriteStringValue(InstanceLinkRole.Value.ToString());
+            }
+            if (Optional.IsDefined(InstanceAvailabilityGroupName))
+            {
+                writer.WritePropertyName("instanceAvailabilityGroupName"u8);
+                writer.WriteStringValue(InstanceAvailabilityGroupName);
+            }
+            if (Optional.IsDefined(FailoverMode))
+            {
+                writer.WritePropertyName("failoverMode"u8);
+                writer.WriteStringValue(FailoverMode.Value.ToString());
+            }
+            if (Optional.IsDefined(SeedingMode))
+            {
+                writer.WritePropertyName("seedingMode"u8);
+                writer.WriteStringValue(SeedingMode.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Databases))
+            {
+                writer.WritePropertyName("databases"u8);
+                writer.WriteStartArray();
+                foreach (var item in Databases)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -117,16 +128,17 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string targetDatabase = default;
-            string sourceEndpoint = default;
-            string primaryAvailabilityGroupName = default;
-            string secondaryAvailabilityGroupName = default;
-            DistributedAvailabilityGroupReplicationMode? replicationMode = default;
+            string distributedAvailabilityGroupName = default;
             Guid? distributedAvailabilityGroupId = default;
-            Guid? sourceReplicaId = default;
-            Guid? targetReplicaId = default;
-            string linkState = default;
-            string lastHardenedLsn = default;
+            ReplicationModeType? replicationMode = default;
+            LinkRole? partnerLinkRole = default;
+            string partnerAvailabilityGroupName = default;
+            string partnerEndpoint = default;
+            LinkRole? instanceLinkRole = default;
+            string instanceAvailabilityGroupName = default;
+            FailoverModeType? failoverMode = default;
+            SeedingModeType? seedingMode = default;
+            IList<DistributedAvailabilityGroupDatabase> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,33 +176,9 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("targetDatabase"u8))
+                        if (property0.NameEquals("distributedAvailabilityGroupName"u8))
                         {
-                            targetDatabase = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceEndpoint"u8))
-                        {
-                            sourceEndpoint = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("primaryAvailabilityGroupName"u8))
-                        {
-                            primaryAvailabilityGroupName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("secondaryAvailabilityGroupName"u8))
-                        {
-                            secondaryAvailabilityGroupName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("replicationMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replicationMode = new DistributedAvailabilityGroupReplicationMode(property0.Value.GetString());
+                            distributedAvailabilityGroupName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("distributedAvailabilityGroupId"u8))
@@ -202,32 +190,78 @@ namespace Azure.ResourceManager.Sql
                             distributedAvailabilityGroupId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("sourceReplicaId"u8))
+                        if (property0.NameEquals("replicationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            sourceReplicaId = property0.Value.GetGuid();
+                            replicationMode = new ReplicationModeType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("targetReplicaId"u8))
+                        if (property0.NameEquals("partnerLinkRole"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            targetReplicaId = property0.Value.GetGuid();
+                            partnerLinkRole = new LinkRole(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("linkState"u8))
+                        if (property0.NameEquals("partnerAvailabilityGroupName"u8))
                         {
-                            linkState = property0.Value.GetString();
+                            partnerAvailabilityGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastHardenedLsn"u8))
+                        if (property0.NameEquals("partnerEndpoint"u8))
                         {
-                            lastHardenedLsn = property0.Value.GetString();
+                            partnerEndpoint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("instanceLinkRole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            instanceLinkRole = new LinkRole(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("instanceAvailabilityGroupName"u8))
+                        {
+                            instanceAvailabilityGroupName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("failoverMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            failoverMode = new FailoverModeType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("seedingMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            seedingMode = new SeedingModeType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("databases"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DistributedAvailabilityGroupDatabase> array = new List<DistributedAvailabilityGroupDatabase>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DistributedAvailabilityGroupDatabase.DeserializeDistributedAvailabilityGroupDatabase(item, options));
+                            }
+                            databases = array;
                             continue;
                         }
                     }
@@ -244,16 +278,17 @@ namespace Azure.ResourceManager.Sql
                 name,
                 type,
                 systemData,
-                targetDatabase,
-                sourceEndpoint,
-                primaryAvailabilityGroupName,
-                secondaryAvailabilityGroupName,
-                replicationMode,
+                distributedAvailabilityGroupName,
                 distributedAvailabilityGroupId,
-                sourceReplicaId,
-                targetReplicaId,
-                linkState,
-                lastHardenedLsn,
+                replicationMode,
+                partnerLinkRole,
+                partnerAvailabilityGroupName,
+                partnerEndpoint,
+                instanceLinkRole,
+                instanceAvailabilityGroupName,
+                failoverMode,
+                seedingMode,
+                databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>(),
                 serializedAdditionalRawData);
         }
 
@@ -323,110 +358,26 @@ namespace Azure.ResourceManager.Sql
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetDatabase), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DistributedAvailabilityGroupName), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    targetDatabase: ");
+                builder.Append("    distributedAvailabilityGroupName: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(TargetDatabase))
+                if (Optional.IsDefined(DistributedAvailabilityGroupName))
                 {
-                    builder.Append("    targetDatabase: ");
-                    if (TargetDatabase.Contains(Environment.NewLine))
+                    builder.Append("    distributedAvailabilityGroupName: ");
+                    if (DistributedAvailabilityGroupName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{TargetDatabase}'''");
+                        builder.AppendLine($"{DistributedAvailabilityGroupName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{TargetDatabase}'");
+                        builder.AppendLine($"'{DistributedAvailabilityGroupName}'");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceEndpoint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sourceEndpoint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourceEndpoint))
-                {
-                    builder.Append("    sourceEndpoint: ");
-                    if (SourceEndpoint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SourceEndpoint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SourceEndpoint}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAvailabilityGroupName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    primaryAvailabilityGroupName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrimaryAvailabilityGroupName))
-                {
-                    builder.Append("    primaryAvailabilityGroupName: ");
-                    if (PrimaryAvailabilityGroupName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrimaryAvailabilityGroupName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrimaryAvailabilityGroupName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryAvailabilityGroupName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    secondaryAvailabilityGroupName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecondaryAvailabilityGroupName))
-                {
-                    builder.Append("    secondaryAvailabilityGroupName: ");
-                    if (SecondaryAvailabilityGroupName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecondaryAvailabilityGroupName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecondaryAvailabilityGroupName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    replicationMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReplicationMode))
-                {
-                    builder.Append("    replicationMode: ");
-                    builder.AppendLine($"'{ReplicationMode.Value.ToString()}'");
                 }
             }
 
@@ -445,78 +396,169 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceReplicaId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationMode), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    sourceReplicaId: ");
+                builder.Append("    replicationMode: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(SourceReplicaId))
+                if (Optional.IsDefined(ReplicationMode))
                 {
-                    builder.Append("    sourceReplicaId: ");
-                    builder.AppendLine($"'{SourceReplicaId.Value.ToString()}'");
+                    builder.Append("    replicationMode: ");
+                    builder.AppendLine($"'{ReplicationMode.Value.ToString()}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetReplicaId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerLinkRole), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    targetReplicaId: ");
+                builder.Append("    partnerLinkRole: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(TargetReplicaId))
+                if (Optional.IsDefined(PartnerLinkRole))
                 {
-                    builder.Append("    targetReplicaId: ");
-                    builder.AppendLine($"'{TargetReplicaId.Value.ToString()}'");
+                    builder.Append("    partnerLinkRole: ");
+                    builder.AppendLine($"'{PartnerLinkRole.Value.ToString()}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkState), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerAvailabilityGroupName), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    linkState: ");
+                builder.Append("    partnerAvailabilityGroupName: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(LinkState))
+                if (Optional.IsDefined(PartnerAvailabilityGroupName))
                 {
-                    builder.Append("    linkState: ");
-                    if (LinkState.Contains(Environment.NewLine))
+                    builder.Append("    partnerAvailabilityGroupName: ");
+                    if (PartnerAvailabilityGroupName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{LinkState}'''");
+                        builder.AppendLine($"{PartnerAvailabilityGroupName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{LinkState}'");
+                        builder.AppendLine($"'{PartnerAvailabilityGroupName}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastHardenedLsn), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerEndpoint), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    lastHardenedLsn: ");
+                builder.Append("    partnerEndpoint: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(LastHardenedLsn))
+                if (Optional.IsDefined(PartnerEndpoint))
                 {
-                    builder.Append("    lastHardenedLsn: ");
-                    if (LastHardenedLsn.Contains(Environment.NewLine))
+                    builder.Append("    partnerEndpoint: ");
+                    if (PartnerEndpoint.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{LastHardenedLsn}'''");
+                        builder.AppendLine($"{PartnerEndpoint}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{LastHardenedLsn}'");
+                        builder.AppendLine($"'{PartnerEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceLinkRole), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    instanceLinkRole: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceLinkRole))
+                {
+                    builder.Append("    instanceLinkRole: ");
+                    builder.AppendLine($"'{InstanceLinkRole.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceAvailabilityGroupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    instanceAvailabilityGroupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceAvailabilityGroupName))
+                {
+                    builder.Append("    instanceAvailabilityGroupName: ");
+                    if (InstanceAvailabilityGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InstanceAvailabilityGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InstanceAvailabilityGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    failoverMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailoverMode))
+                {
+                    builder.Append("    failoverMode: ");
+                    builder.AppendLine($"'{FailoverMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SeedingMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    seedingMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SeedingMode))
+                {
+                    builder.Append("    seedingMode: ");
+                    builder.AppendLine($"'{SeedingMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Databases), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    databases: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Databases))
+                {
+                    if (Databases.Any())
+                    {
+                        builder.Append("    databases: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Databases)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    databases: ");
+                        }
+                        builder.AppendLine("    ]");
                     }
                 }
             }

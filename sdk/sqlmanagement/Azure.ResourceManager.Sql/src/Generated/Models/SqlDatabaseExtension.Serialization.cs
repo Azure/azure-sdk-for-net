@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql.Models
             string databaseEdition = default;
             string serviceObjectiveName = default;
             string maxSizeBytes = default;
-            DatabaseExtensionNetworkIsolationSettings networkIsolation = default;
+            NetworkIsolationSettings networkIsolation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            networkIsolation = DatabaseExtensionNetworkIsolationSettings.DeserializeDatabaseExtensionNetworkIsolationSettings(property0.Value, options);
+                            networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property0.Value, options);
                             continue;
                         }
                     }

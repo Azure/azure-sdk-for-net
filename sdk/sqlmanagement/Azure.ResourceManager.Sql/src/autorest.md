@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 tag: package-composite-v5-take-2021-stable
-require: https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6e7a6fc075a6b7053e21fc6a1bca9582ef12cbd5/specification/sql/resource-manager/readme.md
 #package-composite-v5-take-2021-stable
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
@@ -358,8 +358,8 @@ rename-mapping:
   Phase: DatabaseOperationPhase
   PhaseDetails: DatabaseOperationPhaseDetails
   # Api version change from 2020-11-01-preview to 2021-11-01-preview, the model name changed and contains more properties
-  UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
-  Status: UpsertManagedServerOperationStepStatus
+  # UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
+  # Status: UpsertManagedServerOperationStepStatus
 
 prompted-enum-values:
   - Default
@@ -574,173 +574,23 @@ directive:
       transform: >
           $.push('SecuredByPerimeter');
       reason: Align the enum choices to avoid breaking changes of one enum split into two.
-    - from: DatabaseExtensions.json
-      where: $.definitions.NetworkIsolationSettings
-      transform: >
-          $['x-ms-client-name'] = 'DatabaseExtensionNetworkIsolationSettings'
-    - from: ManagedDatabaseVulnerabilityAssessments.json
-      where: $.definitions.DatabaseVulnerabilityAssessmentProperties.properties
-      transform: >
-          $.storageContainerSasKey['x-ms-secret'] = true;
-          $.storageAccountAccessKey['x-ms-secret'] = true;
-    - from: DatabaseSecurityAlertPolicies.json
-      where: $.paths
-      transform: >
-          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
-          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
-    - from: ManagedDatabaseSecurityAlertPolicies.json
-      where: $.paths
-      transform: >
-          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
-          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
-```
-
-### Tag: package-composite-v5-take-2021-stable
-
-These settings apply only when `--tag=package-composite-v5-take-2021-stable` is specified on the command line.
-
-```yaml $(tag) == 'package-composite-v5-take-2021-stable'
-input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/dataMasking.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/geoBackupPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/metrics.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/serverCommunicationLinks.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/serviceObjectives.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01-legacy/sql.core_legacy.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01-legacy/usages_legacy.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseAdvisors.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseAutomaticTuning.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseColumns.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseRecommendedActions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseSchemas.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseSecurityAlertPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseTables.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseVulnerabilityAssessmentRuleBaselines.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseVulnerabilityAssessments.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseVulnerabilityAssessmentScans.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DataWarehouseUserActivities.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DeletedServers.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ElasticPoolOperations.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/EncryptionProtectors.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/FirewallRules.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/JobAgents.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/JobCredentials.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/JobExecutions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/JobPrivateEndpoints.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/Jobs.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/JobStepExecutions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/JobSteps.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/JobTargetExecutions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/JobTargetGroups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/JobVersions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/LocationCapabilities.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/MaintenanceWindowOptions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/MaintenanceWindows.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedBackupShortTermRetentionPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseColumns.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseQueries.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseSchemas.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseSecurityAlertPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseSecurityEvents.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseTables.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseTransparentDataEncryption.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseVulnerabilityAssessmentRuleBaselines.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseVulnerabilityAssessments.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseVulnerabilityAssessmentScans.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstanceAdministrators.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstanceAzureADOnlyAuthentications.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstanceEncryptionProtectors.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstanceKeys.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstanceLongTermRetentionPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstanceOperations.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstancePrivateEndpointConnections.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstancePrivateLinkResources.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstanceTdeCertificates.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedInstanceVulnerabilityAssessments.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedServerSecurityAlertPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/Operations.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/PrivateEndpointConnections.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/PrivateLinkResources.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/RecoverableManagedDatabases.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/RestorePoints.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerAdvisors.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerAutomaticTuning.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerAzureADAdministrators.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerAzureADOnlyAuthentications.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/ServerDevOpsAudit.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerDnsAliases.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerKeys.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerOperations.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerSecurityAlertPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerTrustGroups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerVulnerabilityAssessments.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/SqlAgent.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/SubscriptionUsages.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/SyncAgents.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/SyncGroups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/SyncMembers.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/TdeCertificates.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/TimeZones.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/VirtualNetworkRules.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/WorkloadClassifiers.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/WorkloadGroups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/BackupShortTermRetentionPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseExtensions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseUsages.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/LedgerDigestUploads.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/OutboundFirewallRules.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/Usages.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/LongTermRetentionManagedInstanceBackups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/RestorableDroppedManagedDatabases.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerConnectionPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DistributedAvailabilityGroups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerTrustCertificates.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/EndpointCertificates.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedDatabaseSensitivityLabels.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/SensitivityLabels.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/BlobAuditing.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/DatabaseAdvancedThreatProtectionSettings.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerAdvancedThreatProtectionSettings.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ManagedServerDnsAliases.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/ManagedDatabaseAdvancedThreatProtectionSettings.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/ManagedInstanceAdvancedThreatProtectionSettings.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/ManagedDatabaseMoveOperations.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/ManagedInstanceDtcs.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/SynapseLinkWorkspaces.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/VirtualClusters.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/InstanceFailoverGroups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/ManagedDatabaseRestoreDetails.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/DatabaseEncryptionProtectorRevalidate.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/DatabaseEncryptionProtectorRevert.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/Databases.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/ElasticPools.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/ManagedDatabases.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/ManagedInstances.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/ManagedLedgerDigestUploads.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/RecoverableDatabases.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/RestorableDroppedDatabases.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/ServerConfigurationOptions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/StartStopManagedInstanceSchedules.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/TransparentDataEncryptions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/DatabaseOperations.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/IPv6FirewallRules.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/SqlVulnerabilityAssessmentBaseline.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/SqlVulnerabilityAssessmentExecuteScan.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/SqlVulnerabilityAssessmentRuleBaseline.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/SqlVulnerabilityAssessmentScanResult.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/SqlVulnerabilityAssessmentScans.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/SqlVulnerabilityAssessmentsSettings.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/DatabaseSqlVulnerabilityAssessmentBaselines.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/DatabaseSqlVulnerabilityAssessmentExecuteScan.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/DatabaseSqlVulnerabilityAssessmentRuleBaselines.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/DatabaseSqlVulnerabilityAssessmentScanResult.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/DatabaseSqlVulnerabilityAssessmentScans.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/DatabaseSqlVulnerabilityAssessmentsSettings.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/FailoverGroups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/InstancePools.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/LongTermRetentionBackups.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/LongTermRetentionPolicies.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/Servers.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/ReplicationLinks.json
+    # - from: DatabaseExtensions.json
+    #   where: $.definitions.NetworkIsolationSettings
+    #   transform: >
+    #       $['x-ms-client-name'] = 'DatabaseExtensionNetworkIsolationSettings'
+    # - from: ManagedDatabaseVulnerabilityAssessments.json
+    #   where: $.definitions.DatabaseVulnerabilityAssessmentProperties.properties
+    #   transform: >
+    #       $.storageContainerSasKey['x-ms-secret'] = true;
+    #       $.storageAccountAccessKey['x-ms-secret'] = true;
+    # - from: DatabaseSecurityAlertPolicies.json
+    #   where: $.paths
+    #   transform: >
+    #       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+    #       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    # - from: ManagedDatabaseSecurityAlertPolicies.json
+    #   where: $.paths
+    #   transform: >
+    #       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+    #       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
 ```
