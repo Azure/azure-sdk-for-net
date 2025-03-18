@@ -17,14 +17,14 @@ steps:
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
     parameters:
       ServiceDirectory: ${{parameters.ServiceDirectory}}
-      PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
+      PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing/PackageInfo
 
   # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation steps
   # that will execute directly after the pregeneration steps here, we output them to a publishing directory, copy from there into the target PackageInfoDirectory,
   # and then publish the originals
   - pwsh: |
       mkdir "$(Build.ArtifactStagingDirectory)/PackageInfo"
-      Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing" -File `
+      Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing/PackageInfo" -File `
         | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo/$($_.Name)" -Force
     displayName: Copy ArtifactInfo from Publishing Directory
 
