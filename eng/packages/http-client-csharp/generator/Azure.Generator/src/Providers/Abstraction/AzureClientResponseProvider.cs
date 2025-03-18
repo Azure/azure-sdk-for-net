@@ -36,8 +36,7 @@ namespace Azure.Generator.Providers
             CSharpType? type,
             bool isAsync)
         {
-            // TODO https://github.com/Azure/azure-sdk-for-net/issues/48927
-            throw new NotImplementedException();
+            return new CollectionResultDefinition(client, operation, type, isAsync);
         }
 
         public override CSharpType ClientResponseExceptionType => typeof(RequestFailedException);
