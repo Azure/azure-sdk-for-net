@@ -13,6 +13,7 @@ namespace Azure.Communication.PhoneNumbers
 {
     [CodeGenModel("CommunicationErrorResponse")]
     [CodeGenSuppress("CommunicationErrorResponse", typeof(CommunicationError))]
+    [CodeGenSuppress("Error", typeof(CommunicationError))]
     [CodeGenSuppress("DeserializeCommunicationErrorResponse", typeof(JsonElement))]
     [CodeGenSuppress("FromResponse", typeof(Response))]
     internal partial class CommunicationErrorResponse
