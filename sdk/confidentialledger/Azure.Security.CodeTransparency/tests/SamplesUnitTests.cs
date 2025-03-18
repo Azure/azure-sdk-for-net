@@ -121,13 +121,15 @@ namespace Azure.Security.CodeTransparency.Tests
             Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryStatementAsync(entryId);
             #endregion
 
-            #region Snippet:CodeTransparencySample2_GetRawReceipt
+#region Snippet:CodeTransparencySample2_GetRawReceipt
+#if Snippet
             Response<BinaryData> receipt = await client.GetEntryAsync(entryId);
-            #endregion
+#endif
+#endregion
 
             BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
             byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
-            #endregion
+#endregion
 
             #region Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
 #if Snippet
@@ -137,7 +139,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
 #endif
-            #endregion
+#endregion
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -172,7 +174,7 @@ namespace Azure.Security.CodeTransparency.Tests
 #if SNIPPET
             client.RunTransparentStatementVerification(transparentStatementBytes, inputSignedStatement);
 #endif
-            #endregion
+#endregion
 #endif
         }
     }
