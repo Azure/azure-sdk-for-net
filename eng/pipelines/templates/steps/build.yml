@@ -182,7 +182,7 @@ steps:
     parameters:
       Artifacts: ${{ parameters.Artifacts }}
       ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-        ArtifactName: BuildPackagesArtifact
+        ArtifactName: 'packages_$(System.JobName)'
 
   - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
     parameters:
