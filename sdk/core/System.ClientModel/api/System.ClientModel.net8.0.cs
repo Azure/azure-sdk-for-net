@@ -65,7 +65,7 @@ namespace System.ClientModel.Primitives
     public static partial class ActivityExtensions
     {
         public static void MarkFailed(this System.Diagnostics.Activity activity, System.Exception? exception) { }
-        public static System.Diagnostics.Activity? StartClientActivity(this System.Diagnostics.ActivitySource activitySource, bool isDistributedTracingEnabled, string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal, System.Diagnostics.ActivityContext context = default(System.Diagnostics.ActivityContext), System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object?>>? tags = null) { throw null; }
+        public static System.Diagnostics.Activity? StartClientActivity(this System.Diagnostics.ActivitySource activitySource, bool isDistributedTracingEnabled, string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal, System.Diagnostics.ActivityContext parentContext = default(System.Diagnostics.ActivityContext), System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object?>>? tags = null) { throw null; }
     }
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
