@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.3 (2025-03-18)
+
+### Bugs Fixed
+
+- Updated the type of endorsements.
+
 ## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
