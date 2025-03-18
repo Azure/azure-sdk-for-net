@@ -160,7 +160,7 @@ foreach ($directory in $directories) {
     if (-not (Test-Path $generationDir)) {
         New-Item -ItemType Directory -Path $generationDir | Out-Null
     }
-    
+
     if ($folders.Contains("versioning")) {
         Generate-Versioning $directory.FullName $generationDir -generateStub $stubbed
         $spectorLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
@@ -180,7 +180,7 @@ foreach ($directory in $directories) {
     if ($LaunchOnly) {
         continue
     }
-    
+
     Write-Host "Generating $subPath" -ForegroundColor Cyan
     Invoke (Get-TspCommand $specFile $generationDir $stubbed -forceNewProject $ForceNewProject)
 
@@ -194,7 +194,6 @@ foreach ($directory in $directories) {
 if ($null -eq $filter) {
     Write-Host "Writing new launch settings" -ForegroundColor Cyan
     $mgcExe = "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.exe"
-    $sampleExe = "`$(SolutionDir)/../generator/artifacts/bin/SamplePlugin/Debug/net8.0/Microsoft.Generator.CSharp.exe"
     $basicSpec = "TestProjects/Local/Basic-TypeSpec"
     $mgmtSpec = "TestProjects/Local/Mgmt-TypeSpec"
 
@@ -204,7 +203,7 @@ if ($null -eq $filter) {
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$basicSpec -g AzureClientGenerator")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandName", "Executable")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", "dotnet")
-    
+
     $launchSettings["profiles"].Add("Mgmt-TypeSpec", @{})
     $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -g AzureClientGenerator")
     $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
