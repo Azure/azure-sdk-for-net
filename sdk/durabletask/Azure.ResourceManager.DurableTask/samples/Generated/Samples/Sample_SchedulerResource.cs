@@ -93,18 +93,23 @@ namespace Azure.ResourceManager.DurableTask.Samples
             SchedulerResource scheduler = client.GetSchedulerResource(schedulerResourceId);
 
             // invoke the operation
-            SchedulerData data = new SchedulerData(default)
+            SchedulerPatch patch = new SchedulerPatch
             {
-                Properties = new SchedulerProperties(new string[] { "10.0.0.0/8" }, new SchedulerSku("Dedicated")
+                Properties = new SchedulerPropertiesUpdate
                 {
-                    Capacity = 10,
-                }),
+                    IPAllowlist = { "10.0.0.0/8" },
+                    Sku = new SchedulerSkuUpdate
+                    {
+                        Name = "Dedicated",
+                        Capacity = 10,
+                    },
+                },
                 Tags =
 {
 ["key8653"] = "lr"
 },
             };
-            ArmOperation<SchedulerResource> lro = await scheduler.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SchedulerResource> lro = await scheduler.UpdateAsync(WaitUntil.Completed, patch);
             SchedulerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
