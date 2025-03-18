@@ -85,12 +85,14 @@ namespace Azure.Security.CodeTransparency.Tests
             };
 
             #region Snippet:CodeTransparencySubmission
+            #region Snippet:CodeTransparencySample2_CreateClient
 #if !SNIPPET
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 #endif
 #if SNIPPET
             CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 #endif
+            #endregion Snippet:CodeTransparencySample2_CreateClient
 #if !SNIPPET
             BinaryData content = BinaryData.FromString("Hello World!");
 #endif
