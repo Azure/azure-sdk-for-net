@@ -113,7 +113,7 @@ namespace Azure.Generator
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            if (!AzureClientPlugin.Instance.IsAzureArm.Value)
+            if (!AzureClientGenerator.Instance.IsAzureArm.Value)
             {
                 return base.CreateClientCore(inputClient);
             }
