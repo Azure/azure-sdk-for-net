@@ -12,7 +12,7 @@ To get started, you'll need a url of the service.
 To create a new `CodeTransparencyClient` that will interact with the service, without explicit credentials if the service allows it or if you 
 want to get the publicly accessible data only. Then use a subclient to work with entries:
 
-```C# Snippet:CodeTransparencySample2_CreateClient
+```C# Snippet:CodeTransparencySample_CreateClient
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 ```
 

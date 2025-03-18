@@ -7,7 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
@@ -85,14 +87,14 @@ namespace Azure.Security.CodeTransparency.Tests
             };
 
             #region Snippet:CodeTransparencySubmission
-            #region Snippet:CodeTransparencySample2_CreateClient
+            #region Snippet:CodeTransparencySample_CreateClient
 #if !SNIPPET
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 #endif
 #if SNIPPET
             CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 #endif
-            #endregion Snippet:CodeTransparencySample2_CreateClient
+            #endregion Snippet:CodeTransparencySample_CreateClient
 #if !SNIPPET
             BinaryData content = BinaryData.FromString("Hello World!");
 #endif
@@ -101,6 +103,8 @@ namespace Azure.Security.CodeTransparency.Tests
             BinaryData content = BinaryData.FromStream(fileStream);
 #endif
             Operation<BinaryData> operation = await client.CreateEntryAsync(content);
+
+            #region Snippet:CodeTransparencySample1_WaitForResult
             Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
 
             string entryId = string.Empty;
@@ -118,6 +122,7 @@ namespace Azure.Security.CodeTransparency.Tests
             }
 
             Console.WriteLine($"The entry id to use to get the receipt and Transparent Statement is {{{entryId}}}");
+            #endregion
 
             #region Snippet:CodeTransparencySample2_GetEntryStatement
             Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryStatementAsync(entryId);
@@ -145,6 +150,23 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
+        }
+
+        [Test]
+        public void Snippet_Sample3_Test()
+        {
+            #region Snippet:CodeTransparencySample3_CreateClientWithCredentials
+            TokenCredential credential = new DefaultAzureCredential();
+            string[] scopes = { "https://your.service.scope/.default" };
+#if !SNIPPET
+            AccessToken accessToken = new("token", DateTimeOffset.Now.AddHours(1));
+            CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential(accessToken.Token));
+#endif
+#if SNIPPET
+            AccessToken accessToken = credential.GetToken(new TokenRequestContext(scopes), CancellationToken.None);
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), new AzureKeyCredential(accessToken.Token));
+#endif
+            #endregion
         }
 
         [Test]

@@ -13,7 +13,7 @@ Then, you will also need to have a valid `COSE_Sign1` envelope file. There are m
 To create a new `CodeTransparencyClient` that will interact with the service, without explicit credentials if the service allows it or if you 
 want to get the publicly accessible data only. Then use a subclient to work with entries:
 
-```C# Snippet:CodeTransparencySample1_CreateClient
+```C# Snippet:CodeTransparencySample_CreateClient
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 ```
 
@@ -21,7 +21,7 @@ CodeTransparencyClient client = new(new Uri("https://<< service name >>.confiden
 
 The most basic usage is to submit a valid signature file to the service. Acceptance of the submission is a long running operation which is why the response will contain the operation id.
 
-```C# Snippet:CodeTransparencySample1_SendSignature
+```C# Snippet:CodeTransparencySubmission
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
 Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
