@@ -97,7 +97,7 @@ namespace Azure.AI.Projects.Tests
             if (argType == ArgumentType.Metadata)
             {
                 Response<Agent> agentResponse = await client.UpdateAgentAsync(
-                agentId: agent.Id,
+                assistantId: agent.Id,
                 model: "gpt-4",
                 name: AGENT_NAME2,
                 instructions: "You are helpful assistant."
@@ -369,7 +369,7 @@ namespace Azure.AI.Projects.Tests
                 Response<ThreadRun> resResp = await client.GetRunAsync(thread.Id, GetFieldFromJson(rawRun.Content, "id"));
                 result = resResp.Value;
             }
-            Assert.AreEqual(agent.Id, result.AgentId);
+            Assert.AreEqual(agent.Id, result.AssistantId);
             Assert.AreEqual(thread.Id, result.ThreadId);
             //  Check run status
             result = await WaitForRun(client, result);
@@ -401,7 +401,7 @@ namespace Azure.AI.Projects.Tests
             if (argType == ArgumentType.Metadata)
             {
                 result = await client.CreateThreadAndRunAsync(
-                    agentId: agent.Id,
+                    assistantId: agent.Id,
                     thread: threadOp,
                     metadata: new Dictionary<string, string> {
                             { "key1", "value1"},
@@ -435,7 +435,7 @@ namespace Azure.AI.Projects.Tests
                     GetFieldFromJson(rawRun.Content, "thread_id"),
                     GetFieldFromJson(rawRun.Content, "id"));
             }
-            Assert.AreEqual(agent.Id, result.AgentId);
+            Assert.AreEqual(agent.Id, result.AssistantId);
             //  Check run status
             result = await WaitForRun(client, result);
             Response<PageableList<ThreadMessage>> msgResp = await client.GetMessagesAsync(result.ThreadId);
@@ -550,7 +550,7 @@ namespace Azure.AI.Projects.Tests
                     content: "Tell me the favourite word of Mike?"
                 ));
                 toolRun = await client.CreateThreadAndRunAsync(
-                    agentId: agent.Id,
+                    assistantId: agent.Id,
                     thread: threadOp,
                     parallelToolCalls: parallelToolCalls
                 );
@@ -561,7 +561,7 @@ namespace Azure.AI.Projects.Tests
                 await client.CreateMessageAsync(thread.Id, MessageRole.User, "Tell me the favourite word of Mike?");
                 toolRun = await client.CreateRunAsync(
                     threadId: thread.Id,
-                    agentId: agent.Id,
+                    assistantId: agent.Id,
                     parallelToolCalls: parallelToolCalls
                 );
             }
@@ -719,7 +719,7 @@ namespace Azure.AI.Projects.Tests
             else
             {
                 fileSearchRun = await client.CreateThreadAndRunAsync(
-                    agentId: agent.Id,
+                    assistantId: agent.Id,
                     thread: threadOp
                 );
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
