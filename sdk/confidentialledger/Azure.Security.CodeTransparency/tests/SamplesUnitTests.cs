@@ -103,6 +103,7 @@ namespace Azure.Security.CodeTransparency.Tests
             BinaryData content = BinaryData.FromStream(fileStream);
 #endif
             Operation<BinaryData> operation = await client.CreateEntryAsync(content);
+            #endregion Snippet:CodeTransparencySubmission
 
             #region Snippet:CodeTransparencySample1_WaitForResult
             Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
@@ -122,21 +123,20 @@ namespace Azure.Security.CodeTransparency.Tests
             }
 
             Console.WriteLine($"The entry id to use to get the receipt and Transparent Statement is {{{entryId}}}");
-            #endregion
+            #endregion Snippet:CodeTransparencySample1_WaitForResult
 
             #region Snippet:CodeTransparencySample2_GetEntryStatement
             Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryStatementAsync(entryId);
-            #endregion
+            #endregion Snippet:CodeTransparencySample2_GetEntryStatement
 
-#region Snippet:CodeTransparencySample2_GetRawReceipt
-#if Snippet
+            #region Snippet:CodeTransparencySample2_GetRawReceipt
+#if SNIPPET
             Response<BinaryData> receipt = await client.GetEntryAsync(entryId);
 #endif
-#endregion
+            #endregion Snippet:CodeTransparencySample2_GetRawReceipt
 
             BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
             byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
-#endregion
 
             #region Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
 #if Snippet
@@ -166,7 +166,7 @@ namespace Azure.Security.CodeTransparency.Tests
             AccessToken accessToken = credential.GetToken(new TokenRequestContext(scopes), CancellationToken.None);
             CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), new AzureKeyCredential(accessToken.Token));
 #endif
-            #endregion
+#endregion
         }
 
         [Test]
