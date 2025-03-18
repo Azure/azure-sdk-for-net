@@ -139,7 +139,7 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
 
             #region Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
-#if Snippet
+#if SNIPPET
             // Create a JsonWebKey
             JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
             byte[] inputSignedStatement = readFileBytes("<input_signed_claims");
