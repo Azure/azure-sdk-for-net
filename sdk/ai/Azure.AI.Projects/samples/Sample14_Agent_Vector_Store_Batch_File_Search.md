@@ -90,13 +90,13 @@ ThreadRun run = client.CreateRun(
 
 do
 {
-    Task.Delay(TimeSpan.FromMilliseconds(500));
+    Thread.Sleep(TimeSpan.FromMilliseconds(500));
     run = client.GetRun(thread.Id,  run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-PageableList<ThreadMessage> afterRunMessages = client.GetMessages(thread.Id);
-IReadOnlyList<ThreadMessage> messages = afterRunMessages.Data;
+PageableList<ThreadMessage> messages = client.GetMessages(thread.Id);
+WriteMessages(messages, dtReferences);
 ```
 
 Async API:
@@ -122,15 +122,21 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-    = await client.GetMessagesAsync(thread.Id);
-IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
+PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+    threadId: thread.Id,
+    order: ListSortOrder.Ascending
+);
+Assert.AreEqual(
+    RunStatus.Completed,
+    run.Status,
+    run.LastError?.Message);
+WriteMessages(messages, dtReferences);
 ```
 
 After the run complete, we will use `WriteMessages` method to swap reference placeholders by the actual file names.
 
 ```C# Snippet:VectorStoreBatchFileSearchParseResults
-private void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
+private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
 {
     foreach (ThreadMessage threadMessage in messages)
     {
@@ -169,7 +175,7 @@ private void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<strin
     }
 }
 
-private string replaceReferences(Dictionary<string, string> fileIds, string fileID, string placeholder, string text)
+private static string replaceReferences(Dictionary<string, string> fileIds, string fileID, string placeholder, string text)
 {
     if (fileIds.TryGetValue(fileID, out string replacement))
         return text.Replace(placeholder, $" [{replacement}]");

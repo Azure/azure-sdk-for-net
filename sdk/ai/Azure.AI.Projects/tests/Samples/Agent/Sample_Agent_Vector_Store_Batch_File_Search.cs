@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -83,15 +84,16 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-            = await client.GetMessagesAsync(thread.Id);
-        IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
-        #endregion
         Assert.AreEqual(
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
+        PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+            threadId: thread.Id,
+            order: ListSortOrder.Ascending
+        );
         WriteMessages(messages, dtReferences);
+        #endregion
 
         #region Snippet:VectorStoreBatchFileSearchAsyncCleanup
         VectorStoreDeletionStatus delTask = await client.DeleteVectorStoreAsync(vectorStore.Id);
@@ -165,15 +167,22 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
 
         do
         {
-            Task.Delay(TimeSpan.FromMilliseconds(500));
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
             run = client.GetRun(thread.Id,  run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        PageableList<ThreadMessage> afterRunMessages = client.GetMessages(thread.Id);
-        IReadOnlyList<ThreadMessage> messages = afterRunMessages.Data;
-        #endregion
+
+        Assert.AreEqual(
+            RunStatus.Completed,
+            run.Status,
+            run.LastError?.Message);
+        PageableList<ThreadMessage> messages = client.GetMessages(
+            threadId: thread.Id,
+            order: ListSortOrder.Ascending
+        );
         WriteMessages(messages, dtReferences);
+        #endregion
 
         #region Snippet:VectorStoreBatchFileSearchCleanup
         VectorStoreDeletionStatus delTask = client.DeleteVectorStore(vectorStore.Id);
@@ -190,7 +199,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
     }
 
     #region Snippet:VectorStoreBatchFileSearchParseResults
-    private void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
+    private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
     {
         foreach (ThreadMessage threadMessage in messages)
         {
@@ -229,7 +238,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
         }
     }
 
-    private string replaceReferences(Dictionary<string, string> fileIds, string fileID, string placeholder, string text)
+    private static string replaceReferences(Dictionary<string, string> fileIds, string fileID, string placeholder, string text)
     {
         if (fileIds.TryGetValue(fileID, out string replacement))
             return text.Replace(placeholder, $" [{replacement}]");

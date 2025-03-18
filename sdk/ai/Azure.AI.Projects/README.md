@@ -27,10 +27,10 @@ Use the AI Projects client library to:
     - [File search](#file-search)
     - [Enterprise File Search](#create-agent-with-enterprise-file-search)
     - [Code interpreter attachment](#create-message-with-code-interpreter-attachment)
+    - [Create Agent with Bing Grounding](#create-agent-with-bing-grounding)
     - [Azure AI Search](#create-agent-with-azure-ai-search)
     - [Function call](#function-call)
-    - [Azure function call](#azure-function-call)
-    - [Azure Function Call](#create-agent-with-azure-function-call)
+    - [Azure function Call](#azure-function-call)
     - [OpenAPI](#create-agent-with-openapi)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
@@ -82,47 +82,44 @@ Agents in the Azure AI Projects client library are designed to facilitate variou
 First, you need to create an `AgentsClient`
 ```C# Snippet:OverviewCreateAgentClient
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AgentsClient client = new(connectionString, new DefaultAzureCredential());
 ```
 
 With an authenticated client, an agent can be created:
 ```C# Snippet:OverviewCreateAgent
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4",
+Agent agent = await client.CreateAgentAsync(
+    model: modelDeploymentName,
     name: "Math Tutor",
-    instructions: "You are a personal math tutor. Write and run code to answer math questions.",
-    tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });
-Agent agent = agentResponse.Value;
+    instructions: "You are a personal math tutor. Write and run code to answer math questions."
+);
 ```
 
 #### Create thread
 
 Next, create a thread:
 ```C# Snippet:OverviewCreateThread
-Response<AgentThread> threadResponse = await client.CreateThreadAsync();
-AgentThread thread = threadResponse.Value;
+AgentThread thread = await client.CreateThreadAsync();
 ```
 
 #### Create message
 
 With a thread created, messages can be created on it:
 ```C# Snippet:OverviewCreateMessage
-Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+ThreadMessage message = await client.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
-ThreadMessage message = messageResponse.Value;
 ```
 
 #### Create and execute run
 
 A run can then be started that evaluates the thread against an agent:
 ```C# Snippet:OverviewCreateRun
-Response<ThreadRun> runResponse = await client.CreateRunAsync(
+ThreadRun run = await client.CreateRunAsync(
     thread.Id,
     agent.Id,
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
-ThreadRun run = runResponse.Value;
 ```
 
 Once the run has started, it should then be polled until it reaches a terminal status:
@@ -130,10 +127,14 @@ Once the run has started, it should then be polled until it reaches a terminal s
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+    run = await client.GetRunAsync(thread.Id, run.Id);
 }
-while (runResponse.Value.Status == RunStatus.Queued
-    || runResponse.Value.Status == RunStatus.InProgress);
+while (run.Status == RunStatus.Queued
+    || run.Status == RunStatus.InProgress);
+Assert.AreEqual(
+    RunStatus.Completed,
+    run.Status,
+    run.LastError?.Message);
 ```
 
 #### Retrieve messages
@@ -141,11 +142,10 @@ while (runResponse.Value.Status == RunStatus.Queued
 Assuming the run successfully completed, listing messages from the thread that was run will now reflect new information
 added by the agent:
 ```C# Snippet:OverviewListUpdatedMessages
-Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-    = await client.GetMessagesAsync(thread.Id);
-IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
+PageableList<ThreadMessage> messages
+    = await client.GetMessagesAsync(
+        threadId: thread.Id, order: ListSortOrder.Ascending);
 
-// Note: messages iterate from newest to oldest, with the messages[0] being the most recent
 foreach (ThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
@@ -222,19 +222,18 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-var vectorStoreTask = await client.CreateVectorStoreAsync(
+VectorStore vectorStore = await client.CreateVectorStoreAsync(
     name: "sample_vector_store",
     storeConfiguration: new VectorStoreConfiguration(
-        dataSources: new List<VectorStoreDataSource> { ds }
+        dataSources: [ ds ]
     )
 );
-var vectorStore = vectorStoreTask.Value;
 
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: modelName,
+Agent agent = await client.CreateAgentAsync(
+    model: modelDeploymentName,
     name: "my-assistant",
     instructions: "You are helpful assistant.",
     tools: tools,
@@ -313,6 +312,29 @@ var attachment = new MessageAttachment(
     ds: ds,
     tools: tools
 );
+```
+
+#### Create Agent with Bing Grounding
+
+To enable your Agent to perform search through Bing search API, you use `BingGroundingTool` along with a connection.
+
+Here is an example:
+```C# Snippet:BingGroundingAsync_GetConnection
+ConnectionResponse bingConnection = await projectClient.GetConnectionsClient().GetConnectionAsync(bingConnectionName);
+var connectionId = bingConnection.Id;
+
+ToolConnectionList connectionList = new()
+{
+    ConnectionList = { new ToolConnection(connectionId) }
+};
+BingGroundingToolDefinition bingGroundingTool = new(connectionList);
+```
+```C# Snippet:BingGroundingAsync_CreateAgent
+Agent agent = await agentClient.CreateAgentAsync(
+   model: modelDeploymentName,
+   name: "my-assistant",
+   instructions: "You are a helpful assistant.",
+   tools: [ bingGroundingTool ]);
 ```
 
 #### Create Agent with Azure AI Search
@@ -628,8 +650,14 @@ await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync
 
 #### Azure function call
 
-We also can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. See below for the instructions on function deployment.
+We can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. See below for the instructions on function deployment.
 ```C# Snippet:AzureFunctionsDefineFunctionTools
+var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
+
+AgentsClient client = new(connectionString, new DefaultAzureCredential());
+
 AzureFunctionToolDefinition azureFnTool = new(
     name: "foo",
     description: "Get answers from the foo bot.",
@@ -670,37 +698,41 @@ AzureFunctionToolDefinition azureFnTool = new(
 
 Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
 ```C# Snippet:AzureFunctionsCreateAgentWithFunctionTools
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4",
+Agent agent = await client.CreateAgentAsync(
+    model: modelDeploymentName,
     name: "azure-function-agent-foo",
         instructions: "You are a helpful support agent. Use the provided function any "
         + "time the prompt contains the string 'What would foo say?'. When you invoke "
         + "the function, ALWAYS specify the output queue uri parameter as "
         + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
         + "\"Foo says\" and then the response from the tool.",
-    tools: new List<ToolDefinition> { azureFnTool }
+    tools: [ azureFnTool ]
     );
-Agent agent = agentResponse.Value;
 ```
 
 After we have created a message with request to ask "What would foo say?", we need to wait while the run is in queued, in progress or requires action states.
 ```C# Snippet:AzureFunctionsHandlePollingWithRequiredAction
-Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+AgentThread thread = await client.CreateThreadAsync();
+
+ThreadMessage message = await client.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What is the most prevalent element in the universe? What would foo say?");
-ThreadMessage message = messageResponse.Value;
 
-Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
+ThreadRun run = await client.CreateRunAsync(thread, agent);
 
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+    run = await client.GetRunAsync(thread.Id, run.Id);
 }
-while (runResponse.Value.Status == RunStatus.Queued
-    || runResponse.Value.Status == RunStatus.InProgress
-    || runResponse.Value.Status == RunStatus.RequiresAction);
+while (run.Status == RunStatus.Queued
+    || run.Status == RunStatus.InProgress
+    || run.Status == RunStatus.RequiresAction);
+Assert.AreEqual(
+    RunStatus.Completed,
+    run.Status,
+    run.LastError?.Message);
 ```
 
 To make a function call we need to create and deploy the Azure function. In the code snippet below, we have an example of function on C# which can be used by the code above.
