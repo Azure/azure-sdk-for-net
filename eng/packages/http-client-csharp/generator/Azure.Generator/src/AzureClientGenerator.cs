@@ -14,7 +14,7 @@ using Azure.Generator.Primitives;
 namespace Azure.Generator;
 
 /// <summary>
-/// The Azure client plugin to generate the Azure client SDK.
+/// The Azure client generator to generate the Azure client SDK.
 /// </summary>
 [Export(typeof(CodeModelGenerator))]
 [ExportMetadata(GeneratorMetadataName, nameof(AzureClientGenerator))]
@@ -34,7 +34,7 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     public override AzureInputLibrary InputLibrary { get; }
 
     /// <summary>
-    /// The Azure client plugin to generate the Azure client SDK.
+    /// Constructs the Azure client generator used to generate the Azure client SDK.
     /// </summary>
     /// <param name="context"></param>
     [ImportingConstructor]
