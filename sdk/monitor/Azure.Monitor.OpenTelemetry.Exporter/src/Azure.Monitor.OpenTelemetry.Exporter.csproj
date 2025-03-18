@@ -17,6 +17,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.PersistentStorage.FileSystem" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -24,6 +25,12 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <!-- Shared sources from Azure.Monitor.OpenTelemetry.LiveMetrics -->
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\**\*.cs" LinkBase="Shared\LiveMetrics" />
+    <Compile Remove="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Properties\AssemblyInfo.cs" />
   </ItemGroup>
 
 </Project>

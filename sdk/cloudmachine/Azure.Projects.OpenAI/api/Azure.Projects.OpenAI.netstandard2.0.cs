@@ -25,7 +25,7 @@ namespace Azure.Projects.OpenAI
         public ChatProcessor(OpenAI.Chat.ChatClient chat) { }
         public ChatProcessor(OpenAI.Chat.ChatClient chat, OpenAI.Embeddings.EmbeddingClient? embeddings, Azure.Projects.OpenAI.ChatTools? tools = null) { }
         public Azure.Projects.OpenAI.ChatTools? Tools { get { throw null; } set { } }
-        public Azure.Projects.OpenAI.EmbeddingsVectorbase? VectorDb { get { throw null; } set { } }
+        public Azure.Projects.OpenAI.EmbeddingsStore? VectorDb { get { throw null; } set { } }
         protected virtual OpenAI.Chat.ChatCompletion OnComplete(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, string prompt) { throw null; }
         protected virtual void OnGround(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, string prompt) { }
         protected virtual void OnLength(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, OpenAI.Chat.ChatCompletion completion) { }
@@ -47,9 +47,9 @@ namespace Azure.Projects.OpenAI
         public static implicit operator OpenAI.Chat.ChatCompletionOptions (Azure.Projects.OpenAI.ChatTools tools) { throw null; }
         public OpenAI.Chat.ChatCompletionOptions ToOptions() { throw null; }
     }
-    public partial class EmbeddingsVectorbase
+    public partial class EmbeddingsStore
     {
-        public EmbeddingsVectorbase(OpenAI.Embeddings.EmbeddingClient client, Azure.Projects.OpenAI.VectorbaseStore? store = null, int factChunkSize = 1000) { }
+        public EmbeddingsStore(OpenAI.Embeddings.EmbeddingClient client, Azure.Projects.OpenAI.VectorbaseStore? store = null, int factChunkSize = 1000) { }
         public void Add(System.BinaryData data) { }
         public void Add(string text) { }
         public System.Collections.Generic.IEnumerable<Azure.Projects.OpenAI.VectorbaseEntry> Find(string text, Azure.Projects.OpenAI.FindOptions? options = null) { throw null; }
@@ -73,9 +73,9 @@ namespace Azure.Projects.OpenAI
         public OpenAIModelFeature(string model, string modelVersion, Azure.Projects.OpenAI.AIModelKind kind = Azure.Projects.OpenAI.AIModelKind.Chat) { }
         public string Model { get { throw null; } }
         public string ModelVersion { get { throw null; } }
-        protected override void AddImplicitFeatures(Azure.Projects.Core.FeatureCollection features, string cmId) { }
         public System.ClientModel.Primitives.ClientConnection CreateConnection(string cmId) { throw null; }
-        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.Projects.ProjectInfrastructure cm) { throw null; }
+        protected override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
+        protected override void EmitFeatures(Azure.Projects.ProjectInfrastructure infrastructure) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VectorbaseEntry

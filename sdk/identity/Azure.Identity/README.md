@@ -241,7 +241,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 
 ## Continuous Access Evaluation
 
-As of version 1.10.0, accessing resources protected by [Continuous Access Evaluation (CAE)][cae] is possible on a per-request basis. This behavior can be enabled by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor. CAE isn't supported for developer and managed identity credentials.
+As of version 1.10.0, accessing resources protected by [Continuous Access Evaluation (CAE)][cae] is possible on a per-request basis. This behavior can be enabled by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor. CAE isn't supported for developer credentials.
 
 ## Token caching
 

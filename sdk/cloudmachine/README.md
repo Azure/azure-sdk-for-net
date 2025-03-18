@@ -42,7 +42,7 @@ cd server
 dotnet new web
 ```
 
-Add `Azure.Projects.All` package
+Add `Azure.Projects.*` packages
 ```dotnetcli
 dotnet add package Azure.Projects.Provisioning --prerelease
 dotnet add package Azure.Projects.OpenAI --prerelease
