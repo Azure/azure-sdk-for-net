@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             resourceMonitor.StartMonitoring(cancellationToken);
-            SimulateCpuLoad(3);
+            SimulateCpuLoad(10);
             cancellationTokenSource.Cancel();
 
             // Assert
