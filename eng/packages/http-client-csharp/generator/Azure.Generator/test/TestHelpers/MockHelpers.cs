@@ -48,7 +48,7 @@ namespace Azure.Generator.Tests.TestHelpers
                 inputNsClients,
                 inputNsAuth,
                 null);
-            var mockInputLibrary = new Mock<InputLibrary>(_configFilePath);
+            var mockInputLibrary = new Mock<AzureInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
             Mock<AzureTypeFactory>? mockTypeFactory = null;
