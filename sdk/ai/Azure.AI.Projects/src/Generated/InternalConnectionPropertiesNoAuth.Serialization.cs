@@ -71,7 +71,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString().ToConnectionType();
+                    category = new ConnectionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("target"u8))

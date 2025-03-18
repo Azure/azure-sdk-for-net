@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The SIMs to clone.
-    /// Serialized Name: SimClone
-    /// </summary>
+    /// <summary> The SIMs to clone. </summary>
     public partial class SimCloneContent
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SimCloneContent"/>. </summary>
-        /// <param name="targetSimGroupId">
-        /// The SIM Group where the SIMs should be cloned.
-        /// Serialized Name: SimClone.targetSimGroupId
-        /// </param>
-        /// <param name="sims">
-        /// A list of SIM resource names to be cloned.
-        /// Serialized Name: SimClone.sims
-        /// </param>
+        /// <param name="targetSimGroupId"> The SIM Group where the SIMs should be cloned. </param>
+        /// <param name="sims"> A list of SIM resource names to be cloned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimCloneContent(SubResource targetSimGroupId, IList<string> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,10 +64,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The SIM Group where the SIMs should be cloned.
-        /// Serialized Name: SimClone.targetSimGroupId
-        /// </summary>
+        /// <summary> The SIM Group where the SIMs should be cloned. </summary>
         internal SubResource TargetSimGroupId { get; set; }
         /// <summary> Gets Id. </summary>
         [WirePath("targetSimGroupId.id")]
@@ -85,10 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             get => TargetSimGroupId is null ? default : TargetSimGroupId.Id;
         }
 
-        /// <summary>
-        /// A list of SIM resource names to be cloned.
-        /// Serialized Name: SimClone.sims
-        /// </summary>
+        /// <summary> A list of SIM resource names to be cloned. </summary>
         [WirePath("sims")]
         public IList<string> Sims { get; }
     }
