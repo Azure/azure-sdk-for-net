@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2025-03-18)
 
 ### Features Added
 
@@ -9,6 +9,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed an issue with the audio samples not properly showcasing the intended workflow.
 
 ### Other Changes
 
