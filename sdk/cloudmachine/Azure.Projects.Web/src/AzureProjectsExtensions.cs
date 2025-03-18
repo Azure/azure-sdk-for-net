@@ -21,15 +21,25 @@ namespace Azure.Projects;
 public static class AzureProjectsExtensions
 {
     /// <summary>
-    /// Maps TSP endpoints. Projects needs to be in the container for this method to work.
+    /// Adds the project client to the DI container.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="application"></param>
-    public static void MapAzureProjectsApplication<T>(this WebApplication application) where T : class
+    /// <param name="builder"></param>
+    public static ProjectClient AddProjectClient(this WebApplicationBuilder builder)
     {
-        ProjectClient cm = application.Services.GetRequiredService<ProjectClient>();
-        T service = (T)Activator.CreateInstance(typeof(T), cm)!;
-        application.Map<T>(service);
+        ProjectClient project = new ProjectClient();
+        builder.Services.AddSingleton(project);
+        return project;
+    }
+
+    /// <summary>
+    /// Adds the project client to the DI container.
+    /// </summary>
+    /// <param name="builder"></param>
+    public static OfxProjectClient AddOfxClient(this WebApplicationBuilder builder)
+    {
+        OfxProjectClient client = new();
+        builder.Services.AddSingleton(client);
+        return client;
     }
 
     /// <summary>
@@ -52,7 +62,7 @@ public static class AzureProjectsExtensions
     /// <typeparam name="T"></typeparam>
     /// <param name="routeBuilder"></param>
     /// <param name="serviceImplementation"></param>
-    public static void Map<T>(this IEndpointRouteBuilder routeBuilder, T serviceImplementation) where T : class
+    private static void Map<T>(this IEndpointRouteBuilder routeBuilder, T serviceImplementation) where T : class
     {
         Type serviceImplementationType = typeof(T);
         Type serviceDescriptor = GetServiceDescriptor(serviceImplementationType);

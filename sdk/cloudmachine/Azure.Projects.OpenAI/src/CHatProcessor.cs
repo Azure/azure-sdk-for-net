@@ -17,7 +17,7 @@ namespace Azure.Projects.OpenAI
         /// <summary>
         /// Vector db.
         /// </summary>
-        public EmbeddingsVectorbase? VectorDb { get; set; }
+        public EmbeddingsStore? VectorDb { get; set; }
 
         /// <summary>
         /// Tools to call.
