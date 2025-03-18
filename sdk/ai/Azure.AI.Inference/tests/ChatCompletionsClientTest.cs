@@ -46,7 +46,7 @@ namespace Azure.AI.Inference.Tests
             UsingFilePath
         }
 
-        public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
+        public ChatCompletionsClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
@@ -59,6 +59,7 @@ namespace Azure.AI.Inference.Tests
         [TestCase(TargetModel.MistralSmall)]
         [TestCase(TargetModel.GitHubGpt4o)]
         [TestCase(TargetModel.AoaiGpt4o)]
+        [TestCase(TargetModel.PhiAudioModel)]
         public async Task TestChatCompletions(TargetModel targetModel)
         {
             var endpoint = targetModel switch
@@ -66,6 +67,7 @@ namespace Azure.AI.Inference.Tests
                 TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
                 TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
                 TargetModel.AoaiGpt4o => new Uri(TestEnvironment.AoaiEndpoint),
+                TargetModel.PhiAudioModel => new Uri(TestEnvironment.PhiAudioEndpoint),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -74,6 +76,7 @@ namespace Azure.AI.Inference.Tests
                 TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
                 TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
                 TargetModel.AoaiGpt4o => new AzureKeyCredential(TestEnvironment.AoaiKey),
+                TargetModel.PhiAudioModel => new AzureKeyCredential(TestEnvironment.PhiAudioKey),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -564,7 +567,7 @@ namespace Azure.AI.Inference.Tests
             if (targetModel == TargetModel.AoaiAudioModel)
             {
                 OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-11-01-preview");
-                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerRetry);
             }
 
             var client = CreateClient(endpoint, credential, clientOptions);
@@ -597,20 +600,9 @@ namespace Azure.AI.Inference.Tests
 
             var requestOptions = new ChatCompletionsOptions()
             {
-                Messages =
-                {
-                    new ChatRequestSystemMessage("You are a helpful assistant that helps provide translations."),
-                    new ChatRequestUserMessage(
-                        new ChatMessageTextContentItem("Please translate this audio snippet to spanish."),
-                        audioContentItem),
-                },
+                Messages = messages,
                 MaxTokens = 2048,
             };
-
-            if (targetModel == TargetModel.PhiAudioModel)
-            {
-                requestOptions.Model = "phi-4-multimodal-instruct-1";
-            }
 
             Response<ChatCompletions> response = null;
             try
@@ -892,12 +884,12 @@ namespace Azure.AI.Inference.Tests
             if (targetModel == TargetModel.AoaiGpt4o)
             {
                 OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-08-01-preview");
-                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerRetry);
             }
             else if (targetModel == TargetModel.GitHubGpt4o)
             {
                 OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-08-01-preview");
-                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerRetry);
             }
 
             var client = CreateClient(endpoint, credential, clientOptions);
@@ -1130,7 +1122,8 @@ namespace Azure.AI.Inference.Tests
             {
                 return new Uri("https://sanitized");
             }
-            return new Uri("https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba-online-audio-converter.com_-1.wav");
+
+            return new Uri("https://github.com/Azure/azure-sdk-for-net/raw/refs/heads/main/sdk/ai/Azure.AI.Inference/tests/Data/hello_how_are_you.mp3");
         }
 
         private async Task ProcessStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response, List<ChatRequestMessage> messages)
