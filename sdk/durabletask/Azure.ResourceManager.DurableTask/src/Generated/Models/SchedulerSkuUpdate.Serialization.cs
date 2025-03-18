@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
-    public partial class SchedulerSku : IUtf8JsonSerializable, IJsonModel<SchedulerSku>
+    public partial class SchedulerSkuUpdate : IUtf8JsonSerializable, IJsonModel<SchedulerSkuUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchedulerSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchedulerSkuUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SchedulerSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SchedulerSkuUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,14 +28,17 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SchedulerSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchedulerSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SchedulerSkuUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
@@ -63,19 +66,19 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
         }
 
-        SchedulerSku IJsonModel<SchedulerSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SchedulerSkuUpdate IJsonModel<SchedulerSkuUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SchedulerSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchedulerSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SchedulerSkuUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSchedulerSku(document.RootElement, options);
+            return DeserializeSchedulerSkuUpdate(document.RootElement, options);
         }
 
-        internal static SchedulerSku DeserializeSchedulerSku(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SchedulerSkuUpdate DeserializeSchedulerSkuUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,38 +122,38 @@ namespace Azure.ResourceManager.DurableTask.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SchedulerSku(name, capacity, redundancyState, serializedAdditionalRawData);
+            return new SchedulerSkuUpdate(name, capacity, redundancyState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SchedulerSku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SchedulerSkuUpdate>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SchedulerSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SchedulerSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchedulerSkuUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SchedulerSku IPersistableModel<SchedulerSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SchedulerSkuUpdate IPersistableModel<SchedulerSkuUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SchedulerSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSchedulerSku(document.RootElement, options);
+                        return DeserializeSchedulerSkuUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SchedulerSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchedulerSkuUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SchedulerSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SchedulerSkuUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

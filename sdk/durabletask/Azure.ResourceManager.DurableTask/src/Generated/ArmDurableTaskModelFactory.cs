@@ -89,5 +89,28 @@ namespace Azure.ResourceManager.DurableTask.Models
         {
             return new SchedulerSku(name, capacity, redundancyState, serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SchedulerPropertiesUpdate"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="endpoint"> URL of the durable task scheduler. </param>
+        /// <param name="ipAllowlist"> IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR. </param>
+        /// <param name="sku"> SKU of the durable task scheduler. </param>
+        /// <returns> A new <see cref="Models.SchedulerPropertiesUpdate"/> instance for mocking. </returns>
+        public static SchedulerPropertiesUpdate SchedulerPropertiesUpdate(ProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<string> ipAllowlist = null, SchedulerSkuUpdate sku = null)
+        {
+            ipAllowlist ??= new List<string>();
+
+            return new SchedulerPropertiesUpdate(provisioningState, endpoint, ipAllowlist?.ToList(), sku, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SchedulerSkuUpdate"/>. </summary>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="capacity"> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </param>
+        /// <param name="redundancyState"> Indicates whether the current SKU configuration is zone redundant. </param>
+        /// <returns> A new <see cref="Models.SchedulerSkuUpdate"/> instance for mocking. </returns>
+        public static SchedulerSkuUpdate SchedulerSkuUpdate(string name = null, int? capacity = null, RedundancyState? redundancyState = null)
+        {
+            return new SchedulerSkuUpdate(name, capacity, redundancyState, serializedAdditionalRawData: null);
+        }
     }
 }

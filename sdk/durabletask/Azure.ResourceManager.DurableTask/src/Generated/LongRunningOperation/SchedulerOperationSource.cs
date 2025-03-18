@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.DurableTask
 
         SchedulerResource IOperationSource<SchedulerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SchedulerData.DeserializeSchedulerData(document.RootElement);
+            var data = ModelReaderWriter.Read<SchedulerData>(response.Content);
             return new SchedulerResource(_client, data);
         }
 
         async ValueTask<SchedulerResource> IOperationSource<SchedulerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SchedulerData.DeserializeSchedulerData(document.RootElement);
-            return new SchedulerResource(_client, data);
+            var data = ModelReaderWriter.Read<SchedulerData>(response.Content);
+            return await Task.FromResult(new SchedulerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

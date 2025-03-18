@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
-    public partial class SchedulerProperties : IUtf8JsonSerializable, IJsonModel<SchedulerProperties>
+    public partial class SchedulerPropertiesUpdate : IUtf8JsonSerializable, IJsonModel<SchedulerPropertiesUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchedulerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchedulerPropertiesUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SchedulerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SchedulerPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SchedulerPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchedulerProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SchedulerPropertiesUpdate)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -44,15 +44,21 @@ namespace Azure.ResourceManager.DurableTask.Models
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            writer.WritePropertyName("ipAllowlist"u8);
-            writer.WriteStartArray();
-            foreach (var item in IPAllowlist)
+            if (Optional.IsCollectionDefined(IPAllowlist))
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("ipAllowlist"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPAllowlist)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -70,19 +76,19 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
         }
 
-        SchedulerProperties IJsonModel<SchedulerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SchedulerPropertiesUpdate IJsonModel<SchedulerPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SchedulerPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchedulerProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SchedulerPropertiesUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSchedulerProperties(document.RootElement, options);
+            return DeserializeSchedulerPropertiesUpdate(document.RootElement, options);
         }
 
-        internal static SchedulerProperties DeserializeSchedulerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SchedulerPropertiesUpdate DeserializeSchedulerPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             ProvisioningState? provisioningState = default;
             string endpoint = default;
             IList<string> ipAllowlist = default;
-            SchedulerSku sku = default;
+            SchedulerSkuUpdate sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,6 +120,10 @@ namespace Azure.ResourceManager.DurableTask.Models
                 }
                 if (property.NameEquals("ipAllowlist"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -124,7 +134,11 @@ namespace Azure.ResourceManager.DurableTask.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = SchedulerSku.DeserializeSchedulerSku(property.Value, options);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = SchedulerSkuUpdate.DeserializeSchedulerSkuUpdate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,38 +147,38 @@ namespace Azure.ResourceManager.DurableTask.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SchedulerProperties(provisioningState, endpoint, ipAllowlist, sku, serializedAdditionalRawData);
+            return new SchedulerPropertiesUpdate(provisioningState, endpoint, ipAllowlist ?? new ChangeTrackingList<string>(), sku, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SchedulerProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SchedulerPropertiesUpdate>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SchedulerPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SchedulerProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchedulerPropertiesUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SchedulerProperties IPersistableModel<SchedulerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SchedulerPropertiesUpdate IPersistableModel<SchedulerPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SchedulerPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSchedulerProperties(document.RootElement, options);
+                        return DeserializeSchedulerPropertiesUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SchedulerProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchedulerPropertiesUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SchedulerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SchedulerPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
