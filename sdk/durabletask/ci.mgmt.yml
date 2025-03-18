@@ -26,6 +26,18 @@ pr:
     - sdk/durabletask/ci.mgmt.yml
     - sdk/durabletask/Azure.ResourceManager.DurableTask/
 
+
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/durabletask/ci.mgmt.yml
+    - sdk/durabletask/Azure.ResourceManager.DurableTask/
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
