@@ -25,7 +25,7 @@ The receipt on its own contains only the inclusion proof and the signature. You 
 The easiest way is to download the receipt and the signature together which was stored after the submission. The receipt will be added to the unprotected header of the signature.
 
 ```C# Snippet:CodeTransparencySample2_GetEntryStatement
-Response<BinaryData> signatureWithReceipt = await client.GetEntryStatementAsync("2.34");
+Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryStatementAsync(entryId);
 ```
 
 ### Raw receipt
@@ -33,7 +33,7 @@ Response<BinaryData> signatureWithReceipt = await client.GetEntryStatementAsync(
 If you have the signature as a separate file already then you can download the raw receipt file.
 
 ```C# Snippet:CodeTransparencySample2_GetRawReceipt
-Response<BinaryData> receipt = await client.GetEntryAsync("2.34");
+Response<BinaryData> receipt = await client.GetEntryAsync(entryId);
 ```
 
 ## Verify
@@ -50,5 +50,6 @@ When receipt is embedded in the signature then passing just the signature is eno
 // Create a JsonWebKey
 JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
 byte[] inputSignedStatement = readFileBytes("<input_signed_claims");
+
 CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
 ```

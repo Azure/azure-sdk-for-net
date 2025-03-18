@@ -22,9 +22,10 @@ CodeTransparencyClient client = new(new Uri("https://<< service name >>.confiden
 The most basic usage is to submit a valid signature file to the service. Acceptance of the submission is a long running operation which is why the response will contain the operation id.
 
 ```C# Snippet:CodeTransparencySubmission
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
+Operation<BinaryData> operation = await client.CreateEntryAsync(content);
 ```
 
 ## Verify if operation was successful
@@ -34,7 +35,21 @@ If you want to be sure that the submission completed successfully it is necessar
 Another important part of the operation check is that it will contain an identifier (entry ID) to be used to get the transaction receipt.
 
 ```C# Snippet:CodeTransparencySample1_WaitForResult
-Response<GetOperationResult> response = await operation.WaitForCompletionAsync();
-GetOperationResult value = response.Value;
-Console.WriteLine($"The entry id to use to get the entry and receipt is {{{value.EntryId}}}");
+Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
+
+string entryId = string.Empty;
+CborReader cborReader = new CborReader(operationResult.Value);
+cborReader.ReadStartMap();
+while (cborReader.PeekState() != CborReaderState.EndMap)
+{
+    string key = cborReader.ReadTextString();
+    if (key == "EntryId")
+    {
+        entryId = cborReader.ReadTextString();
+    }
+    else
+        cborReader.SkipValue();
+}
+
+Console.WriteLine($"The entry id to use to get the receipt and Transparent Statement is {{{entryId}}}");
 ```
