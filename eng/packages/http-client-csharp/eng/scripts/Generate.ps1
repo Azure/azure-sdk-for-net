@@ -201,18 +201,18 @@ if ($null -eq $filter) {
     $launchSettings = @{}
     $launchSettings.Add("profiles", @{})
     $launchSettings["profiles"].Add("Basic-TypeSpec", @{})
-    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$basicSpec -p AzureClientPlugin")
+    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$basicSpec -g AzureClientGenerator")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandName", "Executable")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", "dotnet")
     
     $launchSettings["profiles"].Add("Mgmt-TypeSpec", @{})
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -p AzureClientPlugin")
+    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -g AzureClientGenerator")
     $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
     $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
 
     foreach ($kvp in $spectorLaunchProjects.GetEnumerator()) {
         $launchSettings["profiles"].Add($kvp.Key, @{})
-        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$($kvp.Value) -p AzureStubPlugin")
+        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$($kvp.Value) -g AzureClientGenerator")
         $launchSettings["profiles"][$kvp.Key].Add("commandName", "Executable")
         $launchSettings["profiles"][$kvp.Key].Add("executablePath", "dotnet")
     }
