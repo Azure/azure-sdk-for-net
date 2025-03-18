@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "CollectionsStringProperty",
-   "clientNamespace": "Type.Property.Nullable",
+   "namespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Model with collection string properties",
@@ -64,7 +64,7 @@
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
       },
-      "clientNamespace": ""
+      "namespace": ""
      },
      "optional": false,
      "readOnly": false,
@@ -86,7 +86,7 @@
    "$id": "13",
    "kind": "model",
    "name": "CollectionsModelProperty",
-   "clientNamespace": "Type.Property.Nullable",
+   "namespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Model with collection models properties",
@@ -136,7 +136,7 @@
         "$id": "21",
         "kind": "model",
         "name": "InnerModel",
-        "clientNamespace": "Type.Property.Nullable",
+        "namespace": "Type.Property.Nullable",
         "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel",
         "usage": "Input,Output,JsonMergePatch,Json",
         "doc": "Inner model used in collections model property",
@@ -174,7 +174,7 @@
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
       },
-      "clientNamespace": ""
+      "namespace": ""
      },
      "optional": false,
      "readOnly": false,
@@ -199,7 +199,7 @@
    "$id": "28",
    "kind": "model",
    "name": "CollectionsByteProperty",
-   "clientNamespace": "Type.Property.Nullable",
+   "namespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Model with collection bytes properties",
@@ -256,7 +256,7 @@
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
       },
-      "clientNamespace": ""
+      "namespace": ""
      },
      "optional": false,
      "readOnly": false,
@@ -278,7 +278,7 @@
    "$id": "39",
    "kind": "model",
    "name": "DurationProperty",
-   "clientNamespace": "Type.Property.Nullable",
+   "namespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Model with a duration property",
@@ -335,7 +335,7 @@
        "crossLanguageDefinitionId": "TypeSpec.duration",
        "decorators": []
       },
-      "clientNamespace": ""
+      "namespace": ""
      },
      "optional": false,
      "readOnly": false,
@@ -357,7 +357,7 @@
    "$id": "50",
    "kind": "model",
    "name": "DatetimeProperty",
-   "clientNamespace": "Type.Property.Nullable",
+   "namespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Model with a datetime property",
@@ -414,7 +414,7 @@
        "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
        "decorators": []
       },
-      "clientNamespace": ""
+      "namespace": ""
      },
      "optional": false,
      "readOnly": false,
@@ -436,7 +436,7 @@
    "$id": "61",
    "kind": "model",
    "name": "BytesProperty",
-   "clientNamespace": "Type.Property.Nullable",
+   "namespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
@@ -486,7 +486,7 @@
        "crossLanguageDefinitionId": "TypeSpec.bytes",
        "decorators": []
       },
-      "clientNamespace": ""
+      "namespace": ""
      },
      "optional": false,
      "readOnly": false,
@@ -508,7 +508,7 @@
    "$id": "71",
    "kind": "model",
    "name": "StringProperty",
-   "clientNamespace": "Type.Property.Nullable",
+   "namespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
@@ -557,7 +557,7 @@
        "crossLanguageDefinitionId": "TypeSpec.string",
        "decorators": []
       },
-      "clientNamespace": ""
+      "namespace": ""
      },
      "optional": false,
      "readOnly": false,
@@ -580,7 +580,7 @@
   {
    "$id": "81",
    "Name": "NullableClient",
-   "ClientNamespace": "Type.Property.Nullable",
+   "Namespace": "Type.Property.Nullable",
    "Doc": "Illustrates models with nullable properties.",
    "Operations": [],
    "Protocol": {
@@ -619,12 +619,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Property.Nullable"
   },
   {
    "$id": "87",
    "Name": "String",
-   "ClientNamespace": "Type.Property.Nullable",
+   "Namespace": "Type.Property.Nullable",
    "Operations": [
     {
      "$id": "88",
@@ -670,7 +671,6 @@
        "BodyType": {
         "$ref": "71"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -679,7 +679,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/string/non-null",
      "BufferResponse": true,
@@ -732,7 +731,6 @@
        "BodyType": {
         "$ref": "71"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -741,7 +739,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/string/null",
      "BufferResponse": true,
@@ -809,13 +806,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/string/non-null",
      "RequestMediaTypes": [
@@ -886,13 +881,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/string/null",
      "RequestMediaTypes": [
@@ -942,12 +935,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Property.Nullable.String"
   },
   {
    "$id": "115",
    "Name": "Bytes",
-   "ClientNamespace": "Type.Property.Nullable",
+   "Namespace": "Type.Property.Nullable",
    "Operations": [
     {
      "$id": "116",
@@ -993,7 +987,6 @@
        "BodyType": {
         "$ref": "61"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -1002,7 +995,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/bytes/non-null",
      "BufferResponse": true,
@@ -1055,7 +1047,6 @@
        "BodyType": {
         "$ref": "61"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -1064,7 +1055,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/bytes/null",
      "BufferResponse": true,
@@ -1132,13 +1122,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/bytes/non-null",
      "RequestMediaTypes": [
@@ -1209,13 +1197,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/bytes/null",
      "RequestMediaTypes": [
@@ -1265,12 +1251,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Property.Nullable.Bytes"
   },
   {
    "$id": "143",
    "Name": "Datetime",
-   "ClientNamespace": "Type.Property.Nullable",
+   "Namespace": "Type.Property.Nullable",
    "Operations": [
     {
      "$id": "144",
@@ -1316,7 +1303,6 @@
        "BodyType": {
         "$ref": "50"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -1325,7 +1311,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/datetime/non-null",
      "BufferResponse": true,
@@ -1378,7 +1363,6 @@
        "BodyType": {
         "$ref": "50"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -1387,7 +1371,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/datetime/null",
      "BufferResponse": true,
@@ -1455,13 +1438,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/datetime/non-null",
      "RequestMediaTypes": [
@@ -1532,13 +1513,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/datetime/null",
      "RequestMediaTypes": [
@@ -1588,12 +1567,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Property.Nullable.Datetime"
   },
   {
    "$id": "171",
    "Name": "Duration",
-   "ClientNamespace": "Type.Property.Nullable",
+   "Namespace": "Type.Property.Nullable",
    "Operations": [
     {
      "$id": "172",
@@ -1639,7 +1619,6 @@
        "BodyType": {
         "$ref": "39"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -1648,7 +1627,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/duration/non-null",
      "BufferResponse": true,
@@ -1701,7 +1679,6 @@
        "BodyType": {
         "$ref": "39"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -1710,7 +1687,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/duration/null",
      "BufferResponse": true,
@@ -1778,13 +1754,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/duration/non-null",
      "RequestMediaTypes": [
@@ -1855,13 +1829,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/duration/null",
      "RequestMediaTypes": [
@@ -1911,12 +1883,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Property.Nullable.Duration"
   },
   {
    "$id": "199",
    "Name": "CollectionsByte",
-   "ClientNamespace": "Type.Property.Nullable",
+   "Namespace": "Type.Property.Nullable",
    "Operations": [
     {
      "$id": "200",
@@ -1962,7 +1935,6 @@
        "BodyType": {
         "$ref": "28"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -1971,7 +1943,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/bytes/non-null",
      "BufferResponse": true,
@@ -2024,7 +1995,6 @@
        "BodyType": {
         "$ref": "28"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2033,7 +2003,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/bytes/null",
      "BufferResponse": true,
@@ -2101,13 +2070,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/bytes/non-null",
      "RequestMediaTypes": [
@@ -2178,13 +2145,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/bytes/null",
      "RequestMediaTypes": [
@@ -2234,12 +2199,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte"
   },
   {
    "$id": "227",
    "Name": "CollectionsModel",
-   "ClientNamespace": "Type.Property.Nullable",
+   "Namespace": "Type.Property.Nullable",
    "Operations": [
     {
      "$id": "228",
@@ -2285,7 +2251,6 @@
        "BodyType": {
         "$ref": "13"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2294,7 +2259,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/model/non-null",
      "BufferResponse": true,
@@ -2347,7 +2311,6 @@
        "BodyType": {
         "$ref": "13"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2356,7 +2319,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/model/null",
      "BufferResponse": true,
@@ -2424,13 +2386,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/model/non-null",
      "RequestMediaTypes": [
@@ -2501,13 +2461,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/model/null",
      "RequestMediaTypes": [
@@ -2557,12 +2515,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel"
   },
   {
    "$id": "255",
    "Name": "CollectionsString",
-   "ClientNamespace": "Type.Property.Nullable",
+   "Namespace": "Type.Property.Nullable",
    "Operations": [
     {
      "$id": "256",
@@ -2608,7 +2567,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2617,7 +2575,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/string/non-null",
      "BufferResponse": true,
@@ -2670,7 +2627,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2679,7 +2635,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/string/null",
      "BufferResponse": true,
@@ -2747,13 +2702,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/string/non-null",
      "RequestMediaTypes": [
@@ -2824,13 +2777,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/property/nullable/collections/string/null",
      "RequestMediaTypes": [
@@ -2880,7 +2831,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString"
   }
  ]
 }

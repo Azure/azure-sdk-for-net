@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 return null;
             }
             IReadOnlyDictionary<string, ConversationAuthoringConfusionMatrixRow> confusionMatrix = default;
-            IReadOnlyDictionary<string, EntityEvaluationSummary> entities = default;
+            IReadOnlyDictionary<string, ConversationAuthoringEntityEvalSummary> entities = default;
             float microF1 = default;
             float microPrecision = default;
             float microRecall = default;
@@ -123,10 +123,10 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (property.NameEquals("entities"u8))
                 {
-                    Dictionary<string, EntityEvaluationSummary> dictionary = new Dictionary<string, EntityEvaluationSummary>();
+                    Dictionary<string, ConversationAuthoringEntityEvalSummary> dictionary = new Dictionary<string, ConversationAuthoringEntityEvalSummary>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityEvaluationSummary.DeserializeEntityEvaluationSummary(property0.Value, options));
+                        dictionary.Add(property0.Name, ConversationAuthoringEntityEvalSummary.DeserializeConversationAuthoringEntityEvalSummary(property0.Value, options));
                     }
                     entities = dictionary;
                     continue;
@@ -200,7 +200,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEntitiesEvaluationSummary(document.RootElement, options);
                     }
                 default:
@@ -214,7 +214,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static EntitiesEvaluationSummary FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEntitiesEvaluationSummary(document.RootElement);
         }
 

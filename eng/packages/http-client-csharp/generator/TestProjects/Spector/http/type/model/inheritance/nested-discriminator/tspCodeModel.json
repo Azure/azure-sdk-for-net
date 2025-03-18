@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "Fish",
-   "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
+   "namespace": "Type.Model.Inheritance.NestedDiscriminator",
    "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish",
    "usage": "Input,Output,Json",
    "doc": "This is base model for polymorphic multiple levels inheritance with a discriminator.",
@@ -77,7 +77,7 @@
      "$id": "12",
      "kind": "model",
      "name": "Shark",
-     "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
+     "namespace": "Type.Model.Inheritance.NestedDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark",
      "usage": "Input,Output,Json",
      "doc": "The second level model in polymorphic multiple levels inheritance and it defines a new discriminator.",
@@ -155,7 +155,7 @@
        "$id": "23",
        "kind": "model",
        "name": "SawShark",
-       "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
+       "namespace": "Type.Model.Inheritance.NestedDiscriminator",
        "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.SawShark",
        "usage": "Input,Output,Json",
        "doc": "The third level model SawShark in polymorphic multiple levels inheritance.",
@@ -203,7 +203,7 @@
        "$id": "29",
        "kind": "model",
        "name": "GoblinShark",
-       "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
+       "namespace": "Type.Model.Inheritance.NestedDiscriminator",
        "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.GoblinShark",
        "usage": "Input,Output,Json",
        "doc": "The third level model GoblinShark in polymorphic multiple levels inheritance.",
@@ -253,7 +253,7 @@
      "$id": "35",
      "kind": "model",
      "name": "Salmon",
-     "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
+     "namespace": "Type.Model.Inheritance.NestedDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon",
      "usage": "Input,Output,Json",
      "doc": "The second level model in polymorphic multiple levels inheritance which contains references to other polymorphic instances.",
@@ -401,7 +401,7 @@
   {
    "$id": "53",
    "Name": "NestedDiscriminatorClient",
-   "ClientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
+   "Namespace": "Type.Model.Inheritance.NestedDiscriminator",
    "Doc": "Illustrates multiple level inheritance with multiple discriminators.",
    "Operations": [
     {
@@ -447,7 +447,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -456,7 +455,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/nested-discriminator/model",
      "BufferResponse": true,
@@ -523,13 +521,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/nested-discriminator/model",
      "RequestMediaTypes": [
@@ -584,7 +580,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -593,7 +588,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/nested-discriminator/recursivemodel",
      "BufferResponse": true,
@@ -660,13 +654,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/nested-discriminator/recursivemodel",
      "RequestMediaTypes": [
@@ -721,7 +713,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -730,7 +721,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/nested-discriminator/missingdiscriminator",
      "BufferResponse": true,
@@ -782,7 +772,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -791,7 +780,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/nested-discriminator/wrongdiscriminator",
      "BufferResponse": true,
@@ -837,7 +825,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator"
   }
  ]
 }

@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,8 +110,8 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             string category = default;
             ConversationAuthoringCompositionMode? compositionSetting = default;
-            ExportedEntityList entities = default;
-            IList<ExportedPrebuiltEntity> prebuilts = default;
+            ConversationAuthoringExportedEntityList entities = default;
+            IList<ConversationAuthoringExportedPrebuiltEntity> prebuilts = default;
             ExportedEntityRegex regex = default;
             IList<string> requiredComponents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -138,7 +138,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    entities = ExportedEntityList.DeserializeExportedEntityList(property.Value, options);
+                    entities = ConversationAuthoringExportedEntityList.DeserializeConversationAuthoringExportedEntityList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("prebuilts"u8))
@@ -147,10 +147,10 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    List<ExportedPrebuiltEntity> array = new List<ExportedPrebuiltEntity>();
+                    List<ConversationAuthoringExportedPrebuiltEntity> array = new List<ConversationAuthoringExportedPrebuiltEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExportedPrebuiltEntity.DeserializeExportedPrebuiltEntity(item, options));
+                        array.Add(ConversationAuthoringExportedPrebuiltEntity.DeserializeConversationAuthoringExportedPrebuiltEntity(item, options));
                     }
                     prebuilts = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 category,
                 compositionSetting,
                 entities,
-                prebuilts ?? new ChangeTrackingList<ExportedPrebuiltEntity>(),
+                prebuilts ?? new ChangeTrackingList<ConversationAuthoringExportedPrebuiltEntity>(),
                 regex,
                 requiredComponents ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
@@ -215,7 +215,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConversationExportedEntity(document.RootElement, options);
                     }
                 default:
@@ -229,7 +229,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ConversationExportedEntity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeConversationExportedEntity(document.RootElement);
         }
 

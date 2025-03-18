@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.OpenAI;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 
@@ -16,7 +17,7 @@ namespace Azure.Projects.OpenAI
         /// <summary>
         /// Vector db.
         /// </summary>
-        public EmbeddingsVectorbase? VectorDb { get; set; }
+        public EmbeddingsStore? VectorDb { get; set; }
 
         /// <summary>
         /// Tools to call.
@@ -145,9 +146,30 @@ namespace Azure.Projects.OpenAI
         {
             if (Tools == null)
                 throw new InvalidOperationException("No tools defined.");
-            conversation.Add(completion);
-            IEnumerable<ToolChatMessage> toolResults = Tools.CallAll(completion.ToolCalls);
-            conversation.AddRange(toolResults);
+
+            // for some reason I am getting tool calls for tools that dont exist.
+            IEnumerable<ToolChatMessage> toolResults = Tools.CallAll(completion.ToolCalls, out List<string>? failed);
+            if (failed != null)
+            {
+                OnToolError(failed, conversation, completion);
+            }
+            else
+            {
+                conversation.Add(completion);
+                conversation.AddRange(toolResults);
+            }
+        }
+
+        /// <summary>
+        /// Handles the error when a tool call fails.
+        /// </summary>
+        /// <param name="failed"></param>
+        /// <param name="conversation"></param>
+        /// <param name="completion"></param>
+        protected virtual void OnToolError(List<string> failed, List<ChatMessage> conversation, ChatCompletion completion)
+        {
+            failed.ForEach(toolName => Console.WriteLine($"Failed to call tool: {toolName}"));
+            conversation.Add(ChatMessage.CreateUserMessage("don't call tools that dont exist"));
         }
     }
 }

@@ -102,7 +102,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "Client.Structure.Service",
+   "namespace": "Client.Structure.Service",
    "isFixed": true,
    "isFlags": false,
    "usage": "Input",
@@ -114,7 +114,7 @@
   {
    "$id": "14",
    "Name": "ServiceClient",
-   "ClientNamespace": "Client.Structure.Service",
+   "Namespace": "Client.Structure.Service",
    "Doc": "Test that we can use @client and @operationGroup decorators to customize client side code structure, such as:\n1. have everything as default.\n2. to rename client or operation group\n3. one client can have more than one operations groups\n4. split one interface into two clients\n5. have two clients with operations come from different interfaces\n6. have two clients with a hierarchy relation.",
    "Operations": [
     {
@@ -129,13 +129,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}/client/structure/{client}",
      "Path": "/one",
      "BufferResponse": true,
@@ -156,13 +154,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}/client/structure/{client}",
      "Path": "/two",
      "BufferResponse": true,
@@ -216,12 +212,13 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Client.Structure.Service"
   },
   {
    "$id": "23",
    "Name": "Baz",
-   "ClientNamespace": "Client.Structure.Service.Baz",
+   "Namespace": "Client.Structure.Service.Baz",
    "Operations": [],
    "Protocol": {
     "$id": "24"
@@ -268,12 +265,13 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Client.Structure.Service.Baz"
   },
   {
    "$id": "28",
    "Name": "BazFoo",
-   "ClientNamespace": "Client.Structure.Service.Baz",
+   "Namespace": "Client.Structure.Service.Baz",
    "Operations": [
     {
      "$id": "29",
@@ -287,13 +285,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}/client/structure/{client}",
      "Path": "/seven",
      "BufferResponse": true,
@@ -348,12 +344,13 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo"
   },
   {
    "$id": "35",
    "Name": "Qux",
-   "ClientNamespace": "Client.Structure.Service.Qux",
+   "Namespace": "Client.Structure.Service.Qux",
    "Operations": [
     {
      "$id": "36",
@@ -367,13 +364,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}/client/structure/{client}",
      "Path": "/eight",
      "BufferResponse": true,
@@ -428,12 +423,13 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Client.Structure.Service.Qux"
   },
   {
    "$id": "42",
    "Name": "QuxBar",
-   "ClientNamespace": "Client.Structure.Service.Qux",
+   "Namespace": "Client.Structure.Service.Qux",
    "Operations": [
     {
      "$id": "43",
@@ -447,13 +443,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}/client/structure/{client}",
      "Path": "/nine",
      "BufferResponse": true,
@@ -508,12 +502,13 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar"
   },
   {
    "$id": "49",
    "Name": "Foo",
-   "ClientNamespace": "Client.Structure.Service",
+   "Namespace": "Client.Structure.Service",
    "Operations": [
     {
      "$id": "50",
@@ -527,13 +522,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}/client/structure/{client}",
      "Path": "/three",
      "BufferResponse": true,
@@ -554,13 +547,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}/client/structure/{client}",
      "Path": "/four",
      "BufferResponse": true,
@@ -615,12 +606,13 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Client.Structure.Service.Foo"
   },
   {
    "$id": "58",
    "Name": "Bar",
-   "ClientNamespace": "Client.Structure.Service",
+   "Namespace": "Client.Structure.Service",
    "Operations": [
     {
      "$id": "59",
@@ -634,13 +626,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}/client/structure/{client}",
      "Path": "/five",
      "BufferResponse": true,
@@ -661,13 +651,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}/client/structure/{client}",
      "Path": "/six",
      "BufferResponse": true,
@@ -722,7 +710,8 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Client.Structure.Service.Bar"
   }
  ]
 }

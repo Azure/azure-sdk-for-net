@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerRegistryRunData(document.RootElement, options);
                     }
                 default:

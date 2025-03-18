@@ -23,8 +23,8 @@ To retrieve metadata of a project, call GetProject on the `ConversationAuthoring
 string projectName = "MySampleProject";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-Response<ProjectMetadata> response = projectClient.GetProject();
-ProjectMetadata projectMetadata = response.Value;
+Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject();
+ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
 Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
 Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");

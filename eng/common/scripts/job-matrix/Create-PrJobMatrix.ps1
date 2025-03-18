@@ -180,7 +180,7 @@ function GeneratePRMatrixForBatch {
           }
 
           if ($batchSuffixNecessary) {
-            $outputItem["name"] = $outputItem["name"] + "$batchNamePrefix$batchCounter"
+            $outputItem["name"] = $outputItem["name"] + "_$batchNamePrefix$batchCounter"
           }
 
           $OverallResult += $outputItem
@@ -205,7 +205,7 @@ function GeneratePRMatrixForBatch {
         }
 
         if ($batchSuffixNecessary) {
-          $outputItem["name"] = $outputItem["name"]  + "_$batchNamePrefix$batchCounter"
+          $outputItem["name"] = $outputItem["name"] + "_$batchNamePrefix$batchCounter"
         }
         # now we need to take an item from the front of the matrix results, clone it, and add it to the back of the matrix results
         # we will add the cloned version to OverallResult
@@ -253,14 +253,14 @@ if ($directPackages) {
   foreach($artifact in $directPackages) {
     Write-Host "-> $($artifact.ArtifactName)"
   }
-  $OverallResult += GeneratePRMatrixForBatch -Packages $directPackages
+  $OverallResult += (GeneratePRMatrixForBatch -Packages $directPackages) ?? @()
 }
 if ($indirectPackages) {
   Write-Host "Discovered $($indirectPackages.Length) indirect packages"
   foreach($artifact in $indirectPackages) {
     Write-Host "-> $($artifact.ArtifactName)"
   }
-  $OverallResult += GeneratePRMatrixForBatch -Packages $indirectPackages -FullSparseMatrix (-not $SparseIndirect)
+  $OverallResult += (GeneratePRMatrixForBatch -Packages $indirectPackages -FullSparseMatrix (-not $SparseIndirect)) ?? @()
 }
 $serialized = SerializePipelineMatrix $OverallResult
 

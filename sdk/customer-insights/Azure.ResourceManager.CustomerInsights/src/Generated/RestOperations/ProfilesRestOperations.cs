@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ProfileResourceFormatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProfileResourceFormatData.DeserializeProfileResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ProfileResourceFormatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProfileResourceFormatData.DeserializeProfileResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         IReadOnlyList<KpiDefinition> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<KpiDefinition> array = new List<KpiDefinition>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         IReadOnlyList<KpiDefinition> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<KpiDefinition> array = new List<KpiDefinition>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

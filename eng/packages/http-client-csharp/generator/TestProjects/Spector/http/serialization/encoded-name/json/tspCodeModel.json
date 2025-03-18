@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "JsonEncodedNameModel",
-   "clientNamespace": "Serialization.EncodedName.Json.Property",
+   "namespace": "Serialization.EncodedName.Json.Property",
    "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.JsonEncodedNameModel",
    "usage": "Input,Output,Json",
    "decorators": [],
@@ -47,7 +47,7 @@
   {
    "$id": "7",
    "Name": "JsonClient",
-   "ClientNamespace": "Serialization.EncodedName.Json",
+   "Namespace": "Serialization.EncodedName.Json",
    "Doc": "Projection",
    "Operations": [],
    "Protocol": {
@@ -86,12 +86,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Serialization.EncodedName.Json"
   },
   {
    "$id": "13",
    "Name": "Property",
-   "ClientNamespace": "Serialization.EncodedName.Json.Property",
+   "Namespace": "Serialization.EncodedName.Json.Property",
    "Operations": [
     {
      "$id": "14",
@@ -151,13 +152,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/serialization/encoded-name/json/property",
      "RequestMediaTypes": [
@@ -212,7 +211,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -221,7 +219,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/serialization/encoded-name/json/property",
      "BufferResponse": true,
@@ -268,7 +265,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Serialization.EncodedName.Json.Property"
   }
  ]
 }

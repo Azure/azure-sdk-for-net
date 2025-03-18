@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Storage
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTableServiceData(document.RootElement, options);
                     }
                 default:

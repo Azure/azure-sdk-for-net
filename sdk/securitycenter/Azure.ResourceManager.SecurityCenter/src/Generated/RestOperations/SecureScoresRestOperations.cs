@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoresList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecureScoresList.DeserializeSecureScoresList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoresList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecureScoresList.DeserializeSecureScoresList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecureScoreData.DeserializeSecureScoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecureScoreData.DeserializeSecureScoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoresList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecureScoresList.DeserializeSecureScoresList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoresList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecureScoresList.DeserializeSecureScoresList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

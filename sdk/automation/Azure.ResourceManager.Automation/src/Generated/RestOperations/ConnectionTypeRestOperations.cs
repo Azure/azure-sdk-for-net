@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationConnectionTypeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationConnectionTypeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         AutomationConnectionTypeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         AutomationConnectionTypeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationConnectionTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationConnectionTypeListResult.DeserializeAutomationConnectionTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationConnectionTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationConnectionTypeListResult.DeserializeAutomationConnectionTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationConnectionTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationConnectionTypeListResult.DeserializeAutomationConnectionTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationConnectionTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationConnectionTypeListResult.DeserializeAutomationConnectionTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
