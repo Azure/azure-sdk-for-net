@@ -26,7 +26,7 @@ function Get-TspCommand {
     return $command
 }
 
-function Get-MgmtTspCommand {
+function Get-Mgmt-TspCommand {
     param (
         [string]$specFile,
         [string]$generationDir
@@ -68,18 +68,18 @@ $mgmtTestProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects
 $basicTypespecTestProject = Join-Path $testProjectsLocalDir "Basic-TypeSpec"
 $mgmtTypespecTestProject = Join-Path $mgmtTestProjectsLocalDir "Mgmt-TypeSpec"
 
-# Push-Location $packageRoot
+Push-Location $packageRoot
 
-# Write-Host "Generating test projects ..."
-# Refresh-Build
+Write-Host "Generating test projects ..."
+Refresh-Build
 
-# Write-Host "Generating BasicTypeSpec" -ForegroundColor Cyan
-# Invoke-LoggedCommand (Get-TspCommand "$basicTypespecTestProject/Basic-TypeSpec.tsp" $basicTypespecTestProject)
+Write-Host "Generating BasicTypeSpec" -ForegroundColor Cyan
+Invoke-LoggedCommand (Get-TspCommand "$basicTypespecTestProject/Basic-TypeSpec.tsp" $basicTypespecTestProject)
 
-# Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
-# Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Basic-TypeSpec/src/BasicTypeSpec.csproj"
+Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
+Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Basic-TypeSpec/src/BasicTypeSpec.csproj"
 
-# Pop-Location
+Pop-Location
 
 Push-Location $mgmtPackageRoot
 
@@ -87,7 +87,7 @@ Write-Host "Generating test projects ..."
 Refresh-Mgmt-Build
 
 Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
-Invoke-LoggedCommand (Get-MgmtTspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject)
+Invoke-LoggedCommand (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject)
 
 Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
 Invoke-LoggedCommand "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"

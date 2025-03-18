@@ -8,8 +8,13 @@ param(
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
 
+Write-Host "Script root: $PSScriptRoot" -ForegroundColor Cyan
 $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
+Write-Host "Package root: $packageRoot" -ForegroundColor Cyan
+$mgmtPackageRoot = Resolve-Path (Join-Path $packageRoot '..' 'http-client-csharp-mgmt')
+Write-Host "Mgmt Package root: $packageRoot" -ForegroundColor Cyan
 $solutionDir = Join-Path $packageRoot 'generator'
+$mgmtSolutionDir = Join-Path $mgmtPackageRoot 'generator'
 
 if (-not $LaunchOnly) {
     Refresh-Build
@@ -38,11 +43,11 @@ if (-not $LaunchOnly) {
 
     if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec") {
         Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
-        $testProjectsLocalDir = Join-Path $packageRoot 'generator' 'TestProjects' 'Local'
+        $testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Local'
 
         $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
 
-        Invoke (Get-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -forceNewProject $ForceNewProject)
+        Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -forceNewProject $ForceNewProject)
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
@@ -50,7 +55,7 @@ if (-not $LaunchOnly) {
         }
 
         Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
-        Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
+        Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
