@@ -144,6 +144,9 @@ function ProcessNonSparseParameters(
     $nonSparse = [MatrixParameter[]]@()
 
     foreach ($param in $parameters) {
+        if ($null -eq $param){
+            continue
+        }
         if ($param.Name -in $nonSparseParameters) {
             $nonSparse += $param
         }
@@ -444,7 +447,7 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         $combinedDisplayNameLookup[$lookup.Name] = $lookup.Value
     }
 
-    return $matrix, $importedMatrix, $combinedDisplayNameLookup
+    return , $matrix, $importedMatrix, $combinedDisplayNameLookup
 }
 
 function CombineMatrices([Array]$matrix1, [Array]$matrix2, [Hashtable]$displayNamesLookup = @{}) {
