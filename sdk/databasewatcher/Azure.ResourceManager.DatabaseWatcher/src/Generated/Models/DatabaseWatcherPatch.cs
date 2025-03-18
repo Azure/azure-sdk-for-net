@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
@@ -56,16 +57,13 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseWatcherPatch(DatabaseWatcherManagedServiceIdentity identity, IDictionary<string, string> tags, DatabaseWatcherUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatabaseWatcherPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, DatabaseWatcherUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Tags = tags;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public DatabaseWatcherManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>

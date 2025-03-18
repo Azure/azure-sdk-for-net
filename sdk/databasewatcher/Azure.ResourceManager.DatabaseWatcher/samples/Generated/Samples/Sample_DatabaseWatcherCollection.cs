@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DatabaseWatcher.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Samples
                     },
                     DefaultAlertRuleIdentityResourceId = new ResourceIdentifier("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
                 },
-                Identity = new DatabaseWatcherManagedServiceIdentity(DatabaseWatcherManagedServiceIdentityType.SystemAssigned),
+                Identity = (ManagedServiceIdentity)null,
                 Tags = { },
             };
             ArmOperation<DatabaseWatcherResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, watcherName, data);

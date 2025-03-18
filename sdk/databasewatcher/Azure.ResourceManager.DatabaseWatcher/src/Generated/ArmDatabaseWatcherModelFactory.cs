@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherData"/> instance for mocking. </returns>
-        public static DatabaseWatcherData DatabaseWatcherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DatabaseWatcherProperties properties = null, DatabaseWatcherManagedServiceIdentity identity = null)
+        public static DatabaseWatcherData DatabaseWatcherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DatabaseWatcherProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -294,19 +294,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static DatabaseWatcherProperties DatabaseWatcherProperties(DatabaseWatcherDatastore datastore = null, DatabaseWatcherStatus? status = null, DatabaseWatcherProvisioningState? provisioningState = null, ResourceIdentifier defaultAlertRuleIdentityResourceId = null)
         {
             return new DatabaseWatcherProperties(datastore, status, provisioningState, defaultAlertRuleIdentityResourceId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherManagedServiceIdentity"/>. </summary>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
-        /// <returns> A new <see cref="Models.DatabaseWatcherManagedServiceIdentity"/> instance for mocking. </returns>
-        public static DatabaseWatcherManagedServiceIdentity DatabaseWatcherManagedServiceIdentity(Guid? principalId = null, Guid? tenantId = null, DatabaseWatcherManagedServiceIdentityType type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
-        {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-
-            return new DatabaseWatcherManagedServiceIdentity(principalId, tenantId, type, userAssignedIdentities, serializedAdditionalRawData: null);
         }
     }
 }

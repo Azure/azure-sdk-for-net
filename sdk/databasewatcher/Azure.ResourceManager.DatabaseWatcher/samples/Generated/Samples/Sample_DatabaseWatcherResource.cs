@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DatabaseWatcher.Models;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Samples
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Samples
             // invoke the operation
             DatabaseWatcherPatch patch = new DatabaseWatcherPatch
             {
-                Identity = new DatabaseWatcherManagedServiceIdentity(DatabaseWatcherManagedServiceIdentityType.SystemAssigned),
+                Identity = (ManagedServiceIdentity)null,
                 Tags = { },
                 Properties = new DatabaseWatcherUpdateProperties
                 {

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseWatcherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatabaseWatcherProperties properties, DatabaseWatcherManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DatabaseWatcherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatabaseWatcherProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -81,7 +81,5 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public DatabaseWatcherProperties Properties { get; set; }
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public DatabaseWatcherManagedServiceIdentity Identity { get; set; }
     }
 }

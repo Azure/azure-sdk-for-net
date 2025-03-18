@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                JsonSerializer.Serialize(writer, Identity);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 return null;
             }
             DatabaseWatcherProperties properties = default;
-            DatabaseWatcherManagedServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                     {
                         continue;
                     }
-                    identity = DatabaseWatcherManagedServiceIdentity.DeserializeDatabaseWatcherManagedServiceIdentity(property.Value, options);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

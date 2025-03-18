@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             {
                 return null;
             }
-            DatabaseWatcherManagedServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             DatabaseWatcherUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                     {
                         continue;
                     }
-                    identity = DatabaseWatcherManagedServiceIdentity.DeserializeDatabaseWatcherManagedServiceIdentity(property.Value, options);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
