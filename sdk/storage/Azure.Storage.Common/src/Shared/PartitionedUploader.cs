@@ -359,35 +359,64 @@ namespace Azure.Storage
             // an expected length
             long? length = expectedContentLength ?? content.GetLengthOrDefault();
 
-            // If we know the length and it's small enough
-            if (length < _singleUploadThreshold)
+            using var bucket = new DisposableBucket();
+
+            // If we don't know the length, we must buffer anyway. Upfront buffer up to _singleUploadThreshold
+            // to see if we can still manage a single upload.
+            if (!length.HasValue)
             {
-                using var bucket = new DisposableBucket();
+                UploadTransferValidationOptions oneshotValidationOptions = ValidationOptions;
+                oneshotValidationOptions.PrecalculatedChecksum = _masterCrcSupplier?.Invoke() ?? default;
+
+                // must buffer via stream; _singleUplaodThreshold can be > max int
+                (Stream bufferedContent, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
+                    content, _singleUploadThreshold, oneshotValidationOptions, async, cancellationToken)
+                    .ConfigureAwait(false);
+                bucket.Add(bufferedContent);
+                bufferedContent.Position = 0;
+
+                // if we buffered entire stream within the threshold; oneshot it
+                if (bufferedContent.Length < _singleUploadThreshold)
+                {
+                    return await _singleUploadStreamingInternal(
+                        bufferedContent,
+                        args,
+                        progressHandler,
+                        oneshotValidationOptions,
+                        _operationName,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                // otherwise, stitch the content back together
+                else
+                {
+                    content = new ConcatStream([
+                        (bufferedContent, true), // dispose of the buffer we made once consumed
+                        (content, false) // don't dispose of the caller-provded stream
+                    ]);
+                }
+            }
+            // If we know the length and it's small enough, oneshot it
+            else if (length.Value < _singleUploadThreshold)
+            {
                 UploadTransferValidationOptions oneshotValidationOptions = ValidationOptions;
                 oneshotValidationOptions.PrecalculatedChecksum = _masterCrcSupplier?.Invoke() ?? default;
 
                 // If not seekable, buffer and checksum if necessary.
                 if (!content.CanSeek)
                 {
-                    Stream bufferedContent;
-                    if (UseMasterCrc && _masterCrcSupplier != default)
-                    {
-                        bufferedContent = new PooledMemoryStream(_arrayPool, Constants.MB);
-                        await content.CopyToInternal(bufferedContent, async, cancellationToken).ConfigureAwait(false);
-                        bufferedContent.Position = 0;
-                    }
-                    else
-                    {
-                        (bufferedContent, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
-                            content, length.Value, oneshotValidationOptions, async, cancellationToken)
-                            .ConfigureAwait(false);
-                    }
+                    // must buffer via stream; _singleUplaodThreshold can be > max int
+                    (Stream bufferedContent, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
+                        content, _singleUploadThreshold, oneshotValidationOptions, async, cancellationToken)
+                        .ConfigureAwait(false);
                     bucket.Add(bufferedContent);
+                    bufferedContent.Position = 0;
                     content = bufferedContent;
                 }
 
                 // Upload it in a single request
-                var result = await _singleUploadStreamingInternal(
+                return await _singleUploadStreamingInternal(
                     content,
                     args,
                     progressHandler,
@@ -396,8 +425,6 @@ namespace Azure.Storage
                     async,
                     cancellationToken)
                     .ConfigureAwait(false);
-
-                return result;
             }
 
             // configure content stream to calculate master crc as it is read

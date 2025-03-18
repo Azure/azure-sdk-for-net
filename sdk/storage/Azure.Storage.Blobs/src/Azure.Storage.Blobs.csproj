@@ -50,6 +50,7 @@
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ChecksumCalculatingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ConcatStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentRange.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
