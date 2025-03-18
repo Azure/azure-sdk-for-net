@@ -141,7 +141,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
       # BuildSnippets is opt _out_, so we should default to true if not specified
       $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
-      if ($shouldSnippet) {
+      if ($null -ne $shouldSnippet) {
         $parsedBool = $null
         if ([bool]::TryParse($shouldSnippet, [ref]$parsedBool)) {
           $pkgProp.CIParameters["BuildSnippets"] = $parsedBool

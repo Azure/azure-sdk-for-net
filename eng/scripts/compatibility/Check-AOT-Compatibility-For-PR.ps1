@@ -25,7 +25,7 @@ if ($ProjectNames) {
     $projectNamesArray = $ProjectNames.Split(',') | ForEach-Object { $_.Trim() }
 }
 else {
-    Write-Error "ProjectNames paramter doesn't target any packages. Please provide a comma-separated list of project names."
+    Write-Error "ProjectNames parameter doesn't target any packages. Please provide a comma-separated list of project names."
     exit 0
 }
 
