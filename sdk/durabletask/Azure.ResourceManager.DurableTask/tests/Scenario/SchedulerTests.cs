@@ -136,13 +136,18 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         Assert.AreEqual(TagValueEnv, resource.Data.Tags[TagKeyEnv]);
         Assert.AreEqual(ProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
 
+        var bla = new SchedulerPropertiesUpdate();
+        bla.IPAllowlist.Add("test");
         // Update select Scheduler properties (Patch)
-        SchedulerData patchSchedulerData = new(default)
+        SchedulerPatch patchSchedulerData = new()
         {
-            Properties = new SchedulerProperties(
-                ipAllowlist: [PatchIpRange],
-                sku: new SchedulerSku(skuType) // capacity can optionally be changed
-            ),
+            Properties = new SchedulerPropertiesUpdate{
+                IPAllowlist = { PatchIpRange },
+                Sku= new SchedulerSkuUpdate
+                {
+                    Name = skuType,
+                } // capacity can optionally be changed
+            },
             Tags = { { TagKeyEnv, TagValueEnv } }
         };
 
