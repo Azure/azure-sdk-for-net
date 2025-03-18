@@ -59,9 +59,4 @@ public class AzureClientPlugin : ScmCodeModelPlugin
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 """;
-
-    /// <summary>
-    /// Identify if the input is generated for Azure ARM.
-    /// </summary>
-    internal Lazy<bool> IsAzureArm => new Lazy<bool>(() => InputLibrary.InputNamespace.Clients.Any(c => c.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armProviderNamespace"))));
 }

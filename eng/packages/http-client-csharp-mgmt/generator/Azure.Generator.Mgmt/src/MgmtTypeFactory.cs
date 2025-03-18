@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Mgmt.InputTransformation;
+using Azure.Generator.Mgmt.Providers.Abstraction;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -12,6 +13,9 @@ namespace Azure.Generator.Mgmt
     /// <inheritdoc/>
     public class MgmtTypeFactory : AzureTypeFactory
     {
+        /// <inheritdoc/>
+        public override IClientPipelineApi ClientPipelineApi => MgmtHttpPipelineProvider.Instance;
+
         /// <inheritdoc/>
         public override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
             [

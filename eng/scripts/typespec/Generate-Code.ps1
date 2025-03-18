@@ -41,7 +41,6 @@ function Get-Mgmt-TspCommand {
     $mgmtCommand += " --option @azure-typespec/http-client-csharp-mgmt.emitter-output-dir=$generationDir"
     $mgmtCommand += " --option @azure-typespec/http-client-csharp-mgmt.save-inputs=true"
     $mgmtCommand += " --option @azure-typespec/http-client-csharp-mgmt.new-project=true"
-    # $mgmtCommand += " --option @azure-typespec/http-client-csharp-mgmt.debug=true"
     return $mgmtCommand
 }
 
@@ -91,5 +90,7 @@ Invoke-LoggedCommand (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $m
 
 Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
 Invoke-LoggedCommand "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
+
+Pop-Location
 
 Write-Host 'Code generation is completed.'
