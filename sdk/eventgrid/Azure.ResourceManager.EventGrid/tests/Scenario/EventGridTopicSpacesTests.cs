@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
             Assert.AreEqual(EventGridNamespace.Data.Name, namespaceName);
         }
         [Test]
-
         public async Task TopicSpacesCreateGetUpdateDelete()
         {
             string topicSpaceName = Recording.GenerateAssetName("topicspace-");
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
             await updatedTopicSpace.DeleteAsync(WaitUntil.Completed);
         }
         [Test]
-
         public async Task ListTopicSpaces()
         {
             string topicSpaceName1 = Recording.GenerateAssetName("topicspace1-");
@@ -117,7 +115,6 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
         }
 
         [OneTimeTearDown]
-
         public async Task GlobalCleanup()
         {
             if (EventGridNamespace != null)

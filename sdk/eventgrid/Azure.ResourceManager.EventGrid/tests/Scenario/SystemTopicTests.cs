@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // List all system topics under subscription
             var systemTopicsInAzureSubscription = await DefaultSubscription.GetSystemTopicsAsync().ToEnumerableAsync();
-            Assert.AreEqual(systemTopicsInAzureSubscription.Count, 178);
+            Assert.AreEqual(systemTopicsInAzureSubscription.Count, 179);
 
             var SystemTopicEventSubscriptionsCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
 
