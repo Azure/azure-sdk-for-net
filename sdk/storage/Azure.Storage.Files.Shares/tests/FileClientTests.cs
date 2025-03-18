@@ -2382,11 +2382,12 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync_SourceErrorAndStatusCode()
         {
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
-            ShareFileClient file = test.File;
+            ShareFileClient srcFile = test.File.GetParentShareDirectoryClient().GetFileClient(GetNewFileName());
+            ShareFileClient destFile = test.File;
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.StartCopyAsync(sourceUri: s_invalidUri),
+                destFile.StartCopyAsync(sourceUri: srcFile.Uri),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 400"));
