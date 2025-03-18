@@ -20,6 +20,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Core" />
+    <!-- Remove Microsoft.Extensions.Logging.Abstractions dependency once new Azure.Core is shipped.-->
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" VersionOverride ="6.0.0"/>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" VersionOverride="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Options" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
