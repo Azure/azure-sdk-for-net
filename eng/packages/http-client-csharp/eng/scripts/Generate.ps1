@@ -210,7 +210,7 @@ if ($null -eq $filter) {
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", "dotnet")
 
     $launchSettings["profiles"].Add("Mgmt-TypeSpec", @{})
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -g AzureClientGenerator")
+    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -g MgmtClientGenerator")
     $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
     $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
 
