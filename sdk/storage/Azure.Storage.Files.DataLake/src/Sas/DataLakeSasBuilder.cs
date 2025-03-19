@@ -529,6 +529,8 @@ namespace Azure.Storage.Sas
                 PreauthorizedAgentObjectId,
                 AgentObjectId,
                 CorrelationId,
+                null,
+                null,
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
