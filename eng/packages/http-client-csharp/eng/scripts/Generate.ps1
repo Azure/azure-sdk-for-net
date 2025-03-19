@@ -18,6 +18,7 @@ $mgmtSolutionDir = Join-Path $mgmtPackageRoot 'generator'
 
 if (-not $LaunchOnly) {
     Refresh-Build
+    Refresh-Mgmt-Build
 
     if ($null -eq $filter -or $filter -eq "Basic-TypeSpec") {
         Write-Host "Generating BasicTypeSpec" -ForegroundColor Cyan

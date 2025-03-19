@@ -96,7 +96,7 @@ function Get-Mgmt-TspCommand {
 
 function Refresh-Build {
     Write-Host "Building emitter and generator" -ForegroundColor Cyan
-    Invoke "npm run build:emitter"
+    Invoke "npm run build:emitter" 
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
@@ -112,14 +112,14 @@ function Refresh-Build {
 
 function Refresh-Mgmt-Build {
     Write-Host "Building emitter and generator" -ForegroundColor Cyan
-    Invoke "npm run build:emitter"
+    Invoke "npm run build:emitter" "$repoRoot/../../http-client-csharp-mgmt"
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
     }
 
     # we don't want to build the entire solution because the test projects might not build until after regeneration
-    Invoke "dotnet build $repoRoot/../generator/Azure.Generator.Mgmt/src"
+    Invoke "dotnet build $repoRoot/../../http-client-csharp-mgmt/generator/Azure.Generator.Mgmt/src"
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
