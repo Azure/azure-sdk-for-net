@@ -57,25 +57,25 @@ namespace Azure.AI.Inference
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
         /// </param>
         /// <param name="model"> The model used for the chat completion. </param>
-        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <param name="choices">
         /// The collection of completions choices associated with this completions response.
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="model"/>, <paramref name="usage"/> or <paramref name="choices"/> is null. </exception>
-        internal ChatCompletions(string id, DateTimeOffset created, string model, CompletionsUsage usage, IEnumerable<ChatChoice> choices)
+        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="model"/>, <paramref name="choices"/> or <paramref name="usage"/> is null. </exception>
+        internal ChatCompletions(string id, DateTimeOffset created, string model, IEnumerable<ChatChoice> choices, CompletionsUsage usage)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(model, nameof(model));
-            Argument.AssertNotNull(usage, nameof(usage));
             Argument.AssertNotNull(choices, nameof(choices));
+            Argument.AssertNotNull(usage, nameof(usage));
 
             Id = id;
             Created = created;
             Model = model;
-            Usage = usage;
             Choices = choices.ToList();
+            Usage = usage;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletions"/>. </summary>
@@ -85,20 +85,20 @@ namespace Azure.AI.Inference
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
         /// </param>
         /// <param name="model"> The model used for the chat completion. </param>
-        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <param name="choices">
         /// The collection of completions choices associated with this completions response.
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
+        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletions(string id, DateTimeOffset created, string model, CompletionsUsage usage, IReadOnlyList<ChatChoice> choices, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletions(string id, DateTimeOffset created, string model, IReadOnlyList<ChatChoice> choices, CompletionsUsage usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Created = created;
             Model = model;
-            Usage = usage;
             Choices = choices;
+            Usage = usage;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

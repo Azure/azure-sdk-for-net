@@ -16,7 +16,7 @@ namespace BasicTypeSpec.Models
     public static partial class BasicTypeSpecModelFactory
     {
         /// <summary> A model with a few properties of literal types. </summary>
-        /// <param name="name"> name of the Thing. </param>
+        /// <param name="name"> name of the ThingModel. </param>
         /// <param name="requiredUnion"> required Union. </param>
         /// <param name="requiredLiteralString"> required literal string. </param>
         /// <param name="requiredLiteralInt"> required literal int. </param>
@@ -29,13 +29,13 @@ namespace BasicTypeSpec.Models
         /// <param name="requiredBadDescription"> description with xml &lt;|endoftext|&gt;. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
-        /// <returns> A new <see cref="Models.Thing"/> instance for mocking. </returns>
-        public static Thing Thing(string name = default, BinaryData requiredUnion = default, ThingRequiredLiteralString requiredLiteralString = default, ThingRequiredLiteralInt requiredLiteralInt = default, ThingRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
+        /// <returns> A new <see cref="Models.ThingModel"/> instance for mocking. </returns>
+        public static ThingModel ThingModel(string name = default, BinaryData requiredUnion = default, ThingModelRequiredLiteralString requiredLiteralString = default, ThingModelRequiredLiteralInt requiredLiteralInt = default, ThingModelRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
         {
             optionalNullableList ??= new ChangeTrackingList<int>();
             requiredNullableList ??= new ChangeTrackingList<int>();
 
-            return new Thing(
+            return new ThingModel(
                 name,
                 requiredUnion,
                 requiredLiteralString,
@@ -78,7 +78,7 @@ namespace BasicTypeSpec.Models
         /// <param name="modelWithRequiredNullable"> this is a model with required nullable properties. </param>
         /// <param name="requiredBytes"> Required bytes. </param>
         /// <returns> A new <see cref="Models.RoundTripModel"/> instance for mocking. </returns>
-        public static RoundTripModel RoundTripModel(string requiredString = default, int requiredInt = default, IEnumerable<StringFixedEnum> requiredCollection = default, IDictionary<string, StringExtensibleEnum> requiredDictionary = default, Thing requiredModel = default, IntExtensibleEnum? intExtensibleEnum = default, IEnumerable<IntExtensibleEnum> intExtensibleEnumCollection = default, FloatExtensibleEnum? floatExtensibleEnum = default, FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default, IEnumerable<FloatExtensibleEnum> floatExtensibleEnumCollection = default, FloatFixedEnum? floatFixedEnum = default, FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default, IEnumerable<FloatFixedEnum> floatFixedEnumCollection = default, IntFixedEnum? intFixedEnum = default, IEnumerable<IntFixedEnum> intFixedEnumCollection = default, StringFixedEnum? stringFixedEnum = default, BinaryData requiredUnknown = default, BinaryData optionalUnknown = default, IDictionary<string, BinaryData> requiredRecordUnknown = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyRequiredRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyOptionalRecordUnknown = default, ModelWithRequiredNullableProperties modelWithRequiredNullable = default, BinaryData requiredBytes = default)
+        public static RoundTripModel RoundTripModel(string requiredString = default, int requiredInt = default, IEnumerable<StringFixedEnum> requiredCollection = default, IDictionary<string, StringExtensibleEnum> requiredDictionary = default, ThingModel requiredModel = default, IntExtensibleEnum? intExtensibleEnum = default, IEnumerable<IntExtensibleEnum> intExtensibleEnumCollection = default, FloatExtensibleEnum? floatExtensibleEnum = default, FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default, IEnumerable<FloatExtensibleEnum> floatExtensibleEnumCollection = default, FloatFixedEnum? floatFixedEnum = default, FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default, IEnumerable<FloatFixedEnum> floatFixedEnumCollection = default, IntFixedEnum? intFixedEnum = default, IEnumerable<IntFixedEnum> intFixedEnumCollection = default, StringFixedEnum? stringFixedEnum = default, BinaryData requiredUnknown = default, BinaryData optionalUnknown = default, IDictionary<string, BinaryData> requiredRecordUnknown = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyRequiredRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyOptionalRecordUnknown = default, ModelWithRequiredNullableProperties modelWithRequiredNullable = default, BinaryData requiredBytes = default)
         {
             requiredCollection ??= new ChangeTrackingList<StringFixedEnum>();
             requiredDictionary ??= new ChangeTrackingDictionary<string, StringExtensibleEnum>();
@@ -132,11 +132,11 @@ namespace BasicTypeSpec.Models
 
         /// <summary> this is not a friendly model but with a friendly name. </summary>
         /// <param name="name"> name of the NotFriend. </param>
-        /// <returns> A new <see cref="Models.Friend"/> instance for mocking. </returns>
-        public static Friend Friend(string name = default)
+        /// <returns> A new <see cref="Models.FriendModel"/> instance for mocking. </returns>
+        public static FriendModel FriendModel(string name = default)
         {
 
-            return new Friend(name, additionalBinaryDataProperties: null);
+            return new FriendModel(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> this is a model with a projected name. </summary>

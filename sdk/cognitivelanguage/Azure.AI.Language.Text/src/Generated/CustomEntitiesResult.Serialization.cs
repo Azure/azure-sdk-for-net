@@ -11,13 +11,21 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.Text.Authoring.Models
 {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/TextAnalysisAuthoringError.Serialization.cs
+    public partial class TextAnalysisAuthoringError : IUtf8JsonSerializable, IJsonModel<TextAnalysisAuthoringError>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextAnalysisAuthoringError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<TextAnalysisAuthoringError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+========
     public partial class CustomEntitiesResult : IUtf8JsonSerializable, IJsonModel<CustomEntitiesResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomEntitiesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomEntitiesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,35 +36,43 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/TextAnalysisAuthoringError.Serialization.cs
+            var format = options.Format == "W" ? ((IPersistableModel<TextAnalysisAuthoringError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TextAnalysisAuthoringError)} does not support writing '{format}' format.");
+========
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomEntitiesResult)} does not support writing '{format}' format.");
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
             }
 
-            writer.WritePropertyName("errors"u8);
-            writer.WriteStartArray();
-            foreach (var item in Errors)
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code.ToString());
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            if (Optional.IsDefined(Target))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("target"u8);
+                writer.WriteStringValue(Target);
             }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (Optional.IsCollectionDefined(Details))
             {
-                writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WritePropertyName("projectName"u8);
-            writer.WriteStringValue(ProjectName);
-            writer.WritePropertyName("deploymentName"u8);
-            writer.WriteStringValue(DeploymentName);
-            writer.WritePropertyName("documents"u8);
-            writer.WriteStartArray();
-            foreach (var item in Documents)
+            if (Optional.IsDefined(Innererror))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("innererror"u8);
+                writer.WriteObjectValue(Innererror, options);
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -65,7 +81,7 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -74,6 +90,21 @@ namespace Azure.AI.Language.Text
             }
         }
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/TextAnalysisAuthoringError.Serialization.cs
+        TextAnalysisAuthoringError IJsonModel<TextAnalysisAuthoringError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextAnalysisAuthoringError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TextAnalysisAuthoringError)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextAnalysisAuthoringError(document.RootElement, options);
+        }
+
+        internal static TextAnalysisAuthoringError DeserializeTextAnalysisAuthoringError(JsonElement element, ModelReaderWriterOptions options = null)
+========
         CustomEntitiesResult IJsonModel<CustomEntitiesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -87,6 +118,7 @@ namespace Azure.AI.Language.Text
         }
 
         internal static CustomEntitiesResult DeserializeCustomEntitiesResult(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -94,31 +126,50 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/TextAnalysisAuthoringError.Serialization.cs
+            ErrorCode code = default;
+            string message = default;
+            string target = default;
+            IReadOnlyList<TextAnalysisAuthoringError> details = default;
+            InnerErrorModel innererror = default;
+========
             IReadOnlyList<DocumentError> errors = default;
             RequestStatistics statistics = default;
             string projectName = default;
             string deploymentName = default;
             IReadOnlyList<CustomEntityActionResult> documents = default;
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"u8))
+                if (property.NameEquals("code"u8))
                 {
-                    List<DocumentError> array = new List<DocumentError>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentError.DeserializeDocumentError(item, options));
-                    }
-                    errors = array;
+                    code = new ErrorCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("statistics"u8))
+                if (property.NameEquals("message"u8))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/TextAnalysisAuthoringError.Serialization.cs
+                    List<TextAnalysisAuthoringError> array = new List<TextAnalysisAuthoringError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DeserializeTextAnalysisAuthoringError(item, options));
+========
                     statistics = RequestStatistics.DeserializeRequestStatistics(property.Value, options);
                     continue;
                 }
@@ -138,8 +189,18 @@ namespace Azure.AI.Language.Text
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(CustomEntityActionResult.DeserializeCustomEntityActionResult(item, options));
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
                     }
-                    documents = array;
+                    details = array;
+                    continue;
+                }
+                if (property.NameEquals("innererror"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    innererror = InnerErrorModel.DeserializeInnerErrorModel(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,6 +209,20 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/TextAnalysisAuthoringError.Serialization.cs
+            return new TextAnalysisAuthoringError(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<TextAnalysisAuthoringError>(),
+                innererror,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<TextAnalysisAuthoringError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextAnalysisAuthoringError>)this).GetFormatFromOptions(options) : options.Format;
+========
             return new CustomEntitiesResult(
                 errors,
                 statistics,
@@ -160,12 +235,22 @@ namespace Azure.AI.Language.Text
         BinaryData IPersistableModel<CustomEntitiesResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/TextAnalysisAuthoringError.Serialization.cs
+                    throw new FormatException($"The model {nameof(TextAnalysisAuthoringError)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TextAnalysisAuthoringError IPersistableModel<TextAnalysisAuthoringError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextAnalysisAuthoringError>)this).GetFormatFromOptions(options) : options.Format;
+========
                     throw new FormatException($"The model {nameof(CustomEntitiesResult)} does not support writing '{options.Format}' format.");
             }
         }
@@ -173,12 +258,31 @@ namespace Azure.AI.Language.Text
         CustomEntitiesResult IPersistableModel<CustomEntitiesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/TextAnalysisAuthoringError.Serialization.cs
                         using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTextAnalysisAuthoringError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TextAnalysisAuthoringError)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TextAnalysisAuthoringError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TextAnalysisAuthoringError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTextAnalysisAuthoringError(document.RootElement);
+========
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomEntitiesResult(document.RootElement, options);
                     }
                 default:
@@ -192,8 +296,9 @@ namespace Azure.AI.Language.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CustomEntitiesResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCustomEntitiesResult(document.RootElement);
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

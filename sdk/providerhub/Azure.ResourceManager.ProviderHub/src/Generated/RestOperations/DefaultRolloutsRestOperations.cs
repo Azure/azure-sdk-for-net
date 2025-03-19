@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         DefaultRolloutData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         DefaultRolloutData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         DefaultRolloutListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DefaultRolloutListResult.DeserializeDefaultRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         DefaultRolloutListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DefaultRolloutListResult.DeserializeDefaultRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         DefaultRolloutListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DefaultRolloutListResult.DeserializeDefaultRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         DefaultRolloutListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DefaultRolloutListResult.DeserializeDefaultRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

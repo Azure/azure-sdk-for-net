@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI.Chat
         public static bool operator ==(ChatDocumentFilterReason left, ChatDocumentFilterReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatDocumentFilterReason"/> values are not the same. </summary>
         public static bool operator !=(ChatDocumentFilterReason left, ChatDocumentFilterReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChatDocumentFilterReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChatDocumentFilterReason"/>. </summary>
         public static implicit operator ChatDocumentFilterReason(string value) => new ChatDocumentFilterReason(value);
 
         /// <inheritdoc />

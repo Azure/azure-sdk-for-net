@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MySql
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Properties))
+                using (JsonDocument document = JsonDocument.Parse(Properties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MySql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlAdvisorData(document.RootElement, options);
                     }
                 default:

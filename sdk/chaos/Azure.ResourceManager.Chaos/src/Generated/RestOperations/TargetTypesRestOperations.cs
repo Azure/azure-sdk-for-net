@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         TargetTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TargetTypeListResult.DeserializeTargetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         TargetTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TargetTypeListResult.DeserializeTargetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ChaosTargetTypeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChaosTargetTypeData.DeserializeChaosTargetTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ChaosTargetTypeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChaosTargetTypeData.DeserializeChaosTargetTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         TargetTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TargetTypeListResult.DeserializeTargetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         TargetTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TargetTypeListResult.DeserializeTargetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

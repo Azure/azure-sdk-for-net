@@ -41,7 +41,13 @@ namespace Azure.Security.CodeTransparency.Tests
             var pemText = Encoding.Default.GetString(pem);
             string base64 = pemText.Replace("-----BEGIN CERTIFICATE-----", "").Replace("-----END CERTIFICATE-----", "").Trim();
             byte[] rawCert = Convert.FromBase64String(base64);
-            return new X509Certificate2(rawCert);
+
+#if NET9_0_OR_GREATER
+            var cert = X509CertificateLoader.LoadCertificate(rawCert);
+#else
+            var cert = new X509Certificate2(rawCert);
+#endif
+            return cert;
         }
 
         [SetUp]

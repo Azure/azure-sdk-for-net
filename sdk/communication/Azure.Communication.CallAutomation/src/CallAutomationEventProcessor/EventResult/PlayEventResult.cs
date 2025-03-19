@@ -12,6 +12,21 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get; internal set; }
 
         /// <summary>
+        /// <see cref="PlayStarted"/> event will be returned once the play has started successfully.
+        /// </summary>
+        public PlayStarted StartResult { get; }
+
+        /// <summary>
+        /// <see cref="PlayPaused"/> event will be returned once the play is paused successfully.
+        /// </summary>
+        public PlayPaused PauseResult { get; }
+
+        /// <summary>
+        /// <see cref="PlayResumed"/> event will be returned once the play is resumed successfully.
+        /// </summary>
+        public PlayResumed ResumeResult { get; }
+
+        /// <summary>
         /// <see cref="PlayCompleted"/> event will be returned once the play is completed successfully.
         /// </summary>
         public PlayCompleted SuccessResult { get; }
@@ -21,11 +36,14 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public PlayFailed FailureResult { get; }
 
-        internal PlayEventResult(bool isSuccess, PlayCompleted successResult, PlayFailed failureResult)
+        internal PlayEventResult(bool isSuccess, PlayCompleted successResult, PlayFailed failureResult, PlayStarted startResult, PlayPaused pauseResult, PlayResumed resumeResult)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;
             FailureResult = failureResult;
+            StartResult = startResult;
+            PauseResult = pauseResult;
+            ResumeResult = resumeResult;
         }
     }
 }

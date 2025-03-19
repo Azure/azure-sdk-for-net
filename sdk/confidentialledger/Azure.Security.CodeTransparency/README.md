@@ -103,5 +103,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ccf]: https://github.com/Microsoft/CCF
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fconfidentialledger%2FAzure.Security.CodeTransparency%2FREADME.png)

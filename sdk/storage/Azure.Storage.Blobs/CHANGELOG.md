@@ -1,6 +1,21 @@
 # Release History
 
-## 12.24.0-beta.1 (Unreleased)
+## 12.25.0-beta.1 (Unreleased)
+
+### Features Added
+- Added support for service version 2025-05-05.
+
+## 12.24.0 (2025-03-11)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
+- Added the following Client Builders: `AddBlobServiceClient(Uri, Azure.SasCredential)`, `AddBlobServiceClient(Uri, TokenCredential)`
+
+### Bugs Fixed
+- Fixed bug where a `BlobServiceClient`, `BlobContainerClient`, `BlobBaseClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+- Fixed bug where a `BlobServiceClient`, `BlobContainerClient`, `BlobBaseClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+
+## 12.24.0-beta.1 (2025-02-11)
 
 ### Features Added
 - Added support for service version 2025-05-05.

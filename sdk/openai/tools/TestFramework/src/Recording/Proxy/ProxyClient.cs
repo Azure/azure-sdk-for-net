@@ -620,7 +620,7 @@ public class ProxyClient
                     string error;
                     try
                     {
-                        var parsed = response.Content.ToObjectFromJson<ErrorResponse>(new()
+                        var parsed = response.Content.ToObjectFromJson<ErrorResponse>(new JsonSerializerOptions()
                         {
                             PropertyNameCaseInsensitive = true
                         });

@@ -20,17 +20,15 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample8_TextAuthoring_LoadSnapshotAsync
             string projectName = "LoanAgreements";
             string trainedModelLabel = "ModelLabel"; // Replace with your actual model label.
+            TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            Operation operation = await authoringClient.LoadSnapshotAsync(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                trainedModelLabel: trainedModelLabel
+            Operation operation = await trainedModelClient.LoadSnapshotAsync(
+                waitUntil: WaitUntil.Completed
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

@@ -9,9 +9,15 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/PlayStarted.Serialization.cs
     public partial class PlayStarted
     {
         internal static PlayStarted DeserializePlayStarted(JsonElement element)
+========
+    public partial class PlayPaused
+    {
+        internal static PlayPaused DeserializePlayPaused(JsonElement element)
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/PlayPaused.Serialization.cs
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,15 +60,26 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/PlayStarted.Serialization.cs
             return new PlayStarted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+========
+            return new PlayPaused(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/PlayPaused.Serialization.cs
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/PlayStarted.Serialization.cs
         internal static PlayStarted FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializePlayStarted(document.RootElement);
+========
+        internal static PlayPaused FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePlayPaused(document.RootElement);
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/PlayPaused.Serialization.cs
         }
     }
 }

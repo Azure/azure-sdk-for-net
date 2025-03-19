@@ -510,6 +510,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 SourceAccount = sourceAccount.Id.Name,
                 DestinationAccount = destAccount.Id.Name,
+                IsMetricsEnabled = true,
                 Rules =
                 {
                     new ObjectReplicationPolicyRule(containerName1, containerName2)
@@ -526,6 +527,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(objectReplicationPolicy);
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
+            Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
 
             //get policy
             List<ObjectReplicationPolicyResource> policies = await objectReplicationPolicyCollection.GetAllAsync().ToEnumerableAsync();
@@ -533,6 +535,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(objectReplicationPolicy);
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
+            Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
 
             //delete policy
             await objectReplicationPolicy.DeleteAsync(WaitUntil.Completed);

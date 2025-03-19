@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Workloads
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSapVirtualInstanceData(document.RootElement, options);
                     }
                 default:

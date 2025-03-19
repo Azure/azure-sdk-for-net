@@ -83,7 +83,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessageReadReceiptsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChatMessageReadReceiptsCollection.DeserializeChatMessageReadReceiptsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -112,7 +112,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessageReadReceiptsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChatMessageReadReceiptsCollection.DeserializeChatMessageReadReceiptsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.Communication.Chat
                 case 201:
                     {
                         SendChatMessageResultInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SendChatMessageResultInternal.DeserializeSendChatMessageResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -290,7 +290,7 @@ namespace Azure.Communication.Chat
                 case 201:
                     {
                         SendChatMessageResultInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SendChatMessageResultInternal.DeserializeSendChatMessageResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -343,7 +343,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessagesCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChatMessagesCollection.DeserializeChatMessagesCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -372,7 +372,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessagesCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChatMessagesCollection.DeserializeChatMessagesCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -421,7 +421,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessageInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChatMessageInternal.DeserializeChatMessageInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -453,7 +453,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessageInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChatMessageInternal.DeserializeChatMessageInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -668,7 +668,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatParticipantsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChatParticipantsCollection.DeserializeChatParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -697,7 +697,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatParticipantsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChatParticipantsCollection.DeserializeChatParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -835,7 +835,7 @@ namespace Azure.Communication.Chat
                 case 201:
                     {
                         AddChatParticipantsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddChatParticipantsResult.DeserializeAddChatParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -867,7 +867,7 @@ namespace Azure.Communication.Chat
                 case 201:
                     {
                         AddChatParticipantsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddChatParticipantsResult.DeserializeAddChatParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -978,7 +978,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatThreadPropertiesInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChatThreadPropertiesInternal.DeserializeChatThreadPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1005,7 +1005,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatThreadPropertiesInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChatThreadPropertiesInternal.DeserializeChatThreadPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1122,7 +1122,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessageReadReceiptsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChatMessageReadReceiptsCollection.DeserializeChatMessageReadReceiptsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1156,7 +1156,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessageReadReceiptsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChatMessageReadReceiptsCollection.DeserializeChatMessageReadReceiptsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1203,7 +1203,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessagesCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChatMessagesCollection.DeserializeChatMessagesCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1237,7 +1237,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatMessagesCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChatMessagesCollection.DeserializeChatMessagesCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1284,7 +1284,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatParticipantsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChatParticipantsCollection.DeserializeChatParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1318,7 +1318,7 @@ namespace Azure.Communication.Chat
                 case 200:
                     {
                         ChatParticipantsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChatParticipantsCollection.DeserializeChatParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -15,11 +15,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
+<<<<<<<< HEAD:sdk/quota/Azure.ResourceManager.Quota/src/Generated/GroupQuotaLimitListData.Serialization.cs
+    public partial class GroupQuotaLimitListData : IUtf8JsonSerializable, IJsonModel<GroupQuotaLimitListData>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupQuotaLimitListData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GroupQuotaLimitListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+========
     public partial class ArcSettings : IUtf8JsonSerializable, IJsonModel<ArcSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArcSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +38,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+<<<<<<<< HEAD:sdk/quota/Azure.ResourceManager.Quota/src/Generated/GroupQuotaLimitListData.Serialization.cs
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{format}' format.");
+========
             var format = options.Format == "W" ? ((IPersistableModel<ArcSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArcSettings)} does not support writing '{format}' format.");
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.Serialization.cs
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -55,6 +70,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
+<<<<<<<< HEAD:sdk/quota/Azure.ResourceManager.Quota/src/Generated/GroupQuotaLimitListData.Serialization.cs
+        GroupQuotaLimitListData IJsonModel<GroupQuotaLimitListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGroupQuotaLimitListData(document.RootElement, options);
+        }
+
+        internal static GroupQuotaLimitListData DeserializeGroupQuotaLimitListData(JsonElement element, ModelReaderWriterOptions options = null)
+========
         ArcSettings IJsonModel<ArcSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -68,6 +98,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         internal static ArcSettings DeserializeArcSettings(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,6 +106,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/quota/Azure.ResourceManager.Quota/src/Generated/GroupQuotaLimitListData.Serialization.cs
+            GroupQuotaLimitListProperties properties = default;
+========
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.Serialization.cs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -85,6 +120,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/quota/Azure.ResourceManager.Quota/src/Generated/GroupQuotaLimitListData.Serialization.cs
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = GroupQuotaLimitListProperties.DeserializeGroupQuotaLimitListProperties(property.Value, options);
+                    continue;
+                }
+========
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.Serialization.cs
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -157,7 +204,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/quota/Azure.ResourceManager.Quota/src/Generated/GroupQuotaLimitListData.Serialization.cs
+            return new GroupQuotaLimitListData(
+========
             return new ArcSettings(
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.Serialization.cs
                 id,
                 name,
                 type,
@@ -271,9 +322,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return BinaryData.FromString(builder.ToString());
         }
 
+<<<<<<<< HEAD:sdk/quota/Azure.ResourceManager.Quota/src/Generated/GroupQuotaLimitListData.Serialization.cs
+        BinaryData IPersistableModel<GroupQuotaLimitListData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
+========
         BinaryData IPersistableModel<ArcSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcSettings>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.Serialization.cs
 
             switch (format)
             {
@@ -282,6 +339,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
+<<<<<<<< HEAD:sdk/quota/Azure.ResourceManager.Quota/src/Generated/GroupQuotaLimitListData.Serialization.cs
+                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GroupQuotaLimitListData IPersistableModel<GroupQuotaLimitListData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
+========
                     throw new FormatException($"The model {nameof(ArcSettings)} does not support writing '{options.Format}' format.");
             }
         }
@@ -289,12 +355,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
         ArcSettings IPersistableModel<ArcSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcSettings>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
+<<<<<<<< HEAD:sdk/quota/Azure.ResourceManager.Quota/src/Generated/GroupQuotaLimitListData.Serialization.cs
                         using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGroupQuotaLimitListData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GroupQuotaLimitListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+========
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeArcSettings(document.RootElement, options);
                     }
                 default:
@@ -303,5 +381,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         string IPersistableModel<ArcSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.Serialization.cs
     }
 }

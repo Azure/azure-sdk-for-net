@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToSerialString());
             writer.WritePropertyName("category"u8);
-            writer.WriteStringValue(Category.ToSerialString());
+            writer.WriteStringValue(Category.ToString());
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -48,7 +48,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,6 +83,8 @@ namespace Azure.AI.Projects
                 {
                     case "AAD": return InternalConnectionPropertiesAADAuth.DeserializeInternalConnectionPropertiesAADAuth(element, options);
                     case "ApiKey": return ConnectionPropertiesApiKeyAuth.DeserializeConnectionPropertiesApiKeyAuth(element, options);
+                    case "CustomKeys": return InternalConnectionPropertiesCustomAuth.DeserializeInternalConnectionPropertiesCustomAuth(element, options);
+                    case "None": return InternalConnectionPropertiesNoAuth.DeserializeInternalConnectionPropertiesNoAuth(element, options);
                     case "SAS": return InternalConnectionPropertiesSASAuth.DeserializeInternalConnectionPropertiesSASAuth(element, options);
                 }
             }
@@ -110,7 +112,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectionProperties(document.RootElement, options);
                     }
                 default:
@@ -124,7 +126,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ConnectionProperties FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeConnectionProperties(document.RootElement);
         }
 

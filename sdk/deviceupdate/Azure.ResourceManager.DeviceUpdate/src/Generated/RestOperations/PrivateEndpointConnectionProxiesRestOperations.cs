@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 200:
                     {
                         PrivateEndpointConnectionProxyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateEndpointConnectionProxyListResult.DeserializePrivateEndpointConnectionProxyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 200:
                     {
                         PrivateEndpointConnectionProxyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateEndpointConnectionProxyListResult.DeserializePrivateEndpointConnectionProxyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 200:
                     {
                         DeviceUpdatePrivateEndpointConnectionProxyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceUpdatePrivateEndpointConnectionProxyData.DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 200:
                     {
                         DeviceUpdatePrivateEndpointConnectionProxyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceUpdatePrivateEndpointConnectionProxyData.DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
