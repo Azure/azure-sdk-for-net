@@ -96,6 +96,7 @@ try {
     }
 
     # build and pack the emitter
+    Invoke-LoggedCommand "npm install @types/node --save-dev" -GroupOutput
     Invoke-LoggedCommand "npm run build" -GroupOutput
 
     if ($BuildNumber) {
