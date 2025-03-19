@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         ImportCollectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportCollectorListResult.DeserializeImportCollectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         ImportCollectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportCollectorListResult.DeserializeImportCollectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         MigrationAssessmentImportCollectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MigrationAssessmentImportCollectorData.DeserializeMigrationAssessmentImportCollectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         MigrationAssessmentImportCollectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MigrationAssessmentImportCollectorData.DeserializeMigrationAssessmentImportCollectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         ImportCollectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportCollectorListResult.DeserializeImportCollectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         ImportCollectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportCollectorListResult.DeserializeImportCollectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

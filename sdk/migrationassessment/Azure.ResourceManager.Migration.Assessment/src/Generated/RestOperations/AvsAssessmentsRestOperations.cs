@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         AvsAssessmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvsAssessmentListResult.DeserializeAvsAssessmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         AvsAssessmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvsAssessmentListResult.DeserializeAvsAssessmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         MigrationAvsAssessmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MigrationAvsAssessmentData.DeserializeMigrationAvsAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         MigrationAvsAssessmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MigrationAvsAssessmentData.DeserializeMigrationAvsAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Migration.Assessment
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(body);
 #else
-            using (JsonDocument document = JsonDocument.Parse(body))
+            using (JsonDocument document = JsonDocument.Parse(body, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
             }
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         AvsAssessmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvsAssessmentListResult.DeserializeAvsAssessmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         AvsAssessmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvsAssessmentListResult.DeserializeAvsAssessmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

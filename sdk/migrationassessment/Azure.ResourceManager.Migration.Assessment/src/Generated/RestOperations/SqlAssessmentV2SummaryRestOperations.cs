@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         SqlAssessmentV2SummaryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlAssessmentV2SummaryListResult.DeserializeSqlAssessmentV2SummaryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         SqlAssessmentV2SummaryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlAssessmentV2SummaryListResult.DeserializeSqlAssessmentV2SummaryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         MigrationSqlAssessmentV2SummaryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MigrationSqlAssessmentV2SummaryData.DeserializeMigrationSqlAssessmentV2SummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         MigrationSqlAssessmentV2SummaryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MigrationSqlAssessmentV2SummaryData.DeserializeMigrationSqlAssessmentV2SummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         SqlAssessmentV2SummaryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlAssessmentV2SummaryListResult.DeserializeSqlAssessmentV2SummaryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         SqlAssessmentV2SummaryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlAssessmentV2SummaryListResult.DeserializeSqlAssessmentV2SummaryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

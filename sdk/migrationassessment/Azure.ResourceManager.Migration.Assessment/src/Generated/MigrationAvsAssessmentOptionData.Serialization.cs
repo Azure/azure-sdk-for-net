@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrationAvsAssessmentOptionData(document.RootElement, options);
                     }
                 default:

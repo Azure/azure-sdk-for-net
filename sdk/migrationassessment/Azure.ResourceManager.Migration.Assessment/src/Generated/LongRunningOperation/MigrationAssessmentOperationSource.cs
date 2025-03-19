@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessmentResource IOperationSource<MigrationAssessmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MigrationAssessmentData.DeserializeMigrationAssessmentData(document.RootElement);
+            var data = ModelReaderWriter.Read<MigrationAssessmentData>(response.Content);
             return new MigrationAssessmentResource(_client, data);
         }
 
         async ValueTask<MigrationAssessmentResource> IOperationSource<MigrationAssessmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MigrationAssessmentData.DeserializeMigrationAssessmentData(document.RootElement);
-            return new MigrationAssessmentResource(_client, data);
+            var data = ModelReaderWriter.Read<MigrationAssessmentData>(response.Content);
+            return await Task.FromResult(new MigrationAssessmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

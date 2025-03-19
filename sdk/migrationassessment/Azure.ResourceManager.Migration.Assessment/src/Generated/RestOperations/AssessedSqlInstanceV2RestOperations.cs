@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         AssessedSqlInstanceV2ListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssessedSqlInstanceV2ListResult.DeserializeAssessedSqlInstanceV2ListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         AssessedSqlInstanceV2ListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssessedSqlInstanceV2ListResult.DeserializeAssessedSqlInstanceV2ListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         MigrationAssessedSqlInstanceV2Data value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MigrationAssessedSqlInstanceV2Data.DeserializeMigrationAssessedSqlInstanceV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         MigrationAssessedSqlInstanceV2Data value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MigrationAssessedSqlInstanceV2Data.DeserializeMigrationAssessedSqlInstanceV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         AssessedSqlInstanceV2ListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssessedSqlInstanceV2ListResult.DeserializeAssessedSqlInstanceV2ListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 case 200:
                     {
                         AssessedSqlInstanceV2ListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssessedSqlInstanceV2ListResult.DeserializeAssessedSqlInstanceV2ListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

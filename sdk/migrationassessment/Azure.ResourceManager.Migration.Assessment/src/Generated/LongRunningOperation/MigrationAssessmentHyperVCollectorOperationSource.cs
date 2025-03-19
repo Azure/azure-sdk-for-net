@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessmentHyperVCollectorResource IOperationSource<MigrationAssessmentHyperVCollectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MigrationAssessmentHyperVCollectorData.DeserializeMigrationAssessmentHyperVCollectorData(document.RootElement);
+            var data = ModelReaderWriter.Read<MigrationAssessmentHyperVCollectorData>(response.Content);
             return new MigrationAssessmentHyperVCollectorResource(_client, data);
         }
 
         async ValueTask<MigrationAssessmentHyperVCollectorResource> IOperationSource<MigrationAssessmentHyperVCollectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MigrationAssessmentHyperVCollectorData.DeserializeMigrationAssessmentHyperVCollectorData(document.RootElement);
-            return new MigrationAssessmentHyperVCollectorResource(_client, data);
+            var data = ModelReaderWriter.Read<MigrationAssessmentHyperVCollectorData>(response.Content);
+            return await Task.FromResult(new MigrationAssessmentHyperVCollectorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
