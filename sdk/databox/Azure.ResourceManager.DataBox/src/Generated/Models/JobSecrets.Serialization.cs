@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBox": return DataboxJobSecrets.DeserializeDataboxJobSecrets(element, options);
+                    case "DataBox": return DataBoxJobSecrets.DeserializeDataBoxJobSecrets(element, options);
                     case "DataBoxCustomerDisk": return CustomerDiskJobSecrets.DeserializeCustomerDiskJobSecrets(element, options);
                     case "DataBoxDisk": return DataBoxDiskJobSecrets.DeserializeDataBoxDiskJobSecrets(element, options);
                     case "DataBoxHeavy": return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element, options);

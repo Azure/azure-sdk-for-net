@@ -57,11 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             if (IsRedirection(message.Response, out string? redirectionValue))
             {
                 Debug.WriteLine($"OnPing: Received Redirection: {redirectionValue}");
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.LiveMetricsRedirectReceived(redirectionValue);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.LiveMetricsRedirectReceived(redirectionValue);
-#endif
 
                 message.Response.Dispose();
 

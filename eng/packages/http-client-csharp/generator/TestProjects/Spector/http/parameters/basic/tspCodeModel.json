@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "SimpleRequest",
-   "clientNamespace": "Parameters.Basic.ImplicitBody",
+   "namespace": "Parameters.Basic.ImplicitBody",
    "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -45,7 +45,7 @@
    "$id": "7",
    "kind": "model",
    "name": "User",
-   "clientNamespace": "Parameters.Basic.ExplicitBody",
+   "namespace": "Parameters.Basic.ExplicitBody",
    "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User",
    "usage": "Input,Json",
    "doc": "This is a simple model.",
@@ -84,7 +84,7 @@
   {
    "$id": "12",
    "Name": "BasicClient",
-   "ClientNamespace": "Parameters.Basic",
+   "Namespace": "Parameters.Basic",
    "Doc": "Test for basic parameters cases.",
    "Operations": [],
    "Protocol": {
@@ -123,12 +123,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Parameters.Basic"
   },
   {
    "$id": "18",
    "Name": "ExplicitBody",
-   "ClientNamespace": "Parameters.Basic.ExplicitBody",
+   "Namespace": "Parameters.Basic.ExplicitBody",
    "Operations": [
     {
      "$id": "19",
@@ -188,13 +189,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/basic/explicit-body/simple",
      "RequestMediaTypes": [
@@ -244,12 +243,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Parameters.Basic.ExplicitBody"
   },
   {
    "$id": "30",
    "Name": "ImplicitBody",
-   "ClientNamespace": "Parameters.Basic.ImplicitBody",
+   "Namespace": "Parameters.Basic.ImplicitBody",
    "Operations": [
     {
      "$id": "31",
@@ -309,13 +309,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/basic/implicit-body/simple",
      "RequestMediaTypes": [
@@ -365,7 +363,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Parameters.Basic.ImplicitBody"
   }
  ]
 }
