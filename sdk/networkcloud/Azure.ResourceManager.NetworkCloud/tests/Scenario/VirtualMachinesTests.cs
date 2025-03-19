@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
                 SshPublicKeys =
                 {
-                    new NetworkCloudSshPublicKey("ssh-rsa ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZVQ8kqj4YM4sM2+sXH/gQmqiVS4Bl9Y5ZAnBZSlW2QEs1Qg8ubiYHMwYU5Z+yKXmcnJ0lJEyF9opa0em3Y9Du5BZ5MMGWn8jWR0OpaDgXMxZJa5cIg6uGtk5vmav/XOAUHtjkqTKJgWBfHJZFfccyfOST66nyotrSrl1FQZUBVU0fTP/rnH/2MrD7r9rhC5hgRyh6RFjyw3rI5e+WJ9v/Edi9EGvnrUXQy9PXLQGiaEgCnktbdvHfvBZOYrrDLr/vjFFKBvgfEJqBg05lmQRw/bF9xuwfbM36wxGjIyohLMIHcHBP3QT55onaY8hyUSzcLAAvbpzev0gXujxXzkCKYEfXHjvEeEhRVm57Gnw8/2dTnqBJkNo5x+2y584oKbYthRkX4LM+JipDua6jMl5LYDJi5Y2V1A0uq67rxmnfI5i+Lw/Q9tiWPMh05ZsXTA2MGds5bWjsK9cL+w3YSPjmi59YHgZNZ4eW0/nMj6ioqy78A5casVmG4k/10TwqZik= cloudtest@simulator")
+                    new NetworkCloudSshPublicKey("ssh-rsa REDACTED")
                 },
                 VmImageRepositoryCredentials = new ImageRepositoryCredentials
                 (
