@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudCloudServicesNetworkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudCloudServicesNetworkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

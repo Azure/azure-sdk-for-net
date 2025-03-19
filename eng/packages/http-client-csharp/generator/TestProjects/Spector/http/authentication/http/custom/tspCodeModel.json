@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "InvalidAuth",
-   "clientNamespace": "Authentication.Http.Custom",
+   "namespace": "Authentication.Http.Custom",
    "crossLanguageDefinitionId": "Authentication.Http.Custom.InvalidAuth",
    "usage": "Error,Json,Exception",
    "decorators": [],
@@ -46,7 +46,7 @@
   {
    "$id": "7",
    "Name": "CustomClient",
-   "ClientNamespace": "Authentication.Http.Custom",
+   "Namespace": "Authentication.Http.Custom",
    "Doc": "Illustrates clients generated with generic HTTP auth.",
    "Operations": [
     {
@@ -62,13 +62,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/authentication/http/custom/valid",
      "BufferResponse": true,
@@ -118,13 +116,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/authentication/http/custom/invalid",
      "BufferResponse": true,
@@ -170,7 +166,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Authentication.Http.Custom"
   }
  ],
  "Auth": {

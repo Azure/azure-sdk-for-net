@@ -295,6 +295,8 @@ namespace Azure.Storage.Files.DataLake
             _uri = uriBuilder.ToUri();
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
+            _accountName = conn.AccountName;
+            _path = path;
 
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
@@ -327,13 +329,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential)
-            : this(
-                  pathUri,
-                  credential.AsPolicy(),
-                  options: null,
-                  storageSharedKeyCredential: credential,
-                  sasCredential: null,
-                  tokenCredential: null)
+            : this(pathUri, credential, default)
         {
         }
 
@@ -363,6 +359,7 @@ namespace Azure.Storage.Files.DataLake
                   sasCredential: null,
                   tokenCredential: null)
         {
+            _accountName ??= credential?.AccountName;
         }
 
         /// <summary>
@@ -763,10 +760,10 @@ namespace Azure.Storage.Files.DataLake
                 || _name == null)
             {
                 var builder = new DataLakeUriBuilder(Uri);
-                _fileSystemName = builder.FileSystemName;
-                _accountName = builder.AccountName;
-                _path = builder.DirectoryOrFilePath;
-                _name = builder.LastDirectoryOrFileName;
+                _fileSystemName ??= builder.FileSystemName;
+                _accountName ??= builder.AccountName;
+                _path ??= builder.DirectoryOrFilePath;
+                _name ??= builder.LastDirectoryOrFileName;
             }
         }
 

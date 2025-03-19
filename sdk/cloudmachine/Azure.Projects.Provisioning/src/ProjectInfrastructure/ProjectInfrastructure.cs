@@ -1,24 +1,29 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using Azure.Projects.AppConfiguration;
 using Azure.Projects.Core;
-using Azure.Projects.EventGrid;
-using Azure.Projects.ServiceBus;
-using Azure.Projects.Storage;
 using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Roles;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects;
 
+[DebuggerTypeProxy(typeof(ProjectInfrastructureDebugView))]
 public partial class ProjectInfrastructure
 {
     private readonly Infrastructure _infrastructure = new("project");
-    private readonly List<NamedProvisionableConstruct> _constrcuts = [];
+    private readonly Dictionary<string, NamedProvisionableConstruct> _constrcuts = [];
+    private readonly Dictionary<Provisionable, List<FeatureRole>> _requiredSystemRoles = new();
+    private readonly FeatureCollection _features = new();
+    private readonly ConnectionStore _connectionStore;
 
     /// <summary>
     /// This is the resource group name for the project resources.
@@ -34,20 +39,16 @@ public partial class ProjectInfrastructure
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningParameter PrincipalIdParameter => new("principalId", typeof(string));
 
-    public FeatureCollection Features { get; } = new();
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public FeatureCollection Features => _features;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ConnectionCollection Connections { get; } = [];
+    public ConnectionStore Connections => _connectionStore;
 
-    public ProjectClient GetClient()
-    {
-        ProjectClient client = new(Connections);
-        return client;
-    }
-
-    public ProjectInfrastructure(string? projectId = default)
+    public ProjectInfrastructure(ConnectionStore connections, string? projectId = default)
     {
         ProjectId = projectId ?? ProjectClient.ReadOrCreateProjectId();
+        _connectionStore = connections;
 
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
@@ -64,94 +65,96 @@ public partial class ProjectInfrastructure
         });
 
         // setup project identity
-        Identity = new UserAssignedIdentity("project_identity")
+        Identity = new UserAssignedIdentity("projectIdentity")
         {
             Name = ProjectId
         };
         _infrastructure.Add(Identity);
         _infrastructure.Add(new ProvisioningOutput("project_identity_id", typeof(string)) { Value = Identity.Id });
+
+        if (_connectionStore.TryGetFeature(out AzureProjectFeature? feature))
+        {
+            AddFeature(feature!);
+        }
     }
+
+    public ProjectInfrastructure(string? projectId = default)
+        : this(new AppConfigConnectionStore(), projectId)
+    {}
 
     public T AddFeature<T>(T feature) where T: AzureProjectFeature
     {
-        feature.EmitFeatures(Features, ProjectId);
-        feature.EmitConnections(Connections, ProjectId);
+        feature.EmitFeatures(this);
         return feature;
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void AddResource(NamedProvisionableConstruct resource)
+    public void AddConstruct(string id, NamedProvisionableConstruct construct)
     {
-        _constrcuts.Add(resource);
+        _constrcuts.Add(id, construct);
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public T GetConstruct<T>(string id) where T : NamedProvisionableConstruct
+    {
+        if (_constrcuts.TryGetValue(id, out NamedProvisionableConstruct? construct))
+        {
+            return (T)construct;
+        }
+        throw new InvalidOperationException($"Construct of type {typeof(T).FullName} not found.");
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void AddSystemRole(Provisionable provisionable, string roleName, string roleId)
+    {
+        FeatureRole role = new(roleName, roleId);
+
+        if (!_requiredSystemRoles.TryGetValue(provisionable, out List<FeatureRole>? roles))
+        {
+            _requiredSystemRoles.Add(provisionable, [role]);
+        }
+        else
+        {
+            roles.Add(role);
+        }
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = default)
     {
-        context ??= new ProvisioningBuildOptions();
-
-        Features.Emit(this);
-
-        // Add any add-on resources to the infrastructure.
-        foreach (Provisionable resource in _constrcuts)
+        // emit features
+        foreach (AzureProjectFeature feature in Features)
         {
-            _infrastructure.Add(resource);
+            feature.EmitConstructs(this);
+        }
+
+        // add constructs to infrastructure
+        foreach (NamedProvisionableConstruct construct in _constrcuts.Values)
+        {
+            _infrastructure.Add(construct);
         }
 
         // This must occur after the features have been emitted.
-        context.InfrastructureResolvers.Add(new RoleResolver(ProjectId, Features.RoleAnnotations, [Identity], [PrincipalIdParameter]));
+        context ??= new ProvisioningBuildOptions();
+        context.InfrastructureResolvers.Add(new RoleResolver(ProjectId, _requiredSystemRoles, [Identity], [PrincipalIdParameter]));
 
         return _infrastructure.Build(context);
     }
-}
 
-public static class OfxExtensions
-{
-    public static void AddOfx(this ProjectInfrastructure infra)
+    private class ProjectInfrastructureDebugView
     {
-        infra.AddBlobsContainer();
-        infra.AddServiceBus();
-    }
+        private readonly ProjectInfrastructure _projectInfrastructure;
 
-    public static void AddBlobsContainer(this ProjectInfrastructure infra, string? containerName = default, bool enableEvents = true)
-    {
-        var storage = infra.AddStorageAccount();
-        var blobs = infra.AddFeature(new BlobServiceFeature(storage));
-        var defaultContainer = infra.AddFeature(new BlobContainerFeature(blobs));
-
-        if (enableEvents)
+        public ProjectInfrastructureDebugView(ProjectInfrastructure projectInfrastructure)
         {
-            var sb = infra.AddServiceBusNamespace();
-            var sbTopicPrivate = infra.AddFeature(new ServiceBusTopicFeature("cm_servicebus_topic_private", sb));
-            var systemTopic = infra.AddFeature(new EventGridSystemTopicFeature(infra.ProjectId, storage, "Microsoft.Storage.StorageAccounts"));
-            infra.AddFeature(new SystemTopicEventSubscriptionFeature("cm-eventgrid-subscription-blob", systemTopic, sbTopicPrivate, sb));
-            infra.AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate)); // TODO: should private connections not be in the Connections collection?
+            _projectInfrastructure = projectInfrastructure;
         }
-    }
 
-    private static ServiceBusNamespaceFeature AddServiceBusNamespace(this ProjectInfrastructure infra)
-    {
-        if (!infra.Features.TryGet(out ServiceBusNamespaceFeature? serviceBusNamespace))
-        {
-            serviceBusNamespace = infra.AddFeature(new ServiceBusNamespaceFeature(infra.ProjectId));
-        }
-        return serviceBusNamespace!;
-    }
+        public AzureProjectFeature[] Features => _projectInfrastructure.Features.ToArray();
 
-    private static StorageAccountFeature AddStorageAccount(this ProjectInfrastructure infra)
-    {
-        if (!infra.Features.TryGet(out StorageAccountFeature? storageAccount))
-        {
-            storageAccount = infra.AddFeature(new StorageAccountFeature(infra.ProjectId));
-        }
-        return storageAccount!;
-    }
+        //[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+        public Dictionary<string, NamedProvisionableConstruct> Constructs => _projectInfrastructure._constrcuts;
 
-    private static void AddServiceBus(this ProjectInfrastructure infra)
-    {
-        var sb = infra.AddServiceBusNamespace();
-        // Add core features
-        var sbTopicDefault = infra.AddFeature(new ServiceBusTopicFeature("cm_servicebus_default_topic", sb));
-        infra.AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopicDefault));
+        public string ProjectId => _projectInfrastructure.ProjectId;
     }
 }

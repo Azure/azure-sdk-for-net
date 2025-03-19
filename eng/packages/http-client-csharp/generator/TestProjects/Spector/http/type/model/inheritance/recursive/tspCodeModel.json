@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "Extension",
-   "clientNamespace": "Type.Model.Inheritance.Recursive",
+   "namespace": "Type.Model.Inheritance.Recursive",
    "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Extension",
    "usage": "Input,Output,Json",
    "doc": "extension",
@@ -17,7 +17,7 @@
     "$id": "3",
     "kind": "model",
     "name": "Element",
-    "clientNamespace": "Type.Model.Inheritance.Recursive",
+    "namespace": "Type.Model.Inheritance.Recursive",
     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Element",
     "usage": "Input,Output,Json",
     "doc": "element",
@@ -91,7 +91,7 @@
   {
    "$id": "12",
    "Name": "RecursiveClient",
-   "ClientNamespace": "Type.Model.Inheritance.Recursive",
+   "Namespace": "Type.Model.Inheritance.Recursive",
    "Doc": "Illustrates inheritance recursion",
    "Operations": [
     {
@@ -152,13 +152,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/recursive",
      "RequestMediaTypes": [
@@ -213,7 +211,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -222,7 +219,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/recursive",
      "BufferResponse": true,
@@ -268,7 +264,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Model.Inheritance.Recursive"
   }
  ]
 }

@@ -3,63 +3,125 @@
 
 #nullable enable
 
+using System;
+using System.Threading;
+using Azure.AI.OpenAI;
 using Azure.Data.AppConfiguration;
-using Azure.Projects.AIFoundry;
+using Azure.Messaging.ServiceBus;
 using Azure.Projects.KeyVault;
-using Azure.Projects.AppConfiguration;
+using Azure.Projects.Ofx;
 using Azure.Projects.OpenAI;
+using Azure.Projects.Storage;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
 using OpenAI.Chat;
+using OpenAI.Embeddings;
 
 namespace Azure.Projects.Tests;
 
 public class E2ETests
 {
+    private static string projectId = "cm00000000000test";
+
     [TestCase("-bicep")]
-    [TestCase("")]
+    //[TestCase("")]
     public void OpenAI(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+        ProjectInfrastructure infra = new(projectId);
         infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
         if (infra.TryExecuteCommand([arg])) return;
 
-        ProjectClient project = new(infra.Connections);
+        ProjectClient project = new(projectId, default);
         ChatClient chat = project.GetOpenAIChatClient();
-
-        Assert.AreEqual(2, project.Connections.Count);
     }
 
     [TestCase("-bicep")]
-    [TestCase("")]
-    public void AppConfiguration(string arg)
+    //[TestCase("")]
+    public void KeyVault(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
-        infra.AddFeature(new AppConfigurationFeature());
-        if (infra.TryExecuteCommand([arg]))
+        ProjectInfrastructure infra = new(projectId);
+        infra.AddFeature(new KeyVaultFeature());
+        if (infra.TryExecuteCommand([arg])) return;
+
+        ProjectClient project = new(projectId, default);
+        SecretClient secrets = project.GetSecretClient();
+    }
+
+    [TestCase("-bicep")]
+    //[TestCase("")]
+    public void All (string arg)
+    {
+        ProjectInfrastructure infrastructure = new(projectId);
+        AddAllFeratures(infrastructure);
+
+        if (infrastructure.TryExecuteCommand([arg]))
             return;
 
-        ProjectClient project = new(infra.Connections);
-        Assert.AreEqual(1, project.Connections.Count);
-
+        ProjectClient project = new(projectId, default);
+        SecretClient secrets = project.GetSecretClient();
+        BlobContainerClient defaultContainer = project.GetBlobContainerClient();
+        BlobContainerClient testContainer = project.GetBlobContainerClient("test");
         ConfigurationClient config = project.GetConfigurationClient();
+        ChatClient chat = project.GetOpenAIChatClient();
+        EmbeddingClient embedding = project.GetOpenAIEmbeddingClient();
+        //AzureOpenAIClient openAIClient = project.GetAzureOpenAIClient();
+        ServiceBusClient sb = project.GetServiceBusClient();
+        ServiceBusSender sender = project.GetServiceBusSender("cm_servicebus_topic_private", "cm_servicebus_subscription_private");
+        //ServiceBusReceiver receiver = project.GetServiceBusReceiver("cm_servicebus_topic_private", "cm_servicebus_subscription_private");
+
+        try
+        {
+            testContainer.UploadBlob("test", BinaryData.FromString("test"));
+            BlobDownloadResult result = testContainer.GetBlobClient("test").DownloadContent();
+            Assert.AreEqual("test", result.Content.ToString());
+        }
+        finally
+        {
+            testContainer.DeleteBlobIfExists("test");
+        }
     }
 
     [TestCase("-bicep")]
-    [TestCase("")]
-    public void FoundryWithOpenAI(string arg)
+    //[TestCase("")]
+    public void Ofx(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
-        var openAI = infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
-        var foundry = infra.AddFeature(new AIProjectFeature()
+        ProjectInfrastructure infrastructure = new(projectId);
+        infrastructure.AddFeature(new OfxProjectFeature());
+
+        if (infrastructure.TryExecuteCommand([arg]))
+            return;
+
+        OfxProjectClient project = new(projectId, default);
+        string? uploadedPath = null;
+        long done = 0;
+        try
         {
-            Connections = [ openAI.CreateConnection(infra.ProjectId) ]
-        });
+            project.Storage.WhenUploaded((file) =>
+            {
+                string downloaded = file.Download().ToString();
+                Assert.AreEqual("hello world", downloaded);
+                Interlocked.Increment(ref done);
+            });
 
-        infra.TryExecuteCommand([arg]);
+            uploadedPath = project.Storage.Upload(BinaryData.FromString("hello world"));
+            string downloaded = project.Storage.Download(uploadedPath).ToString();
+            Assert.AreEqual("hello world", downloaded);
+            while (Interlocked.Read(ref done)==0);
+        }
+        finally
+        {
+            if (uploadedPath!=null) project.Storage.Delete(uploadedPath);
+        }
+    }
 
-        ProjectClient project = new(infra.Connections);
-        ChatClient chat = project.GetOpenAIChatClient();
-
-        Assert.AreEqual(2, project.Connections.Count);
+    internal void AddAllFeratures(ProjectInfrastructure infrastructure)
+    {
+        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new KeyVaultFeature());
+        infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
+        infrastructure.AddFeature(new OpenAIEmbeddingFeature("text-embedding-ada-002", "2"));
+        infrastructure.AddFeature(new BlobContainerFeature("test", false));
     }
 }

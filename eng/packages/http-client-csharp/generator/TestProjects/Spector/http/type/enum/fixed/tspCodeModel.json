@@ -143,7 +143,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "Type.Enum.Fixed",
+   "namespace": "Type.Enum.Fixed",
    "doc": "Days of the week",
    "isFixed": true,
    "isFlags": false,
@@ -156,7 +156,7 @@
   {
    "$id": "18",
    "Name": "FixedClient",
-   "ClientNamespace": "Type.Enum.Fixed",
+   "Namespace": "Type.Enum.Fixed",
    "Operations": [],
    "Protocol": {
     "$id": "19"
@@ -194,12 +194,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Enum.Fixed"
   },
   {
    "$id": "24",
    "Name": "String",
-   "ClientNamespace": "Type.Enum.Fixed",
+   "Namespace": "Type.Enum.Fixed",
    "Operations": [
     {
      "$id": "25",
@@ -245,7 +246,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -254,7 +254,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/enum/fixed/string/known-value",
      "BufferResponse": true,
@@ -323,13 +322,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/enum/fixed/string/known-value",
      "RequestMediaTypes": [
@@ -401,13 +398,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/enum/fixed/string/unknown-value",
      "RequestMediaTypes": [
@@ -457,7 +452,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Enum.Fixed.String"
   }
  ]
 }

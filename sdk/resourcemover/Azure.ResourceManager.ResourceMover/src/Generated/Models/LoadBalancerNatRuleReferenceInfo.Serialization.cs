@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLoadBalancerNatRuleReferenceInfo(document.RootElement, options);
                     }
                 default:
