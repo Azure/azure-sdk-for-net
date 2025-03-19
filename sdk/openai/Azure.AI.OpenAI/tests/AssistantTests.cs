@@ -654,9 +654,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     }
 
     private static readonly DateTimeOffset s_2024 = new(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
-    private static FunctionToolDefinition s_getFoodForDayOfWeekTool = new()
+    private static FunctionToolDefinition s_getFoodForDayOfWeekTool = new("get_favorite_food_for_day_of_week")
     {
-        FunctionName = "get_favorite_food_for_day_of_week",
         Description = "gets the user's favorite food for a given day of the week, like Tuesday",
         Parameters = BinaryData.FromObjectAsJson(new
         {
