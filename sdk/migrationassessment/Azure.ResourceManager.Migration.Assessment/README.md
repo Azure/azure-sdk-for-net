@@ -1,6 +1,7 @@
 # Microsoft Azure Migration.Assessment management client library for .NET
 
-**[Describe the service briefly first.]**
+**Azure Migrate assessments help you evaluate your on-premises workloads and applications to determine the best migration approach. Assessments will help you to identify the recommended migration strategy, target Azure service, right-sized SKU, estimated cost, as well as readiness and migration blockers if any and develop a high confidence migration plan for smooth migration. 
+Azure Migrate supports both application-based and workload-specific assessments, covering Azure Virtual Machines, Azure MS SQL and MySQL databases and .Net and Java Web Apps**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
