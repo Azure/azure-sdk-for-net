@@ -36,6 +36,7 @@ function Build-Emitter {
             #     $errors += "Lint failed"
             # }
 
+            Invoke-LoggedCommand "npm install @types/node --save-dev" -GroupOutput
             Invoke-LoggedCommand "npm run build:emitter" -GroupOutput
             Invoke-LoggedCommand "npm run test:emitter" -GroupOutput -ErrorAction Continue
             if ($LastExitCode) {
