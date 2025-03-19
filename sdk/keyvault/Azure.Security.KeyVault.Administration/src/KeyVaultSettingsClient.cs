@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
 
             _diagnostics = new ClientDiagnostics(options, true);
-            _restClient = new KeyVaultRestClient(vaultUri,credential, options);
+            _restClient = new KeyVaultRestClient(vaultUri, credential, options);
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultBackupClient"/> class for mocking.
@@ -171,11 +171,11 @@ namespace Azure.Security.KeyVault.Administration
             {
                 Response response = _restClient.UpdateSetting(setting.Name, setting.ToRequestContent());
 
-                KeyVaultSetting value0 = default;
+                KeyVaultSetting updatedSetting = default;
                 using var document = JsonDocument.Parse(response.ContentStream, default);
-                value0 = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
+                updatedSetting = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
 
-                return Response.FromValue(value0, response);
+                return Response.FromValue(updatedSetting, response);
             }
             catch (Exception ex)
             {
@@ -201,11 +201,11 @@ namespace Azure.Security.KeyVault.Administration
             {
                 Response response = await _restClient.UpdateSettingAsync(setting.Name, setting.ToRequestContent()).ConfigureAwait(false);
 
-                KeyVaultSetting value0 = default;
+                KeyVaultSetting updatedSetting = default;
                 using var document = await JsonDocument.ParseAsync(response.ContentStream, default).ConfigureAwait(false);
-                value0 = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
+                updatedSetting = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
 
-                return Response.FromValue(value0, response);
+                return Response.FromValue(updatedSetting, response);
             }
             catch (Exception ex)
             {
