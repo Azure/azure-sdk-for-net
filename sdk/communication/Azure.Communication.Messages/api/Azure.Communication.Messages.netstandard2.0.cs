@@ -1,5 +1,52 @@
 namespace Azure.Communication.Messages
 {
+    public abstract partial class ActionBindings : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionBindings>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionBindings>
+    {
+        protected ActionBindings() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ActionBindings System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionBindings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionBindings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ActionBindings System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionBindings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionBindings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionBindings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ActionGroup : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroup>
+    {
+        public ActionGroup(string title, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ActionGroupItem> items) { }
+        public System.Collections.Generic.IList<Azure.Communication.Messages.ActionGroupItem> Items { get { throw null; } }
+        public string Title { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ActionGroup System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ActionGroup System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ActionGroupContent : Azure.Communication.Messages.MessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionGroupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroupContent>
+    {
+        public ActionGroupContent(string title, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ActionGroup> groups) { }
+        public System.Collections.Generic.IList<Azure.Communication.Messages.ActionGroup> Groups { get { throw null; } }
+        public string Title { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ActionGroupContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionGroupContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionGroupContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ActionGroupContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroupContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroupContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroupContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ActionGroupItem : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionGroupItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroupItem>
+    {
+        public ActionGroupItem(string id, string title, string description) { }
+        public string Description { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Title { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ActionGroupItem System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionGroupItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ActionGroupItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ActionGroupItem System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroupItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroupItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ActionGroupItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AddParticipantsOptions : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsOptions>
     {
         public AddParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationParticipant> participants) { }
@@ -55,6 +102,29 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.BotContact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.BotContact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ButtonContent : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ButtonContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ButtonContent>
+    {
+        public ButtonContent(string id, string title) { }
+        public string Id { get { throw null; } }
+        public string Title { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ButtonContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ButtonContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ButtonContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ButtonContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ButtonContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ButtonContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ButtonContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ButtonSetContent : Azure.Communication.Messages.MessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ButtonSetContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ButtonSetContent>
+    {
+        public ButtonSetContent(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ButtonContent> buttons) { }
+        public System.Collections.Generic.IList<Azure.Communication.Messages.ButtonContent> Buttons { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ButtonSetContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ButtonSetContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ButtonSetContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ButtonSetContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ButtonSetContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ButtonSetContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ButtonSetContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CommunicationContact : Azure.Communication.Messages.ConversationContact, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.CommunicationContact>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.CommunicationContact>
     {
         public CommunicationContact(string id) : base (default(string)) { }
@@ -82,26 +152,33 @@ namespace Azure.Communication.Messages
     }
     public partial class CommunicationMessagesClientOptions : Azure.Core.ClientOptions
     {
-        public CommunicationMessagesClientOptions(Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion version = Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2025_03_01_Preview) { }
+        public CommunicationMessagesClientOptions(Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion version = Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2025_04_01_Preview) { }
         public enum ServiceVersion
         {
             V2024_02_01 = 1,
             V2024_08_30 = 2,
-            V2025_03_01_Preview = 3,
+            V2025_01_15_Preview = 3,
+            V2025_04_01_Preview = 4,
         }
     }
     public static partial class CommunicationMessagesModelFactory
     {
+        public static Azure.Communication.Messages.ActionGroupContent ActionGroupContent(string title = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ActionGroup> groups = null) { throw null; }
         public static Azure.Communication.Messages.AddParticipantsResult AddParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.UpdateParticipantsResult> invalidParticipants = null) { throw null; }
         public static Azure.Communication.Messages.AudioNotificationContent AudioNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.CommunicationConversation CommunicationConversation(string id = null, string topic = null, System.Collections.Generic.IEnumerable<string> deliveryChannelIds = null, Azure.Communication.Messages.OutboundDeliveryStrategyKind? outboundDeliveryStrategy = default(Azure.Communication.Messages.OutboundDeliveryStrategyKind?), System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationParticipant> participants = null) { throw null; }
         public static Azure.Communication.Messages.ConversationMessageItem ConversationMessageItem(string id = null, long? sequenceId = default(long?), Azure.Communication.Messages.ConversationMessageContent message = null, string senderDisplayName = null, string senderCommunicationIdentifier = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Communication.Messages.ConversationParticipant ConversationParticipant(string id = null, string displayName = null, string kind = null) { throw null; }
+        public static Azure.Communication.Messages.DocumentMessageContent DocumentMessageContent(System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.DocumentNotificationContent DocumentNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string caption = null, string fileName = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.ExternalConversationParticipant ExternalConversationParticipant(string id = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationContact> contacts = null) { throw null; }
         public static Azure.Communication.Messages.GetConversationThreadAnalysisResult GetConversationThreadAnalysisResult(string summary = null) { throw null; }
+        public static Azure.Communication.Messages.ImageMessageContent ImageMessageContent(System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.ImageNotificationContent ImageNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string caption = null, System.Uri mediaUri = null) { throw null; }
+        public static Azure.Communication.Messages.InteractiveMessage InteractiveMessage(Azure.Communication.Messages.MessageContent header = null, Azure.Communication.Messages.TextMessageContent body = null, Azure.Communication.Messages.TextMessageContent footer = null, Azure.Communication.Messages.ActionBindings action = null) { throw null; }
+        public static Azure.Communication.Messages.InteractiveNotificationContent InteractiveNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, Azure.Communication.Messages.InteractiveMessage interactiveMessage = null) { throw null; }
         public static Azure.Communication.Messages.InternalConversationParticipant InternalConversationParticipant(string id = null, string displayName = null, Azure.Communication.Messages.ConversationContact contact = null) { throw null; }
+        public static Azure.Communication.Messages.LinkContent LinkContent(string title = null, System.Uri uri = null) { throw null; }
         public static Azure.Communication.Messages.MediaNotificationContent MediaNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string content = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.MessageReceipt MessageReceipt(string messageId = null, string to = null) { throw null; }
         public static Azure.Communication.Messages.MessageTemplate MessageTemplate(string name = null, string language = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageTemplateValue> values = null, Azure.Communication.Messages.MessageTemplateBindings bindings = null) { throw null; }
@@ -113,6 +190,7 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.MessageTemplateValue MessageTemplateValue(string name = null, string kind = null) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateVideo MessageTemplateVideo(string name = null, System.Uri uri = null, string caption = null, string fileName = null) { throw null; }
         public static Azure.Communication.Messages.NotificationContent NotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string kind = null) { throw null; }
+        public static Azure.Communication.Messages.ReactionNotificationContent ReactionNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string emoji = null, string messageId = null) { throw null; }
         public static Azure.Communication.Messages.RemoveParticipantsResult RemoveParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.UpdateParticipantsResult> invalidParticipants = null) { throw null; }
         public static Azure.Communication.Messages.SendConversationMessageOptions SendConversationMessageOptions(Azure.Communication.Messages.ConversationMessageContent request = null, Azure.Communication.Messages.OutboundDeliveryStrategyKind? outboundDeliveryStrategy = default(Azure.Communication.Messages.OutboundDeliveryStrategyKind?)) { throw null; }
         public static Azure.Communication.Messages.SendConversationMessageResult SendConversationMessageResult(string messageId = null) { throw null; }
@@ -122,22 +200,12 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.TextMessageContent TextMessageContent(string text = null) { throw null; }
         public static Azure.Communication.Messages.TextNotificationContent TextNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string content = null) { throw null; }
         public static Azure.Communication.Messages.UpdateParticipantsResult UpdateParticipantsResult(string id = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.Communication.Messages.VideoMessageContent VideoMessageContent(System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.VideoNotificationContent VideoNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string caption = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings WhatsAppButtonActionBindings(Azure.Communication.Messages.ButtonSetContent content = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings WhatsAppListActionBindings(Azure.Communication.Messages.ActionGroupContent content = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, Azure.Communication.Messages.MessageTemplateStatus status = default(Azure.Communication.Messages.MessageTemplateStatus), System.BinaryData content = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppUrlActionBindings WhatsAppUrlActionBindings(Azure.Communication.Messages.LinkContent content = null) { throw null; }
-    }
-    public partial class DocumentMessageContent : Azure.Communication.Messages.MessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.DocumentMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentMessageContent>
-    {
-        public DocumentMessageContent(System.Uri mediaUri) { }
-        public System.Uri MediaUri { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.DocumentMessageContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.DocumentMessageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.DocumentMessageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.DocumentMessageContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentMessageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentMessageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentMessageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConversationAdministrationClient
     {
@@ -285,6 +353,17 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentConversationMessageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentConversationMessageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DocumentMessageContent : Azure.Communication.Messages.MessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.DocumentMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentMessageContent>
+    {
+        public DocumentMessageContent(System.Uri mediaUri) { }
+        public System.Uri MediaUri { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.DocumentMessageContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.DocumentMessageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.DocumentMessageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.DocumentMessageContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentMessageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentMessageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentMessageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DocumentNotificationContent : Azure.Communication.Messages.NotificationContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.DocumentNotificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentNotificationContent>
     {
         public DocumentNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, System.Uri mediaUri) : base (default(System.Guid), default(System.Collections.Generic.IEnumerable<string>)) { }
@@ -332,6 +411,17 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageConversationMessageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageConversationMessageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ImageMessageContent : Azure.Communication.Messages.MessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ImageMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageMessageContent>
+    {
+        public ImageMessageContent(System.Uri mediaUri) { }
+        public System.Uri MediaUri { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ImageMessageContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ImageMessageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ImageMessageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ImageMessageContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageMessageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageMessageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageMessageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ImageNotificationContent : Azure.Communication.Messages.NotificationContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ImageNotificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageNotificationContent>
     {
         public ImageNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, System.Uri mediaUri) : base (default(System.Guid), default(System.Collections.Generic.IEnumerable<string>)) { }
@@ -344,6 +434,31 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageNotificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageNotificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class InteractiveMessage : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InteractiveMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InteractiveMessage>
+    {
+        public InteractiveMessage(Azure.Communication.Messages.TextMessageContent body, Azure.Communication.Messages.ActionBindings action) { }
+        public Azure.Communication.Messages.ActionBindings Action { get { throw null; } }
+        public Azure.Communication.Messages.TextMessageContent Body { get { throw null; } }
+        public Azure.Communication.Messages.TextMessageContent Footer { get { throw null; } set { } }
+        public Azure.Communication.Messages.MessageContent Header { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.InteractiveMessage System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InteractiveMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InteractiveMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.InteractiveMessage System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InteractiveMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InteractiveMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InteractiveMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class InteractiveNotificationContent : Azure.Communication.Messages.NotificationContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InteractiveNotificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InteractiveNotificationContent>
+    {
+        public InteractiveNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, Azure.Communication.Messages.InteractiveMessage interactiveMessage) : base (default(System.Guid), default(System.Collections.Generic.IEnumerable<string>)) { }
+        public Azure.Communication.Messages.InteractiveMessage InteractiveMessage { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.InteractiveNotificationContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InteractiveNotificationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InteractiveNotificationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.InteractiveNotificationContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InteractiveNotificationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InteractiveNotificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InteractiveNotificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class InternalConversationParticipant : Azure.Communication.Messages.ConversationParticipant, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InternalConversationParticipant>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalConversationParticipant>
     {
         public InternalConversationParticipant(Azure.Communication.Messages.ConversationContact contact) { }
@@ -354,6 +469,18 @@ namespace Azure.Communication.Messages
         Azure.Communication.Messages.InternalConversationParticipant System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalConversationParticipant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalConversationParticipant>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalConversationParticipant>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LinkContent : Azure.Communication.Messages.MessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.LinkContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.LinkContent>
+    {
+        public LinkContent(string title, System.Uri uri) { }
+        public string Title { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.LinkContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.LinkContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.LinkContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.LinkContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.LinkContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.LinkContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.LinkContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("`MediaNotificationContent` is being deprecated, we encourage you to use the new `ImageNotificationContent` for sending images instead.")]
     public partial class MediaNotificationContent : Azure.Communication.Messages.NotificationContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.MediaNotificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MediaNotificationContent>
@@ -599,6 +726,18 @@ namespace Azure.Communication.Messages
         public static bool operator !=(Azure.Communication.Messages.OutboundDeliveryStrategyKind left, Azure.Communication.Messages.OutboundDeliveryStrategyKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ReactionNotificationContent : Azure.Communication.Messages.NotificationContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ReactionNotificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ReactionNotificationContent>
+    {
+        public ReactionNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, string emoji, string messageId) : base (default(System.Guid), default(System.Collections.Generic.IEnumerable<string>)) { }
+        public string Emoji { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ReactionNotificationContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ReactionNotificationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ReactionNotificationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ReactionNotificationContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ReactionNotificationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ReactionNotificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ReactionNotificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RemoveParticipantsOptions : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsOptions>
     {
         public RemoveParticipantsOptions(System.Collections.Generic.IEnumerable<string> participantIds) { }
@@ -655,6 +794,17 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendMessageResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendMessageResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StickerNotificationContent : Azure.Communication.Messages.NotificationContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.StickerNotificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.StickerNotificationContent>
+    {
+        public StickerNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, System.Uri mediaUri) : base (default(System.Guid), default(System.Collections.Generic.IEnumerable<string>)) { }
+        public System.Uri MediaUri { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.StickerNotificationContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.StickerNotificationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.StickerNotificationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.StickerNotificationContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.StickerNotificationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.StickerNotificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.StickerNotificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class TemplateConversationMessageContent : Azure.Communication.Messages.ConversationMessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.TemplateConversationMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TemplateConversationMessageContent>
     {
         public TemplateConversationMessageContent(Azure.Communication.Messages.MessageTemplate template) { }
@@ -687,6 +837,17 @@ namespace Azure.Communication.Messages
         Azure.Communication.Messages.TextConversationMessageContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextConversationMessageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextConversationMessageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextConversationMessageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TextMessageContent : Azure.Communication.Messages.MessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.TextMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextMessageContent>
+    {
+        public TextMessageContent(string text) { }
+        public string Text { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.TextMessageContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.TextMessageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.TextMessageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.TextMessageContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextMessageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextMessageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextMessageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TextNotificationContent : Azure.Communication.Messages.NotificationContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.TextNotificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextNotificationContent>
     {
@@ -723,6 +884,17 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoConversationMessageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoConversationMessageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class VideoMessageContent : Azure.Communication.Messages.MessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.VideoMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoMessageContent>
+    {
+        public VideoMessageContent(System.Uri mediaUri) { }
+        public System.Uri MediaUri { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.VideoMessageContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.VideoMessageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.VideoMessageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.VideoMessageContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoMessageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoMessageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoMessageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class VideoNotificationContent : Azure.Communication.Messages.NotificationContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.VideoNotificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoNotificationContent>
     {
         public VideoNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, System.Uri mediaUri) : base (default(System.Guid), default(System.Collections.Generic.IEnumerable<string>)) { }
@@ -738,6 +910,17 @@ namespace Azure.Communication.Messages
 }
 namespace Azure.Communication.Messages.Models.Channels
 {
+    public partial class WhatsAppButtonActionBindings : Azure.Communication.Messages.ActionBindings, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>
+    {
+        public WhatsAppButtonActionBindings(Azure.Communication.Messages.ButtonSetContent content) { }
+        public Azure.Communication.Messages.ButtonSetContent Content { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class WhatsAppContact : Azure.Communication.Messages.ConversationContact, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>
     {
         public WhatsAppContact(string id) : base (default(string)) { }
@@ -747,6 +930,17 @@ namespace Azure.Communication.Messages.Models.Channels
         Azure.Communication.Messages.Models.Channels.WhatsAppContact System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WhatsAppListActionBindings : Azure.Communication.Messages.ActionBindings, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings>
+    {
+        public WhatsAppListActionBindings(Azure.Communication.Messages.ActionGroupContent content) { }
+        public Azure.Communication.Messages.ActionGroupContent Content { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WhatsAppMessageButtonSubType : System.IEquatable<Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType>

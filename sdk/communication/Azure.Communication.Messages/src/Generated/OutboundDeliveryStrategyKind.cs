@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The options of the outbound delivery strategy for messages sent by emplyees in a conversation. </summary>
+    /// <summary> The options of the outbound delivery strategy for messages sent by participants in a conversation. </summary>
     public readonly partial struct OutboundDeliveryStrategyKind : IEquatable<OutboundDeliveryStrategyKind>
     {
         private readonly string _value;

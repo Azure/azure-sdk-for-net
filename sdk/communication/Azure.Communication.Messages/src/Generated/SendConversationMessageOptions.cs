@@ -66,7 +66,7 @@ namespace Azure.Communication.Messages
         /// The available derived classes include <see cref="AudioConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="TemplateConversationMessageContent"/>, <see cref="TextConversationMessageContent"/> and <see cref="VideoConversationMessageContent"/>.
         /// </param>
         /// <param name="outboundDeliveryStrategy">
-        /// The options of the outbound delivery strategy for messages sent by emplyees in a conversation.
+        /// The options of the outbound delivery strategy for messages sent by participants in a conversation.
         /// Supports internalOnly, allChannels.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -89,7 +89,7 @@ namespace Azure.Communication.Messages
         /// </summary>
         public ConversationMessageContent Request { get; }
         /// <summary>
-        /// The options of the outbound delivery strategy for messages sent by emplyees in a conversation.
+        /// The options of the outbound delivery strategy for messages sent by participants in a conversation.
         /// Supports internalOnly, allChannels.
         /// </summary>
         public OutboundDeliveryStrategyKind? OutboundDeliveryStrategy { get; set; }

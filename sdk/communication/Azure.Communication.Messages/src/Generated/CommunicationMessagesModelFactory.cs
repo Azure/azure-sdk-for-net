@@ -440,7 +440,7 @@ namespace Azure.Communication.Messages
         /// The available derived classes include <see cref="AudioConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="TemplateConversationMessageContent"/>, <see cref="TextConversationMessageContent"/> and <see cref="VideoConversationMessageContent"/>.
         /// </param>
         /// <param name="outboundDeliveryStrategy">
-        /// The options of the outbound delivery strategy for messages sent by emplyees in a conversation.
+        /// The options of the outbound delivery strategy for messages sent by participants in a conversation.
         /// Supports internalOnly, allChannels.
         /// </param>
         /// <returns> A new <see cref="Messages.SendConversationMessageOptions"/> instance for mocking. </returns>
