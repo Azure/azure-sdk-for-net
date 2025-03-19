@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Definition);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Definition))
+                using (JsonDocument document = JsonDocument.Parse(Definition, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWorkflowVersionData(document.RootElement, options);
                     }
                 default:

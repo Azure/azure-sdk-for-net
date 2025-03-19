@@ -18,6 +18,7 @@ using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Files.Shares;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
@@ -68,6 +69,28 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder2.BlobContainerName);
             Assert.AreEqual(blobName, builder2.BlobName);
             Assert.AreEqual("accountName", builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            var containerName = "containername";
+            var blobName = "blobname";
+
+            BlobBaseClient blobClient = new BlobBaseClient(connectionString.ToString(true), containerName, blobName);
+
+            Assert.AreEqual(containerName, blobClient.BlobContainerName);
+            Assert.AreEqual(blobName, blobClient.Name);
+            Assert.AreEqual(accountName, blobClient.AccountName);
         }
 
         [RecordedTest]
@@ -212,6 +235,24 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => new BlobBaseClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var containerName = "containerName";
+            var blobName = "blobName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri($"https://customdomain/{containerName}/{blobName}");
+
+            BlobBaseClient blobClient = new BlobBaseClient(blobEndpoint, credentials);
+
+            Assert.AreEqual(accountName, blobClient.AccountName);
+            Assert.AreEqual(containerName, blobClient.BlobContainerName);
+            Assert.AreEqual(blobName, blobClient.Name);
         }
 
         [RecordedTest]
@@ -980,7 +1021,7 @@ namespace Azure.Storage.Blobs.Test
             RequestFailedException ex = Assert.CatchAsync<RequestFailedException>(async () => {
                 BlobDownloadStreamingResult result = await blob.DownloadStreamingAsync();
                 await result.Content.CopyToAsync(Stream.Null);
-            });
+                });
 
             // Assert
             Assert.IsTrue(ex.ErrorCode == BlobErrorCode.ConditionNotMet);
@@ -1080,120 +1121,6 @@ namespace Azure.Storage.Blobs.Test
             await response.Value.Content.CopyToAsync(actual);
             Assert.AreEqual(count, actual.Length);
             TestHelper.AssertSequenceEqual(data.Skip(offset).Take(count), actual.ToArray());
-        }
-
-        [RecordedTest]
-        public async Task DownloadStreamingAsync_RangeNotSet_AssertContentRange()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            int size = Constants.KB;
-            BlockBlobClient blob1 = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(GetRandomBuffer(size)))
-            {
-                await blob1.UploadAsync(stream);
-            }
-            BlockBlobClient blob2 = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(GetRandomBuffer(size)))
-            {
-                await blob2.UploadAsync(stream);
-            }
-
-            // Act
-            Response<BlobDownloadStreamingResult> response1 = await blob1.DownloadStreamingAsync();
-            Response<BlobDownloadStreamingResult> response2 = await blob2.DownloadStreamingAsync(new BlobDownloadOptions());
-
-            // Assert
-            Assert.IsNull(response1.Value.Details.ContentRange);
-            Assert.IsNull(response2.Value.Details.ContentRange);
-        }
-
-        [RecordedTest]
-        [TestCase(0)]
-        [TestCase(1)]
-        public async Task DownloadStreamingAsync_RangeSet_AssertContentRange(long offset)
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            int size = Constants.KB;
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-
-            BlobDownloadOptions blobDownloadOptions = new BlobDownloadOptions
-            {
-                Range = new HttpRange(offset)
-            };
-
-            // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(blobDownloadOptions);
-
-            // Assert
-            Assert.NotNull(response.Value.Details.ContentRange);
-            string expectedContentRange = $"bytes {offset}-{size - 1}/{size}";
-            Assert.AreEqual(expectedContentRange, response.Value.Details.ContentRange);
-        }
-
-        [RecordedTest]
-        public async Task DownloadContentAsync_RangeNotSet_AssertContentRange()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            int size = Constants.KB;
-            BlockBlobClient blob1 = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(GetRandomBuffer(size)))
-            {
-                await blob1.UploadAsync(stream);
-            }
-            BlockBlobClient blob2 = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(GetRandomBuffer(size)))
-            {
-                await blob2.UploadAsync(stream);
-            }
-
-            // Act
-            Response<BlobDownloadResult> response1 = await blob1.DownloadContentAsync();
-            Response<BlobDownloadResult> response2 = await blob2.DownloadContentAsync(new BlobDownloadOptions());
-
-            // Assert
-            Assert.IsNull(response1.Value.Details.ContentRange);
-            Assert.IsNull(response2.Value.Details.ContentRange);
-        }
-
-        [RecordedTest]
-        [TestCase(0)]
-        [TestCase(1)]
-        public async Task DownloadContentAsync_RangeSet_AssertContentRange(long offset)
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            int size = Constants.KB;
-            var data = GetRandomBuffer(size);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-
-            BlobDownloadOptions blobDownloadOptions = new BlobDownloadOptions
-            {
-                Range = new HttpRange(offset)
-            };
-
-            // Act
-            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(blobDownloadOptions);
-
-            // Assert
-            Assert.NotNull(response.Value.Details.ContentRange);
-            string expectedContentRange = $"bytes {offset}-{size - 1}/{size}";
-            Assert.AreEqual(expectedContentRange, response.Value.Details.ContentRange);
         }
 
         [RecordedTest]
@@ -2734,7 +2661,7 @@ namespace Azure.Storage.Blobs.Test
                     await operation.WaitForCompletionAsync();
 
                     // Assert
-                    Assert.AreEqual(operation.Value, 0);
+                    Assert.AreEqual(operation.Value,0);
                     Assert.True(operation.HasCompleted);
                     Assert.IsNotNull(operation.GetRawResponse());
                 }
@@ -3449,6 +3376,54 @@ namespace Azure.Storage.Blobs.Test
                     source: srcBlob.Uri,
                     options: options),
                 e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task SyncCopyFromUri_SourceBearerToken_FilesSource()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+
+            ShareServiceClient shareServiceClient = GetShareServiceClient_OAuthAccount_SharedKey();
+            ShareClient shareClient = await shareServiceClient.CreateShareAsync(GetNewContainerName());
+
+            try
+            {
+                ShareDirectoryClient directoryClient = await shareClient.CreateDirectoryAsync(GetNewBlobName());
+                ShareFileClient fileClient = await directoryClient.CreateFileAsync(GetNewBlobName(), Constants.KB);
+                await fileClient.UploadAsync(stream);
+
+                BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+                string sourceBearerToken = await GetAuthToken();
+
+                HttpAuthorization sourceAuth = new HttpAuthorization(
+                    "Bearer",
+                    sourceBearerToken);
+
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    SourceAuthentication = sourceAuth,
+                    SourceShareTokenIntent = FileShareTokenIntent.Backup
+                };
+
+                // Act
+                Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(
+                    source: fileClient.Uri,
+                    options: options);
+            }
+            finally
+            {
+                await shareClient.DeleteAsync();
+            }
         }
 
         [RecordedTest]
@@ -8320,7 +8295,7 @@ namespace Azure.Storage.Blobs.Test
                  new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobVersionId does not match snapshot value in the URI in the Client. BlobSasBuilder.BlobVersionId must either be left empty or match the snapshot value in the URI in the Client"));
         }
 
-        [LiveOnly]
+        [RecordedTest]
         public async Task GenerateUserDelegationSas_TrimBlobSlashes()
         {
             // Arrange

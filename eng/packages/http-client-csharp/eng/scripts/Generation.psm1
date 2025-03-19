@@ -39,13 +39,13 @@ function Get-TspCommand {
     $command += " --option @azure-typespec/http-client-csharp.emitter-output-dir=$generationDir"
     $command += " --option @azure-typespec/http-client-csharp.save-inputs=true"
     if ($generateStub) {
-        $command += " --option @azure-typespec/http-client-csharp.plugin-name=AzureStubPlugin"
+        $command += " --option @azure-typespec/http-client-csharp.generator-name=AzureStubGenerator"
     }
 
     if ($namespaceOverride) {
         $command += " --option @azure-typespec/http-client-csharp.namespace=$namespaceOverride"
     }
-    
+
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp.api-version=$apiVersion"
     }
@@ -114,7 +114,7 @@ function Generate-Srv-Driven {
     ## get the last two directories of the output directory and add V1/V2 to disambiguate the namespaces
     $namespaceRoot = $(($outputDir.Split([System.IO.Path]::DirectorySeparatorChar)[-2..-1] | `
         ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1) }) -replace '-(\p{L})', { $_.Groups[1].Value.ToUpper() } -replace '\W', '' -join ".")
-    $v1NamespaceOverride = $namespaceRoot + ".V1" 
+    $v1NamespaceOverride = $namespaceRoot + ".V1"
     $v2NamespaceOverride = $namespaceRoot + ".V2"
 
     $v1SpecFilePath = $(Join-Path $specFilePath "old.tsp")
@@ -141,7 +141,7 @@ function Generate-Versioning {
     if ($createOutputDirIfNotExist -and -not (Test-Path $v1Dir)) {
         New-Item -ItemType Directory -Path $v1Dir | Out-Null
     }
-    
+
     $v2Dir = $(Join-Path $outputDir "v2")
     if ($createOutputDirIfNotExist -and -not (Test-Path $v2Dir)) {
         New-Item -ItemType Directory -Path $v2Dir | Out-Null
@@ -150,12 +150,12 @@ function Generate-Versioning {
     ## get the last two directories of the output directory and add V1/V2 to disambiguate the namespaces
     $namespaceRoot = $(($outputFolders[-2..-1] | `
                            ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1) }) -join ".")
-    $v1NamespaceOverride = $namespaceRoot + ".V1" 
+    $v1NamespaceOverride = $namespaceRoot + ".V1"
     $v2NamespaceOverride = $namespaceRoot + ".V2"
-      
+
     Invoke (Get-TspCommand $specFilePath $v1Dir -generateStub $generateStub -apiVersion "v1" -namespaceOverride $v1NamespaceOverride)
     Invoke (Get-TspCommand $specFilePath $v2Dir -generateStub $generateStub -apiVersion "v2" -namespaceOverride $v2NamespaceOverride)
-    
+
     if ($outputFolders.Contains("removed")) {
         $v2PreviewDir = $(Join-Path $outputDir "v2Preview")
         if ($createOutputDirIfNotExist -and -not (Test-Path $v2PreviewDir)) {

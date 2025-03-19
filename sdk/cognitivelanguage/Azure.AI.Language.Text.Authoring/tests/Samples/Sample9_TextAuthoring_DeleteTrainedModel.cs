@@ -19,17 +19,14 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample9_TextAuthoring_DeleteTrainedModel
             string projectName = "LoanAgreements";
             string trainedModelLabel = "ModelLabel"; // Replace with the actual model label.
+            TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            Response response = authoringClient.DeleteTrainedModel(
-                projectName: projectName,
-                trainedModelLabel: trainedModelLabel
-            );
+            Response response = trainedModelClient.DeleteTrainedModel();
 
             Console.WriteLine($"Trained model deleted. Response status: {response.Status}");
             #endregion

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 case 200:
                     {
                         PlaywrightTestingQuotaData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 case 200:
                     {
                         PlaywrightTestingQuotaData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 case 200:
                     {
                         QuotaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaListResult.DeserializeQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 case 200:
                     {
                         QuotaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaListResult.DeserializeQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 case 200:
                     {
                         QuotaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaListResult.DeserializeQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 case 200:
                     {
                         QuotaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaListResult.DeserializeQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

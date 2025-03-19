@@ -39,6 +39,11 @@
     "key": "Sanitized",
     "deployment": "o1"
   },
+  "chat_o3-mini": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "o3-mini"
+  },
   "chat_with_async_filter": {
     "endpoint": "https://Sanitized.openai.azure.com/",
     "key": "Sanitized",

@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2024_11_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_03_01_Preview)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -64,6 +64,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/48588")]
         public async Task CreateAzureBlobIndexer()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this, populate: true);
@@ -178,6 +179,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/48588")]
         public async Task CrudDataSourceConnection()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);
@@ -383,6 +385,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/48588")]
         public async Task CrudSkillset()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);
@@ -629,7 +632,8 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_11_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_03_01_Preview)]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/48588")]
         public async Task RoundtripAllSkills()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

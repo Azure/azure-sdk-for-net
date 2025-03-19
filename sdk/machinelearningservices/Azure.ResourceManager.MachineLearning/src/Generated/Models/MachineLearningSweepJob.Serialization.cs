@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SearchSpace);
 #else
-            using (JsonDocument document = JsonDocument.Parse(SearchSpace))
+            using (JsonDocument document = JsonDocument.Parse(SearchSpace, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningSweepJob(document.RootElement, options);
                     }
                 default:

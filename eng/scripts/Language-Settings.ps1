@@ -116,132 +116,46 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
     }
 
+    $ciProps = $pkgProp.GetCIYmlForArtifact()
+
+    if ($ciProps) {
+      # CheckAOTCompat is opt _in_, so we should default to false if not specified
+      $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
+      if ($null -ne $shouldAot) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
+        }
+
+        # when AOTCompat is true, there is an additional parameter we need to retrieve
+        $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
+        if ($aotArtifacts) {
+          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
+          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
+        }
+      }
+      else {
+        $pkgProp.CIParameters["CheckAOTCompat"] = $false
+        $pkgProp.CIParameters["AOTTestInputs"] = @()
+      }
+
+      # BuildSnippets is opt _out_, so we should default to true if not specified
+      $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
+      if ($null -ne $shouldSnippet) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldSnippet, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["BuildSnippets"] = $parsedBool
+        }
+      }
+      else {
+        $pkgProp.CIParameters["BuildSnippets"] = $true
+      }
+    }
+
     $allPackageProps += $pkgProp
   }
 
   return $allPackageProps
-}
-
-<#
-.DESCRIPTION
-This function governs the logic for determining which packages should be included for validation in net - pullrequest
-when the PR contains changes to files outside of package directories.
-
-.PARAMETER LocatedPackages
-The set of packages that have been directly changed in the PR.
-
-.PARAMETER diffObj
-The diff object that contains the set of changed and deleted files in the PR.
-
-.PARAMETER AllPkgProps
-The entire set of package properties for the repository.
-
-#>
-function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
-  param(
-    [Parameter(Mandatory=$true)]
-    $LocatedPackages,
-    [Parameter(Mandatory=$true)]
-    $diffObj,
-    [Parameter(Mandatory=$true)]
-    $AllPkgProps
-  )
-  $additionalValidationPackages = @()
-  $uniqueResultSet = @()
-  function isOther($fileName) {
-    $startsWithPrefixes = @(".config", ".devcontainer", ".github", ".vscode", "common", "doc", "eng", "samples")
-
-    $startsWith = $false
-    foreach ($prefix in $startsWithPrefixes) {
-      if ($fileName.StartsWith($prefix)) {
-        $startsWith = $true
-      }
-    }
-
-    return $startsWith
-  }
-
-  # ensure we observe deleted files too
-  $targetedFiles = @($diffObj.ChangedFiles + $diffObj.DeletedFiles)
-
-  # The targetedFiles needs to filter out anything in the ExcludePaths
-  # otherwise it'll end up processing things below that it shouldn't be.
-  foreach ($excludePath in $diffObj.ExcludePaths) {
-    $targetedFiles = $targetedFiles | Where-Object { -not $_.StartsWith($excludePath.TrimEnd("/") + "/") }
-  }
-
-  # this section will identify
-  #  - any service-level changes
-  #  - any shared package changes that should be treated as a service-level change. EG changes to Azure.Storage.Shared.
-  # and add all packages within that service to the validation set. these will be treated as "directly" changed packages.
-  $changedServices = @()
-  if ($targetedFiles) {
-    foreach($file in $targetedFiles) {
-      $pathComponents = $file -split "/"
-      # handle changes only in sdk/<service>/<file>.<extension>
-      if ($pathComponents.Length -eq 3 -and $pathComponents[0] -eq "sdk") {
-        if (-not $changedServices.Contains($pathComponents[1])) {
-          $changedServices += $pathComponents[1]
-        }
-      }
-
-      # handle any changes under sdk/<file>.<extension>
-      if ($pathComponents.Length -eq 2 -and $pathComponents[0] -eq "sdk") {
-        if (-not $changedServices.Contains("template")) {
-          $changedServices += "template"
-        }
-      }
-
-      # changes to a Azure.*.Shared within a service directory should include all packages within that service directory
-      if ($file.Replace('\', '/') -match ".*sdk/.*/.*\.Shared/.*") {
-        if (-not $changedServices.Contains($pathComponents[1])) {
-          $changedServices += $pathComponents[1]
-        }
-      }
-    }
-    foreach ($changedService in $changedServices) {
-      $additionalPackages = $AllPkgProps | Where-Object { $_.ServiceDirectory -eq $changedService }
-
-      foreach ($pkg in $additionalPackages) {
-        if ($uniqueResultSet -notcontains $pkg -and $LocatedPackages -notcontains $pkg) {
-          # notice the lack of setting IncludedForValidation to true. This is because these "changed services"
-          # are specifically where a file within the service, but not an individual package within that service has changed.
-          # we want this package to be fully validated
-          $uniqueResultSet += $pkg
-        }
-      }
-    }
-  }
-
-  # handle any changes to files that are not within a package directory
-  $othersChanged = @()
-  if ($targetedFiles) {
-    $othersChanged = $targetedFiles | Where-Object { isOther($_) }
-  }
-
-  if ($othersChanged) {
-    $additionalPackages = @(
-      "Azure.Template"
-    ) | ForEach-Object { $me=$_; $AllPkgProps | Where-Object { $_.Name -eq $me } | Select-Object -First 1 }
-
-    $additionalValidationPackages += $additionalPackages
-  }
-
-  # walk the packages added purely for validation, if they haven't been added yet, add them
-  # these packages aren't considered "directly" changed, so we will set IncludedForValidation to true for them
-  foreach ($pkg in $additionalValidationPackages) {
-    if ($uniqueResultSet -notcontains $pkg -and $LocatedPackages -notcontains $pkg) {
-      $pkg.IncludedForValidation = $true
-      $uniqueResultSet += $pkg
-    }
-  }
-
-  Write-Host "Returning additional packages for validation: $($uniqueResultSet.Count)"
-  foreach ($pkg in $uniqueResultSet) {
-    Write-Host "  - $($pkg.Name)"
-  }
-
-  return $uniqueResultSet
 }
 
 # Returns the nuget publish status of a package id and version.

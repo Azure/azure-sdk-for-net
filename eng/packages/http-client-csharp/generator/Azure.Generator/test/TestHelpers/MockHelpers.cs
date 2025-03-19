@@ -22,7 +22,7 @@ namespace Azure.Generator.Tests.TestHelpers
         private static readonly string _configFilePath = Path.Combine(AppContext.BaseDirectory, TestHelpersFolder);
         private const string TestHelpersFolder = "TestHelpers";
 
-        public static Mock<AzureClientPlugin> LoadMockPlugin(
+        public static Mock<AzureClientGenerator> LoadMockPlugin(
             Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
             Func<InputType, CSharpType>? createCSharpTypeCore = null,
             Func<InputApiKeyAuth>? apiKeyAuth = null,
@@ -48,7 +48,7 @@ namespace Azure.Generator.Tests.TestHelpers
                 inputNsClients,
                 inputNsAuth,
                 null);
-            var mockInputLibrary = new Mock<InputLibrary>(_configFilePath);
+            var mockInputLibrary = new Mock<AzureInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
             Mock<AzureTypeFactory>? mockTypeFactory = null;
@@ -59,15 +59,15 @@ namespace Azure.Generator.Tests.TestHelpers
             }
 
             // initialize the mock singleton instance of the plugin
-            var codeModelInstance = typeof(CodeModelPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
-            var clientModelInstance = typeof(ClientModelPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
-            var azureInstance = typeof(AzureClientPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
+            var codeModelInstance = typeof(CodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
+            var clientModelInstance = typeof(ScmCodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
+            var azureInstance = typeof(AzureClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             // invoke the load method with the config file path
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
             object?[] parameters = [_configFilePath, null];
             var config = loadMethod?.Invoke(null, parameters);
             var mockGeneratorContext = new Mock<GeneratorContext>(config!);
-            var mockPluginInstance = new Mock<AzureClientPlugin>(mockGeneratorContext.Object) { CallBase = true };
+            var mockPluginInstance = new Mock<AzureClientGenerator>(mockGeneratorContext.Object) { CallBase = true };
             codeModelInstance!.SetValue(null, mockPluginInstance.Object);
             clientModelInstance!.SetValue(null, mockPluginInstance.Object);
             azureInstance!.SetValue(null, mockPluginInstance.Object);

@@ -20,6 +20,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
@@ -136,7 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Impala": return ImpalaLinkedService.DeserializeImpalaLinkedService(element);
                     case "Informix": return InformixLinkedService.DeserializeInformixLinkedService(element);
                     case "Jira": return JiraLinkedService.DeserializeJiraLinkedService(element);
-                    case "LakeHouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element);
+                    case "Lakehouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element);
                     case "Magento": return MagentoLinkedService.DeserializeMagentoLinkedService(element);
                     case "MariaDB": return MariaDBLinkedService.DeserializeMariaDBLinkedService(element);
                     case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element);
@@ -202,7 +207,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static LinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeLinkedService(document.RootElement);
         }
 
