@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         PublicCloudConnectorResource IOperationSource<PublicCloudConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PublicCloudConnectorData.DeserializePublicCloudConnectorData(document.RootElement);
+            var data = ModelReaderWriter.Read<PublicCloudConnectorData>(response.Content);
             return new PublicCloudConnectorResource(_client, data);
         }
 
         async ValueTask<PublicCloudConnectorResource> IOperationSource<PublicCloudConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PublicCloudConnectorData.DeserializePublicCloudConnectorData(document.RootElement);
-            return new PublicCloudConnectorResource(_client, data);
+            var data = ModelReaderWriter.Read<PublicCloudConnectorData>(response.Content);
+            return await Task.FromResult(new PublicCloudConnectorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

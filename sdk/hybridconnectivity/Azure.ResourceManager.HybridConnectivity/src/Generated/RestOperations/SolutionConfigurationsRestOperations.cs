@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         SolutionConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         SolutionConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 201:
                     {
                         SolutionConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 201:
                     {
                         SolutionConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         SolutionConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         SolutionConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         SolutionConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SolutionConfigurationListResult.DeserializeSolutionConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         SolutionConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SolutionConfigurationListResult.DeserializeSolutionConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         SolutionConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SolutionConfigurationListResult.DeserializeSolutionConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         SolutionConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SolutionConfigurationListResult.DeserializeSolutionConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         InventoryResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InventoryResourceData.DeserializeInventoryResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         InventoryResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InventoryResourceData.DeserializeInventoryResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         InventoryResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InventoryResourceListResult.DeserializeInventoryResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         InventoryResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InventoryResourceListResult.DeserializeInventoryResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         InventoryResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InventoryResourceListResult.DeserializeInventoryResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         InventoryResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InventoryResourceListResult.DeserializeInventoryResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

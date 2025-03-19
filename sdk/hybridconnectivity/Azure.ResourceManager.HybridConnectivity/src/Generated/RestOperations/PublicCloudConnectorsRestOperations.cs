@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublicCloudConnectorData.DeserializePublicCloudConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublicCloudConnectorData.DeserializePublicCloudConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublicCloudConnectorData.DeserializePublicCloudConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublicCloudConnectorData.DeserializePublicCloudConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublicCloudConnectorListResult.DeserializePublicCloudConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublicCloudConnectorListResult.DeserializePublicCloudConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublicCloudConnectorListResult.DeserializePublicCloudConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublicCloudConnectorListResult.DeserializePublicCloudConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublicCloudConnectorListResult.DeserializePublicCloudConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublicCloudConnectorListResult.DeserializePublicCloudConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublicCloudConnectorListResult.DeserializePublicCloudConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         PublicCloudConnectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublicCloudConnectorListResult.DeserializePublicCloudConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
