@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Sql.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DefaultValue = "default";
+        private const string DefaultValue = "Default";
 
-        /// <summary> default. </summary>
+        /// <summary> Default. </summary>
         public static SqlSecurityAlertPolicyName Default { get; } = new SqlSecurityAlertPolicyName(DefaultValue);
         /// <summary> Determines if two <see cref="SqlSecurityAlertPolicyName"/> values are the same. </summary>
         public static bool operator ==(SqlSecurityAlertPolicyName left, SqlSecurityAlertPolicyName right) => left.Equals(right);

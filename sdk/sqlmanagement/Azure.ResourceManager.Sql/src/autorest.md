@@ -357,8 +357,8 @@ rename-mapping:
   BackupStorageAccessTier: SqlBackupStorageAccessTier
   Phase: DatabaseOperationPhase
   PhaseDetails: DatabaseOperationPhaseDetails
-  # Api version change from 2020-11-01-preview to 2021-11-01-preview, the model name changed and contains more properties
-  # UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
+  UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
+  ManagedInstanceProperties.provisioningState: ManagedInstanceProvisioningState
   # Status: UpsertManagedServerOperationStepStatus
 
 prompted-enum-values:
@@ -583,14 +583,14 @@ directive:
     #   transform: >
     #       $.storageContainerSasKey['x-ms-secret'] = true;
     #       $.storageAccountAccessKey['x-ms-secret'] = true;
-    # - from: DatabaseSecurityAlertPolicies.json
-    #   where: $.paths
-    #   transform: >
-    #       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
-    #       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
-    # - from: ManagedDatabaseSecurityAlertPolicies.json
-    #   where: $.paths
-    #   transform: >
-    #       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
-    #       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: DatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: ManagedDatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
 ```
