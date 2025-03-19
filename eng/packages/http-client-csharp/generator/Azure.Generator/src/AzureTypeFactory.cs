@@ -113,37 +113,13 @@ namespace Azure.Generator
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            if (!AzureClientPlugin.Instance.IsAzureArm.Value)
+            if (!AzureClientGenerator.Instance.IsAzureArm.Value)
             {
                 return base.CreateClientCore(inputClient);
             }
 
             var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
             return transformedClient is null ? null : base.CreateClientCore(transformedClient);
-        }
-
-        /// <inheritdoc/>
-        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
-        {
-            if (inputType is InputModelType inputModel
-                && typeProvider is ModelProvider modelProvider
-                && AzureClientPlugin.Instance.OutputLibrary.IsResource(inputType.Name)
-                && inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
-            {
-                return [new ResourceDataSerializationProvider(inputModel, modelProvider)];
-            }
-
-            return base.CreateSerializationsCore(inputType, typeProvider);
-        }
-
-        /// <inheritdoc/>
-        protected override ModelProvider? CreateModelCore(InputModelType model)
-        {
-            if (AzureClientPlugin.Instance.OutputLibrary.IsResource(model.Name))
-            {
-                return new ResourceDataProvider(model);
-            }
-            return base.CreateModelCore(model);
         }
 
         /// <inheritdoc/>

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSynapseDedicatedSqlMinimalTlsSettingData(document.RootElement, options);
                     }
                 default:

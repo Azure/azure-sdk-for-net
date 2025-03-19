@@ -90,6 +90,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("logSettings"u8);
                 writer.WriteObjectValue(LogSettings);
             }
+            if (Optional.IsDefined(ReturnMultistatementResult))
+            {
+                writer.WritePropertyName("returnMultistatementResult"u8);
+                writer.WriteObjectValue<object>(ReturnMultistatementResult);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -117,6 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object scriptBlockExecutionTimeout = default;
             IList<ScriptActivityScriptBlock> scripts = default;
             ScriptActivityTypePropertiesLogSettings logSettings = default;
+            object returnMultistatementResult = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -241,6 +247,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             logSettings = ScriptActivityTypePropertiesLogSettings.DeserializeScriptActivityTypePropertiesLogSettings(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("returnMultistatementResult"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            returnMultistatementResult = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -260,14 +275,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 policy,
                 scriptBlockExecutionTimeout,
                 scripts ?? new ChangeTrackingList<ScriptActivityScriptBlock>(),
-                logSettings);
+                logSettings,
+                returnMultistatementResult);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ScriptActivity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeScriptActivity(document.RootElement);
         }
 

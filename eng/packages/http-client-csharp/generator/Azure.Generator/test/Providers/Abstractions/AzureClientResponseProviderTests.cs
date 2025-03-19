@@ -39,7 +39,7 @@ namespace Azure.Generator.Tests.Providers.Abstractions
         {
             MockHelpers.LoadMockPlugin();
             var pipelineExtensions =
-                AzureClientPlugin.Instance.OutputLibrary.TypeProviders.FirstOrDefault(t => t.Name == "ClientPipelineExtensions");
+                AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(t => t.Name == "ClientPipelineExtensions");
             Assert.NotNull(pipelineExtensions);
             var method = pipelineExtensions!.Methods.FirstOrDefault(x => x.Signature.Name == "ProcessMessage");
             Assert.NotNull(method);
@@ -51,7 +51,7 @@ namespace Azure.Generator.Tests.Providers.Abstractions
         {
             var client = InputFactory.Client("TestClient", operations: [InputFactory.Operation("foo")]);
             MockHelpers.LoadMockPlugin(clientResponseApi: AzureClientResponseProvider.Instance);
-            var clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(client)!;
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(client)!;
             return clientProvider;
         }
     }

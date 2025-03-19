@@ -17,15 +17,16 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="Models.FacetResult"/>. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
+        /// <param name="sum"> The resulting total sum for the facet when a sum metric is requested. </param>
         /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
-        public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, IList<FacetResult>> facets = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static FacetResult FacetResult(long? count = null, double? sum = null, IReadOnlyDictionary<string, IList<FacetResult>> facets = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             facets ??= new Dictionary<string, IList<FacetResult>>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, facets, additionalProperties);
+            return new FacetResult(count, sum, facets, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryAnswerResult"/>. </summary>
@@ -40,6 +41,36 @@ namespace Azure.Search.Documents.Models
             additionalProperties ??= new Dictionary<string, object>();
 
             return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DebugInfo"/>. </summary>
+        /// <param name="queryRewrites"> Contains debugging information specific to query rewrites. </param>
+        /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
+        public static DebugInfo DebugInfo(QueryRewritesDebugInfo queryRewrites = null)
+        {
+            return new DebugInfo(queryRewrites);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesDebugInfo"/>. </summary>
+        /// <param name="text"> List of query rewrites generated for the text query. </param>
+        /// <param name="vectors"> List of query rewrites generated for the vectorizable text queries. </param>
+        /// <returns> A new <see cref="Models.QueryRewritesDebugInfo"/> instance for mocking. </returns>
+        public static QueryRewritesDebugInfo QueryRewritesDebugInfo(QueryRewritesValuesDebugInfo text = null, IEnumerable<QueryRewritesValuesDebugInfo> vectors = null)
+        {
+            vectors ??= new List<QueryRewritesValuesDebugInfo>();
+
+            return new QueryRewritesDebugInfo(text, vectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesValuesDebugInfo"/>. </summary>
+        /// <param name="inputQuery"> The input text to the generative query rewriting model. There may be cases where the user query and the input to the generative model are not identical. </param>
+        /// <param name="rewrites"> List of query rewrites. </param>
+        /// <returns> A new <see cref="Models.QueryRewritesValuesDebugInfo"/> instance for mocking. </returns>
+        public static QueryRewritesValuesDebugInfo QueryRewritesValuesDebugInfo(string inputQuery = null, IEnumerable<string> rewrites = null)
+        {
+            rewrites ??= new List<string>();
+
+            return new QueryRewritesValuesDebugInfo(inputQuery, rewrites?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryCaptionResult"/>. </summary>
@@ -131,36 +162,6 @@ namespace Azure.Search.Documents.Models
         public static SingleVectorFieldResult SingleVectorFieldResult(double? searchScore = null, double? vectorSimilarity = null)
         {
             return new SingleVectorFieldResult(searchScore, vectorSimilarity);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DebugInfo"/>. </summary>
-        /// <param name="queryRewrites"> Contains debugging information specific to query rewrites. </param>
-        /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
-        public static DebugInfo DebugInfo(QueryRewritesDebugInfo queryRewrites = null)
-        {
-            return new DebugInfo(queryRewrites);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesDebugInfo"/>. </summary>
-        /// <param name="text"> List of query rewrites generated for the text query. </param>
-        /// <param name="vectors"> List of query rewrites generated for the vectorizable text queries. </param>
-        /// <returns> A new <see cref="Models.QueryRewritesDebugInfo"/> instance for mocking. </returns>
-        public static QueryRewritesDebugInfo QueryRewritesDebugInfo(QueryRewritesValuesDebugInfo text = null, IEnumerable<QueryRewritesValuesDebugInfo> vectors = null)
-        {
-            vectors ??= new List<QueryRewritesValuesDebugInfo>();
-
-            return new QueryRewritesDebugInfo(text, vectors?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesValuesDebugInfo"/>. </summary>
-        /// <param name="inputQuery"> The input text to the generative query rewriting model. There may be cases where the user query and the input to the generative model are not identical. </param>
-        /// <param name="rewrites"> List of query rewrites. </param>
-        /// <returns> A new <see cref="Models.QueryRewritesValuesDebugInfo"/> instance for mocking. </returns>
-        public static QueryRewritesValuesDebugInfo QueryRewritesValuesDebugInfo(string inputQuery = null, IEnumerable<string> rewrites = null)
-        {
-            rewrites ??= new List<string>();
-
-            return new QueryRewritesValuesDebugInfo(inputQuery, rewrites?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutocompleteResults"/>. </summary>
@@ -304,6 +305,33 @@ namespace Azure.Search.Documents.Models
         public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = null, int? maxFieldNestingDepthPerIndex = null, int? maxComplexCollectionFieldsPerIndex = null, int? maxComplexObjectsInCollectionsPerDocument = null, long? maxStoragePerIndexInBytes = null)
         {
             return new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.ListIndexStatsSummary"/>. </summary>
+        /// <param name="indexesStatistics"> The Statistics summary of all indexes in the Search service. </param>
+        /// <returns> A new <see cref="Indexes.Models.ListIndexStatsSummary"/> instance for mocking. </returns>
+        public static ListIndexStatsSummary ListIndexStatsSummary(IEnumerable<IndexStatisticsSummary> indexesStatistics = null)
+        {
+            indexesStatistics ??= new List<IndexStatisticsSummary>();
+
+            return new ListIndexStatsSummary(indexesStatistics?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexStatisticsSummary"/>. </summary>
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="documentCount"> The number of documents in the index. </param>
+        /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
+        /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <returns> A new <see cref="Indexes.Models.IndexStatisticsSummary"/> instance for mocking. </returns>
+        public static IndexStatisticsSummary IndexStatisticsSummary(string name = null, long documentCount = default, long storageSize = default, long vectorIndexSize = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return new IndexStatisticsSummary(name, documentCount, storageSize, vectorIndexSize);
         }
     }
 }

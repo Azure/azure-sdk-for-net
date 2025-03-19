@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- UpdateCheckpointAsync in the 'EventProcessorClient` was not awaiting the Checkpoint Stores 'UpdateCheckpointAsync' method.
+By not awaiting we were starting the OTel span and closing it almost immediately. The catch would've been ignored as well.
+
 ### Other Changes
 
 ## 5.12.0-beta.2 (2025-02-11)

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GroupQuotasGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/GroupQuotas/GetGroupQuotas.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotas/GetGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_GroupQuotasDeleteRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/GroupQuotas/DeleteGroupQuotas.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotas/DeleteGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_GroupQuotasPatchRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/GroupQuotas/PatchGroupQuotas.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotas/PatchGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetGroupQuotaLimitsRequests_GroupQuotaLimitsRequestList()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/GroupQuotaLimitsRequests/GroupQuotaLimitsRequests_List.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotaLimitsRequests/GroupQuotaLimitsRequests_List.json
             // this example is just showing the usage of "GroupQuotaLimitsRequest_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

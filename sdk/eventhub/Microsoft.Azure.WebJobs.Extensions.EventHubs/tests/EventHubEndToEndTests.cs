@@ -242,13 +242,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>()
                     {
                         {"TestConnection:fullyQualifiedNamespace", EventHubsTestEnvironment.Instance.FullyQualifiedNamespace},
-                        {"TestConnection:clientId", EventHubsTestEnvironment.Instance.ClientId},
-                        {"TestConnection:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
-                        {"TestConnection:tenantId", EventHubsTestEnvironment.Instance.TenantId},
-                        {"AzureWebJobsStorage:serviceUri", GetServiceUri()},
-                        {"AzureWebJobsStorage:clientId", EventHubsTestEnvironment.Instance.ClientId},
-                        {"AzureWebJobsStorage:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
-                        {"AzureWebJobsStorage:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                        {"AzureWebJobsStorage:serviceUri", GetServiceUri()}
                     })));
         }
 

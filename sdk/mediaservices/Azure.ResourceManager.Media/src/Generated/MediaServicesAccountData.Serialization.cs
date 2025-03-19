@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Media
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMediaServicesAccountData(document.RootElement, options);
                     }
                 default:
