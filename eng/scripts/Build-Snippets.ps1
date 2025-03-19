@@ -3,8 +3,8 @@ param(
     [string] $PackageInfoFolder,
     [Parameter(Mandatory=$true)]
     [string] $SdkType,
-    [Parameter(Mandatory=$false)]
-    [string] $ProjectNames="Azure.Security.KeyVault.Administration,Azure.Security.KeyVault.Certificates,Azure.Security.KeyVault.Keys,Azure.Security.KeyVault.Secrets",
+    [Parameter(Mandatory=$true)]
+    [string] $ProjectNames,
     [Parameter(Mandatory=$false)]
     [string] $BuildConfiguration,
     [Parameter(Mandatory=$false)]
@@ -12,7 +12,6 @@ param(
 )
 . $PSScriptRoot/splittestdependencies/generate-dependency-functions.ps1
 
-$env:GITHUB_ACTIONS="true"
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version 4
 
