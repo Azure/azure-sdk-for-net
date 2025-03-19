@@ -3,8 +3,8 @@ param(
     [string] $PackageInfoFolder,
     [Parameter(Mandatory=$true)]
     [string] $SdkType,
-    [Parameter(Mandatory=$true)]
-    [string] $ProjectNames,
+    [Parameter(Mandatory=$false)]
+    [string] $ProjectNames="Azure.Security.KeyVault.Administration,Azure.Security.KeyVault.Certificates,Azure.Security.KeyVault.Keys,Azure.Security.KeyVault.Secrets",
     [Parameter(Mandatory=$false)]
     [string] $BuildConfiguration,
     [Parameter(Mandatory=$false)]
@@ -12,16 +12,17 @@ param(
 )
 . $PSScriptRoot/splittestdependencies/generate-dependency-functions.ps1
 
+$env:GITHUB_ACTIONS="true"
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version 4
 
 $TargetProjects = $ProjectNames -split ","
 $RepoRoot = Resolve-Path (Join-Path "$PSScriptRoot" ".." "..")
 
-$snippetEnabledProjects = (Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
+$snippetEnabledProjects = Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
 | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json } `
 | Where-Object { $_.ArtifactName -in $TargetProjects -and $_.CIParameters.BuildSnippets -eq $true }
-| ForEach-Object { $_.ArtifactName }) -join ","
+| ForEach-Object { $_.ArtifactName }
 
 if ($snippetEnabledProjects) {
     $scopedFile = Write-PkgInfoToDependencyGroupFile -OutputPath "$RepoRoot" -PackageInfoFolder $PackageInfoFolder -ProjectNames $snippetEnabledProjects
