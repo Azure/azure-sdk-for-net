@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.Security.CodeTransparency.Receipt;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
@@ -192,13 +193,51 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
-            byte[] inputSignedStatement = readFileBytes("input_signed_claims");
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
             #region Snippet:CodeTransparencyVerification
 #if SNIPPET
-            client.RunTransparentStatementVerification(transparentStatementBytes, inputSignedStatement);
+            Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
+            byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
+            client.RunTransparentStatementVerification(transparentStatementBytes);
 #endif
-#endregion
+            #endregion
+#endif
+        }
+
+        [Test]
+        public void Snippet_Readme_CodeTransparencyCcfReceiptVerifier_Test()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}");
+
+            var mockTransport = new MockTransport(content);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+
+            byte[] receiptBytes = readFileBytes("receipt.cose");
+            byte[] inputSignedPayloadBytes = readFileBytes("input_signed_claims");
+
+            #region Snippet:CodeTransparencyVerificyReceipt
+#if SNIPPET
+            Response<JwksDocument> key = client.GetPublicKeys();
+
+            CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes);
+#endif
+            #endregion Snippet:CodeTransparencyVerificyReceipt
+
 #endif
         }
     }

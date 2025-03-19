@@ -22,7 +22,7 @@ dotnet add package Azure.Security.CodeTransparency --prerelease
 
 - A running and accessible Code Transparency Service
 - Ability to create `COSE_Sign1` envelopes, [an example script][CTS_claim_generator_script]
-- Your signer details (CA cert or DID issuer) have to be configured in the running service, [about available configuration][CTS_configuration_doc]
+- Your signer details (CA cert) have to be configured in the running service, [about available configuration][CTS_configuration_doc]
 - You can get a valid Bearer token if the service authentication is configured to require one, [see example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md)
 
 ### Thread safety
@@ -69,8 +69,17 @@ byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
 
 Once you have the receipt and the signature, you can verify whether the signature was actually included in the Code Transparency service by running the receipt verification logic. The verifier checks if the receipt was issued for a given signature and if the receipt signature was endorsed by the service.
 
+```C# Snippet:CodeTransparencyVerificyReceipt
+Response<JwksDocument> key = client.GetPublicKeys();
+CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes);
+```
+
+Alternatively, you can retrieve the Transparent Statement of the corresponding submission and run the receipt verification logic
+
 ```C# Snippet:CodeTransparencyVerification
-client.VerifyTransparentStatementReceipt(signatureWithReceiptBytes, content.ToArray());
+Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
+byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
+client.RunTransparentStatementVerification(transparentStatementBytes);
 ```
 
 If the verification completes without exception, you can trust the signature and the receipt. This allows you to safely inspect the contents of the files, especially the contents of the payload embedded in a cose signature envelope.

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Cose;
 using System.Text;
+using Azure.Core;
 using static Azure.Security.CodeTransparency.Receipt.CcfReceipt;
 
 namespace Azure.Security.CodeTransparency.Receipt
@@ -33,7 +34,9 @@ namespace Azure.Security.CodeTransparency.Receipt
 
         /// <summary>
         /// Verify a CCF SCITT receipt.
-        /// If the verification fails, an exception is thrown.
+        /// If the verification fails, an exception is thrown explaining in which step the verification failed.
+        /// #1 Reference: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
+        /// #2 Reference: https://datatracker.ietf.org/doc/draft-birkholz-cose-receipts-ccf-profile/
         /// </summary>
         /// <param name="jsonWebKey">The service certificate key (JWK).</param>
         /// <param name="receiptBytes">Receipt in COSE_Sign1 cbor bytes.</param>
@@ -170,8 +173,8 @@ namespace Azure.Security.CodeTransparency.Receipt
                 KeyVault.Keys.JsonWebKey tmpAkvKey = new KeyVault.Keys.JsonWebKey(null)
                 {
                     CurveName = jsonWebKey.Crv,
-                    X = Convert.FromBase64String(jsonWebKey.X.Replace('-', '+').Replace('_', '/')),
-                    Y = Convert.FromBase64String(jsonWebKey.Y.Replace('-', '+').Replace('_', '/')),
+                    X = Base64Url.Decode(jsonWebKey.X),
+                    Y = Base64Url.Decode(jsonWebKey.Y),
                     Id = jsonWebKey.Kid,
                     KeyType = jsonWebKey.Kty
                 };

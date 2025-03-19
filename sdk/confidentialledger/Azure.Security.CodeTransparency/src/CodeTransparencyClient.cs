@@ -223,13 +223,12 @@ namespace Azure.Security.CodeTransparency
         /// <summary>
         /// Verify the receipt integrity against the COSE_Sign1 envelope
         /// and check if receipt was endorsed by the given service certificate.
-        /// In the case of receipts being embedded in the signature then verify
+        /// In the case of multiple receipts being embedded in the signature then verify
         /// all of them.
         /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(JsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
         /// </summary>
         /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
-        /// <param name="signedStatement">The input signed statement in Cose_Sign1 cbor bytes.</param>
-        public void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes, byte[] signedStatement)
+        public void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes)
         {
             List<Exception> failures = new List<Exception>();
 
@@ -254,13 +253,18 @@ namespace Azure.Security.CodeTransparency
             }
             cborReader.ReadEndArray();
 
+            // Get the input signed statement bytes from the transparent statement
+            // by removing the unprotected headers and encoding the message again
+            CoseSign1Message inputSignedStatement = CoseMessage.DecodeSign1(transparentStatementCoseSign1Bytes);
+            inputSignedStatement.UnprotectedHeaders.Clear();
+
             // Verify each receipt and keep failure counter
             foreach (var receipt in receiptList)
             {
                 try
                 {
                     JsonWebKey jsonWebKey = GetServiceCertificateKey(receipt);
-                    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, receipt, signedStatement);
+                    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, receipt, inputSignedStatement.Encode());
                 }
                 catch (Exception e)
                 {

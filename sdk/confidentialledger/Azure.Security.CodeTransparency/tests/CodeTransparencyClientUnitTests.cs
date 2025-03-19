@@ -352,6 +352,33 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
+        public void GetPublicKeys_Success_After_retry()
+        {
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}");
+
+            var mockTransport = new MockTransport(new MockResponse(503), content);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+
+            Response<JwksDocument> result = client.GetPublicKeys();
+
+            Assert.NotNull(result);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.AreEqual("https://foo.bar.com/jwks?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
+        }
+
+        [Test]
         public void RunTransparentStatementVerification_InvalidParameters_ShouldThrowCryptographicException()
         {
 #if NET462
@@ -375,9 +402,8 @@ namespace Azure.Security.CodeTransparency.Tests
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
             byte[] transparentStatementCoseSign1Bytes = new byte[] { 0x01, 0x02, 0x03 /* invalid bytes */ };
-            byte[] signedStatement = readFileBytes("input_signed_claims");
 
-            Assert.Throws<CryptographicException>(() => client.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, signedStatement));
+            Assert.Throws<CryptographicException>(() => client.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes));
 #endif
         }
 
@@ -404,10 +430,9 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
-            byte[] inputSignedStatement = readFileBytes("input_signed_claims");
-            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
-            client.RunTransparentStatementVerification(transparentStatementBytes, inputSignedStatement);
+            client.RunTransparentStatementVerification(transparentStatementBytes);
 #endif
         }
 
@@ -434,10 +459,9 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
-            byte[] inputSignedStatement = readFileBytes("input_signed_claims");
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
 
-            var exception = Assert.Throws<AggregateException>(() => client.RunTransparentStatementVerification(transparentStatementBytes, inputSignedStatement));
+            var exception = Assert.Throws<AggregateException>(() => client.RunTransparentStatementVerification(transparentStatementBytes));
             Assert.AreEqual("The ECDsa key uses the wrong algorithm. Expected -39 Found -35", exception.InnerExceptions[0].Message);
 #endif
         }
@@ -465,10 +489,9 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
-            byte[] inputSignedStatement = readFileBytes("input_signed_claims");
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
 
-            Assert.Throws<AggregateException>(() => client.RunTransparentStatementVerification(transparentStatementBytes, inputSignedStatement));
+            Assert.Throws<AggregateException>(() => client.RunTransparentStatementVerification(transparentStatementBytes));
 #endif
         }
     }
