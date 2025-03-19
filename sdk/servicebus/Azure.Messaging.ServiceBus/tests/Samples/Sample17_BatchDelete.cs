@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -16,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusPurgeMessages
 #if SNIPPET
-                string fullQualifiedNamespace = "<fully_qualified_namespace>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
@@ -42,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusPurgeMessagesByDate
 #if SNIPPET
-                string fullQualifiedNamespace = "<fully_qualified_namespace>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";;
                 await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
 #else
@@ -69,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusDeleteMessages
 #if SNIPPET
-                string fullQualifiedNamespace = "<fully_qualified_namespace>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
 #else
