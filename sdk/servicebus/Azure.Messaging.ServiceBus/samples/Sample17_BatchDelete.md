@@ -27,7 +27,7 @@ For scenarios where you would like to delete all messages enqueued before a give
 ```C# Snippet:ServiceBusPurgeMessagesByDate
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";;
-await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // Delete all messages in the queue that were enqueued more than a year ago.
@@ -44,7 +44,7 @@ Note that the service may delete fewer messages than were requested, but will ne
 ```C# Snippet:ServiceBusDeleteMessages
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
-await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // Delete the oldest 50 messages in the queue.
