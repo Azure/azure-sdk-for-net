@@ -106,7 +106,6 @@ function GenerateMatrix(
     $combinedDisplayNameLookup= $result.DisplayNamesLookup
 
     if ($selectFromMatrixType -eq "sparse") {
-        Write-Host "$($matrixParameters.GetType())"
         $matrix = GenerateSparseMatrix $matrixParameters $config.displayNamesLookup $nonSparseParameters
     }
     elseif ($selectFromMatrixType -eq "all") {
