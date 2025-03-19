@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
         }
         // for live tests, replace passcode with actual code from portal for this this function devexpfuncappdestination and function EventGridTrigger1
+        // for live tests, replace SANITIZED_FUNCTION_KEY with actual code from portal for this this function devexpfuncappdestination and function EventGridTrigger1
         public const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY";
         public const string AzureFunctionArmId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Web/sites/devexpfuncappdestination/functions/EventGridTrigger1";
         private EventGridTopicCollection TopicCollection { get; set; }
@@ -135,9 +137,31 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("StaticDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[0].Name);
             Assert.AreEqual("DynamicDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[1].Name);
 
-            //// TODO: @surabhi Fix thisList event subscriptions
-            //var eventSubscriptionsPage = await ResourceGroup.GetRegionalEventSubscriptionsDataAsync(DefaultLocation).ToEnumerableAsync();
-            //Assert.NotNull(eventSubscriptionsPage.FirstOrDefault(x => x.Name.Equals(eventSubscriptionName)));
+            string topicTypeName = "Microsoft.EventGrid.Topics";
+
+            // Get regional event subscriptions at resource group level from given location
+            var regionalEventSubscriptionsByResourceGroup = ResourceGroup.GetRegionalEventSubscriptionsDataAsync(DefaultLocation).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(regionalEventSubscriptionsByResourceGroup);
+
+            // Get regional event subscriptions at subscription level for given location
+            var regionalEventSubscriptionsBySubscription = DefaultSubscription.GetRegionalEventSubscriptionsDataAsync(DefaultLocation).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(regionalEventSubscriptionsByResourceGroup);
+
+            // Get regional event subscriptions by topic type at resource group level from given location
+            var regionalEventSubscriptionsByTopicTypeResourceGroup =  ResourceGroup.GetRegionalEventSubscriptionsDataForTopicTypeAsync(DefaultLocation, topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(regionalEventSubscriptionsByTopicTypeResourceGroup);
+
+            // Get regional event subscriptions by topic type at subscription level for given location
+            var regionalEventSubscriptionsByTopicTypeBySubscription = DefaultSubscription.GetRegionalEventSubscriptionsDataForTopicTypeAsync(DefaultLocation, topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(regionalEventSubscriptionsByTopicTypeBySubscription);
+
+            // Get global event subscriptions by topic type at resource group level
+            var globalEventSubscriptionsByResourceGroup = ResourceGroup.GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(globalEventSubscriptionsByResourceGroup);
+
+            // Get global event subscriptions by topic type at subscription level
+            var globalEventSubscriptionsBySubscription = DefaultSubscription.GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(globalEventSubscriptionsBySubscription);
 
             // Delete the event subscription
             await eventSubscriptionResponse.DeleteAsync(WaitUntil.Completed);
@@ -286,6 +310,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(EventSubscriptionProvisioningState.Succeeded, eventSubscriptionResponse.Data.ProvisioningState);
             Assert.AreEqual("TestPrefix", eventSubscriptionResponse.Data.Filter.SubjectBeginsWith);
             Assert.AreEqual("TestSuffix", eventSubscriptionResponse.Data.Filter.SubjectEndsWith);
+
+            // List all event subscriptions for a domain topic
+            var domainTopicEventSubscriptions = await domainTopic.GetDomainTopicEventSubscriptions().GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(domainTopicEventSubscriptions);
+            Assert.AreEqual(domainTopicEventSubscriptions.Count(), 1);
 
             // List event subscriptions
             var eventSubscriptionsPage = await subscriptionCollection.GetAllAsync().ToEnumerableAsync();
