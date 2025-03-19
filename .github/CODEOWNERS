@@ -982,6 +982,12 @@
 # ServiceLabel: %Container Orchestrator Runtime
 # ServiceOwners:                                                   @ddadaal
 
+# PRLabel: %Database Watcher
+/sdk/databasewatcher/Azure.ResourceManager.*/                      @Renyx1219
+
+# ServiceLabel: %Database Watcher %Mgmt
+# ServiceOwners:                                                   @Renyx1219
+
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
