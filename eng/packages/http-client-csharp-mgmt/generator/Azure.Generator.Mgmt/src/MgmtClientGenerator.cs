@@ -4,7 +4,6 @@
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
-using Microsoft.TypeSpec.Generator.EmitterRpc;
 using System;
 using System.ComponentModel.Composition;
 
@@ -13,19 +12,19 @@ namespace Azure.Generator.Mgmt
     /// <summary>
     /// The management-plane client plugin to generate the Azure mgmt client SDK.
     /// </summary>
-    [Export(typeof(CodeModelPlugin))]
-    [ExportMetadata("PluginName", nameof(MgmtClientPlugin))]
-    public class MgmtClientPlugin : AzureClientPlugin
+    [Export(typeof(CodeModelGenerator))]
+    [ExportMetadata("PluginName", nameof(MgmtClientGenerator))]
+    public class MgmtClientGenerator : AzureClientGenerator
     {
-        private static MgmtClientPlugin? _instance;
-        internal static MgmtClientPlugin Instance => _instance ?? throw new InvalidOperationException("MgmtClientPlugin is not loaded.");
+        private static MgmtClientGenerator? _instance;
+        internal static MgmtClientGenerator Instance => _instance ?? throw new InvalidOperationException("MgmtClientPlugin is not loaded.");
 
         /// <summary>
         /// The Azure client plugin to generate the Azure client SDK.
         /// </summary>
         /// <param name="context"></param>
         [ImportingConstructor]
-        public MgmtClientPlugin(GeneratorContext context) : base(context)
+        public MgmtClientGenerator(GeneratorContext context) : base(context)
         {
             TypeFactory = new MgmtTypeFactory();
             InputLibrary = new MgmtInputLibrary(Configuration.OutputDirectory);

@@ -21,7 +21,7 @@ namespace Azure.Generator.Mgmt
         private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
             var result = new List<ResourceClientProvider>();
-            foreach (var client in MgmtClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
+            foreach (var client in MgmtClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
                 // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
                 var resourceMetadata = client.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
@@ -30,7 +30,7 @@ namespace Azure.Generator.Mgmt
                     continue;
                 }
                 var resource = new ResourceClientProvider(client);
-                MgmtClientPlugin.Instance.AddTypeToKeep(resource.Name);
+                MgmtClientGenerator.Instance.AddTypeToKeep(resource.Name);
                 result.Add(resource);
             }
             return result;

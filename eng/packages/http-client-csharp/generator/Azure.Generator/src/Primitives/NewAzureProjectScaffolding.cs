@@ -30,7 +30,7 @@ namespace Azure.Generator.Primitives
                 GenerateDocumentationFile = true,
             };
 
-            foreach (var packages in AzureClientPlugin.Instance.TypeFactory.AzureDependencyPackages)
+            foreach (var packages in AzureClientGenerator.Instance.TypeFactory.AzureDependencyPackages)
             {
                 builder.PackageReferences.Add(packages);
             }

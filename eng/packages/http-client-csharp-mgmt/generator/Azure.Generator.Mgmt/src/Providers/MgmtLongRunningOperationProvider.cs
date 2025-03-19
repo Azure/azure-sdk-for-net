@@ -39,7 +39,7 @@ namespace Azure.Generator.Mgmt.Providers
             _operationIdField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(string), "_operationId", this);
         }
 
-        private readonly string _serviceName = MgmtClientPlugin.Instance.InputLibrary.InputNamespace.Name.Split('.').Last();
+        private readonly string _serviceName = MgmtClientGenerator.Instance.InputLibrary.InputNamespace.Name.Split('.').Last();
         protected override string BuildName() => $"{_serviceName}ArmOperation";
 
         protected override CSharpType[] GetTypeArguments() => _isGeneric ? new CSharpType[] { _t } : base.GetTypeArguments();
