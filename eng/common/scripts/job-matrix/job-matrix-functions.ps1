@@ -99,9 +99,14 @@ function GenerateMatrix(
     [Array]$nonSparseParameters = @(),
     [Switch]$skipEnvironmentVariables
 ) {
-    $matrixParameters, $importedMatrix, $combinedDisplayNameLookup = `
-        ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
+    $result = ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
+
+    $matrixParameters         = $result.Matrix
+    $importedMatrix           = $result.ImportedMatrix
+    $combinedDisplayNameLookup= $result.DisplayNamesLookup
+
     if ($selectFromMatrixType -eq "sparse") {
+        Write-Host "$($matrixParameters.GetType())"
         $matrix = GenerateSparseMatrix $matrixParameters $config.displayNamesLookup $nonSparseParameters
     }
     elseif ($selectFromMatrixType -eq "all") {
@@ -425,7 +430,11 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         }
     }
     if ((!$matrix -and !$importPath) -or !$importPath) {
-        return $matrix, @(), $displayNamesLookup
+        return [PSCustomObject]@{
+            Matrix                = $matrix
+            ImportedMatrix        = @()
+            DisplayNamesLookup    = $displayNamesLookup
+        }
     }
 
     if (!(Test-Path $importPath)) {
@@ -447,7 +456,11 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         $combinedDisplayNameLookup[$lookup.Name] = $lookup.Value
     }
 
-    return @($matrix ?? $null, $importedMatrix, $combinedDisplayNameLookup)
+    return [PSCustomObject]@{
+        Matrix                = $matrix ?? @()
+        ImportedMatrix        = $importedMatrix
+        DisplayNamesLookup    = $combinedDisplayNameLookup
+    }
 }
 
 function CombineMatrices([Array]$matrix1, [Array]$matrix2, [Hashtable]$displayNamesLookup = @{}) {
