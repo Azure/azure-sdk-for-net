@@ -37,6 +37,7 @@ namespace Azure.Storage.DataMovement
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
         private readonly ITransferCheckpointer _checkpointer;
+        private readonly ConcurrencyTuner _concurrencyTuner;
 
         private readonly List<StorageResourceProvider> _resumeProviders;
 
@@ -60,7 +61,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Options that will apply to all transfers started by this TransferManager.</param>
         public TransferManager(TransferManagerOptions options = default)
             : this(
-            ChannelProcessing.NewProcessor<TransferJobInternal>(readers: 1),
+            ChannelProcessing.NewProcessor<TransferJobInternal>(readers: DataMovementConstants.Channels.MaxJobReaders),
             ChannelProcessing.NewProcessor<JobPartInternal>(
                 readers: DataMovementConstants.Channels.MaxJobPartReaders,
                 capacity: DataMovementConstants.Channels.JobPartCapacity),
@@ -70,9 +71,17 @@ namespace Azure.Storage.DataMovement
             new(ArrayPool<byte>.Shared,
                 options?.ErrorMode ?? TransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
-                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
-                options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
-                default)
+            CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
+            options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
+            new ConcurrencyTuner(
+                    new ResourceMonitor(),
+                    options?.MonitoringInterval ?? DataMovementConstants.TransferManagerOptions.MonitoringInterval,
+                    options?.MaximumMemoryUsage ?? DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
+                    options?.InitialConcurrency ?? DataMovementConstants.TransferManagerOptions.InitialConcurrency,
+                    options?.MaximumConcurrency ?? DataMovementConstants.TransferManagerOptions.MaxConcurrency,
+                    options?.MaximumCpuUsage ?? DataMovementConstants.TransferManagerOptions.MaxCpuUsage
+                    ),
+            default)
         {}
 
         /// <summary>
@@ -85,7 +94,9 @@ namespace Azure.Storage.DataMovement
             JobBuilder jobBuilder,
             ITransferCheckpointer checkpointer,
             ICollection<StorageResourceProvider> resumeProviders,
-            Func<string> generateTransferId = default)
+            ConcurrencyTuner concurrencyTuner,
+            Func<string> generateTransferId = default
+            )
         {
             _jobsProcessor = jobsProcessor;
             _partsProcessor = partsProcessor;
@@ -95,6 +106,14 @@ namespace Azure.Storage.DataMovement
             _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
+            _concurrencyTuner = concurrencyTuner ?? new ConcurrencyTuner(
+                    new ResourceMonitor(),
+                    DataMovementConstants.TransferManagerOptions.MonitoringInterval,
+                    DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
+                    DataMovementConstants.TransferManagerOptions.InitialConcurrency,
+                    DataMovementConstants.TransferManagerOptions.MaxConcurrency,
+                    DataMovementConstants.TransferManagerOptions.MaxCpuUsage
+                    );
 
             ConfigureProcessorCallbacks();
         }
@@ -395,6 +414,11 @@ namespace Azure.Storage.DataMovement
                     cancellationToken).ConfigureAwait(false);
 
                 DataMovementEventSource.Singleton.TransferQueued(transferId, sourceResource, destinationResource);
+
+                StartConcurrencyTuner();
+                //TODO: If we need to shut off the concurrency tuner in the future after perf testing, then we can
+                //StopConcurrencyTunerWhenTransfersComplete();
+
                 return transferOperation;
             }
             catch (Exception ex)
@@ -413,6 +437,20 @@ namespace Azure.Storage.DataMovement
                 }
                 throw;
             }
+        }
+
+        private void StopConcurrencyTunerWhenTransfersComplete()
+        {
+            // TaskContinuationOptions.OnlyOnRanToCompletion ensures that this only executes when successful
+            // TaskScheduler.FromCurrentSchronizationContext ensures that this executes on the main thread
+            Task.WhenAll(_transfers.Values
+                .Select(transfer => transfer.WaitForCompletionAsync(_cancellationToken)))
+                .ContinueWith((_) => _cancellationTokenSource.Cancel());
+        }
+
+        private void StartConcurrencyTuner()
+        {
+            _concurrencyTuner.Start(_cancellationToken);
         }
 
         private async Task<TransferOperation> BuildAndAddTransferJobAsync(

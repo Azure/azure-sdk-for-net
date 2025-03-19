@@ -16,11 +16,13 @@ namespace Azure.Storage.DataMovement
         internal static class Channels
         {
             internal const int MaxJobPartReaders = 32;
+            internal const int MinimumJobChuckReaders = 1;
             internal static int MaxJobChunkReaders = Environment.ProcessorCount * 8;
             internal const int JobPartCapacity = 1000;
             internal const int JobChunkCapacity = 1000;
             internal const int DownloadChunkCapacity = 16;
             internal const int StageChunkCapacity = 1000;
+            internal const int MaxJobReaders = 1;
         }
 
         internal static class ConcurrencyTuner
@@ -31,6 +33,16 @@ namespace Azure.Storage.DataMovement
             internal const int SlowdownFactor = 5;
             internal const double MinMulitplier = 1.19; // really this is 1.2, but use a little less to make the floating point comparisons robust
             internal const double FudgeFactor = 0.2;
+        }
+
+        internal static class TransferManagerOptions
+        {
+            internal static TransferErrorMode ErrorMode = TransferErrorMode.StopOnAnyFailure;
+            internal const int InitialConcurrency = 1;
+            internal static int MaxConcurrency = Environment.ProcessorCount * 8;
+            internal const double MaxMemoryUsage = double.MaxValue;
+            internal const float MaxCpuUsage = 1.0F;
+            internal static TimeSpan MonitoringInterval = TimeSpan.FromSeconds(1);
         }
 
         /// <summary>

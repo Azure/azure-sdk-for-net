@@ -165,7 +165,9 @@ public class PauseResumeTransferMockedTests
             chunksProcessor2,
             jobBuilder2,
             checkpointer,
-            resumeProviders2);
+            resumeProviders2,
+            default,
+            default);
 
         return (transferManager2, jobsProcessor2, partsProcessor2, chunksProcessor2);
     }
@@ -209,7 +211,8 @@ public class PauseResumeTransferMockedTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default);
 
         List<TransferOperation> transfers = new();
 
@@ -344,7 +347,8 @@ public class PauseResumeTransferMockedTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default);
 
         List<TransferOperation> transfers = new();
 
@@ -480,7 +484,8 @@ public class PauseResumeTransferMockedTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default);
 
         List<TransferOperation> transfers = new();
 
@@ -639,7 +644,8 @@ public class PauseResumeTransferMockedTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default);
 
         List<TransferOperation> transfers = new();
 
@@ -775,7 +781,8 @@ public class PauseResumeTransferMockedTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default);
 
         List<TransferOperation> transfers = new();
 
@@ -911,7 +918,8 @@ public class PauseResumeTransferMockedTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default);
 
         List<TransferOperation> transfers = new();
 
@@ -1083,7 +1091,8 @@ public class PauseResumeTransferMockedTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default);
 
         List<TransferOperation> transfers = new();
 
@@ -1258,7 +1267,8 @@ public class PauseResumeTransferMockedTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default);
 
         List<TransferOperation> transfers = new();
 
@@ -1432,7 +1442,8 @@ public class PauseResumeTransferMockedTests
             chunksProcessor0,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default);
 
         List<TransferOperation> transfers = new();
 
@@ -1584,7 +1595,9 @@ public class PauseResumeTransferMockedTests
             chunksProcessor0,
             jobBuilder,
             checkpointer,
-            resumeProviders);
+            resumeProviders,
+            default,
+            default);
 
         List<TransferOperation> transfers = new();
 

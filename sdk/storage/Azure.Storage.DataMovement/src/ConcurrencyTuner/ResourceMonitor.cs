@@ -3,15 +3,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
+    /// CPU usage is a measure of how much processing power a process is using over a period of time. To calculate this,
+    /// you need to know how much CPU time the process has consumed during a specific interval.
+    ///
     /// In order to perform a cpu monitor without requiring large
     /// amounts of permissions from the user, we can do a pseudo monitor
     /// where with poll the CPU to see how it does with a simple wait task.
@@ -24,26 +28,58 @@ namespace Azure.Storage.DataMovement
     ///
     /// A lot of computations were taken from the azcopy cpuMonitor
     /// </summary>
-    internal class CpuMonitor
+    internal class ResourceMonitor
     {
-        public bool IsRunning { get; private set; }
+        #region private fields and properties
+        private Task _monitoringWorker;
+        //private CancellationTokenSource _cancellationTokenSource;
+        private TimeSpan _monitoringInterval;
+        private double _previousProcessorTime = 0;
+        private double _currentProcessorTime = 0;
+        private int _coreCount = Environment.ProcessorCount;
+        private CancellationToken _cancellationToken;
+        private Process CurrentProcess
+        {
+            get
+            {
+                return Process.GetCurrentProcess();
+            }
+        }
+        #endregion
 
+        #region internal fields and properties
         /// <summary>
         /// CPUContentionExists returns true if demand for CPU capacity is affecting
         /// the ability of our GoRoutines to run when they want to run
         /// </summary>
 
-        public bool ContentionExists { get; private set; }
-
-        private Task _monitoringWorker;
+        internal bool ContentionExists { get; private set; }
 
         /// <summary>
-        /// Initalizes the CPU monitor.
-        ///
-        /// This should be called early on in the job transfers.
+        /// CpuUsage represents the amount of CPU used as a float between 0 and 1
         /// </summary>
-        public CpuMonitor()
+        internal float CpuUsage { get; private set; }
+
+        /// <summary>
+        /// MemoryUsage returns the number of bytes of memory currently being used by the process.
+        /// This is the same amount of memory that appears in the task manager
+        /// </summary>
+
+        internal double MemoryUsage { get; private set; }
+
+        /// <summary>
+        /// IsRunning returns a boolean on whether the ResourceMonitor is running
+        /// </summary>
+        internal bool IsRunning { get; private set; }
+        #endregion
+        ///
+        public ResourceMonitor(TimeSpan monitoringInterval = default)
         {
+            if (monitoringInterval < TimeSpan.FromMilliseconds(0))
+            {
+                throw new ArgumentOutOfRangeException(nameof(monitoringInterval), "Value cannot be less than 0.");
+            }
+            _monitoringInterval = monitoringInterval == TimeSpan.FromSeconds(0) ? TimeSpan.FromMilliseconds(1000) : monitoringInterval;
         }
 
         /// <summary>
@@ -134,6 +170,29 @@ namespace Azure.Storage.DataMovement
             }
         }
 
+        internal void StartMonitoring(CancellationToken cancellationToken)
+        {
+            if (IsRunning)
+                return;
+
+            IsRunning = true;
+            // _cancellationToken is set for the MonitorResourceUsage loop
+            // cancellationToken is used to cancel the callback
+            _cancellationToken = cancellationToken;
+            Task.Run(() => MonitorResourceUsage(), cancellationToken);
+        }
+
+        // Removing the stopMonitoring method. This will be handled by the TransferManager
+        // when the Transfer Manager calls `.Cancel()` on the cancellationTokenSource
+        //internal void StopMonitoring()
+        //{
+        //    if (!IsRunning)
+        //        return;
+
+        //    IsRunning = false;
+        //    _cancellationTokenSource.Cancel();
+        //}
+
         private static async Task MonitoringWorker(
             TimeSpan waitTime,
             ChannelWriter<TimeSpan> durationWriter,
@@ -155,6 +214,45 @@ namespace Azure.Storage.DataMovement
 
                 await durationWriter.WriteAsync(excessTime, cancellationToken).ConfigureAwait(false);
             }
+        }
+
+        private async Task MonitorResourceUsage()
+        {
+            while (!_cancellationToken.IsCancellationRequested)
+            {
+                // Calling Refresh forces the Process object to update its cached information with current values from the OS.
+                CurrentProcess.Refresh();
+
+                CalculateCpuUsage();
+                CalculateMemoryUsage();
+                await Task.Delay(_monitoringInterval, _cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        private void CalculateCpuUsage()
+        {
+            // using process would work on all old and new frameworks
+            // https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.getcurrentprocess?view=net-9.0#system-diagnostics-process-getcurrentprocess
+
+            _currentProcessorTime = CurrentProcess.TotalProcessorTime.TotalMilliseconds;
+
+            // CPU Usage = ((Current CPU Time - Previous CPU Time)/ (Time Elapsed * Number of Cores))
+            // Process.TotalProcessorTime.TotalMilliseconds returns the processing time across all processors
+            // Environment.ProcessorCount returns then total number of cores (which includes physical cores plus hyper
+            // threaded cores
+            CpuUsage = (float)(_currentProcessorTime - _previousProcessorTime) / (float)(_monitoringInterval.TotalMilliseconds * _coreCount);
+            _previousProcessorTime = _currentProcessorTime;
+        }
+
+        private void CalculateMemoryUsage()
+        {
+            // https://stackoverflow.com/questions/16402036/anomalies-with-using-process-workingset64-to-measure-memory-usage
+            // https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.workingset64?view=net-9.0
+            // long currentMemoryUsage = CurrentProcess.WorkingSet64;
+
+            // This is the memory that is shown in the task manager
+            // https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.privatememorysize64?view=net-9.0
+            MemoryUsage = CurrentProcess.PrivateMemorySize64;
         }
     }
 }
