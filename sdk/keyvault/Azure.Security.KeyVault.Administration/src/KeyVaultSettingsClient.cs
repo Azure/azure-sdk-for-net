@@ -169,7 +169,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                Response response = _restClient.UpdateSetting(setting.Name, setting.Value.ToString());
+                Response response = _restClient.UpdateSetting(setting.Name, setting.ToRequestContent());
 
                 KeyVaultSetting value0 = default;
                 using var document = JsonDocument.Parse(response.ContentStream, default);
@@ -199,7 +199,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                Response response = await _restClient.UpdateSettingAsync(setting.Name, setting.Value.ToString()).ConfigureAwait(false);
+                Response response = await _restClient.UpdateSettingAsync(setting.Name, setting.ToRequestContent()).ConfigureAwait(false);
 
                 KeyVaultSetting value0 = default;
                 using var document = await JsonDocument.ParseAsync(response.ContentStream, default).ConfigureAwait(false);
