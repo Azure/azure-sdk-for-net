@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             if (options.Format != "W" && Optional.IsDefined(RelatedResourceType))
             {
                 writer.WritePropertyName("relatedResourceType"u8);
-                writer.WriteStringValue(RelatedResourceType);
+                writer.WriteStringValue(RelatedResourceType.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             string recommendationMessage = default;
             Uri recommendationUrl = default;
             ResourceIdentifier relatedResourceId = default;
-            string relatedResourceType = default;
+            ResourceType? relatedResourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (property.NameEquals("relatedResourceType"u8))
                 {
-                    relatedResourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    relatedResourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

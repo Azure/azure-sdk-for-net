@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="relatedResourceId"> The resource ID of the Azure resource related to the issue. </param>
         /// <param name="relatedResourceType"> The type of the Azure resource related to the issue. </param>
         /// <returns> A new <see cref="Models.DatabaseWatcherHealthValidationIssue"/> instance for mocking. </returns>
-        public static DatabaseWatcherHealthValidationIssue DatabaseWatcherHealthValidationIssue(string errorCode = null, string errorMessage = null, string additionalDetails = null, string recommendationMessage = null, Uri recommendationUri = null, ResourceIdentifier relatedResourceId = null, string relatedResourceType = null)
+        public static DatabaseWatcherHealthValidationIssue DatabaseWatcherHealthValidationIssue(string errorCode = null, string errorMessage = null, string additionalDetails = null, string recommendationMessage = null, Uri recommendationUri = null, ResourceIdentifier relatedResourceId = null, ResourceType? relatedResourceType = null)
         {
             return new DatabaseWatcherHealthValidationIssue(
                 errorCode,

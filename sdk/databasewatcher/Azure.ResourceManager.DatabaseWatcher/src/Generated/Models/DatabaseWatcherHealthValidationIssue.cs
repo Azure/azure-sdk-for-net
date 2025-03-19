@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="relatedResourceId"> The resource ID of the Azure resource related to the issue. </param>
         /// <param name="relatedResourceType"> The type of the Azure resource related to the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseWatcherHealthValidationIssue(string errorCode, string errorMessage, string additionalDetails, string recommendationMessage, Uri recommendationUri, ResourceIdentifier relatedResourceId, string relatedResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatabaseWatcherHealthValidationIssue(string errorCode, string errorMessage, string additionalDetails, string recommendationMessage, Uri recommendationUri, ResourceIdentifier relatedResourceId, ResourceType? relatedResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <summary> The resource ID of the Azure resource related to the issue. </summary>
         public ResourceIdentifier RelatedResourceId { get; }
         /// <summary> The type of the Azure resource related to the issue. </summary>
-        public string RelatedResourceType { get; }
+        public ResourceType? RelatedResourceType { get; }
     }
 }
