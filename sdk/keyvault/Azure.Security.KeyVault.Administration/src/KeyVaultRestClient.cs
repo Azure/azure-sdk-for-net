@@ -38,7 +38,8 @@ namespace Azure.Security.KeyVault.Administration
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options,
+                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
             _endpoint = endpoint;
             _apiVersion = options.GetVersionString();
         }
