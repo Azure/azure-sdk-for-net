@@ -59,6 +59,57 @@ namespace System.ClientModel
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
+    public partial interface IClaimsToken : System.ClientModel.IScopedToken, System.ClientModel.ITokenContext
+    {
+        string Claims { get; }
+    }
+    public partial interface IOauthPolicyFactory
+    {
+        System.ClientModel.Primitives.OAuthPipelinePolicy CreateAuthenticationPolicy(System.Collections.Generic.IReadOnlyDictionary<string, object> context);
+    }
+    public partial interface IScopedToken : System.ClientModel.ITokenContext
+    {
+        string[] Scopes { get; }
+    }
+    public partial interface ITokenContext
+    {
+    }
+    public partial interface ITokenProvider
+    {
+        object CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        System.ClientModel.Token GetAccessToken(object context, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetAccessTokenAsync(object context, System.Threading.CancellationToken cancellationToken);
+    }
+    public abstract partial class RefreshableToken : System.ClientModel.Token
+    {
+        public RefreshableToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) : base (default(string), default(string), default(System.DateTimeOffset), default(System.DateTimeOffset?)) { }
+        public abstract System.Threading.Tasks.Task RefreshAsync(System.Threading.CancellationToken cancellationToken);
+    }
+    public partial class Token
+    {
+        public Token(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } protected set { } }
+        public System.DateTimeOffset? RefreshOn { get { throw null; } protected set { } }
+        public string TokenType { get { throw null; } protected set { } }
+        public string TokenValue { get { throw null; } protected set { } }
+    }
+    public abstract partial class TokenProvider2<TContext> : System.ClientModel.ITokenProvider where TContext : System.ClientModel.ITokenContext
+    {
+        protected TokenProvider2() { }
+        public abstract TContext CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        public abstract System.ClientModel.Token GetAccessToken(TContext context, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetAccessTokenAsync(TContext context, System.Threading.CancellationToken cancellationToken);
+        object System.ClientModel.ITokenProvider.CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { throw null; }
+        System.ClientModel.Token System.ClientModel.ITokenProvider.GetAccessToken(object context, System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Threading.Tasks.ValueTask<System.ClientModel.Token> System.ClientModel.ITokenProvider.GetAccessTokenAsync(object context, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public abstract partial class TokenProvider<TContext> where TContext : System.ClientModel.ITokenContext
+    {
+        protected TokenProvider() { }
+        public abstract TContext CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> context);
+        public abstract System.ClientModel.Token GetAccessToken(TContext context, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetAccessTokenAsync(TContext context, System.Threading.CancellationToken cancellationToken);
+    }
 }
 namespace System.ClientModel.Primitives
 {
@@ -235,6 +286,12 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public abstract partial class OAuthPipelinePolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        protected OAuthPipelinePolicy() { }
+        public abstract System.ClientModel.Token GetToken(System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetTokenAsync(System.Threading.CancellationToken cancellationToken);
     }
     public abstract partial class OperationResult
     {
