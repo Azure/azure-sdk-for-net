@@ -5,8 +5,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
-#if !NET6_0 // The TagName class isn't available in NET6.
-
     // TODO: REMOVE THIS PRAGMA AFTER Microsoft.Extensions.Telemetry SHIPS THE TagName API AS STABLE.
     // https://github.com/dotnet/extensions/issues/5825
 #pragma warning disable EXTEXP0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
@@ -25,5 +23,4 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public static partial void WriteCustomEventWithAdditionalProperties(this ILogger logger, [TagName("microsoft.custom_event.name")] string customEventName, string key1, string key2);
     }
 #pragma warning restore EXTEXP0003
-#endif
 }

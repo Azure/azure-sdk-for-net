@@ -15,7 +15,6 @@ using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 {
-#if !NET6_0
     /// <summary>
     /// The purpose of these tests is to validate the <see cref="TelemetryItem"/> that is created
     /// based on interacting with <see cref="LoggerFactory"/> and <see cref="Logger"/>.
@@ -40,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         [Fact]
         public void VerifyExceptionTakesPrecence()
         {
-            // This test confirms that if an exception is present in a LogRecord that contains the "customevent" attribute then only an exception will be exported.
+            // This test confirms that if a LogRecord contains both an exception and the "customevent" attribute then only an exception will be exported.
 
             // SETUP
             var uniqueTestId = Guid.NewGuid();
@@ -130,7 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         }
 
         [Fact]
-        public void VerifyCustomEventViaLogMethodWithScopes()
+        public void VerifyCustomEventNotExporterViaScopes()
         {
             // SETUP
             var uniqueTestId = Guid.NewGuid();
@@ -238,7 +237,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         }
 
         [Fact]
-        public void VerifyCustomEventViaSourceGeneratedAndScopeAttribute()
+        public void VerifyScopeAttributeIsIgnored()
         {
             // This method is testing Compile-time logging source generation.
             // https://learn.microsoft.com/dotnet/core/extensions/logger-message-generator
@@ -345,7 +344,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         }
 
         [Fact]
-        public void VerifyCustomEventWithTwoCustomEventAttributes()
+        public void VerifyCustomEventWithExtraScopeAttribute()
         {
             // This method is testing Compile-time logging source generation.
             // https://learn.microsoft.com/dotnet/core/extensions/logger-message-generator
@@ -373,7 +372,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             List<KeyValuePair<string, object>> customEventScope = new()
             {
-                new("microsoft.custom_event.name", "Name2")
+                new("microsoft.custom_event.name", "Name2") // This scope attribute should be ignored and mapped as a property.
             };
 
             using (logger.BeginScope(customEventScope))
@@ -397,5 +396,4 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: null);
         }
     }
-#endif
 }

@@ -576,8 +576,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(duplicateScopeValue2, actualScopeValue);
         }
 
-        // TODO: SHOULD ADD TESTS FOR EVENTNAME, EVALUATING BOTH ATTRIBUTES (MAPPED) AND SCOPE (NOT MAPPED).
-
         [Fact]
         public void VerifyEventName()
         {
@@ -602,7 +600,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("MyCustomEventName", eventName);
         }
 
-#if !NET6_0
         [Fact]
         public void VerifyEventName_UsingLoggerExtensions()
         {
@@ -626,7 +623,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal("MyCustomEventName", eventName);
         }
-#endif
 
         private class CustomObject
         {
