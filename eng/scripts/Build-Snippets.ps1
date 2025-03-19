@@ -18,11 +18,12 @@ Set-StrictMode -Version 4
 $TargetProjects = $ProjectNames -split ","
 $RepoRoot = Resolve-Path (Join-Path "$PSScriptRoot" ".." "..")
 
-$snippetEnabledProjects = Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
+$snippetEnabledProjects = (Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
 | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json } `
 | Where-Object { $_.ArtifactName -in $TargetProjects -and $_.CIParameters.BuildSnippets -eq $true }
+| ForEach-Object { $_.ArtifactName }) -join ","
 
-$scopedFile = Write-PkgInfoToDependencyGroupFile -OutputPath "$RepoRoot" -PackageInfoFolder $PackageInfoFolder -ProjectNames $TargetProjects
+$scopedFile = Write-PkgInfoToDependencyGroupFile -OutputPath "$RepoRoot" -PackageInfoFolder $PackageInfoFolder -ProjectNames $snippetEnabledProjects
 
 Write-Host "Writing project list to $scopedFile"
 Write-Host (Get-Content -Raw -Path $scopedFile)
