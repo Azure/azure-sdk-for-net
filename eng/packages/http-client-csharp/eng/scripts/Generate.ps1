@@ -209,11 +209,6 @@ if ($null -eq $filter) {
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandName", "Executable")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", "dotnet")
 
-    $launchSettings["profiles"].Add("Mgmt-TypeSpec", @{})
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -g MgmtClientGenerator")
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
-
     foreach ($kvp in $spectorLaunchProjects.GetEnumerator()) {
         $launchSettings["profiles"].Add($kvp.Key, @{})
         $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$($kvp.Value) -g AzureClientGenerator")
@@ -241,4 +236,18 @@ if ($null -eq $filter) {
     $launchSettingsPath = Join-Path $solutionDir "Azure.Generator" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
     $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $launchSettingsPath
+    
+    # Write the launch settings for Mgmt
+    $mgmtLaunchSettings = @{}
+    $mgmtLaunchSettings.Add("profiles", @{})
+
+    $mgmtLaunchSettings["profiles"].Add("Mgmt-TypeSpec", @{})
+    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -g MgmtClientGenerator")
+    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
+    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
+    
+    # Write the launch settings to the launchSettings.json file
+    $mgmtLaunchSettingsPath = Join-Path $mgmtSolutionDir "Azure.Generator.Mgmt" "src" "Properties" "launchSettings.json"
+    # Write the settings to JSON and normalize line endings to Unix style (LF)
+    $mgmtLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $mgmtLaunchSettingsPath
 }
