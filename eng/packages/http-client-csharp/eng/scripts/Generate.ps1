@@ -247,8 +247,24 @@ if ($null -eq $filter) {
     $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
     $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
     
+    $mgmtSortedLaunchSettings = @{}
+    $mgmtSortedLaunchSettings.Add("profiles", [ordered]@{})
+    $mgmtLaunchSettings["profiles"].Keys | Sort-Object | ForEach-Object {
+        $profileKey = $_
+        $originalProfile = $mgmtLaunchSettings["profiles"][$profileKey]
+
+        # Sort the keys inside each profile
+        # This is needed due to non deterministic ordering of json elements in powershell
+        $sortedProfile = [ordered]@{}
+        $originalProfile.GetEnumerator() | Sort-Object Key | ForEach-Object {
+            $sortedProfile[$_.Key] = $_.Value
+        }
+
+        $mgmtSortedLaunchSettings["profiles"][$profileKey] = $sortedProfile
+    }
+    
     # Write the launch settings to the launchSettings.json file
     $mgmtLaunchSettingsPath = Join-Path $mgmtSolutionDir "Azure.Generator.Mgmt" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
-    $mgmtLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $mgmtLaunchSettingsPath
+    $mgmtSortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $mgmtLaunchSettingsPath
 }

@@ -2,8 +2,8 @@
   "profiles": {
     "Mgmt-TypeSpec": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/Local/Mgmt-TypeSpec -g MgmtClientGenerator",
-      "executablePath": "dotnet",
-      "commandName": "Executable"
+      "commandName": "Executable",
+      "executablePath": "dotnet"
     }
   }
 }
