@@ -24,8 +24,6 @@ function Build-Emitter {
         [string]$testResultsPath
     )
 
-    Push-Location $packageRoot
-    try {
         if ($UnitTests) {
             # test the emitter
             Invoke-LoggedCommand "npm run prettier" -GroupOutput -ErrorAction Continue
@@ -41,7 +39,7 @@ function Build-Emitter {
             Invoke-LoggedCommand "npm run build:generator" -GroupOutput
             Invoke-LoggedCommand "npm run test:generator" -GroupOutput -ErrorAction Continue
             if ($LastExitCode) {
-                $errors += "Genereator tests failed"
+                $errors += "Generator tests failed"
             }
 
             Invoke-LoggedCommand "npm run build:emitter" -GroupOutput
@@ -50,14 +48,25 @@ function Build-Emitter {
                 $errors += "Emitter tests failed"
             }
         }
-    }
-    finally {
-        Pop-Location
-    }
 }
 
-Build-Emitter -packageRoot $packageRoot -testResultsPath $testResultsPath
-Build-Emitter -packageRoot $mgmtPackageRoot -testResultsPath $mgmtTestResultsPath
+
+Push-Location $packageRoot
+try {
+    Build-Emitter -packageRoot $packageRoot -testResultsPath $testResultsPath
+}
+finally {
+    Pop-Location
+}
+
+
+Push-Location $mgmtPackageRoot
+try {
+    Build-Emitter -packageRoot $mgmtPackageRoot -testResultsPath $mgmtTestResultsPath
+}
+finally {
+    Pop-Location
+}
 
 Push-Location $packageRoot
 try {
