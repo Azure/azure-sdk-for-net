@@ -43,8 +43,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Gets or sets the Audience to use for authentication with Microsoft Entra. The audience is not considered when using a shared key.
         /// </summary>
-        /// <value>If <c>null</c>, <see cref="ConfigurationAudience.AzurePublicCloud" /> will be assumed.</value>
-        public ConfigurationAudience? Audience { get; set; }
+        public AppConfigurationAudience? Audience { get; set; }
 
         internal string Version { get; }
 
@@ -77,10 +76,10 @@ namespace Azure.Data.AppConfiguration
                 return host switch
                 {
                     _ when host.EndsWith(AzConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase)
-                        => $"{ConfigurationAudience.AzureGovernment}/.default",
+                        => $"{AppConfigurationAudience.AzureGovernment}/.default",
                     _ when host.EndsWith(AzConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase)
-                        => $"{ConfigurationAudience.AzureChina}/.default",
-                    _ => $"{ConfigurationAudience.AzurePublicCloud}/.default"
+                        => $"{AppConfigurationAudience.AzureChina}/.default",
+                    _ => $"{AppConfigurationAudience.AzurePublicCloud}/.default"
                 };
             }
 

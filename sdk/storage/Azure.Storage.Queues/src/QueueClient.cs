@@ -201,6 +201,8 @@ namespace Azure.Storage.Queues
             };
 
             _uri = uriBuilder.ToUri();
+            _accountName = conn.AccountName;
+            _name = queueName;
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
 
@@ -273,6 +275,7 @@ namespace Azure.Storage.Queues
                   sasCredential: null,
                   tokenCredential: null)
         {
+            _accountName ??= credential?.AccountName;
         }
 
         /// <summary>
@@ -456,8 +459,8 @@ namespace Azure.Storage.Queues
             if (_name == null || _accountName == null)
             {
                 var builder = new QueueUriBuilder(Uri);
-                _name = builder.QueueName;
-                _accountName = builder.AccountName;
+                _name ??= builder.QueueName;
+                _accountName ??= builder.AccountName;
             }
         }
 

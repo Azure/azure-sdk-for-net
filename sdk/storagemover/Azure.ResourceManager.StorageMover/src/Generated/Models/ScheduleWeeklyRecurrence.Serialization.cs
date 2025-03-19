@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScheduleWeeklyRecurrence(document.RootElement, options);
                     }
                 default:

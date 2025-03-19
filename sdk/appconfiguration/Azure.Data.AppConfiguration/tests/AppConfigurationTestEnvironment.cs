@@ -13,23 +13,23 @@ namespace Azure.Data.AppConfiguration
         public string Endpoint => GetRecordedVariable("APPCONFIGURATION_ENDPOINT_STRING");
         public string SecretId => GetRecordedVariable("KEYVAULT_SECRET_URL");
 
-        public ConfigurationAudience GetAudience()
+        public AppConfigurationAudience GetAudience()
         {
             Uri authorityHost = new(AuthorityHostUrl);
 
             if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
             {
-                return ConfigurationAudience.AzurePublicCloud;
+                return AppConfigurationAudience.AzurePublicCloud;
             }
 
             if (authorityHost == AzureAuthorityHosts.AzureChina)
             {
-                return ConfigurationAudience.AzureChina;
+                return AppConfigurationAudience.AzureChina;
             }
 
             if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
-                return ConfigurationAudience.AzureGovernment;
+                return AppConfigurationAudience.AzureGovernment;
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");

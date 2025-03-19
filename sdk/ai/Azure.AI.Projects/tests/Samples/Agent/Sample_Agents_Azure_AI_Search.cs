@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Collections.Generic;
+using NUnit.Framework.Internal;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -18,13 +19,14 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
     public async Task AzureAISearchExample()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
         var clientOptions = new AIProjectClientOptions();
 
         // Adding the custom headers policy
         clientOptions.AddPolicy(new CustomHeadersPolicy(), HttpPipelinePosition.PerCall);
         var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential(), clientOptions);
-
+        #region Snippet:CreateAgentWithAzureAISearchTool
         ListConnectionsResponse connections = await projectClient.GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
 
         if (connections?.Value == null || connections.Value.Count == 0)
@@ -45,13 +47,13 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
         AgentsClient agentClient = projectClient.GetAgentsClient();
 
         Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
-           model: "gpt-4-1106-preview",
+           model: modelName,
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: new List<ToolDefinition> { new AzureAISearchToolDefinition() },
            toolResources: searchResource);
         Agent agent = agentResponse.Value;
-
+        #endregion
         // Create thread for communication
         Response<AgentThread> threadResponse = await agentClient.CreateThreadAsync();
         AgentThread thread = threadResponse.Value;
@@ -60,7 +62,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
         Response<ThreadMessage> messageResponse = await agentClient.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
-            "Hello, send an email with the datetime and weather information in New York?");
+            "What is the temperature rating of the cozynights sleeping bag?");
         ThreadMessage message = messageResponse.Value;
 
         // Run the agent
@@ -74,9 +76,15 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);
 
-        Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-            = await agentClient.GetMessagesAsync(thread.Id);
-        IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
+        Assert.AreEqual(
+            RunStatus.Completed,
+            runResponse.Value.Status,
+            runResponse.Value.LastError?.Message);
+        #region Snippet:PopulateReferencesAgentWithAzureAISearchTool
+        PageableList<ThreadMessage> messages = await agentClient.GetMessagesAsync(
+            threadId: thread.Id,
+            order: ListSortOrder.Ascending
+        );
 
         // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
         foreach (ThreadMessage threadMessage in messages)
@@ -86,7 +94,25 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
             {
                 if (contentItem is MessageTextContent textItem)
                 {
-                    Console.Write(textItem.Text);
+                    // We need to annotate only Agent messages.
+                    if (threadMessage.Role == MessageRole.Agent && textItem.Annotations.Count > 0)
+                    {
+                        string annotatedText = textItem.Text;
+                        foreach (MessageTextAnnotation annotation in textItem.Annotations)
+                        {
+                            if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                            {
+                                annotatedText = annotatedText.Replace(
+                                    urlAnnotation.Text,
+                                    $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                            }
+                        }
+                        Console.Write(annotatedText);
+                    }
+                    else
+                    {
+                        Console.Write(textItem.Text);
+                    }
                 }
                 else if (contentItem is MessageImageFileContent imageFileItem)
                 {
@@ -95,5 +121,6 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
                 Console.WriteLine();
             }
         }
+        #endregion
     }
 }

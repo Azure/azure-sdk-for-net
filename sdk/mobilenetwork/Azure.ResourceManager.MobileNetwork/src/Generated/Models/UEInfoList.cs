@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Response for packet core list UEs API call.
-    /// Serialized Name: UeInfoList
-    /// </summary>
+    /// <summary> Response for packet core list UEs API call. </summary>
     internal partial class UEInfoList
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UEInfoList"/>. </summary>
-        /// <param name="value">
-        /// A list of UEs in a packet core and their basic information.
-        /// Serialized Name: UeInfoList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: UeInfoList.nextLink
-        /// </param>
+        /// <param name="value"> A list of UEs in a packet core and their basic information. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UEInfoList(IReadOnlyList<UEInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of UEs in a packet core and their basic information.
-        /// Serialized Name: UeInfoList.value
-        /// </summary>
+        /// <summary> A list of UEs in a packet core and their basic information. </summary>
         public IReadOnlyList<UEInfo> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: UeInfoList.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

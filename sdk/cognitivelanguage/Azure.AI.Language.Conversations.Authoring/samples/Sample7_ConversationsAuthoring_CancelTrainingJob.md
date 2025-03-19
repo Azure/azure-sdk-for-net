@@ -24,7 +24,7 @@ string projectName = "MyProject";
 string jobId = "YourTrainingJobId";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-Operation<TrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
+Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
     waitUntil: WaitUntil.Completed,
     jobId: jobId
 );
