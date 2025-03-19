@@ -447,7 +447,7 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         $combinedDisplayNameLookup[$lookup.Name] = $lookup.Value
     }
 
-    return @($matrix, $importedMatrix, $combinedDisplayNameLookup)
+    return @($matrix ?? $null, $importedMatrix, $combinedDisplayNameLookup)
 }
 
 function CombineMatrices([Array]$matrix1, [Array]$matrix2, [Hashtable]$displayNamesLookup = @{}) {
