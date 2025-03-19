@@ -13,7 +13,7 @@ namespace Azure.Generator.Mgmt
     /// The management-plane client plugin to generate the Azure mgmt client SDK.
     /// </summary>
     [Export(typeof(CodeModelGenerator))]
-    [ExportMetadata("PluginName", nameof(MgmtClientGenerator))]
+    [ExportMetadata(GeneratorMetadataName, nameof(MgmtClientGenerator))]
     public class MgmtClientGenerator : AzureClientGenerator
     {
         private static MgmtClientGenerator? _instance;
