@@ -101,9 +101,9 @@ function GenerateMatrix(
 ) {
     $result = ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
 
-    $matrixParameters         = $result.Matrix
-    $importedMatrix           = $result.ImportedMatrix
-    $combinedDisplayNameLookup= $result.DisplayNamesLookup
+    $matrixParameters          = $result.Matrix
+    $importedMatrix            = $result.ImportedMatrix
+    $combinedDisplayNameLookup = $result.DisplayNamesLookup
 
     if ($selectFromMatrixType -eq "sparse") {
         $matrix = GenerateSparseMatrix $matrixParameters $config.displayNamesLookup $nonSparseParameters
