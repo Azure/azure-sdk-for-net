@@ -149,7 +149,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             logRecord.ForEachScope(s_processScope, properties);
 
-            if (eventName is null)
+            if (eventName is null) // we will omit the following properties if we've detected a custom event.
             {
                 var categoryName = logRecord.CategoryName;
                 if (!properties.ContainsKey("CategoryName") && !string.IsNullOrEmpty(categoryName))
