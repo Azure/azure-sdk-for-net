@@ -7,9 +7,16 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-GetProcessorCount for webjobs service bus extension does not override processor count for flex consumption. (#45970)
 
 ### Other Changes
+
+## 5.16.5 (2025-03-14)
+
+Updated GetProcessorCount to not override the processor count for flex consumption. (#45970)
+
+### Other Changes
+
+- Updating .NET runtime dependencies to the 6.x line, the Azure extensions to 1.8.0, and the latest dependencies for the Functions host.
 
 ## 5.16.4 (2024-08-08)
 

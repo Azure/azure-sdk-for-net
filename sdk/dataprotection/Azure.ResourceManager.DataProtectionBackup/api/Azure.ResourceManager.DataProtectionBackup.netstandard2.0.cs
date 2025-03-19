@@ -1992,9 +1992,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         public DataProtectionIdentityDetails() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property has been replaced by UserAssignedIdentityArmUriString", false)]
+        [System.ObsoleteAttribute("This property has been replaced by UserAssignedIdentityId", false)]
         public System.Uri UserAssignedIdentityArmUri { get { throw null; } set { } }
-        public string UserAssignedIdentityArmUriString { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentityId { get { throw null; } set { } }
         public bool? UseSystemAssignedIdentity { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

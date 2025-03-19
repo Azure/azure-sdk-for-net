@@ -46,8 +46,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoX509Thumbprint"/>. </summary>
-        internal DeviceTwinInfoX509Thumbprint()
+        /// <param name="primaryThumbprint"> Primary thumbprint for the x509 certificate. </param>
+        /// <param name="secondaryThumbprint"> Secondary thumbprint for the x509 certificate. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="primaryThumbprint"/> or <paramref name="secondaryThumbprint"/> is null. </exception>
+        internal DeviceTwinInfoX509Thumbprint(string primaryThumbprint, string secondaryThumbprint)
         {
+            Argument.AssertNotNull(primaryThumbprint, nameof(primaryThumbprint));
+            Argument.AssertNotNull(secondaryThumbprint, nameof(secondaryThumbprint));
+
+            PrimaryThumbprint = primaryThumbprint;
+            SecondaryThumbprint = secondaryThumbprint;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoX509Thumbprint"/>. </summary>
@@ -59,6 +67,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             PrimaryThumbprint = primaryThumbprint;
             SecondaryThumbprint = secondaryThumbprint;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoX509Thumbprint"/> for deserialization. </summary>
+        internal DeviceTwinInfoX509Thumbprint()
+        {
         }
 
         /// <summary> Primary thumbprint for the x509 certificate. </summary>

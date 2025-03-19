@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKeyVaultSecretUriSecretInfo(document.RootElement, options);
                     }
                 default:

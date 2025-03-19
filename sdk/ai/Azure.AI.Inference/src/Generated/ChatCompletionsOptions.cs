@@ -25,7 +25,7 @@ namespace Azure.AI.Inference
         /// the behavior of the assistant, followed by alternating messages between the User and
         /// Assistant roles.
         /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
+        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestDeveloperMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
         public ChatCompletionsOptions(IEnumerable<ChatRequestMessage> messages)
@@ -45,7 +45,7 @@ namespace Azure.AI.Inference
         /// the behavior of the assistant, followed by alternating messages between the User and
         /// Assistant roles.
         /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
+        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestDeveloperMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
         /// </param>
         /// <param name="frequencyPenalty">
         /// A value that influences the probability of generated tokens appearing based on their cumulative
@@ -81,11 +81,15 @@ namespace Azure.AI.Inference
         /// </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
         /// <param name="responseFormat">
-        /// The format that the model must output. Use this to enable JSON mode instead of the default text mode.
-        /// Note that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON
-        /// via a system or user message.
+        /// An object specifying the format that the model must output.
+        ///
+        /// Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema.
+        ///
+        /// Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the message the model generates is valid JSON.
+        ///
+        /// **Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly "stuck" request. Also note that the message content may be partially cut off if `finish_reason="length"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.
         /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatCompletionsResponseFormatJSON"/> and <see cref="ChatCompletionsResponseFormatText"/>.
+        /// The available derived classes include <see cref="ChatCompletionsResponseFormatJsonObject"/> and <see cref="ChatCompletionsResponseFormatText"/>.
         /// </param>
         /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
         /// <param name="tools">
@@ -154,11 +158,15 @@ namespace Azure.AI.Inference
         /// <summary> The maximum number of tokens to generate. </summary>
         public int? MaxTokens { get; set; }
         /// <summary>
-        /// The format that the model must output. Use this to enable JSON mode instead of the default text mode.
-        /// Note that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON
-        /// via a system or user message.
+        /// An object specifying the format that the model must output.
+        ///
+        /// Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema.
+        ///
+        /// Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the message the model generates is valid JSON.
+        ///
+        /// **Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly "stuck" request. Also note that the message content may be partially cut off if `finish_reason="length"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.
         /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatCompletionsResponseFormatJSON"/> and <see cref="ChatCompletionsResponseFormatText"/>.
+        /// The available derived classes include <see cref="ChatCompletionsResponseFormatJsonObject"/> and <see cref="ChatCompletionsResponseFormatText"/>.
         /// </summary>
         public ChatCompletionsResponseFormat ResponseFormat { get; set; }
         /// <summary> A collection of textual sequences that will end completions generation. </summary>

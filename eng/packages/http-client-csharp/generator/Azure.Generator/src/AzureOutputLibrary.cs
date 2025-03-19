@@ -1,83 +1,53 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Mgmt.Models;
+using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
-using Azure.Generator.Utilities;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator
 {
     /// <inheritdoc/>
     public class AzureOutputLibrary : ScmOutputLibrary
     {
-        // TODO: categorize clients into operationSets, which contains operations sharing the same Path
-        private Dictionary<string, OperationSet> _pathToOperationSetMap;
-        private Dictionary<string, HashSet<OperationSet>> _resourceDataBySpecNameMap;
+        private LongRunningOperationProvider? _armOperation;
+        internal LongRunningOperationProvider ArmOperation => _armOperation ??= new LongRunningOperationProvider(false);
 
-        /// <inheritdoc/>
-        public AzureOutputLibrary()
-        {
-            _pathToOperationSetMap = CategorizeClients();
-            _resourceDataBySpecNameMap = EnsureResourceDataMap();
-        }
+        private LongRunningOperationProvider? _genericArmOperation;
+        internal LongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new LongRunningOperationProvider(true);
 
-        private Dictionary<string, HashSet<OperationSet>> EnsureResourceDataMap()
+        private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
-            var result = new Dictionary<string, HashSet<OperationSet>>();
-            foreach (var operationSet in _pathToOperationSetMap.Values)
+            var result = new List<ResourceClientProvider>();
+            foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
-                if (AzureClientPlugin.Instance.ResourceDetection.TryGetResourceDataSchema(operationSet, out var resourceSpecName, out var resourceSchema))
+                // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
+                var resourceMetadata = client.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
+                if (resourceMetadata is null)
                 {
-                    // if this operation set corresponds to a SDK resource, we add it to the map
-                    if (!result.TryGetValue(resourceSpecName!, out HashSet<OperationSet>? value))
-                    {
-                        value = new HashSet<OperationSet>();
-                        result.Add(resourceSpecName!, value);
-                    }
-                    value.Add(operationSet);
+                    continue;
                 }
+                var resource = new ResourceClientProvider(client);
+                AzureClientGenerator.Instance.AddTypeToKeep(resource.Name);
+                result.Add(resource);
             }
-
-            return result;
-        }
-
-        private Dictionary<string, OperationSet> CategorizeClients()
-        {
-            var result = new Dictionary<string, OperationSet>();
-            foreach (var inputClient in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
-            {
-                var requestPathList = new HashSet<string>();
-                foreach (var operation in inputClient.Operations)
-                {
-                    var path = operation.GetHttpPath();
-                    requestPathList.Add(path);
-                    if (result.TryGetValue(path, out var operationSet))
-                    {
-                        operationSet.Add(operation);
-                    }
-                    else
-                    {
-                        operationSet = new OperationSet(path, inputClient)
-                        {
-                            operation
-                        };
-                        result.Add(path, operationSet);
-                    }
-                }
-            }
-
-            // TODO: add operation set for the partial resources here
-
             return result;
         }
 
         /// <inheritdoc/>
-        // TODO: generate resources and collections
-        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
-
-        internal bool IsResource(string name) => _resourceDataBySpecNameMap.ContainsKey(name);
+        // TODO: generate collections
+        protected override TypeProvider[] BuildTypeProviders()
+        {
+            var baseProviders = base.BuildTypeProviders();
+            if (AzureClientGenerator.Instance.IsAzureArm.Value == true)
+            {
+                var resources = BuildResources();
+                return [.. baseProviders, new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
+            }
+            return [.. baseProviders, new RequestContextExtensionsDefinition()];
+        }
     }
 }

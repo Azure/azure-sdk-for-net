@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.21 (Unreleased)
+## 1.0.0-preview.22 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,48 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.21 (2025-03-07)
+
+### Features Added
+
+  - Model Dataset has a new parameter schema
+  - Model LinkedService parameter AzureFileStorageLinkedService support MI auth
+  - Model LinkedService parameter AzureTableStorageLinkedService support MI auth
+  - Model LinkedService parameter DynamicsCrmLinkedService has a new properties credential
+  - Model LinkedService parameter DynamicsLinkedService has a new properties domain
+  - Model LinkedService parameter GreenplumLinkedService has some new connection properties
+  - Model LinkedService parameter MySqlLinkedService has some new properties
+  - Model LinkedService parameter OracleLinkedService update properties
+  - Model LinkedService parameter RestService and SharePointOnlineList support ServicePrincipalCert auth
+  - Model LinkedService parameter SAP ODP update properties sncMode
+  - Model LinkedService parameter SnowflakeV2LinkedService has a new properties host
+  - Model LinkedService parameter SqlServerLinkedService add authenticationType UserAssignedManagedIdentity
+  - Model LinkedService parameter TeradataLinkedService has some new Teradata connection properties
+  - Model LinkedService parameter VerticaLinkedService support Vertica V2
+  - Model LinkedService has a new parameter version
+  - Model Pipeline Add credential reference in notebook and spark job definition activity
+  - Model Pipeline feature snowflake support multi-resultset
+  - Model Pipeline feature snowflake support storage integration
+  - Model Pipeline parameter ExecuteDataFlowActivity has a new properties continuationSettings
+  - Model Pipeline parameter ExpressionV2 has a new properties page_size
+  - Model Pipeline parameter SalesforceV2Source has a new properties page_size
+  - Model Pipeline support Iceberg Format As Sink
+  - Model Pipeline support TeradataSink
+  - Model Dataset support Iceberg Format As Sink
+  - Model runNotebook parameter runId update description
+  - Model LinkedService support sslMode and useSystemTrustStore for MariaDB
+
+### Breaking Changes
+
+  - Model LinkedService parameter PostgreSqlV2LinkedService has a new required properties authentication_type
+  - Model LinkedService parameter SapOdpLinkedService update properties sncMode
+  - Model LinkedService parameter AzureSqlDWLinkedService update required properties
+  - Model LinkedService parameter SqlServerLinkedService update required properties
+  - Model LinkedService parameter AmazonRdsForSqlServerLinkedService update required properties
+  - Model LinkedService parameter AzureSqlDatabaseLinkedService update required properties
+  - Model LinkedService parameter AzureSqlMILinkedService update required properties
+
 
 ## 1.0.0-preview.20 (2024-06-07)
 ### Features Added

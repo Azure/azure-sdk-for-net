@@ -59,9 +59,9 @@ internal partial class AzureOpenAIFile : OpenAIFile
     /// <param name="azureStatus"></param>
     /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="filename"/> or <paramref name="purpose"/> is null. </exception>
     internal AzureOpenAIFile(string id, int? bytes, DateTimeOffset createdAt, string filename, string purpose, AzureOpenAIFileStatus azureStatus)
-        : base(id, bytes, createdAt, filename, purpose.ToFilePurpose(), azureStatus.ToFileStatus())
+        : base(id, createdAt, filename, purpose.ToFilePurpose(), bytes, azureStatus.ToFileStatus())
     {
-        _object = InternalListFilesResponseObject.List.ToString();
+        _object = "file";
         _purpose = purpose;
         _azureStatus = azureStatus;
     }
@@ -77,7 +77,7 @@ internal partial class AzureOpenAIFile : OpenAIFile
     /// <param name="azureStatus"></param>
     /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
     internal AzureOpenAIFile(string id, int? bytes, DateTimeOffset createdAt, string filename, InternalOpenAIFileObject @object, string purpose, string statusDetails, AzureOpenAIFileStatus azureStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        : base(id, bytes, createdAt, filename, @object, purpose.ToFilePurpose(), azureStatus.ToFileStatus(), statusDetails, serializedAdditionalRawData)
+        : base(id, createdAt, filename, purpose.ToFilePurpose(), @object, bytes, azureStatus.ToFileStatus(), statusDetails, serializedAdditionalRawData)
     {
         _object = @object.ToString();
         _purpose = purpose;

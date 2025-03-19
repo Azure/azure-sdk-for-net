@@ -21,6 +21,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
@@ -109,6 +114,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue<object>(EncryptedCredential);
             }
+            if (Optional.IsDefined(AllowZeroDateTime))
+            {
+                writer.WritePropertyName("allowZeroDateTime"u8);
+                writer.WriteObjectValue<object>(AllowZeroDateTime);
+            }
+            if (Optional.IsDefined(ConnectionTimeout))
+            {
+                writer.WritePropertyName("connectionTimeout"u8);
+                writer.WriteObjectValue<object>(ConnectionTimeout);
+            }
+            if (Optional.IsDefined(ConvertZeroDateTime))
+            {
+                writer.WritePropertyName("convertZeroDateTime"u8);
+                writer.WriteObjectValue<object>(ConvertZeroDateTime);
+            }
+            if (Optional.IsDefined(GuidFormat))
+            {
+                writer.WritePropertyName("guidFormat"u8);
+                writer.WriteObjectValue<object>(GuidFormat);
+            }
+            if (Optional.IsDefined(SslCert))
+            {
+                writer.WritePropertyName("sslCert"u8);
+                writer.WriteObjectValue<object>(SslCert);
+            }
+            if (Optional.IsDefined(SslKey))
+            {
+                writer.WritePropertyName("sslKey"u8);
+                writer.WriteObjectValue<object>(SslKey);
+            }
+            if (Optional.IsDefined(TreatTinyAsBoolean))
+            {
+                writer.WritePropertyName("treatTinyAsBoolean"u8);
+                writer.WriteObjectValue<object>(TreatTinyAsBoolean);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -125,6 +165,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
+            string version = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
@@ -139,6 +180,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object useSystemTrustStore = default;
             AzureKeyVaultSecretReference password = default;
             object encryptedCredential = default;
+            object allowZeroDateTime = default;
+            object connectionTimeout = default;
+            object convertZeroDateTime = default;
+            object guidFormat = default;
+            object sslCert = default;
+            object sslKey = default;
+            object treatTinyAsBoolean = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -146,6 +194,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectVia"u8))
@@ -296,6 +349,69 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("allowZeroDateTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowZeroDateTime = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("connectionTimeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectionTimeout = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("convertZeroDateTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            convertZeroDateTime = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("guidFormat"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            guidFormat = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("sslCert"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslCert = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("sslKey"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslKey = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("treatTinyAsBoolean"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            treatTinyAsBoolean = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -304,6 +420,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new MySqlLinkedService(
                 type,
+                version,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
@@ -318,14 +435,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sslMode,
                 useSystemTrustStore,
                 password,
-                encryptedCredential);
+                encryptedCredential,
+                allowZeroDateTime,
+                connectionTimeout,
+                convertZeroDateTime,
+                guidFormat,
+                sslCert,
+                sslKey,
+                treatTinyAsBoolean);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new MySqlLinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMySqlLinkedService(document.RootElement);
         }
 

@@ -234,7 +234,7 @@ namespace Azure.Storage.DataMovement
                 if (destinationCreated)
                 {
                     // If we cannot upload in one shot, initiate the parallel block uploader
-                    IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize);
+                    IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize, _destinationResource.MaxSupportedChunkCount);
                     if (_destinationResource.TransferType == TransferOrder.Unordered)
                     {
                         await QueueStageBlockRequests(ranges, length, sourceProperties).ConfigureAwait(false);

@@ -309,9 +309,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     setMetadataCalled = true;
                 };
 
-                client.UploadAsyncCallback = (_, _, _, _, _, _, _, _) =>
+                client.UploadAsyncCallback = (_, _, _, conditions, _, _, _, _) =>
                 {
                     uploadBlobCalled = true;
+                    Assert.That(conditions.IfNoneMatch, Is.EqualTo(new ETag("*")), "The IfNoneMatch condition should be set.");
+                    Assert.That(conditions.IfMatch, Is.Null, "The IfMatch condition should be null.");
                 };
             });
 

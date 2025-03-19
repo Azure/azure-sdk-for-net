@@ -18,7 +18,7 @@ namespace SpecialWords
 
         public HttpPipeline Pipeline => throw null;
 
-        public virtual ModelsOps GetModelsOpsClient() => throw null;
+        public virtual Models GetModelsClient() => throw null;
 
         public virtual ModelProperties GetModelPropertiesClient() => throw null;
 

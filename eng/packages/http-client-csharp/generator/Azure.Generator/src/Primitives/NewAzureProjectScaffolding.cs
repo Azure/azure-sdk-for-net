@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Generator.CSharp;
-using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,36 +23,96 @@ namespace Azure.Generator.Primitives
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientPlugin.Instance.Configuration.RootNamespace} client library for developing .NET applications with rich experience.",
-                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.Configuration.RootNamespace}",
+                Description = $"This is the {AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace} client library for developing .NET applications with rich experience.",
+                AssemblyTitle = $"SDK Code Generation {AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace}",
                 Version = "1.0.0-beta.1",
-                PackageTags = AzureClientPlugin.Instance.Configuration.RootNamespace,
+                PackageTags = AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace,
                 GenerateDocumentationFile = true,
             };
-            foreach (var packages in _unbrandedDependencyPackages)
+
+            foreach (var packages in _azureDependencyPackages)
             {
                 builder.PackageReferences.Add(packages);
             }
 
-            if (AzureClientPlugin.Instance.InputLibrary.InputNamespace.Auth.ApiKey is not null)
+            int pathSegmentCount = GetPathSegmentCount();
+            if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
-                ReadOnlySpan<char> text = AzureClientPlugin.Instance.Configuration.OutputDirectory.AsSpan();
-                // we are either a spector project in the eng folder or a real sdk in the sdk folder
-                int beginning = text.IndexOf("eng");
-                if (beginning == -1)
-                {
-                    beginning = text.IndexOf("sdk");
-                }
-                text = text.Slice(beginning);
-                // starting with 2 to include eng at the beginning and src at the end
-                int pathSegmentCount = 2 + text.Count('/');
-                // count both path separators to normalize
-                pathSegmentCount += text.Count('\\');
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
+            }
+
+            TraverseInput(out bool hasOperation, out bool hasLongRunningOperation);
+            if (hasOperation)
+            {
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), "Shared/Core"));
             }
 
+            if (hasLongRunningOperation)
+            {
+                foreach (var file in _lroSharedFiles)
+                {
+                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), "Shared/Core"));
+                }
+            }
+
             return builder.Write();
+        }
+
+        private static readonly IReadOnlyList<string> _lroSharedFiles =
+        [
+            "AppContextSwitchHelper.cs",
+            "AsyncLockWithValue.cs",
+            "FixedDelayWithNoJitterStrategy.cs",
+            "ClientDiagnostics.cs",
+            "DiagnosticScopeFactory.cs",
+            "DiagnosticScope.cs",
+            "HttpMessageSanitizer.cs",
+            "IOperationSource.cs",
+            "NextLinkOperationImplementation.cs",
+            "OperationFinalStateVia.cs",
+            "OperationInternal.cs",
+            "OperationInternalBase.cs",
+            "OperationInternalOfT.cs",
+            "OperationPoller.cs",
+            "SequentialDelayStrategy.cs",
+            "TaskExtensions.cs",
+            "TrimmingAttribute.cs",
+            "VoidValue.cs"
+        ];
+
+        private static void TraverseInput(out bool hasOperation, out bool hasLongRunningOperation)
+        {
+            hasOperation = false;
+            hasLongRunningOperation = false;
+            foreach (var inputClient in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            {
+                foreach (var operation in inputClient.Operations)
+                {
+                    hasOperation = true;
+                    if (operation.LongRunning != null)
+                    {
+                        hasLongRunningOperation = true;
+                        return;
+                    }
+                }
+            }
+        }
+
+        private static int GetPathSegmentCount()
+        {
+            ReadOnlySpan<char> text = AzureClientGenerator.Instance.Configuration.OutputDirectory.AsSpan();
+            // we are either a spector project in the eng folder or a real sdk in the sdk folder
+            int beginning = text.IndexOf("eng");
+            if (beginning == -1)
+            {
+                beginning = text.IndexOf("sdk");
+            }
+            text = text.Slice(beginning);
+            // starting with 2 to include eng at the beginning and src at the end
+            int pathSegmentCount = 2 + text.Count('/');
+            // count both path separators to normalize
+            pathSegmentCount += text.Count('\\');
+            return pathSegmentCount;
         }
 
         private string GetCompileInclude(string fileName, int pathSegmentCount)
@@ -60,41 +120,18 @@ namespace Azure.Generator.Primitives
             return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, pathSegmentCount))}{RelativeCoreSegment}{fileName}";
         }
 
-        private static readonly IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> _unbrandedDependencyPackages =
-        [
-            new("Azure.Core"),
-            new("System.Text.Json")
-        ];
-
-        /// <inheritdoc/>
-        protected override string GetSolutionFileContent()
-        {
-            string slnContent = @"Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.10.35201.131
-MinimumVisualStudioVersion = 10.0.40219.1
-Project(""{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}"") = ""{0}"", ""src\{0}.csproj"", ""{{28FF4005-4467-4E36-92E7-DEA27DEB1519}}""
-EndProject
-Global
-    GlobalSection(SolutionConfigurationPlatforms) = preSolution
-        Debug|Any CPU = Debug|Any CPU
-        Release|Any CPU = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {{28FF4005-4467-4E36-92E7-DEA27DEB1519}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {{28FF4005-4467-4E36-92E7-DEA27DEB1519}}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {{28FF4005-4467-4E36-92E7-DEA27DEB1519}}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {{28FF4005-4467-4E36-92E7-DEA27DEB1519}}.Release|Any CPU.Build.0 = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(SolutionProperties) = preSolution
-        HideSolutionNode = FALSE
-    EndGlobalSection
-    GlobalSection(ExtensibilityGlobals) = postSolution
-        SolutionGuid = {{A97F4B90-2591-4689-B1F8-5F21FE6D6CAE}}
-    EndGlobalSection
-EndGlobal
-";
-            return string.Format(slnContent, AzureClientPlugin.Instance.Configuration.RootNamespace);
-        }
+        private static readonly IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> _azureDependencyPackages =
+            AzureClientGenerator.Instance.IsAzureArm.Value == true
+            ? [
+                new("Azure.Core"),
+                new("Azure.ResourceManager"),
+                new("System.ClientModel"),
+                new("System.Text.Json")
+            ]
+            : [
+                new("Azure.Core"),
+                new("System.ClientModel"),
+                new("System.Text.Json")
+            ];
     }
 }

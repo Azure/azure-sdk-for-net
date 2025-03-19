@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTaskData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTaskData.DeserializeStorageTaskData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTaskData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTaskData.DeserializeStorageTaskData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTasksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTasksListResult.DeserializeStorageTasksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTasksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTasksListResult.DeserializeStorageTasksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTasksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTasksListResult.DeserializeStorageTasksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTasksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTasksListResult.DeserializeStorageTasksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTaskPreviewAction value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTaskPreviewAction.DeserializeStorageTaskPreviewAction(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTaskPreviewAction value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTaskPreviewAction.DeserializeStorageTaskPreviewAction(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTasksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTasksListResult.DeserializeStorageTasksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTasksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTasksListResult.DeserializeStorageTasksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTasksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTasksListResult.DeserializeStorageTasksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTasksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTasksListResult.DeserializeStorageTasksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

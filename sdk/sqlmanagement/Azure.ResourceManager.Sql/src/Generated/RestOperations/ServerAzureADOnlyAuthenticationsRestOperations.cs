@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerAzureADOnlyAuthenticationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerAzureADOnlyAuthenticationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         AzureADOnlyAuthListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureADOnlyAuthListResult.DeserializeAzureADOnlyAuthListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         AzureADOnlyAuthListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureADOnlyAuthListResult.DeserializeAzureADOnlyAuthListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         AzureADOnlyAuthListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureADOnlyAuthListResult.DeserializeAzureADOnlyAuthListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         AzureADOnlyAuthListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureADOnlyAuthListResult.DeserializeAzureADOnlyAuthListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

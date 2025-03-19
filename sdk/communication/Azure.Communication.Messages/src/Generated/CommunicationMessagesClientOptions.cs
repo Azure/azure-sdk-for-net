@@ -35,7 +35,11 @@ namespace Azure.Communication.Messages
             {
                 ServiceVersion.V2024_02_01 => "2024-02-01",
                 ServiceVersion.V2024_08_30 => "2024-08-30",
+<<<<<<< HEAD
                 ServiceVersion.V2025_03_01_Preview => "2025-03-01-preview",
+=======
+                ServiceVersion.V2025_01_15_Preview => "2025-01-15-preview",
+>>>>>>> main
                 _ => throw new NotSupportedException()
             };
         }

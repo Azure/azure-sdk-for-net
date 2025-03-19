@@ -26,6 +26,7 @@ namespace Azure.AI.Projects.Tests
         private const string TEMP_DIR = "cs_e2e_temp_dir";
 
         private const string FILE_UPLOAD_CONSTRAINT = "The file is being uploaded as a multipart multipart/form-data, which cannot be recorded.";
+        private const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
 
         public AgentClientTests(bool isAsync) : base(isAsync) {
             TestDiagnostics = false;
@@ -610,23 +611,31 @@ namespace Azure.AI.Projects.Tests
                 || toolRun.Status == RunStatus.InProgress
                 || toolRun.Status == RunStatus.RequiresAction);
             Assert.True(functionCalled);
-            Assert.AreEqual(toolRun.Status, RunStatus.Completed);
+            Assert.AreEqual(RunStatus.Completed, toolRun.Status, message: toolRun.LastError?.Message);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
         }
 
         [RecordedTest]
-        [TestCase(VecrorStoreTestType.JustVectorStore, true)]
-        [TestCase(VecrorStoreTestType.Batch, true)]
-        [TestCase(VecrorStoreTestType.File, true)]
-        [TestCase(VecrorStoreTestType.JustVectorStore, false)]
-        [TestCase(VecrorStoreTestType.Batch, false)]
-        [TestCase(VecrorStoreTestType.File, false)]
-        public async Task TestCreateVectorStore(VecrorStoreTestType testType, bool useFileSource)
+        [TestCase(VecrorStoreTestType.JustVectorStore, true, false)]
+        [TestCase(VecrorStoreTestType.Batch, true, false)]
+        [TestCase(VecrorStoreTestType.File, true, false)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, false, false)]
+        [TestCase(VecrorStoreTestType.Batch, false, false)]
+        [TestCase(VecrorStoreTestType.File, false, false)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, true, true)]
+        [TestCase(VecrorStoreTestType.Batch, true, true)]
+        [TestCase(VecrorStoreTestType.File, true, true)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, false, true)]
+        [TestCase(VecrorStoreTestType.Batch, false, true)]
+        [TestCase(VecrorStoreTestType.File, false, true)]
+        public async Task TestCreateVectorStore(VecrorStoreTestType testType, bool useFileSource, bool useStreaming)
         {
             if (useFileSource && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
+            if (useStreaming && !IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             AgentsClient client = GetClient();
             VectorStore vectorStore;
 
@@ -693,11 +702,29 @@ namespace Azure.AI.Projects.Tests
                 role: MessageRole.User,
                 content: "What does the attachment say?"
             ));
-            ThreadRun fileSearchRun = await client.CreateThreadAndRunAsync(
-                assistantId: agent.Id,
-                thread: threadOp
-            );
-            fileSearchRun = await WaitForRun(client, fileSearchRun);
+            ThreadRun fileSearchRun = default;
+            if (useStreaming)
+            {
+                AgentThread thread = await client.CreateThreadAsync(messages: [new ThreadMessageOptions(
+                    role: MessageRole.User,
+                    content: "What does the attachment say?"
+                )]);
+                await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+                {
+                    if (streamingUpdate is RunUpdate runUpdate)
+                        fileSearchRun = runUpdate.Value;
+                }
+                Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status, fileSearchRun.LastError?.ToString());
+            }
+            else
+            {
+                fileSearchRun = await client.CreateThreadAndRunAsync(
+                    assistantId: agent.Id,
+                    thread: threadOp
+                );
+                fileSearchRun = await WaitForRun(client, fileSearchRun);
+            }
+            Assert.IsNotNull(fileSearchRun);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             // Check list, get and delete operations.
@@ -892,7 +919,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestIncludeFileSearchContent(bool useStream, bool includeContent)
         {
             if (useStream && !IsAsync)
-                Assert.Inconclusive("The test framework does not support iteration of stream in Sync mode.");
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             AgentsClient client = GetClient();
             VectorStoreDataSource vectorStoreDataSource = new(
                     assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
@@ -973,9 +1000,10 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
-        [Ignore("Azure function call is not supported in all regions yet.")]
         public async Task TestAzureFunctionCall()
         {
+            // Note: This test was recorded in westus region as for now
+            // 2025-02-05 it is not supported in test region (East US 2)
             AzureFunctionToolDefinition azureFnTool = new(
                 name: "foo",
                 description: "Get answers from the foo bot.",
@@ -1032,9 +1060,10 @@ namespace Azure.AI.Projects.Tests
             await WaitForRun(client, run);
             PageableList<ThreadMessage> afterRunMessages = await client.GetMessagesAsync(thread.Id);
 
+            Assert.Greater(afterRunMessages.Count(), 1);
+            bool foundResponse = false;
             foreach (ThreadMessage msg in afterRunMessages)
             {
-                bool foundResponse = false;
                 foreach (MessageContent contentItem in msg.ContentItems)
                 {
                     if (contentItem is MessageTextContent textItem)
@@ -1046,8 +1075,8 @@ namespace Azure.AI.Projects.Tests
                         }
                     }
                 }
-                Assert.True(foundResponse);
             }
+            Assert.True(foundResponse);
         }
 
         [RecordedTest]
@@ -1227,7 +1256,7 @@ namespace Azure.AI.Projects.Tests
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress
                 || run.Status == RunStatus.RequiresAction);
-            Assert.AreEqual(RunStatus.Completed, run.Status);
+            Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.Message?.ToString());
             return run;
         }
 

@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace SpecialWords.Models
+namespace SpecialWords._Models
 {
     public partial class Or : IJsonModel<Or>
     {

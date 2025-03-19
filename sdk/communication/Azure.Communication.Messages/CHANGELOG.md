@@ -6,17 +6,21 @@
 
 - Add Threaded Conversation
 
-## 1.2.0-beta.1 (Unreleased)
-
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added Interactive Message.
+- Added Reaction Message.
+- Added Sticker Message.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.1.0 (2024-10-18)
 
