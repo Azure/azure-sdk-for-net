@@ -23,12 +23,12 @@ $snippetEnabledProjects = (Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
 | Where-Object { $_.ArtifactName -in $TargetProjects -and $_.CIParameters.BuildSnippets -eq $true }
 | ForEach-Object { $_.ArtifactName }) -join ","
 
-$scopedFile = Write-PkgInfoToDependencyGroupFile -OutputPath "$RepoRoot" -PackageInfoFolder $PackageInfoFolder -ProjectNames $snippetEnabledProjects
-
-Write-Host "Writing project list to $scopedFile"
-Write-Host (Get-Content -Raw -Path $scopedFile)
-
 if ($snippetEnabledProjects) {
+    $scopedFile = Write-PkgInfoToDependencyGroupFile -OutputPath "$RepoRoot" -PackageInfoFolder $PackageInfoFolder -ProjectNames $snippetEnabledProjects
+
+    Write-Host "Writing project list to $scopedFile"
+    Write-Host (Get-Content -Raw -Path $scopedFile)
+
     dotnet build eng/service.proj -warnaserror `
     /t:rebuild `
     /p:DebugType=none `
