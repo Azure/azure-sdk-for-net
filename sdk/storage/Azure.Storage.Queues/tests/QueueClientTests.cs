@@ -638,6 +638,30 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(queueProperties);
         }
 
+        [TestCase(0)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [RecordedTest]
+        public async Task GetPropertiesAsync_ApproximateMessagesCountLong(int messageCount)
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act: Enqueue messages
+            for (int i = 0; i < messageCount; i++)
+            {
+                await test.Queue.SendMessageAsync($"Message {i + 1}");
+            }
+
+            // Fetch queue properties
+            Response<Models.QueueProperties> queueProperties = await test.Queue.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(queueProperties);
+            Assert.AreEqual(messageCount, queueProperties.Value.ApproximateMessagesCount);
+            Assert.AreEqual(messageCount, queueProperties.Value.ApproximateMessagesCountLong);
+        }
+
         [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
