@@ -116,6 +116,42 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
     }
 
+    $ciProps = $pkgProp.GetCIYmlForArtifact()
+
+    if ($ciProps) {
+      # CheckAOTCompat is opt _in_, so we should default to false if not specified
+      $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
+      if ($shouldAot) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
+        }
+
+        # when AOTCompat is true, there is an additional parameter we need to retrieve
+        $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
+        if ($aotArtifacts) {
+          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
+          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
+        }
+      }
+      else {
+        $pkgProp.CIParameters["CheckAOTCompat"] = $false
+        $pkgProp.CIParameters["AOTTestInputs"] = @()
+      }
+
+      # BuildSnippets is opt _out_, so we should default to true if not specified
+      $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
+      if ($null -ne $shouldSnippet) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldSnippet, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["BuildSnippets"] = $parsedBool
+        }
+      }
+      else {
+        $pkgProp.CIParameters["BuildSnippets"] = $true
+      }
+    }
+
     $allPackageProps += $pkgProp
   }
 

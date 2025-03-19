@@ -9,7 +9,7 @@ import {
 } from "@typespec/http-client-csharp";
 
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
-  context.options["plugin-name"] ??= "AzureClientPlugin";
+  context.options["generator-name"] ??= "AzureClientGenerator";
   context.options["emitter-extension-path"] = import.meta.url;
   await $onMTGEmit(context);
 }

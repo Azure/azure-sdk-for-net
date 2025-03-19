@@ -23,10 +23,10 @@ namespace Azure.Generator.Primitives
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientPlugin.Instance.TypeFactory.PrimaryNamespace} client library for developing .NET applications with rich experience.",
-                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.TypeFactory.PrimaryNamespace}",
+                Description = $"This is the {AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace} client library for developing .NET applications with rich experience.",
+                AssemblyTitle = $"SDK Code Generation {AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace}",
                 Version = "1.0.0-beta.1",
-                PackageTags = AzureClientPlugin.Instance.TypeFactory.PrimaryNamespace,
+                PackageTags = AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace,
                 GenerateDocumentationFile = true,
             };
 
@@ -36,7 +36,7 @@ namespace Azure.Generator.Primitives
             }
 
             int pathSegmentCount = GetPathSegmentCount();
-            if (AzureClientPlugin.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
+            if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
             }
@@ -84,7 +84,7 @@ namespace Azure.Generator.Primitives
         {
             hasOperation = false;
             hasLongRunningOperation = false;
-            foreach (var inputClient in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
+            foreach (var inputClient in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
                 foreach (var operation in inputClient.Operations)
                 {
@@ -100,7 +100,7 @@ namespace Azure.Generator.Primitives
 
         private static int GetPathSegmentCount()
         {
-            ReadOnlySpan<char> text = AzureClientPlugin.Instance.Configuration.OutputDirectory.AsSpan();
+            ReadOnlySpan<char> text = AzureClientGenerator.Instance.Configuration.OutputDirectory.AsSpan();
             // we are either a spector project in the eng folder or a real sdk in the sdk folder
             int beginning = text.IndexOf("eng");
             if (beginning == -1)

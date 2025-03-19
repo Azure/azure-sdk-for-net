@@ -12,14 +12,14 @@ using System.Linq;
 namespace Azure.Generator;
 
 /// <summary>
-/// The Azure client plugin to generate the Azure client SDK.
+/// The Azure client generator to generate the Azure client SDK.
 /// </summary>
-[Export(typeof(CodeModelPlugin))]
-[ExportMetadata("PluginName", nameof(AzureClientPlugin))]
-public class AzureClientPlugin : ScmCodeModelPlugin
+[Export(typeof(CodeModelGenerator))]
+[ExportMetadata(GeneratorMetadataName, nameof(AzureClientGenerator))]
+public class AzureClientGenerator : ScmCodeModelGenerator
 {
-    private static AzureClientPlugin? _instance;
-    internal static AzureClientPlugin Instance => _instance ?? throw new InvalidOperationException("AzureClientPlugin is not loaded.");
+    private static AzureClientGenerator? _instance;
+    internal static AzureClientGenerator Instance => _instance ?? throw new InvalidOperationException("AzureClientGenerator is not loaded.");
 
     /// <inheritdoc/>
     public override AzureTypeFactory TypeFactory { get; }
@@ -29,11 +29,11 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
     /// <summary>
-    /// The Azure client plugin to generate the Azure client SDK.
+    /// Constructs the Azure client generator used to generate the Azure client SDK.
     /// </summary>
     /// <param name="context"></param>
     [ImportingConstructor]
-    public AzureClientPlugin(GeneratorContext context) : base(context)
+    public AzureClientGenerator(GeneratorContext context) : base(context)
     {
         TypeFactory = new AzureTypeFactory();
         _instance = this;
@@ -47,7 +47,7 @@ public class AzureClientPlugin : ScmCodeModelPlugin
         base.Configure();
         // Include Azure.Core
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
-        var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientPlugin).Assembly.Location)!, "Shared", "Core");
+        var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientGenerator).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
         AddVisitor(new NamespaceVisitor());
     }
