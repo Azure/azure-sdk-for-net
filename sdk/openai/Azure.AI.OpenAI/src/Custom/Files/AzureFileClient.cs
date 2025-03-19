@@ -41,7 +41,8 @@ internal partial class AzureFileClient : OpenAIFileClient
     {
         if (purpose != FileUploadPurpose.FineTune && purpose != FileUploadPurpose.Batch)
         {
-            return base.UploadFile(file, filename, purpose, cancellationToken);
+            ClientResult<OpenAIFile> baseResult = base.UploadFile(file, filename, purpose, cancellationToken);
+            return GetAzureFileResult(baseResult);
         }
 
         // need to set the content type for fine tuning file uploads in Azure OpenAI
@@ -59,8 +60,9 @@ internal partial class AzureFileClient : OpenAIFileClient
     {
         if (purpose != FileUploadPurpose.FineTune && purpose != FileUploadPurpose.Batch)
         {
-            return await base.UploadFileAsync(file, filename, purpose, cancellationToken)
+            ClientResult<OpenAIFile> baseResult = await base.UploadFileAsync(file, filename, purpose, cancellationToken)
                 .ConfigureAwait(false);
+            return GetAzureFileResult(baseResult);
         }
 
         // need to set the content type for fine tuning file uploads in Azure OpenAI
