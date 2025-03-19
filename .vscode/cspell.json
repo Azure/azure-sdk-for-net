@@ -188,6 +188,13 @@
       ]
     },
     {
+      "filename": "**/sdk/agricultureplatform/**/*.cs",
+      "words": [
+        "agri",
+        "mobo"
+      ]
+    },
+    {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
         "Ubinary"
