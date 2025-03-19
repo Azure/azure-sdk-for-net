@@ -3,19 +3,15 @@
 
 #nullable disable
 
+using Azure.AI.OpenAI.Tests.Utils.Config;
+using OpenAI.Files;
+using OpenAI.TestFramework;
+using OpenAI.VectorStores;
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Tests.Utils.Config;
-using NUnit.Framework;
-using OpenAI;
-using OpenAI.Assistants;
-using OpenAI.Files;
-using OpenAI.TestFramework;
-using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.Tests;
 

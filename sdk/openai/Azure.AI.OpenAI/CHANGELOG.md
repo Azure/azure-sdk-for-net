@@ -1,5 +1,15 @@
 # Release History
 
+## 2.2.0-beta.4 (2025-03-18)
+
+This update brings compatibility with the `2025-03-01-preview` service API version, including support for the new `/responses` API via `OpenAIResponseClient`.
+
+- To use the new `/responses` endpoint, call `GetOpenAIResponseClient()` on an `AzureOpenAIClient` instance, following the same pattern as other operations. Using the overload without a deployment name will not be able to create new responses, only retrieve and list existing response data.
+
+In addition to the new features transitive via the `OpenAI` library:
+
+- Azure OpenAI file upload for batch (`FileUploadPurpose.Batch`) now supports the specification of a custom expiration policy in supported regions. To use this capability, call one of the supplied extension method overloads of `UploadFile()` that accepts an `AzureFileExpirationOptions` parameter.
+
 ## 2.2.0-beta.2 (2025-02-18)
 
 ### Bugs fixed

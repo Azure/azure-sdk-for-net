@@ -92,12 +92,13 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
         string id = default;
         int? bytes = default;
         DateTimeOffset createdAt = default;
+        DateTimeOffset? expiresAt = default;
         string filename = default;
         string @object = default;
         string purpose = default;
         string statusDetails = default;
         AzureOpenAIFileStatus status = default;
-        IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+        IDictionary<string, BinaryData> additionalBinaryDataProperties = default;
         Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
         foreach (var property in element.EnumerateObject())
         {
@@ -119,6 +120,11 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
             if (property.NameEquals("created_at"u8))
             {
                 createdAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                continue;
+            }
+            if (property.NameEquals("expires_at"u8))
+            {
+                expiresAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                 continue;
             }
             if (property.NameEquals("filename"u8))
@@ -152,17 +158,18 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
                 rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
         }
-        serializedAdditionalRawData = rawDataDictionary;
+        additionalBinaryDataProperties = rawDataDictionary;
         return new AzureOpenAIFile(
             id,
             bytes,
             createdAt,
+            expiresAt,
             filename,
             @object,
             purpose,
             statusDetails,
             status,
-            serializedAdditionalRawData);
+            additionalBinaryDataProperties);
     }
 
     void IJsonModel<AzureOpenAIFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
