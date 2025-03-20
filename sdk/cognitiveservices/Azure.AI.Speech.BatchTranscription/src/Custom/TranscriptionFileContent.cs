@@ -38,9 +38,23 @@ public class CombinedRecognizedPhrase
     /// <summary> The lexical phrase. </summary>
     public string Lexical { get; }
     /// <summary> The itn phrase. </summary>
-    public string Itn { get; }
+    public string InverseTextNormalization
+    {
+        get
+        {
+            return Itn;
+        }
+    }
+    internal string Itn { get; }
     /// <summary> The maskedITN phrase. </summary>
-    public string MaskedITN { get; }
+    public string MaskedInverseTextNormalization
+    {
+        get
+        {
+            return MaskedITN;
+        }
+    }
+    internal string MaskedITN { get; }
     /// <summary> The display phrase. </summary>
     public string Display { get; }
 }
@@ -90,9 +104,23 @@ public class BestPhrase
     /// <summary> The lexical phrase. </summary>
     public string Lexical { get; }
     /// <summary> The itn phrase. </summary>
-    public string Itn { get; }
+    public string InverseTextNormalization
+    {
+        get
+        {
+            return Itn;
+        }
+    }
+    internal string Itn { get; }
     /// <summary> The maskedITN phrase. </summary>
-    public string MaskedITN { get; }
+    public string MaskedInverseTextNormalization
+    {
+        get
+        {
+            return MaskedITN;
+        }
+    }
+    internal string MaskedITN { get; }
     /// <summary> The display phrase. </summary>
     public string Display { get; }
 }
