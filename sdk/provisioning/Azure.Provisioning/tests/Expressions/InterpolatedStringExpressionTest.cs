@@ -2,16 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.CognitiveServices;
+using Azure.Provisioning.Expressions;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests.Expressions
 {
-    public class IndexExpressionTests
+    public class InterpolatedStringExpressionTest
     {
         [Test]
         public void ValidateIndexExpressionWithStringLiteral()
