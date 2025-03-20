@@ -81,7 +81,6 @@ namespace Azure.Generator.Tests.Common
             bool isRequired = false,
             InputOperationParameterKind kind = InputOperationParameterKind.Method,
             bool isEndpoint = false,
-            bool isResourceParameter = false,
             bool isContentType = false)
         {
             return new InputParameter(
@@ -95,7 +94,6 @@ namespace Azure.Generator.Tests.Common
                 kind,
                 isRequired,
                 false,
-                isResourceParameter,
                 isContentType,
                 isEndpoint,
                 false,

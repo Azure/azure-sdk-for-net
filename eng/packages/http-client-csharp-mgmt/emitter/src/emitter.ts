@@ -26,25 +26,26 @@ export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
   context.options["generator-name"] ??= "MgmtClientGenerator";
   context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
+  context.options["sdk-context-options"] ??= azureSDKContextOptions;
   setSDKContextOptions(azureSDKContextOptions);
   await $onAzureEmit(context);
 }
 
 function updateCodeModel(codeModel: CodeModel): CodeModel {
-  for (const client of codeModel.Clients) {
+  for (const client of codeModel.clients) {
     // TODO: we can implement this decorator in TCGC until we meet the corner case
     // if the client has resourceMetadata decorator, it is a resource client and we don't need to add it again
-    if (client.Decorators?.some((d) => d.name == resourceMetadata)) {
+    if (client.decorators?.some((d) => d.name == resourceMetadata)) {
       continue;
     }
 
     // TODO: Once we have the ability to get resource hierarchy from TCGC directly, we can remove this implementation
     // A resource client should have decorator armResourceOperations and contains either a get operation(containing armResourceRead deocrator) or a put operation(containing armResourceCreateOrUpdate decorator)
     if (
-      client.Decorators?.some((d) => d.name == armResourceOperations) &&
-      client.Operations.some(
+      client.decorators?.some((d) => d.name == armResourceOperations) &&
+      client.operations.some(
         (op) =>
-          op.Decorators?.some(
+          op.decorators?.some(
             (d) => d.name == armResourceRead || armResourceCreateOrUpdate
           )
       )
@@ -53,25 +54,25 @@ function updateCodeModel(codeModel: CodeModel): CodeModel {
       let isSingleton: boolean = false;
       let resourceType: string | undefined = undefined;
       // We will try to get resource metadata from put operation firstly, if not found, we will try to get it from get operation
-      const putOperation = client.Operations.find(
-        (op) => op.Decorators?.some((d) => d.name == armResourceCreateOrUpdate)
+      const putOperation = client.operations.find(
+        (op) => op.decorators?.some((d) => d.name == armResourceCreateOrUpdate)
       );
       if (putOperation) {
-        const path = putOperation.Path;
+        const path = putOperation.path;
         resourceType = calculateResourceTypeFromPath(path);
-        resourceModel = putOperation.Responses.filter((r) => r.BodyType)[0]
-          .BodyType as InputModelType;
+        resourceModel = putOperation.responses.filter((r) => r.bodyType)[0]
+          .bodyType as InputModelType;
         isSingleton =
           resourceModel.decorators?.some((d) => d.name == singleton) ?? false;
       } else {
-        const getOperation = client.Operations.find(
-          (op) => op.Decorators?.some((d) => d.name == armResourceRead)
+        const getOperation = client.operations.find(
+          (op) => op.decorators?.some((d) => d.name == armResourceRead)
         );
         if (getOperation) {
-          const path = getOperation.Path;
+          const path = getOperation.path;
           resourceType = calculateResourceTypeFromPath(path);
-          resourceModel = getOperation.Responses.filter((r) => r.BodyType)[0]
-            .BodyType as InputModelType;
+          resourceModel = getOperation.responses.filter((r) => r.bodyType)[0]
+            .bodyType as InputModelType;
           isSingleton =
             resourceModel.decorators?.some((d) => d.name == singleton) ?? false;
         }
@@ -86,7 +87,7 @@ function updateCodeModel(codeModel: CodeModel): CodeModel {
       resourceMetadataDecorator.arguments["isSingleton"] =
         isSingleton.toString();
       resourceMetadataDecorator.arguments["resourceType"] = resourceType;
-      client.Decorators.push(resourceMetadataDecorator);
+      client.decorators.push(resourceMetadataDecorator);
     }
   }
   return codeModel;
