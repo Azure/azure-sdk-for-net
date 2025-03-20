@@ -22,7 +22,7 @@ internal sealed class AppServiceResourceDetector : IResourceDetector
     /// <inheritdoc/>
     public Resource Detect()
     {
-        List<KeyValuePair<string, object>> attributeList = new();
+        List<KeyValuePair<string, object>> attributeList = [];
 
         try
         {
@@ -61,21 +61,18 @@ internal sealed class AppServiceResourceDetector : IResourceDetector
 
     private static string? GetAzureResourceURI(string websiteSiteName)
     {
-        string? websiteResourceGroup = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceResourceGroupEnvVar);
-        string websiteOwnerName = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceOwnerNameEnvVar) ?? string.Empty;
+        var websiteResourceGroup = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceResourceGroupEnvVar);
+        var websiteOwnerName = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceOwnerNameEnvVar) ?? string.Empty;
 
 #if NET
-        int idx = websiteOwnerName.IndexOf('+', StringComparison.Ordinal);
+        var idx = websiteOwnerName.IndexOf('+', StringComparison.Ordinal);
 #else
-        int idx = websiteOwnerName.IndexOf("+", StringComparison.Ordinal);
+        var idx = websiteOwnerName.IndexOf("+", StringComparison.Ordinal);
 #endif
-        string subscriptionId = idx > 0 ? websiteOwnerName.Substring(0, idx) : websiteOwnerName;
+        var subscriptionId = idx > 0 ? websiteOwnerName.Substring(0, idx) : websiteOwnerName;
 
-        if (string.IsNullOrEmpty(websiteResourceGroup) || string.IsNullOrEmpty(subscriptionId))
-        {
-            return null;
-        }
-
-        return $"/subscriptions/{subscriptionId}/resourceGroups/{websiteResourceGroup}/providers/Microsoft.Web/sites/{websiteSiteName}";
+        return string.IsNullOrEmpty(websiteResourceGroup) || string.IsNullOrEmpty(subscriptionId)
+            ? null
+            : $"/subscriptions/{subscriptionId}/resourceGroups/{websiteResourceGroup}/providers/Microsoft.Web/sites/{websiteSiteName}";
     }
 }
