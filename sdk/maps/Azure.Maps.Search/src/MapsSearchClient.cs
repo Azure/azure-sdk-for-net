@@ -165,7 +165,7 @@ namespace Azure.Maps.Search
                     };
                 }
 
-                return await RestClient.GetGeocodingAsync(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetGeocodingAsync(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, options?.AcceptLanguage, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -207,7 +207,7 @@ namespace Azure.Maps.Search
                     };
                 }
 
-                return RestClient.GetGeocoding(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, cancellationToken);
+                return RestClient.GetGeocoding(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, options?.AcceptLanguage, cancellationToken);
             }
             catch (Exception e)
             {
@@ -284,7 +284,7 @@ namespace Azure.Maps.Search
                         Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     };
                 }
-                var boundaryInternal = await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
+                var boundaryInternal = await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, options?.AcceptLanguage, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Boundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.Maps.Search
                 {
                     coordinates = new[] { (double)options.Coordinates.Longitude, (double)options.Coordinates.Latitude };
                 }
-                var boundaryInternal = RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
+                var boundaryInternal = RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, options?.AcceptLanguage, cancellationToken);
                 return Response.FromValue(new Boundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
             }
             catch (Exception e)
@@ -355,7 +355,7 @@ namespace Azure.Maps.Search
                     coordinatesList = new[] { coordinates.Longitude, coordinates.Latitude };
                 }
 
-                return await RestClient.GetReverseGeocodingAsync(coordinatesList, options?.ResultTypes, localizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetReverseGeocodingAsync(coordinatesList, options?.ResultTypes, localizedMapView, options?.AcceptLanguage, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -390,7 +390,7 @@ namespace Azure.Maps.Search
                 {
                     coordinatesList = new[] { coordinates.Longitude, coordinates.Latitude };
                 }
-                return RestClient.GetReverseGeocoding(coordinatesList, options?.ResultTypes, localizedMapView, cancellationToken);
+                return RestClient.GetReverseGeocoding(coordinatesList, options?.ResultTypes, localizedMapView, options?.AcceptLanguage, cancellationToken);
             }
             catch (Exception e)
             {
