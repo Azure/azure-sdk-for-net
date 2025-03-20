@@ -11,7 +11,7 @@ import {
   setSDKContextOptions
 } from "@typespec/http-client-csharp";
 
-import {$onEmit as $onAzureEmit} from "@azure-typespec/http-client-csharp";
+import { $onEmit as $onAzureEmit } from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
 import { calculateResourceTypeFromPath } from "./resource-type.js";
 
