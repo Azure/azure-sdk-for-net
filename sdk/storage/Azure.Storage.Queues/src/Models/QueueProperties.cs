@@ -20,7 +20,11 @@ namespace Azure.Storage.Queues.Models
         /// The approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int ApproximateMessagesCount { get; internal set; }
+        public int ApproximateMessagesCount
+        {
+            get => checked((int)ApproximateMessagesCountLong);
+            internal set => ApproximateMessagesCountLong = value;
+        }
 
         /// <summary>
         /// The approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher.

@@ -17,6 +17,7 @@ using Azure.Storage.Queues.Specialized;
 using Moq.Protected;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using System.Threading;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -640,7 +641,7 @@ namespace Azure.Storage.Queues.Test
 
         [TestCase(0)]
         [TestCase(5)]
-        [TestCase(10)]
+        [TestCase(12)]
         [RecordedTest]
         public async Task GetPropertiesAsync_ApproximateMessagesCountLong(int messageCount)
         {
@@ -659,6 +660,31 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(queueProperties);
             Assert.AreEqual(messageCount, queueProperties.Value.ApproximateMessagesCount);
             Assert.AreEqual(messageCount, queueProperties.Value.ApproximateMessagesCountLong);
+        }
+
+        [RecordedTest]
+        public async Task GetPropertiesAsync_ApproximateMessagesCountOverflow()
+        {
+            // Arrange
+            var mockQueue = new Mock<QueueClient>();
+            var mockResponse = new Mock<Response<Models.QueueProperties>>();
+
+            long msgCount = long.MaxValue;
+            var queueProperties = new Models.QueueProperties()
+            {
+                ApproximateMessagesCountLong = msgCount
+            };
+
+            mockResponse.Setup(r => r.Value).Returns(queueProperties);
+            mockQueue.Setup(q => q.GetPropertiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(mockResponse.Object);
+
+            // Act
+            var result = await mockQueue.Object.GetPropertiesAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.AreEqual(msgCount, result.Value.ApproximateMessagesCountLong);
+            Assert.Throws<OverflowException>(() => _ = result.Value.ApproximateMessagesCount);
         }
 
         [RecordedTest]
