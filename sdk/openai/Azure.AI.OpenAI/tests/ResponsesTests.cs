@@ -214,7 +214,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(string.Join(string.Empty, deltaTextSegments), Is.EqualTo(finalResponseText));
     }
 
-    [RecordedTest]
+    [Test]
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/49020")]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment)]
     public async Task ResponsesHelloWorldWithTool(string deploymentName)
