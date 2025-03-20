@@ -10,17 +10,17 @@ using System.ComponentModel.Composition;
 namespace Azure.Generator.Mgmt
 {
     /// <summary>
-    /// The management-plane client plugin to generate the Azure mgmt client SDK.
+    /// The Azure management client generator to generate the Azure management client SDK.
     /// </summary>
     [Export(typeof(CodeModelGenerator))]
     [ExportMetadata(GeneratorMetadataName, nameof(MgmtClientGenerator))]
     public class MgmtClientGenerator : AzureClientGenerator
     {
         private static MgmtClientGenerator? _instance;
-        internal static MgmtClientGenerator Instance => _instance ?? throw new InvalidOperationException("MgmtClientPlugin is not loaded.");
+        internal static MgmtClientGenerator Instance => _instance ?? throw new InvalidOperationException("MgmtClientGenerator is not loaded.");
 
         /// <summary>
-        /// The Azure client plugin to generate the Azure client SDK.
+        /// The Azure management client generator to generate the Azure management client SDK.
         /// </summary>
         /// <param name="context"></param>
         [ImportingConstructor]
