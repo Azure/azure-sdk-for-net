@@ -1,0 +1,3 @@
+directory: specification\dependencymap\Azure.ResourceManager.DependencyMap
+commit: 80314be566948e220c41b2793f7fb09eed724b22
+repo: Azure/azure-rest-api-specs
