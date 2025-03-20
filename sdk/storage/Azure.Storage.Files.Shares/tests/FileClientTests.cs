@@ -2383,17 +2383,19 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient srcFile = InstrumentClient(test.File.GetParentShareDirectoryClient().GetFileClient(GetNewFileName()));
+            await srcFile.CreateAsync(maxSize: Constants.KB);
             ShareFileClient destFile = InstrumentClient(test.File.GetParentShareDirectoryClient().GetFileClient(GetNewFileName()));
             await destFile.CreateAsync(maxSize: Constants.KB);
+            Uri sourceUri = srcFile.GenerateSasUri(ShareFileSasPermissions.Write, GetUtcNow().AddDays(1));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destFile.StartCopyAsync(sourceUri: srcFile.Uri),
+                destFile.StartCopyAsync(sourceUri: sourceUri),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 400"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: InvalidQueryParameterValue"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Value for one of the query parameters specified in the request URI is invalid."));
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 403"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: AuthorizationPermissionMismatch"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: This request is not authorized to perform this operation using this permission."));
                 });
         }
 
