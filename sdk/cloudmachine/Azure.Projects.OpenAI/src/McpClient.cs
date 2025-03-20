@@ -10,12 +10,12 @@ internal class McpClient
     private McpSession _session;
     private ClientPipeline _pipeline = ClientPipeline.Create();
 
-    public string ServerEndpoint {get;}
+    public Uri ServerEndpoint {get;}
 
-    public McpClient(string serverEndpoint)
+    public McpClient(Uri endpoint)
     {
-        _session = new McpSession(serverEndpoint, _pipeline);
-        ServerEndpoint = serverEndpoint;
+        _session = new McpSession(endpoint, _pipeline);
+        ServerEndpoint = endpoint;
     }
 
     public async Task StartAsync()
@@ -23,9 +23,9 @@ internal class McpClient
         await _session.EnsureInitializedAsync().ConfigureAwait(false);
     }
 
-    public async Task Stop()
+    public void Stop()
     {
-        await _session.StopAsync().ConfigureAwait(false);
+        _session.Stop();
     }
 
     public async Task<BinaryData> ListToolsAsync()

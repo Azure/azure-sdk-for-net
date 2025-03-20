@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 internal class McpSession : IDisposable
 {
-    private readonly string _serverEndpoint;
+    private readonly Uri _serverEndpoint;
     private readonly ClientPipeline _pipeline;
     private readonly MessageRouter _messageRouter = new MessageRouter();
     private CancellationTokenSource _cancellationSource;
@@ -24,7 +24,7 @@ internal class McpSession : IDisposable
     private readonly SemaphoreSlim _initializationLock = new(1, 1);
     private TaskCompletionSource<string>? _endpointTcs;
 
-    public McpSession(string serverEndpoint, ClientPipeline pipeline)
+    public McpSession(Uri serverEndpoint, ClientPipeline pipeline)
     {
         _serverEndpoint = serverEndpoint;
         _pipeline = pipeline;
@@ -57,9 +57,9 @@ internal class McpSession : IDisposable
         }
     }
 
-    public async Task StopAsync()
+    public void Stop()
     {
-        await _cancellationSource.CancelAsync().ConfigureAwait(false);
+        _cancellationSource.Cancel();
         DebugPrint("Stopping session...");
         CleanupCurrentSession();
         _isInitialized = false;
@@ -123,19 +123,28 @@ internal class McpSession : IDisposable
         {
             while (!_cancellationSource.Token.IsCancellationRequested)
             {
+                DebugPrint("Reading line from SSE stream...");
+#if !NETSTANDARD2_0
                 string? line = await streamReader.ReadLineAsync(_cancellationSource.Token).ConfigureAwait(false);
+#else
+                string? line = await streamReader.ReadLineAsync().ConfigureAwait(false);
+#endif
                 if (line == null)
                 {
                     throw new IOException("SSE stream closed unexpectedly");
                 }
 
-                if (line.StartsWith("event:"))
+                if (line.StartsWith("event:", StringComparison.OrdinalIgnoreCase))
                 {
-                    eventName = line[6..].Trim();
+                    eventName = line.AsSpan(6).Trim().ToString();
                 }
                 else if (line.StartsWith("data:"))
                 {
-                    dataBuilder.AppendLine(line[5..].Trim());
+#if !NETSTANDARD2_0
+                    dataBuilder.Append(line.AsSpan(5));
+#else
+                    dataBuilder.Append(line.AsSpan(5).ToString());
+#endif
                 }
                 else if (string.IsNullOrEmpty(line) && dataBuilder.Length > 0)
                 {
@@ -151,6 +160,10 @@ internal class McpSession : IDisposable
         {
             DebugPrint($"Error processing SSE stream: {ex.Message}");
         }
+        finally
+        {
+            CleanupCurrentSession();
+        }
     }
 
     private async Task ProcessEventAsync(SseEvent sseEvent)
@@ -160,9 +173,9 @@ internal class McpSession : IDisposable
             case "endpoint":
                 if (_endpointTcs != null)
                 {
-                    var serverUri = new Uri(_serverEndpoint);
+                    var serverUri = _serverEndpoint;
                     var endpoint = serverUri.GetLeftPart(UriPartial.Authority);
-                    var messageEndpoint = $"{endpoint}{sseEvent.Data}";
+                    var messageEndpoint = $"{endpoint}{sseEvent.Data.Trim()}";
                     _endpointTcs.TrySetResult(messageEndpoint);
                 }
                 break;
@@ -203,7 +216,7 @@ internal class McpSession : IDisposable
     private async Task SendInitializeAsync()
     {
         var id = GetNextId();
-        var initializeTcs = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var initializeTcs = new TaskCompletionSource<Task>(TaskCreationOptions.RunContinuationsAsynchronously);
 
         string json = $$"""
             {
@@ -240,7 +253,7 @@ internal class McpSession : IDisposable
                     """;
 
                 await SendAsync(initialized).ConfigureAwait(false);
-                initializeTcs.SetResult();
+                initializeTcs.SetResult(Task.CompletedTask);
             }
             catch (Exception ex)
             {
@@ -260,7 +273,7 @@ internal class McpSession : IDisposable
     {
         var message = _pipeline.CreateMessage();
         var request = message.Request;
-        request.Uri = new Uri(_serverEndpoint);
+        request.Uri = _serverEndpoint;
         request.Method = "GET";
         request.Headers.Add("Accept", "text/event-stream");
         message.BufferResponse = false;
@@ -382,7 +395,7 @@ internal class McpSession : IDisposable
         _cancellationSource.Dispose();
     }
 
-    public class SseEvent
+    public struct SseEvent
     {
         public string Event { get; set; }
         public string Data { get; set; }
@@ -493,11 +506,11 @@ internal class McpSession : IDisposable
 
     private static void DebugPrint(string message)
     {
-        #if DEBUG
+#if DEBUGPRINT
         var color = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.DarkGray;// This is a placeholder for a debug print functi
         Console.WriteLine(message);
         Console.ForegroundColor = color;
-        #endif
+#endif
     }
 }

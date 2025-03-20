@@ -25,8 +25,6 @@ ChatProcessor processor = new(
     tools
 );
 
-await tools.AddMcpServerAsync("http://localhost:3001/sse");
-
 while (true)
 {
     Console.Write("> ");
@@ -44,10 +42,10 @@ while (true)
     if (prompt.StartsWith("addmcp:", StringComparison.OrdinalIgnoreCase))
     {
         string mcp = prompt[7..].Trim();
-        await tools.AddMcpServerAsync(mcp);
+        Console.WriteLine($"Adding MCP server {mcp}");
+        await tools.AddMcpServerAsync(new Uri(mcp)).ConfigureAwait(false);
         continue;
     }
-
     ChatCompletion completion = await processor.TakeTurnAsync(conversation, prompt).ConfigureAwait(false);
 
     Console.WriteLine(completion.AsText());

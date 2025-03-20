@@ -39,10 +39,10 @@ public class ChatTools
     /// Adds a new MCP Server connection to be used for function calls.
     /// </summary>
     /// <param name="serverEndpoint">The Uri of the MCP Server.</param>
-    public async Task AddMcpServerAsync(string serverEndpoint)
+    public async Task AddMcpServerAsync(Uri serverEndpoint)
     {
         var client = new McpClient(serverEndpoint);
-        _mcpClientsByEndpoint[serverEndpoint] = client;
+        _mcpClientsByEndpoint[serverEndpoint.AbsoluteUri] = client;
         await client.StartAsync().ConfigureAwait(false);
         BinaryData tools = await client.ListToolsAsync().ConfigureAwait(false);
         Add(tools, client);
@@ -85,7 +85,7 @@ public class ChatTools
 
         var tools = toolsElement.EnumerateArray();
         // the replacement is to deal with OpenAI's tool name regex validation.
-        var serverKey = client.ServerEndpoint.Replace('/', '_').Replace(':', '_');
+        var serverKey = client.ServerEndpoint.AbsoluteUri.Replace('/', '_').Replace(':', '_');
 
         foreach (var tool in tools)
         {
@@ -187,7 +187,13 @@ public class ChatTools
     {
         if (_mcpMethods.TryGetValue(call.FunctionName, out Func<string, BinaryData, Task<BinaryData>>? method))
         {
-            var actualFunctionName = call.FunctionName.Split("__.__", 2)[1];
+            #if !NETSTANDARD2_0
+                        var actualFunctionName = call.FunctionName.Split("__.__", 2)[1];
+            #else
+                        var separator = "__.__";
+                        var index = call.FunctionName.IndexOf(separator);
+                        var actualFunctionName = call.FunctionName.Substring(index + separator.Length);
+            #endif
             var result = await method(actualFunctionName, call.FunctionArguments).ConfigureAwait(false);
             return result.ToString();
         }
