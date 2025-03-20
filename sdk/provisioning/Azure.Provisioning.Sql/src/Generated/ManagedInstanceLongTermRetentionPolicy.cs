@@ -105,7 +105,7 @@ public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResou
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceLongTermRetentionPolicy.</param>
     public ManagedInstanceLongTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -130,6 +130,11 @@ public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResou
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

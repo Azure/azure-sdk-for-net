@@ -580,7 +580,7 @@ public partial class CosmosDBAccount : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBAccount.</param>
     public CosmosDBAccount(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2024-08-15")
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2024-11-15")
     {
     }
 
@@ -647,6 +647,11 @@ public partial class CosmosDBAccount : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-15.
+        /// </summary>
+        public static readonly string V2024_11_15 = "2024-11-15";
+
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -816,7 +821,7 @@ public partial class CosmosDBAccount : ProvisionableResource
     public RoleAssignment CreateRoleAssignment(CosmosDBBuiltInRole role, UserAssignedIdentity identity) =>
         new($"{BicepIdentifier}_{identity.BicepIdentifier}_{CosmosDBBuiltInRole.GetBuiltInRoleName(role)}")
         {
-            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Name = BicepFunction.CreateGuid(Id, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),

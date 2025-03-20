@@ -83,16 +83,6 @@ public partial class EventHubsNamespace : ProvisionableResource
     private EventHubsEncryption? _encryption;
 
     /// <summary>
-    /// Geo Data Replication settings for the namespace.
-    /// </summary>
-    public NamespaceGeoDataReplicationProperties GeoDataReplication 
-    {
-        get { Initialize(); return _geoDataReplication!; }
-        set { Initialize(); AssignOrReplace(ref _geoDataReplication, value); }
-    }
-    private NamespaceGeoDataReplicationProperties? _geoDataReplication;
-
-    /// <summary>
     /// Properties of BYOK Identity description.
     /// </summary>
     public ManagedServiceIdentity Identity 
@@ -296,7 +286,6 @@ public partial class EventHubsNamespace : ProvisionableResource
         _clusterArmId = DefineProperty<ResourceIdentifier>("ClusterArmId", ["properties", "clusterArmId"]);
         _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", ["properties", "disableLocalAuth"]);
         _encryption = DefineModelProperty<EventHubsEncryption>("Encryption", ["properties", "encryption"]);
-        _geoDataReplication = DefineModelProperty<NamespaceGeoDataReplicationProperties>("GeoDataReplication", ["properties", "geoDataReplication"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _isAutoInflateEnabled = DefineProperty<bool>("IsAutoInflateEnabled", ["properties", "isAutoInflateEnabled"]);
         _kafkaEnabled = DefineProperty<bool>("KafkaEnabled", ["properties", "kafkaEnabled"]);
@@ -380,7 +369,7 @@ public partial class EventHubsNamespace : ProvisionableResource
     public RoleAssignment CreateRoleAssignment(EventHubsBuiltInRole role, UserAssignedIdentity identity) =>
         new($"{BicepIdentifier}_{identity.BicepIdentifier}_{EventHubsBuiltInRole.GetBuiltInRoleName(role)}")
         {
-            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Name = BicepFunction.CreateGuid(Id, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),

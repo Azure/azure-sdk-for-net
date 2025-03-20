@@ -527,7 +527,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceManagedCluster.</param>
     public ContainerServiceManagedCluster(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2025-01-01")
     {
     }
 
@@ -591,6 +591,21 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-01-01.
+        /// </summary>
+        public static readonly string V2025_01_01 = "2025-01-01";
+
+        /// <summary>
+        /// 2024-10-01.
+        /// </summary>
+        public static readonly string V2024_10_01 = "2024-10-01";
+
+        /// <summary>
+        /// 2024-09-01.
+        /// </summary>
+        public static readonly string V2024_09_01 = "2024-09-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>
@@ -875,7 +890,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     public RoleAssignment CreateRoleAssignment(ContainerServiceBuiltInRole role, UserAssignedIdentity identity) =>
         new($"{BicepIdentifier}_{identity.BicepIdentifier}_{ContainerServiceBuiltInRole.GetBuiltInRoleName(role)}")
         {
-            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Name = BicepFunction.CreateGuid(Id, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),

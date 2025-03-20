@@ -145,6 +145,16 @@ public partial class EventHubsConsumerGroup : ProvisionableResource
         /// 2017-04-01.
         /// </summary>
         public static readonly string V2017_04_01 = "2017-04-01";
+
+        /// <summary>
+        /// 2015-08-01.
+        /// </summary>
+        public static readonly string V2015_08_01 = "2015-08-01";
+
+        /// <summary>
+        /// 2014-09-01.
+        /// </summary>
+        public static readonly string V2014_09_01 = "2014-09-01";
     }
 
     /// <summary>
