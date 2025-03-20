@@ -54,7 +54,6 @@ complete:
         case ChatFinishReason.ToolCalls:
 
             // for some reason I am getting tool calls for tools that dont exist.
-            List<string> failed;
             ToolCallResult toolResults = await tools.CallAllWithErrors(completion.ToolCalls).ConfigureAwait(false);
             if (toolResults.Failed != null)
             {
