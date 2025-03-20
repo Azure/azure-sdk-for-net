@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Linq;
-using Azure.Provisioning.CognitiveServices;
+using System.Collections.Generic;
 using Azure.Provisioning.Expressions;
 using NUnit.Framework;
 
@@ -11,25 +9,37 @@ namespace Azure.Provisioning.Tests.Expressions
 {
     public class InterpolatedStringExpressionTest
     {
-        [Test]
-        public void ValidateIndexExpressionWithStringLiteral()
+        [TestCaseSource(nameof(stringInterpolationTestData))]
+        public string ValidateStringInterpolationWithStringLiteral(BicepValue<string> expression)
         {
-            CognitiveServicesAccount ai = new(nameof(ai));
+            return expression.ToString();
+        }
 
-            Infrastructure infra = new();
-            infra.Add(ai);
-
-            var inferenceEndpoint = new IndexExpression(
-                (BicepExpression)ai.Properties.Endpoints!,
-                "Azure AI Model Inference API");
-            infra.Add(new ProvisioningOutput("connectionString", typeof(string))
+        private static IEnumerable<TestCaseData> stringInterpolationTestData
+        {
+            get
             {
-                Value = BicepFunction.Interpolate($"Endpoint={inferenceEndpoint}")
-            });
+                // test provisionable variable
+                var variable = new ProvisioningVariable("v", typeof(string));
+                yield return new TestCaseData(
+                    BicepFunction.Interpolate(
+                        $"Var={new ProvisioningVariable("v", typeof(string))}"
+                        ))
+                {
+                    ExpectedResult = "Var=${v}"
+                };
 
-            ProvisioningPlan plan = infra.Build();
-            string bicep = plan.Compile().First().Value;
-            Console.WriteLine(bicep);
+                // test index expression in interpolation
+                yield return new TestCaseData(
+                    BicepFunction.Interpolate(
+                        $"Endpoint={new IndexExpression(
+                            new IdentifierExpression("dict"),
+                            new StringLiteralExpression("test")
+                        )}"))
+                {
+                    ExpectedResult = "'Endpoint=${dict['test']}'"
+                };
+            }
         }
     }
 }
