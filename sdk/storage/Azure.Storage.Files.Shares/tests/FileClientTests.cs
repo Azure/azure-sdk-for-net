@@ -2382,8 +2382,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync_SourceErrorAndStatusCode()
         {
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
-            ShareFileClient srcFile = test.File.GetParentShareDirectoryClient().GetFileClient(GetNewFileName());
-            ShareFileClient destFile = test.File;
+            ShareFileClient srcFile = InstrumentClient(test.File.GetParentShareDirectoryClient().GetFileClient(GetNewFileName()));
+            ShareFileClient destFile = InstrumentClient(test.File.GetParentShareDirectoryClient().GetFileClient(GetNewFileName()));
+            await destFile.CreateAsync(maxSize: Constants.KB);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
