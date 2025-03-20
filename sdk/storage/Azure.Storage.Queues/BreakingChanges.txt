@@ -1,6 +1,11 @@
 Breaking Changes
 ================
 
+12.24.0-beta.1 (Unreleased)
+---------------------------
+- 'QueueProperties.ApproximateMessagesCount' will now throw an OverflowException if the value exceeds int.MaxValue.
+  Please use 'QueueProperties.ApproximateMessagesCountLong' instead.
+
 12.0.0 (2019-11)
 --------------------------
 - Renamed a number of operations and models to better align with other client
