@@ -84,7 +84,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 201:
                     {
                         AssetConversion value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssetConversion.DeserializeAssetConversion(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 201:
                     {
                         AssetConversion value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssetConversion.DeserializeAssetConversion(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -165,7 +165,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         AssetConversion value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssetConversion.DeserializeAssetConversion(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -194,7 +194,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         AssetConversion value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssetConversion.DeserializeAssetConversion(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -232,7 +232,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         ConversionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConversionList.DeserializeConversionList(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         ConversionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConversionList.DeserializeConversionList(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -310,7 +310,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 201:
                     {
                         RenderingSession value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenderingSession.DeserializeRenderingSession(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -345,7 +345,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 201:
                     {
                         RenderingSession value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenderingSession.DeserializeRenderingSession(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -390,7 +390,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         RenderingSession value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenderingSession.DeserializeRenderingSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -418,7 +418,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         RenderingSession value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenderingSession.DeserializeRenderingSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -472,7 +472,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         RenderingSession value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenderingSession.DeserializeRenderingSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -505,7 +505,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         RenderingSession value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenderingSession.DeserializeRenderingSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -608,7 +608,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         SessionsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SessionsList.DeserializeSessionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -629,7 +629,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         SessionsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SessionsList.DeserializeSessionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -671,7 +671,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         ConversionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConversionList.DeserializeConversionList(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -700,7 +700,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         ConversionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConversionList.DeserializeConversionList(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -741,7 +741,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         SessionsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SessionsList.DeserializeSessionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -769,7 +769,7 @@ namespace Azure.MixedReality.RemoteRendering
                 case 200:
                     {
                         SessionsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SessionsList.DeserializeSessionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBNamespaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBNamespaceListResult.DeserializeSBNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBNamespaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBNamespaceListResult.DeserializeSBNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBNamespaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBNamespaceListResult.DeserializeSBNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBNamespaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBNamespaceListResult.DeserializeSBNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNamespaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNamespaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 201:
                     {
                         ServiceBusNamespaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 201:
                     {
                         ServiceBusNamespaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNetworkRuleSetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusNetworkRuleSetData.DeserializeServiceBusNetworkRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNetworkRuleSetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusNetworkRuleSetData.DeserializeServiceBusNetworkRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNetworkRuleSetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusNetworkRuleSetData.DeserializeServiceBusNetworkRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNetworkRuleSetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusNetworkRuleSetData.DeserializeServiceBusNetworkRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         NetworkRuleSetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         NetworkRuleSetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusNameAvailabilityResult.DeserializeServiceBusNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusNameAvailabilityResult.DeserializeServiceBusNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBNamespaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBNamespaceListResult.DeserializeSBNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBNamespaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBNamespaceListResult.DeserializeSBNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBNamespaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBNamespaceListResult.DeserializeSBNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBNamespaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBNamespaceListResult.DeserializeSBNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         NetworkRuleSetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         NetworkRuleSetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

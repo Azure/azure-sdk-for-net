@@ -20,7 +20,7 @@ class PackageProps {
     # additional packages required for validation of this one
     [string[]]$AdditionalValidationPackages
     [HashTable]$ArtifactDetails
-    [HashTable[]]$CIMatrixConfigs
+    [HashTable]$CIParameters
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory) {
         $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
@@ -61,6 +61,7 @@ class PackageProps {
             $this.ChangeLogPath = $null
         }
 
+        $this.CIParameters = @{"CIMatrixConfigs" = @()}
         $this.InitializeCIArtifacts()
     }
 
@@ -89,14 +90,8 @@ class PackageProps {
             if ($artifactForCurrentPackage) {
                 $result = [PSCustomObject]@{
                     ArtifactConfig = [HashTable]$artifactForCurrentPackage
-                    MatrixConfigs  = @()
-                }
-
-                # if we know this is the matrix for our file, we should now see if there is a custom matrix config for the package
-                $matrixConfigList = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "MatrixConfigs")
-
-                if ($matrixConfigList) {
-                    $result.MatrixConfigs = $matrixConfigList
+                    ParsedYml = $content
+                    Location = $ymlPath
                 }
 
                 return $result
@@ -105,25 +100,77 @@ class PackageProps {
         return $null
     }
 
+    [PSCustomObject]GetCIYmlForArtifact() {
+        $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+
+        $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
+        $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
+        $ciArtifactResult = $null
+
+        foreach ($ciFile in $ciFiles) {
+            $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
+            if ($ciArtifactResult) {
+                break
+            }
+        }
+
+        return $ciArtifactResult
+    }
+
     [void]InitializeCIArtifacts() {
         if (-not $env:SYSTEM_TEAMPROJECTID  -and -not $env:GITHUB_ACTIONS) {
             return
         }
 
-        $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
-
-        $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
-        $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
-
         if (-not $this.ArtifactDetails) {
-            foreach ($ciFile in $ciFiles) {
-                $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
-                if ($ciArtifactResult) {
-                    $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
-                    $this.CIMatrixConfigs = $ciArtifactResult.MatrixConfigs
-                    # if this package appeared in this ci file, then we should
-                    # treat this CI file as the source of the Matrix for this package
-                    break
+            $ciArtifactResult = $this.GetCIYmlForArtifact()
+
+            if ($ciArtifactResult) {
+                $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
+
+                $repoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+                $ciYamlPath = (Resolve-Path -Path $ciArtifactResult.Location -Relative -RelativeBasePath $repoRoot).TrimStart(".").Replace("`\", "/")
+                $relRoot = [System.IO.Path]::GetDirectoryName($ciYamlPath).Replace("`\", "/")
+
+                if (-not $this.ArtifactDetails["triggeringPaths"]) {
+                    $this.ArtifactDetails["triggeringPaths"] = @()
+                }
+                else {
+                    $adjustedPaths = @()
+
+                    # we need to convert relative references to absolute references within the repo
+                    # this will make it extremely easy to compare triggering paths to files in the deleted+changed file list.
+                    for ($i = 0; $i -lt $this.ArtifactDetails["triggeringPaths"].Count; $i++) {
+                        $currentPath = $this.ArtifactDetails["triggeringPaths"][$i]
+                        $newPath = Join-Path $repoRoot $currentPath
+                        if (!$currentPath.StartsWith("/")) {
+                            $newPath = Join-Path $repoRoot $relRoot $currentPath
+                        }
+                        # it is a possibility that users may have a triggerPath dependency on a file that no longer exists.
+                        # before we resolve it to get rid of possible relative references, we should check if the file exists
+                        # if it doesn't, we should just leave it as is. Otherwise we would _crash_ here when a user accidentally
+                        # left a triggeringPath on a file that had been deleted
+                        if (Test-Path $newPath) {
+                            $adjustedPaths += (Resolve-Path -Path $newPath -Relative -RelativeBasePath $repoRoot).TrimStart(".").Replace("`\", "/")
+                        }
+                    }
+                    $this.ArtifactDetails["triggeringPaths"] = $adjustedPaths
+                }
+                $this.ArtifactDetails["triggeringPaths"] += $ciYamlPath
+
+                $this.CIParameters["CIMatrixConfigs"] = @()
+
+                # if we know this is the matrix for our file, we should now see if there is a custom matrix config for the package
+                $matrixConfigList = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("extends", "parameters", "MatrixConfigs")
+
+                if ($matrixConfigList) {
+                    $this.CIParameters["CIMatrixConfigs"] += $matrixConfigList
+                }
+
+                $additionalMatrixConfigList = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("extends", "parameters", "AdditionalMatrixConfigs")
+
+                if ($additionalMatrixConfigList) {
+                    $this.CIParameters["CIMatrixConfigs"] += $additionalMatrixConfigList
                 }
             }
         }
@@ -156,8 +203,86 @@ function Get-PkgProperties {
     return $null
 }
 
+
+function Get-TriggerPaths([PSCustomObject]$AllPackageProperties) {
+    $existingTriggeringPaths = @()
+    $AllPackageProperties | ForEach-Object {
+        if ($_.ArtifactDetails) {
+            $pathsForArtifact = $_.ArtifactDetails["triggeringPaths"]
+            foreach ($triggerPath in $pathsForArtifact){
+                # we only care about triggering paths that are actual files, not directories
+                # go by by the assumption that if the triggerPath has an extension, it's a file :)
+                if ([System.IO.Path]::HasExtension($triggerPath)) {
+                    $existingTriggeringPaths += $triggerPath
+                }
+            }
+        }
+    }
+
+    return ($existingTriggeringPaths | Select-Object -Unique)
+}
+
+function Update-TargetedFilesForTriggerPaths([string[]]$TargetedFiles, [string[]]$TriggeringPaths) {
+    # now we simply loop through the files a single time, keeping all the files that are a triggeringPath
+    # for the rest of the files, simply group by what directory they belong to
+    # the new TargetedFiles array will contain only the changed directories + the files that actually aligned to a triggeringPath
+    $processedFiles = @()
+    $Triggers = [System.Collections.ArrayList]$TriggeringPaths
+    $i = 0
+    foreach ($file in $TargetedFiles) {
+        $isExistingTriggerPath = $false
+
+        for ($i = 0; $i -lt $Triggers.Count; $i++) {
+            $triggerPath = $Triggers[$i]
+            if ($triggerPath -and $file -eq "$triggerPath") {
+                $isExistingTriggerPath = $true
+                break
+            }
+        }
+
+        if ($isExistingTriggerPath) {
+            # we know that we should have a valid $i that we can use to remove the triggerPath from the list
+            # so that it gets smaller as we find items
+            $Triggers.RemoveAt($i)
+            $processedFiles += $file
+        }
+        else {
+            # Get directory path by removing the filename
+            $directoryPath = Split-Path -Path $file -Parent
+            if ($directoryPath) {
+                $processedFiles += $directoryPath
+            } else {
+                # In case there's no parent directory (root file), keep the original
+                $processedFiles += $file
+            }
+        }
+    }
+
+    return ($processedFiles | Select-Object -Unique)
+}
+
+function Update-TargetedFilesForExclude([string[]]$TargetedFiles, [string[]]$ExcludePaths) {
+    $files = @()
+    foreach ($file in $TargetedFiles) {
+        $shouldExclude = $false
+        foreach ($exclude in $ExcludePaths) {
+            if ($file.StartsWith($exclude,'CurrentCultureIgnoreCase')) {
+                $shouldExclude = $true
+                break
+            }
+        }
+        if (!$shouldExclude) {
+            $files += $file
+        }
+    }
+    return ,$files
+}
+
 function Get-PrPkgProperties([string]$InputDiffJson) {
     $packagesWithChanges = @()
+    $additionalValidationPackages = @()
+    $lookup = @{}
+    $directoryIndex = @{}
 
     $allPackageProperties = Get-AllPkgProperties
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
@@ -170,36 +295,105 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         $targetedFiles += $diff.DeletedFiles
     }
 
-    # The exclude paths and the targeted files paths aren't full OS paths, they're
-    # GitHub paths meaning they're relative to the repo root and slashes are forward
-    # slashes "/". The ExcludePaths need to have a trailing slash added in order
-    # correctly test for string matches without overmatching. For example, if a pr
-    # had files sdk/foo/file1 and sdk/foobar/file2 with the exclude of anything in
-    # sdk/foo, it should only exclude things under sdk/foo. The TrimEnd is just in
-    # case one of the paths ends with a slash, it doesn't add a second one.
-    $excludePaths = $diff.ExcludePaths | ForEach-Object { $_.TrimEnd("/") + "/" }
+    $existingTriggeringPaths = Get-TriggerPaths $allPackageProperties
+    $targetedFiles = Update-TargetedFilesForExclude $targetedFiles $diff.ExcludePaths
+    $targetedFiles = Update-TargetedFilesForTriggerPaths $targetedFiles $existingTriggeringPaths
 
-    $additionalValidationPackages = @()
-    $lookup = @{}
+    # Sort so that we very quickly find any directly changed packages before hitting service level changes.
+    # This is important because due to the way we traverse the changed files, the instant we evaluate a pkg
+    # as directly or indirectly changed, we exit the file loop and move on to the next pkg.
+    # The problem is, a package may be detected as indirectly changed _before_ we get to the file that directly changed it!
+    # To avoid this without wonky changes to the detection algorithm, we simply sort our files by their depth, so we will always
+    # detect direct package changes first!
+    $targetedFiles = $targetedFiles | Sort-Object { ($_.Split("/").Count) } -Descending
+    $pkgCounter = 1
 
+    # this is the primary loop that identifies the packages that have changes
     foreach ($pkg in $allPackageProperties) {
+        Write-Host "Processing changed files against $($pkg.Name). $pkgCounter of $($allPackageProperties.Count)."
         $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
         $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").TrimStart('\/')
         $lookup[$lookupKey] = $pkg
 
+        # we only honor the individual artifact triggers
+        # if we were to honor the ci-level triggers, we would simply
+        # end up in a situation where any change to a service would
+        # still trigger every package in that service. individual package triggers
+        # must be added to handle this.
+        $triggeringPaths = @()
+        if ($pkg.ArtifactDetails -and $pkg.ArtifactDetails["triggeringPaths"]) {
+            $triggeringPaths = $pkg.ArtifactDetails["triggeringPaths"]
+        }
+
         foreach ($file in $targetedFiles) {
-            $shouldExclude = $false
-            foreach ($exclude in $excludePaths) {
-                if ($file.StartsWith($exclude,'CurrentCultureIgnoreCase')) {
-                    $shouldExclude = $true
+            $filePath = (Join-Path $RepoRoot $file)
+
+            # handle direct changes to packages
+            $shouldInclude = $filePath -eq $pkgDirectory -or $filePath -like (Join-Path "$pkgDirectory" "*")
+
+            # we only need to do additional work for indirect packages if we haven't already decided
+            # to include this package due to this file
+            if (-not $shouldInclude) {
+                # handle changes to files that are RELATED to each package
+                foreach($triggerPath in $triggeringPaths) {
+                    $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
+                    # triggerPaths can be direct files, so we need to check both startswith and direct equality
+                    $includedForValidation = ($filePath -like (Join-Path "$resolvedRelativePath" "*") -or $filePath -eq $resolvedRelativePath)
+                    $shouldInclude = $shouldInclude -or $includedForValidation
+                    if ($includedForValidation) {
+                        $pkg.IncludedForValidation = $true
+                    }
                     break
                 }
+
+                # handle service-level changes to the ci.yml files
+                # we are using the ci.yml file being added automatically to each artifactdetails as the input
+                # for this task. This is because we can resolve a service directory from the ci.yml, and if
+                # there is a single ci.yml in that directory, we can assume that any file change in that directory
+                # will apply to all packages that exist in that directory.
+                $triggeringCIYmls = $triggeringPaths | Where-Object { $_ -like "*ci*.yml" }
+
+                foreach($yml in $triggeringCIYmls) {
+                    # given that this path is coming from the populated triggering paths in the artifact,
+                    # we can assume that the path to the ci.yml will successfully resolve.
+                    $ciYml = Join-Path $RepoRoot $yml
+                    # ensure we terminate the service directory with a /
+                    $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/")
+
+                    # we should only continue with this check if the file being changed is "in the service directory"
+                    # files that are directly included in triggerPaths will kept in full form, but otherwise we pre-process the targetedFiles to the
+                    # directory containing the change. Given that pre-process, we should check both direct equality (when not triggeringPath) and parent directory
+                    # for the case where the full form of the file has been left behind (because it was a triggeringPath)
+                    $serviceDirectoryChange = (Split-Path $filePath -Parent).Replace("`\", "/") -eq $directory -or $filePath.Replace("`\", "/") -eq $directory
+                    if (!$serviceDirectoryChange) {
+                        break
+                    }
+
+                    # this GCI is very expensive, so we want to cache the result
+                    $soleCIYml = $true
+                    if ($directoryIndex[$directory]) {
+                        $soleCIYml = $directoryIndex[$directory]
+                    }
+                    else {
+                        $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
+                        $directoryIndex[$directory] = $soleCIYml
+                    }
+
+                    if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
+                        if (-not $shouldInclude) {
+                            $pkg.IncludedForValidation = $true
+                            $shouldInclude = $true
+                        }
+                        break
+                    }
+                    else {
+                        # if the ci.yml is not the only file in the directory, we cannot assume that any file changed within the directory that isn't the ci.yml
+                        # should trigger this package
+                        Write-Host "Skipping adding package for file `"$file`" because the ci yml `"$yml`" is not the only file in the service directory `"$directory`""
+                    }
+                }
             }
-            if ($shouldExclude) {
-                continue
-            }
-            $filePath = (Join-Path $RepoRoot $file)
-            $shouldInclude = $filePath -like (Join-Path "$pkgDirectory" "*")
+
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
 
@@ -211,8 +405,13 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                 break
             }
         }
+
+        $pkgCounter++
     }
 
+    # add all of the packages that were added purely for validation purposes
+    # this is executed separately because we need to identify packages added this way as only included for validation
+    # we don't actually need to build or analyze them. only test them.
     $existingPackageNames = @($packagesWithChanges | ForEach-Object { $_.Name })
     foreach ($addition in $additionalValidationPackages) {
         $key = $addition.Replace($RepoRoot, "").TrimStart('\/')
@@ -227,8 +426,19 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
     }
 
+    # now pass along the set of packages we've identified, the diff itself, and the full set of package properties
+    # to locate any additional packages that should be included for validation
     if ($AdditionalValidationPackagesFromPackageSetFn -and (Test-Path "Function:$AdditionalValidationPackagesFromPackageSetFn")) {
         $packagesWithChanges += &$AdditionalValidationPackagesFromPackageSetFn $packagesWithChanges $diff $allPackageProperties
+    }
+
+    # finally, if we have gotten all the way here and we still don't have any packages, we should include the template service
+    # packages. We should never return NO validation.
+    if ($packagesWithChanges.Count -eq 0) {
+        $packagesWithChanges += ($allPackageProperties | Where-Object { $_.ServiceDirectory -eq "template" })
+        foreach ($package in $packagesWithChanges) {
+            $package.IncludedForValidation = $true
+        }
     }
 
     return $packagesWithChanges

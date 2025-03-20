@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Authorization
                 case 201:
                     {
                         AuthorizationRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Authorization
                 case 201:
                     {
                         AuthorizationRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

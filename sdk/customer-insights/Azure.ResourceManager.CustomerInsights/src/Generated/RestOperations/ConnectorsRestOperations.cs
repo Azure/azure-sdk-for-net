@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ConnectorResourceFormatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectorResourceFormatData.DeserializeConnectorResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ConnectorResourceFormatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectorResourceFormatData.DeserializeConnectorResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ConnectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectorListResult.DeserializeConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ConnectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectorListResult.DeserializeConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ConnectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectorListResult.DeserializeConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         ConnectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectorListResult.DeserializeConnectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

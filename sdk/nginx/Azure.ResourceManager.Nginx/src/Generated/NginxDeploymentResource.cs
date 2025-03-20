@@ -90,6 +90,75 @@ namespace Azure.ResourceManager.Nginx
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of NginxDeploymentApiKeyResources in the NginxDeployment. </summary>
+        /// <returns> An object representing collection of NginxDeploymentApiKeyResources and their operations over a NginxDeploymentApiKeyResource. </returns>
+        public virtual NginxDeploymentApiKeyCollection GetNginxDeploymentApiKeys()
+        {
+            return GetCachedClient(client => new NginxDeploymentApiKeyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the specified API Key of the given Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiKeys_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentApiKeyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiKeyName"> The resource name of the API key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiKeyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NginxDeploymentApiKeyResource>> GetNginxDeploymentApiKeyAsync(string apiKeyName, CancellationToken cancellationToken = default)
+        {
+            return await GetNginxDeploymentApiKeys().GetAsync(apiKeyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified API Key of the given Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiKeys_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentApiKeyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiKeyName"> The resource name of the API key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiKeyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NginxDeploymentApiKeyResource> GetNginxDeploymentApiKey(string apiKeyName, CancellationToken cancellationToken = default)
+        {
+            return GetNginxDeploymentApiKeys().Get(apiKeyName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of NginxCertificateResources in the NginxDeployment. </summary>
         /// <returns> An object representing collection of NginxCertificateResources and their operations over a NginxCertificateResource. </returns>
         public virtual NginxCertificateCollection GetNginxCertificates()
@@ -110,7 +179,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +210,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +248,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +279,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -241,7 +310,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +350,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +390,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,7 +432,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -405,7 +474,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -451,7 +520,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -497,7 +566,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -559,7 +628,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -621,7 +690,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -678,7 +747,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -735,7 +804,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -795,7 +864,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

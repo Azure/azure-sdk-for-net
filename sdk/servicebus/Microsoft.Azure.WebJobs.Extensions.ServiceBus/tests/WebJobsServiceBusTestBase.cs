@@ -1,6 +1,17 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Core.TestFramework;
+using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus.Tests;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,17 +20,6 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure.Core.TestFramework;
-using Azure.Messaging.ServiceBus;
-using Azure.Messaging.ServiceBus.Administration;
-using Azure.Messaging.ServiceBus.Tests;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Azure.WebJobs.ServiceBus;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NUnit.Framework;
 using static Azure.Messaging.ServiceBus.Tests.ServiceBusScope;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
@@ -144,9 +144,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             if (useTokenCredential)
             {
                 settings.Add("AzureWebJobsServiceBus:fullyQualifiedNamespace", ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace);
-                settings.Add("AzureWebJobsServiceBus:clientId", ServiceBusTestEnvironment.Instance.ClientId);
-                settings.Add("AzureWebJobsServiceBus:clientSecret", ServiceBusTestEnvironment.Instance.ClientSecret);
-                settings.Add("AzureWebJobsServiceBus:tenantId", ServiceBusTestEnvironment.Instance.TenantId);
             }
             else
             {
@@ -156,6 +153,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var hostBuilder = new HostBuilder()
                 .ConfigureServices(s =>
                 {
+                    s.AddAzureClients(clientBuilder =>
+                    {
+                        clientBuilder.UseCredential(ServiceBusTestEnvironment.Instance.Credential);
+                    });
+
                     s.Configure<HostOptions>(opts => opts.ShutdownTimeout = HostShutdownTimeout);
                     // Configure ServiceBusEndToEndTestService before WebJobs stuff so that the ServiceBusEndToEndTestService.StopAsync will be called after
                     // the WebJobsHost.StopAsync (service that is started first will be stopped last by the IHost).

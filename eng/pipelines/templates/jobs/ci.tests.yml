@@ -120,22 +120,23 @@ jobs:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
 
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          NuGetCacheKey: Test
+
       # this section is only included when invoking with a dynamic set of packages (EG net - pullrequest)
       - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
         - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
           parameters:
             PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+            Restore: true
 
         - pwsh: |
             if ("$(ProjectNames)" -like "*storage*") {
-              &"$(Build.SourcesDirectory)/eng/scripts/install_azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
+              &"$(Build.SourcesDirectory)/eng/scripts/Install-Azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
             }
           displayName: Install Azurite If Necessary
           condition: ne(variables['ProjectNames'], '')
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-        parameters:
-          NuGetCacheKey: Test
 
       # ProjectListOverrideFile is set by the customization within dependency.tests.yml
       # OR it is set by the PR built to target a set of packages outside of a single target service directory.
@@ -164,7 +165,7 @@ jobs:
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=$(ServiceDirectory)
-          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage)

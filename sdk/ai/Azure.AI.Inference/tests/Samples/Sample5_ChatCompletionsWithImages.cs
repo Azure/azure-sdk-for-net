@@ -153,7 +153,7 @@ namespace Azure.AI.Inference.Tests.Samples
                     ChatMessageImageDetailLevel.Low
                 );
 #else
-            Stream imageStream = File.OpenRead(TestEnvironment.TestImageJpgInputPath);
+            Stream imageStream = File.OpenRead(TestEnvironment.TestImagePngInputPath);
 
             ChatMessageImageContentItem imageContentItem =
                 new ChatMessageImageContentItem(
@@ -212,8 +212,8 @@ namespace Azure.AI.Inference.Tests.Samples
 #else
             ChatMessageImageContentItem imageContentItem =
                 new ChatMessageImageContentItem(
-                    TestEnvironment.TestImageJpgInputPath,
-                    "image/jpg",
+                    TestEnvironment.TestImagePngInputPath,
+                    "image/png",
                     ChatMessageImageDetailLevel.Low
                 );
 #endif

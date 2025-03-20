@@ -411,7 +411,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLargeFaceListsAsync(start, top, returnRecognitionModel, context).ConfigureAwait(false);
             IReadOnlyList<LargeFaceList> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LargeFaceList> array = new List<LargeFaceList>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -433,7 +433,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLargeFaceLists(start, top, returnRecognitionModel, context);
             IReadOnlyList<LargeFaceList> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LargeFaceList> array = new List<LargeFaceList>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1084,7 +1084,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetFacesAsync(start, top, context).ConfigureAwait(false);
             IReadOnlyList<LargeFaceListFace> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LargeFaceListFace> array = new List<LargeFaceListFace>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1105,7 +1105,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetFaces(start, top, context);
             IReadOnlyList<LargeFaceListFace> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LargeFaceListFace> array = new List<LargeFaceListFace>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

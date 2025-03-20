@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceRoleInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceRoleInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceView value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleInstanceView.DeserializeRoleInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceView value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleInstanceView.DeserializeRoleInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleInstanceListResult.DeserializeRoleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleInstanceListResult.DeserializeRoleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleInstanceListResult.DeserializeRoleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleInstanceListResult.DeserializeRoleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppComplianceReportData(document.RootElement, options);
                     }
                 default:

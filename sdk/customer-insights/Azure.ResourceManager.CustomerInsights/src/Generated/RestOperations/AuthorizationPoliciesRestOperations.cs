@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 201:
                     {
                         AuthorizationPolicyResourceFormatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 201:
                     {
                         AuthorizationPolicyResourceFormatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicyResourceFormatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicyResourceFormatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationPolicyListResult.DeserializeAuthorizationPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationPolicyListResult.DeserializeAuthorizationPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicy value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationPolicy.DeserializeAuthorizationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicy value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationPolicy.DeserializeAuthorizationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicy value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationPolicy.DeserializeAuthorizationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicy value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationPolicy.DeserializeAuthorizationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationPolicyListResult.DeserializeAuthorizationPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         AuthorizationPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationPolicyListResult.DeserializeAuthorizationPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

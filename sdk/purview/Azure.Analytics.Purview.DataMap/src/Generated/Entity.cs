@@ -2582,7 +2582,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await BatchSetClassificationsAsync(content, context).ConfigureAwait(false);
             IReadOnlyList<string> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<string> array = new List<string>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -2605,7 +2605,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = BatchSetClassifications(content, context);
             IReadOnlyList<string> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<string> array = new List<string>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

@@ -880,6 +880,18 @@ namespace Azure.Messaging.EventGrid
         {
             return new AcsEmailDeliveryReportStatusDetails(default, statusMessage);
         }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageMediaContent"/>. </summary>
+        /// <param name="mimeType"> The MIME type of the file this media represents. </param>
+        /// <param name="mediaId"> The media identifier. </param>
+        /// <param name="fileName"> The filename of the underlying media file as specified when uploaded. </param>
+        /// <param name="caption"> The caption for the media object, if supported and provided. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsMessageMediaContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType, string mediaId, string fileName, string caption)
+        {
+            return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption, default);
+        }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
 }

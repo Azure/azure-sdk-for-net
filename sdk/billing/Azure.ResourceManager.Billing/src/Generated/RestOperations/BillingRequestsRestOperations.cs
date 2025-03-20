@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestData.DeserializeBillingRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestData.DeserializeBillingRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1146,7 +1146,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1271,7 +1271,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRequestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRequestListResult.DeserializeBillingRequestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

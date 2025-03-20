@@ -81,6 +81,8 @@ namespace Azure.Storage.DataMovement
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract long? Length { get; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected internal virtual int MaxSupportedChunkCount { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract long MaxSupportedChunkSize { get; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract long MaxSupportedSingleTransferSize { get; }
@@ -227,7 +229,7 @@ namespace Azure.Storage.DataMovement
     public partial class TransferOptions : System.IEquatable<Azure.Storage.DataMovement.TransferOptions>
     {
         public TransferOptions() { }
-        public Azure.Storage.DataMovement.StorageResourceCreationMode CreationPreference { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.StorageResourceCreationMode CreationMode { get { throw null; } set { } }
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
         public Azure.Storage.DataMovement.TransferProgressHandlerOptions ProgressHandlerOptions { get { throw null; } set { } }

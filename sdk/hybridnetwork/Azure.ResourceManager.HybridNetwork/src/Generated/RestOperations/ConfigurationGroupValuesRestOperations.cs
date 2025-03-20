@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationGroupValueListResult.DeserializeConfigurationGroupValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationGroupValueListResult.DeserializeConfigurationGroupValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationGroupValueListResult.DeserializeConfigurationGroupValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationGroupValueListResult.DeserializeConfigurationGroupValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationGroupValueListResult.DeserializeConfigurationGroupValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationGroupValueListResult.DeserializeConfigurationGroupValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationGroupValueListResult.DeserializeConfigurationGroupValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         ConfigurationGroupValueListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationGroupValueListResult.DeserializeConfigurationGroupValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

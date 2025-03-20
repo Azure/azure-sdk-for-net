@@ -34,35 +34,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(ServiceBusDeadletterMessagesAvailableWithNoListenersEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NamespaceName))
-            {
-                writer.WritePropertyName("namespaceName"u8);
-                writer.WriteStringValue(NamespaceName);
-            }
-            if (Optional.IsDefined(RequestUri))
-            {
-                writer.WritePropertyName("requestUri"u8);
-                writer.WriteStringValue(RequestUri);
-            }
-            if (Optional.IsDefined(EntityType))
-            {
-                writer.WritePropertyName("entityType"u8);
-                writer.WriteStringValue(EntityType);
-            }
-            if (Optional.IsDefined(QueueName))
+            writer.WritePropertyName("namespaceName"u8);
+            writer.WriteStringValue(NamespaceName);
+            writer.WritePropertyName("requestUri"u8);
+            writer.WriteStringValue(RequestUri);
+            writer.WritePropertyName("entityType"u8);
+            writer.WriteStringValue(EntityType);
+            if (QueueName != null)
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (Optional.IsDefined(TopicName))
+            else
+            {
+                writer.WriteNull("queueName");
+            }
+            if (TopicName != null)
             {
                 writer.WritePropertyName("topicName"u8);
                 writer.WriteStringValue(TopicName);
             }
-            if (Optional.IsDefined(SubscriptionName))
+            else
+            {
+                writer.WriteNull("topicName");
+            }
+            if (SubscriptionName != null)
             {
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
+            }
+            else
+            {
+                writer.WriteNull("subscriptionName");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +75,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -128,16 +131,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("queueName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        queueName = null;
+                        continue;
+                    }
                     queueName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("topicName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topicName = null;
+                        continue;
+                    }
                     topicName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        subscriptionName = null;
+                        continue;
+                    }
                     subscriptionName = property.Value.GetString();
                     continue;
                 }
@@ -178,7 +196,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(document.RootElement, options);
                     }
                 default:
@@ -192,7 +210,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(document.RootElement);
         }
 

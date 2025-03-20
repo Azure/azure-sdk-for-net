@@ -11,7 +11,7 @@ pr:
     - "*"
 
     exclude:
-    - eng/packages/http-client-csharp
+    - eng/packages/http-client-csharp/
 
 parameters:
   - name: Service
@@ -22,3 +22,5 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: ${{ parameters.Service }}
+    CheckAOTCompat: true
+    BuildSnippets: true

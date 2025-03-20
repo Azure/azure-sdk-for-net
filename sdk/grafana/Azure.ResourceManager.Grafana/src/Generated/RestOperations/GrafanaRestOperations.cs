@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedGrafanaListResponse.DeserializeManagedGrafanaListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedGrafanaListResponse.DeserializeManagedGrafanaListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedGrafanaListResponse.DeserializeManagedGrafanaListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedGrafanaListResponse.DeserializeManagedGrafanaListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Grafana
                 case 202:
                     {
                         ManagedGrafanaData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Grafana
                 case 202:
                     {
                         ManagedGrafanaData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         EnterpriseDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnterpriseDetails.DeserializeEnterpriseDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         EnterpriseDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnterpriseDetails.DeserializeEnterpriseDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         GrafanaAvailablePluginListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GrafanaAvailablePluginListResponse.DeserializeGrafanaAvailablePluginListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         GrafanaAvailablePluginListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GrafanaAvailablePluginListResponse.DeserializeGrafanaAvailablePluginListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedGrafanaListResponse.DeserializeManagedGrafanaListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedGrafanaListResponse.DeserializeManagedGrafanaListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedGrafanaListResponse.DeserializeManagedGrafanaListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         ManagedGrafanaListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedGrafanaListResponse.DeserializeManagedGrafanaListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

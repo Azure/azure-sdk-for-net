@@ -235,6 +235,7 @@ rename-mapping:
   DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
   BackupDatasourceParameters: BackupDataSourceSettings
   BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
+  AdlsBlobBackupDatasourceParameters: AdlsBlobBackupDataSourceSettings
   KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
   KubernetesClusterBackupDatasourceParameters.snapshotVolumes: IsSnapshotVolumesEnabled
   KubernetesClusterBackupDatasourceParameters.includeClusterScopeResources: IsClusterScopeResourcesIncluded
@@ -257,7 +258,7 @@ rename-mapping:
   SecureScoreLevel: BackupVaultSecureScoreLevel
   FeatureSettings: BackupVaultFeatureSettings
   IdentityDetails: DataProtectionIdentityDetails
-  IdentityDetails.userAssignedIdentityArmUrl: UserAssignedIdentityArmUriString
+  IdentityDetails.userAssignedIdentityArmUrl: UserAssignedIdentityId|arm-id
   NamespacedNameResource: NamespacedName
   CrossRegionRestoreDetails.sourceBackupInstanceId : -|arm-id
   CrossRegionRestoreDetails.sourceRegion  : -|azure-location

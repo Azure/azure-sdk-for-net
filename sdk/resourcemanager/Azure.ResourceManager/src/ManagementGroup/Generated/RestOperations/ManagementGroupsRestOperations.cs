@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagementGroupListResult.DeserializeManagementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagementGroupListResult.DeserializeManagementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         DescendantListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DescendantListResult.DeserializeDescendantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         DescendantListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DescendantListResult.DeserializeDescendantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagementGroupNameAvailabilityResult.DeserializeManagementGroupNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagementGroupNameAvailabilityResult.DeserializeManagementGroupNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagementGroupListResult.DeserializeManagementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagementGroupListResult.DeserializeManagementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         DescendantListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DescendantListResult.DeserializeDescendantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         DescendantListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DescendantListResult.DeserializeDescendantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlServerPropertiesForGeoRestore(document.RootElement, options);
                     }
                 default:

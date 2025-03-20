@@ -56,7 +56,7 @@ namespace Azure.Maps.TimeZones
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static WindowsTimeZone FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWindowsTimeZone(document.RootElement);
         }
     }

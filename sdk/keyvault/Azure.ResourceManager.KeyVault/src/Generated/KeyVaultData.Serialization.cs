@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKeyVaultData(document.RootElement, options);
                     }
                 default:

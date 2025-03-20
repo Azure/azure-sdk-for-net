@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ArmTemplateList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmTemplateList.DeserializeArmTemplateList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ArmTemplateList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmTemplateList.DeserializeArmTemplateList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabArmTemplateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabArmTemplateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ArmTemplateList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmTemplateList.DeserializeArmTemplateList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ArmTemplateList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmTemplateList.DeserializeArmTemplateList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

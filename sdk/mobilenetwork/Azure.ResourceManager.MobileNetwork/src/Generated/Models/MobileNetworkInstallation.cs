@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The installation state of the packet core.
-    /// Serialized Name: Installation
-    /// </summary>
+    /// <summary> The installation state of the packet core. </summary>
     public partial class MobileNetworkInstallation
     {
         /// <summary>
@@ -57,26 +54,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkInstallation"/>. </summary>
-        /// <param name="desiredState">
-        /// The desired installation state
-        /// Serialized Name: Installation.desiredState
-        /// </param>
-        /// <param name="state">
-        /// Installation state
-        /// Serialized Name: Installation.state
-        /// </param>
-        /// <param name="reinstallRequired">
-        /// Whether a reinstall of the packet core is required to pick up the latest configuration changes.
-        /// Serialized Name: Installation.reinstallRequired
-        /// </param>
-        /// <param name="reasons">
-        /// Reason(s) for the current installation state of the packet core.
-        /// Serialized Name: Installation.reasons
-        /// </param>
-        /// <param name="operation">
-        /// A reference to an in-progress installation operation
-        /// Serialized Name: Installation.operation
-        /// </param>
+        /// <param name="desiredState"> The desired installation state. </param>
+        /// <param name="state"> Installation state. </param>
+        /// <param name="reinstallRequired"> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </param>
+        /// <param name="reasons"> Reason(s) for the current installation state of the packet core. </param>
+        /// <param name="operation"> A reference to an in-progress installation operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkInstallation(DesiredInstallationState? desiredState, MobileNetworkInstallationState? state, MobileNetworkReinstallRequired? reinstallRequired, IReadOnlyList<MobileNetworkInstallationReason> reasons, SubResource operation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,34 +70,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The desired installation state
-        /// Serialized Name: Installation.desiredState
-        /// </summary>
+        /// <summary> The desired installation state. </summary>
         [WirePath("desiredState")]
         public DesiredInstallationState? DesiredState { get; set; }
-        /// <summary>
-        /// Installation state
-        /// Serialized Name: Installation.state
-        /// </summary>
+        /// <summary> Installation state. </summary>
         [WirePath("state")]
         public MobileNetworkInstallationState? State { get; }
-        /// <summary>
-        /// Whether a reinstall of the packet core is required to pick up the latest configuration changes.
-        /// Serialized Name: Installation.reinstallRequired
-        /// </summary>
+        /// <summary> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </summary>
         [WirePath("reinstallRequired")]
         public MobileNetworkReinstallRequired? ReinstallRequired { get; }
-        /// <summary>
-        /// Reason(s) for the current installation state of the packet core.
-        /// Serialized Name: Installation.reasons
-        /// </summary>
+        /// <summary> Reason(s) for the current installation state of the packet core. </summary>
         [WirePath("reasons")]
         public IReadOnlyList<MobileNetworkInstallationReason> Reasons { get; }
-        /// <summary>
-        /// A reference to an in-progress installation operation
-        /// Serialized Name: Installation.operation
-        /// </summary>
+        /// <summary> A reference to an in-progress installation operation. </summary>
         internal SubResource Operation { get; }
         /// <summary> Gets Id. </summary>
         [WirePath("operation.id")]

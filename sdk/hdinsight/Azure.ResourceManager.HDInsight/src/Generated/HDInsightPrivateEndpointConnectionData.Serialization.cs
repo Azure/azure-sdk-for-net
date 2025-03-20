@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHDInsightPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

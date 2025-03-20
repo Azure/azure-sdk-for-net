@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         TemplateSpecData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecData.DeserializeTemplateSpecData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         TemplateSpecData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecData.DeserializeTemplateSpecData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecData.DeserializeTemplateSpecData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecData.DeserializeTemplateSpecData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecData.DeserializeTemplateSpecData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecData.DeserializeTemplateSpecData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecsListResult.DeserializeTemplateSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecsListResult.DeserializeTemplateSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecsListResult.DeserializeTemplateSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecsListResult.DeserializeTemplateSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecsListResult.DeserializeTemplateSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecsListResult.DeserializeTemplateSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecsListResult.DeserializeTemplateSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecsListResult.DeserializeTemplateSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

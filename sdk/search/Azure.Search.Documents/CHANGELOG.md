@@ -3,6 +3,7 @@
 ## 11.7.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added extension methods to get `SearchClient`, `SearchIndexClient` and `SearchIndexerClient` using [AIProjectClient](https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview).
 
 ### Breaking Changes
 

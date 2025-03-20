@@ -1,6 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Authentication.Http.Custom",
-  "library-name": "Authentication.Http.Custom",
-  "use-model-reader-writer": true
+  "package-name": "Authentication.Http.Custom"
 }

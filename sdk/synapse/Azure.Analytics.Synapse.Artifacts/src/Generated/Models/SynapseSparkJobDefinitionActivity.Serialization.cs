@@ -198,6 +198,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Authentication))
+            {
+                writer.WritePropertyName("authentication"u8);
+                writer.WriteObjectValue(Authentication);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -238,6 +243,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ConfigurationType? configurationType = default;
             SparkConfigurationParametrizationReference targetSparkConfiguration = default;
             IDictionary<string, object> sparkConfig = default;
+            SynapseActivityAuthentication authentication = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -530,6 +536,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sparkConfig = dictionary;
                             continue;
                         }
+                        if (property0.NameEquals("authentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authentication = SynapseActivityAuthentication.DeserializeSynapseActivityAuthentication(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -562,14 +577,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 numExecutors,
                 configurationType,
                 targetSparkConfiguration,
-                sparkConfig ?? new ChangeTrackingDictionary<string, object>());
+                sparkConfig ?? new ChangeTrackingDictionary<string, object>(),
+                authentication);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new SynapseSparkJobDefinitionActivity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSynapseSparkJobDefinitionActivity(document.RootElement);
         }
 

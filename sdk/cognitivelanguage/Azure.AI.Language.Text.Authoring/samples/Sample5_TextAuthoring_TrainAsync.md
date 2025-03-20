@@ -9,9 +9,8 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Train a Project Asynchronously
@@ -20,24 +19,24 @@ To train a project, call TrainAsync on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample5_TextAuthoring_TrainAsync
 string projectName = "LoanAgreements";
+TextAuthoringProject projectClient = client.GetProject(projectName);
 
-var trainingJobConfig = new TrainingJobDetails(
+var trainingJobConfig = new TextAuthoringTrainingJobDetails(
     modelLabel: "model1",
     trainingConfigVersion: "latest"
 )
 {
-    EvaluationOptions = new EvaluationDetails
+    EvaluationOptions = new TextAuthoringEvaluationDetails
     {
-        Kind = EvaluationKind.Percentage,
+        Kind = TextAuthoringEvaluationKind.Percentage,
         TestingSplitPercentage = 20,
         TrainingSplitPercentage = 80
     }
 };
 
-Operation<TrainingJobResult> operation = await authoringClient.TrainAsync(
+Operation<TextAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
-    body: trainingJobConfig
+    details: trainingJobConfig
 );
 
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

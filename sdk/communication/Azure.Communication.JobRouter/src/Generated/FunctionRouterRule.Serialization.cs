@@ -120,7 +120,7 @@ namespace Azure.Communication.JobRouter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFunctionRouterRule(document.RootElement, options);
                     }
                 default:
@@ -134,7 +134,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new FunctionRouterRule FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFunctionRouterRule(document.RootElement);
         }
 

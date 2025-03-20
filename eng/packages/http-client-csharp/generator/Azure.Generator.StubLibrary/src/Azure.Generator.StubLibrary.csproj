@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="Microsoft.Generator.CSharp.ClientModel" />
+    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
   
   <ItemGroup>

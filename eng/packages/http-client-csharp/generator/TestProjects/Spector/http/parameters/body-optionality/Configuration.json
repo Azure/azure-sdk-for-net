@@ -1,6 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Parameters.BodyOptionality",
-  "library-name": "Parameters.BodyOptionality",
-  "use-model-reader-writer": true
+  "package-name": "Parameters.BodyOptionality"
 }

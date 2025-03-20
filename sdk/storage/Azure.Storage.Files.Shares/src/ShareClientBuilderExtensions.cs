@@ -7,6 +7,7 @@ using Azure.Core.Extensions;
 using Azure.Core;
 using Azure.Storage;
 using Azure.Storage.Files.Shares;
+using Azure;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -60,6 +61,24 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>(options => new ShareServiceClient(serviceUri, sharedKeyCredential, options));
+        }
+
+        /// <summary>
+        /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
+        /// </summary>
+        public static IAzureClientBuilder<ShareServiceClient, ShareClientOptions> AddShareServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>((options, token) => new ShareServiceClient(serviceUri, token, options));
+        }
+
+        /// <summary>
+        /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="sasCredential"/>
+        /// </summary>
+        public static IAzureClientBuilder<ShareServiceClient, ShareClientOptions> AddShareServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, AzureSasCredential sasCredential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>(options => new ShareServiceClient(serviceUri, sasCredential, options));
         }
 
         /// <summary>

@@ -10,37 +10,16 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// UE Information for 4G.
-    /// Serialized Name: UeInfo4G
-    /// </summary>
+    /// <summary> UE Information for 4G. </summary>
     public partial class UEInfo4G : ExtendedUEInfoProperties
     {
         /// <summary> Initializes a new instance of <see cref="UEInfo4G"/>. </summary>
-        /// <param name="imsi">
-        /// International mobile subscriber identifier
-        /// Serialized Name: UeInfo4G.info.imsi
-        /// </param>
-        /// <param name="mTmsi">
-        /// MME Temporary Mobile Subscriber Identity
-        /// Serialized Name: UeInfo4G.info.guti.mTmsi
-        /// </param>
-        /// <param name="groupId">
-        /// MME group identifier
-        /// Serialized Name: UeInfo4G.info.guti.mmeId.groupId
-        /// </param>
-        /// <param name="code">
-        /// MME code
-        /// Serialized Name: UeInfo4G.info.guti.mmeId.code
-        /// </param>
-        /// <param name="mccInfoGutiPlmnMcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo4G.info.guti.plmn.mcc
-        /// </param>
-        /// <param name="mncInfoGutiPlmnMnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo4G.info.guti.plmn.mnc
-        /// </param>
+        /// <param name="imsi"> International mobile subscriber identifier. </param>
+        /// <param name="mTmsi"> MME Temporary Mobile Subscriber Identity. </param>
+        /// <param name="groupId"> MME group identifier. </param>
+        /// <param name="code"> MME code. </param>
+        /// <param name="mccInfoGutiPlmnMcc"> Mobile country code (MCC). </param>
+        /// <param name="mncInfoGutiPlmnMnc"> Mobile network code (MNC). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imsi"/>, <paramref name="mccInfoGutiPlmnMcc"/> or <paramref name="mncInfoGutiPlmnMnc"/> is null. </exception>
         public UEInfo4G(string imsi, int mTmsi, int groupId, int code, string mccInfoGutiPlmnMcc, string mncInfoGutiPlmnMnc)
         {
@@ -59,130 +38,40 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UEInfo4G"/>. </summary>
-        /// <param name="ratType">
-        /// RAT Type
-        /// Serialized Name: ExtendedUeInfoProperties.ratType
-        /// </param>
-        /// <param name="lastReadOn">
-        /// The timestamp of last UE info read from the packet core (UTC).
-        /// Serialized Name: ExtendedUeInfoProperties.lastReadAt
-        /// </param>
+        /// <param name="ratType"> RAT Type. </param>
+        /// <param name="lastReadOn"> The timestamp of last UE info read from the packet core (UTC). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="imsi">
-        /// International mobile subscriber identifier
-        /// Serialized Name: UeInfo4G.info.imsi
-        /// </param>
-        /// <param name="imei">
-        /// International mobile equipment identity
-        /// Serialized Name: UeInfo4G.info.imei
-        /// </param>
-        /// <param name="imeisv">
-        /// International mobile equipment identity – software version
-        /// Serialized Name: UeInfo4G.info.imeisv
-        /// </param>
-        /// <param name="sessionInfo"> Serialized Name: UeInfo4G.info.sessionInfo. </param>
-        /// <param name="perUETnla">
-        /// Per-UE transport network layer association
-        /// Serialized Name: UeInfo4G.info.connectionInfo.perUeTnla
-        /// </param>
-        /// <param name="mmeS1ApId">
-        /// MME S1AP identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.mmeS1apId
-        /// </param>
-        /// <param name="enbS1ApId">
-        /// eNodeB S1AP identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.enbS1apId
-        /// </param>
-        /// <param name="lastVisitedTai">
-        /// Last Visited TAI
-        /// Serialized Name: UeInfo4G.info.connectionInfo.lastVisitedTai
-        /// </param>
-        /// <param name="ueState">
-        /// State of the UE.
-        /// Serialized Name: UeInfo4G.info.connectionInfo.ueState
-        /// </param>
-        /// <param name="rrcEstablishmentCause">
-        /// Radio connection establishment cause
-        /// Serialized Name: UeInfo4G.info.connectionInfo.rrcEstablishmentCause
-        /// </param>
-        /// <param name="ueUsageSetting">
-        /// The UE's usage setting
-        /// Serialized Name: UeInfo4G.info.connectionInfo.ueUsageSetting
-        /// </param>
-        /// <param name="lastActivityOn">
-        /// The timestamp of last activity of UE (UTC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.lastActivityTime
-        /// </param>
-        /// <param name="ngeNbId">
-        /// NG-eNodeB identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.ngeNbId
-        /// </param>
-        /// <param name="eNbId">
-        /// eNodeB identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.eNbId
-        /// </param>
-        /// <param name="n3IwfId">
-        /// N3 IWF identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.n3IwfId
-        /// </param>
-        /// <param name="wagfId">
-        /// W-AGF identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.wagfId
-        /// </param>
-        /// <param name="tngfId">
-        /// TNGF identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.tngfId
-        /// </param>
-        /// <param name="nid">
-        /// Network identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.nid
-        /// </param>
-        /// <param name="bitLength"> Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.gNbId.bitLength. </param>
-        /// <param name="gnbValue"> Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.gNbId.gNBValue. </param>
-        /// <param name="mccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.plmnId.mcc
-        /// </param>
-        /// <param name="mncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.plmnId.mnc
-        /// </param>
-        /// <param name="locationType">
-        /// Location Type
-        /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.locationType
-        /// </param>
-        /// <param name="tac">
-        /// Type Allocation Code of UE
-        /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.tac
-        /// </param>
-        /// <param name="mccInfoConnectionInfoLocationInfoPlmnMcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.plmn.mcc
-        /// </param>
-        /// <param name="mncInfoConnectionInfoLocationInfoPlmnMnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.plmn.mnc
-        /// </param>
-        /// <param name="mTmsi">
-        /// MME Temporary Mobile Subscriber Identity
-        /// Serialized Name: UeInfo4G.info.guti.mTmsi
-        /// </param>
-        /// <param name="groupId">
-        /// MME group identifier
-        /// Serialized Name: UeInfo4G.info.guti.mmeId.groupId
-        /// </param>
-        /// <param name="code">
-        /// MME code
-        /// Serialized Name: UeInfo4G.info.guti.mmeId.code
-        /// </param>
-        /// <param name="mccInfoGutiPlmnMcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo4G.info.guti.plmn.mcc
-        /// </param>
-        /// <param name="mncInfoGutiPlmnMnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo4G.info.guti.plmn.mnc
-        /// </param>
+        /// <param name="imsi"> International mobile subscriber identifier. </param>
+        /// <param name="imei"> International mobile equipment identity. </param>
+        /// <param name="imeisv"> International mobile equipment identity – software version. </param>
+        /// <param name="sessionInfo"></param>
+        /// <param name="perUETnla"> Per-UE transport network layer association. </param>
+        /// <param name="mmeS1ApId"> MME S1AP identifier. </param>
+        /// <param name="enbS1ApId"> eNodeB S1AP identifier. </param>
+        /// <param name="lastVisitedTai"> Last Visited TAI. </param>
+        /// <param name="ueState"> State of the UE. </param>
+        /// <param name="rrcEstablishmentCause"> Radio connection establishment cause. </param>
+        /// <param name="ueUsageSetting"> The UE's usage setting. </param>
+        /// <param name="lastActivityOn"> The timestamp of last activity of UE (UTC). </param>
+        /// <param name="ngeNbId"> NG-eNodeB identifier. </param>
+        /// <param name="eNbId"> eNodeB identifier. </param>
+        /// <param name="n3IwfId"> N3 IWF identifier. </param>
+        /// <param name="wagfId"> W-AGF identifier. </param>
+        /// <param name="tngfId"> TNGF identifier. </param>
+        /// <param name="nid"> Network identifier. </param>
+        /// <param name="bitLength"></param>
+        /// <param name="gnbValue"></param>
+        /// <param name="mccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc"> Mobile country code (MCC). </param>
+        /// <param name="mncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc"> Mobile network code (MNC). </param>
+        /// <param name="locationType"> Location Type. </param>
+        /// <param name="tac"> Type Allocation Code of UE. </param>
+        /// <param name="mccInfoConnectionInfoLocationInfoPlmnMcc"> Mobile country code (MCC). </param>
+        /// <param name="mncInfoConnectionInfoLocationInfoPlmnMnc"> Mobile network code (MNC). </param>
+        /// <param name="mTmsi"> MME Temporary Mobile Subscriber Identity. </param>
+        /// <param name="groupId"> MME group identifier. </param>
+        /// <param name="code"> MME code. </param>
+        /// <param name="mccInfoGutiPlmnMcc"> Mobile country code (MCC). </param>
+        /// <param name="mncInfoGutiPlmnMnc"> Mobile network code (MNC). </param>
         internal UEInfo4G(RatType ratType, DateTimeOffset? lastReadOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string imsi, string imei, string imeisv, IList<UESessionInfo4G> sessionInfo, string perUETnla, int? mmeS1ApId, int? enbS1ApId, string lastVisitedTai, UEState? ueState, RrcEstablishmentCause? rrcEstablishmentCause, UEUsageSetting? ueUsageSetting, DateTimeOffset? lastActivityOn, string ngeNbId, string eNbId, string n3IwfId, string wagfId, string tngfId, string nid, int? bitLength, string gnbValue, string mccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc, string mncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc, string locationType, string tac, string mccInfoConnectionInfoLocationInfoPlmnMcc, string mncInfoConnectionInfoLocationInfoPlmnMnc, int mTmsi, int groupId, int code, string mccInfoGutiPlmnMcc, string mncInfoGutiPlmnMnc) : base(ratType, lastReadOn, serializedAdditionalRawData)
         {
             Imsi = imsi;
@@ -224,181 +113,97 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// International mobile subscriber identifier
-        /// Serialized Name: UeInfo4G.info.imsi
-        /// </summary>
+        /// <summary> International mobile subscriber identifier. </summary>
         [WirePath("info.imsi")]
         public string Imsi { get; set; }
-        /// <summary>
-        /// International mobile equipment identity
-        /// Serialized Name: UeInfo4G.info.imei
-        /// </summary>
+        /// <summary> International mobile equipment identity. </summary>
         [WirePath("info.imei")]
         public string Imei { get; set; }
-        /// <summary>
-        /// International mobile equipment identity – software version
-        /// Serialized Name: UeInfo4G.info.imeisv
-        /// </summary>
+        /// <summary> International mobile equipment identity – software version. </summary>
         [WirePath("info.imeisv")]
         public string Imeisv { get; set; }
-        /// <summary> Serialized Name: UeInfo4G.info.sessionInfo. </summary>
+        /// <summary> Gets the session info. </summary>
         [WirePath("info.sessionInfo")]
         public IList<UESessionInfo4G> SessionInfo { get; }
-        /// <summary>
-        /// Per-UE transport network layer association
-        /// Serialized Name: UeInfo4G.info.connectionInfo.perUeTnla
-        /// </summary>
+        /// <summary> Per-UE transport network layer association. </summary>
         [WirePath("info.perUeTnla")]
         public string PerUETnla { get; set; }
-        /// <summary>
-        /// MME S1AP identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.mmeS1apId
-        /// </summary>
+        /// <summary> MME S1AP identifier. </summary>
         [WirePath("info.mmeS1apId")]
         public int? MmeS1ApId { get; set; }
-        /// <summary>
-        /// eNodeB S1AP identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.enbS1apId
-        /// </summary>
+        /// <summary> eNodeB S1AP identifier. </summary>
         [WirePath("info.enbS1apId")]
         public int? EnbS1ApId { get; set; }
-        /// <summary>
-        /// Last Visited TAI
-        /// Serialized Name: UeInfo4G.info.connectionInfo.lastVisitedTai
-        /// </summary>
+        /// <summary> Last Visited TAI. </summary>
         [WirePath("info.lastVisitedTai")]
         public string LastVisitedTai { get; set; }
-        /// <summary>
-        /// State of the UE.
-        /// Serialized Name: UeInfo4G.info.connectionInfo.ueState
-        /// </summary>
+        /// <summary> State of the UE. </summary>
         [WirePath("info.ueState")]
         public UEState? UEState { get; set; }
-        /// <summary>
-        /// Radio connection establishment cause
-        /// Serialized Name: UeInfo4G.info.connectionInfo.rrcEstablishmentCause
-        /// </summary>
+        /// <summary> Radio connection establishment cause. </summary>
         [WirePath("info.rrcEstablishmentCause")]
         public RrcEstablishmentCause? RrcEstablishmentCause { get; set; }
-        /// <summary>
-        /// The UE's usage setting
-        /// Serialized Name: UeInfo4G.info.connectionInfo.ueUsageSetting
-        /// </summary>
+        /// <summary> The UE's usage setting. </summary>
         [WirePath("info.ueUsageSetting")]
         public UEUsageSetting? UEUsageSetting { get; set; }
-        /// <summary>
-        /// The timestamp of last activity of UE (UTC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.lastActivityTime
-        /// </summary>
+        /// <summary> The timestamp of last activity of UE (UTC). </summary>
         [WirePath("info.lastActivityTime")]
         public DateTimeOffset? LastActivityOn { get; set; }
-        /// <summary>
-        /// NG-eNodeB identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.ngeNbId
-        /// </summary>
+        /// <summary> NG-eNodeB identifier. </summary>
         [WirePath("info.ngeNbId")]
         public string NgeNbId { get; set; }
-        /// <summary>
-        /// eNodeB identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.eNbId
-        /// </summary>
+        /// <summary> eNodeB identifier. </summary>
         [WirePath("info.eNbId")]
         public string ENbId { get; set; }
-        /// <summary>
-        /// N3 IWF identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.n3IwfId
-        /// </summary>
+        /// <summary> N3 IWF identifier. </summary>
         [WirePath("info.n3IwfId")]
         public string N3IwfId { get; set; }
-        /// <summary>
-        /// W-AGF identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.wagfId
-        /// </summary>
+        /// <summary> W-AGF identifier. </summary>
         [WirePath("info.wagfId")]
         public string WagfId { get; set; }
-        /// <summary>
-        /// TNGF identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.tngfId
-        /// </summary>
+        /// <summary> TNGF identifier. </summary>
         [WirePath("info.tngfId")]
         public string TngfId { get; set; }
-        /// <summary>
-        /// Network identifier
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.nid
-        /// </summary>
+        /// <summary> Network identifier. </summary>
         [WirePath("info.nid")]
         public string Nid { get; set; }
-        /// <summary> Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.gNbId.bitLength. </summary>
+        /// <summary> Gets or sets the bit length. </summary>
         [WirePath("info.bitLength")]
         public int? BitLength { get; set; }
-        /// <summary> Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.gNbId.gNBValue. </summary>
+        /// <summary> Gets or sets the gnb value. </summary>
         [WirePath("info.gNBValue")]
         public string GNBValue { get; set; }
-        /// <summary>
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.plmnId.mcc
-        /// </summary>
+        /// <summary> Mobile country code (MCC). </summary>
         [WirePath("info.mcc")]
         public string MccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc { get; set; }
-        /// <summary>
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.plmnId.mnc
-        /// </summary>
+        /// <summary> Mobile network code (MNC). </summary>
         [WirePath("info.mnc")]
         public string MncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc { get; set; }
-        /// <summary>
-        /// Location Type
-        /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.locationType
-        /// </summary>
+        /// <summary> Location Type. </summary>
         [WirePath("info.locationType")]
         public string LocationType { get; set; }
-        /// <summary>
-        /// Type Allocation Code of UE
-        /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.tac
-        /// </summary>
+        /// <summary> Type Allocation Code of UE. </summary>
         [WirePath("info.tac")]
         public string Tac { get; set; }
-        /// <summary>
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.plmn.mcc
-        /// </summary>
+        /// <summary> Mobile country code (MCC). </summary>
         [WirePath("info.mcc")]
         public string MccInfoConnectionInfoLocationInfoPlmnMcc { get; set; }
-        /// <summary>
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.plmn.mnc
-        /// </summary>
+        /// <summary> Mobile network code (MNC). </summary>
         [WirePath("info.mnc")]
         public string MncInfoConnectionInfoLocationInfoPlmnMnc { get; set; }
-        /// <summary>
-        /// MME Temporary Mobile Subscriber Identity
-        /// Serialized Name: UeInfo4G.info.guti.mTmsi
-        /// </summary>
+        /// <summary> MME Temporary Mobile Subscriber Identity. </summary>
         [WirePath("info.mTmsi")]
         public int MTmsi { get; set; }
-        /// <summary>
-        /// MME group identifier
-        /// Serialized Name: UeInfo4G.info.guti.mmeId.groupId
-        /// </summary>
+        /// <summary> MME group identifier. </summary>
         [WirePath("info.groupId")]
         public int GroupId { get; set; }
-        /// <summary>
-        /// MME code
-        /// Serialized Name: UeInfo4G.info.guti.mmeId.code
-        /// </summary>
+        /// <summary> MME code. </summary>
         [WirePath("info.code")]
         public int Code { get; set; }
-        /// <summary>
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo4G.info.guti.plmn.mcc
-        /// </summary>
+        /// <summary> Mobile country code (MCC). </summary>
         [WirePath("info.mcc")]
         public string MccInfoGutiPlmnMcc { get; set; }
-        /// <summary>
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo4G.info.guti.plmn.mnc
-        /// </summary>
+        /// <summary> Mobile network code (MNC). </summary>
         [WirePath("info.mnc")]
         public string MncInfoGutiPlmnMnc { get; set; }
     }

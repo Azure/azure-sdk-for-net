@@ -46,8 +46,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageUpdatedEventData"/>. </summary>
-        internal HealthcareDicomImageUpdatedEventData()
+        /// <param name="partitionName"> Data partition name. </param>
+        /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
+        /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
+        /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
+        /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partitionName"/>, <paramref name="imageStudyInstanceUid"/>, <paramref name="imageSeriesInstanceUid"/>, <paramref name="imageSopInstanceUid"/> or <paramref name="serviceHostName"/> is null. </exception>
+        internal HealthcareDicomImageUpdatedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName)
         {
+            Argument.AssertNotNull(partitionName, nameof(partitionName));
+            Argument.AssertNotNull(imageStudyInstanceUid, nameof(imageStudyInstanceUid));
+            Argument.AssertNotNull(imageSeriesInstanceUid, nameof(imageSeriesInstanceUid));
+            Argument.AssertNotNull(imageSopInstanceUid, nameof(imageSopInstanceUid));
+            Argument.AssertNotNull(serviceHostName, nameof(serviceHostName));
+
+            PartitionName = partitionName;
+            ImageStudyInstanceUid = imageStudyInstanceUid;
+            ImageSeriesInstanceUid = imageSeriesInstanceUid;
+            ImageSopInstanceUid = imageSopInstanceUid;
+            ServiceHostName = serviceHostName;
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageUpdatedEventData"/>. </summary>
@@ -67,6 +84,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ServiceHostName = serviceHostName;
             SequenceNumber = sequenceNumber;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageUpdatedEventData"/> for deserialization. </summary>
+        internal HealthcareDicomImageUpdatedEventData()
+        {
         }
 
         /// <summary> Data partition name. </summary>

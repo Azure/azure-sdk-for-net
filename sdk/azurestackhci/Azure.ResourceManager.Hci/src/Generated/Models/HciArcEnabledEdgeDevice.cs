@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciArcEnabledEdgeDevice"/>. </summary>
         public HciArcEnabledEdgeDevice()
         {
-            Kind = HciEdgeDeviceKind.HCI;
+            Kind = HciEdgeDeviceKind.Hci;
         }
 
         /// <summary> Initializes a new instance of <see cref="HciArcEnabledEdgeDevice"/>. </summary>

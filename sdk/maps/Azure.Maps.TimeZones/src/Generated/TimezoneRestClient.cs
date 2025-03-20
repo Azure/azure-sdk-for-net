@@ -110,7 +110,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         TimeZoneResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TimeZoneResult.DeserializeTimeZoneResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -147,7 +147,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         TimeZoneResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TimeZoneResult.DeserializeTimeZoneResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -227,7 +227,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         TimeZoneResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TimeZoneResult.DeserializeTimeZoneResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -264,7 +264,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         TimeZoneResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TimeZoneResult.DeserializeTimeZoneResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -308,7 +308,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         IReadOnlyList<WindowsTimeZone> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<WindowsTimeZone> array = new List<WindowsTimeZone>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -338,7 +338,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         IReadOnlyList<WindowsTimeZone> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<WindowsTimeZone> array = new List<WindowsTimeZone>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -387,7 +387,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         IReadOnlyList<IanaId> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<IanaId> array = new List<IanaId>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -417,7 +417,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         IReadOnlyList<IanaId> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<IanaId> array = new List<IanaId>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -466,7 +466,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         TimeZoneIanaVersionResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TimeZoneIanaVersionResult.DeserializeTimeZoneIanaVersionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -491,7 +491,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         TimeZoneIanaVersionResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TimeZoneIanaVersionResult.DeserializeTimeZoneIanaVersionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -548,7 +548,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         IReadOnlyList<IanaId> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<IanaId> array = new List<IanaId>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -586,7 +586,7 @@ namespace Azure.Maps.TimeZones
                 case 200:
                     {
                         IReadOnlyList<IanaId> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<IanaId> array = new List<IanaId>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {

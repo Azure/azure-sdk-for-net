@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ManagedEnvironmentStoragesCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedEnvironmentStoragesCollection.DeserializeManagedEnvironmentStoragesCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ManagedEnvironmentStoragesCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedEnvironmentStoragesCollection.DeserializeManagedEnvironmentStoragesCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ContainerAppManagedEnvironmentStorageData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerAppManagedEnvironmentStorageData.DeserializeContainerAppManagedEnvironmentStorageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ContainerAppManagedEnvironmentStorageData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerAppManagedEnvironmentStorageData.DeserializeContainerAppManagedEnvironmentStorageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ContainerAppManagedEnvironmentStorageData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerAppManagedEnvironmentStorageData.DeserializeContainerAppManagedEnvironmentStorageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ContainerAppManagedEnvironmentStorageData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerAppManagedEnvironmentStorageData.DeserializeContainerAppManagedEnvironmentStorageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

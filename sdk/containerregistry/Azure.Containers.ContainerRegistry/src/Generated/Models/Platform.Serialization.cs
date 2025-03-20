@@ -88,7 +88,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static Platform FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePlatform(document.RootElement);
         }
     }

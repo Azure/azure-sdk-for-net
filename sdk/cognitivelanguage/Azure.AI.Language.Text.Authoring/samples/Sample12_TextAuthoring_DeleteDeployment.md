@@ -9,9 +9,8 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Delete a Deployment Synchronously
@@ -21,11 +20,10 @@ To delete a deployment, call DeleteDeployment on the TextAnalysisAuthoring clien
 ```C# Snippet:Sample12_TextAuthoring_DeleteDeployment
 string projectName = "LoanAgreements";
 string deploymentName = "DeploymentA";
+TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
-Operation operation = authoringClient.DeleteDeployment(
-    waitUntil: WaitUntil.Completed,
-    projectName: projectName,
-    deploymentName: deploymentName
+Operation operation = deploymentClient.DeleteDeployment(
+    waitUntil: WaitUntil.Completed
 );
 
 Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AzureMonitorPrivateLinkScopeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureMonitorPrivateLinkScopeListResult.DeserializeAzureMonitorPrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AzureMonitorPrivateLinkScopeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureMonitorPrivateLinkScopeListResult.DeserializeAzureMonitorPrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AzureMonitorPrivateLinkScopeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureMonitorPrivateLinkScopeListResult.DeserializeAzureMonitorPrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AzureMonitorPrivateLinkScopeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureMonitorPrivateLinkScopeListResult.DeserializeAzureMonitorPrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MonitorPrivateLinkScopeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MonitorPrivateLinkScopeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Monitor
                 case 201:
                     {
                         MonitorPrivateLinkScopeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Monitor
                 case 201:
                     {
                         MonitorPrivateLinkScopeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MonitorPrivateLinkScopeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MonitorPrivateLinkScopeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AzureMonitorPrivateLinkScopeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureMonitorPrivateLinkScopeListResult.DeserializeAzureMonitorPrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AzureMonitorPrivateLinkScopeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureMonitorPrivateLinkScopeListResult.DeserializeAzureMonitorPrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AzureMonitorPrivateLinkScopeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureMonitorPrivateLinkScopeListResult.DeserializeAzureMonitorPrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AzureMonitorPrivateLinkScopeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureMonitorPrivateLinkScopeListResult.DeserializeAzureMonitorPrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

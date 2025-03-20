@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WorkspaceManagerMembersList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceManagerMembersList.DeserializeWorkspaceManagerMembersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WorkspaceManagerMembersList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceManagerMembersList.DeserializeWorkspaceManagerMembersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WorkspaceManagerMemberData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceManagerMemberData.DeserializeWorkspaceManagerMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WorkspaceManagerMemberData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceManagerMemberData.DeserializeWorkspaceManagerMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 201:
                     {
                         WorkspaceManagerMemberData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceManagerMemberData.DeserializeWorkspaceManagerMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 201:
                     {
                         WorkspaceManagerMemberData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceManagerMemberData.DeserializeWorkspaceManagerMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WorkspaceManagerMembersList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceManagerMembersList.DeserializeWorkspaceManagerMembersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WorkspaceManagerMembersList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceManagerMembersList.DeserializeWorkspaceManagerMembersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

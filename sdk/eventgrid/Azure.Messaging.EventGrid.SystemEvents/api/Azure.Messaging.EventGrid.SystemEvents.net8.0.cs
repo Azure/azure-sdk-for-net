@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatMessageDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedEventData>
     {
         internal AcsChatMessageDeletedEventData() { }
-        public System.DateTimeOffset DeleteTime { get { throw null; } }
+        public System.DateTimeOffset? DeleteTime { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatMessageDeletedInThreadEventData : Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventInThreadBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedInThreadEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedInThreadEventData>
     {
         internal AcsChatMessageDeletedInThreadEventData() { }
-        public System.DateTimeOffset DeleteTime { get { throw null; } }
+        public System.DateTimeOffset? DeleteTime { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedInThreadEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedInThreadEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedInThreadEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatMessageEditedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedEventData>
     {
         internal AcsChatMessageEditedEventData() { }
-        public System.DateTimeOffset EditTime { get { throw null; } }
+        public System.DateTimeOffset? EditTime { get { throw null; } }
         public string MessageBody { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatMessageEditedInThreadEventData : Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventInThreadBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedInThreadEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedInThreadEventData>
     {
         internal AcsChatMessageEditedInThreadEventData() { }
-        public System.DateTimeOffset EditTime { get { throw null; } }
+        public System.DateTimeOffset? EditTime { get { throw null; } }
         public string MessageBody { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatMessageEventBaseProperties : Azure.Messaging.EventGrid.SystemEvents.AcsChatEventBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventBaseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventBaseProperties>
     {
         internal AcsChatMessageEventBaseProperties() { }
-        public System.DateTimeOffset ComposeTime { get { throw null; } }
+        public System.DateTimeOffset? ComposeTime { get { throw null; } }
         public string MessageId { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel SenderCommunicationIdentifier { get { throw null; } }
         public string SenderDisplayName { get { throw null; } }
@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatMessageEventInThreadBaseProperties : Azure.Messaging.EventGrid.SystemEvents.AcsChatEventInThreadBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventInThreadBaseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventInThreadBaseProperties>
     {
         internal AcsChatMessageEventInThreadBaseProperties() { }
-        public System.DateTimeOffset ComposeTime { get { throw null; } }
+        public System.DateTimeOffset? ComposeTime { get { throw null; } }
         public string MessageId { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel SenderCommunicationIdentifier { get { throw null; } }
         public string SenderDisplayName { get { throw null; } }
@@ -141,7 +141,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AcsChatParticipantAddedToThreadEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel AddedByCommunicationIdentifier { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties ParticipantAdded { get { throw null; } }
-        public System.DateTimeOffset Time { get { throw null; } }
+        public System.DateTimeOffset? Time { get { throw null; } }
         public long? Version { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -155,7 +155,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AcsChatParticipantAddedToThreadWithUserEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel AddedByCommunicationIdentifier { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties ParticipantAdded { get { throw null; } }
-        public System.DateTimeOffset Time { get { throw null; } }
+        public System.DateTimeOffset? Time { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadWithUserEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadWithUserEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadWithUserEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -168,7 +168,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AcsChatParticipantRemovedFromThreadEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties ParticipantRemoved { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel RemovedByCommunicationIdentifier { get { throw null; } }
-        public System.DateTimeOffset Time { get { throw null; } }
+        public System.DateTimeOffset? Time { get { throw null; } }
         public long? Version { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -182,7 +182,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AcsChatParticipantRemovedFromThreadWithUserEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties ParticipantRemoved { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel RemovedByCommunicationIdentifier { get { throw null; } }
-        public System.DateTimeOffset Time { get { throw null; } }
+        public System.DateTimeOffset? Time { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadWithUserEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadWithUserEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadWithUserEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -222,7 +222,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsChatThreadDeletedEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel DeletedByCommunicationIdentifier { get { throw null; } }
-        public System.DateTimeOffset DeleteTime { get { throw null; } }
+        public System.DateTimeOffset? DeleteTime { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadDeletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadDeletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadDeletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -233,7 +233,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadEventBaseProperties : Azure.Messaging.EventGrid.SystemEvents.AcsChatEventBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventBaseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventBaseProperties>
     {
         internal AcsChatThreadEventBaseProperties() { }
-        public System.DateTimeOffset CreateTime { get { throw null; } }
+        public System.DateTimeOffset? CreateTime { get { throw null; } }
         public long? Version { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventBaseProperties System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventBaseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -245,7 +245,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadEventInThreadBaseProperties : Azure.Messaging.EventGrid.SystemEvents.AcsChatEventInThreadBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventInThreadBaseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventInThreadBaseProperties>
     {
         internal AcsChatThreadEventInThreadBaseProperties() { }
-        public System.DateTimeOffset CreateTime { get { throw null; } }
+        public System.DateTimeOffset? CreateTime { get { throw null; } }
         public long? Version { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventInThreadBaseProperties System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventInThreadBaseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -271,7 +271,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsChatThreadPropertiesUpdatedEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel EditedByCommunicationIdentifier { get { throw null; } }
-        public System.DateTimeOffset EditTime { get { throw null; } }
+        public System.DateTimeOffset? EditTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Properties { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -285,7 +285,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsChatThreadPropertiesUpdatedPerUserEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel EditedByCommunicationIdentifier { get { throw null; } }
-        public System.DateTimeOffset EditTime { get { throw null; } }
+        public System.DateTimeOffset? EditTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Properties { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -299,7 +299,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsChatThreadWithUserDeletedEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel DeletedByCommunicationIdentifier { get { throw null; } }
-        public System.DateTimeOffset DeleteTime { get { throw null; } }
+        public System.DateTimeOffset? DeleteTime { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadWithUserDeletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadWithUserDeletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadWithUserDeletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -310,12 +310,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsEmailDeliveryReportReceivedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData>
     {
         internal AcsEmailDeliveryReportReceivedEventData() { }
-        public System.DateTimeOffset DeliveryAttemptTimestamp { get { throw null; } }
+        public System.DateTimeOffset? DeliveryAttemptTimestamp { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails DeliveryStatusDetails { get { throw null; } }
+        public string InternetMessageId { get { throw null; } }
         public string MessageId { get { throw null; } }
         public string Recipient { get { throw null; } }
         public string Sender { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus Status { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus? Status { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -348,6 +349,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsEmailDeliveryReportStatusDetails : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails>
     {
         internal AcsEmailDeliveryReportStatusDetails() { }
+        public string RecipientMailServerHostName { get { throw null; } }
         public string StatusMessage { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -359,12 +361,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsEmailEngagementTrackingReportReceivedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData>
     {
         internal AcsEmailEngagementTrackingReportReceivedEventData() { }
-        public Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement Engagement { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement? Engagement { get { throw null; } }
         public string EngagementContext { get { throw null; } }
         public string MessageId { get { throw null; } }
         public string Recipient { get { throw null; } }
         public string Sender { get { throw null; } }
-        public System.DateTimeOffset UserActionTimestamp { get { throw null; } }
+        public System.DateTimeOffset? UserActionTimestamp { get { throw null; } }
         public string UserAgent { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -393,6 +395,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallCustomContext CustomContext { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel FromCommunicationIdentifier { get { throw null; } }
         public string IncomingCallContext { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel OnBehalfOfCallee { get { throw null; } }
         public string ServerCallId { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel ToCommunicationIdentifier { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -499,9 +502,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageDeliveryStatusUpdatedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsMessageEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>
     {
         internal AcsMessageDeliveryStatusUpdatedEventData() { }
-        public Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind ChannelKind { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind? ChannelKind { get { throw null; } }
         public string MessageId { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus Status { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus? Status { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -514,7 +517,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AcsMessageEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelEventError Error { get { throw null; } }
         public string From { get { throw null; } }
-        public System.DateTimeOffset ReceivedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
         public string To { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsMessageEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -540,7 +543,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AcsMessageInteractiveContent() { }
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveButtonReplyContent ButtonReply { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveListReplyContent ListReply { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind ReplyKind { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind? ReplyKind { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -564,6 +567,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageMediaContent : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent>
     {
         internal AcsMessageMediaContent() { }
+        public bool? Animated { get { throw null; } }
         public string Caption { get { throw null; } }
         public string FileName { get { throw null; } }
         public string MediaId { get { throw null; } }
@@ -575,15 +579,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AcsMessageReactionContent : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent>
+    {
+        internal AcsMessageReactionContent() { }
+        public string Emoji { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AcsMessageReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsMessageEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReceivedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReceivedEventData>
     {
         internal AcsMessageReceivedEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageButtonContent Button { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind ChannelKind { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind? ChannelKind { get { throw null; } }
         public string Content { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageContext Context { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent InteractiveContent { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent MediaContent { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string MessageType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent Reaction { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsMessageReceivedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReceivedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsMessageReceivedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -610,11 +629,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRecordingFileStatusUpdatedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>
     {
         internal AcsRecordingFileStatusUpdatedEventData() { }
-        public Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType RecordingChannelKind { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.RecordingContentType RecordingContentType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType? RecordingChannelKind { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.RecordingContentType? RecordingContentType { get { throw null; } }
         public long? RecordingDurationMs { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType RecordingFormatType { get { throw null; } }
-        public System.DateTimeOffset RecordingStartTime { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType? RecordingFormatType { get { throw null; } }
+        public System.DateTimeOffset? RecordingStartTime { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties RecordingStorageInfo { get { throw null; } }
         public string SessionEndReason { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -791,10 +810,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsRouterJobReceivedEventData() { }
         public string ClassificationPolicyId { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus JobStatus { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus? JobStatus { get { throw null; } }
         public int? Priority { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> RequestedWorkerSelectors { get { throw null; } }
-        public System.DateTimeOffset ScheduledOn { get { throw null; } }
+        public System.DateTimeOffset? ScheduledOn { get { throw null; } }
         public bool UnavailableForMatching { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -810,7 +829,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> ExpiredRequestedWorkerSelectors { get { throw null; } }
         public string FailureReason { get { throw null; } }
         public int? Priority { get { throw null; } }
-        public System.DateTimeOffset ScheduledOn { get { throw null; } }
+        public System.DateTimeOffset? ScheduledOn { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobSchedulingFailedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobSchedulingFailedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobSchedulingFailedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -864,7 +883,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> ExpiredAttachedWorkerSelectors { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> ExpiredRequestedWorkerSelectors { get { throw null; } }
         public int? Priority { get { throw null; } }
-        public System.DateTimeOffset ScheduledOn { get { throw null; } }
+        public System.DateTimeOffset? ScheduledOn { get { throw null; } }
         public bool UnavailableForMatching { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobWaitingForActivationEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobWaitingForActivationEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1019,11 +1038,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterWorkerOfferIssuedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferIssuedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferIssuedEventData>
     {
         internal AcsRouterWorkerOfferIssuedEventData() { }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> JobLabels { get { throw null; } }
         public int? JobPriority { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> JobTags { get { throw null; } }
-        public System.DateTimeOffset OfferedOn { get { throw null; } }
+        public System.DateTimeOffset? OfferedOn { get { throw null; } }
         public string OfferId { get { throw null; } }
         public string QueueId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> WorkerLabels { get { throw null; } }
@@ -1066,11 +1085,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterWorkerSelector : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>
     {
         internal AcsRouterWorkerSelector() { }
-        public System.DateTimeOffset ExpirationTime { get { throw null; } }
+        public System.DateTimeOffset? ExpirationTime { get { throw null; } }
         public string Key { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator LabelOperator { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator? LabelOperator { get { throw null; } }
         public System.BinaryData LabelValue { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState SelectorState { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState? SelectorState { get { throw null; } }
         public double TimeToLive { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1119,7 +1138,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AcsSmsDeliveryAttemptProperties() { }
         public int? SegmentsFailed { get { throw null; } }
         public int? SegmentsSucceeded { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1133,7 +1152,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties> DeliveryAttempts { get { throw null; } }
         public string DeliveryStatus { get { throw null; } }
         public string DeliveryStatusDetails { get { throw null; } }
-        public System.DateTimeOffset ReceivedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
         public string Tag { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryReportReceivedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryReportReceivedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1159,7 +1178,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsSmsReceivedEventData() { }
         public string Message { get { throw null; } }
-        public System.DateTimeOffset ReceivedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
+        public int SegmentCount { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AcsSmsReceivedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsSmsReceivedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsSmsReceivedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1606,7 +1626,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AppEventTypeDetail : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail>
     {
         internal AppEventTypeDetail() { }
-        public Azure.Messaging.EventGrid.SystemEvents.AppAction Action { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppAction? Action { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1634,9 +1654,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AppServicePlanEventTypeDetail : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail>
     {
         internal AppServicePlanEventTypeDetail() { }
-        public Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction Action { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.StampKind StampKind { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.AsyncStatus Status { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction? Action { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StampKind? StampKind { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AsyncStatus? Status { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1848,7 +1868,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal CommunicationIdentifierModel() { }
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationUserIdentifierModel CommunicationUser { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModelKind Kind { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModelKind? Kind { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel MicrosoftTeamsApp { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.PhoneNumberIdentifierModel PhoneNumber { get { throw null; } }
@@ -1899,7 +1919,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Id { get { throw null; } }
         public string Location { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget Target { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1977,7 +1997,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest Request { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource Source { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget Target { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2139,8 +2159,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal DataBoxCopyCompletedEventData() { }
         public string SerialNumber { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName StageName { get { throw null; } }
-        public System.DateTimeOffset StageTime { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName? StageName { get { throw null; } }
+        public System.DateTimeOffset? StageTime { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyCompletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2152,8 +2172,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal DataBoxCopyStartedEventData() { }
         public string SerialNumber { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName StageName { get { throw null; } }
-        public System.DateTimeOffset StageTime { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName? StageName { get { throw null; } }
+        public System.DateTimeOffset? StageTime { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyStartedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyStartedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyStartedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2165,8 +2185,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal DataBoxOrderCompletedEventData() { }
         public string SerialNumber { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName StageName { get { throw null; } }
-        public System.DateTimeOffset StageTime { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName? StageName { get { throw null; } }
+        public System.DateTimeOffset? StageTime { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.DataBoxOrderCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.DataBoxOrderCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.DataBoxOrderCompletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2312,155 +2332,156 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridMQTTClientCreatedOrUpdatedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData>
+    public partial class EventGridMqttClientCreatedOrUpdatedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData>
     {
-        internal EventGridMQTTClientCreatedOrUpdatedEventData() { }
+        internal EventGridMqttClientCreatedOrUpdatedEventData() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Attributes { get { throw null; } }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState State { get { throw null; } }
-        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState? State { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridMQTTClientDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData>
+    public partial class EventGridMqttClientDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData>
     {
-        internal EventGridMQTTClientDeletedEventData() { }
+        internal EventGridMqttClientDeletedEventData() { }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventGridMQTTClientDisconnectionReason : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason>
+    public readonly partial struct EventGridMqttClientDisconnectionReason : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public EventGridMQTTClientDisconnectionReason(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason ClientAuthenticationError { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason ClientAuthorizationError { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason ClientError { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason ClientInitiatedDisconnect { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason ConnectionLost { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason IpForbidden { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason QuotaExceeded { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason ServerError { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason ServerInitiatedDisconnect { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason SessionOverflow { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason SessionTakenOver { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason other) { throw null; }
+        public EventGridMqttClientDisconnectionReason(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ClientAuthenticationError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ClientAuthorizationError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ClientError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ClientInitiatedDisconnect { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ConnectionLost { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason IpForbidden { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason QuotaExceeded { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ServerError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ServerInitiatedDisconnect { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason SessionOverflow { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason SessionTakenOver { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason left, Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason left, Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason right) { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason left, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason left, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventGridMQTTClientEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData>
+    public partial class EventGridMqttClientEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData>
     {
-        internal EventGridMQTTClientEventData() { }
+        internal EventGridMqttClientEventData() { }
         public string ClientAuthenticationName { get { throw null; } }
         public string ClientName { get { throw null; } }
         public string NamespaceName { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridMQTTClientSessionConnectedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData>
+    public partial class EventGridMqttClientSessionConnectedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>
     {
-        internal EventGridMQTTClientSessionConnectedEventData() { }
+        internal EventGridMqttClientSessionConnectedEventData() { }
         public string ClientSessionName { get { throw null; } }
         public long? SequenceNumber { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventGridMQTTClientSessionDisconnectedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData>
+    public partial class EventGridMqttClientSessionDisconnectedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData>
     {
-        internal EventGridMQTTClientSessionDisconnectedEventData() { }
+        internal EventGridMqttClientSessionDisconnectedEventData() { }
         public string ClientSessionName { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason DisconnectionReason { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason? DisconnectionReason { get { throw null; } }
         public long? SequenceNumber { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventGridMQTTClientState : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState>
+    public readonly partial struct EventGridMqttClientState : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public EventGridMQTTClientState(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState Disabled { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState Enabled { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState other) { throw null; }
+        public EventGridMqttClientState(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState Disabled { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState Enabled { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState left, Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState left, Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState right) { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState left, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState left, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class EventGridSystemEventsModelFactory
     {
         public static Azure.Messaging.EventGrid.SystemEvents.AcsChatEventBaseProperties AcsChatEventBaseProperties(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsChatEventInThreadBaseProperties AcsChatEventInThreadBaseProperties(string transactionId = null, string threadId = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedEventData AcsChatMessageDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset composeTime = default(System.DateTimeOffset), string type = null, long? version = default(long?), System.DateTimeOffset deleteTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedInThreadEventData AcsChatMessageDeletedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset composeTime = default(System.DateTimeOffset), string type = null, long? version = default(long?), System.DateTimeOffset deleteTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedEventData AcsChatMessageEditedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset composeTime = default(System.DateTimeOffset), string type = null, long? version = default(long?), string messageBody = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.DateTimeOffset editTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset composeTime = default(System.DateTimeOffset), string type = null, long? version = default(long?), string messageBody = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.DateTimeOffset editTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventBaseProperties AcsChatMessageEventBaseProperties(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset composeTime = default(System.DateTimeOffset), string type = null, long? version = default(long?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventInThreadBaseProperties AcsChatMessageEventInThreadBaseProperties(string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset composeTime = default(System.DateTimeOffset), string type = null, long? version = default(long?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset composeTime = default(System.DateTimeOffset), string type = null, long? version = default(long?), string messageBody = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset composeTime = default(System.DateTimeOffset), string type = null, long? version = default(long?), string messageBody = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadEventData AcsChatParticipantAddedToThreadEventData(string transactionId = null, string threadId = null, System.DateTimeOffset time = default(System.DateTimeOffset), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel addedByCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties participantAdded = null, long? version = default(long?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadWithUserEventData AcsChatParticipantAddedToThreadWithUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?), System.DateTimeOffset time = default(System.DateTimeOffset), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel addedByCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties participantAdded = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData AcsChatParticipantRemovedFromThreadEventData(string transactionId = null, string threadId = null, System.DateTimeOffset time = default(System.DateTimeOffset), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel removedByCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties participantRemoved = null, long? version = default(long?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadWithUserEventData AcsChatParticipantRemovedFromThreadWithUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?), System.DateTimeOffset time = default(System.DateTimeOffset), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel removedByCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties participantRemoved = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel createdByCommunicationIdentifier = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties> participants = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel createdByCommunicationIdentifier = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties> participants = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadDeletedEventData AcsChatThreadDeletedEventData(string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel deletedByCommunicationIdentifier = null, System.DateTimeOffset deleteTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventBaseProperties AcsChatThreadEventBaseProperties(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventInThreadBaseProperties AcsChatThreadEventInThreadBaseProperties(string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedEventData AcsChatMessageDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset? composeTime = default(System.DateTimeOffset?), string type = null, long? version = default(long?), System.DateTimeOffset? deleteTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageDeletedInThreadEventData AcsChatMessageDeletedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset? composeTime = default(System.DateTimeOffset?), string type = null, long? version = default(long?), System.DateTimeOffset? deleteTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedEventData AcsChatMessageEditedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset? composeTime = default(System.DateTimeOffset?), string type = null, long? version = default(long?), string messageBody = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.DateTimeOffset? editTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset? composeTime = default(System.DateTimeOffset?), string type = null, long? version = default(long?), string messageBody = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.DateTimeOffset? editTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventBaseProperties AcsChatMessageEventBaseProperties(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset? composeTime = default(System.DateTimeOffset?), string type = null, long? version = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventInThreadBaseProperties AcsChatMessageEventInThreadBaseProperties(string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset? composeTime = default(System.DateTimeOffset?), string type = null, long? version = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset? composeTime = default(System.DateTimeOffset?), string type = null, long? version = default(long?), string messageBody = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, System.DateTimeOffset? composeTime = default(System.DateTimeOffset?), string type = null, long? version = default(long?), string messageBody = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadEventData AcsChatParticipantAddedToThreadEventData(string transactionId = null, string threadId = null, System.DateTimeOffset? time = default(System.DateTimeOffset?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel addedByCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties participantAdded = null, long? version = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadWithUserEventData AcsChatParticipantAddedToThreadWithUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), System.DateTimeOffset? time = default(System.DateTimeOffset?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel addedByCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties participantAdded = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData AcsChatParticipantRemovedFromThreadEventData(string transactionId = null, string threadId = null, System.DateTimeOffset? time = default(System.DateTimeOffset?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel removedByCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties participantRemoved = null, long? version = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadWithUserEventData AcsChatParticipantRemovedFromThreadWithUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), System.DateTimeOffset? time = default(System.DateTimeOffset?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel removedByCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties participantRemoved = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel createdByCommunicationIdentifier = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties> participants = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel createdByCommunicationIdentifier = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties> participants = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadDeletedEventData AcsChatThreadDeletedEventData(string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel deletedByCommunicationIdentifier = null, System.DateTimeOffset? deleteTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventBaseProperties AcsChatThreadEventBaseProperties(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventInThreadBaseProperties AcsChatThreadEventInThreadBaseProperties(string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel participantCommunicationIdentifier = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel editedByCommunicationIdentifier = null, System.DateTimeOffset editTime = default(System.DateTimeOffset), System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel editedByCommunicationIdentifier = null, System.DateTimeOffset editTime = default(System.DateTimeOffset), System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadWithUserDeletedEventData AcsChatThreadWithUserDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset createTime = default(System.DateTimeOffset), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel deletedByCommunicationIdentifier = null, System.DateTimeOffset deleteTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus status = default(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus), Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = null, System.DateTimeOffset deliveryAttemptTimestamp = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, System.DateTimeOffset userActionTimestamp = default(System.DateTimeOffset), string engagementContext = null, string userAgent = null, Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement engagement = default(Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel editedByCommunicationIdentifier = null, System.DateTimeOffset? editTime = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel editedByCommunicationIdentifier = null, System.DateTimeOffset? editTime = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadWithUserDeletedEventData AcsChatThreadWithUserDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel deletedByCommunicationIdentifier = null, System.DateTimeOffset? deleteTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string internetMessageId = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus?), Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = null, System.DateTimeOffset? deliveryAttemptTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage = null, string recipientMailServerHostName = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, System.DateTimeOffset? userActionTimestamp = default(System.DateTimeOffset?), string engagementContext = null, string userAgent = null, Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement? engagement = default(Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallCustomContext AcsIncomingCallCustomContext(System.Collections.Generic.IReadOnlyDictionary<string, string> sipHeaders = null, System.Collections.Generic.IReadOnlyDictionary<string, string> voipHeaders = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallEventData AcsIncomingCallEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel toCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel fromCommunicationIdentifier = null, string serverCallId = null, string callerDisplayName = null, Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallCustomContext customContext = null, string incomingCallContext = null, string correlationId = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallEventData AcsIncomingCallEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel toCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel fromCommunicationIdentifier = null, string serverCallId = null, string callerDisplayName = null, Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallCustomContext customContext = null, string incomingCallContext = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel onBehalfOfCallee = null, string correlationId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageButtonContent AcsMessageButtonContent(string text = null, string payload = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelEventError AcsMessageChannelEventError(string channelCode = null, string channelMessage = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageContext AcsMessageContext(string from = null, string messageId = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData AcsMessageDeliveryStatusUpdatedEventData(string from = null, string to = null, System.DateTimeOffset receivedTimestamp = default(System.DateTimeOffset), Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelEventError error = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus status = default(Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus), Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind channelKind = default(Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageEventData AcsMessageEventData(string from = null, string to = null, System.DateTimeOffset receivedTimestamp = default(System.DateTimeOffset), Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelEventError error = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData AcsMessageDeliveryStatusUpdatedEventData(string from = null, string to = null, System.DateTimeOffset? receivedTimestamp = default(System.DateTimeOffset?), Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelEventError error = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus?), Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind? channelKind = default(Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageEventData AcsMessageEventData(string from = null, string to = null, System.DateTimeOffset? receivedTimestamp = default(System.DateTimeOffset?), Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelEventError error = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveButtonReplyContent AcsMessageInteractiveButtonReplyContent(string buttonId = null, string title = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent AcsMessageInteractiveContent(Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind replyKind = default(Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind), Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveButtonReplyContent buttonReply = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveListReplyContent listReply = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent AcsMessageInteractiveContent(Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind? replyKind = default(Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind?), Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveButtonReplyContent buttonReply = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveListReplyContent listReply = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveListReplyContent AcsMessageInteractiveListReplyContent(string listItemId = null, string title = null, string description = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageReceivedEventData AcsMessageReceivedEventData(string from = null, string to = null, System.DateTimeOffset receivedTimestamp = default(System.DateTimeOffset), Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelEventError error = null, string content = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind channelKind = default(Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind), Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent mediaContent = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageContext context = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageButtonContent button = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent interactiveContent = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null, bool? animated = default(bool?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent AcsMessageReactionContent(string messageId = null, string emoji = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageReceivedEventData AcsMessageReceivedEventData(string from = null, string to = null, System.DateTimeOffset? receivedTimestamp = default(System.DateTimeOffset?), Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelEventError error = null, string content = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind? channelKind = default(Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelKind?), string messageType = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent mediaContent = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent reaction = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageContext context = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageButtonContent button = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent interactiveContent = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = null, long? index = default(long?), string endReason = null, string metadataLocation = null, string contentLocation = null, string deleteLocation = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties recordingStorageInfo = null, System.DateTimeOffset recordingStartTime = default(System.DateTimeOffset), long? recordingDurationMs = default(long?), Azure.Messaging.EventGrid.SystemEvents.RecordingContentType recordingContentType = default(Azure.Messaging.EventGrid.SystemEvents.RecordingContentType), Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType recordingChannelKind = default(Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType), Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType recordingFormatType = default(Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType), string sessionEndReason = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties recordingStorageInfo = null, System.DateTimeOffset? recordingStartTime = default(System.DateTimeOffset?), long? recordingDurationMs = default(long?), Azure.Messaging.EventGrid.SystemEvents.RecordingContentType? recordingContentType = default(Azure.Messaging.EventGrid.SystemEvents.RecordingContentType?), Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType? recordingChannelKind = default(Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType?), Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType? recordingFormatType = default(Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType?), string sessionEndReason = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties AcsRecordingStorageInfoProperties(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties> recordingChunks = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration AcsRouterChannelConfiguration(string channelId = null, int? capacityCostPerJob = default(int?), int? maxNumberOfJobs = default(int?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterCommunicationError AcsRouterCommunicationError(string code = null, string message = null, string target = null, Azure.Messaging.EventGrid.SystemEvents.AcsRouterCommunicationError innererror = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterCommunicationError> details = null) { throw null; }
@@ -2474,10 +2495,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobEventData AcsRouterJobEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobExceptionTriggeredEventData AcsRouterJobExceptionTriggeredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string ruleKey = null, string exceptionRuleId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobQueuedEventData AcsRouterJobQueuedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> attachedWorkerSelectors = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> requestedWorkerSelectors = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus jobStatus = default(Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus), string classificationPolicyId = null, int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> requestedWorkerSelectors = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), bool unavailableForMatching = false) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobSchedulingFailedEventData AcsRouterJobSchedulingFailedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), string failureReason = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus? jobStatus = default(Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus?), string classificationPolicyId = null, int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> requestedWorkerSelectors = null, System.DateTimeOffset? scheduledOn = default(System.DateTimeOffset?), bool unavailableForMatching = false) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobSchedulingFailedEventData AcsRouterJobSchedulingFailedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, System.DateTimeOffset? scheduledOn = default(System.DateTimeOffset?), string failureReason = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobUnassignedEventData AcsRouterJobUnassignedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobWaitingForActivationEventData AcsRouterJobWaitingForActivationEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), bool unavailableForMatching = false) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobWaitingForActivationEventData AcsRouterJobWaitingForActivationEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, System.DateTimeOffset? scheduledOn = default(System.DateTimeOffset?), bool unavailableForMatching = false) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobWorkerSelectorsExpiredEventData AcsRouterJobWorkerSelectorsExpiredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterQueueDetails AcsRouterQueueDetails(string id = null, string name = null, System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerDeletedEventData AcsRouterWorkerDeletedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null) { throw null; }
@@ -2486,15 +2507,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferAcceptedEventData AcsRouterWorkerOfferAcceptedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, string assignmentId = null, int? jobPriority = default(int?), System.Collections.Generic.IReadOnlyDictionary<string, string> workerLabels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> workerTags = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobLabels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobTags = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData AcsRouterWorkerOfferDeclinedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferExpiredEventData AcsRouterWorkerOfferExpiredEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferIssuedEventData AcsRouterWorkerOfferIssuedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, int? jobPriority = default(int?), System.Collections.Generic.IReadOnlyDictionary<string, string> workerLabels = null, System.DateTimeOffset offeredOn = default(System.DateTimeOffset), System.DateTimeOffset expiresOn = default(System.DateTimeOffset), System.Collections.Generic.IReadOnlyDictionary<string, string> workerTags = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobLabels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobTags = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferIssuedEventData AcsRouterWorkerOfferIssuedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, int? jobPriority = default(int?), System.Collections.Generic.IReadOnlyDictionary<string, string> workerLabels = null, System.DateTimeOffset? offeredOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> workerTags = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobLabels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobTags = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferRevokedEventData AcsRouterWorkerOfferRevokedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerRegisteredEventData AcsRouterWorkerRegisteredEventData(string workerId = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterQueueDetails> queueAssignments = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = default(int?), System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector AcsRouterWorkerSelector(string key = null, Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator labelOperator = default(Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator), System.BinaryData labelValue = null, double timeToLive = 0, Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState selectorState = default(Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState), System.DateTimeOffset expirationTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector AcsRouterWorkerSelector(string key = null, Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator? labelOperator = default(Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator?), System.BinaryData labelValue = null, double timeToLive = 0, Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState? selectorState = default(Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState?), System.DateTimeOffset? expirationTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerUpdatedEventData AcsRouterWorkerUpdatedEventData(string workerId = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterQueueDetails> queueAssignments = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = default(int?), System.Collections.Generic.IReadOnlyDictionary<string, string> labels = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty> updatedWorkerProperties = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties AcsSmsDeliveryAttemptProperties(System.DateTimeOffset timestamp = default(System.DateTimeOffset), int? segmentsSucceeded = default(int?), int? segmentsFailed = default(int?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryReportReceivedEventData AcsSmsDeliveryReportReceivedEventData(string messageId = null, string from = null, string to = null, string deliveryStatus = null, string deliveryStatusDetails = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties> deliveryAttempts = null, System.DateTimeOffset receivedTimestamp = default(System.DateTimeOffset), string tag = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties AcsSmsDeliveryAttemptProperties(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), int? segmentsSucceeded = default(int?), int? segmentsFailed = default(int?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryReportReceivedEventData AcsSmsDeliveryReportReceivedEventData(string messageId = null, string from = null, string to = null, string deliveryStatus = null, string deliveryStatusDetails = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties> deliveryAttempts = null, System.DateTimeOffset? receivedTimestamp = default(System.DateTimeOffset?), string tag = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsEventBaseProperties AcsSmsEventBaseProperties(string messageId = null, string from = null, string to = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = null, string from = null, string to = null, string message = null, System.DateTimeOffset receivedTimestamp = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = null, string from = null, string to = null, string message = null, System.DateTimeOffset? receivedTimestamp = default(System.DateTimeOffset?), int segmentCount = 0) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsUserDisconnectedEventData AcsUserDisconnectedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel userCommunicationIdentifier = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData ApiCenterApiDefinitionAddedEventData(string title = null, string description = null, Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiSpecification specification = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionUpdatedEventData ApiCenterApiDefinitionUpdatedEventData(string title = null, string description = null, Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiSpecification specification = null) { throw null; }
@@ -2530,8 +2551,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationSnapshotCreatedEventData AppConfigurationSnapshotCreatedEventData(string name = null, string etag = null, string syncToken = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationSnapshotEventData AppConfigurationSnapshotEventData(string name = null, string etag = null, string syncToken = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationSnapshotModifiedEventData AppConfigurationSnapshotModifiedEventData(string name = null, string etag = null, string syncToken = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail(Azure.Messaging.EventGrid.SystemEvents.AppAction action = default(Azure.Messaging.EventGrid.SystemEvents.AppAction)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail AppServicePlanEventTypeDetail(Azure.Messaging.EventGrid.SystemEvents.StampKind stampKind = default(Azure.Messaging.EventGrid.SystemEvents.StampKind), Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction action = default(Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction), Azure.Messaging.EventGrid.SystemEvents.AsyncStatus status = default(Azure.Messaging.EventGrid.SystemEvents.AsyncStatus)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail(Azure.Messaging.EventGrid.SystemEvents.AppAction? action = default(Azure.Messaging.EventGrid.SystemEvents.AppAction?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail AppServicePlanEventTypeDetail(Azure.Messaging.EventGrid.SystemEvents.StampKind? stampKind = default(Azure.Messaging.EventGrid.SystemEvents.StampKind?), Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction? action = default(Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction?), Azure.Messaging.EventGrid.SystemEvents.AsyncStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.AsyncStatus?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsClusterCreatedEventData AvsClusterCreatedEventData(string operationId = null, System.Collections.Generic.IEnumerable<string> addedHostNames = null, System.Collections.Generic.IEnumerable<string> removedHostNames = null, System.Collections.Generic.IEnumerable<string> inMaintenanceHostNames = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsClusterDeletedEventData AvsClusterDeletedEventData(string operationId = null, System.Collections.Generic.IEnumerable<string> addedHostNames = null, System.Collections.Generic.IEnumerable<string> removedHostNames = null, System.Collections.Generic.IEnumerable<string> inMaintenanceHostNames = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsClusterEventData AvsClusterEventData(string operationId = null, System.Collections.Generic.IEnumerable<string> addedHostNames = null, System.Collections.Generic.IEnumerable<string> removedHostNames = null, System.Collections.Generic.IEnumerable<string> inMaintenanceHostNames = null) { throw null; }
@@ -2547,20 +2568,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionFailedEventData AvsScriptExecutionFailedEventData(string operationId = null, string cmdletId = null, System.Collections.Generic.IEnumerable<string> output = null, string failureMessage = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionFinishedEventData AvsScriptExecutionFinishedEventData(string operationId = null, string cmdletId = null, System.Collections.Generic.IEnumerable<string> output = null, System.Collections.Generic.IReadOnlyDictionary<string, string> namedOutputs = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData AvsScriptExecutionStartedEventData(string operationId = null, string cmdletId = null, System.Collections.Generic.IEnumerable<string> output = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel CommunicationIdentifierModel(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModelKind kind = default(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModelKind), string rawId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationUserIdentifierModel communicationUser = null, Azure.Messaging.EventGrid.SystemEvents.PhoneNumberIdentifierModel phoneNumber = null, Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel CommunicationIdentifierModel(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModelKind? kind = default(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModelKind?), string rawId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationUserIdentifierModel communicationUser = null, Azure.Messaging.EventGrid.SystemEvents.PhoneNumberIdentifierModel phoneNumber = null, Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.CommunicationUserIdentifierModel CommunicationUserIdentifierModel(string id = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventData ContainerRegistryArtifactEventData(string id = null, System.DateTimeOffset timestamp = default(System.DateTimeOffset), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventData ContainerRegistryArtifactEventData(string id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget ContainerRegistryArtifactEventTarget(string mediaType = null, long? size = default(long?), string digest = null, string repository = null, string tag = null, string name = null, string version = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData ContainerRegistryChartDeletedEventData(string id = null, System.DateTimeOffset timestamp = default(System.DateTimeOffset), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartPushedEventData ContainerRegistryChartPushedEventData(string id = null, System.DateTimeOffset timestamp = default(System.DateTimeOffset), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData ContainerRegistryChartDeletedEventData(string id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartPushedEventData ContainerRegistryChartPushedEventData(string id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor ContainerRegistryEventActor(string name = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry ContainerRegistryEventConnectedRegistry(string name = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventData ContainerRegistryEventData(string id = null, System.DateTimeOffset timestamp = default(System.DateTimeOffset), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest request = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor actor = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource source = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventData ContainerRegistryEventData(string id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest request = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor actor = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource source = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest ContainerRegistryEventRequest(string id = null, string addr = null, string host = null, string method = null, string useragent = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource ContainerRegistryEventSource(string addr = null, string instanceID = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget ContainerRegistryEventTarget(string mediaType = null, long? size = default(long?), string digest = null, long? length = default(long?), string repository = null, string url = null, string tag = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryImageDeletedEventData ContainerRegistryImageDeletedEventData(string id = null, System.DateTimeOffset timestamp = default(System.DateTimeOffset), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest request = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor actor = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource source = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryImagePushedEventData ContainerRegistryImagePushedEventData(string id = null, System.DateTimeOffset timestamp = default(System.DateTimeOffset), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest request = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor actor = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource source = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryImageDeletedEventData ContainerRegistryImageDeletedEventData(string id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest request = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor actor = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource source = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryImagePushedEventData ContainerRegistryImagePushedEventData(string id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest request = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor actor = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource source = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndedEventData ContainerServiceClusterSupportEndedEventData(string kubernetesVersion = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData ContainerServiceClusterSupportEndingEventData(string kubernetesVersion = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEventData ContainerServiceClusterSupportEventData(string kubernetesVersion = null) { throw null; }
@@ -2569,9 +2590,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingFailedEventData ContainerServiceNodePoolRollingFailedEventData(string nodePoolName = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingStartedEventData ContainerServiceNodePoolRollingStartedEventData(string nodePoolName = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyCompletedEventData DataBoxCopyCompletedEventData(string serialNumber = null, Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName stageName = default(Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName), System.DateTimeOffset stageTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyStartedEventData DataBoxCopyStartedEventData(string serialNumber = null, Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName stageName = default(Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName), System.DateTimeOffset stageTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.DataBoxOrderCompletedEventData DataBoxOrderCompletedEventData(string serialNumber = null, Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName stageName = default(Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName), System.DateTimeOffset stageTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyCompletedEventData DataBoxCopyCompletedEventData(string serialNumber = null, Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName? stageName = default(Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName?), System.DateTimeOffset? stageTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyStartedEventData DataBoxCopyStartedEventData(string serialNumber = null, Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName? stageName = default(Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName?), System.DateTimeOffset? stageTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.DataBoxOrderCompletedEventData DataBoxOrderCompletedEventData(string serialNumber = null, Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName? stageName = default(Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName?), System.DateTimeOffset? stageTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventInfo DeviceConnectionStateEventInfo(string sequenceNumber = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventProperties DeviceConnectionStateEventProperties(string deviceId = null, string moduleId = null, string hubName = null, Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceLifeCycleEventProperties DeviceLifeCycleEventProperties(string deviceId = null, string hubName = null, Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfo twin = null) { throw null; }
@@ -2581,18 +2602,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfoX509Thumbprint DeviceTwinInfoX509Thumbprint(string primaryThumbprint = null, string secondaryThumbprint = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata DeviceTwinMetadata(string lastUpdated = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties DeviceTwinProperties(Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata metadata = null, float? version = default(float?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData EventGridMQTTClientCreatedOrUpdatedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState state = default(Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientState), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset updatedOn = default(System.DateTimeOffset), System.Collections.Generic.IReadOnlyDictionary<string, string> attributes = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDeletedEventData EventGridMQTTClientDeletedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientEventData EventGridMQTTClientEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionConnectedEventData EventGridMQTTClientSessionConnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = default(long?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientSessionDisconnectedEventData EventGridMQTTClientSessionDisconnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = default(long?), Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason disconnectionReason = default(Azure.Messaging.EventGrid.SystemEvents.EventGridMQTTClientDisconnectionReason)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.EventHubCaptureFileCreatedEventData EventHubCaptureFileCreatedEventData(string fileurl = null, string fileType = null, string partitionId = null, int? sizeInBytes = default(int?), int? eventCount = default(int?), int? firstSequenceNumber = default(int?), int? lastSequenceNumber = default(int?), System.DateTimeOffset firstEnqueueTime = default(System.DateTimeOffset), System.DateTimeOffset lastEnqueueTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData EventGridMqttClientCreatedOrUpdatedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState? state = default(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> attributes = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData EventGridMqttClientDeletedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData EventGridMqttClientEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData EventGridMqttClientSessionDisconnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = default(long?), Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason? disconnectionReason = default(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventHubCaptureFileCreatedEventData EventHubCaptureFileCreatedEventData(string fileurl = null, string fileType = null, string partitionId = null, int? sizeInBytes = default(int?), int? eventCount = default(int?), int? firstSequenceNumber = default(int?), int? lastSequenceNumber = default(int?), System.DateTimeOffset? firstEnqueueTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastEnqueueTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = default(long?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = default(long?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageUpdatedEventData HealthcareDicomImageUpdatedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = default(long?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceCreatedEventData HealthcareFhirResourceCreatedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceDeletedEventData HealthcareFhirResourceDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceUpdatedEventData HealthcareFhirResourceUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceCreatedEventData HealthcareFhirResourceCreatedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType?), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceDeletedEventData HealthcareFhirResourceDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType?), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceUpdatedEventData HealthcareFhirResourceUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType?), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceConnectedEventData IotHubDeviceConnectedEventData(string deviceId = null, string moduleId = null, string hubName = null, Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceCreatedEventData IotHubDeviceCreatedEventData(string deviceId = null, string hubName = null, Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfo twin = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData IotHubDeviceDeletedEventData(string deviceId = null, string hubName = null, Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfo twin = null) { throw null; }
@@ -2608,7 +2629,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.KeyVaultSecretExpiredEventData KeyVaultSecretExpiredEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = default(float?), float? exp = default(float?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.KeyVaultSecretNearExpiryEventData KeyVaultSecretNearExpiryEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = default(float?), float? exp = default(float?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.KeyVaultSecretNewVersionCreatedEventData KeyVaultSecretNewVersionCreatedEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = default(float?), float? exp = default(float?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesDatasetDriftDetectedEventData MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId = null, string dataDriftName = null, string runId = null, string baseDatasetId = null, string targetDatasetId = null, double? driftCoefficient = default(double?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset endTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesDatasetDriftDetectedEventData MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId = null, string dataDriftName = null, string runId = null, string baseDatasetId = null, string targetDatasetId = null, double? driftCoefficient = default(double?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesModelDeployedEventData MachineLearningServicesModelDeployedEventData(string serviceName = null, string serviceComputeType = null, string modelIds = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> serviceTags = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> serviceProperties = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesModelRegisteredEventData MachineLearningServicesModelRegisteredEventData(string modelName = null, string modelVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> modelTags = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> modelProperties = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesRunCompletedEventData MachineLearningServicesRunCompletedEventData(string experimentId = null, string experimentName = null, string runId = null, string runType = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> runTags = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> runProperties = null) { throw null; }
@@ -2618,45 +2639,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceExitedEventData MapsGeofenceExitedEventData(System.Collections.Generic.IEnumerable<string> expiredGeofenceGeometryId = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry> geometries = null, System.Collections.Generic.IEnumerable<string> invalidPeriodGeofenceGeometryId = null, bool? isEventPublished = default(bool?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry MapsGeofenceGeometry(string deviceId = null, float? distance = default(float?), string geometryId = null, float? nearestLat = default(float?), float? nearestLon = default(float?), string udId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData MapsGeofenceResultEventData(System.Collections.Generic.IEnumerable<string> expiredGeofenceGeometryId = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry> geometries = null, System.Collections.Generic.IEnumerable<string> invalidPeriodGeofenceGeometryId = null, bool? isEventPublished = default(bool?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData MediaJobCanceledEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobState state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), System.Collections.Generic.IReadOnlyDictionary<string, string> correlationData = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> outputs = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData MediaJobCancelingEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobState state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), System.Collections.Generic.IReadOnlyDictionary<string, string> correlationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobError MediaJobError(Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode code = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode), string message = null, Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory category = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory), Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry retry = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry), System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail> details = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail MediaJobErrorDetail(string code = null, string message = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData MediaJobErroredEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobState state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), System.Collections.Generic.IReadOnlyDictionary<string, string> correlationData = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> outputs = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData MediaJobFinishedEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobState state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), System.Collections.Generic.IReadOnlyDictionary<string, string> correlationData = null, System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> outputs = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput MediaJobOutput(string odataType = null, Azure.Messaging.EventGrid.SystemEvents.MediaJobError error = null, string label = null, long progress = (long)0, Azure.Messaging.EventGrid.SystemEvents.MediaJobState state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset MediaJobOutputAsset(Azure.Messaging.EventGrid.SystemEvents.MediaJobError error = null, string label = null, long progress = (long)0, Azure.Messaging.EventGrid.SystemEvents.MediaJobState state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), string assetName = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData MediaJobOutputCanceledEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput output = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData MediaJobOutputCancelingEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput output = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData MediaJobOutputErroredEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput output = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData MediaJobOutputFinishedEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput output = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData MediaJobOutputProcessingEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput output = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData MediaJobOutputProgressEventData(string label = null, long? progress = default(long?), System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData MediaJobOutputScheduledEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput output = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData MediaJobOutputStateChangeEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput output = null, System.Collections.Generic.IReadOnlyDictionary<string, string> jobCorrelationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData MediaJobProcessingEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobState state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), System.Collections.Generic.IReadOnlyDictionary<string, string> correlationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData MediaJobScheduledEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobState state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), System.Collections.Generic.IReadOnlyDictionary<string, string> correlationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData MediaJobStateChangeEventData(Azure.Messaging.EventGrid.SystemEvents.MediaJobState previousState = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), Azure.Messaging.EventGrid.SystemEvents.MediaJobState state = default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState), System.Collections.Generic.IReadOnlyDictionary<string, string> correlationData = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData MediaLiveEventChannelArchiveHeartbeatEventData(string channelLatencyMs = null, string latencyResultCode = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData MediaLiveEventConnectionRejectedEventData(string ingestUrl = null, string streamId = null, string encoderIp = null, string encoderPort = null, string resultCode = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData MediaLiveEventEncoderConnectedEventData(string ingestUrl = null, string streamId = null, string encoderIp = null, string encoderPort = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData MediaLiveEventEncoderDisconnectedEventData(string ingestUrl = null, string streamId = null, string encoderIp = null, string encoderPort = null, string resultCode = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData MediaLiveEventIncomingDataChunkDroppedEventData(string timestamp = null, string trackType = null, long? bitrate = default(long?), string timescale = null, string resultCode = null, string trackName = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData MediaLiveEventIncomingStreamReceivedEventData(string ingestUrl = null, string trackType = null, string trackName = null, long? bitrate = default(long?), string encoderIp = null, string encoderPort = null, string timestamp = null, string duration = null, string timescale = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData MediaLiveEventIncomingStreamsOutOfSyncEventData(string minLastTimestamp = null, string typeOfStreamWithMinLastTimestamp = null, string maxLastTimestamp = null, string typeOfStreamWithMaxLastTimestamp = null, string timescaleOfMinLastTimestamp = null, string timescaleOfMaxLastTimestamp = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(string firstTimestamp = null, string firstDuration = null, string secondTimestamp = null, string secondDuration = null, string timescale = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType = null, string trackName = null, string transcriptionLanguage = null, string transcriptionState = null, long? bitrate = default(long?), long? incomingBitrate = default(long?), string ingestDriftValue = null, string lastFragmentArrivalTime = null, string lastTimestamp = null, string timescale = null, long? overlapCount = default(long?), long? discontinuityCount = default(long?), long? nonincreasingCount = default(long?), bool? unexpectedBitrate = default(bool?), string state = null, bool? healthy = default(bool?)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData MediaLiveEventTrackDiscontinuityDetectedEventData(string trackType = null, string trackName = null, long? bitrate = default(long?), string previousTimestamp = null, string newTimestamp = null, string timescale = null, string discontinuityGap = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel MicrosoftTeamsAppIdentifierModel(string appId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel cloud = default(Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel)) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUserIdentifierModel(string userId = null, bool? isAnonymous = default(bool?), Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel cloud = default(Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel MicrosoftTeamsAppIdentifierModel(string appId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel? cloud = default(Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUserIdentifierModel(string userId = null, bool? isAnonymous = default(bool?), Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel? cloud = default(Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.PhoneNumberIdentifierModel PhoneNumberIdentifierModel(string value = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateChangedEventData PolicyInsightsPolicyStateChangedEventData(System.DateTimeOffset timestamp = default(System.DateTimeOffset), string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateCreatedEventData PolicyInsightsPolicyStateCreatedEventData(System.DateTimeOffset timestamp = default(System.DateTimeOffset), string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateDeletedEventData PolicyInsightsPolicyStateDeletedEventData(System.DateTimeOffset timestamp = default(System.DateTimeOffset), string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData RedisExportRDBCompletedEventData(System.DateTimeOffset timestamp = default(System.DateTimeOffset), string name = null, string status = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData RedisImportRDBCompletedEventData(System.DateTimeOffset timestamp = default(System.DateTimeOffset), string name = null, string status = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.RedisPatchingCompletedEventData RedisPatchingCompletedEventData(System.DateTimeOffset timestamp = default(System.DateTimeOffset), string name = null, string status = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.RedisScalingCompletedEventData RedisScalingCompletedEventData(System.DateTimeOffset timestamp = default(System.DateTimeOffset), string name = null, string status = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateChangedEventData PolicyInsightsPolicyStateChangedEventData(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateCreatedEventData PolicyInsightsPolicyStateCreatedEventData(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateDeletedEventData PolicyInsightsPolicyStateDeletedEventData(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData RedisExportRdbCompletedEventData(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string name = null, string status = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData RedisImportRdbCompletedEventData(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string name = null, string status = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.RedisPatchingCompletedEventData RedisPatchingCompletedEventData(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string name = null, string status = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.RedisScalingCompletedEventData RedisScalingCompletedEventData(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string name = null, string status = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceActionCancelEventData ResourceActionCancelEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, Azure.Messaging.EventGrid.SystemEvents.ResourceAuthorization authorization = null, System.Collections.Generic.IReadOnlyDictionary<string, string> claims = null, string correlationId = null, Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest httpRequest = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceActionFailureEventData ResourceActionFailureEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, Azure.Messaging.EventGrid.SystemEvents.ResourceAuthorization authorization = null, System.Collections.Generic.IReadOnlyDictionary<string, string> claims = null, string correlationId = null, Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest httpRequest = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceActionSuccessEventData ResourceActionSuccessEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, Azure.Messaging.EventGrid.SystemEvents.ResourceAuthorization authorization = null, System.Collections.Generic.IReadOnlyDictionary<string, string> claims = null, string correlationId = null, Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest httpRequest = null) { throw null; }
@@ -2665,9 +2657,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceDeleteFailureEventData ResourceDeleteFailureEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, Azure.Messaging.EventGrid.SystemEvents.ResourceAuthorization authorization = null, System.Collections.Generic.IReadOnlyDictionary<string, string> claims = null, string correlationId = null, Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest httpRequest = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceDeleteSuccessEventData ResourceDeleteSuccessEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, Azure.Messaging.EventGrid.SystemEvents.ResourceAuthorization authorization = null, System.Collections.Generic.IReadOnlyDictionary<string, string> claims = null, string correlationId = null, Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest httpRequest = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest ResourceHttpRequest(string clientRequestId = null, string clientIpAddress = null, string method = null, string url = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData ResourceNotificationsContainerServiceEventResourcesScheduledEventData(Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceUpdatedDetails resourceDetails = null, Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsHealthResourcesAnnotatedEventData ResourceNotificationsHealthResourcesAnnotatedEventData(Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceUpdatedDetails resourceDetails = null, Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceUpdatedDetails resourceDetails = null, Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails ResourceNotificationsOperationalDetails(System.DateTimeOffset resourceEventTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails ResourceNotificationsOperationalDetails(System.DateTimeOffset? resourceEventTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceDeletedDetails ResourceNotificationsResourceDeletedDetails(string id = null, string name = null, string type = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceDeletedEventData ResourceNotificationsResourceDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceDeletedDetails resourceDetails = null, Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails operationalDetails = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceManagementCreatedOrUpdatedEventData ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceUpdatedDetails resourceDetails = null, Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null) { throw null; }
@@ -2681,23 +2674,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static Azure.Messaging.EventGrid.SystemEvents.ServiceBusActiveMessagesAvailableWithNoListenersEventData ServiceBusActiveMessagesAvailableWithNoListenersEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ServiceBusDeadletterMessagesAvailableWithNoListenersEventData ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionConnectedEventData SignalRServiceClientConnectionConnectedEventData(System.DateTimeOffset timestamp = default(System.DateTimeOffset), string hubName = null, string connectionId = null, string userId = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionDisconnectedEventData SignalRServiceClientConnectionDisconnectedEventData(System.DateTimeOffset timestamp = default(System.DateTimeOffset), string hubName = null, string connectionId = null, string userId = null, string errorMessage = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionConnectedEventData SignalRServiceClientConnectionConnectedEventData(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string hubName = null, string connectionId = null, string userId = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionDisconnectedEventData SignalRServiceClientConnectionDisconnectedEventData(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string hubName = null, string connectionId = null, string userId = null, string errorMessage = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageAsyncOperationInitiatedEventData StorageAsyncOperationInitiatedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = default(long?), string blobType = null, string url = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string contentType = null, long? contentLength = default(long?), long? contentOffset = default(long?), string blobType = null, string url = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string contentType = null, long? contentLength = default(long?), long? contentOffset = default(long?), string blobType = null, Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier accessTier = default(Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier), string url = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobDeletedEventData StorageBlobDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, string blobType = null, string url = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobInventoryPolicyCompletedEventData StorageBlobInventoryPolicyCompletedEventData(System.DateTimeOffset scheduleDateTime = default(System.DateTimeOffset), string accountName = null, string ruleName = null, string policyRunStatus = null, string policyRunStatusMessage = null, string policyRunId = null, string manifestBlobUrl = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobInventoryPolicyCompletedEventData StorageBlobInventoryPolicyCompletedEventData(System.DateTimeOffset? scheduleDateTime = default(System.DateTimeOffset?), string accountName = null, string ruleName = null, string policyRunStatus = null, string policyRunStatusMessage = null, string policyRunId = null, string manifestBlobUrl = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobRenamedEventData StorageBlobRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = default(long?), string blobType = null, string url = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = default(long?), string blobType = null, Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier accessTier = default(Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier), Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier previousTier = default(Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier), string url = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageDirectoryCreatedEventData StorageDirectoryCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string url = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageDirectoryDeletedEventData StorageDirectoryDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string url = null, string recursive = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageDirectoryRenamedEventData StorageDirectoryRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> storageDiagnostics = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount = default(long?), long? successCount = default(long?), string errorList = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedEventData StorageTaskAssignmentCompletedEventData(Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedStatus status = default(Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedStatus), System.DateTimeOffset completedOn = default(System.DateTimeOffset), string taskExecutionId = null, string taskName = null, System.Uri summaryReportBlobUri = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentQueuedEventData StorageTaskAssignmentQueuedEventData(System.DateTimeOffset queuedOn = default(System.DateTimeOffset), string taskExecutionId = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedEventData StorageTaskCompletedEventData(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus status = default(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus), System.DateTimeOffset completedDateTime = default(System.DateTimeOffset), string taskExecutionId = null, string taskName = null, System.Uri summaryReportBlobUrl = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskQueuedEventData StorageTaskQueuedEventData(System.DateTimeOffset queuedDateTime = default(System.DateTimeOffset), string taskExecutionId = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary policyRunSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary StorageLifecyclePolicyRunSummary(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus completionStatus = default(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedEventData StorageTaskAssignmentCompletedEventData(Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedStatus?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), string taskExecutionId = null, string taskName = null, System.Uri summaryReportBlobUri = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentQueuedEventData StorageTaskAssignmentQueuedEventData(System.DateTimeOffset? queuedOn = default(System.DateTimeOffset?), string taskExecutionId = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedEventData StorageTaskCompletedEventData(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus?), System.DateTimeOffset? completedDateTime = default(System.DateTimeOffset?), string taskExecutionId = null, string taskName = null, System.Uri summaryReportBlobUrl = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskQueuedEventData StorageTaskQueuedEventData(System.DateTimeOffset? queuedDateTime = default(System.DateTimeOffset?), string taskExecutionId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.SubscriptionDeletedEventData SubscriptionDeletedEventData(string eventSubscriptionId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.SubscriptionValidationEventData SubscriptionValidationEventData(string validationCode = null, string validationUrl = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.SubscriptionValidationResponse SubscriptionValidationResponse(string validationResponse = null) { throw null; }
@@ -2722,9 +2716,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public int? EventCount { get { throw null; } }
         public string FileType { get { throw null; } }
         public string Fileurl { get { throw null; } }
-        public System.DateTimeOffset FirstEnqueueTime { get { throw null; } }
+        public System.DateTimeOffset? FirstEnqueueTime { get { throw null; } }
         public int? FirstSequenceNumber { get { throw null; } }
-        public System.DateTimeOffset LastEnqueueTime { get { throw null; } }
+        public System.DateTimeOffset? LastEnqueueTime { get { throw null; } }
         public int? LastSequenceNumber { get { throw null; } }
         public string PartitionId { get { throw null; } }
         public int? SizeInBytes { get { throw null; } }
@@ -2787,7 +2781,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal HealthcareFhirResourceCreatedEventData() { }
         public string FhirResourceId { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType FhirResourceType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? FhirResourceType { get { throw null; } }
         public long? FhirResourceVersionId { get { throw null; } }
         public string FhirServiceHostName { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2801,7 +2795,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal HealthcareFhirResourceDeletedEventData() { }
         public string FhirResourceId { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType FhirResourceType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? FhirResourceType { get { throw null; } }
         public long? FhirResourceVersionId { get { throw null; } }
         public string FhirServiceHostName { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2992,7 +2986,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal HealthcareFhirResourceUpdatedEventData() { }
         public string FhirResourceId { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType FhirResourceType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? FhirResourceType { get { throw null; } }
         public long? FhirResourceVersionId { get { throw null; } }
         public string FhirServiceHostName { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3229,9 +3223,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string DataDriftId { get { throw null; } }
         public string DataDriftName { get { throw null; } }
         public double? DriftCoefficient { get { throw null; } }
-        public System.DateTimeOffset EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndTime { get { throw null; } }
         public string RunId { get { throw null; } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartTime { get { throw null; } }
         public string TargetDatasetId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesDatasetDriftDetectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesDatasetDriftDetectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3362,479 +3356,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MediaJobCanceledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData>
-    {
-        internal MediaJobCanceledEventData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCanceledEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobCancelingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData>
-    {
-        internal MediaJobCancelingEventData() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobCancelingEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobError : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobError>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobError>
-    {
-        internal MediaJobError() { }
-        public Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory Category { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry Retry { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobError System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobError System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaJobErrorCategory : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaJobErrorCategory(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory Account { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory Configuration { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory Content { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory Download { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory Service { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory Upload { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory left, Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory left, Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaJobErrorCode : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaJobErrorCode(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode ConfigurationUnsupported { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode ContentMalformed { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode ContentUnsupported { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode DownloadNotAccessible { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode DownloadTransientError { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode IdentityUnsupported { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode ServiceError { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode ServiceTransientError { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode UploadNotAccessible { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode UploadTransientError { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode left, Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode left, Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MediaJobErrorDetail : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail>
-    {
-        internal MediaJobErrorDetail() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobErroredEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData>
-    {
-        internal MediaJobErroredEventData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobErroredEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobFinishedEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData>
-    {
-        internal MediaJobFinishedEventData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobFinishedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class MediaJobOutput : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput>
-    {
-        protected MediaJobOutput(Azure.Messaging.EventGrid.SystemEvents.MediaJobError error, long progress, Azure.Messaging.EventGrid.SystemEvents.MediaJobState state) { }
-        public Azure.Messaging.EventGrid.SystemEvents.MediaJobError Error { get { throw null; } }
-        public string Label { get { throw null; } }
-        public long Progress { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.MediaJobState State { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobOutputAsset : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset>
-    {
-        internal MediaJobOutputAsset() : base (default(Azure.Messaging.EventGrid.SystemEvents.MediaJobError), default(long), default(Azure.Messaging.EventGrid.SystemEvents.MediaJobState)) { }
-        public string AssetName { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputAsset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobOutputCanceledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData>
-    {
-        internal MediaJobOutputCanceledEventData() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCanceledEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobOutputCancelingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData>
-    {
-        internal MediaJobOutputCancelingEventData() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputCancelingEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobOutputErroredEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData>
-    {
-        internal MediaJobOutputErroredEventData() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputErroredEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobOutputFinishedEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData>
-    {
-        internal MediaJobOutputFinishedEventData() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputFinishedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobOutputProcessingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData>
-    {
-        internal MediaJobOutputProcessingEventData() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProcessingEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobOutputProgressEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData>
-    {
-        internal MediaJobOutputProgressEventData() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> JobCorrelationData { get { throw null; } }
-        public string Label { get { throw null; } }
-        public long? Progress { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputProgressEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobOutputScheduledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData>
-    {
-        internal MediaJobOutputScheduledEventData() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputScheduledEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobOutputStateChangeEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData>
-    {
-        internal MediaJobOutputStateChangeEventData() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> JobCorrelationData { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput Output { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.MediaJobState PreviousState { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaJobProcessingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData>
-    {
-        internal MediaJobProcessingEventData() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobProcessingEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaJobRetry : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaJobRetry(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry DoNotRetry { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry MayRetry { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry left, Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry left, Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MediaJobScheduledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData>
-    {
-        internal MediaJobScheduledEventData() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobScheduledEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaJobState : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.MediaJobState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaJobState(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobState Canceled { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobState Canceling { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobState Error { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobState Finished { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobState Processing { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobState Queued { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.MediaJobState Scheduled { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.MediaJobState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.MediaJobState left, Azure.Messaging.EventGrid.SystemEvents.MediaJobState right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.MediaJobState (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.MediaJobState left, Azure.Messaging.EventGrid.SystemEvents.MediaJobState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MediaJobStateChangeEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData>
-    {
-        internal MediaJobStateChangeEventData() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> CorrelationData { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.MediaJobState PreviousState { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.MediaJobState State { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventChannelArchiveHeartbeatEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData>
-    {
-        internal MediaLiveEventChannelArchiveHeartbeatEventData() { }
-        public string ChannelLatencyMs { get { throw null; } }
-        public string LatencyResultCode { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventConnectionRejectedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData>
-    {
-        internal MediaLiveEventConnectionRejectedEventData() { }
-        public string EncoderIp { get { throw null; } }
-        public string EncoderPort { get { throw null; } }
-        public string IngestUrl { get { throw null; } }
-        public string ResultCode { get { throw null; } }
-        public string StreamId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventConnectionRejectedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventEncoderConnectedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData>
-    {
-        internal MediaLiveEventEncoderConnectedEventData() { }
-        public string EncoderIp { get { throw null; } }
-        public string EncoderPort { get { throw null; } }
-        public string IngestUrl { get { throw null; } }
-        public string StreamId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderConnectedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventEncoderDisconnectedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData>
-    {
-        internal MediaLiveEventEncoderDisconnectedEventData() { }
-        public string EncoderIp { get { throw null; } }
-        public string EncoderPort { get { throw null; } }
-        public string IngestUrl { get { throw null; } }
-        public string ResultCode { get { throw null; } }
-        public string StreamId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventEncoderDisconnectedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventIncomingDataChunkDroppedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData>
-    {
-        internal MediaLiveEventIncomingDataChunkDroppedEventData() { }
-        public long? Bitrate { get { throw null; } }
-        public string ResultCode { get { throw null; } }
-        public string Timescale { get { throw null; } }
-        public string Timestamp { get { throw null; } }
-        public string TrackName { get { throw null; } }
-        public string TrackType { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventIncomingStreamReceivedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData>
-    {
-        internal MediaLiveEventIncomingStreamReceivedEventData() { }
-        public long? Bitrate { get { throw null; } }
-        public string Duration { get { throw null; } }
-        public string EncoderIp { get { throw null; } }
-        public string EncoderPort { get { throw null; } }
-        public string IngestUrl { get { throw null; } }
-        public string Timescale { get { throw null; } }
-        public string Timestamp { get { throw null; } }
-        public string TrackName { get { throw null; } }
-        public string TrackType { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamReceivedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventIncomingStreamsOutOfSyncEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData>
-    {
-        internal MediaLiveEventIncomingStreamsOutOfSyncEventData() { }
-        public string MaxLastTimestamp { get { throw null; } }
-        public string MinLastTimestamp { get { throw null; } }
-        public string TimescaleOfMaxLastTimestamp { get { throw null; } }
-        public string TimescaleOfMinLastTimestamp { get { throw null; } }
-        public string TypeOfStreamWithMaxLastTimestamp { get { throw null; } }
-        public string TypeOfStreamWithMinLastTimestamp { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>
-    {
-        internal MediaLiveEventIncomingVideoStreamsOutOfSyncEventData() { }
-        public string FirstDuration { get { throw null; } }
-        public string FirstTimestamp { get { throw null; } }
-        public string SecondDuration { get { throw null; } }
-        public string SecondTimestamp { get { throw null; } }
-        public string Timescale { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventIngestHeartbeatEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData>
-    {
-        internal MediaLiveEventIngestHeartbeatEventData() { }
-        public long? Bitrate { get { throw null; } }
-        public long? DiscontinuityCount { get { throw null; } }
-        public bool? Healthy { get { throw null; } }
-        public long? IncomingBitrate { get { throw null; } }
-        public string IngestDriftValue { get { throw null; } }
-        public string LastFragmentArrivalTime { get { throw null; } }
-        public string LastTimestamp { get { throw null; } }
-        public long? NonincreasingCount { get { throw null; } }
-        public long? OverlapCount { get { throw null; } }
-        public string State { get { throw null; } }
-        public string Timescale { get { throw null; } }
-        public string TrackName { get { throw null; } }
-        public string TrackType { get { throw null; } }
-        public string TranscriptionLanguage { get { throw null; } }
-        public string TranscriptionState { get { throw null; } }
-        public bool? UnexpectedBitrate { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventIngestHeartbeatEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MediaLiveEventTrackDiscontinuityDetectedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData>
-    {
-        internal MediaLiveEventTrackDiscontinuityDetectedEventData() { }
-        public long? Bitrate { get { throw null; } }
-        public string DiscontinuityGap { get { throw null; } }
-        public string NewTimestamp { get { throw null; } }
-        public string PreviousTimestamp { get { throw null; } }
-        public string Timescale { get { throw null; } }
-        public string TrackName { get { throw null; } }
-        public string TrackType { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class MicrosoftTeamsAppIdentifierModel : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel>
     {
         internal MicrosoftTeamsAppIdentifierModel() { }
         public string AppId { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel Cloud { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel? Cloud { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsAppIdentifierModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3845,7 +3371,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class MicrosoftTeamsUserIdentifierModel : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel>
     {
         internal MicrosoftTeamsUserIdentifierModel() { }
-        public Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel Cloud { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel? Cloud { get { throw null; } }
         public bool? IsAnonymous { get { throw null; } }
         public string UserId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3875,7 +3401,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateChangedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateChangedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateChangedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3892,7 +3418,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateCreatedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateCreatedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateCreatedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3909,7 +3435,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateDeletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateDeletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateDeletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3972,38 +3498,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType left, Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RedisExportRDBCompletedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData>
+    public partial class RedisExportRdbCompletedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData>
     {
-        internal RedisExportRDBCompletedEventData() { }
+        internal RedisExportRdbCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRDBCompletedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisExportRdbCompletedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RedisImportRDBCompletedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData>
+    public partial class RedisImportRdbCompletedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData>
     {
-        internal RedisImportRDBCompletedEventData() { }
+        internal RedisImportRdbCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRDBCompletedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisImportRdbCompletedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RedisPatchingCompletedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisPatchingCompletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.RedisPatchingCompletedEventData>
     {
         internal RedisPatchingCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.RedisPatchingCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisPatchingCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisPatchingCompletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4016,7 +3542,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal RedisScalingCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.RedisScalingCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisScalingCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.RedisScalingCompletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4177,6 +3703,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ResourceNotificationsContainerServiceEventResourcesScheduledEventData : Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceUpdatedEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData>
+    {
+        internal ResourceNotificationsContainerServiceEventResourcesScheduledEventData() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ResourceNotificationsHealthResourcesAnnotatedEventData : Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceUpdatedEventData, System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsHealthResourcesAnnotatedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsHealthResourcesAnnotatedEventData>
     {
         internal ResourceNotificationsHealthResourcesAnnotatedEventData() { }
@@ -4200,7 +3736,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ResourceNotificationsOperationalDetails : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails>
     {
         internal ResourceNotificationsOperationalDetails() { }
-        public System.DateTimeOffset ResourceEventTime { get { throw null; } }
+        public System.DateTimeOffset? ResourceEventTime { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsOperationalDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4414,7 +3950,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal SignalRServiceClientConnectionConnectedEventData() { }
         public string ConnectionId { get { throw null; } }
         public string HubName { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         public string UserId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionConnectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionConnectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4429,7 +3965,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ConnectionId { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public string HubName { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         public string UserId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionDisconnectedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionDisconnectedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4477,9 +4013,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageAsyncOperationInitiatedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageAsyncOperationInitiatedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageBlobAccessTier : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageBlobAccessTier(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier Archive { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier Cold { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier Cool { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier Default { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier Hot { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier left, Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier left, Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class StorageBlobCreatedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageBlobCreatedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageBlobCreatedEventData>
     {
         internal StorageBlobCreatedEventData() { }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier AccessTier { get { throw null; } }
         public string Api { get { throw null; } }
         public string BlobType { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
@@ -4527,7 +4085,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string PolicyRunStatus { get { throw null; } }
         public string PolicyRunStatusMessage { get { throw null; } }
         public string RuleName { get { throw null; } }
-        public System.DateTimeOffset ScheduleDateTime { get { throw null; } }
+        public System.DateTimeOffset? ScheduleDateTime { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.StorageBlobInventoryPolicyCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageBlobInventoryPolicyCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageBlobInventoryPolicyCompletedEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4556,12 +4114,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageBlobTierChangedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageBlobTierChangedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageBlobTierChangedEventData>
     {
         internal StorageBlobTierChangedEventData() { }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier AccessTier { get { throw null; } }
         public string Api { get { throw null; } }
         public string BlobType { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public long? ContentLength { get { throw null; } }
         public string ContentType { get { throw null; } }
         public string Identity { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier PreviousTier { get { throw null; } }
         public string RequestId { get { throw null; } }
         public string Sequencer { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> StorageDiagnostics { get { throw null; } }
@@ -4627,6 +4187,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageDirectoryRenamedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageDirectoryRenamedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageLifecycleCompletionStatus : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageLifecycleCompletionStatus(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus Completed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus CompletedWithError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus Incomplete { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus left, Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus left, Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class StorageLifecyclePolicyActionSummaryDetail : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail>
     {
         internal StorageLifecyclePolicyActionSummaryDetail() { }
@@ -4644,8 +4223,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal StorageLifecyclePolicyCompletedEventData() { }
         public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail DeleteSummary { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary PolicyRunSummary { get { throw null; } }
         public string ScheduleTime { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail TierToArchiveSummary { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail TierToColdSummary { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail TierToCoolSummary { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4654,11 +4235,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StorageLifecyclePolicyRunSummary : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary>
+    {
+        internal StorageLifecyclePolicyRunSummary() { }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus CompletionStatus { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class StorageTaskAssignmentCompletedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedEventData>
     {
         internal StorageTaskAssignmentCompletedEventData() { }
-        public System.DateTimeOffset CompletedOn { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedStatus Status { get { throw null; } }
+        public System.DateTimeOffset? CompletedOn { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedStatus? Status { get { throw null; } }
         public System.Uri SummaryReportBlobUri { get { throw null; } }
         public string TaskExecutionId { get { throw null; } }
         public string TaskName { get { throw null; } }
@@ -4690,7 +4282,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageTaskAssignmentQueuedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentQueuedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentQueuedEventData>
     {
         internal StorageTaskAssignmentQueuedEventData() { }
-        public System.DateTimeOffset QueuedOn { get { throw null; } }
+        public System.DateTimeOffset? QueuedOn { get { throw null; } }
         public string TaskExecutionId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentQueuedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentQueuedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4702,8 +4294,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageTaskCompletedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedEventData>
     {
         internal StorageTaskCompletedEventData() { }
-        public System.DateTimeOffset CompletedDateTime { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus Status { get { throw null; } }
+        public System.DateTimeOffset? CompletedDateTime { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus? Status { get { throw null; } }
         public System.Uri SummaryReportBlobUrl { get { throw null; } }
         public string TaskExecutionId { get { throw null; } }
         public string TaskName { get { throw null; } }
@@ -4735,7 +4327,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageTaskQueuedEventData : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskQueuedEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskQueuedEventData>
     {
         internal StorageTaskQueuedEventData() { }
-        public System.DateTimeOffset QueuedDateTime { get { throw null; } }
+        public System.DateTimeOffset? QueuedDateTime { get { throw null; } }
         public string TaskExecutionId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Messaging.EventGrid.SystemEvents.StorageTaskQueuedEventData System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.StorageTaskQueuedEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4884,10 +4476,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public const string DataBoxCopyCompleted = "Microsoft.DataBox.CopyCompleted";
         public const string DataBoxCopyStarted = "Microsoft.DataBox.CopyStarted";
         public const string DataBoxOrderCompleted = "Microsoft.DataBox.OrderCompleted";
-        public const string EventGridMQTTClientCreatedOrUpdated = "Microsoft.EventGrid.MQTTClientCreatedOrUpdated";
-        public const string EventGridMQTTClientDeleted = "Microsoft.EventGrid.MQTTClientDeleted";
-        public const string EventGridMQTTClientSessionConnected = "Microsoft.EventGrid.MQTTClientSessionConnected";
-        public const string EventGridMQTTClientSessionDisconnected = "Microsoft.EventGrid.MQTTClientSessionDisconnected";
+        public const string EventGridMqttClientCreatedOrUpdated = "Microsoft.EventGrid.MQTTClientCreatedOrUpdated";
+        public const string EventGridMqttClientDeleted = "Microsoft.EventGrid.MQTTClientDeleted";
+        public const string EventGridMqttClientSessionConnected = "Microsoft.EventGrid.MQTTClientSessionConnected";
+        public const string EventGridMqttClientSessionDisconnected = "Microsoft.EventGrid.MQTTClientSessionDisconnected";
         public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
         public const string EventGridSubscriptionValidation = "Microsoft.EventGrid.SubscriptionValidationEvent";
         public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
@@ -4920,36 +4512,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public const string MapsGeofenceEntered = "Microsoft.Maps.GeofenceEntered";
         public const string MapsGeofenceExited = "Microsoft.Maps.GeofenceExited";
         public const string MapsGeofenceResult = "Microsoft.Maps.GeofenceResult";
-        public const string MediaJobCanceled = "Microsoft.Media.JobCanceled";
-        public const string MediaJobCanceling = "Microsoft.Media.JobCanceling";
-        public const string MediaJobErrored = "Microsoft.Media.JobErrored";
-        public const string MediaJobFinished = "Microsoft.Media.JobFinished";
-        public const string MediaJobOutputCanceled = "Microsoft.Media.JobOutputCanceled";
-        public const string MediaJobOutputCanceling = "Microsoft.Media.JobOutputCanceling";
-        public const string MediaJobOutputErrored = "Microsoft.Media.JobOutputErrored";
-        public const string MediaJobOutputFinished = "Microsoft.Media.JobOutputFinished";
-        public const string MediaJobOutputProcessing = "Microsoft.Media.JobOutputProcessing";
-        public const string MediaJobOutputProgress = "Microsoft.Media.JobOutputProgress";
-        public const string MediaJobOutputScheduled = "Microsoft.Media.JobOutputScheduled";
-        public const string MediaJobOutputStateChange = "Microsoft.Media.JobOutputStateChange";
-        public const string MediaJobProcessing = "Microsoft.Media.JobProcessing";
-        public const string MediaJobScheduled = "Microsoft.Media.JobScheduled";
-        public const string MediaJobStateChange = "Microsoft.Media.JobStateChange";
-        public const string MediaLiveEventChannelArchiveHeartbeat = "Microsoft.Media.LiveEventChannelArchiveHeartbeat";
-        public const string MediaLiveEventConnectionRejected = "Microsoft.Media.LiveEventConnectionRejected";
-        public const string MediaLiveEventEncoderConnected = "Microsoft.Media.LiveEventEncoderConnected";
-        public const string MediaLiveEventEncoderDisconnected = "Microsoft.Media.LiveEventEncoderDisconnected";
-        public const string MediaLiveEventIncomingDataChunkDropped = "Microsoft.Media.LiveEventIncomingDataChunkDropped";
-        public const string MediaLiveEventIncomingStreamReceived = "Microsoft.Media.LiveEventIncomingStreamReceived";
-        public const string MediaLiveEventIncomingStreamsOutOfSync = "Microsoft.Media.LiveEventIncomingStreamsOutOfSync";
-        public const string MediaLiveEventIncomingVideoStreamsOutOfSync = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
-        public const string MediaLiveEventIngestHeartbeat = "Microsoft.Media.LiveEventIngestHeartbeat";
-        public const string MediaLiveEventTrackDiscontinuityDetected = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
         public const string PolicyInsightsPolicyStateChanged = "Microsoft.PolicyInsights.PolicyStateChanged";
         public const string PolicyInsightsPolicyStateCreated = "Microsoft.PolicyInsights.PolicyStateCreated";
         public const string PolicyInsightsPolicyStateDeleted = "Microsoft.PolicyInsights.PolicyStateDeleted";
-        public const string RedisExportRDBCompleted = "Microsoft.Cache.ExportRDBCompleted";
-        public const string RedisImportRDBCompleted = "Microsoft.Cache.ImportRDBCompleted";
+        public const string RedisExportRdbCompleted = "Microsoft.Cache.ExportRDBCompleted";
+        public const string RedisImportRdbCompleted = "Microsoft.Cache.ImportRDBCompleted";
         public const string RedisPatchingCompleted = "Microsoft.Cache.PatchingCompleted";
         public const string RedisScalingCompleted = "Microsoft.Cache.ScalingCompleted";
         public const string ResourceActionCancel = "Microsoft.Resources.ResourceActionCancel";
@@ -4958,6 +4525,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public const string ResourceDeleteCancel = "Microsoft.Resources.ResourceDeleteCancel";
         public const string ResourceDeleteFailure = "Microsoft.Resources.ResourceDeleteFailure";
         public const string ResourceDeleteSuccess = "Microsoft.Resources.ResourceDeleteSuccess";
+        public const string ResourceNotificationsContainerServiceEventResourcesScheduled = "Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted";
         public const string ResourceNotificationsHealthResourcesAnnotated = "Microsoft.ResourceNotifications.HealthResources.ResourceAnnotated";
         public const string ResourceNotificationsHealthResourcesAvailabilityStatusChanged = "Microsoft.ResourceNotifications.HealthResources.AvailabilityStatusChanged";
         public const string ResourceNotificationsResourceManagementCreatedOrUpdated = "Microsoft.ResourceNotifications.Resources.CreatedOrUpdated";

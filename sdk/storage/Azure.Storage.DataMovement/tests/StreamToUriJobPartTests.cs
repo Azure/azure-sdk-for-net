@@ -216,6 +216,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.CompletedTask);
             mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(length - 1);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(chunkSize);
+            mockDestination.Setup(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
 
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);

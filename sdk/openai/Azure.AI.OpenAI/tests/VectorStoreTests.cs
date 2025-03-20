@@ -176,7 +176,8 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         Assert.True(removalResult.Removed);
 
         // Errata: removals aren't immediately reflected when requesting the list
-        await Task.Delay(TimeSpan.FromSeconds(5));
+        TimeSpan waitTime = Recording!.Mode == RecordedTestMode.Playback ? TimeSpan.FromMilliseconds(1) : TimeSpan.FromSeconds(10);
+        await Task.Delay(waitTime);
 
         int count = 0;
         AsyncCollectionResult<VectorStoreFileAssociation> response = client.GetFileAssociationsAsync(vectorStore.Id);

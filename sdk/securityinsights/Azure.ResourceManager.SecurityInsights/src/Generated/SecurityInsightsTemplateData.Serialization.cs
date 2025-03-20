@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityInsights
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MainTemplate);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MainTemplate))
+                using (JsonDocument document = JsonDocument.Parse(MainTemplate, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityInsightsTemplateData(document.RootElement, options);
                     }
                 default:

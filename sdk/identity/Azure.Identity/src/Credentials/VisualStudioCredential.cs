@@ -26,6 +26,7 @@ namespace Azure.Identity
         private static readonly string TokenProviderFilePath = Path.Combine(".IdentityService", "AzureServiceAuth", "tokenprovider.json");
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
+        private string[] UnavailableErrorStrings => new[] { "TS005" };
 
         private readonly CredentialPipeline _pipeline;
         internal string TenantId { get; }
@@ -119,7 +120,16 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
+                bool containsUnavailableError = false;
+                foreach (string errorString in UnavailableErrorStrings)
+                {
+                    if (e.Message.Contains(errorString))
+                    {
+                        containsUnavailableError = true;
+                        break;
+                    }
+                }
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential || containsUnavailableError);
             }
         }
 

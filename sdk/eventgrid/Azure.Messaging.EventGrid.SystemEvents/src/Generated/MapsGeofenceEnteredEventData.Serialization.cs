@@ -67,10 +67,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("expiredGeofenceGeometryId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -91,10 +87,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("invalidPeriodGeofenceGeometryId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -118,7 +110,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MapsGeofenceEnteredEventData(expiredGeofenceGeometryId ?? new ChangeTrackingList<string>(), geometries, invalidPeriodGeofenceGeometryId ?? new ChangeTrackingList<string>(), isEventPublished, serializedAdditionalRawData);
+            return new MapsGeofenceEnteredEventData(expiredGeofenceGeometryId, geometries, invalidPeriodGeofenceGeometryId, isEventPublished, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsGeofenceEnteredEventData>.Write(ModelReaderWriterOptions options)
@@ -142,7 +134,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMapsGeofenceEnteredEventData(document.RootElement, options);
                     }
                 default:
@@ -156,7 +148,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new MapsGeofenceEnteredEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMapsGeofenceEnteredEventData(document.RootElement);
         }
 

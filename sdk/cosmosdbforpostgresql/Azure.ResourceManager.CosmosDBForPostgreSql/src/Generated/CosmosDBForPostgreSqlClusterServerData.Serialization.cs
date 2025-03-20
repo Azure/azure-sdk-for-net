@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCosmosDBForPostgreSqlClusterServerData(document.RootElement, options);
                     }
                 default:

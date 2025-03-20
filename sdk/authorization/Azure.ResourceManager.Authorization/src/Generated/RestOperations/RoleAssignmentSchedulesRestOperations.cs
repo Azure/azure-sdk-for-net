@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentScheduleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentScheduleListResult.DeserializeRoleAssignmentScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentScheduleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentScheduleListResult.DeserializeRoleAssignmentScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentScheduleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentScheduleListResult.DeserializeRoleAssignmentScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentScheduleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentScheduleListResult.DeserializeRoleAssignmentScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

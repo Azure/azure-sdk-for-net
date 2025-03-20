@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The certificate's provisioning state
-    /// Serialized Name: CertificateProvisioningState
-    /// </summary>
+    /// <summary> The certificate's provisioning state. </summary>
     public readonly partial struct CertificateProvisioningState : IEquatable<CertificateProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string ProvisionedValue = "Provisioned";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// The certificate has not been provisioned.
-        /// Serialized Name: CertificateProvisioningState.NotProvisioned
-        /// </summary>
+        /// <summary> The certificate has not been provisioned. </summary>
         public static CertificateProvisioningState NotProvisioned { get; } = new CertificateProvisioningState(NotProvisionedValue);
-        /// <summary>
-        /// The certificate has been provisioned.
-        /// Serialized Name: CertificateProvisioningState.Provisioned
-        /// </summary>
+        /// <summary> The certificate has been provisioned. </summary>
         public static CertificateProvisioningState Provisioned { get; } = new CertificateProvisioningState(ProvisionedValue);
-        /// <summary>
-        /// The certificate failed to be provisioned. The "reason" property explains why.
-        /// Serialized Name: CertificateProvisioningState.Failed
-        /// </summary>
+        /// <summary> The certificate failed to be provisioned. The "reason" property explains why. </summary>
         public static CertificateProvisioningState Failed { get; } = new CertificateProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="CertificateProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CertificateProvisioningState left, CertificateProvisioningState right) => left.Equals(right);

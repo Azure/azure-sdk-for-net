@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformApiPortalCustomDomainData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppPlatformApiPortalCustomDomainData.DeserializeAppPlatformApiPortalCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformApiPortalCustomDomainData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppPlatformApiPortalCustomDomainData.DeserializeAppPlatformApiPortalCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ApiPortalCustomDomainResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiPortalCustomDomainResourceList.DeserializeApiPortalCustomDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ApiPortalCustomDomainResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiPortalCustomDomainResourceList.DeserializeApiPortalCustomDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ApiPortalCustomDomainResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiPortalCustomDomainResourceList.DeserializeApiPortalCustomDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ApiPortalCustomDomainResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiPortalCustomDomainResourceList.DeserializeApiPortalCustomDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

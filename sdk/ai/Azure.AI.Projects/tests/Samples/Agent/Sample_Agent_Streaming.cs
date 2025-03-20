@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Tests
             AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
             Response<Agent> agentResponse = await client.CreateAgentAsync(
-                model: "gpt-4-1106-preview",
+                model: "gpt-4",
                 name: "My Friendly Test Assistant",
                 instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
                 tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });

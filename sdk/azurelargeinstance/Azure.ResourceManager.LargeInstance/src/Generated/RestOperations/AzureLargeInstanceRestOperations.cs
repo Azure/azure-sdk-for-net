@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureLargeInstanceListResult.DeserializeAzureLargeInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureLargeInstanceListResult.DeserializeAzureLargeInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureLargeInstanceListResult.DeserializeAzureLargeInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureLargeInstanceListResult.DeserializeAzureLargeInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         LargeInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LargeInstanceData.DeserializeLargeInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         LargeInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LargeInstanceData.DeserializeLargeInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         LargeInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LargeInstanceData.DeserializeLargeInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         LargeInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LargeInstanceData.DeserializeLargeInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureLargeInstanceListResult.DeserializeAzureLargeInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureLargeInstanceListResult.DeserializeAzureLargeInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureLargeInstanceListResult.DeserializeAzureLargeInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureLargeInstanceListResult.DeserializeAzureLargeInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

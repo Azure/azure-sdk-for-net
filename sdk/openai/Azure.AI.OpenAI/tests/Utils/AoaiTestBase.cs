@@ -641,10 +641,18 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         });
         RequestOptions requestOptions = new() { ErrorOptions = ClientErrorBehaviors.NoThrow, };
 
+        void WriteIfNotSuppressed(string message)
+        {
+            if (Environment.GetEnvironmentVariable("AOAI_SUPPRESS_TRAFFIC_DUMP") != "true")
+            {
+                Console.WriteLine(message);
+            }
+        }
+
         OpenAIFileClient fileClient = topLevelCleanupClient.GetOpenAIFileClient();
         foreach (string fileId in _fileIdsToDelete)
         {
-            Console.WriteLine($"Cleanup: {fileId} -> {fileClient.DeleteFile(fileId, requestOptions)?.GetRawResponse().Status}");
+            WriteIfNotSuppressed($"Cleanup: {fileId} -> {fileClient.DeleteFile(fileId, requestOptions)?.GetRawResponse().Status}");
         }
         _fileIdsToDelete.Clear();
 
@@ -659,23 +667,23 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         VectorStoreClient vectorStoreClient = topLevelCleanupClient.GetVectorStoreClient();
         foreach ((string threadId, string messageId) in _threadIdsWithMessageIdsToDelete)
         {
-            Console.WriteLine($"Cleanup: {messageId} -> {client.DeleteMessage(threadId, messageId, requestOptions)?.GetRawResponse().Status}");
+            WriteIfNotSuppressed($"Cleanup: {messageId} -> {client.DeleteMessage(threadId, messageId, requestOptions)?.GetRawResponse().Status}");
         }
         foreach (string assistantId in _assistantIdsToDelete)
         {
-            Console.WriteLine($"Cleanup: {assistantId} -> {client.DeleteAssistant(assistantId, requestOptions)?.GetRawResponse().Status}");
+            WriteIfNotSuppressed($"Cleanup: {assistantId} -> {client.DeleteAssistant(assistantId, requestOptions)?.GetRawResponse().Status}");
         }
         foreach (string threadId in _threadIdsToDelete)
         {
-            Console.WriteLine($"Cleanup: {threadId} -> {client.DeleteThread(threadId, requestOptions)?.GetRawResponse().Status}");
+            WriteIfNotSuppressed($"Cleanup: {threadId} -> {client.DeleteThread(threadId, requestOptions)?.GetRawResponse().Status}");
         }
         foreach ((string vectorStoreId, string fileId) in _vectorStoreFileAssociationsToRemove)
         {
-            Console.WriteLine($"Cleanup: {vectorStoreId}<->{fileId} => {vectorStoreClient.RemoveFileFromStore(vectorStoreId, fileId, requestOptions)?.GetRawResponse().Status}");
+            WriteIfNotSuppressed($"Cleanup: {vectorStoreId}<->{fileId} => {vectorStoreClient.RemoveFileFromStore(vectorStoreId, fileId, requestOptions)?.GetRawResponse().Status}");
         }
         foreach (string vectorStoreId in _vectorStoreIdsToDelete)
         {
-            Console.WriteLine($"Cleanup: {vectorStoreId} => {vectorStoreClient.DeleteVectorStore(vectorStoreId, requestOptions)?.GetRawResponse().Status}");
+            WriteIfNotSuppressed($"Cleanup: {vectorStoreId} => {vectorStoreClient.DeleteVectorStore(vectorStoreId, requestOptions)?.GetRawResponse().Status}");
         }
         _threadIdsWithMessageIdsToDelete.Clear();
         _assistantIdsToDelete.Clear();
@@ -756,6 +764,6 @@ public class TestClientOptions : AzureOpenAIClientOptions
     public TestClientOptions(ServiceVersion version) : base(version)
     { }
 
-    public bool ShouldOutputRequests { get; set; } = true;
-    public bool ShouldOutputResponses { get; set; } = true;
+    public bool ShouldOutputRequests { get; set; } = Environment.GetEnvironmentVariable("AOAI_SUPPRESS_TRAFFIC_DUMP") != "true";
+    public bool ShouldOutputResponses { get; set; } = Environment.GetEnvironmentVariable("AOAI_SUPPRESS_TRAFFIC_DUMP") != "true";
 }

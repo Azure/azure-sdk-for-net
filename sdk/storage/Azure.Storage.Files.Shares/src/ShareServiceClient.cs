@@ -130,6 +130,7 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.FileEndpoint;
+            _accountName = conn.AccountName;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
@@ -190,6 +191,7 @@ namespace Azure.Storage.Files.Shares
                   sasCredential: null,
                   tokenCredential: null)
         {
+            _accountName ??= credential?.AccountName;
         }
 
         /// <summary>
@@ -388,6 +390,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Pageable<ShareItem> GetShares(
             ShareTraits traits = ShareTraits.None,
@@ -427,6 +431,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual AsyncPageable<ShareItem> GetSharesAsync(
             ShareTraits traits = ShareTraits.None,
@@ -485,6 +491,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<ListSharesResponse>> GetSharesInternal(
             string marker,
@@ -592,6 +600,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<ShareServiceProperties> GetProperties(
             CancellationToken cancellationToken = default) =>
@@ -620,6 +630,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<ShareServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default) =>
@@ -651,6 +663,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<ShareServiceProperties>> GetPropertiesInternal(
             bool async,
@@ -725,6 +739,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Response SetProperties(
@@ -759,6 +775,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual async Task<Response> SetPropertiesAsync(
@@ -796,6 +814,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response> SetPropertiesInternal(
             ShareServiceProperties properties,
@@ -874,6 +894,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<ShareClient> CreateShare(
             string shareName,
@@ -928,6 +950,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
             string shareName,
@@ -985,6 +1009,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareClient> CreateShare(
@@ -1044,6 +1070,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
@@ -1078,8 +1106,6 @@ namespace Azure.Storage.Files.Shares
         #region DeleteShare
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
-        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.
         /// There's no way to specify a separate value for x-ms-delete-snapshots.
@@ -1104,6 +1130,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response DeleteShare(
             string shareName,
@@ -1120,8 +1148,6 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
-        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
@@ -1145,6 +1171,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response> DeleteShareAsync(
             string shareName,
@@ -1162,8 +1190,6 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
-        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.
         /// There's no way to specify a separate value for x-ms-delete-snapshots.
@@ -1189,6 +1215,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DeleteShare(
@@ -1206,8 +1234,6 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
-        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
@@ -1232,6 +1258,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteShareAsync(
@@ -1271,6 +1299,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<ShareClient> UndeleteShare(
             string deletedShareName,
@@ -1338,6 +1368,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<ShareClient>> UndeleteShareInternal(
             string deletedShareName,
@@ -1508,6 +1540,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public Uri GenerateAccountSasUri(AccountSasBuilder builder)
@@ -1539,6 +1573,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]

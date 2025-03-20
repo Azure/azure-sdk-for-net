@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The current provisioning state.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state. </summary>
     public readonly partial struct MobileNetworkProvisioningState : IEquatable<MobileNetworkProvisioningState>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string CanceledValue = "Canceled";
         private const string DeletedValue = "Deleted";
 
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: ProvisioningState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static MobileNetworkProvisioningState Unknown { get; } = new MobileNetworkProvisioningState(UnknownValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static MobileNetworkProvisioningState Succeeded { get; } = new MobileNetworkProvisioningState(SucceededValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: ProvisioningState.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static MobileNetworkProvisioningState Accepted { get; } = new MobileNetworkProvisioningState(AcceptedValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static MobileNetworkProvisioningState Deleting { get; } = new MobileNetworkProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static MobileNetworkProvisioningState Failed { get; } = new MobileNetworkProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static MobileNetworkProvisioningState Canceled { get; } = new MobileNetworkProvisioningState(CanceledValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: ProvisioningState.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         public static MobileNetworkProvisioningState Deleted { get; } = new MobileNetworkProvisioningState(DeletedValue);
         /// <summary> Determines if two <see cref="MobileNetworkProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkProvisioningState left, MobileNetworkProvisioningState right) => left.Equals(right);

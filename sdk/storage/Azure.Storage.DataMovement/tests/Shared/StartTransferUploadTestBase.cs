@@ -201,7 +201,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationMode.FailIfExists
+                CreationMode = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -248,7 +248,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationMode.SkipIfExists
+                CreationMode = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -482,7 +482,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             List<string> objectNames = new List<string>() { objectName };
@@ -508,7 +508,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions>() { options };
 
@@ -546,7 +546,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationMode.SkipIfExists,
+                CreationMode = StorageResourceCreationMode.SkipIfExists,
             };
             StorageResource sourceResource = LocalFilesStorageResourceProvider.FromFile(newSourceFile);
             StorageResourceItem destinationResource = GetStorageResourceItem(objectClient);
@@ -604,7 +604,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to fail and keep track of the failure.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationMode.FailIfExists,
+                CreationMode = StorageResourceCreationMode.FailIfExists,
             };
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
             StorageResource sourceResource = LocalFilesStorageResourceProvider.FromFile(newSourceFile);

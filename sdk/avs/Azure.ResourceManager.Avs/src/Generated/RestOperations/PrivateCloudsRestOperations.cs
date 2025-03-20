@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PrivateCloudList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PrivateCloudList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PrivateCloudList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PrivateCloudList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         AvsPrivateCloudData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvsPrivateCloudData.DeserializeAvsPrivateCloudData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         AvsPrivateCloudData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvsPrivateCloudData.DeserializeAvsPrivateCloudData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         AdminCredentials value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdminCredentials.DeserializeAdminCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         AdminCredentials value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdminCredentials.DeserializeAdminCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PrivateCloudList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PrivateCloudList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PrivateCloudList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PrivateCloudList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

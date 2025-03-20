@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecretDeploymentResourceReference(document.RootElement, options);
                     }
                 default:

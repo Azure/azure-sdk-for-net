@@ -82,6 +82,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
             }
+            if (Optional.IsDefined(ContinuationSettings))
+            {
+                writer.WritePropertyName("continuationSettings"u8);
+                writer.WriteObjectValue(ContinuationSettings);
+            }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
@@ -134,6 +139,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DataFlowReference dataflow = default;
             DataFlowStagingInfo staging = default;
             IntegrationRuntimeReference integrationRuntime = default;
+            ContinuationSettingsReference continuationSettings = default;
             ExecuteDataFlowActivityTypePropertiesCompute compute = default;
             object traceLevel = default;
             object continueOnError = default;
@@ -254,6 +260,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("continuationSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            continuationSettings = ContinuationSettingsReference.DeserializeContinuationSettingsReference(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("compute"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -319,6 +334,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 dataflow,
                 staging,
                 integrationRuntime,
+                continuationSettings,
                 compute,
                 traceLevel,
                 continueOnError,
@@ -330,7 +346,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ExecuteDataFlowActivity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeExecuteDataFlowActivity(document.RootElement);
         }
 

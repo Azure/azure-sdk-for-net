@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the PacketCoreControlPlaneVersion data model.
     /// Packet core control plane version resource.
-    /// Serialized Name: PacketCoreControlPlaneVersion
     /// </summary>
     public partial class PacketCoreControlPlaneVersionData : ResourceData
     {
@@ -63,14 +62,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the packet core control plane version resource.
-        /// Serialized Name: PacketCoreControlPlaneVersion.properties.provisioningState
-        /// </param>
-        /// <param name="platforms">
-        /// Platform specific packet core control plane version properties.
-        /// Serialized Name: PacketCoreControlPlaneVersion.properties.platforms
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the packet core control plane version resource. </param>
+        /// <param name="platforms"> Platform specific packet core control plane version properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PacketCoreControlPlaneVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, IList<MobileNetworkPlatform> platforms, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -79,16 +72,10 @@ namespace Azure.ResourceManager.MobileNetwork
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The provisioning state of the packet core control plane version resource.
-        /// Serialized Name: PacketCoreControlPlaneVersion.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the packet core control plane version resource. </summary>
         [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Platform specific packet core control plane version properties.
-        /// Serialized Name: PacketCoreControlPlaneVersion.properties.platforms
-        /// </summary>
+        /// <summary> Platform specific packet core control plane version properties. </summary>
         [WirePath("properties.platforms")]
         public IList<MobileNetworkPlatform> Platforms { get; }
     }

@@ -541,6 +541,7 @@ namespace Azure.Messaging.EventHubs.Processor
     {
         private object _dummy;
         private int _dummyPrimitive;
+        public CheckpointPosition() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("The Event Hubs service does not guarantee that a sequence number-only checkpoint can access the event stream for all resource configurations.  Reading events may not work in all cases going forward. Please provide a string-based offset.", false)]
         public CheckpointPosition(long sequenceNumber) { throw null; }

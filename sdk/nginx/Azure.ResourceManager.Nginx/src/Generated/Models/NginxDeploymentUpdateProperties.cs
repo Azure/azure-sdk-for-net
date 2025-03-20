@@ -55,15 +55,17 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="logging"></param>
         /// <param name="scalingProperties"> Information on how the deployment will be scaled. </param>
         /// <param name="userProfile"></param>
+        /// <param name="networkProfile"></param>
         /// <param name="autoUpgradeProfile"> Autoupgrade settings of a deployment. </param>
         /// <param name="nginxAppProtect"> Update settings for NGINX App Protect (NAP). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, AutoUpgradeProfile autoUpgradeProfile, NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, NginxNetworkProfile networkProfile, AutoUpgradeProfile autoUpgradeProfile, NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableDiagnosticsSupport = enableDiagnosticsSupport;
             Logging = logging;
             ScalingProperties = scalingProperties;
             UserProfile = userProfile;
+            NetworkProfile = networkProfile;
             AutoUpgradeProfile = autoUpgradeProfile;
             NginxAppProtect = nginxAppProtect;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -101,6 +103,8 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
+        /// <summary> Gets or sets the network profile. </summary>
+        public NginxNetworkProfile NetworkProfile { get; set; }
         /// <summary> Autoupgrade settings of a deployment. </summary>
         internal AutoUpgradeProfile AutoUpgradeProfile { get; set; }
         /// <summary> Channel used for autoupgrade. </summary>

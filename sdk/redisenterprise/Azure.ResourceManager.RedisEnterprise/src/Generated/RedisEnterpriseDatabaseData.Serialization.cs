@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRedisEnterpriseDatabaseData(document.RootElement, options);
                     }
                 default:

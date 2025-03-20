@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         ScheduledActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         ScheduledActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 201:
                     {
                         ScheduledActionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 201:
                     {
                         ScheduledActionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         ScheduledActionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         ScheduledActionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 201:
                     {
                         ScheduledActionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 201:
                     {
                         ScheduledActionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         ScheduledActionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         ScheduledActionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduledActionData.DeserializeScheduledActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CostManagementNameAvailabilityResult.DeserializeCostManagementNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CostManagementNameAvailabilityResult.DeserializeCostManagementNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CostManagementNameAvailabilityResult.DeserializeCostManagementNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CostManagementNameAvailabilityResult.DeserializeCostManagementNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         ScheduledActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         ScheduledActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduledActionListResult.DeserializeScheduledActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

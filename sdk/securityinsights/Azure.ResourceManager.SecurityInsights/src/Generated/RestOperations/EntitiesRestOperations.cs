@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         EntityList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EntityList.DeserializeEntityList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         EntityList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EntityList.DeserializeEntityList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         SecurityInsightsEntity value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityInsightsEntity.DeserializeSecurityInsightsEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         SecurityInsightsEntity value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityInsightsEntity.DeserializeSecurityInsightsEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         EntityExpandResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EntityExpandResult.DeserializeEntityExpandResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         EntityExpandResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EntityExpandResult.DeserializeEntityExpandResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         GetQueriesResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetQueriesResponse.DeserializeGetQueriesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         GetQueriesResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetQueriesResponse.DeserializeGetQueriesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         EntityGetInsightsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EntityGetInsightsResponse.DeserializeEntityGetInsightsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         EntityGetInsightsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EntityGetInsightsResponse.DeserializeEntityGetInsightsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         EntityList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EntityList.DeserializeEntityList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         EntityList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EntityList.DeserializeEntityList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

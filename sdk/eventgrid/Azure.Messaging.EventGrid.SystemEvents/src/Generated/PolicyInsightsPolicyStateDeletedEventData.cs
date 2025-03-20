@@ -46,10 +46,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateDeletedEventData"/>. </summary>
-        /// <param name="timestamp"> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </param>
-        internal PolicyInsightsPolicyStateDeletedEventData(DateTimeOffset timestamp)
+        /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
+        /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>
+        /// <param name="policyDefinitionReferenceId"> The reference ID for the policy definition inside the initiative definition, if the policy assignment is for an initiative. May be empty. </param>
+        /// <param name="complianceState"> The compliance state of the resource with respect to the policy assignment. </param>
+        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
+        /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/>, <paramref name="policyDefinitionId"/>, <paramref name="policyDefinitionReferenceId"/>, <paramref name="complianceState"/>, <paramref name="subscriptionId"/> or <paramref name="complianceReasonCode"/> is null. </exception>
+        internal PolicyInsightsPolicyStateDeletedEventData(string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode)
         {
-            Timestamp = timestamp;
+            Argument.AssertNotNull(policyAssignmentId, nameof(policyAssignmentId));
+            Argument.AssertNotNull(policyDefinitionId, nameof(policyDefinitionId));
+            Argument.AssertNotNull(policyDefinitionReferenceId, nameof(policyDefinitionReferenceId));
+            Argument.AssertNotNull(complianceState, nameof(complianceState));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(complianceReasonCode, nameof(complianceReasonCode));
+
+            PolicyAssignmentId = policyAssignmentId;
+            PolicyDefinitionId = policyDefinitionId;
+            PolicyDefinitionReferenceId = policyDefinitionReferenceId;
+            ComplianceState = complianceState;
+            SubscriptionId = subscriptionId;
+            ComplianceReasonCode = complianceReasonCode;
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateDeletedEventData"/>. </summary>
@@ -61,7 +79,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyInsightsPolicyStateDeletedEventData(DateTimeOffset timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyInsightsPolicyStateDeletedEventData(DateTimeOffset? timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             PolicyAssignmentId = policyAssignmentId;
@@ -79,7 +97,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </summary>
-        public DateTimeOffset Timestamp { get; }
+        public DateTimeOffset? Timestamp { get; }
         /// <summary> The resource ID of the policy assignment. </summary>
         public string PolicyAssignmentId { get; }
         /// <summary> The resource ID of the policy definition. </summary>

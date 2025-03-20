@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevTestLabArtifactSourceData(document.RootElement, options);
                     }
                 default:

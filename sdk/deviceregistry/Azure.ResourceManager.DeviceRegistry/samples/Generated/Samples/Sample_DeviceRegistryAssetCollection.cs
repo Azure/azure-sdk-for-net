@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAssetWithDiscoveredAssetRefs()
         {
-            // Generated from example definition: 2024-09-01-preview/Create_Asset_With_DiscoveredAssetRef.json
+            // Generated from example definition: 2024-11-01/Create_Asset_With_DiscoveredAssetRef.json
             // this example is just showing the usage of "Asset_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAssetWithExternalAssetId()
         {
-            // Generated from example definition: 2024-09-01-preview/Create_Asset_With_ExternalAssetId.json
+            // Generated from example definition: 2024-11-01/Create_Asset_With_ExternalAssetId.json
             // this example is just showing the usage of "Asset_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -206,7 +206,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAssetWithoutDisplayName()
         {
-            // Generated from example definition: 2024-09-01-preview/Create_Asset_Without_DisplayName.json
+            // Generated from example definition: 2024-11-01/Create_Asset_Without_DisplayName.json
             // this example is just showing the usage of "Asset_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -297,7 +297,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAssetWithoutExternalAssetId()
         {
-            // Generated from example definition: 2024-09-01-preview/Create_Asset_Without_ExternalAssetId.json
+            // Generated from example definition: 2024-11-01/Create_Asset_Without_ExternalAssetId.json
             // this example is just showing the usage of "Asset_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -388,7 +388,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAsset()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_Asset.json
+            // Generated from example definition: 2024-11-01/Get_Asset.json
             // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -421,7 +421,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAssetWithSyncStatus()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_Asset_With_SyncStatus.json
+            // Generated from example definition: 2024-11-01/Get_Asset_With_SyncStatus.json
             // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -454,7 +454,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAssetsResourceGroup()
         {
-            // Generated from example definition: 2024-09-01-preview/List_Assets_ResourceGroup.json
+            // Generated from example definition: 2024-11-01/List_Assets_ResourceGroup.json
             // this example is just showing the usage of "Asset_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -489,7 +489,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAsset()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_Asset.json
+            // Generated from example definition: 2024-11-01/Get_Asset.json
             // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -518,7 +518,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAssetWithSyncStatus()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_Asset_With_SyncStatus.json
+            // Generated from example definition: 2024-11-01/Get_Asset_With_SyncStatus.json
             // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -547,7 +547,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAsset()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_Asset.json
+            // Generated from example definition: 2024-11-01/Get_Asset.json
             // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -588,7 +588,7 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAssetWithSyncStatus()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_Asset_With_SyncStatus.json
+            // Generated from example definition: 2024-11-01/Get_Asset_With_SyncStatus.json
             // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

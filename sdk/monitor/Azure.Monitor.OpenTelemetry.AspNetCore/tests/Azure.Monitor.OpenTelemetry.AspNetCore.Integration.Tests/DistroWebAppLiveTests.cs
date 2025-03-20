@@ -22,7 +22,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using static Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.TelemetryValidationHelper;
 
-#if NET6_0_OR_GREATER
+#if NET
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public class DistroWebAppLiveTests : BaseLiveTest

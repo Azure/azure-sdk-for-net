@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.BotService
                 case 200:
                     {
                         GetBotServiceQnAMakerEndpointKeyResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetBotServiceQnAMakerEndpointKeyResult.DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.BotService
                 case 200:
                     {
                         GetBotServiceQnAMakerEndpointKeyResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetBotServiceQnAMakerEndpointKeyResult.DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

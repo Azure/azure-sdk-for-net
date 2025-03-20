@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRackData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkRackData.DeserializeNetworkRackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRackData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkRackData.DeserializeNetworkRackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRacksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkRacksListResult.DeserializeNetworkRacksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRacksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkRacksListResult.DeserializeNetworkRacksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRacksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkRacksListResult.DeserializeNetworkRacksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRacksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkRacksListResult.DeserializeNetworkRacksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRacksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkRacksListResult.DeserializeNetworkRacksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRacksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkRacksListResult.DeserializeNetworkRacksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRacksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkRacksListResult.DeserializeNetworkRacksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkRacksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkRacksListResult.DeserializeNetworkRacksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

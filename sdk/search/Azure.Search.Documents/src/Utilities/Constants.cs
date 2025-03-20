@@ -152,6 +152,16 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText CountKeyJson = JsonEncodedText.Encode(CountKey);
 
         /// <summary>
+        /// The sum key.
+        /// </summary>
+        public const string SumKey = "sum";
+
+        /// <summary>
+        /// The sum key.
+        /// </summary>
+        public static readonly JsonEncodedText SumKeyJson = JsonEncodedText.Encode(SumKey);
+
+        /// <summary>
         /// The facets key.
         /// </summary>
         public static readonly JsonEncodedText FacetsKeyJson = JsonEncodedText.Encode("@search.facets");

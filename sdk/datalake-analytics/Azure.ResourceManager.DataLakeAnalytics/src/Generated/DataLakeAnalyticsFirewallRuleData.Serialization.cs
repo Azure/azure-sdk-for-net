@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataLakeAnalyticsFirewallRuleData(document.RootElement, options);
                     }
                 default:

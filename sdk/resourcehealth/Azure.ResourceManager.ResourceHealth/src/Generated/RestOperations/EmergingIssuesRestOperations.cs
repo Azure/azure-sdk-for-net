@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         EmergingIssueListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EmergingIssueListResult.DeserializeEmergingIssueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         EmergingIssueListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EmergingIssueListResult.DeserializeEmergingIssueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ServiceEmergingIssueData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ServiceEmergingIssueData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         EmergingIssueListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EmergingIssueListResult.DeserializeEmergingIssueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         EmergingIssueListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EmergingIssueListResult.DeserializeEmergingIssueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

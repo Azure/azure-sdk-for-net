@@ -8,6 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "InvalidAuth",
+   "namespace": "Authentication.OAuth2",
    "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth",
    "usage": "Error,Json,Exception",
    "decorators": [],
@@ -29,19 +30,27 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth.error"
+     "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth.error",
+     "serializationOptions": {
+      "$id": "5",
+      "json": {
+       "$id": "6",
+       "name": "error"
+      }
+     }
     }
    ]
   }
  ],
  "Clients": [
   {
-   "$id": "5",
+   "$id": "7",
    "Name": "OAuth2Client",
+   "Namespace": "Authentication.OAuth2",
    "Doc": "Illustrates clients generated with OAuth2 authentication.",
    "Operations": [
     {
-     "$id": "6",
+     "$id": "8",
      "Name": "valid",
      "ResourceName": "OAuth2",
      "Doc": "Check whether client is authenticated",
@@ -49,17 +58,15 @@
      "Parameters": [],
      "Responses": [
       {
-       "$id": "7",
+       "$id": "9",
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/authentication/oauth2/valid",
      "BufferResponse": true,
@@ -69,21 +76,21 @@
      "Decorators": []
     },
     {
-     "$id": "8",
+     "$id": "10",
      "Name": "invalid",
      "ResourceName": "OAuth2",
      "Doc": "Check whether client is authenticated. Will return an invalid bearer error.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "9",
+       "$id": "11",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "10",
+        "$id": "12",
         "kind": "constant",
         "valueType": {
-         "$id": "11",
+         "$id": "13",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -105,17 +112,15 @@
      ],
      "Responses": [
       {
-       "$id": "12",
+       "$id": "14",
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/authentication/oauth2/invalid",
      "BufferResponse": true,
@@ -126,16 +131,16 @@
     }
    ],
    "Protocol": {
-    "$id": "13"
+    "$id": "15"
    },
    "Parameters": [
     {
-     "$id": "14",
+     "$id": "16",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "15",
+      "$id": "17",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -150,9 +155,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "16",
+      "$id": "18",
       "Type": {
-       "$id": "17",
+       "$id": "19",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -161,13 +166,14 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Authentication.OAuth2"
   }
  ],
  "Auth": {
-  "$id": "18",
+  "$id": "20",
   "OAuth2": {
-   "$id": "19",
+   "$id": "21",
    "Scopes": [
     "https://security.microsoft.com/.default"
    ]

@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDnsResolverDomainListData(document.RootElement, options);
                     }
                 default:

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SelfHelp
                 case 201:
                     {
                         SelfHelpTroubleshooterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SelfHelpTroubleshooterData.DeserializeSelfHelpTroubleshooterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SelfHelp
                 case 201:
                     {
                         SelfHelpTroubleshooterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SelfHelpTroubleshooterData.DeserializeSelfHelpTroubleshooterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SelfHelp
                 case 200:
                     {
                         SelfHelpTroubleshooterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SelfHelpTroubleshooterData.DeserializeSelfHelpTroubleshooterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SelfHelp
                 case 200:
                     {
                         SelfHelpTroubleshooterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SelfHelpTroubleshooterData.DeserializeSelfHelpTroubleshooterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.SelfHelp
                 case 200:
                     {
                         RestartTroubleshooterResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RestartTroubleshooterResult.DeserializeRestartTroubleshooterResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.SelfHelp
                 case 200:
                     {
                         RestartTroubleshooterResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RestartTroubleshooterResult.DeserializeRestartTroubleshooterResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

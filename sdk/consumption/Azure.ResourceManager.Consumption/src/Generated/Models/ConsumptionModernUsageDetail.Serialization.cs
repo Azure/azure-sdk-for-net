@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConsumptionModernUsageDetail(document.RootElement, options);
                     }
                 default:

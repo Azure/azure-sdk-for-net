@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="nginxVersion"></param>
-        /// <param name="managedResourceGroup"> The managed resource group to deploy VNet injection related network resources. </param>
         /// <param name="networkProfile"></param>
         /// <param name="ipAddress"> The IP address of the deployment. </param>
         /// <param name="enableDiagnosticsSupport"></param>
@@ -62,12 +61,12 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="autoUpgradeProfile"> Autoupgrade settings of a deployment. </param>
         /// <param name="userProfile"></param>
         /// <param name="nginxAppProtect"> Settings for NGINX App Protect (NAP). </param>
+        /// <param name="dataplaneApiEndpoint"> Dataplane API endpoint for the caller to update the NGINX state of the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, AutoUpgradeProfile autoUpgradeProfile, NginxDeploymentUserProfile userProfile, NginxDeploymentPropertiesNginxAppProtect nginxAppProtect, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, AutoUpgradeProfile autoUpgradeProfile, NginxDeploymentUserProfile userProfile, NginxDeploymentPropertiesNginxAppProtect nginxAppProtect, string dataplaneApiEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             NginxVersion = nginxVersion;
-            ManagedResourceGroup = managedResourceGroup;
             NetworkProfile = networkProfile;
             IPAddress = ipAddress;
             EnableDiagnosticsSupport = enableDiagnosticsSupport;
@@ -76,6 +75,7 @@ namespace Azure.ResourceManager.Nginx.Models
             AutoUpgradeProfile = autoUpgradeProfile;
             UserProfile = userProfile;
             NginxAppProtect = nginxAppProtect;
+            DataplaneApiEndpoint = dataplaneApiEndpoint;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,8 +83,6 @@ namespace Azure.ResourceManager.Nginx.Models
         public NginxProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the nginx version. </summary>
         public string NginxVersion { get; }
-        /// <summary> The managed resource group to deploy VNet injection related network resources. </summary>
-        public string ManagedResourceGroup { get; set; }
         /// <summary> Gets or sets the network profile. </summary>
         public NginxNetworkProfile NetworkProfile { get; set; }
         /// <summary> The IP address of the deployment. </summary>
@@ -132,5 +130,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Settings for NGINX App Protect (NAP). </summary>
         public NginxDeploymentPropertiesNginxAppProtect NginxAppProtect { get; set; }
+        /// <summary> Dataplane API endpoint for the caller to update the NGINX state of the deployment. </summary>
+        public string DataplaneApiEndpoint { get; }
     }
 }

@@ -3,14 +3,14 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
-using Microsoft.Generator.CSharp.Snippets;
-using Microsoft.Generator.CSharp.Statements;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System.Threading;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
 {
@@ -37,7 +37,7 @@ namespace Azure.Generator.Providers.Abstraction
             => Static(typeof(HttpPipelineBuilder)).Invoke(nameof(HttpPipelineBuilder.Build), [options, perRetryPolicies]);
 
         public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
-            => Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
+            => AzureClientGenerator.Instance.IsAzureArm.Value ? Original.Invoke(nameof(HttpPipeline.CreateMessage)) : Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
 
         public override ClientPipelineApi FromExpression(ValueExpression expression)
             => new HttpPipelineProvider(expression);
@@ -68,8 +68,8 @@ namespace Azure.Generator.Providers.Abstraction
                 new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", options.NullConditional().Property("ErrorOptions"), options.NoThrow()).NotEqual(options.NoThrow())))
                 {
                     isAsync
-                    ? Throw(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
-                    : Throw(New.Instance(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ClientResponseExceptionType, message.Response()))
+                    ? Throw(AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
+                    : Throw(New.Instance(AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseExceptionType, message.Response()))
                 },
                 MethodBodyStatement.EmptyLine,
                 Return(message.Response())

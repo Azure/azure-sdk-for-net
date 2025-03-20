@@ -14,14 +14,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     internal partial class UnknownExtendedUEInfoProperties : ExtendedUEInfoProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExtendedUEInfoProperties"/>. </summary>
-        /// <param name="ratType">
-        /// RAT Type
-        /// Serialized Name: ExtendedUeInfoProperties.ratType
-        /// </param>
-        /// <param name="lastReadOn">
-        /// The timestamp of last UE info read from the packet core (UTC).
-        /// Serialized Name: ExtendedUeInfoProperties.lastReadAt
-        /// </param>
+        /// <param name="ratType"> RAT Type. </param>
+        /// <param name="lastReadOn"> The timestamp of last UE info read from the packet core (UTC). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownExtendedUEInfoProperties(RatType ratType, DateTimeOffset? lastReadOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(ratType, lastReadOn, serializedAdditionalRawData)
         {

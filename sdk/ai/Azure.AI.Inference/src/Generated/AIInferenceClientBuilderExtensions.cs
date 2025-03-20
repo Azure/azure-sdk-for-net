@@ -12,7 +12,7 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="ChatCompletionsClient"/>, <see cref="EmbeddingsClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="ChatCompletionsClient"/>, <see cref="EmbeddingsClient"/>, <see cref="ImageEmbeddingsClient"/> to client builder. </summary>
     public static partial class AIInferenceClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="ChatCompletionsClient"/> instance. </summary>
@@ -53,6 +53,25 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<EmbeddingsClient, AzureAIInferenceClientOptions>((options, cred) => new EmbeddingsClient(endpoint, cred, options));
         }
 
+        /// <summary> Registers a <see cref="ImageEmbeddingsClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<ImageEmbeddingsClient, AzureAIInferenceClientOptions> AddImageEmbeddingsClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<ImageEmbeddingsClient, AzureAIInferenceClientOptions>((options) => new ImageEmbeddingsClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="ImageEmbeddingsClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service host. </param>
+        public static IAzureClientBuilder<ImageEmbeddingsClient, AzureAIInferenceClientOptions> AddImageEmbeddingsClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ImageEmbeddingsClient, AzureAIInferenceClientOptions>((options, cred) => new ImageEmbeddingsClient(endpoint, cred, options));
+        }
+
         /// <summary> Registers a <see cref="ChatCompletionsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
@@ -68,6 +87,14 @@ namespace Microsoft.Extensions.Azure
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<EmbeddingsClient, AzureAIInferenceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="ImageEmbeddingsClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<ImageEmbeddingsClient, AzureAIInferenceClientOptions> AddImageEmbeddingsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<ImageEmbeddingsClient, AzureAIInferenceClientOptions>(configuration);
         }
     }
 }
