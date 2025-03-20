@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="TranscribeAsync(Stream,TranscriptionOptions,CancellationToken)">
+    <member name="TranscribeAsync(TranscribeRequest,CancellationToken)">
       <example>
 This sample shows how to call TranscribeAsync.
 <code><![CDATA[
@@ -9,7 +9,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-Response<TranscriptionResult> response = await client.TranscribeAsync(null);
+TranscribeRequest body = new TranscribeRequest((Stream)null);
+Response<TranscriptionResult> response = await client.TranscribeAsync(body);
 ]]></code>
 This sample shows how to call TranscribeAsync with all parameters.
 <code><![CDATA[
@@ -17,25 +18,28 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-TranscriptionOptions definition = new TranscriptionOptions
+TranscribeRequest body = new TranscribeRequest((Stream)null)
 {
-    Locales = { "<locales>" },
-    Models =
+    Definition = new TranscriptionOptions
     {
-        ["key"] = new Uri("http://localhost:3000")
+        Locales = { "<locales>" },
+        Models =
+        {
+            ["key"] = new Uri("http://localhost:3000")
+        },
+        ProfanityFilterMode = ProfanityFilterMode.None,
+        DiarizationProperties = new TranscriptionDiarizationOptions
+        {
+            Enabled = true,
+            MaxSpeakers = 1234,
+        },
+        ActiveChannels = { 1234 },
     },
-    ProfanityFilterMode = ProfanityFilterMode.None,
-    DiarizationProperties = new TranscriptionDiarizationOptions
-    {
-        Enabled = true,
-        MaxSpeakers = 1234,
-    },
-    ActiveChannels = { 1234 },
 };
-Response<TranscriptionResult> response = await client.TranscribeAsync(null, definition: definition);
+Response<TranscriptionResult> response = await client.TranscribeAsync(body);
 ]]></code></example>
     </member>
-    <member name="Transcribe(Stream,TranscriptionOptions,CancellationToken)">
+    <member name="Transcribe(TranscribeRequest,CancellationToken)">
       <example>
 This sample shows how to call Transcribe.
 <code><![CDATA[
@@ -43,7 +47,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-Response<TranscriptionResult> response = client.Transcribe(null);
+TranscribeRequest body = new TranscribeRequest((Stream)null);
+Response<TranscriptionResult> response = client.Transcribe(body);
 ]]></code>
 This sample shows how to call Transcribe with all parameters.
 <code><![CDATA[
@@ -51,22 +56,25 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-TranscriptionOptions definition = new TranscriptionOptions
+TranscribeRequest body = new TranscribeRequest((Stream)null)
 {
-    Locales = { "<locales>" },
-    Models =
+    Definition = new TranscriptionOptions
     {
-        ["key"] = new Uri("http://localhost:3000")
+        Locales = { "<locales>" },
+        Models =
+        {
+            ["key"] = new Uri("http://localhost:3000")
+        },
+        ProfanityFilterMode = ProfanityFilterMode.None,
+        DiarizationProperties = new TranscriptionDiarizationOptions
+        {
+            Enabled = true,
+            MaxSpeakers = 1234,
+        },
+        ActiveChannels = { 1234 },
     },
-    ProfanityFilterMode = ProfanityFilterMode.None,
-    DiarizationProperties = new TranscriptionDiarizationOptions
-    {
-        Enabled = true,
-        MaxSpeakers = 1234,
-    },
-    ActiveChannels = { 1234 },
 };
-Response<TranscriptionResult> response = client.Transcribe(null, definition: definition);
+Response<TranscriptionResult> response = client.Transcribe(body);
 ]]></code></example>
     </member>
     <member name="TranscribeAsync(RequestContent,string,RequestContext)">

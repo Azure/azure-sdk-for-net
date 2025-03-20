@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -63,34 +61,30 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <summary> Transcribes the provided audio stream. </summary>
-        /// <param name="audio"> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. </param>
-        /// <param name="definition"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscribeDefinition`. </param>
+        /// <param name="body"> The body of the multipart request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='TranscribeAsync(Stream,TranscriptionOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<TranscriptionResult>> TranscribeAsync(Stream audio, TranscriptionOptions definition = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='TranscribeAsync(TranscribeRequest,CancellationToken)']/*" />
+        public virtual async Task<Response<TranscriptionResult>> TranscribeAsync(TranscribeRequest body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(audio, nameof(audio));
+            Argument.AssertNotNull(body, nameof(body));
 
-            TranscribeRequest transcribeRequest = new TranscribeRequest(definition, audio, null);
-            using MultipartFormDataRequestContent content = transcribeRequest.ToMultipartRequestContent();
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await TranscribeAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(TranscriptionResult.FromResponse(response), response);
         }
 
         /// <summary> Transcribes the provided audio stream. </summary>
-        /// <param name="audio"> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. </param>
-        /// <param name="definition"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscribeDefinition`. </param>
+        /// <param name="body"> The body of the multipart request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='Transcribe(Stream,TranscriptionOptions,CancellationToken)']/*" />
-        public virtual Response<TranscriptionResult> Transcribe(Stream audio, TranscriptionOptions definition = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='Transcribe(TranscribeRequest,CancellationToken)']/*" />
+        public virtual Response<TranscriptionResult> Transcribe(TranscribeRequest body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(audio, nameof(audio));
+            Argument.AssertNotNull(body, nameof(body));
 
-            TranscribeRequest transcribeRequest = new TranscribeRequest(definition, audio, null);
-            using MultipartFormDataRequestContent content = transcribeRequest.ToMultipartRequestContent();
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Transcribe(content, content.ContentType, context);
             return Response.FromValue(TranscriptionResult.FromResponse(response), response);
@@ -106,7 +100,7 @@ namespace Azure.AI.Speech.Transcription
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TranscribeAsync(Stream,TranscriptionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TranscribeAsync(TranscribeRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -146,7 +140,7 @@ namespace Azure.AI.Speech.Transcription
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Transcribe(Stream,TranscriptionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Transcribe(TranscribeRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

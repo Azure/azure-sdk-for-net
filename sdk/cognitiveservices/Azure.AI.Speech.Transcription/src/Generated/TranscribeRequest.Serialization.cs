@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.AI.Speech.Transcription
 {
-    internal partial class TranscribeRequest : IUtf8JsonSerializable, IJsonModel<TranscribeRequest>
+    public partial class TranscribeRequest : IUtf8JsonSerializable, IJsonModel<TranscribeRequest>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranscribeRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -38,7 +38,7 @@ namespace Azure.AI.Speech.Transcription
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition, options);
+                writer.WriteObjectValue<TranscriptionOptions>(Definition, options);
             }
             writer.WritePropertyName("audio"u8);
 #if NET6_0_OR_GREATER
@@ -135,7 +135,7 @@ namespace Azure.AI.Speech.Transcription
             MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
             if (Optional.IsDefined(Definition))
             {
-                content.Add(ModelReaderWriter.Write(Definition, ModelSerializationExtensions.WireOptions), "definition");
+                content.Add(ModelReaderWriter.Write<TranscriptionOptions>(Definition, ModelSerializationExtensions.WireOptions), "definition");
             }
             content.Add(Audio, "audio", "audio", "application/octet-stream");
             return content;

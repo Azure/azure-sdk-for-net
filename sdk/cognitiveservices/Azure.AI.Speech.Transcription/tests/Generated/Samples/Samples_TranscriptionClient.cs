@@ -71,7 +71,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            Response<TranscriptionResult> response = client.Transcribe(null);
+            TranscribeRequest body = new TranscribeRequest((Stream)null);
+            Response<TranscriptionResult> response = client.Transcribe(body);
         }
 
         [Test]
@@ -82,7 +83,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            Response<TranscriptionResult> response = await client.TranscribeAsync(null);
+            TranscribeRequest body = new TranscribeRequest((Stream)null);
+            Response<TranscriptionResult> response = await client.TranscribeAsync(body);
         }
 
         [Test]
@@ -195,22 +197,25 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscriptionOptions definition = new TranscriptionOptions
+            TranscribeRequest body = new TranscribeRequest((Stream)null)
             {
-                Locales = { "<locales>" },
-                Models =
+                Definition = new TranscriptionOptions
+                {
+                    Locales = { "<locales>" },
+                    Models =
 {
 ["key"] = new Uri("http://localhost:3000")
 },
-                ProfanityFilterMode = ProfanityFilterMode.None,
-                DiarizationProperties = new TranscriptionDiarizationOptions
-                {
-                    Enabled = true,
-                    MaxSpeakers = 1234,
+                    ProfanityFilterMode = ProfanityFilterMode.None,
+                    DiarizationProperties = new TranscriptionDiarizationOptions
+                    {
+                        Enabled = true,
+                        MaxSpeakers = 1234,
+                    },
+                    ActiveChannels = { 1234 },
                 },
-                ActiveChannels = { 1234 },
             };
-            Response<TranscriptionResult> response = client.Transcribe(null, definition: definition);
+            Response<TranscriptionResult> response = client.Transcribe(body);
         }
 
         [Test]
@@ -221,22 +226,25 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscriptionOptions definition = new TranscriptionOptions
+            TranscribeRequest body = new TranscribeRequest((Stream)null)
             {
-                Locales = { "<locales>" },
-                Models =
+                Definition = new TranscriptionOptions
+                {
+                    Locales = { "<locales>" },
+                    Models =
 {
 ["key"] = new Uri("http://localhost:3000")
 },
-                ProfanityFilterMode = ProfanityFilterMode.None,
-                DiarizationProperties = new TranscriptionDiarizationOptions
-                {
-                    Enabled = true,
-                    MaxSpeakers = 1234,
+                    ProfanityFilterMode = ProfanityFilterMode.None,
+                    DiarizationProperties = new TranscriptionDiarizationOptions
+                    {
+                        Enabled = true,
+                        MaxSpeakers = 1234,
+                    },
+                    ActiveChannels = { 1234 },
                 },
-                ActiveChannels = { 1234 },
             };
-            Response<TranscriptionResult> response = await client.TranscribeAsync(null, definition: definition);
+            Response<TranscriptionResult> response = await client.TranscribeAsync(body);
         }
     }
 }
