@@ -9,35 +9,34 @@ namespace Azure.Provisioning.Tests.Expressions
 {
     public class InterpolatedStringExpressionTest
     {
-        [TestCaseSource(nameof(stringInterpolationTestData))]
-        public string ValidateStringInterpolationWithStringLiteral(BicepValue<string> expression)
+        [TestCaseSource(nameof(_bicepFunctionInterpolateTestData))]
+        public string ValidateBicepFunctionInterpolate(BicepValue<string> expression)
         {
             return expression.ToString();
         }
 
-        private static IEnumerable<TestCaseData> stringInterpolationTestData
+        private static IEnumerable<TestCaseData> _bicepFunctionInterpolateTestData
         {
             get
             {
                 // test provisionable variable
-                var variable = new ProvisioningVariable("v", typeof(string));
                 yield return new TestCaseData(
                     BicepFunction.Interpolate(
-                        $"Var={new ProvisioningVariable("v", typeof(string))}"
+                        $"Var={new ProvisioningVariable("foo", typeof(string))}"
                         ))
                 {
-                    ExpectedResult = "Var=${v}"
+                    ExpectedResult = "'Var=${foo}'"
                 };
 
                 // test index expression in interpolation
                 yield return new TestCaseData(
                     BicepFunction.Interpolate(
                         $"Endpoint={new IndexExpression(
-                            new IdentifierExpression("dict"),
-                            new StringLiteralExpression("test")
+                            new IdentifierExpression("foo"),
+                            new StringLiteralExpression("bar")
                         )}"))
                 {
-                    ExpectedResult = "'Endpoint=${dict['test']}'"
+                    ExpectedResult = "'Endpoint=${foo['bar']}'"
                 };
             }
         }
