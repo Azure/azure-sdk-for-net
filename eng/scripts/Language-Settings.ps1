@@ -121,7 +121,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     if ($ciProps) {
       # CheckAOTCompat is opt _in_, so we should default to false if not specified
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
-      if ($shouldAot) {
+      if ($null -ne $shouldAot) {
         $parsedBool = $null
         if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
           $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
