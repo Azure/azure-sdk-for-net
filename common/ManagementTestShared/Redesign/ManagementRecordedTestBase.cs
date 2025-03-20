@@ -147,7 +147,9 @@ namespace Azure.ResourceManager.TestFramework
 
         private ArmEnvironment GetArmEnvironment(TestEnvironment environment)
         {
-            var endpoint = environment.ResourceManagerUrl;
+            var endpoint = "https://centraluseuap.management.azure.com/";
+
+            //var endpoint = environment.ResourceManagerUrl;
             if (string.IsNullOrEmpty(endpoint))
             {
                 return ArmEnvironment.AzurePublicCloud;

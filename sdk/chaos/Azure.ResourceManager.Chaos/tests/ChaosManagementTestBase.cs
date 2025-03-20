@@ -49,12 +49,13 @@ namespace Azure.ResourceManager.Chaos.Tests
         [SetUp]
         public void CreateCommonClient()
         {
+            var options = new ArmClientOptions();
             Client = GetArmClient();
         }
 
         protected async Task Initialize()
         {
-            this.Location = new AzureLocation(TestEnvironment.Location);
+            this.Location = new AzureLocation("centraluseuap");
             this.VmssId = this.CreateVmssId();
             this.VmssName = string.Format(TestConstants.VmssNameFormat, TestEnvironment.Location, this.VmssId);
             this.SubscriptionResource = await this.Client.GetDefaultSubscriptionAsync();
