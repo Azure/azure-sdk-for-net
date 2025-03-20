@@ -17,15 +17,27 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageError"/>. </summary>
         /// <param name="message"></param>
+        /// <param name="copySourceStatusCode"></param>
+        /// <param name="copySourceErrorCode"></param>
+        /// <param name="copySourceErrorMessage"></param>
         /// <param name="authenticationErrorDetail"></param>
-        internal StorageError(string message, string authenticationErrorDetail)
+        internal StorageError(string message, long? copySourceStatusCode, string copySourceErrorCode, string copySourceErrorMessage, string authenticationErrorDetail)
         {
             Message = message;
+            CopySourceStatusCode = copySourceStatusCode;
+            CopySourceErrorCode = copySourceErrorCode;
+            CopySourceErrorMessage = copySourceErrorMessage;
             AuthenticationErrorDetail = authenticationErrorDetail;
         }
 
         /// <summary> Gets the message. </summary>
         public string Message { get; }
+        /// <summary> Gets the copy source status code. </summary>
+        public long? CopySourceStatusCode { get; }
+        /// <summary> Gets the copy source error code. </summary>
+        public string CopySourceErrorCode { get; }
+        /// <summary> Gets the copy source error message. </summary>
+        public string CopySourceErrorMessage { get; }
         /// <summary> Gets the authentication error detail. </summary>
         public string AuthenticationErrorDetail { get; }
     }
