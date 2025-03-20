@@ -10,6 +10,6 @@ import {
 
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
   context.options["generator-name"] ??= "AzureClientGenerator";
-  context.options["emitter-extension-path"] = import.meta.url;
+  context.options["emitter-extension-path"] ??= import.meta.url;
   await $onMTGEmit(context);
 }

@@ -25,6 +25,7 @@ const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
   context.options["generator-name"] ??= "MgmtClientGenerator";
   context.options["update-code-model"] = updateCodeModel;
+  context.options["emitter-extension-path"] ??= import.meta.url;
   setSDKContextOptions(azureSDKContextOptions);
   await $onAzureEmit(context);
 }
