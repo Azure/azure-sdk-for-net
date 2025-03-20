@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -535,6 +535,87 @@ namespace Azure.Security.KeyVault.Administration
                 throw;
             }
         }
+
+        /// <summary>
+        /// Initiates a pre-backup check on the Key Vault. This operation checks if it is possible to back up the entire collection of keys from a Key Vault.
+        /// </summary>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>A <see cref="KeyVaultPreBackupOperation"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<KeyVaultPreBackupOperation> StartPreBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
+            Argument.AssertNotNull(sasToken, nameof(sasToken));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackupAsync)}");
+            scope.Start();
+            try
+            {
+                Operation<FullBackupDetailsInternal> operation = await _restClient.PreFullBackupAsync(
+                    WaitUntil.Started,
+                    new PreBackupOperationParameters(
+                        blobStorageUri.AbsoluteUri,
+                        sasToken,
+                        useManagedIdentity: sasToken == null
+                        ),
+                    cancellationToken).ConfigureAwait(false);
+
+                // Rest client returns an Operation without headers, so we need to create a new response with headers.
+                var headers = new AzureSecurityKeyVaultAdministrationPreFullBackupHeaders(operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
+
+                return new KeyVaultPreBackupOperation(this, responseWithHeaders);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+         }
+
+         /// <summary>
+         /// Initiates a pre-backup check on the Key Vault. This operation checks if it is possible to back up the entire collection of keys from a Key Vault.
+         /// </summary>
+         /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
+         /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
+         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
+         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+         /// <returns>A <see cref="KeyVaultPreBackupOperation"/> representing the result of the operation.</returns>
+         public virtual KeyVaultPreBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+         {
+             Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
+             Argument.AssertNotNull(sasToken, nameof(sasToken));
+
+             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackup)}");
+             scope.Start();
+             try
+             {
+                Operation<FullBackupDetailsInternal> operation = _restClient.PreFullBackup(
+                     WaitUntil.Started,
+                     new PreBackupOperationParameters(
+                         blobStorageUri.AbsoluteUri,
+                         sasToken,
+                         useManagedIdentity: sasToken == null
+                         ),
+                     cancellationToken);
+
+                // Rest client returns an Operation without headers, so we need to create a new response with headers.
+                var headers = new AzureSecurityKeyVaultAdministrationPreFullBackupHeaders(operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
+
+                 // Should this return a KeyVaultBackupOperation?
+                 return new KeyVaultPreBackupOperation(this, responseWithHeaders);
+             }
+             catch (Exception ex)
+             {
+                 scope.Failed(ex);
+                 throw;
+             }
+         }
 
         internal static void ParseFolderName(Uri folderUri, out string containerUriString, out string folderName)
         {
