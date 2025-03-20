@@ -647,13 +647,12 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
 
-            // Act: Enqueue messages
+            // Act
             for (int i = 0; i < messageCount; i++)
             {
                 await test.Queue.SendMessageAsync($"Message {i + 1}");
             }
 
-            // Fetch queue properties
             Response<Models.QueueProperties> queueProperties = await test.Queue.GetPropertiesAsync();
 
             // Assert
