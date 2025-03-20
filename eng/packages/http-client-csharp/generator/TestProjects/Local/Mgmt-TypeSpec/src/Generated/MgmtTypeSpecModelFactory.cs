@@ -126,28 +126,6 @@ namespace MgmtTypeSpec.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The response of a Foo list operation. </summary>
-        /// <param name="value"> The Foo items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.FooListResult"/> instance for mocking. </returns>
-        public static FooListResult FooListResult(IEnumerable<FooData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<FooData>();
-
-            return new FooListResult(value?.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The response of a PrivateLinkResource list operation. </summary>
-        /// <param name="value"> The PrivateLinkResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static PrivateLinkResourceListResult PrivateLinkResourceListResult(IEnumerable<PrivateLinkResource> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<PrivateLinkResource>();
-
-            return new PrivateLinkResourceListResult(value?.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -155,11 +133,11 @@ namespace MgmtTypeSpec.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResource"/> instance for mocking. </returns>
-        public static PrivateLinkResource PrivateLinkResource(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.PrivateLinkResourceData"/> instance for mocking. </returns>
+        public static PrivateLinkResourceData PrivateLinkResourceData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
         {
 
-            return new PrivateLinkResource(
+            return new PrivateLinkResourceData(
                 id,
                 name,
                 @type,
@@ -215,15 +193,6 @@ namespace MgmtTypeSpec.Models
         {
 
             return new ProxyResource(id, name, @type, systemData, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Start SAP instance(s) request body. </summary>
-        /// <param name="startVm"> The boolean value indicates whether to start the virtual machines before starting the SAP instances. </param>
-        /// <returns> A new <see cref="Models.StartRequest"/> instance for mocking. </returns>
-        public static StartRequest StartRequest(bool? startVm = default)
-        {
-
-            return new StartRequest(startVm, additionalBinaryDataProperties: null);
         }
     }
 }
