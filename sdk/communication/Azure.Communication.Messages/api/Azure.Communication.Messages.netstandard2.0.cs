@@ -214,6 +214,8 @@ namespace Azure.Communication.Messages
         public ConversationAdministrationClient(string connectionString, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
         public ConversationAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ConversationAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
+        public ConversationAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ConversationAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.Communication.Messages.AddParticipantsResult> AddParticipants(string conversationId, Azure.Communication.Messages.AddParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response AddParticipants(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
