@@ -215,6 +215,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     }
 
     [RecordedTest]
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/49020")]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment)]
     public async Task ResponsesHelloWorldWithTool(string deploymentName)
