@@ -8,24 +8,20 @@
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The phone number search purchase request. </summary>
-    internal partial class PhoneNumberPurchaseRequest
+    internal partial class PhoneNumbersReservationPurchaseRequest
     {
-        /// <summary> Initializes a new instance of <see cref="PhoneNumberPurchaseRequest"/>. </summary>
-        public PhoneNumberPurchaseRequest()
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbersReservationPurchaseRequest"/>. </summary>
+        public PhoneNumbersReservationPurchaseRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumberPurchaseRequest"/>. </summary>
-        /// <param name="searchId"> The search id. </param>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbersReservationPurchaseRequest"/>. </summary>
         /// <param name="agreeToNotResell"> The agreement to not resell the phone numbers. Defaults to false if not provided. </param>
-        internal PhoneNumberPurchaseRequest(string searchId, bool? agreeToNotResell)
+        internal PhoneNumbersReservationPurchaseRequest(bool? agreeToNotResell)
         {
-            SearchId = searchId;
             AgreeToNotResell = agreeToNotResell;
         }
 
-        /// <summary> The search id. </summary>
-        public string SearchId { get; set; }
         /// <summary> The agreement to not resell the phone numbers. Defaults to false if not provided. </summary>
         public bool? AgreeToNotResell { get; set; }
     }
