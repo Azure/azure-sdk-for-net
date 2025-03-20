@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class NetworkCloudClustersTests : NetworkCloudManagementTestBase
     {
-        public NetworkCloudClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
+        public NetworkCloudClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {
+            SanitizersToRemove.Add("AZSDK3402");
+        }
         public NetworkCloudClustersTests(bool isAsync) : base(isAsync) {}
 
         [Test]
@@ -82,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     AssociatedIdentity = new ManagedServiceIdentitySelector
                     {
                         IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
-                        UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity")
+                        UserAssignedIdentityResourceId = new ResourceIdentifier(TestEnvironment.UserAssignedIdentity)
                     }
                 },
                 CommandOutputSettings = new CommandOutputSettings
@@ -90,15 +93,15 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     AssociatedIdentity = new ManagedServiceIdentitySelector
                     {
                         IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
-                        UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity")
+                        UserAssignedIdentityResourceId = new ResourceIdentifier(TestEnvironment.UserAssignedIdentity)
                     },
-                    ContainerUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer?restype=container"),
+                    ContainerUri = new Uri(TestEnvironment.ContainerUri),
                 },
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
                     {
-                        [new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity")] = new UserAssignedIdentity()
+                        [new ResourceIdentifier(TestEnvironment.UserAssignedIdentity)] = new UserAssignedIdentity()
                     }
                 },
                 Tags =
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 SecretArchiveSettings = new SecretArchiveSettings
                 {
-                    VaultUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer?restype=container"),
+                    VaultUri = new Uri(TestEnvironment.ContainerUri),
                 }
             };
             var secretArchiveResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch3);
