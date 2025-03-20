@@ -5,12 +5,13 @@ import { EmitContext } from "@typespec/compiler";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 
 import {
-  $onEmit as $onMTGEmit,
   CodeModel,
   CSharpEmitterOptions,
   InputModelType,
   setSDKContextOptions
 } from "@typespec/http-client-csharp";
+
+import {$onEmit as $onAzureEmit} from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
 import { calculateResourceTypeFromPath } from "./resource-type.js";
 
@@ -23,10 +24,9 @@ const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
   context.options["generator-name"] ??= "MgmtClientGenerator";
-  context.options["emitter-extension-path"] = import.meta.url;
   context.options["update-code-model"] = updateCodeModel;
   setSDKContextOptions(azureSDKContextOptions);
-  await $onMTGEmit(context);
+  await $onAzureEmit(context);
 }
 
 function updateCodeModel(codeModel: CodeModel): CodeModel {
