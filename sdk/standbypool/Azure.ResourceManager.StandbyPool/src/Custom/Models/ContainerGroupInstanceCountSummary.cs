@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceCountSummary"/>. </summary>
         /// <param name="instanceCountsByState"> The count of pooled resources in each state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal ContainerGroupInstanceCountSummary(IReadOnlyList<PoolResourceStateCount> instanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCountsByState = instanceCountsByState;

@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
     /// <summary> Displays the counts of pooled resources in each state, as known by the StandbyPool resource provider. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class PoolResourceStateCount
     {
         /// <summary>

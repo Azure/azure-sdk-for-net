@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="zone"> The zone that the provided counts are in. This is null if zones are not enabled on the attached VMSS. </param>
         /// <param name="instanceCountsByState"> The count of pooled resources in each state for the given zone. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal StandbyVirtualMachineInstanceCountSummary(long? zone, IReadOnlyList<PoolResourceStateCount> instanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zone = zone;
