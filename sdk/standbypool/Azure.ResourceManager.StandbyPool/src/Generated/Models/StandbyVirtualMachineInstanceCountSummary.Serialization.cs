@@ -40,12 +40,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 writer.WriteNumberValue(Zone.Value);
             }
             writer.WritePropertyName("instanceCountsByState"u8);
-            writer.WriteStartArray();
-            foreach (var item in InstanceCountsByState)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            InstanceCountsByStateSerial(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

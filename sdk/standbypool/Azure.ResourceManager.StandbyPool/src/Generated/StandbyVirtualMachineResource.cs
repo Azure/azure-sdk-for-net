@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachines_Get</description>
+        /// <description>StandbyVirtualMachineResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachines_Get</description>
+        /// <description>StandbyVirtualMachineResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
