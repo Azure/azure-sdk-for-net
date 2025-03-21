@@ -16,14 +16,14 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a DistributedAvailabilityGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DistributedAvailabilityGroupResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDistributedAvailabilityGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetDistributedAvailabilityGroup method.
+    /// A Class representing a SqlDistributedAvailabilityGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlDistributedAvailabilityGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlDistributedAvailabilityGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetSqlDistributedAvailabilityGroup method.
     /// </summary>
-    public partial class DistributedAvailabilityGroupResource : ArmResource
+    public partial class SqlDistributedAvailabilityGroupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DistributedAvailabilityGroupResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SqlDistributedAvailabilityGroupResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="managedInstanceName"> The managedInstanceName. </param>
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.Sql
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _distributedAvailabilityGroupClientDiagnostics;
-        private readonly DistributedAvailabilityGroupsRestOperations _distributedAvailabilityGroupRestClient;
+        private readonly ClientDiagnostics _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics;
+        private readonly DistributedAvailabilityGroupsRestOperations _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient;
         private readonly DistributedAvailabilityGroupData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/distributedAvailabilityGroups";
 
-        /// <summary> Initializes a new instance of the <see cref="DistributedAvailabilityGroupResource"/> class for mocking. </summary>
-        protected DistributedAvailabilityGroupResource()
+        /// <summary> Initializes a new instance of the <see cref="SqlDistributedAvailabilityGroupResource"/> class for mocking. </summary>
+        protected SqlDistributedAvailabilityGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DistributedAvailabilityGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlDistributedAvailabilityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DistributedAvailabilityGroupResource(ArmClient client, DistributedAvailabilityGroupData data) : this(client, data.Id)
+        internal SqlDistributedAvailabilityGroupResource(ArmClient client, DistributedAvailabilityGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DistributedAvailabilityGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlDistributedAvailabilityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DistributedAvailabilityGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SqlDistributedAvailabilityGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _distributedAvailabilityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string distributedAvailabilityGroupApiVersion);
-            _distributedAvailabilityGroupRestClient = new DistributedAvailabilityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, distributedAvailabilityGroupApiVersion);
+            _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsApiVersion);
+            _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient = new DistributedAvailabilityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DistributedAvailabilityGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDistributedAvailabilityGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Get");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await _distributedAvailabilityGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,21 +146,21 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DistributedAvailabilityGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SqlDistributedAvailabilityGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Get");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.Get");
             scope.Start();
             try
             {
-                var response = _distributedAvailabilityGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Delete");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _distributedAvailabilityGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Delete");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = _distributedAvailabilityGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlArmOperation(_sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,16 +278,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The distributed availability group info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DistributedAvailabilityGroupResource>> UpdateAsync(WaitUntil waitUntil, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlDistributedAvailabilityGroupResource>> UpdateAsync(WaitUntil waitUntil, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Update");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _distributedAvailabilityGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupOperationSource(Client), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,16 +324,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The distributed availability group info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DistributedAvailabilityGroupResource> Update(WaitUntil waitUntil, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlDistributedAvailabilityGroupResource> Update(WaitUntil waitUntil, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Update");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _distributedAvailabilityGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupOperationSource(Client), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,16 +370,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="content"> The distributed availability group failover request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<DistributedAvailabilityGroupResource>> FailoverAsync(WaitUntil waitUntil, DistributedAvailabilityGroupsFailoverContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlDistributedAvailabilityGroupResource>> FailoverAsync(WaitUntil waitUntil, DistributedAvailabilityGroupsFailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Failover");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.Failover");
             scope.Start();
             try
             {
-                var response = await _distributedAvailabilityGroupRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupOperationSource(Client), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,16 +416,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="content"> The distributed availability group failover request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<DistributedAvailabilityGroupResource> Failover(WaitUntil waitUntil, DistributedAvailabilityGroupsFailoverContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlDistributedAvailabilityGroupResource> Failover(WaitUntil waitUntil, DistributedAvailabilityGroupsFailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Failover");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.Failover");
             scope.Start();
             try
             {
-                var response = _distributedAvailabilityGroupRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupOperationSource(Client), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -462,16 +462,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="distributedAvailabilityGroupSetRole"> The distributed availability group set role request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupSetRole"/> is null. </exception>
-        public virtual async Task<ArmOperation<DistributedAvailabilityGroupResource>> SetRoleAsync(WaitUntil waitUntil, DistributedAvailabilityGroupSetRole distributedAvailabilityGroupSetRole, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlDistributedAvailabilityGroupResource>> SetRoleAsync(WaitUntil waitUntil, DistributedAvailabilityGroupSetRole distributedAvailabilityGroupSetRole, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(distributedAvailabilityGroupSetRole, nameof(distributedAvailabilityGroupSetRole));
 
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.SetRole");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.SetRole");
             scope.Start();
             try
             {
-                var response = await _distributedAvailabilityGroupRestClient.SetRoleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, distributedAvailabilityGroupSetRole, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateSetRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, distributedAvailabilityGroupSetRole).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.SetRoleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, distributedAvailabilityGroupSetRole, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupOperationSource(Client), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateSetRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, distributedAvailabilityGroupSetRole).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -508,16 +508,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="distributedAvailabilityGroupSetRole"> The distributed availability group set role request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupSetRole"/> is null. </exception>
-        public virtual ArmOperation<DistributedAvailabilityGroupResource> SetRole(WaitUntil waitUntil, DistributedAvailabilityGroupSetRole distributedAvailabilityGroupSetRole, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlDistributedAvailabilityGroupResource> SetRole(WaitUntil waitUntil, DistributedAvailabilityGroupSetRole distributedAvailabilityGroupSetRole, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(distributedAvailabilityGroupSetRole, nameof(distributedAvailabilityGroupSetRole));
 
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.SetRole");
+            using var scope = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics.CreateScope("SqlDistributedAvailabilityGroupResource.SetRole");
             scope.Start();
             try
             {
-                var response = _distributedAvailabilityGroupRestClient.SetRole(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, distributedAvailabilityGroupSetRole, cancellationToken);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateSetRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, distributedAvailabilityGroupSetRole).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.SetRole(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, distributedAvailabilityGroupSetRole, cancellationToken);
+                var operation = new SqlArmOperation<SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupOperationSource(Client), _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics, Pipeline, _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient.CreateSetRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, distributedAvailabilityGroupSetRole).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

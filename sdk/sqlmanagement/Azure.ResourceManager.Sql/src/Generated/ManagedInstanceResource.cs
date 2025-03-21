@@ -847,11 +847,11 @@ namespace Azure.ResourceManager.Sql
             return GetRestorableDroppedManagedDatabases().Get(restorableDroppedDatabaseId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DistributedAvailabilityGroupResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of DistributedAvailabilityGroupResources and their operations over a DistributedAvailabilityGroupResource. </returns>
-        public virtual DistributedAvailabilityGroupCollection GetDistributedAvailabilityGroups()
+        /// <summary> Gets a collection of SqlDistributedAvailabilityGroupResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of SqlDistributedAvailabilityGroupResources and their operations over a SqlDistributedAvailabilityGroupResource. </returns>
+        public virtual SqlDistributedAvailabilityGroupCollection GetSqlDistributedAvailabilityGroups()
         {
-            return GetCachedClient(client => new DistributedAvailabilityGroupCollection(client, Id));
+            return GetCachedClient(client => new SqlDistributedAvailabilityGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -880,9 +880,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DistributedAvailabilityGroupResource>> GetDistributedAvailabilityGroupAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDistributedAvailabilityGroupResource>> GetSqlDistributedAvailabilityGroupAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetDistributedAvailabilityGroups().GetAsync(distributedAvailabilityGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlDistributedAvailabilityGroups().GetAsync(distributedAvailabilityGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -911,9 +911,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DistributedAvailabilityGroupResource> GetDistributedAvailabilityGroup(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlDistributedAvailabilityGroupResource> GetSqlDistributedAvailabilityGroup(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
-            return GetDistributedAvailabilityGroups().Get(distributedAvailabilityGroupName, cancellationToken);
+            return GetSqlDistributedAvailabilityGroups().Get(distributedAvailabilityGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedInstanceServerTrustCertificateResources in the ManagedInstance. </summary>

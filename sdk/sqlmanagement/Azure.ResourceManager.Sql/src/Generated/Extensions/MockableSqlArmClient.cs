@@ -1019,15 +1019,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DistributedAvailabilityGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DistributedAvailabilityGroupResource.CreateResourceIdentifier" /> to create a <see cref="DistributedAvailabilityGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SqlDistributedAvailabilityGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDistributedAvailabilityGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlDistributedAvailabilityGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DistributedAvailabilityGroupResource"/> object. </returns>
-        public virtual DistributedAvailabilityGroupResource GetDistributedAvailabilityGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDistributedAvailabilityGroupResource"/> object. </returns>
+        public virtual SqlDistributedAvailabilityGroupResource GetSqlDistributedAvailabilityGroupResource(ResourceIdentifier id)
         {
-            DistributedAvailabilityGroupResource.ValidateResourceId(id);
-            return new DistributedAvailabilityGroupResource(Client, id);
+            SqlDistributedAvailabilityGroupResource.ValidateResourceId(id);
+            return new SqlDistributedAvailabilityGroupResource(Client, id);
         }
 
         /// <summary>

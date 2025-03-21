@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class DistributedAvailabilityGroupResource : IJsonModel<DistributedAvailabilityGroupData>
+    public partial class SqlDistributedAvailabilityGroupResource : IJsonModel<DistributedAvailabilityGroupData>
     {
         void IJsonModel<DistributedAvailabilityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DistributedAvailabilityGroupData>)Data).Write(writer, options);
 

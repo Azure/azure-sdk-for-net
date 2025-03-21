@@ -225,6 +225,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}/scanResults/{scanResultId}: SqlDatabaseSqlVulnerabilityAssessmentScanResult
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}: SqlDatabaseSqlVulnerabilityAssessmentBaseline
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}/rules/{ruleId}: SqlDatabaseSqlVulnerabilityAssessmentBaselineRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}: SqlDistributedAvailabilityGroup
 
 rename-mapping:
   CopyLongTermRetentionBackupParameters: CopyLongTermRetentionBackupContent
@@ -358,8 +359,8 @@ rename-mapping:
   Phase: DatabaseOperationPhase
   PhaseDetails: DatabaseOperationPhaseDetails
   UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
-  ManagedInstanceProperties.provisioningState: ManagedInstanceProvisioningState
-  # Status: UpsertManagedServerOperationStepStatus
+  ManagedInstanceProperties.properties.provisioningState: ManagedInstanceProvisioningState
+  DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
 
 prompted-enum-values:
   - Default
