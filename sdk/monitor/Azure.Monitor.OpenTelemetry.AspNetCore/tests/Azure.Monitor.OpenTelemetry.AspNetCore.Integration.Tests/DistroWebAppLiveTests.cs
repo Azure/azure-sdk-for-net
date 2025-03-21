@@ -99,63 +99,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
-        public async Task VerifyExporter_UseAzureMonitorExporter()
-        {
-            // SETUP WEBAPPLICATION WITH OPENTELEMETRY
-            var builder = WebApplication.CreateBuilder();
-
-            builder.WebHost.UseUrls(TestServerUrl);
-
-            builder.Logging.ClearProviders();
-            builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddProcessor(new ActivityEnrichingProcessor()));
-            builder.Services.AddOpenTelemetry()
-                .UseAzureMonitorExporter(options =>
-                {
-                    options.EnableLiveMetrics = false;
-                    options.ConnectionString = TestEnvironment.ConnectionString;
-                })
-                .WithTracing(builder => builder
-                    .AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation())
-                .WithMetrics(builder => builder
-                    .AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation())
-                // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
-                .ConfigureResource(x => x.AddAttributes(_testResourceAttributes));
-
-            using var app = builder.Build();
-            app.MapGet("/", (ILoggerFactory loggerFactory) =>
-            {
-                var logger = loggerFactory.CreateLogger(TestLogCategoryName);
-                logger.LogInformation(TestLogMessage);
-
-                return "Response from Test Server";
-            });
-
-            await app.StartAsync().ConfigureAwait(false); // Start HostedServices
-
-            // ACT
-            using var httpClient = new HttpClient();
-            var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
-            Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
-
-            // SHUTDOWN
-            var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
-            tracerProvider.ForceFlush();
-            tracerProvider.Shutdown();
-
-            var meterProvider = app.Services.GetRequiredService<MeterProvider>();
-            meterProvider.ForceFlush();
-            meterProvider.Shutdown();
-
-            await app.StopAsync(); // shutdown to prevent collecting the log queries.
-
-            // ASSERT
-            await VerifyTelemetry(workspaceId: TestEnvironment.WorkspaceId);
-        }
-
-        [RecordedTest]
-        [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
         public async Task VerifySendingToTwoResources_UsingExporter()
         {
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
@@ -235,6 +178,63 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // ASSERT
             await VerifyTelemetry(workspaceId: TestEnvironment.WorkspaceId);
             await VerifyTelemetry(workspaceId: TestEnvironment.SecondaryWorkspaceId);
+        }
+
+        [RecordedTest]
+        [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
+        public async Task VerifyExporter_UseAzureMonitorExporter()
+        {
+            // SETUP WEBAPPLICATION WITH OPENTELEMETRY
+            var builder = WebApplication.CreateBuilder();
+
+            builder.WebHost.UseUrls(TestServerUrl);
+
+            builder.Logging.ClearProviders();
+            builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddProcessor(new ActivityEnrichingProcessor()));
+            builder.Services.AddOpenTelemetry()
+                .UseAzureMonitorExporter(options =>
+                {
+                    options.EnableLiveMetrics = false;
+                    options.ConnectionString = TestEnvironment.ConnectionString;
+                })
+                .WithTracing(builder => builder
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation())
+                .WithMetrics(builder => builder
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation())
+                // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
+                .ConfigureResource(x => x.AddAttributes(_testResourceAttributes));
+
+            using var app = builder.Build();
+            app.MapGet("/", (ILoggerFactory loggerFactory) =>
+            {
+                var logger = loggerFactory.CreateLogger(TestLogCategoryName);
+                logger.LogInformation(TestLogMessage);
+
+                return "Response from Test Server";
+            });
+
+            await app.StartAsync().ConfigureAwait(false); // Start HostedServices
+
+            // ACT
+            using var httpClient = new HttpClient();
+            var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
+            Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
+
+            // SHUTDOWN
+            var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
+            tracerProvider.ForceFlush();
+            tracerProvider.Shutdown();
+
+            var meterProvider = app.Services.GetRequiredService<MeterProvider>();
+            meterProvider.ForceFlush();
+            meterProvider.Shutdown();
+
+            await app.StopAsync(); // shutdown to prevent collecting the log queries.
+
+            // ASSERT
+            await VerifyTelemetry(workspaceId: TestEnvironment.WorkspaceId);
         }
 
         private async Task VerifyTelemetry(string workspaceId)
