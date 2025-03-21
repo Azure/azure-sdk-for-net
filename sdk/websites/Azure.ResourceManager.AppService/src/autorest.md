@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/0410d404c68289cb1737d06bba92133bb84b515c/specification/web/resource-manager/readme.md
+require: D:\Lwm\SourceCode\azure-rest-api-specs\specification\web\resource-manager\readme.md
 #tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
