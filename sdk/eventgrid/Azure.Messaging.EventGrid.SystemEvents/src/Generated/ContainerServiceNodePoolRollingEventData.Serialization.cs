@@ -34,11 +34,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(ContainerServiceNodePoolRollingEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NodePoolName))
-            {
-                writer.WritePropertyName("nodePoolName"u8);
-                writer.WriteStringValue(NodePoolName);
-            }
+            writer.WritePropertyName("nodePoolName"u8);
+            writer.WriteStringValue(NodePoolName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
