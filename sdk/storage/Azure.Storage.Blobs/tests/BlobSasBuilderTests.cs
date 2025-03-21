@@ -663,6 +663,8 @@ namespace Azure.Storage.Blobs.Test
                 null,
                 null,
                 null,
+                null,
+                null,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
                 SasQueryParametersInternals.DefaultSasVersionInternal,
