@@ -1,5 +1,4 @@
 # Release History
-
 ## 1.4.1-beta.2 (Unreleased)
 
 ### Features Added

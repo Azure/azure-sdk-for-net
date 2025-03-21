@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         AuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         AuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayAuthorizationRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayAuthorizationRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayAuthorizationRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayAuthorizationRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayAccessKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RelayAccessKeys.DeserializeRelayAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayAccessKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RelayAccessKeys.DeserializeRelayAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayAccessKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RelayAccessKeys.DeserializeRelayAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayAccessKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RelayAccessKeys.DeserializeRelayAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         HybridConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectionListResult.DeserializeHybridConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         HybridConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectionListResult.DeserializeHybridConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayHybridConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RelayHybridConnectionData.DeserializeRelayHybridConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayHybridConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RelayHybridConnectionData.DeserializeRelayHybridConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1048,7 +1048,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayHybridConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RelayHybridConnectionData.DeserializeRelayHybridConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1081,7 +1081,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         RelayHybridConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RelayHybridConnectionData.DeserializeRelayHybridConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         AuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         AuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         HybridConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectionListResult.DeserializeHybridConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.Relay
                 case 200:
                     {
                         HybridConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectionListResult.DeserializeHybridConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

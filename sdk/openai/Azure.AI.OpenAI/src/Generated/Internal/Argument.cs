@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
-    internal static class Argument
+    internal static partial class Argument
     {
         public static void AssertNotNull<T>(T value, string name)
         {
@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
         }
 
         public static void AssertNotNull<T>(T? value, string name)
-        where T : struct
+            where T : struct 
         {
             if (!value.HasValue)
             {
@@ -73,7 +73,7 @@ namespace Azure.AI.OpenAI
         }
 
         public static void AssertNotDefault<T>(ref T value, string name)
-        where T : struct, IEquatable<T>
+            where T : struct, IEquatable<T> 
         {
             if (value.Equals(default))
             {
@@ -82,7 +82,7 @@ namespace Azure.AI.OpenAI
         }
 
         public static void AssertInRange<T>(T value, T minimum, T maximum, string name)
-        where T : notnull, IComparable<T>
+            where T : notnull, IComparable<T> 
         {
             if (minimum.CompareTo(value) > 0)
             {
@@ -103,7 +103,7 @@ namespace Azure.AI.OpenAI
         }
 
         public static T CheckNotNull<T>(T value, string name)
-        where T : class
+            where T : class 
         {
             AssertNotNull(value, name);
             return value;

@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
-using Azure.AI.Language.Text.Authoring.Models;
 using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -21,16 +20,16 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample6_TextAuthoring_CancelTrainingJobAsync
             string projectName = "LoanAgreements";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
             string jobId = "training-job-id"; // Replace with an actual job ID.
 
-            Operation<TrainingJobResult> operation = await authoringClient.CancelTrainingJobAsync(
+            Operation<TextAuthoringTrainingJobResult> operation = await projectClient.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
                 jobId: jobId
             );
 

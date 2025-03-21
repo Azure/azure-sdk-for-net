@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.2 (2025-03-18)
+
+### Bugs Fixed
+
+- Fix issue #48747, add custom serialization and deserialization methods for `KeyVaultUri` in `OperationalInsightsKeyVaultProperties`
 
 ## 1.3.0-beta.1 (2024-10-15)
 

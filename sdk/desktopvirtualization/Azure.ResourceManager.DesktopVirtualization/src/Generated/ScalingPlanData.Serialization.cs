@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScalingPlanData(document.RootElement, options);
                     }
                 default:

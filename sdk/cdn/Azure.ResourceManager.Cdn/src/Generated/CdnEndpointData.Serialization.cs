@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCdnEndpointData(document.RootElement, options);
                     }
                 default:

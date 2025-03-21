@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.Workflow.Tests
                 return true;
             };
             var options = new PurviewWorkflowServiceClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            return InstrumentClient(new WorkflowClient(TestEnvironment.Endpoint, TestEnvironment.UsernamePasswordCredential, InstrumentClientOptions(options)));
+            return InstrumentClient(new WorkflowClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
         }
 
         public WorkflowsClient GetWorkflowsClient()
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Workflow.Tests
                 return true;
             };
             var options = new PurviewWorkflowServiceClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            return InstrumentClient(new WorkflowsClient(TestEnvironment.Endpoint, TestEnvironment.UsernamePasswordCredential, InstrumentClientOptions(options)));
+            return InstrumentClient(new WorkflowsClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
         }
 
         public UserRequestsClient GetUserRequestsClient()
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.Workflow.Tests
                 return true;
             };
             var options = new PurviewWorkflowServiceClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            return InstrumentClient(new UserRequestsClient(TestEnvironment.Endpoint, TestEnvironment.UsernamePasswordCredential, InstrumentClientOptions(options)));
+            return InstrumentClient(new UserRequestsClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
         }
 
         public WorkflowRunClient GetWorkflowRunClient()
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Purview.Workflow.Tests
                 return true;
             };
             var options = new PurviewWorkflowServiceClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            return InstrumentClient(new WorkflowRunClient(TestEnvironment.Endpoint, TestEnvironment.UsernamePasswordCredential, InstrumentClientOptions(options)));
+            return InstrumentClient(new WorkflowRunClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
         }
 
         public ApprovalClient GetApprovalClient()
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Purview.Workflow.Tests
                 return true;
             };
             var options = new PurviewWorkflowServiceClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            return InstrumentClient(new ApprovalClient(TestEnvironment.Endpoint, TestEnvironment.UsernamePasswordCredential, InstrumentClientOptions(options)));
+            return InstrumentClient(new ApprovalClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
         }
     }
 }

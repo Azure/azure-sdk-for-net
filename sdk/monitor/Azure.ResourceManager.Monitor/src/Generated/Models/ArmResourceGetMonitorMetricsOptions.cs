@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Timespan { get; set; }
         /// <summary> The interval (i.e. timegrain) of the query. </summary>
         public TimeSpan? Interval { get; set; }
-        /// <summary> The names of the metrics (comma separated) to retrieve. </summary>
+        /// <summary> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </summary>
         public string Metricnames { get; set; }
         /// <summary> The list of aggregation types (comma separated) to retrieve. </summary>
         public string Aggregation { get; set; }

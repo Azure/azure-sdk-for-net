@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.3 (2025-02-14)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-06-01-preview' to 'package-2024-11-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/7a3f210cf6924c6139e2493f5fd0625919af1f32/specification/nginx/resource-manager/readme.md.
+    - Added Nginx Deployment API Key support.
+- Rename `AnalysisResultData` to `NginxAnalysisResultDetails`.
+- Removed location support from `NginxConfigurationData`.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.44.1 to 1.45.0
 
 ## 1.1.0-beta.2 (2024-10-30)
 

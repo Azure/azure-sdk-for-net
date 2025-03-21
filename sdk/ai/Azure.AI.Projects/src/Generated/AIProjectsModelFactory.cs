@@ -21,6 +21,7 @@ namespace Azure.AI.Projects
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </param>
+        /// <param name="target"> Evaluation target specifying the model config and parameters. </param>
         /// <param name="displayName"> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
@@ -29,7 +30,7 @@ namespace Azure.AI.Projects
         /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <returns> A new <see cref="Projects.Evaluation"/> instance for mocking. </returns>
-        public static Evaluation Evaluation(string id = null, InputData data = null, string displayName = null, string description = null, SystemData systemData = null, string status = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null)
+        public static Evaluation Evaluation(string id = null, InputData data = null, EvaluationTarget target = null, string displayName = null, string description = null, SystemData systemData = null, string status = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null)
         {
             tags ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
@@ -38,6 +39,7 @@ namespace Azure.AI.Projects
             return new Evaluation(
                 id,
                 data,
+                target,
                 displayName,
                 description,
                 systemData,
@@ -129,7 +131,7 @@ namespace Azure.AI.Projects
         /// <param name="properties">
         /// The properties of the resource
         /// Please note <see cref="Projects.ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Projects.ConnectionPropertiesApiKeyAuth"/> and <see cref="Projects.InternalConnectionPropertiesNoAuth"/>.
+        /// The available derived classes include <see cref="Projects.ConnectionPropertiesApiKeyAuth"/>, <see cref="Projects.InternalConnectionPropertiesCustomAuth"/> and <see cref="Projects.InternalConnectionPropertiesNoAuth"/>.
         /// </param>
         /// <returns> A new <see cref="Projects.ConnectionResponse"/> instance for mocking. </returns>
         public static ConnectionResponse ConnectionResponse(string id = null, string name = null, ConnectionProperties properties = null)
@@ -162,6 +164,15 @@ namespace Azure.AI.Projects
         public static CredentialsApiKeyAuth CredentialsApiKeyAuth(string key = null)
         {
             return new CredentialsApiKeyAuth(key, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.InternalConnectionPropertiesCustomAuth"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <returns> A new <see cref="Projects.InternalConnectionPropertiesCustomAuth"/> instance for mocking. </returns>
+        public static InternalConnectionPropertiesCustomAuth InternalConnectionPropertiesCustomAuth(ConnectionType category = default, string target = null)
+        {
+            return new InternalConnectionPropertiesCustomAuth(AuthenticationType.Custom, category, target, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.InternalConnectionPropertiesNoAuth"/>. </summary>
@@ -230,6 +241,32 @@ namespace Azure.AI.Projects
         public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null)
         {
             return new UnknownMessageTextAnnotation(type, text, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageTextUrlCitationAnnotation"/>. </summary>
+        /// <param name="text"> The textual content associated with this text annotation item. </param>
+        /// <param name="urlCitation"> The details of the URL citation. </param>
+        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
+        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <returns> A new <see cref="Projects.MessageTextUrlCitationAnnotation"/> instance for mocking. </returns>
+        public static MessageTextUrlCitationAnnotation MessageTextUrlCitationAnnotation(string text = null, MessageTextUrlCitationDetails urlCitation = null, int? startIndex = null, int? endIndex = null)
+        {
+            return new MessageTextUrlCitationAnnotation(
+                "url_citation",
+                text,
+                serializedAdditionalRawData: null,
+                urlCitation,
+                startIndex,
+                endIndex);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageTextUrlCitationDetails"/>. </summary>
+        /// <param name="url"> The URL associated with this citation. </param>
+        /// <param name="title"> The title of the URL. </param>
+        /// <returns> A new <see cref="Projects.MessageTextUrlCitationDetails"/> instance for mocking. </returns>
+        public static MessageTextUrlCitationDetails MessageTextUrlCitationDetails(string url = null, string title = null)
+        {
+            return new MessageTextUrlCitationDetails(url, title, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.RequiredToolCall"/>. </summary>
@@ -687,7 +724,7 @@ namespace Azure.AI.Projects
         /// <param name="annotations">
         /// Annotations for the text.
         /// Please note <see cref="Projects.MessageDeltaTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Projects.MessageDeltaTextFileCitationAnnotation"/> and <see cref="Projects.MessageDeltaTextFilePathAnnotation"/>.
+        /// The available derived classes include <see cref="Projects.MessageDeltaTextFileCitationAnnotation"/>, <see cref="Projects.MessageDeltaTextFilePathAnnotation"/> and <see cref="Projects.MessageDeltaTextUrlCitationAnnotation"/>.
         /// </param>
         /// <returns> A new <see cref="Projects.MessageDeltaTextContentObject"/> instance for mocking. </returns>
         public static MessageDeltaTextContentObject MessageDeltaTextContentObject(string value = null, IEnumerable<MessageDeltaTextAnnotation> annotations = null)
@@ -704,6 +741,32 @@ namespace Azure.AI.Projects
         public static MessageDeltaTextAnnotation MessageDeltaTextAnnotation(int index = default, string type = null)
         {
             return new UnknownMessageDeltaTextAnnotation(index, type, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageDeltaTextUrlCitationAnnotation"/>. </summary>
+        /// <param name="index"> The index of the annotation within a text content part. </param>
+        /// <param name="urlCitation"> The details of the URL citation. </param>
+        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
+        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <returns> A new <see cref="Projects.MessageDeltaTextUrlCitationAnnotation"/> instance for mocking. </returns>
+        public static MessageDeltaTextUrlCitationAnnotation MessageDeltaTextUrlCitationAnnotation(int index = default, MessageDeltaTextUrlCitationDetails urlCitation = null, int? startIndex = null, int? endIndex = null)
+        {
+            return new MessageDeltaTextUrlCitationAnnotation(
+                index,
+                "url_citation",
+                serializedAdditionalRawData: null,
+                urlCitation,
+                startIndex,
+                endIndex);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageDeltaTextUrlCitationDetails"/>. </summary>
+        /// <param name="url"> The URL associated with this citation. </param>
+        /// <param name="title"> The title of the URL. </param>
+        /// <returns> A new <see cref="Projects.MessageDeltaTextUrlCitationDetails"/> instance for mocking. </returns>
+        public static MessageDeltaTextUrlCitationDetails MessageDeltaTextUrlCitationDetails(string url = null, string title = null)
+        {
+            return new MessageDeltaTextUrlCitationDetails(url, title, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.MessageDeltaTextFileCitationAnnotation"/>. </summary>
@@ -848,10 +911,8 @@ namespace Azure.AI.Projects
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="fileSearch"> Reserved for future use. </param>
         /// <returns> A new <see cref="Projects.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> fileSearch = null)
+        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, RunStepFileSearchToolCallResults fileSearch = null)
         {
-            fileSearch ??= new Dictionary<string, string>();
-
             return new RunStepDeltaFileSearchToolCall(index, id, "file_search", serializedAdditionalRawData: null, fileSearch);
         }
 

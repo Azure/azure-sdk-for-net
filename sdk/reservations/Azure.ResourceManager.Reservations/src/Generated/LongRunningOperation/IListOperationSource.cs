@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations
     {
         IList<ReservationDetailData> IOperationSource<IList<ReservationDetailData>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<ReservationDetailData> array = new List<ReservationDetailData>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Reservations
 
         async ValueTask<IList<ReservationDetailData>> IOperationSource<IList<ReservationDetailData>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<ReservationDetailData> array = new List<ReservationDetailData>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

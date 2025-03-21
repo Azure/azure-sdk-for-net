@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Redis
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRedisPatchScheduleData(document.RootElement, options);
                     }
                 default:
