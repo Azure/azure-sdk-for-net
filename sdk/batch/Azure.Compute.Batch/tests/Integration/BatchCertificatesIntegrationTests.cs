@@ -45,7 +45,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             const string certificatePrefix = "testcertificatecrud";
             string cerFilePath = CertificateBuilder.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
             string pfxFilePath = CertificateBuilder.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", certificatePrefix));
-            List<GetCertificateResponse> certificates = null;
+            List<BatchCertificate> certificates = null;
 
             try
             {
@@ -113,7 +113,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
             const string certificatePrefix = "testcertificatecrud";
             var client = CreateBatchClient();
-            List<GetCertificateResponse> certificates = null;
+            List<BatchCertificate> certificates = null;
             string cerFilePath = CertificateBuilder.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
 
             WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "CertPool", IsPlayBack());
@@ -159,7 +159,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
             const string certificatePrefix = "testcertificatecrud";
             var client = CreateBatchClient();
-            List<GetCertificateResponse> certificates = null;
+            List<BatchCertificate> certificates = null;
             string cerFilePath = CertificateBuilder.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
 
             WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "ReplaceCertPool", IsPlayBack());
@@ -208,7 +208,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
         }
 
-        private async Task<List<GetCertificateResponse>> GenerateCertificatesAsync(BatchClient batchClient, string cerFilePath, string pfxFilePath, long seed=1)
+        private async Task<List<BatchCertificate>> GenerateCertificatesAsync(BatchClient batchClient, string cerFilePath, string pfxFilePath, long seed=1)
         {
             X509Certificate2 cerCert = CertificateBuilder.CreateSelfSignedInFile2("Foo", cerFilePath, CertificateBuilder.Sha1Algorithm,seed:seed);
             BatchCertificate cerCertificate = new BatchCertificate(cerCert.Thumbprint, "sha1", Convert.ToBase64String(cerCert.GetRawCertData()))
@@ -219,9 +219,9 @@ namespace Azure.Compute.Batch.Tests.Integration
 
             Response response = await batchClient.CreateCertificateAsync(cerCertificate);
 
-            GetCertificateResponse cerCertificateResponse = await batchClient.GetCertificateAsync(cerCertificate.ThumbprintAlgorithm, cerCertificate.Thumbprint);
+            BatchCertificate cerCertificateResponse = await batchClient.GetCertificateAsync(cerCertificate.ThumbprintAlgorithm, cerCertificate.Thumbprint);
 
-            return new List<GetCertificateResponse>
+            return new List<BatchCertificate>
                 {
                     cerCertificateResponse//,
                    // pfxCertificateResponse

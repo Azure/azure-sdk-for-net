@@ -646,7 +646,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            GetCertificateResponse cerCertificateResponse = batchClient.GetCertificate("ThumbprintAlgorithm", "Thumbprint");
+            BatchCertificate cerCertificateResponse = batchClient.GetCertificate("ThumbprintAlgorithm", "Thumbprint");
             #endregion
         }
 
