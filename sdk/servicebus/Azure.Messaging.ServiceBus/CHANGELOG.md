@@ -8,6 +8,20 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 7.18.4 (2025-02-11)
+
+### Bugs Fixed
+
+- Fixed an issue with the `AmqpReceiver` class where a drain failure during a `ReceiveMessagesAsync` operation would cause message ordering to be violated. ([#47822](https://github.com/Azure/azure-sdk-for-net/issues/47822))
+
+- Fixed an issue where an error response from the Service Bus administration service without a body was incorrectly parsed, resulting in a null argument exception obscuring the actual failure response. ([#47517](https://github.com/Azure/azure-sdk-for-net/issues/47517))
+
+## 7.18.3 (2025-01-17)
+
+### Bugs Fixed
+
 - Fixed an issue where identifier generation for senders did not correctly include the entity path as an informational element.  ([#46952](https://github.com/Azure/azure-sdk-for-net/issues/46952))
 
 ### Other Changes
@@ -15,6 +29,8 @@
 - Added annotations to make the package compatible with trimming and native AOT compilation.
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+- Updated the transitive dependency on `System.Text.Json` to 6.0.10 via `Azure.Core` 1.44.1.  Though Service Bus does not perform JSON serialization and was not vulnerable, the .NET 9 SDK was emitting warnings during scans due to a flaw in the previous `System.Text.Json` dependency.
 
 ## 7.18.2 (2024-10-08)
 

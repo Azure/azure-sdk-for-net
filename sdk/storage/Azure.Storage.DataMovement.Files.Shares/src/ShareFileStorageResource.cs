@@ -32,6 +32,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override long MaxSupportedChunkSize => DataMovementShareConstants.MaxRange;
 
+        protected override int MaxSupportedChunkCount => int.MaxValue;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         internal string _destinationPermissionKey;
@@ -80,6 +82,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
             IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
             string filePermission = _options?.GetFilePermission(properties?.RawProperties);
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
+            // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
+            if ((properties == null || properties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
+            {
+                smbProperties.FileAttributes = default;
+            }
+
             await ShareFileClient.CreateAsync(
                     maxSize: maxSize,
                     httpHeaders: httpHeaders,
@@ -90,13 +98,34 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override Task CompleteTransferAsync(
+        private bool IsReadOnlySet(NtfsFileAttributes? fileAttributes)
+        {
+            return fileAttributes?.HasFlag(NtfsFileAttributes.ReadOnly) ?? false;
+        }
+
+        protected override async Task CompleteTransferAsync(
             bool overwrite,
             StorageResourceCompleteTransferOptions completeTransferOptions,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            return Task.CompletedTask;
+
+            StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
+            // Call Set Properties
+            // if transfer is not empty and original File Attribute contains ReadOnly
+            // or if FileChangedOn is to be preserved or manually set
+            if (((sourceProperties == null || sourceProperties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
+                    || (_options?._isFileChangedOnSet == false || _options?.FileChangedOn != null))
+            {
+                ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
+                await ShareFileClient.SetHttpHeadersAsync(new()
+                {
+                    HttpHeaders = httpHeaders,
+                    SmbProperties = smbProperties,
+                },
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         protected override async Task CopyBlockFromUriAsync(
@@ -236,7 +265,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             if (sourceResource is ShareFileStorageResource)
             {
-                if (_options?.FilePermissions?.Preserve ?? false)
+                if (_options?.FilePermissions ?? false)
                 {
                     ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
                     string permissionsValue = sourceProperties?.RawProperties?.GetPermission();
@@ -283,17 +312,28 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
             return new ShareFileDestinationCheckpointDetails(
+                isContentTypeSet: _options?._isContentTypeSet ?? false,
                 contentType: _options?.ContentType,
+                isContentEncodingSet: _options?._isContentEncodingSet ?? false,
                 contentEncoding: _options?.ContentEncoding,
+                isContentLanguageSet: _options?._isContentLanguageSet ?? false,
                 contentLanguage: _options?.ContentLanguage,
+                isContentDispositionSet: _options?._isContentDispositionSet ?? false,
                 contentDisposition: _options?.ContentDisposition,
+                isCacheControlSet: _options?._isCacheControlSet ?? false,
                 cacheControl: _options?.CacheControl,
+                isFileAttributesSet: _options?._isFileAttributesSet ?? false,
                 fileAttributes: _options?.FileAttributes,
-                preserveFilePermission: _options?.FilePermissions?.Preserve,
+                filePermissions: _options?.FilePermissions,
+                isFileCreatedOnSet: _options?._isFileCreatedOnSet ?? false,
                 fileCreatedOn: _options?.FileCreatedOn,
+                isFileLastWrittenOnSet: _options?._isFileLastWrittenOnSet ?? false,
                 fileLastWrittenOn: _options?.FileLastWrittenOn,
+                isFileChangedOnSet: _options?._isFileChangedOnSet ?? false,
                 fileChangedOn: _options?.FileChangedOn,
+                isFileMetadataSet: _options?._isFileMetadataSet ?? false,
                 fileMetadata: _options?.FileMetadata,
+                isDirectoryMetadataSet: _options?._isDirectoryMetadataSet ?? false,
                 directoryMetadata: _options?.DirectoryMetadata);
         }
     }

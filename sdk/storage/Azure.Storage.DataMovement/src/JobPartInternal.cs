@@ -308,7 +308,7 @@ namespace Azure.Storage.DataMovement
 
         protected async ValueTask ReportBytesWrittenAsync(long bytesTransferred)
         {
-            await _progressTracker.IncrementBytesTransferred(bytesTransferred, _cancellationToken).ConfigureAwait(false);
+            await _progressTracker.IncrementBytesTransferredAsync(bytesTransferred, _cancellationToken).ConfigureAwait(false);
         }
 
         public async virtual Task InvokeSingleCompletedArgAsync()
@@ -547,36 +547,29 @@ namespace Azure.Storage.DataMovement
 
         protected static IEnumerable<(long Offset, long Length)> GetRanges(
             long streamLength, // StreamLength needed to divide before hand
-            long blockSize)
+            long blockSize,
+            int maxBlockCount)
         {
-            // The minimum amount of data we'll accept from a stream before
-            // splitting another block. Code that sets `blockSize` will always
-            // set it to a positive number. Min() only avoids edge case where
-            // user sets their block size to 1.
-            long acceptableBlockSize = Math.Max(1, blockSize);
-
-            // service has a max block count per blob
+            // Destination may have a max block count
             // block size * block count limit = max data length to upload
             // if stream length is longer than specified max block size allows, can't upload
-            long minRequiredBlockSize = (long)Math.Ceiling((double)streamLength / Constants.Blob.Block.MaxBlocks);
+            long minRequiredBlockSize = (long)Math.Ceiling((double)streamLength / maxBlockCount);
             if (blockSize < minRequiredBlockSize)
             {
                 throw Errors.InsufficientStorageTransferOptions(streamLength, blockSize, minRequiredBlockSize);
             }
-            // bring min up to our min required by the service
-            acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
 
             // Start the position at the first block size since the first block has potentially
             // been already staged.
             long absolutePosition = blockSize;
-            long blockLength = acceptableBlockSize;
+            long blockLength;
 
             // TODO: divide up partitions based on how much array pool is left
             while (absolutePosition < streamLength)
             {
                 // Return based on the size of the stream divided up by the acceptable blocksize.
-                blockLength = (absolutePosition + acceptableBlockSize < streamLength) ?
-                    acceptableBlockSize :
+                blockLength = (absolutePosition + blockSize < streamLength) ?
+                    blockSize :
                     streamLength - absolutePosition;
                 yield return (absolutePosition, blockLength);
                 absolutePosition += blockLength;

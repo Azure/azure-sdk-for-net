@@ -2267,132 +2267,6 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-        /// <param name="stream"> If true, returns a stream of events that happen during the Run as server-sent events, terminating when the run enters a terminal state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
-
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await SubmitToolOutputsToRunAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
-        }
-
-        /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-        /// <param name="stream"> If true, returns a stream of events that happen during the Run as server-sent events, terminating when the run enters a terminal state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
-
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = SubmitToolOutputsToRun(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SubmitToolOutputsToRunAsync(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SubmitToolOutputsToRunAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SubmitToolOutputsToRun(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response SubmitToolOutputsToRun(string threadId, string runId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Cancels a run of an in progress thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Identifier of the run. </param>
@@ -4168,16 +4042,16 @@ namespace Azure.AI.Projects
         /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="dataSources"> Azure asset ID. </param>
+        /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSources?.ToList() as IReadOnlyList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, null);
+            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateVectorStoreFileAsync(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(VectorStoreFile.FromResponse(response), response);
@@ -4186,16 +4060,16 @@ namespace Azure.AI.Projects
         /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="dataSources"> Azure asset ID. </param>
+        /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSources?.ToList() as IReadOnlyList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, null);
+            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateVectorStoreFile(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context);
             return Response.FromValue(VectorStoreFile.FromResponse(response), response);
@@ -4211,7 +4085,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFileAsync(string,string,IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreFileAsync(string,string,VectorStoreDataSource,VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4252,7 +4126,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFile(string,string,IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreFile(string,string,VectorStoreDataSource,VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

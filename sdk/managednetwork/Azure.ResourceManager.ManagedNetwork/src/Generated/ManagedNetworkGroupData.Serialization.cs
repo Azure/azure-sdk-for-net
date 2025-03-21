@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedNetworkGroupData(document.RootElement, options);
                     }
                 default:

@@ -24,7 +24,7 @@ You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) 
 
 ### Authenticate the client
 
-In order to let the extension work with Azure Web PubSub service, you will need to provide a valid `ConnectionString`. 
+In order to let the extension work with Azure Web PubSub service, you will need to provide a valid `ConnectionString`.
 
 You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal](https://portal.azure.com/).
 
@@ -167,8 +167,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.WebPubSub%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src

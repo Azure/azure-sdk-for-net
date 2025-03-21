@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Kusto.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Samples
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_KustoScriptsCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoScriptsCreateOrUpdate.json
             // this example is just showing the usage of "Scripts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,6 +48,8 @@ namespace Azure.ResourceManager.Kusto.Samples
                 ScriptUriSasToken = "?sv=2019-02-02&st=2019-04-29T22%3A18%3A26Z&se=2019-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=********************************",
                 ForceUpdateTag = "2bcf3c21-ffd1-4444-b9dd-e52e00ee53fe",
                 ShouldContinueOnErrors = true,
+                ScriptLevel = KustoScriptLevel.Database,
+                PrincipalPermissionsAction = PrincipalPermissionsAction.RemovePermissionOnScriptCompletion,
             };
             ArmOperation<KustoScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             KustoScriptResource result = lro.Value;
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_KustoScriptsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoScriptsGet.json
             // this example is just showing the usage of "Scripts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_KustoScriptsList()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsListByDatabase.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoScriptsListByDatabase.json
             // this example is just showing the usage of "Scripts_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +137,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_KustoScriptsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoScriptsGet.json
             // this example is just showing the usage of "Scripts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_KustoScriptsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoScriptsGet.json
             // this example is just showing the usage of "Scripts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

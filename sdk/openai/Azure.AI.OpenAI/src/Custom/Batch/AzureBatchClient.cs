@@ -27,14 +27,9 @@ internal partial class AzureBatchClient : BatchClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureBatchClient()
     { }
-
-    internal override CreateBatchOperation CreateCreateBatchOperation(string batchId, string status, PipelineResponse response)
-    {
-        return new AzureCreateBatchOperation(Pipeline, _endpoint, batchId, status, response, _apiVersion);
-    }
 }

@@ -169,7 +169,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRadiologyProcedureInference(document.RootElement, options);
                     }
                 default:
@@ -183,7 +183,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new RadiologyProcedureInference FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRadiologyProcedureInference(document.RootElement);
         }
 

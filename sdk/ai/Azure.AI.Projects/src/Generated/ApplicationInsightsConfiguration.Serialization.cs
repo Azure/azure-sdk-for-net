@@ -39,8 +39,11 @@ namespace Azure.AI.Projects
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            writer.WritePropertyName("serviceName"u8);
-            writer.WriteStringValue(ServiceName);
+            if (Optional.IsDefined(ServiceName))
+            {
+                writer.WritePropertyName("serviceName"u8);
+                writer.WriteStringValue(ServiceName);
+            }
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
@@ -138,7 +141,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApplicationInsightsConfiguration(document.RootElement, options);
                     }
                 default:
@@ -152,7 +155,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ApplicationInsightsConfiguration FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeApplicationInsightsConfiguration(document.RootElement);
         }
 

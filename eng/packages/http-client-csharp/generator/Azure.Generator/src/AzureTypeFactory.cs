@@ -5,14 +5,14 @@ using Azure.Generator.InputTransformation;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Input;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
-using Microsoft.Generator.CSharp.Snippets;
-using Microsoft.Generator.CSharp.Statements;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -78,7 +78,9 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
         public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             var expression = DeserializeJsonValueCore(valueType, element, format);
             return expression ?? base.DeserializeJsonValue(valueType, element, format);
@@ -109,31 +111,21 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        protected override ClientProvider CreateClientCore(InputClient inputClient)
-            => AzureClientPlugin.Instance.IsAzureArm.Value ? base.CreateClientCore(InputClientTransformer.TransformInputClient(inputClient)) : base.CreateClientCore(inputClient);
-
-        /// <inheritdoc/>
-        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
+        protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            if (inputType is InputModelType inputModel
-                && typeProvider is ModelProvider modelProvider
-                && AzureClientPlugin.Instance.OutputLibrary.IsResource(inputType.Name)
-                && inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
+            if (!AzureClientGenerator.Instance.IsAzureArm.Value)
             {
-                return [new ResourceDataSerializationProvider(inputModel, modelProvider)];
+                return base.CreateClientCore(inputClient);
             }
 
-            return base.CreateSerializationsCore(inputType, typeProvider);
+            var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
+            return transformedClient is null ? null : base.CreateClientCore(transformedClient);
         }
 
         /// <inheritdoc/>
-        protected override ModelProvider? CreateModelCore(InputModelType model)
+        public override NewProjectScaffolding CreateNewProjectScaffolding()
         {
-            if (AzureClientPlugin.Instance.OutputLibrary.IsResource(model.Name))
-            {
-                return new ResourceDataProvider(model);
-            }
-            return base.CreateModelCore(model);
+            return new NewAzureProjectScaffolding();
         }
     }
 }

@@ -33,25 +33,6 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryAssetEndpointProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryAssetEndpointProfileResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryAssetEndpointProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetDeviceRegistryAssetEndpointProfileResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeviceRegistryAssetEndpointProfileResource"/> object. </returns>
-        public static DeviceRegistryAssetEndpointProfileResource GetDeviceRegistryAssetEndpointProfileResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDeviceRegistryArmClient(client).GetDeviceRegistryAssetEndpointProfileResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="DeviceRegistryAssetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DeviceRegistryAssetResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryAssetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -71,96 +52,41 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Gets a collection of DeviceRegistryAssetEndpointProfileResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="DeviceRegistryAssetEndpointProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryAssetEndpointProfileResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryAssetEndpointProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetDeviceRegistryAssetEndpointProfiles()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetDeviceRegistryAssetEndpointProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DeviceRegistryAssetEndpointProfileResources and their operations over a DeviceRegistryAssetEndpointProfileResource. </returns>
-        public static DeviceRegistryAssetEndpointProfileCollection GetDeviceRegistryAssetEndpointProfiles(this ResourceGroupResource resourceGroupResource)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceRegistryAssetEndpointProfileResource"/> object. </returns>
+        public static DeviceRegistryAssetEndpointProfileResource GetDeviceRegistryAssetEndpointProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistryAssetEndpointProfiles();
+            return GetMockableDeviceRegistryArmClient(client).GetDeviceRegistryAssetEndpointProfileResource(id);
         }
 
         /// <summary>
-        /// Get a AssetEndpointProfile
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssetEndpointProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="DeviceRegistryBillingContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryBillingContainerResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryBillingContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetDeviceRegistryAssetEndpointProfileAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetDeviceRegistryBillingContainerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="assetEndpointProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DeviceRegistryAssetEndpointProfileResource>> GetDeviceRegistryAssetEndpointProfileAsync(this ResourceGroupResource resourceGroupResource, string assetEndpointProfileName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceRegistryBillingContainerResource"/> object. </returns>
+        public static DeviceRegistryBillingContainerResource GetDeviceRegistryBillingContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistryAssetEndpointProfileAsync(assetEndpointProfileName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a AssetEndpointProfile
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssetEndpointProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetDeviceRegistryAssetEndpointProfile(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="assetEndpointProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfile(this ResourceGroupResource resourceGroupResource, string assetEndpointProfileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistryAssetEndpointProfile(assetEndpointProfileName, cancellationToken);
+            return GetMockableDeviceRegistryArmClient(client).GetDeviceRegistryBillingContainerResource(id);
         }
 
         /// <summary>
@@ -189,11 +115,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
+        /// <description>Asset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,11 +153,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
+        /// <description>Asset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,55 +183,36 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// List AssetEndpointProfile resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssetEndpointProfiles_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
-        /// </item>
-        /// </list>
+        /// Gets a collection of DeviceRegistryAssetEndpointProfileResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetDeviceRegistryAssetEndpointProfiles()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of DeviceRegistryAssetEndpointProfileResources and their operations over a DeviceRegistryAssetEndpointProfileResource. </returns>
+        public static DeviceRegistryAssetEndpointProfileCollection GetDeviceRegistryAssetEndpointProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistryAssetEndpointProfilesAsync(cancellationToken);
+            return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistryAssetEndpointProfiles();
         }
 
         /// <summary>
-        /// List AssetEndpointProfile resources by subscription ID
+        /// Get a AssetEndpointProfile
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AssetEndpointProfiles_ListBySubscription</description>
+        /// <description>AssetEndpointProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,18 +221,151 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetDeviceRegistryAssetEndpointProfileAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="assetEndpointProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DeviceRegistryAssetEndpointProfileResource>> GetDeviceRegistryAssetEndpointProfileAsync(this ResourceGroupResource resourceGroupResource, string assetEndpointProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistryAssetEndpointProfileAsync(assetEndpointProfileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a AssetEndpointProfile
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssetEndpointProfile_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetDeviceRegistryAssetEndpointProfile(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="assetEndpointProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfile(this ResourceGroupResource resourceGroupResource, string assetEndpointProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistryAssetEndpointProfile(assetEndpointProfileName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of DeviceRegistryBillingContainerResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryBillingContainers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An object representing collection of DeviceRegistryBillingContainerResources and their operations over a DeviceRegistryBillingContainerResource. </returns>
+        public static DeviceRegistryBillingContainerCollection GetDeviceRegistryBillingContainers(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistryAssetEndpointProfiles(cancellationToken);
+            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistryBillingContainers();
+        }
+
+        /// <summary>
+        /// Get a BillingContainer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingContainer_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryBillingContainerResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryBillingContainerAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="billingContainerName"> Name of the billing container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="billingContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DeviceRegistryBillingContainerResource>> GetDeviceRegistryBillingContainerAsync(this SubscriptionResource subscriptionResource, string billingContainerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistryBillingContainerAsync(billingContainerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a BillingContainer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingContainer_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryBillingContainerResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryBillingContainer(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="billingContainerName"> Name of the billing container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="billingContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<DeviceRegistryBillingContainerResource> GetDeviceRegistryBillingContainer(this SubscriptionResource subscriptionResource, string billingContainerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistryBillingContainer(billingContainerName, cancellationToken);
         }
 
         /// <summary>
@@ -337,11 +377,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_ListBySubscription</description>
+        /// <description>Asset_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -373,11 +413,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_ListBySubscription</description>
+        /// <description>Asset_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,6 +438,78 @@ namespace Azure.ResourceManager.DeviceRegistry
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistryAssets(cancellationToken);
+        }
+
+        /// <summary>
+        /// List AssetEndpointProfile resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssetEndpointProfile_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistryAssetEndpointProfilesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List AssetEndpointProfile resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssetEndpointProfile_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistryAssetEndpointProfiles(cancellationToken);
         }
     }
 }

@@ -50,12 +50,12 @@ namespace Azure.AI.Inference.Tests
                     id: "4",
                     model: "gpt-100o",
                     created: DateTimeOffset.Now,
+                    choices: new List<StreamingChatChoiceUpdate>(),
                     usage: new CompletionsUsage(
                         totalTokens: 10,
                         completionTokens: 7,
                         promptTokens: 3
-                        ),
-                    choices: new List<StreamingChatChoiceUpdate>()
+                        )
                 ));
             }
 

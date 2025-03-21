@@ -1,0 +1,77 @@
+parameters:
+  PackageInfo: ''
+  Artifacts: []
+  IncludeIndirect: true
+  Restore: false
+  SetOverrideFile: true
+steps:
+  # Package-Properties folder contains the package properties for all discovered packages that were either A) affected by the PR or
+  # B) explicitly present in the service directory. This repo splits the builds into two categories: "mgmt" and "dataplane". While
+  # a given directory may contain both, there will be a separate build definition to release the management packages. Due to this
+  # we need to artificially filter the packages to ensure that only the packages targeted for THAT ci.yml are built.
+  # When we merge the PR adding net - pullrequest, this code will also merge, meaning the public - <service> - ci builds will still operate
+  # EXACTLY the same as they did before the pipelinev3 change. This is important to ensure that we don't accidentally build the wrong packages
+  # while in the integration period. After we disable all the public `net - <service> - ci` builds, only the `net - pullrequest` build WONT provide
+  # an artifact list, which will allow the expand/contract. Meanwhile the internal builds will continue to provide the artifact list from their
+  # individual ci.yml and ci.mgmt.yml files.
+  - pwsh: |
+      $artifacts = '${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json
+      $includeIndirect = $${{ parameters.IncludeIndirect }}
+      $knownArtifacts = @()
+      if ($artifacts) {
+        $knownArtifacts = $artifacts | ForEach-Object { $_.name }
+      }
+
+      $packageProperties = Get-ChildItem -Recurse "${{ parameters.PackageInfo }}" *.json `
+        | Where-Object { if($knownArtifacts) { $knownArtifacts -contains $_.Name.Replace(".json", "") } else { $true } }
+
+      if (-not $includeIndirect) {
+        $packageProperties = $packageProperties | Where-Object { (Get-Content -Raw $_ | ConvertFrom-Json).IncludedForValidation -eq $false }
+      }
+
+      $pkgNames = $packageProperties | ForEach-Object { $_.Name.Replace(".json", "") }
+
+      $setting = $pkgNames -join ","
+      Write-Host "Setting ProjectNames to: `n$setting"
+      Write-Host "##vso[task.setvariable variable=ProjectNames;]$setting"
+
+      if (!$pkgNames) {
+        Write-Host "No packages were identified for this build."
+      }
+    displayName: Resolve Targeted Packages
+    condition: eq(variables['ProjectNames'], '')
+
+  # this script sets $(ChangedServices) and populates a props file with the targeted set of projects
+  # for the build. This file is set to variable $(ProjectListOverrideFile).
+  - pwsh: |
+      ./eng/scripts/splittestdependencies/set-artifact-packages.ps1 `
+        -ProjectNames "$(ProjectNames)" `
+        -PackageInfoFolder "${{ parameters.PackageInfo }}" `
+        -OutputPath $(Build.SourcesDirectory)/projlist `
+        -SetOverrideFile $${{ parameters.SetOverrideFile }}
+    displayName: Resolve Service and Project List
+    condition: ne(variables['ProjectNames'], '')
+
+  - ${{ if eq(parameters.Restore, true) }}:
+    - template: /eng/common/testproxy/test-proxy-tool.yml
+      parameters:
+        runProxy: false
+
+    - pwsh: |
+        $packageProperties = Get-ChildItem -Recurse '${{ parameters.PackageInfo }}' -Filter *.json `
+          | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json }
+        $packageSet = "$(ProjectNames)" -split ","
+        $changedProjects = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
+
+        foreach ($proj in $changedProjects) {
+          $assets = Join-Path (Join-Path "$(Build.SourcesDirectory)" $proj.DirectoryPath) "assets.json"
+          if (Test-Path $assets) {
+            Write-Host "Restoring $assets"
+            if ($IsWindows) {
+              & "$(Build.BinariesDirectory)/test-proxy/test-proxy.exe" restore -a $assets
+            } else {
+              & "$(Build.BinariesDirectory)/test-proxy/test-proxy" restore -a $assets
+            }
+          }
+        }
+      displayName: Restore Recordings

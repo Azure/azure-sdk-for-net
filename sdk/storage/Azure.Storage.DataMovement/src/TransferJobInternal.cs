@@ -209,7 +209,7 @@ namespace Azure.Storage.DataMovement
                   errorHandling,
                   transferOptions.InitialTransferSize,
                   transferOptions.MaximumTransferChunkSize,
-                  transferOptions.CreationPreference,
+                  transferOptions.CreationMode,
                   arrayPool,
                   transferOptions.GetTransferStatus(),
                   transferOptions.GetFailed(),
@@ -244,7 +244,7 @@ namespace Azure.Storage.DataMovement
                   errorHandling,
                   transferOptions.InitialTransferSize,
                   transferOptions.MaximumTransferChunkSize,
-                  transferOptions.CreationPreference,
+                  transferOptions.CreationMode,
                   arrayPool,
                   transferOptions.GetTransferStatus(),
                   transferOptions.GetFailed(),
@@ -300,7 +300,6 @@ namespace Azure.Storage.DataMovement
                     {
                         // Single resource transfer, we can skip to chunking the job.
                         part = await _createJobPartSingleAsync(this, partNumber).ConfigureAwait(false);
-                        AppendJobPart(part);
                         await OnAllResourcesEnumeratedAsync().ConfigureAwait(false);
                     }
                     catch (Exception ex)
@@ -308,6 +307,7 @@ namespace Azure.Storage.DataMovement
                         await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                         yield break;
                     }
+                    AppendJobPart(part);
                     yield return part;
                 }
                 else
@@ -342,7 +342,7 @@ namespace Azure.Storage.DataMovement
                     yield break;
                 }
 
-                if (!isEnumerationComplete)
+                if (!isEnumerationComplete && !_isSingleResource)
                 {
                     await foreach (JobPartInternal jobPartInternal in EnumerateAndCreateJobPartsAsync().ConfigureAwait(false))
                     {

@@ -48,6 +48,9 @@ namespace Azure.Identity
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
         /// </summary>
+        /// <remarks>
+        /// Defaults to the value of environment variable <c>AZURE_TENANT_ID</c>.
+        /// </remarks>
         public string TenantId
         {
             get => _tenantId.Value;
@@ -101,7 +104,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Specifies the tenant id of the preferred authentication account, to be retrieved from the shared token cache for single sign on authentication with
+        /// Specifies the tenant ID of the preferred authentication account, to be retrieved from the shared token cache for single sign on authentication with
         /// development tools, in the case multiple accounts are found in the shared token.
         /// </summary>
         /// <remarks>
@@ -167,8 +170,10 @@ namespace Azure.Identity
         /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
         /// If no value is specified for <see cref="TenantId"/>, this option will have no effect on that authentication method, and the credential will acquire tokens for any requested tenant when using that method.
-        /// This value can also be set by setting the environment variable AZURE_ADDITIONALLY_ALLOWED_TENANTS.
         /// </summary>
+        /// <remarks>
+        /// Defaults to the value of environment variable <c>AZURE_ADDITIONALLY_ALLOWED_TENANTS</c>.
+        /// </remarks>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = EnvironmentVariables.AdditionallyAllowedTenants;
 
         /// <summary>
@@ -177,18 +182,22 @@ namespace Azure.Identity
         /// </summary>
         /// <remarks>
         /// If multiple accounts are found in the shared token cache and no value is specified, or the specified value matches no accounts in
-        /// the cache the SharedTokenCacheCredential will not be used for authentication.
+        /// the cache, the SharedTokenCacheCredential won't be used for authentication.
+        /// Defaults to the value of environment variable <c>AZURE_USERNAME</c>.
         /// </remarks>
         public string SharedTokenCacheUsername { get; set; } = EnvironmentVariables.Username;
 
         /// <summary>
-        /// Specifies the client id of the selected credential
+        /// Specifies the client ID of the selected credential.
         /// </summary>
         public string InteractiveBrowserCredentialClientId { get; set; }
 
         /// <summary>
-        /// Specifies the client id of the application the workload identity will authenticate.
+        /// Specifies the client ID of the application the workload identity will authenticate.
         /// </summary>
+        /// <remarks>
+        /// Defaults to the value of environment variable <c>AZURE_CLIENT_ID</c>.
+        /// </remarks>
         public string WorkloadIdentityClientId { get; set; } = EnvironmentVariables.ClientId;
 
         /// <summary>
@@ -196,6 +205,7 @@ namespace Azure.Identity
         /// </summary>
         /// <remarks>
         /// If neither the <see cref="ManagedIdentityClientId"/> nor the <see cref="ManagedIdentityResourceId"/> property is set, then a system-assigned managed identity is used.
+        /// Defaults to the value of environment variable <c>AZURE_CLIENT_ID</c>.
         /// </remarks>
         public string ManagedIdentityClientId { get; set; } = EnvironmentVariables.ClientId;
 
@@ -213,20 +223,20 @@ namespace Azure.Identity
         public TimeSpan? CredentialProcessTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
-        /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
+        /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to <c>true</c> disables reading
         /// authentication details from the process' environment variables.
         /// </summary>
         public bool ExcludeEnvironmentCredential { get; set; }
 
         /// <summary>
-        /// Specifies whether the <see cref="WorkloadIdentityCredential"/> will be excluded from the authentication flow. Setting to true disables reading
+        /// Specifies whether the <see cref="WorkloadIdentityCredential"/> will be excluded from the authentication flow. Setting to <c>true</c> disables reading
         /// authentication details from the process' environment variables.
         /// </summary>
         public bool ExcludeWorkloadIdentityCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="ManagedIdentityCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
-        /// Setting to true disables authenticating with managed identity endpoints.
+        /// Setting to <c>true</c> disables authenticating with managed identity endpoints.
         /// </summary>
         public bool ExcludeManagedIdentityCredential { get; set; }
 
@@ -237,14 +247,14 @@ namespace Azure.Identity
 
         /// <summary>
         /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
-        /// Setting to true disables single sign on authentication with development tools which write to the shared token cache.
+        /// Setting to <c>true</c> disables single sign-on authentication with development tools which write to the shared token cache.
         /// The default is <c>true</c>.
         /// </summary>
         public bool ExcludeSharedTokenCacheCredential { get; set; } = true;
 
         /// <summary>
         /// Specifies whether the <see cref="InteractiveBrowserCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
-        /// Setting to true disables launching the default system browser to authenticate in development environments.
+        /// Setting to <c>true</c> disables launching the default system browser to authenticate in development environments.
         /// The default is <c>true</c>.
         /// </summary>
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;

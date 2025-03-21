@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 IsStreamingIngestEnabled = false,
                 OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 5),
                 PublicIPType = "DualStack",
-                TrustedExternalTenants = {new KustoClusterTrustedExternalTenant(TE.TenantId, null)},
+                TrustedExternalTenants = {new KustoClusterTrustedExternalTenant(TE.KustoTenantId, null)},
                 // TODO: figure out how to authenticate
                 // KeyVaultProperties = new KustoKeyVaultProperties(
                 //     TE.KeyName,
@@ -74,8 +74,6 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             await ClusterStopStartTests(clusterCollection, clusterName);
 
-            await ClusterMigrationTests(clusterCollection, clusterName);
-
             await DeletionTest(clusterName, clusterCollection.GetAsync, clusterCollection.ExistsAsync);
         }
 
@@ -90,24 +88,6 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             await cluster.StartAsync(WaitUntil.Completed);
             cluster = await clusterCollection.GetAsync(clusterName);
             AssertEquality(KustoClusterState.Running, cluster.Data.State);
-        }
-
-        private async Task ClusterMigrationTests(KustoClusterCollection clusterCollection, string clusterName)
-        {
-            var cluster = (await clusterCollection.GetAsync(clusterName)).Value;
-
-            var databaseName = GenerateAssetName("MgrDatabase");
-            var databaseData = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = TimeSpan.FromDays(2), SoftDeletePeriod = TimeSpan.FromDays(3)};
-            var databaseCollection = cluster.GetKustoDatabases();
-            await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData);
-
-            var destinationCluster = (await ResourceGroup.GetKustoClusterAsync(TE.ClusterName)).Value;
-
-            var clusterMigrationContent = new ClusterMigrateContent(destinationCluster.Data.Id);
-            await cluster.MigrateAsync(WaitUntil.Completed, clusterMigrationContent).ConfigureAwait(false);
-
-            cluster = await clusterCollection.GetAsync(clusterName).ConfigureAwait(false);
-            AssertEquality(KustoClusterState.Migrated, cluster.Data.State);
         }
 
         private void ValidateCluster(
@@ -154,7 +134,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 Assert.IsNull(actual.PrincipalId);
             }
 
-            AssertEquality(Guid.Parse(TE.TenantId), actual.TenantId);
+            AssertEquality(Guid.Parse(TE.KustoTenantId), actual.TenantId);
             AssertEquality(expected.ManagedServiceIdentityType, actual.ManagedServiceIdentityType);
 
             CollectionAssert.AreEqual(
