@@ -1,0 +1,59 @@
+[
+  [
+    {
+      "sku": {
+        "name": "Classic"
+      },
+      "tags": {
+        "key": "value"
+      },
+      "location": "eastus",
+      "properties": {
+        "platformUpdateDomainCount": 5,
+        "platformFaultDomainCount": 3
+      }
+    },
+    {
+      "sku": {
+        "name": "Classic"
+      },
+      "tags": {
+        "key": "value"
+      },
+      "location": "eastus",
+      "properties": {
+        "platformUpdateDomainCount": 6,
+        "platformFaultDomainCount": 4
+      }
+    }
+  ],
+  null,
+  [
+    {
+      "sku": {
+        "name": "Classic"
+      },
+      "tags": {
+        "key": "value"
+      },
+      "location": "eastus",
+      "properties": {
+        "platformUpdateDomainCount": 7,
+        "platformFaultDomainCount": 5
+      }
+    },
+    {
+      "sku": {
+        "name": "Classic"
+      },
+      "tags": {
+        "key": "value"
+      },
+      "location": "eastus",
+      "properties": {
+        "platformUpdateDomainCount": 8,
+        "platformFaultDomainCount": 6
+      }
+    }
+  ]
+]
