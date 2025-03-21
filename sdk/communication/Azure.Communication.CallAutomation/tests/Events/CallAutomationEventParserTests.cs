@@ -1413,7 +1413,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
 
             Dictionary<string, string> sipHeaders = new Dictionary<string, string>();
             Dictionary<string, string> voipHeaders = new Dictionary<string, string>();
-            var customContext = new CustomCallingContext(sipHeaders, voipHeaders);
+            var customContext = new CustomCallingContext(voipHeaders, sipHeaders);
             customContext.AddSipX("Test-SIP-Header", "TestSIPValue");
             customContext.AddVoip("Test-VoIP-Header", "TestVoIPValue");
 
