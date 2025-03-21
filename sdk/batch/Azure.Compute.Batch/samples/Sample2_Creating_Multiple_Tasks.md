@@ -120,7 +120,7 @@ CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks);
 Console.WriteLine("{0} Tasks Passed, {1} Failed.", result.Pass, result.Fail);
 ```
 
-By default `CreateTasksResult` will only contain a count of the Pass/Fail results but if you want the list of the `BatchTaskAddResult` results returned by the service you can pass in a CreateTasksOptions to the AddTasks method with the field ReturnBatchTaskAddResults set to true.  This is dissable by default because the size of the list scales with the number of requests so memory constrants could be a factor.
+By default `CreateTasksResult` will only contain a count of the Pass/Fail results but if you want the list of the `BatchTaskAddResult` results returned by the service you can pass in a CreateTasksOptions to the AddTasks method with the field ReturnBatchTaskAddResults set to true.  This is disabled by default because the size of the list scales with the number of requests so memory constrants could be a factor.
 
 ```C# Snippet:Batch_Sample02_CreateTasks_ReturnBatchTaskAddResults
 int tasksCount = 1000;
