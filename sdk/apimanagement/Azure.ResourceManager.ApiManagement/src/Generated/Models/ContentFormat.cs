@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string GraphQLLinkValue = "graphql-link";
         private const string OdataValue = "odata";
         private const string OdataLinkValue = "odata-link";
+        private const string GrpcValue = "grpc";
+        private const string GrpcLinkValue = "grpc-link";
 
         /// <summary> The contents are inline and Content type is a WADL document. </summary>
         public static ContentFormat WadlXml { get; } = new ContentFormat(WadlXmlValue);
@@ -62,6 +64,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ContentFormat Odata { get; } = new ContentFormat(OdataValue);
         /// <summary> The OData metadata document hosted on a publicly accessible internet address. </summary>
         public static ContentFormat OdataLink { get; } = new ContentFormat(OdataLinkValue);
+        /// <summary> The contents are inline and Content Type is a gRPC protobuf file. </summary>
+        public static ContentFormat Grpc { get; } = new ContentFormat(GrpcValue);
+        /// <summary> The gRPC protobuf file is hosted on a publicly accessible internet address. </summary>
+        public static ContentFormat GrpcLink { get; } = new ContentFormat(GrpcLinkValue);
         /// <summary> Determines if two <see cref="ContentFormat"/> values are the same. </summary>
         public static bool operator ==(ContentFormat left, ContentFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentFormat"/> values are not the same. </summary>
