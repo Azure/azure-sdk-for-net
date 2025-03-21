@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_RecoveryPointsGet()
+        public async Task Get_GetsTheRecoveryPoint()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/RecoveryPoints_Get.json
-            // this example is just showing the usage of "RecoveryPoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/RecoveryPoints_Get.json
+            // this example is just showing the usage of "RecoveryPointModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_RecoveryPointsList()
+        public async Task GetAll_ListsTheRecoveryPoints()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/RecoveryPoints_List.json
-            // this example is just showing the usage of "RecoveryPoints_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/RecoveryPoints_List.json
+            // this example is just showing the usage of "RecoveryPointModel_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_RecoveryPointsGet()
+        public async Task Exists_GetsTheRecoveryPoint()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/RecoveryPoints_Get.json
-            // this example is just showing the usage of "RecoveryPoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/RecoveryPoints_Get.json
+            // this example is just showing the usage of "RecoveryPointModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_RecoveryPointsGet()
+        public async Task GetIfExists_GetsTheRecoveryPoint()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/RecoveryPoints_Get.json
-            // this example is just showing the usage of "RecoveryPoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/RecoveryPoints_Get.json
+            // this example is just showing the usage of "RecoveryPointModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

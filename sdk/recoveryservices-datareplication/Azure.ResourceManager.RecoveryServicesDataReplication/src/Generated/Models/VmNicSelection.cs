@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string SelectedByDefaultValue = "SelectedByDefault";
         private const string SelectedByUserOverrideValue = "SelectedByUserOverride";
 
-        /// <summary> NotSelected. </summary>
+        /// <summary> Not Selected. </summary>
         public static VmNicSelection NotSelected { get; } = new VmNicSelection(NotSelectedValue);
-        /// <summary> SelectedByUser. </summary>
+        /// <summary> Selected by user. </summary>
         public static VmNicSelection SelectedByUser { get; } = new VmNicSelection(SelectedByUserValue);
-        /// <summary> SelectedByDefault. </summary>
+        /// <summary> Default selection by ASR. </summary>
         public static VmNicSelection SelectedByDefault { get; } = new VmNicSelection(SelectedByDefaultValue);
-        /// <summary> SelectedByUserOverride. </summary>
+        /// <summary> NIC configuration overridden by user. Differs from SelectedByUser in the sense that the legacy SelectedByUser is used both for explicit modification by user and implicit approval of user if the settings are used for TFO/FO. SelectedByUserOverride implies user overriding at least one of the configurations. </summary>
         public static VmNicSelection SelectedByUserOverride { get; } = new VmNicSelection(SelectedByUserOverrideValue);
         /// <summary> Determines if two <see cref="VmNicSelection"/> values are the same. </summary>
         public static bool operator ==(VmNicSelection left, VmNicSelection right) => left.Equals(right);

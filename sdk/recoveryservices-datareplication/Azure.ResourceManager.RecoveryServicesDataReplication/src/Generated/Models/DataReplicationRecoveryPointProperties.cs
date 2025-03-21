@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Recovery point model custom properties.
         /// Please note <see cref="RecoveryPointModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/> and <see cref="VMwareToAzStackHciRecoveryPointModelCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         internal DataReplicationRecoveryPointProperties(DateTimeOffset recoveryPointOn, DataReplicationRecoveryPointType recoveryPointType, RecoveryPointModelCustomProperties customProperties)
@@ -69,14 +69,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Recovery point model custom properties.
         /// Please note <see cref="RecoveryPointModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/> and <see cref="VMwareToAzStackHciRecoveryPointModelCustomProperties"/>.
         /// </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the recovery point item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationRecoveryPointProperties(DateTimeOffset recoveryPointOn, DataReplicationRecoveryPointType recoveryPointType, RecoveryPointModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationRecoveryPointProperties(DateTimeOffset recoveryPointOn, DataReplicationRecoveryPointType recoveryPointType, RecoveryPointModelCustomProperties customProperties, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointType = recoveryPointType;
             CustomProperties = customProperties;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -92,8 +94,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary>
         /// Recovery point model custom properties.
         /// Please note <see cref="RecoveryPointModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/> and <see cref="VMwareToAzStackHciRecoveryPointModelCustomProperties"/>.
         /// </summary>
         public RecoveryPointModelCustomProperties CustomProperties { get; }
+        /// <summary> Gets or sets the provisioning state of the recovery point item. </summary>
+        public DataReplicationProvisioningState? ProvisioningState { get; }
     }
 }

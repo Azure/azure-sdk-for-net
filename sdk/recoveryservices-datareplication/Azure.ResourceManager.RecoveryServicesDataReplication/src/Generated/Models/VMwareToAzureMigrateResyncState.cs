@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string PreparedForResynchronizationValue = "PreparedForResynchronization";
         private const string StartedResynchronizationValue = "StartedResynchronization";
 
-        /// <summary> None. </summary>
+        /// <summary> None state. </summary>
         public static VMwareToAzureMigrateResyncState None { get; } = new VMwareToAzureMigrateResyncState(NoneValue);
-        /// <summary> PreparedForResynchronization. </summary>
+        /// <summary> Prepared for resynchronization state. </summary>
         public static VMwareToAzureMigrateResyncState PreparedForResynchronization { get; } = new VMwareToAzureMigrateResyncState(PreparedForResynchronizationValue);
-        /// <summary> StartedResynchronization. </summary>
+        /// <summary> Started resynchronization state. </summary>
         public static VMwareToAzureMigrateResyncState StartedResynchronization { get; } = new VMwareToAzureMigrateResyncState(StartedResynchronizationValue);
         /// <summary> Determines if two <see cref="VMwareToAzureMigrateResyncState"/> values are the same. </summary>
         public static bool operator ==(VMwareToAzureMigrateResyncState left, VMwareToAzureMigrateResyncState right) => left.Equals(right);

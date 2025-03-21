@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string WarningValue = "Warning";
         private const string CriticalValue = "Critical";
 
-        /// <summary> Normal. </summary>
+        /// <summary> Healthy Status. </summary>
         public static DataReplicationHealthStatus Normal { get; } = new DataReplicationHealthStatus(NormalValue);
-        /// <summary> Warning. </summary>
+        /// <summary> Warning Status. </summary>
         public static DataReplicationHealthStatus Warning { get; } = new DataReplicationHealthStatus(WarningValue);
-        /// <summary> Critical. </summary>
+        /// <summary> Critical Status. </summary>
         public static DataReplicationHealthStatus Critical { get; } = new DataReplicationHealthStatus(CriticalValue);
         /// <summary> Determines if two <see cref="DataReplicationHealthStatus"/> values are the same. </summary>
         public static bool operator ==(DataReplicationHealthStatus left, DataReplicationHealthStatus right) => left.Equals(right);

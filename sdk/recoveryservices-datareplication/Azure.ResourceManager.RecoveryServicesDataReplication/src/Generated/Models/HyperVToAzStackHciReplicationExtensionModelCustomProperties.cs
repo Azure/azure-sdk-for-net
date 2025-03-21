@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="instanceType"> Discriminator property for ReplicationExtensionModelCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hyperVFabricArmId"> Gets or sets the ARM Id of the source HyperV fabric. </param>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>

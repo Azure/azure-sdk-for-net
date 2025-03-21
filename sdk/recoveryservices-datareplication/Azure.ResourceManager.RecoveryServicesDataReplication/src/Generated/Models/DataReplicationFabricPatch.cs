@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> Fabric model for update. </summary>
+    /// <summary> Fabric model update. </summary>
     public partial class DataReplicationFabricPatch : ResourceData
     {
         /// <summary>

@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationErrorInfo"/>. </summary>
         /// <param name="code"> Gets or sets the error code. </param>
-        /// <param name="errorModelType"> Gets or sets the error type. </param>
+        /// <param name="type"> Gets or sets the error type. </param>
         /// <param name="severity"> Gets or sets the error severity. </param>
         /// <param name="createdOn"> Gets or sets the creation time of error. </param>
         /// <param name="message"> Gets or sets the error message. </param>
         /// <param name="causes"> Gets or sets the possible causes of error. </param>
         /// <param name="recommendation"> Gets or sets the recommended action to resolve error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationErrorInfo(string code, string errorModelType, string severity, DateTimeOffset? createdOn, string message, string causes, string recommendation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationErrorInfo(string code, string type, string severity, DateTimeOffset? createdOn, string message, string causes, string recommendation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
-            ErrorModelType = errorModelType;
+            Type = type;
             Severity = severity;
             CreatedOn = createdOn;
             Message = message;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the error code. </summary>
         public string Code { get; }
         /// <summary> Gets or sets the error type. </summary>
-        public string ErrorModelType { get; }
+        public string Type { get; }
         /// <summary> Gets or sets the error severity. </summary>
         public string Severity { get; }
         /// <summary> Gets or sets the creation time of error. </summary>

@@ -10,11 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary>
-    /// HyperV to  AzStackHCI event model custom properties. This class provides provider specific
-    /// details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and
-    /// DataContract.HealthEvents.HealthEventType.AgentHealth.
-    /// </summary>
+    /// <summary> HyperV to  AzStackHCI event model custom properties. This class provides provider specific details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and DataContract.HealthEvents.HealthEventType.AgentHealth. </summary>
     public partial class HyperVToAzStackHciEventModelCustomProperties : EventModelCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciEventModelCustomProperties"/>. </summary>
@@ -24,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciEventModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="instanceType"> Discriminator property for EventModelCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventSourceFriendlyName"> Gets or sets the friendly name of the source which has raised this health event. </param>
         /// <param name="protectedItemFriendlyName"> Gets or sets the protected item friendly name. </param>

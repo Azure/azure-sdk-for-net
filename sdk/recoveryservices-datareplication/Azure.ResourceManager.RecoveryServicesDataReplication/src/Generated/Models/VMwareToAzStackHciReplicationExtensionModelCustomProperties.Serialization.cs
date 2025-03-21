@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ResourceIdentifier vmwareSiteId = default;
             ResourceIdentifier azStackHciFabricArmId = default;
             ResourceIdentifier azStackHciSiteId = default;
-            ResourceIdentifier storageAccountId = default;
+            string storageAccountId = default;
             string storageAccountSasSecretName = default;
             Uri asrServiceUri = default;
             Uri rcmServiceUri = default;
@@ -182,11 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("storageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    storageAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("storageAccountSasSecretName"u8))
