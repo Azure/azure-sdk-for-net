@@ -46,16 +46,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunStatusChangedEventData"/>. </summary>
-        /// <param name="runTags"> The tags of the Machine Learning Run. </param>
-        /// <param name="runProperties"> The properties of the Machine Learning Run. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runTags"/> or <paramref name="runProperties"/> is null. </exception>
-        internal MachineLearningServicesRunStatusChangedEventData(IReadOnlyDictionary<string, BinaryData> runTags, IReadOnlyDictionary<string, BinaryData> runProperties)
+        /// <param name="experimentId"> The ID of the experiment that the Machine Learning Run belongs to. </param>
+        /// <param name="experimentName"> The name of the experiment that the Machine Learning Run belongs to. </param>
+        /// <param name="runId"> The ID of the Machine Learning Run. </param>
+        /// <param name="runType"> The Run Type of the Machine Learning Run. </param>
+        /// <param name="runStatus"> The status of the Machine Learning Run. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentId"/>, <paramref name="experimentName"/>, <paramref name="runId"/>, <paramref name="runType"/> or <paramref name="runStatus"/> is null. </exception>
+        internal MachineLearningServicesRunStatusChangedEventData(string experimentId, string experimentName, string runId, string runType, string runStatus)
         {
-            Argument.AssertNotNull(runTags, nameof(runTags));
-            Argument.AssertNotNull(runProperties, nameof(runProperties));
+            Argument.AssertNotNull(experimentId, nameof(experimentId));
+            Argument.AssertNotNull(experimentName, nameof(experimentName));
+            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNull(runType, nameof(runType));
+            Argument.AssertNotNull(runStatus, nameof(runStatus));
 
-            RunTags = runTags;
-            RunProperties = runProperties;
+            ExperimentId = experimentId;
+            ExperimentName = experimentName;
+            RunId = runId;
+            RunType = runType;
+            RunTags = new ChangeTrackingDictionary<string, BinaryData>();
+            RunProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            RunStatus = runStatus;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunStatusChangedEventData"/>. </summary>

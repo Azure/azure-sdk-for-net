@@ -46,8 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingEventData"/>. </summary>
-        internal ContainerServiceNodePoolRollingEventData()
+        /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
+        internal ContainerServiceNodePoolRollingEventData(string nodePoolName)
         {
+            Argument.AssertNotNull(nodePoolName, nameof(nodePoolName));
+
+            NodePoolName = nodePoolName;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingEventData"/>. </summary>
@@ -57,6 +62,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             NodePoolName = nodePoolName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingEventData"/> for deserialization. </summary>
+        internal ContainerServiceNodePoolRollingEventData()
+        {
         }
 
         /// <summary> The name of the node pool in the ManagedCluster resource. </summary>

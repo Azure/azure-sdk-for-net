@@ -46,16 +46,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/>. </summary>
-        /// <param name="serviceTags"> The tags of the deployed service. </param>
-        /// <param name="serviceProperties"> The properties of the deployed service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceTags"/> or <paramref name="serviceProperties"/> is null. </exception>
-        internal MachineLearningServicesModelDeployedEventData(IReadOnlyDictionary<string, BinaryData> serviceTags, IReadOnlyDictionary<string, BinaryData> serviceProperties)
+        /// <param name="serviceName"> The name of the deployed service. </param>
+        /// <param name="serviceComputeType"> The compute type (e.g. ACI, AKS) of the deployed service. </param>
+        /// <param name="modelIds"> A common separated list of model IDs. The IDs of the models deployed in the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/>, <paramref name="serviceComputeType"/> or <paramref name="modelIds"/> is null. </exception>
+        internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds)
         {
-            Argument.AssertNotNull(serviceTags, nameof(serviceTags));
-            Argument.AssertNotNull(serviceProperties, nameof(serviceProperties));
+            Argument.AssertNotNull(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(serviceComputeType, nameof(serviceComputeType));
+            Argument.AssertNotNull(modelIds, nameof(modelIds));
 
-            ServiceTags = serviceTags;
-            ServiceProperties = serviceProperties;
+            ServiceName = serviceName;
+            ServiceComputeType = serviceComputeType;
+            ModelIds = modelIds;
+            ServiceTags = new ChangeTrackingDictionary<string, BinaryData>();
+            ServiceProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/>. </summary>

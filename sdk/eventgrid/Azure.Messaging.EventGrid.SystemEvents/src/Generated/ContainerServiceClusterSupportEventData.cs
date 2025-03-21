@@ -46,8 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEventData"/>. </summary>
-        internal ContainerServiceClusterSupportEventData()
+        /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
+        internal ContainerServiceClusterSupportEventData(string kubernetesVersion)
         {
+            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
+
+            KubernetesVersion = kubernetesVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEventData"/>. </summary>
@@ -57,6 +62,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             KubernetesVersion = kubernetesVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEventData"/> for deserialization. </summary>
+        internal ContainerServiceClusterSupportEventData()
+        {
         }
 
         /// <summary> The Kubernetes version of the ManagedCluster resource. </summary>

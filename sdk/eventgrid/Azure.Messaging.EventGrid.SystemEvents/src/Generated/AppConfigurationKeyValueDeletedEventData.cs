@@ -46,8 +46,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueDeletedEventData"/>. </summary>
-        internal AppConfigurationKeyValueDeletedEventData()
+        /// <param name="key"> The key used to identify the key-value that was deleted. </param>
+        /// <param name="label"> The label, if any, used to identify the key-value that was deleted. </param>
+        /// <param name="etag"> The etag representing the key-value that was deleted. </param>
+        /// <param name="syncToken"> The sync token representing the server state after the event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/>, <paramref name="label"/>, <paramref name="etag"/> or <paramref name="syncToken"/> is null. </exception>
+        internal AppConfigurationKeyValueDeletedEventData(string key, string label, string etag, string syncToken)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(label, nameof(label));
+            Argument.AssertNotNull(etag, nameof(etag));
+            Argument.AssertNotNull(syncToken, nameof(syncToken));
+
+            Key = key;
+            Label = label;
+            Etag = etag;
+            SyncToken = syncToken;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueDeletedEventData"/>. </summary>
@@ -63,6 +77,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Etag = etag;
             SyncToken = syncToken;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueDeletedEventData"/> for deserialization. </summary>
+        internal AppConfigurationKeyValueDeletedEventData()
+        {
         }
 
         /// <summary> The key used to identify the key-value that was deleted. </summary>

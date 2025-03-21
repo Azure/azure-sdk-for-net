@@ -46,16 +46,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunCompletedEventData"/>. </summary>
-        /// <param name="runTags"> The tags of the completed Run. </param>
-        /// <param name="runProperties"> The properties of the completed Run. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runTags"/> or <paramref name="runProperties"/> is null. </exception>
-        internal MachineLearningServicesRunCompletedEventData(IReadOnlyDictionary<string, BinaryData> runTags, IReadOnlyDictionary<string, BinaryData> runProperties)
+        /// <param name="experimentId"> The ID of the experiment that the run belongs to. </param>
+        /// <param name="experimentName"> The name of the experiment that the run belongs to. </param>
+        /// <param name="runId"> The ID of the Run that was completed. </param>
+        /// <param name="runType"> The Run Type of the completed Run. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentId"/>, <paramref name="experimentName"/>, <paramref name="runId"/> or <paramref name="runType"/> is null. </exception>
+        internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType)
         {
-            Argument.AssertNotNull(runTags, nameof(runTags));
-            Argument.AssertNotNull(runProperties, nameof(runProperties));
+            Argument.AssertNotNull(experimentId, nameof(experimentId));
+            Argument.AssertNotNull(experimentName, nameof(experimentName));
+            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNull(runType, nameof(runType));
 
-            RunTags = runTags;
-            RunProperties = runProperties;
+            ExperimentId = experimentId;
+            ExperimentName = experimentName;
+            RunId = runId;
+            RunType = runType;
+            RunTags = new ChangeTrackingDictionary<string, BinaryData>();
+            RunProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunCompletedEventData"/>. </summary>
