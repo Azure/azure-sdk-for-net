@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             {
                 Properties = new Models.DataReplicationExtensionProperties
                 {
-                    CustomProperties = new Models.HyperVToAzStackHCIReplicationExtensionModelCustomProperties
+                    CustomProperties = new Models.HyperVToAzStackHciReplicationExtensionModelCustomProperties
                     {
                         HyperVFabricArmId = new ResourceIdentifier(DataReplicationTestUtilities.DefaultSourceFabricId),
                         AzStackHciFabricArmId = new ResourceIdentifier(DataReplicationTestUtilities.DefaultTargetFabricId),

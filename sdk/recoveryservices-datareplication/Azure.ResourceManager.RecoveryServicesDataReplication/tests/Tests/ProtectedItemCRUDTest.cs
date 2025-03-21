@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
                 DataReplicationTestUtilities.DefaultVaultName);
 
-            var disk = new Models.HyperVToAzStackHCIDiskInput
+            var disk = new Models.HyperVToAzStackHciDiskInput
             {
                 DiskFileFormat = DataReplicationTestUtilities.DefaultProtectedItemDiskFileFormat,
                 DiskSizeGB = DataReplicationTestUtilities.DefaultProtectedItemDiskSizeInGB,
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 IsOSDisk = true
             };
 
-            var nic = new Models.HyperVToAzStackHCINicInput
+            var nic = new Models.HyperVToAzStackHciNicInput
             {
                 NicId = DataReplicationTestUtilities.DefaultProtectedItemNicId,
                 TargetNetworkId = DataReplicationTestUtilities.DefaultProtectedItemTargetNetworkId,
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 SelectionTypeForFailover = Models.VmNicSelection.SelectedByUser
             };
 
-            var customeProperties = new Models.HyperVToAzStackHCIProtectedItemModelCustomProperties
+            var customeProperties = new Models.HyperVToAzStackHciProtectedItemModelCustomProperties
                (
                    targetHciClusterId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemTargetHciClusterId),
                    targetArcClusterCustomLocationId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemTargetArcClusterCustomLocationId),
                    storageContainerId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemStorageContainerId),
                    targetResourceGroupId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemTargetResourceGroupId),
                    customLocationRegion: DataReplicationTestUtilities.DefaultProtectedItemCustomLocationRegion,
-                   disksToInclude: new List<Models.HyperVToAzStackHCIDiskInput> { disk },
-                   nicsToInclude: new List<Models.HyperVToAzStackHCINicInput> { nic },
+                   disksToInclude: new List<Models.HyperVToAzStackHciDiskInput> { disk },
+                   nicsToInclude: new List<Models.HyperVToAzStackHciNicInput> { nic },
                    hyperVGeneration: DataReplicationTestUtilities.DefaultProtectedItemHyperVGeneration,
                    fabricDiscoveryMachineId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemFabricDiscoveryMachineId),
                    runAsAccountId: DataReplicationTestUtilities.DefaultProtectedItemRunAsAccountId,
