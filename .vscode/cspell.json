@@ -343,7 +343,10 @@
         "ccfs",
         "cose",
         "Jwks",
-        "scitt"
+        "PHDR",
+        "PKIX",
+        "scitt",
+        "tstr"
       ]
     },
     {

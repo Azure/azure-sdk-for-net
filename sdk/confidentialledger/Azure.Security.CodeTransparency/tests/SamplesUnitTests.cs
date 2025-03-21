@@ -61,20 +61,20 @@ namespace Azure.Security.CodeTransparency.Tests
             var createResponse = new MockResponse(201);
             createResponse.SetContent(createCborWriter.Encode());
 
-            var succededCborWriter = new CborWriter();
+            var succeededCborWriter = new CborWriter();
 
             // Write a CBOR map with sample content
-            succededCborWriter.WriteStartMap(3);
-            succededCborWriter.WriteTextString("OperationId");
-            succededCborWriter.WriteTextString("1.345");
-            succededCborWriter.WriteTextString("EntryId");
-            succededCborWriter.WriteTextString("123.23");
-            succededCborWriter.WriteTextString("Status");
-            succededCborWriter.WriteTextString("Succeeded");
-            succededCborWriter.WriteEndMap();
+            succeededCborWriter.WriteStartMap(3);
+            succeededCborWriter.WriteTextString("OperationId");
+            succeededCborWriter.WriteTextString("1.345");
+            succeededCborWriter.WriteTextString("EntryId");
+            succeededCborWriter.WriteTextString("123.23");
+            succeededCborWriter.WriteTextString("Status");
+            succeededCborWriter.WriteTextString("Succeeded");
+            succeededCborWriter.WriteEndMap();
 
             var succeededResponse = new MockResponse(202);
-            succeededResponse.SetContent(succededCborWriter.Encode());
+            succeededResponse.SetContent(succeededCborWriter.Encode());
 
             var entryResponse = new MockResponse(200);
             entryResponse.AddHeader("Content-Type", "application/cose");
@@ -230,13 +230,13 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] receiptBytes = readFileBytes("receipt.cose");
             byte[] inputSignedPayloadBytes = readFileBytes("input_signed_claims");
 
-            #region Snippet:CodeTransparencyVerificyReceipt
+            #region Snippet:CodeTransparencyVerifyReceipt
 #if SNIPPET
             Response<JwksDocument> key = client.GetPublicKeys();
 
             CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes);
 #endif
-            #endregion Snippet:CodeTransparencyVerificyReceipt
+            #endregion Snippet:CodeTransparencyVerifyReceipt
 
 #endif
         }

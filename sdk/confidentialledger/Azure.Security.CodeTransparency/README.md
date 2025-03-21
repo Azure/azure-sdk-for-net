@@ -69,7 +69,7 @@ byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
 
 Once you have the receipt and the signature, you can verify whether the signature was actually included in the Code Transparency service by running the receipt verification logic. The verifier checks if the receipt was issued for a given signature and if the receipt signature was endorsed by the service.
 
-```C# Snippet:CodeTransparencyVerificyReceipt
+```C# Snippet:CodeTransparencyVerifyReceipt
 Response<JwksDocument> key = client.GetPublicKeys();
 CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes);
 ```

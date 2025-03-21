@@ -207,20 +207,20 @@ namespace Azure.Security.CodeTransparency.Tests
             var pendingResponse = new MockResponse(202);
             pendingResponse.SetContent(cborWriter.Encode());
 
-            var succededCborWriter = new CborWriter();
+            var succeededCborWriter = new CborWriter();
 
             // Write a CBOR map with sample content
-            succededCborWriter.WriteStartMap(3);
-            succededCborWriter.WriteTextString("OperationId");
-            succededCborWriter.WriteTextString("1.345");
-            succededCborWriter.WriteTextString("EntryId");
-            succededCborWriter.WriteTextString("123.23");
-            succededCborWriter.WriteTextString("Status");
-            succededCborWriter.WriteTextString("Succeeded");
-            succededCborWriter.WriteEndMap();
+            succeededCborWriter.WriteStartMap(3);
+            succeededCborWriter.WriteTextString("OperationId");
+            succeededCborWriter.WriteTextString("1.345");
+            succeededCborWriter.WriteTextString("EntryId");
+            succeededCborWriter.WriteTextString("123.23");
+            succeededCborWriter.WriteTextString("Status");
+            succeededCborWriter.WriteTextString("Succeeded");
+            succeededCborWriter.WriteEndMap();
 
             var succeededResponse = new MockResponse(202);
-            succeededResponse.SetContent(succededCborWriter.Encode());
+            succeededResponse.SetContent(succeededCborWriter.Encode());
 
             var mockTransport = new MockTransport(createResponse, pendingResponse, succeededResponse);
             var options = new CodeTransparencyClientOptions

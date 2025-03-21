@@ -80,7 +80,7 @@ namespace Azure.Security.CodeTransparency
                 return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
             }
 
-            // The content of the response may be empty if we check the OprationStatus immediately after submitting an entry
+            // The content of the response may be empty if we check the OperationStatus immediately after submitting an entry
             if (response.Content == null || response.Content.ToArray().Length == 0)
             {
                 RequestFailedException ex = new(response);

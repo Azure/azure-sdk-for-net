@@ -147,7 +147,7 @@ namespace Azure.Security.CodeTransparency.Receipt
                 // Deserialize leafBytes into a Leaf
                 Leaf leaf = GetLeaf(leafBytes);
 
-                // Deserialie the ProofPaths into a List of ProofElement
+                // Deserialize the ProofPaths into a List of ProofElement
                 List<ProofElement> proofElements = GetProofElements(proofPaths);
 
                 byte[] accumulator = s_sha256.ComputeHash(
