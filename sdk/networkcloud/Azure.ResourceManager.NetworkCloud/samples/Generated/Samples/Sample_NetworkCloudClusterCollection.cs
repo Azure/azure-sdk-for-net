@@ -101,7 +101,7 @@ StorageApplianceName = "vmName",
                     AssociatedIdentity = new ManagedServiceIdentitySelector
                     {
                         IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
-                        UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourcegroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity"),
+                        UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity1"),
                     },
                     ContainerUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer?restype=container"),
                 },
@@ -145,7 +145,7 @@ StorageApplianceName = "vmName",
                         IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
                         UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity1"),
                     },
-                    VaultUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer?restype=container"),
+                    VaultUri = new Uri("https://keyvaultname.vault.azure.net/"),
                 },
                 UpdateStrategy = new ClusterUpdateStrategy(ClusterUpdateStrategyType.Rack, ValidationThresholdType.CountSuccess, 4L)
                 {
