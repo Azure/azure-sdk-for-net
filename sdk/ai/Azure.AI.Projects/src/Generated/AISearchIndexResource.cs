@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> A Index resource. </summary>
-    public partial class IndexResource
+    /// <summary> A AI Search Index resource. </summary>
+    public partial class AISearchIndexResource
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IndexResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/>. </summary>
         /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this agent. </param>
         /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexConnectionId"/> or <paramref name="indexName"/> is null. </exception>
-        public IndexResource(string indexConnectionId, string indexName)
+        public AISearchIndexResource(string indexConnectionId, string indexName)
         {
             Argument.AssertNotNull(indexConnectionId, nameof(indexConnectionId));
             Argument.AssertNotNull(indexName, nameof(indexName));
@@ -58,19 +58,25 @@ namespace Azure.AI.Projects
             IndexName = indexName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/>. </summary>
         /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this agent. </param>
         /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
+        /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
+        /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
+        /// <param name="filter"> Odata filter string for search resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IndexResource(string indexConnectionId, string indexName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AISearchIndexResource(string indexConnectionId, string indexName, AzureAISearchQueryType? queryType, int? topK, string filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IndexConnectionId = indexConnectionId;
             IndexName = indexName;
+            QueryType = queryType;
+            TopK = topK;
+            Filter = filter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexResource"/> for deserialization. </summary>
-        internal IndexResource()
+        /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/> for deserialization. </summary>
+        internal AISearchIndexResource()
         {
         }
 
@@ -78,5 +84,11 @@ namespace Azure.AI.Projects
         public string IndexConnectionId { get; set; }
         /// <summary> The name of an index in an IndexResource attached to this agent. </summary>
         public string IndexName { get; set; }
+        /// <summary> Type of query in an AIIndexResource attached to this agent. </summary>
+        public AzureAISearchQueryType? QueryType { get; set; }
+        /// <summary> Number of documents to retrieve from search and present to the model. </summary>
+        public int? TopK { get; set; }
+        /// <summary> Odata filter string for search resource. </summary>
+        public string Filter { get; set; }
     }
 }
