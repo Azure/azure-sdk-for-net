@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
+                DataReplicationTestUtilities.DefaultResourceGroupName);
 
             DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
+                DataReplicationTestUtilities.DefaultVaultName);
 
             var replicationExtdata = new DataReplicationExtensionData
             {
                 Properties = new Models.DataReplicationExtensionProperties
                 {
-                    CustomProperties = new Models.VMwareToAzStackHCIReplicationExtensionModelCustomProperties
+                    CustomProperties = new Models.HyperVToAzStackHCIReplicationExtensionModelCustomProperties
                     {
-                        VmwareFabricArmId = new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultSourceApplianceId),
-                        AzStackHciFabricArmId = new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultTargetApplianceId),
-                        StorageAccountId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultStorageAccountId,
+                        HyperVFabricArmId = new ResourceIdentifier(DataReplicationTestUtilities.DefaultSourceFabricId),
+                        AzStackHciFabricArmId = new ResourceIdentifier(DataReplicationTestUtilities.DefaultTargetFabricId),
+                        StorageAccountId = DataReplicationTestUtilities.DefaultStorageAccountId,
                         StorageAccountSasSecretName = string.Empty,
-                        InstanceType = "VMwareToAzStackHCI"
+                        InstanceType = DataReplicationTestUtilities.HyperVToAzStackHCI
                     }
                 }
             };
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             // Create
             var createReplicationExtOperation = await vault.GetDataReplicationExtensions().CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultReplicationExtensionName,
+                DataReplicationTestUtilities.DefaultReplicationExtensionName,
                 replicationExtdata);
 
             Assert.IsTrue(createReplicationExtOperation.HasCompleted);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 
             // Get
             var getReplicationExtOperation = await vault.GetDataReplicationExtensions().GetAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultReplicationExtensionName);
+                DataReplicationTestUtilities.DefaultReplicationExtensionName);
             var relicationExtModelResource = getReplicationExtOperation.Value;
 
             Assert.IsNotNull(relicationExtModelResource);

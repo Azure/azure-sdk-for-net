@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
+                DataReplicationTestUtilities.DefaultResourceGroupName);
 
             DataReplicationVaultResource resource = await rg.GetDataReplicationVaults().GetAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
+                DataReplicationTestUtilities.DefaultVaultName);
             Assert.NotNull(resource);
         }
 
@@ -39,10 +39,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
+                DataReplicationTestUtilities.DefaultResourceGroupName);
 
             // Create
-            DataReplicationVaultData vaultData = new DataReplicationVaultData(new AzureLocation("centraluseuap"))
+            DataReplicationVaultData vaultData = new DataReplicationVaultData(
+                new AzureLocation(DataReplicationTestUtilities.DeafultLocation))
             {
                 Properties = new Models.DataReplicationVaultProperties
                 {
@@ -51,11 +52,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Tags =
                     {
-                         ["Migrate Project"] = "aszmigtest1d6ebba"
+                         ["Migrate Project"] = "sdkTest1-prj"
                     },
             };
 
-            var vaultName = $"vault{IsAsync.ToString()}123";
+            var vaultName = $"vault{IsAsync.ToString()}12";
 
             var vaultCreateOperation = await rg.GetDataReplicationVaults().CreateOrUpdateAsync(
                 WaitUntil.Completed,
