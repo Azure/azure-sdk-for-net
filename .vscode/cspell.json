@@ -353,7 +353,11 @@
         "cbor",
         "ccfs",
         "cose",
-        "scitt"
+        "Jwks",
+        "PHDR",
+        "PKIX",
+        "scitt",
+        "tstr"
       ]
     },
     {
