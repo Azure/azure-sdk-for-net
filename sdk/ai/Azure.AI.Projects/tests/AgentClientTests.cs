@@ -611,7 +611,7 @@ namespace Azure.AI.Projects.Tests
                 || toolRun.Status == RunStatus.InProgress
                 || toolRun.Status == RunStatus.RequiresAction);
             Assert.True(functionCalled);
-            Assert.AreEqual(toolRun.Status, RunStatus.Completed);
+            Assert.AreEqual(RunStatus.Completed, toolRun.Status, message: toolRun.LastError?.Message);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
@@ -1256,7 +1256,7 @@ namespace Azure.AI.Projects.Tests
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress
                 || run.Status == RunStatus.RequiresAction);
-            Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.ToString());
+            Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.Message?.ToString());
             return run;
         }
 
