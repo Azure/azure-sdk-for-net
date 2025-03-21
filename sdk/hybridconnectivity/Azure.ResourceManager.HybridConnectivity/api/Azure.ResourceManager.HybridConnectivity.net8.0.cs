@@ -65,25 +65,25 @@ namespace Azure.ResourceManager.HybridConnectivity
         public static Azure.ResourceManager.HybridConnectivity.HybridConnectivityEndpointResource GetHybridConnectivityEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.HybridConnectivityEndpointCollection GetHybridConnectivityEndpoints(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.HybridConnectivityServiceConfigurationResource GetHybridConnectivityServiceConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.InventoryResource GetInventoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource> GetPublicCloudConnector(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string publicCloudConnector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource>> GetPublicCloudConnectorAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string publicCloudConnector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource GetPublicCloudConnectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorCollection GetPublicCloudConnectors(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource> GetPublicCloudConnectors(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource> GetPublicCloudConnectorsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> GetSolutionConfiguration(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>> GetSolutionConfigurationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource GetSolutionConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.SolutionConfigurationCollection GetSolutionConfigurations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.SolutionTypeResource GetSolutionTypeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> GetSolutionTypeResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource>> GetSolutionTypeResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceCollection GetSolutionTypeResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> GetSolutionTypeResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> GetSolutionTypeResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.PostResponse> PostGenerateAwsTemplate(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.PostResponse>> PostGenerateAwsTemplateAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> GetPublicCloudConnectorSolutionConfiguration(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>> GetPublicCloudConnectorSolutionConfigurationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource GetPublicCloudConnectorSolutionConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationCollection GetPublicCloudConnectorSolutionConfigurations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> GetPublicCloudConnectorSolutionType(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource>> GetPublicCloudConnectorSolutionTypeAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource GetPublicCloudConnectorSolutionTypeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeCollection GetPublicCloudConnectorSolutionTypes(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> GetPublicCloudConnectorSolutionTypes(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> GetPublicCloudConnectorSolutionTypesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource GetPublicCloudInventoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult> PostGenerateAwsTemplate(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult>> PostGenerateAwsTemplateAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HybridConnectivityServiceConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.HybridConnectivityServiceConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.HybridConnectivityServiceConfigurationResource>, System.Collections.IEnumerable
     {
@@ -135,47 +135,6 @@ namespace Azure.ResourceManager.HybridConnectivity
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.HybridConnectivityServiceConfigurationResource> Update(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceConfigurationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.HybridConnectivityServiceConfigurationResource>> UpdateAsync(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceConfigurationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class InventoryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected InventoryResource() { }
-        public virtual Azure.ResourceManager.HybridConnectivity.InventoryResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string solutionConfiguration, string inventoryId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.InventoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.InventoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.HybridConnectivity.InventoryResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.InventoryResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class InventoryResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.InventoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.InventoryResource>, System.Collections.IEnumerable
-    {
-        protected InventoryResourceCollection() { }
-        public virtual Azure.Response<bool> Exists(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.InventoryResource> Get(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridConnectivity.InventoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.InventoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.InventoryResource>> GetAsync(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.InventoryResource> GetIfExists(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.InventoryResource>> GetIfExistsAsync(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridConnectivity.InventoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.InventoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridConnectivity.InventoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.InventoryResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class InventoryResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>
-    {
-        internal InventoryResourceData() { }
-        public Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties Properties { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.InventoryResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.InventoryResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.InventoryResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class PublicCloudConnectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource>, System.Collections.IEnumerable
     {
         protected PublicCloudConnectorCollection() { }
@@ -226,103 +185,144 @@ namespace Azure.ResourceManager.HybridConnectivity
         Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult> TestPermissions(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult>> TestPermissionsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus> TestPermissions(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus>> TestPermissionsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource> Update(Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource>> UpdateAsync(Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SolutionConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>, System.Collections.IEnumerable
+    public partial class PublicCloudConnectorSolutionConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>, System.Collections.IEnumerable
     {
-        protected SolutionConfigurationCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string solutionConfiguration, Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string solutionConfiguration, Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected PublicCloudConnectorSolutionConfigurationCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string solutionConfiguration, Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string solutionConfiguration, Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> Get(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>> GetAsync(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> GetIfExists(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>> GetIfExistsAsync(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> Get(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>> GetAsync(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> GetIfExists(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>> GetIfExistsAsync(string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SolutionConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>
+    public partial class PublicCloudConnectorSolutionConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>
     {
-        public SolutionConfigurationData() { }
-        public Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties Properties { get { throw null; } set { } }
+        public PublicCloudConnectorSolutionConfigurationData() { }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SolutionConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>
+    public partial class PublicCloudConnectorSolutionConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected SolutionConfigurationResource() { }
-        public virtual Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData Data { get { throw null; } }
+        protected PublicCloudConnectorSolutionConfigurationResource() { }
+        public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string solutionConfiguration) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.InventoryResource> GetInventoryResource(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.InventoryResource>> GetInventoryResourceAsync(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridConnectivity.InventoryResourceCollection GetInventoryResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryCollection GetPublicCloudInventories() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource> GetPublicCloudInventory(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource>> GetPublicCloudInventoryAsync(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult> SyncNow(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult>> SyncNowAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> Update(Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>> UpdateAsync(Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> Update(Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>> UpdateAsync(Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SolutionTypeResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>
+    public partial class PublicCloudConnectorSolutionTypeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource>, System.Collections.IEnumerable
     {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected SolutionTypeResource() { }
-        public virtual Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionType) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SolutionTypeResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource>, System.Collections.IEnumerable
-    {
-        protected SolutionTypeResourceCollection() { }
+        protected PublicCloudConnectorSolutionTypeCollection() { }
         public virtual Azure.Response<bool> Exists(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> Get(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource>> GetAsync(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> GetIfExists(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource>> GetIfExistsAsync(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> Get(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource>> GetAsync(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> GetIfExists(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource>> GetIfExistsAsync(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SolutionTypeResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>
+    public partial class PublicCloudConnectorSolutionTypeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>
     {
-        internal SolutionTypeResourceData() { }
-        public Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties Properties { get { throw null; } }
+        internal PublicCloudConnectorSolutionTypeData() { }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties Properties { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PublicCloudConnectorSolutionTypeResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected PublicCloudConnectorSolutionTypeResource() { }
+        public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionType) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PublicCloudInventoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource>, System.Collections.IEnumerable
+    {
+        protected PublicCloudInventoryCollection() { }
+        public virtual Azure.Response<bool> Exists(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource> Get(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource>> GetAsync(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource> GetIfExists(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource>> GetIfExistsAsync(string inventoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class PublicCloudInventoryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>
+    {
+        internal PublicCloudInventoryData() { }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PublicCloudInventoryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected PublicCloudInventoryResource() { }
+        public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string solutionConfiguration, string inventoryId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HybridConnectivity.Mocking
@@ -335,13 +335,13 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         public virtual Azure.ResourceManager.HybridConnectivity.HybridConnectivityEndpointResource GetHybridConnectivityEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridConnectivity.HybridConnectivityEndpointCollection GetHybridConnectivityEndpoints(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.HybridConnectivity.HybridConnectivityServiceConfigurationResource GetHybridConnectivityServiceConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.HybridConnectivity.InventoryResource GetInventoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource GetPublicCloudConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource> GetSolutionConfiguration(Azure.Core.ResourceIdentifier scope, string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource>> GetSolutionConfigurationAsync(Azure.Core.ResourceIdentifier scope, string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridConnectivity.SolutionConfigurationResource GetSolutionConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.HybridConnectivity.SolutionConfigurationCollection GetSolutionConfigurations(Azure.Core.ResourceIdentifier scope) { throw null; }
-        public virtual Azure.ResourceManager.HybridConnectivity.SolutionTypeResource GetSolutionTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource> GetPublicCloudConnectorSolutionConfiguration(Azure.Core.ResourceIdentifier scope, string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource>> GetPublicCloudConnectorSolutionConfigurationAsync(Azure.Core.ResourceIdentifier scope, string solutionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationResource GetPublicCloudConnectorSolutionConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationCollection GetPublicCloudConnectorSolutionConfigurations(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource GetPublicCloudConnectorSolutionTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource GetPublicCloudInventoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableHybridConnectivityResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -349,43 +349,44 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource> GetPublicCloudConnector(string publicCloudConnector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource>> GetPublicCloudConnectorAsync(string publicCloudConnector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorCollection GetPublicCloudConnectors() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> GetSolutionTypeResource(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource>> GetSolutionTypeResourceAsync(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceCollection GetSolutionTypeResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> GetPublicCloudConnectorSolutionType(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource>> GetPublicCloudConnectorSolutionTypeAsync(string solutionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeCollection GetPublicCloudConnectorSolutionTypes() { throw null; }
     }
     public partial class MockableHybridConnectivitySubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableHybridConnectivitySubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource> GetPublicCloudConnectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorResource> GetPublicCloudConnectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> GetSolutionTypeResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.SolutionTypeResource> GetSolutionTypeResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.PostResponse> PostGenerateAwsTemplate(Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.PostResponse>> PostGenerateAwsTemplateAsync(Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> GetPublicCloudConnectorSolutionTypes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource> GetPublicCloudConnectorSolutionTypesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult> PostGenerateAwsTemplate(Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult>> PostGenerateAwsTemplateAsync(Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     public static partial class ArmHybridConnectivityModelFactory
     {
-        public static Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent GenerateAwsTemplateContent(string connectorId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings> solutionTypes = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent GenerateAwsTemplateContent(Azure.Core.ResourceIdentifier connectorId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings> solutionTypes = null) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.HybridConnectivityEndpointData HybridConnectivityEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointProperties HybridConnectivityEndpointProperties(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType endpointType = default(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType), Azure.Core.ResourceIdentifier resourceId = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus HybridConnectivityOperationStatus(Azure.Core.ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = default(double?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult> operations = null, Azure.ResponseError error = null, Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.HybridConnectivityServiceConfigurationData HybridConnectivityServiceConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName? serviceName = default(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName?), Azure.Core.ResourceIdentifier resourceId = null, long? port = default(long?), Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState? provisioningState = default(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.IngressGatewayAsset IngressGatewayAsset(string hostname = null, System.Guid? serverId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), string namespaceName = null, string namespaceNameSuffix = null, string hybridConnectionName = null, string accessKey = null, long? expiresOn = default(long?), string serviceConfigurationToken = null) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties InventoryProperties(Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType? cloudNativeType = default(Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType?), string cloudNativeResourceId = null, string azureResourceId = null, Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus? status = default(Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus?), string statusDetails = null, Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.InventoryResourceData InventoryResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.ManagedProxyAsset ManagedProxyAsset(string proxy = null, long expiresOn = (long)0) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.ManagedProxyContent ManagedProxyContent(string service = null, string hostname = null, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName? serviceName = default(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName?)) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult OperationStatusResult(Azure.Core.ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = default(double?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult> operations = null, Azure.ResponseError error = null, string resourceId = null) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorData PublicCloudConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties PublicCloudConnectorProperties(Azure.ResourceManager.HybridConnectivity.Models.AwsCloudProfile awsCloudProfile = null, Azure.ResourceManager.HybridConnectivity.Models.HostType hostType = default(Azure.ResourceManager.HybridConnectivity.Models.HostType), Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState?), string connectorPrimaryIdentifier = null) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.SolutionConfigurationData SolutionConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties SolutionConfigurationProperties(Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState?), string solutionType = null, Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings solutionSettings = null, Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus? status = default(Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus?), string statusDetails = null, System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties SolutionTypeProperties(string solutionType = null, string description = null, System.Collections.Generic.IEnumerable<string> supportedAzureRegions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties> solutionSettings = null) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.SolutionTypeResourceData SolutionTypeResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings SolutionTypeSettings(string solutionType = null, Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings solutionSettings = null) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties SolutionTypeSettingsProperties(string name = null, string displayName = null, string type = null, string description = null, System.Collections.Generic.IEnumerable<string> allowedValues = null, string defaultValue = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties PublicCloudConnectorProperties(Azure.ResourceManager.HybridConnectivity.Models.AwsCloudProfile awsCloudProfile = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType hostType = default(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType), Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState? provisioningState = default(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState?), string connectorPrimaryIdentifier = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData PublicCloudConnectorSolutionConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties PublicCloudConnectorSolutionConfigurationProperties(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState? provisioningState = default(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState?), string solutionType = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings solutionSettings = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus? status = default(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus?), string statusDetails = null, System.DateTimeOffset? lastSyncedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeData PublicCloudConnectorSolutionTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties PublicCloudConnectorSolutionTypeProperties(string solutionType = null, string description = null, System.Collections.Generic.IEnumerable<string> supportedAzureRegions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties> solutionSettings = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings PublicCloudConnectorSolutionTypeSettings(string solutionType = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings solutionSettings = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties PublicCloudConnectorSolutionTypeSettingsProperties(string name = null, string displayName = null, string type = null, string description = null, System.Collections.Generic.IEnumerable<string> allowedValues = null, string defaultValue = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData PublicCloudInventoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties PublicCloudInventoryProperties(Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType? cloudNativeType = default(Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType?), string cloudNativeResourceId = null, Azure.Core.ResourceIdentifier azureResourceId = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus? status = default(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus?), string statusDetails = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState? provisioningState = default(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState?)) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess TargetResourceEndpointAccess(string namespaceName = null, string namespaceNameSuffix = null, string hybridConnectionName = null, string accessKey = null, long? expiresOn = default(long?), string serviceConfigurationToken = null) { throw null; }
     }
     public partial class AwsCloudProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.AwsCloudProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.AwsCloudProfile>
@@ -420,32 +421,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     }
     public partial class GenerateAwsTemplateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent>
     {
-        public GenerateAwsTemplateContent(string connectorId) { }
-        public string ConnectorId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings> SolutionTypes { get { throw null; } }
+        public GenerateAwsTemplateContent(Azure.Core.ResourceIdentifier connectorId) { }
+        public Azure.Core.ResourceIdentifier ConnectorId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings> SolutionTypes { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.GenerateAwsTemplateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HostType : System.IEquatable<Azure.ResourceManager.HybridConnectivity.Models.HostType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HostType(string value) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.HostType AWS { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.HostType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HostType left, Azure.ResourceManager.HybridConnectivity.Models.HostType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HostType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridConnectivity.Models.HostType left, Azure.ResourceManager.HybridConnectivity.Models.HostType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class HybridConnectivityEndpointProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointProperties>
     {
@@ -477,6 +461,35 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class HybridConnectivityOperationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus>
+    {
+        internal HybridConnectivityOperationStatus() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult> Operations { get { throw null; } }
+        public double? PercentComplete { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityOperationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HybridConnectivityPostOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult>
+    {
+        internal HybridConnectivityPostOperationResult() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityPostOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HybridConnectivityProvisioningState : System.IEquatable<Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState>
@@ -547,22 +560,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.IngressGatewayAsset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.IngressGatewayAsset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class InventoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties>
-    {
-        internal InventoryProperties() { }
-        public string AzureResourceId { get { throw null; } }
-        public string CloudNativeResourceId { get { throw null; } }
-        public Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType? CloudNativeType { get { throw null; } }
-        public Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus? Status { get { throw null; } }
-        public string StatusDetails { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.InventoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ListCredentialsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.ListCredentialsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.ListCredentialsContent>
     {
         public ListCredentialsContent() { }
@@ -629,23 +626,17 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.OperationStatusResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PostResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PostResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PostResponse>
+    public partial class PostResponse
     {
-        internal PostResponse() { }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.PostResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PostResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PostResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.PostResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PostResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PostResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PostResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public PostResponse() { }
     }
     public partial class PublicCloudConnectorProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties>
     {
-        public PublicCloudConnectorProperties(Azure.ResourceManager.HybridConnectivity.Models.AwsCloudProfile awsCloudProfile, Azure.ResourceManager.HybridConnectivity.Models.HostType hostType) { }
+        public PublicCloudConnectorProperties(Azure.ResourceManager.HybridConnectivity.Models.AwsCloudProfile awsCloudProfile, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType hostType) { }
         public Azure.ResourceManager.HybridConnectivity.Models.AwsCloudProfile AwsCloudProfile { get { throw null; } set { } }
         public string ConnectorPrimaryIdentifier { get { throw null; } }
-        public Azure.ResourceManager.HybridConnectivity.Models.HostType HostType { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType HostType { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState? ProvisioningState { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -653,101 +644,82 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceProvisioningState : System.IEquatable<Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState>
+    public partial class PublicCloudConnectorSolutionConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState left, Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState left, Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SolutionConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties>
-    {
-        public SolutionConfigurationProperties(string solutionType) { }
-        public System.DateTimeOffset? LastSyncOn { get { throw null; } }
-        public Azure.ResourceManager.HybridConnectivity.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings SolutionSettings { get { throw null; } set { } }
+        public PublicCloudConnectorSolutionConfigurationProperties(string solutionType) { }
+        public System.DateTimeOffset? LastSyncedOn { get { throw null; } }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings SolutionSettings { get { throw null; } set { } }
         public string SolutionType { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus? Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SolutionConfigurationStatus : System.IEquatable<Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus>
+    public readonly partial struct PublicCloudConnectorSolutionConfigurationStatus : System.IEquatable<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SolutionConfigurationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus Completed { get { throw null; } }
-        public static Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus New { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus other) { throw null; }
+        public PublicCloudConnectorSolutionConfigurationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus New { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus left, Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus left, Azure.ResourceManager.HybridConnectivity.Models.SolutionConfigurationStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SolutionSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings>
+    public partial class PublicCloudConnectorSolutionSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings>
     {
-        public SolutionSettings() { }
+        public PublicCloudConnectorSolutionSettings() { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalProperties { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SolutionTypeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties>
+    public partial class PublicCloudConnectorSolutionTypeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties>
     {
-        internal SolutionTypeProperties() { }
+        internal PublicCloudConnectorSolutionTypeProperties() { }
         public string Description { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties> SolutionSettings { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties> SolutionSettings { get { throw null; } }
         public string SolutionType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedAzureRegions { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SolutionTypeSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings>
+    public partial class PublicCloudConnectorSolutionTypeSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings>
     {
-        public SolutionTypeSettings(string solutionType) { }
-        public Azure.ResourceManager.HybridConnectivity.Models.SolutionSettings SolutionSettings { get { throw null; } set { } }
+        public PublicCloudConnectorSolutionTypeSettings(string solutionType) { }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionSettings SolutionSettings { get { throw null; } set { } }
         public string SolutionType { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SolutionTypeSettingsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties>
+    public partial class PublicCloudConnectorSolutionTypeSettingsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties>
     {
-        internal SolutionTypeSettingsProperties() { }
+        internal PublicCloudConnectorSolutionTypeSettingsProperties() { }
         public System.Collections.Generic.IReadOnlyList<string> AllowedValues { get { throw null; } }
         public string DefaultValue { get { throw null; } }
         public string Description { get { throw null; } }
@@ -755,11 +727,63 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public string Name { get { throw null; } }
         public string Type { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.SolutionTypeSettingsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionTypeSettingsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PublicCloudHostType : System.IEquatable<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PublicCloudHostType(string value) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType Aws { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PublicCloudInventoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties>
+    {
+        internal PublicCloudInventoryProperties() { }
+        public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } }
+        public string CloudNativeResourceId { get { throw null; } }
+        public Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType? CloudNativeType { get { throw null; } }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus? Status { get { throw null; } }
+        public string StatusDetails { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudInventoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PublicCloudResourceProvistioningState : System.IEquatable<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PublicCloudResourceProvistioningState(string value) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvistioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TargetResourceEndpointAccess : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>
     {

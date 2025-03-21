@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            IReadOnlyList<InventoryResourceData> value = default;
+            IReadOnlyList<PublicCloudInventoryData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<InventoryResourceData> array = new List<InventoryResourceData>();
+                    List<PublicCloudInventoryData> array = new List<PublicCloudInventoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InventoryResourceData.DeserializeInventoryResourceData(item, options));
+                        array.Add(PublicCloudInventoryData.DeserializePublicCloudInventoryData(item, options));
                     }
                     value = array;
                     continue;

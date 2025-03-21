@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
                 {
                     ExcludedAccounts = { "rwgqpukglvbqmogqcliqolucp" },
                     IsOrganizationalAccount = true,
-                }, HostType.AWS),
+                }, PublicCloudHostType.Aws),
                 Tags = { },
             };
             ArmOperation<PublicCloudConnectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicCloudConnector, data);

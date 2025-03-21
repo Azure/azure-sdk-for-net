@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostResponse>> PostAsync(string subscriptionId, GenerateAwsTemplateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridConnectivityPostOperationResult>> PostAsync(string subscriptionId, GenerateAwsTemplateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        PostResponse value = default;
+                        HybridConnectivityPostOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PostResponse.DeserializePostResponse(document.RootElement);
+                        value = HybridConnectivityPostOperationResult.DeserializeHybridConnectivityPostOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostResponse> Post(string subscriptionId, GenerateAwsTemplateContent content, CancellationToken cancellationToken = default)
+        public Response<HybridConnectivityPostOperationResult> Post(string subscriptionId, GenerateAwsTemplateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        PostResponse value = default;
+                        HybridConnectivityPostOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PostResponse.DeserializePostResponse(document.RootElement);
+                        value = HybridConnectivityPostOperationResult.DeserializeHybridConnectivityPostOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

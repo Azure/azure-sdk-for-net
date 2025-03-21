@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
         /// <param name="hostType"> Host cloud the public cloud connector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="awsCloudProfile"/> is null. </exception>
-        public PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, HostType hostType)
+        public PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, PublicCloudHostType hostType)
         {
             Argument.AssertNotNull(awsCloudProfile, nameof(awsCloudProfile));
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="connectorPrimaryIdentifier"> Connector primary identifier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, HostType hostType, ResourceProvisioningState? provisioningState, string connectorPrimaryIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, PublicCloudHostType hostType, PublicCloudResourceProvistioningState? provisioningState, string connectorPrimaryIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AwsCloudProfile = awsCloudProfile;
             HostType = hostType;
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> Cloud profile for AWS. </summary>
         public AwsCloudProfile AwsCloudProfile { get; set; }
         /// <summary> Host cloud the public cloud connector. </summary>
-        public HostType HostType { get; set; }
+        public PublicCloudHostType HostType { get; set; }
         /// <summary> The resource provisioning state. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public PublicCloudResourceProvistioningState? ProvisioningState { get; }
         /// <summary> Connector primary identifier. </summary>
         public string ConnectorPrimaryIdentifier { get; }
     }

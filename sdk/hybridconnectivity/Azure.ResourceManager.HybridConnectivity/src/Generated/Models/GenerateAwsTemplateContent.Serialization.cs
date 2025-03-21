@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            string connectorId = default;
-            IList<SolutionTypeSettings> solutionTypes = default;
+            ResourceIdentifier connectorId = default;
+            IList<PublicCloudConnectorSolutionTypeSettings> solutionTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectorId"u8))
                 {
-                    connectorId = property.Value.GetString();
+                    connectorId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("solutionTypes"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    List<SolutionTypeSettings> array = new List<SolutionTypeSettings>();
+                    List<PublicCloudConnectorSolutionTypeSettings> array = new List<PublicCloudConnectorSolutionTypeSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SolutionTypeSettings.DeserializeSolutionTypeSettings(item, options));
+                        array.Add(PublicCloudConnectorSolutionTypeSettings.DeserializePublicCloudConnectorSolutionTypeSettings(item, options));
                     }
                     solutionTypes = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GenerateAwsTemplateContent(connectorId, solutionTypes ?? new ChangeTrackingList<SolutionTypeSettings>(), serializedAdditionalRawData);
+            return new GenerateAwsTemplateContent(connectorId, solutionTypes ?? new ChangeTrackingList<PublicCloudConnectorSolutionTypeSettings>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GenerateAwsTemplateContent>.Write(ModelReaderWriterOptions options)

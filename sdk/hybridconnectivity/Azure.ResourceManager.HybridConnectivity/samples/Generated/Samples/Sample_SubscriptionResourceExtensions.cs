@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            GenerateAwsTemplateContent content = new GenerateAwsTemplateContent("pnxcfjidglabnwxit")
+            GenerateAwsTemplateContent content = new GenerateAwsTemplateContent(new ResourceIdentifier("pnxcfjidglabnwxit"))
             {
-                SolutionTypes = {new SolutionTypeSettings("hjyownzpfxwiufmd")
+                SolutionTypes = {new PublicCloudConnectorSolutionTypeSettings("hjyownzpfxwiufmd")
 {
-SolutionSettings = new SolutionSettings(),
+SolutionSettings = new PublicCloudConnectorSolutionSettings(),
 }},
             };
-            PostResponse result = await subscriptionResource.PostGenerateAwsTemplateAsync(content);
+            HybridConnectivityPostOperationResult result = await subscriptionResource.PostGenerateAwsTemplateAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -81,7 +81,7 @@ SolutionSettings = new SolutionSettings(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetSolutionTypeResources_SolutionTypesListBySubscription()
+        public async Task GetPublicCloudConnectorSolutionTypes_SolutionTypesListBySubscription()
         {
             // Generated from example definition: 2024-12-01/SolutionTypes_ListBySubscription.json
             // this example is just showing the usage of "SolutionTypeResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -98,11 +98,11 @@ SolutionSettings = new SolutionSettings(),
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SolutionTypeResource item in subscriptionResource.GetSolutionTypeResourcesAsync())
+            await foreach (PublicCloudConnectorSolutionTypeResource item in subscriptionResource.GetPublicCloudConnectorSolutionTypesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SolutionTypeResourceData resourceData = item.Data;
+                PublicCloudConnectorSolutionTypeData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

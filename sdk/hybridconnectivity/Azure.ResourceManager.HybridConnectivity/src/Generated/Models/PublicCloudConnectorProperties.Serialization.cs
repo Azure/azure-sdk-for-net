@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 return null;
             }
             AwsCloudProfile awsCloudProfile = default;
-            HostType hostType = default;
-            ResourceProvisioningState? provisioningState = default;
+            PublicCloudHostType hostType = default;
+            PublicCloudResourceProvistioningState? provisioningState = default;
             string connectorPrimaryIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
                 if (property.NameEquals("hostType"u8))
                 {
-                    hostType = new HostType(property.Value.GetString());
+                    hostType = new PublicCloudHostType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new PublicCloudResourceProvistioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectorPrimaryIdentifier"u8))
