@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Communication.Identity.Models;
 
@@ -21,7 +20,6 @@ namespace Azure.Communication.Identity
             }
             CommunicationIdentity identity = default;
             CommunicationIdentityAccessToken accessToken = default;
-            DateTimeOffset? lastTokenIssuedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -38,17 +36,8 @@ namespace Azure.Communication.Identity
                     accessToken = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastTokenIssuedAt"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastTokenIssuedAt = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
             }
-            return new CommunicationUserIdentifierAndToken(identity, accessToken, lastTokenIssuedAt);
+            return new CommunicationUserIdentifierAndToken(identity, accessToken);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

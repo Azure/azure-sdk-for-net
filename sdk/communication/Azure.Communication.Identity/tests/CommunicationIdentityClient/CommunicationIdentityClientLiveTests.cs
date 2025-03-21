@@ -567,10 +567,10 @@ namespace Azure.Communication.Identity.Tests
                     || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
                 Assert.IsNotNull(createResponse.Value.User);
 
-                Response<CommunicationIdentity> getResponse = await client.GetUserAsync(createResponse.Value.User);
+                Response<CommunicationUserDetail> getResponse = await client.GetUserDetailAsync(createResponse.Value.User);
                 Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
                 Assert.AreEqual(createResponse.Value.User.Id, getResponse.Value.User.Id);
-                Assert.AreEqual(externalId, getResponse.Value.ExternalId);
+                Assert.AreEqual(externalId, getResponse.Value.CustomId);
                 Assert.IsNotNull(getResponse.Value.LastTokenIssuedAt);
             }
             catch (Exception ex)

@@ -18,19 +18,14 @@ namespace Azure.Communication.Identity.Models
             {
                 return null;
             }
-            string externalId = default;
-            string id = default;
+            string customId = default;
             DateTimeOffset? lastTokenIssuedAt = default;
+            string id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("externalId"u8))
+                if (property.NameEquals("customId"u8))
                 {
-                    externalId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
+                    customId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastTokenIssuedAt"u8))
@@ -42,8 +37,13 @@ namespace Azure.Communication.Identity.Models
                     lastTokenIssuedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CommunicationIdentity(externalId, id, lastTokenIssuedAt);
+            return new CommunicationIdentity(customId, lastTokenIssuedAt, id);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

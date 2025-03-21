@@ -63,13 +63,12 @@ If you call the CreateUser method again with the same externalId, it will return
 
 The CommunicationIdentityClient can be used to retrieve details about a user. This includes the user's ID, external ID, and the last time a token was issued for the user.
 
-```C# Snippet:GetUserAsync
-var externalId = "alice@contoso.com";
-Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(externalId);
+```C# Snippet:GetUserDetailAsync
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(to: "alice@contoso.com");
 CommunicationUserIdentifier user = userResponse.Value;
-var userDetails = await client.GetUserAsync(user);
+var userDetails = await client.GetUserDetailAsync(user);
 Console.WriteLine($"User id: {userDetails.Value.User.Id}");
-Console.WriteLine($"External id: {userDetails.Value.ExternalId}");
+Console.WriteLine($"Custom id: {userDetails.Value.CustomId}");
 Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
 ```
 

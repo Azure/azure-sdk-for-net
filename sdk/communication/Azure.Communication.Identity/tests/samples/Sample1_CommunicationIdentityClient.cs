@@ -218,38 +218,36 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [SyncOnly]
-        public async Task GetUser()
+        public async Task GetUserDetail()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClient();
-            #region  Snippet:GetUser
-            var externalId = "alice@contoso.com";
-            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(externalId);
+            #region  Snippet:GetUserDetail
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(to: "alice@contoso.com");
             CommunicationUserIdentifier user = userResponse.Value;
-            var userDetails = client.GetUser(user);
+            var userDetails = client.GetUserDetail(user);
             Console.WriteLine($"User id: {userDetails.Value.User.Id}");
-            Console.WriteLine($"External id: {userDetails.Value.ExternalId}");
+            Console.WriteLine($"External id: {userDetails.Value.CustomId}");
             Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
-            #endregion Snippet:GetUser
+            #endregion Snippet:GetUserDetail
         }
 
         [Test]
         [AsyncOnly]
-        public async Task GetUserAsync()
+        public async Task GetUserDetailAsync()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClient();
-            #region  Snippet:GetUserAsync
-            var externalId = "alice@contoso.com";
-            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(externalId);
+            #region  Snippet:GetUserDetailAsync
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(to: "alice@contoso.com");
             CommunicationUserIdentifier user = userResponse.Value;
-            var userDetails = await client.GetUserAsync(user);
+            var userDetails = await client.GetUserDetailAsync(user);
             Console.WriteLine($"User id: {userDetails.Value.User.Id}");
-            Console.WriteLine($"External id: {userDetails.Value.ExternalId}");
+            Console.WriteLine($"Custom id: {userDetails.Value.CustomId}");
             Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
-            #endregion Snippet:GetUserAsync
+            #endregion Snippet:GetUserDetailAsync
         }
 
         [Test]
