@@ -25,7 +25,6 @@ namespace Azure.Communication.CallAutomation
         internal AzureCommunicationServicesRestClient AzureCommunicationServicesRestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
         internal CallRecordingRestClient CallRecordingRestClient { get; }
-        internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
@@ -115,7 +114,6 @@ namespace Azure.Communication.CallAutomation
             CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallDialogRestClient = new CallDialogRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
         }
@@ -248,8 +246,7 @@ namespace Azure.Communication.CallAutomation
             {
                 request.CallIntelligenceOptions = new()
                 {
-                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
-                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
                 };
             }
 
@@ -294,10 +291,6 @@ namespace Azure.Communication.CallAutomation
 
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
 
-                request.CustomCallingContext = new CustomCallingContextInternal(
-                   options.CallInvite.CustomCallingContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders,
-                   options.CallInvite.CustomCallingContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.VoipHeaders);
-
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -336,10 +329,6 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
-
-                request.CustomCallingContext = new CustomCallingContextInternal(
-                                   options.CallInvite.CustomCallingContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders,
-                                   options.CallInvite.CustomCallingContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.VoipHeaders);
 
                 return AzureCommunicationServicesRestClient.RedirectCall(request, cancellationToken);
             }
@@ -728,10 +717,6 @@ namespace Azure.Communication.CallAutomation
                 TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
-            request.CustomCallingContext = new CustomCallingContextInternal(
-               options.CallInvite.CustomCallingContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders,
-               options.CallInvite.CustomCallingContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.VoipHeaders);
-
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
@@ -739,8 +724,7 @@ namespace Azure.Communication.CallAutomation
             {
                 request.CallIntelligenceOptions = new()
                 {
-                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
-                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
                 };
             }
 
@@ -765,10 +749,6 @@ namespace Azure.Communication.CallAutomation
                 TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId)
             };
 
-            request.CustomCallingContext = new CustomCallingContextInternal(
-               options.CustomCallingContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomCallingContext.SipHeaders,
-               options.CustomCallingContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomCallingContext.VoipHeaders);
-
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
@@ -776,8 +756,7 @@ namespace Azure.Communication.CallAutomation
             {
                 request.CallIntelligenceOptions = new()
                 {
-                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
-                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
                 };
             }
 
@@ -802,8 +781,7 @@ namespace Azure.Communication.CallAutomation
             {
                 connectRequest.CallIntelligenceOptions = new()
                 {
-                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
-                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
                 };
             }
 
@@ -851,7 +829,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, CallDialogRestClient, _clientDiagnostics, EventProcessor);
+                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics, EventProcessor);
             }
             catch (Exception ex)
             {
