@@ -485,8 +485,8 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.AgentPageableListOfVectorStore AgentPageableListOfVectorStore(Azure.AI.Projects.AgentPageableListOfVectorStoreObject @object = default(Azure.AI.Projects.AgentPageableListOfVectorStoreObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
         public static Azure.AI.Projects.AgentPageableListOfVectorStoreFile AgentPageableListOfVectorStoreFile(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject @object = default(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
         public static Azure.AI.Projects.AzureFunctionBinding AzureFunctionBinding(Azure.AI.Projects.AzureFunctionBindingType type = default(Azure.AI.Projects.AzureFunctionBindingType), Azure.AI.Projects.AzureFunctionStorageQueue storageQueue = null) { throw null; }
-        public static Azure.AI.Projects.ConnectionProperties ConnectionProperties(Azure.AI.Projects.ConnectionType category = Azure.AI.Projects.ConnectionType.AzureOpenAI, string target = null) { throw null; }
-        public static Azure.AI.Projects.ConnectionPropertiesApiKeyAuth ConnectionPropertiesApiKeyAuth(Azure.AI.Projects.ConnectionType category = Azure.AI.Projects.ConnectionType.AzureOpenAI, string target = null, Azure.AI.Projects.CredentialsApiKeyAuth credentials = null) { throw null; }
+        public static Azure.AI.Projects.ConnectionProperties ConnectionProperties(Azure.AI.Projects.ConnectionType category = default(Azure.AI.Projects.ConnectionType), string target = null) { throw null; }
+        public static Azure.AI.Projects.ConnectionPropertiesApiKeyAuth ConnectionPropertiesApiKeyAuth(Azure.AI.Projects.ConnectionType category = default(Azure.AI.Projects.ConnectionType), string target = null, Azure.AI.Projects.CredentialsApiKeyAuth credentials = null) { throw null; }
         public static Azure.AI.Projects.ConnectionResponse ConnectionResponse(string id = null, string name = null, Azure.AI.Projects.ConnectionProperties properties = null) { throw null; }
         public static Azure.AI.Projects.CredentialsApiKeyAuth CredentialsApiKeyAuth(string key = null) { throw null; }
         public static Azure.AI.Projects.Evaluation Evaluation(string id = null, Azure.AI.Projects.InputData data = null, Azure.AI.Projects.EvaluationTarget target = null, string displayName = null, string description = null, Azure.AI.Projects.SystemData systemData = null, string status = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators = null) { throw null; }
@@ -494,8 +494,8 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.FileSearchToolCallContent FileSearchToolCallContent(Azure.AI.Projects.FileSearchToolCallContentType type = default(Azure.AI.Projects.FileSearchToolCallContentType), string text = null) { throw null; }
         public static Azure.AI.Projects.GetWorkspaceResponse GetWorkspaceResponse(string id = null, string name = null, Azure.AI.Projects.WorkspaceProperties properties = null) { throw null; }
         public static Azure.AI.Projects.IncompleteRunDetails IncompleteRunDetails(Azure.AI.Projects.IncompleteDetailsReason reason = default(Azure.AI.Projects.IncompleteDetailsReason)) { throw null; }
-        public static Azure.AI.Projects.InternalConnectionPropertiesCustomAuth InternalConnectionPropertiesCustomAuth(Azure.AI.Projects.ConnectionType category = Azure.AI.Projects.ConnectionType.AzureOpenAI, string target = null) { throw null; }
-        public static Azure.AI.Projects.InternalConnectionPropertiesNoAuth InternalConnectionPropertiesNoAuth(Azure.AI.Projects.ConnectionType category = Azure.AI.Projects.ConnectionType.AzureOpenAI, string target = null) { throw null; }
+        public static Azure.AI.Projects.InternalConnectionPropertiesCustomAuth InternalConnectionPropertiesCustomAuth(Azure.AI.Projects.ConnectionType category = default(Azure.AI.Projects.ConnectionType), string target = null) { throw null; }
+        public static Azure.AI.Projects.InternalConnectionPropertiesNoAuth InternalConnectionPropertiesNoAuth(Azure.AI.Projects.ConnectionType category = default(Azure.AI.Projects.ConnectionType), string target = null) { throw null; }
         public static Azure.AI.Projects.ListConnectionsResponse ListConnectionsResponse(System.Collections.Generic.IEnumerable<Azure.AI.Projects.ConnectionResponse> value = null) { throw null; }
         public static Azure.AI.Projects.MessageDelta MessageDelta(Azure.AI.Projects.MessageRole role = default(Azure.AI.Projects.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.Projects.MessageDeltaContent> content = null) { throw null; }
         public static Azure.AI.Projects.MessageDeltaChunk MessageDeltaChunk(string id = null, Azure.AI.Projects.MessageDeltaChunkObject @object = default(Azure.AI.Projects.MessageDeltaChunkObject), Azure.AI.Projects.MessageDelta delta = null) { throw null; }
@@ -772,16 +772,29 @@ namespace Azure.AI.Projects
         public virtual System.Threading.Tasks.Task<Azure.Response> GetWorkspaceAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.GetWorkspaceResponse>> GetWorkspaceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public enum ConnectionType
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectionType : System.IEquatable<Azure.AI.Projects.ConnectionType>
     {
-        AzureOpenAI = 0,
-        Serverless = 1,
-        AzureBlobStorage = 2,
-        AzureAIServices = 3,
-        AzureAISearch = 4,
-        APIKey = 5,
-        Custom = 6,
-        CognitiveService = 7,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConnectionType(string value) { throw null; }
+        public static Azure.AI.Projects.ConnectionType APIKey { get { throw null; } }
+        public static Azure.AI.Projects.ConnectionType AzureAISearch { get { throw null; } }
+        public static Azure.AI.Projects.ConnectionType AzureAIServices { get { throw null; } }
+        public static Azure.AI.Projects.ConnectionType AzureBlobStorage { get { throw null; } }
+        public static Azure.AI.Projects.ConnectionType AzureOpenAI { get { throw null; } }
+        public static Azure.AI.Projects.ConnectionType CognitiveService { get { throw null; } }
+        public static Azure.AI.Projects.ConnectionType Custom { get { throw null; } }
+        public static Azure.AI.Projects.ConnectionType Serverless { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.ConnectionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.ConnectionType left, Azure.AI.Projects.ConnectionType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.ConnectionType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.ConnectionType left, Azure.AI.Projects.ConnectionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CredentialsApiKeyAuth : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CredentialsApiKeyAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CredentialsApiKeyAuth>
     {
