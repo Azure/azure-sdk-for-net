@@ -165,7 +165,7 @@ namespace Azure.Communication.Identity.Samples
             client = CreateClient();
             #region Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
             TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
-            Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+            Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(@for: "alice@contoso.com", scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
             var (user, token) = response.Value;
             Console.WriteLine($"User id: {user.Id}");
             Console.WriteLine($"Token: {token.Token}");
@@ -188,32 +188,30 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [SyncOnly]
-        public void CreateCommunicationUserWithExternalId()
+        public void CreateCommunicationUserWithCustomId()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClient();
-            #region  Snippet:CreateCommunicationUserWithExternalId
-            var externalId = "alice@contoso.com";
-            Response<CommunicationUserIdentifier> userResponse = client.CreateUser(externalId);
+            #region  Snippet:CreateCommunicationUserWithCustomId
+            Response<CommunicationUserIdentifier> userResponse = client.CreateUser(@for: "alice@contoso.com");
             CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
-            #endregion Snippet:CreateCommunicationUserWithExternalId
+            #endregion Snippet:CreateCommunicationUserWithCustomId
         }
 
         [Test]
         [AsyncOnly]
-        public async Task CreateCommunicationUserWithExternalIdAsync()
+        public async Task CreateCommunicationUserWithCustomlIdAsync()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClient();
-            #region  Snippet:CreateCommunicationUserWithExternalIdAsync
-            var externalId = "alice@contoso.com";
-            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(externalId);
+            #region  Snippet:CreateCommunicationUserWithCustomAsync
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(@for: "alice@contoso.com");
             CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
-            #endregion Snippet:CreateCommunicationUserWithExternalIdAsync
+            #endregion Snippet:CreateCommunicationUserWithCustomAsync
         }
 
         [Test]
@@ -224,11 +222,11 @@ namespace Azure.Communication.Identity.Samples
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClient();
             #region  Snippet:GetUserDetail
-            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(to: "alice@contoso.com");
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(@for: "alice@contoso.com");
             CommunicationUserIdentifier user = userResponse.Value;
             var userDetails = client.GetUserDetail(user);
             Console.WriteLine($"User id: {userDetails.Value.User.Id}");
-            Console.WriteLine($"External id: {userDetails.Value.CustomId}");
+            Console.WriteLine($"Custom id: {userDetails.Value.CustomId}");
             Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
             #endregion Snippet:GetUserDetail
         }
@@ -241,7 +239,7 @@ namespace Azure.Communication.Identity.Samples
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClient();
             #region  Snippet:GetUserDetailAsync
-            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(to: "alice@contoso.com");
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(@for: "alice@contoso.com");
             CommunicationUserIdentifier user = userResponse.Value;
             var userDetails = await client.GetUserDetailAsync(user);
             Console.WriteLine($"User id: {userDetails.Value.User.Id}");
@@ -251,17 +249,17 @@ namespace Azure.Communication.Identity.Samples
         }
 
         [Test]
-        public async Task CreateUserWithExternalId()
+        [AsyncOnly]
+        public async Task CreateUserWithCustomId()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClient();
-            #region Snippet:CreateCommunicationUserWithExternalId
-            var externalId = "alice@contoso.com";
-            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(externalId);
+            #region Snippet:CreateCommunicationUserWithCustomIdAsync
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(@for: "alice@contoso.com");
             CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
-            #endregion Snippet:CreateCommunicationUserWithExternalId
+            #endregion Snippet:CreateCommunicationUserWithCustomIdAsync
         }
 
         [Test]
