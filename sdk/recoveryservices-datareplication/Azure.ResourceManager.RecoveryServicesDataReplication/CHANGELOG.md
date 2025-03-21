@@ -4,10 +4,6 @@
 
 ### Features Added
 
-- Stable release for api-version `2024-09-01`. Detail available at https://github.com/Azure/azure-rest-api-specs/tree/735b8f03b5e773b751f93960137e397e2282ca92/specification/recoveryservicesdatareplication/DataReplication.Management/routes.tsp.
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-
 ### Breaking Changes
 
 ### Bugs Fixed
