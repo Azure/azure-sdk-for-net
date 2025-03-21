@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -15,14 +11,15 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Tests
 {
-    public class DomainEventSubscriptionTests : EventGridManagementTestBase
+    public class EventGridDomainEventSubscriptionTests : EventGridManagementTestBase
     {
-        public DomainEventSubscriptionTests(bool isAsync)
+        public EventGridDomainEventSubscriptionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
-
-        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=PASSWORDCODE";
+        // For live tests, replace "SANITIZED_FUNCTION_KEY" with the actual function key
+        // from the Azure Portal for the function "EventGridTrigger1" in "devexpfuncappdestination".
+        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY";
         private EventGridDomainCollection DomainCollection { get; set; }
         private ResourceGroupResource ResourceGroup { get; set; }
 
@@ -73,9 +70,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Labels = { "TestLabel1", "TestLabel2" }
             };
 
+            var domainEventSubscriptionExistsBeforeCreate = (await domainEventSubscriptionsCollection.ExistsAsync(eventSubscriptionName)).Value;
+            Assert.IsFalse(domainEventSubscriptionExistsBeforeCreate);
+
             var eventSubscriptionResponse = (await domainEventSubscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscription)).Value;
             Assert.NotNull(eventSubscriptionResponse);
             Assert.AreEqual(eventSubscriptionResponse.Data.Name, eventSubscriptionName);
+
+            var domainEventSubscriptionExistsAfterCreate = (await domainEventSubscriptionsCollection.ExistsAsync(eventSubscriptionName)).Value;
+            Assert.IsTrue(domainEventSubscriptionExistsAfterCreate);
 
             // Get the created event subscription
             eventSubscriptionResponse = await domainEventSubscriptionsCollection.GetAsync(eventSubscriptionName);
@@ -142,9 +145,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Labels = { "TestLabel1", "TestLabel2" }
             };
 
+            var domainTopicEventSubscriptionExistsBeforeCreate = (await domainEventSubscriptionsCollection.ExistsAsync(eventSubscriptionName)).Value;
+            Assert.IsFalse(domainTopicEventSubscriptionExistsBeforeCreate);
             var domainTopicEventSubscriptionResponse = (await domainTopicEventSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscription)).Value;
             Assert.NotNull(domainTopicEventSubscriptionResponse);
             Assert.AreEqual(domainTopicEventSubscriptionResponse.Data.Name, eventSubscriptionName);
+            var domainTopicEventSubscriptionExistsAfterCreate = (await domainTopicEventSubscriptionCollection.ExistsAsync(eventSubscriptionName)).Value;
+            Assert.IsTrue(domainTopicEventSubscriptionExistsAfterCreate);
 
             // Get the created event subscription
             domainTopicEventSubscriptionResponse = await domainTopicEventSubscriptionCollection.GetAsync(eventSubscriptionName);
@@ -152,6 +159,31 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(EventSubscriptionProvisioningState.Succeeded, domainTopicEventSubscriptionResponse.Data.ProvisioningState);
             Assert.AreEqual("TestPrefix", domainTopicEventSubscriptionResponse.Data.Filter.SubjectBeginsWith);
             Assert.AreEqual("TestSuffix", domainTopicEventSubscriptionResponse.Data.Filter.SubjectEndsWith);
+
+            // Update the domain topic event subscription
+            var domainTopicEventSubscriptionUpdateParameters = new EventGridSubscriptionPatch()
+            {
+                Destination = new WebHookEventSubscriptionDestination()
+                {
+                    Endpoint = new Uri(AzureFunctionEndpointUrl),
+                },
+                Filter = new EventSubscriptionFilter()
+                {
+                    IncludedEventTypes = { "UpdatedEvent1", "UpdatedEvent2" },
+                    SubjectEndsWith = ".png",
+                    SubjectBeginsWith = "UpdatedPrefix"
+                },
+                Labels = { "UpdatedDomainTopicLabel1", "UpdatedDomainTopicLabel2" }
+            };
+
+            // Apply the update
+            domainTopicEventSubscriptionResponse = (await domainTopicEventSubscriptionResponse.UpdateAsync(WaitUntil.Completed, domainTopicEventSubscriptionUpdateParameters)).Value;
+
+            // Validate update
+            Assert.NotNull(domainTopicEventSubscriptionResponse);
+            Assert.AreEqual(".png", domainTopicEventSubscriptionResponse.Data.Filter.SubjectEndsWith);
+            Assert.AreEqual("UpdatedPrefix", domainTopicEventSubscriptionResponse.Data.Filter.SubjectBeginsWith);
+            Assert.IsTrue(domainTopicEventSubscriptionResponse.Data.Labels.Contains("UpdatedDomainTopicLabel1"));
 
             // List domain topic event subscriptions
             var listDomainTopicEventSubscriptionsResponse = await domainTopicEventSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
