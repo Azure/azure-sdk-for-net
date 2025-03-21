@@ -184,12 +184,7 @@ namespace Azure.Storage.Tests
             stream.CallBase = true;
             if (!baseStreamSeekable)
             {
-                stream.SetupGet(s => s.CanSeek).Returns(false);
-                stream.SetupGet(s => s.Position).Throws(new NotSupportedException());
-                stream.SetupSet(s => s.Position = default).Throws(new NotSupportedException());
-                stream.Setup(s => s.Seek(It.IsAny<long>(), It.IsAny<SeekOrigin>())).Throws(new NotSupportedException());
-                stream.SetupGet(s => s.Length).Throws(new NotSupportedException());
-                stream.Setup(s => s.SetLength(It.IsAny<long>())).Throws(new NotSupportedException());
+                stream.MakeUnseekable();
             }
 
             // all stream-accepting delegates are rigged to throw if they get a non-seekable stream
@@ -220,16 +215,12 @@ namespace Azure.Storage.Tests
             var data = TestHelper.GetRandomBuffer(dataSize);
             int blockSize = oneshot ? dataSize * 2 : dataSize / numPartitions;
 
-            var stream = new Mock<MemoryStream>(MockBehavior.Loose, data);
-            stream.CallBase = true;
+            Mock<MemoryStream> stream = new(MockBehavior.Loose, data)
+            {
+                CallBase = true
+            };
 
-            // make stream unseekable (can't get length from stream)
-            stream.SetupGet(s => s.CanSeek).Returns(false);
-            stream.SetupGet(s => s.Position).Throws(new NotSupportedException());
-            stream.SetupSet(s => s.Position = default).Throws(new NotSupportedException());
-            stream.Setup(s => s.Seek(It.IsAny<long>(), It.IsAny<SeekOrigin>())).Throws(new NotSupportedException());
-            stream.SetupGet(s => s.Length).Throws(new NotSupportedException());
-            stream.Setup(s => s.SetLength(It.IsAny<long>())).Throws(new NotSupportedException());
+            stream.MakeUnseekable();
 
             // confirm our stream cannot give a length
             Assert.Throws<NotSupportedException>(() => _ = stream.Object.Length);
@@ -262,6 +253,57 @@ namespace Azure.Storage.Tests
                 Assert.IsEmpty(mocks.SingleUploadStream.Invocations);
                 Assert.AreEqual(numPartitions, mocks.PartitionUploadStream.Invocations.Count);
                 Assert.AreEqual(1, mocks.Commit.Invocations.Count);
+            }
+        }
+
+        [Test]
+        [Combinatorial]
+        public async Task AlwaysObeysOneshotThreshold(
+            [Values(true, false)] bool overThreshold,
+            [Values(true, false)] bool seekable,
+            [Values(1, 8)] int concurrency)
+        {
+            const int threshold = 123;
+            const int blockSize = 50;
+            int dataSize = overThreshold ? 200 : 100;
+            int totalBlocks = dataSize / blockSize;
+
+            var dataBuffer = new byte[dataSize];
+            new Random().NextBytes(dataBuffer);
+            Mock<MemoryStream> content = new(dataBuffer)
+            {
+                CallBase = true,
+            };
+            if (!seekable)
+            {
+                content.MakeUnseekable();
+            }
+
+            var mocks = GetMockBehaviors(dataSize, blockSize);
+            var partitionedUploader = new PartitionedUploader<object, object>(
+                mocks.ToBehaviors(),
+                new StorageTransferOptions()
+                {
+                    InitialTransferSize = threshold,
+                    MaximumTransferSize = blockSize,
+                    MaximumConcurrency = concurrency,
+                },
+                s_validationOptions,
+                operationName: s_operationName);
+
+            await partitionedUploader.UploadInternal(content.Object, dataSize, s_objectArgs, s_progress, IsAsync, s_cancellation);
+
+            if (overThreshold)
+            {
+                Assert.AreEqual(totalBlocks, mocks.PartitionUploadStream.Invocations.Count);
+                Assert.AreEqual(1, mocks.Commit.Invocations.Count);
+                Assert.IsEmpty(mocks.SingleUploadStream.Invocations);
+            }
+            else
+            {
+                Assert.AreEqual(1, mocks.SingleUploadStream.Invocations.Count);
+                Assert.IsEmpty(mocks.PartitionUploadStream.Invocations);
+                Assert.IsEmpty(mocks.Commit.Invocations);
             }
         }
 
