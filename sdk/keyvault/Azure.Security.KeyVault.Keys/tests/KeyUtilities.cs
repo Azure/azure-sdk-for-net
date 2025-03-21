@@ -47,6 +47,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     }
 #endif
 
+                case SignatureAlgorithm.HS256Value:
+                case SignatureAlgorithm.HS384Value:
+                case SignatureAlgorithm.HS512Value:
+                    return CreateAesKey(32, keyOps); // Use 256-bit key for all HMAC algorithms
+
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
