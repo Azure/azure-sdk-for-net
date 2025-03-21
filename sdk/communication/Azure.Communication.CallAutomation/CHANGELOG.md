@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.0-beta.3 (2025-03-21)
 
 ### Bugs Fixed
 
-### Other Changes
+- The parsing issue related to setting intermediate results on transcription has been resolved.
 
 ## 1.4.0-beta.2 (2025-01-31)
 
