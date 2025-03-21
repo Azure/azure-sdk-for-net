@@ -2,7 +2,7 @@
 
 In the enterprise file search, as opposed to regular file search, we are assuming that user has uploaded the file to Azure and have registered it in the Azure AI Foundry. In the example below we will utilize the asset ID from Azure as a data source for the `VectorStore`.
 
-1. First we need to create agent client and read the environmental variables, which will be used in the next steps.
+1. First we need to create agent client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:EnterpriseFileSearch_CreateProject
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");

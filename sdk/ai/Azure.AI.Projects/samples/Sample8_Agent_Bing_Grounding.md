@@ -1,7 +1,7 @@
 # Sample for use of an agent with Bing grounding in Azure.AI.Projects.
 
 To enable your Agent to perform search through Bing search API, you use `BingGroundingToolDefinition` along with a connection.
-1. First we need to create agent client and read the environmental variables, which will be used in the next steps.
+1. First we need to create agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:BingGrounding_CreateProject
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");

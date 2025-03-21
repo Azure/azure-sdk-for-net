@@ -2,7 +2,7 @@
 
 In this example we will demonstrate creation and basic use of an agent step by step.
 
-1. First we need to create agent client and read the environmental variables, which will be used in the next steps.
+1. First we need to create agent client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:OverviewCreateAgentClient
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

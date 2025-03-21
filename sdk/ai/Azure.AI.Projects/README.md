@@ -270,35 +270,35 @@ To attach a file with the context to the message, use the `MessageAttachment` cl
 Here is an example to pass `CodeInterpreterTool` as tool:
 
 ```C# Snippet:CreateAgentWithInterpreterTool
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
-
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: modelName,
+Agent agent = await client.CreateAgentAsync(
+    model: modelDeploymentName,
     name: "my-assistant",
-    instructions: "You are helpful assistant.",
+    instructions: "You are a helpful agent that can help fetch data from files you know about.",
     tools: tools
 );
-Agent agent = agentResponse.Value;
 
-var fileResponse = await client.UploadFileAsync(filePath, AgentFilePurpose.Agents);
-var fileId = fileResponse.Value.Id;
+File.WriteAllText(
+    path: "sample_file_for_upload.txt",
+    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+AgentFile uploadedAgentFile = await client.UploadFileAsync(
+    filePath: "sample_file_for_upload.txt",
+    purpose: AgentFilePurpose.Agents);
+var fileId = uploadedAgentFile.Id;
 
 var attachment = new MessageAttachment(
     fileId: fileId,
     tools: tools
 );
 
-Response<AgentThread> threadResponse = await client.CreateThreadAsync();
-AgentThread thread = threadResponse.Value;
+AgentThread thread = await client.CreateThreadAsync();
 
-Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+ThreadMessage message = await client.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
-    content: "What does the attachment say?",
-    attachments: new List< MessageAttachment > { attachment}
-    );
-ThreadMessage message = messageResponse.Value;
+    content: "Can you give me the documented codes for 'banana' and 'orange'?",
+    attachments: [ attachment ]
+);
 ```
 
 Azure blob storage can be used as a message attachment. In this case, use `VectorStoreDataSource` as a data source:
@@ -367,13 +367,12 @@ ToolResources searchResource = new ToolResources
 
 AgentsClient agentClient = projectClient.GetAgentsClient();
 
-Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
-   model: modelName,
+Agent agent = await agentClient.CreateAgentAsync(
+   model: modelDeploymentName,
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
-   tools: new List<ToolDefinition> { new AzureAISearchToolDefinition() },
+   tools: [ new AzureAISearchToolDefinition() ],
    toolResources: searchResource);
-Agent agent = agentResponse.Value;
 ```
 
 If the agent has found the relevant information in the index, the reference
@@ -387,7 +386,6 @@ PageableList<ThreadMessage> messages = await agentClient.GetMessagesAsync(
     order: ListSortOrder.Ascending
 );
 
-// Note: messages iterate from newest to oldest, with the messages[0] being the most recent
 foreach (ThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
@@ -500,15 +498,14 @@ With the functions defined in their appropriate tools, an agent can be now creat
 
 ```C# Snippet:FunctionsCreateAgentWithFunctionTools
 // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: modelName,
+Agent agent = await client.CreateAgentAsync(
+    model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
         instructions: "You are a weather bot. Use the provided functions to help answer questions. "
             + "Customize your responses to the user's preferences as much as possible and use friendly "
             + "nicknames for cities whenever possible.",
-    tools: new List<ToolDefinition> { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
+    tools: [ getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool ]
     );
-Agent agent = agentResponse.Value;
 ```
 
 If the agent calls tools, the calling code will need to resolve `ToolCall` instances into matching
@@ -553,21 +550,25 @@ run via the `SubmitRunToolOutputs` method so that the run can continue:
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+    run = await client.GetRunAsync(thread.Id, run.Id);
 
-    if (runResponse.Value.Status == RunStatus.RequiresAction
-        && runResponse.Value.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
+    if (run.Status == RunStatus.RequiresAction
+        && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
     {
-        List<ToolOutput> toolOutputs = new();
+        List<ToolOutput> toolOutputs = [];
         foreach (RequiredToolCall toolCall in submitToolOutputsAction.ToolCalls)
         {
             toolOutputs.Add(GetResolvedToolOutput(toolCall));
         }
-        runResponse = await client.SubmitToolOutputsToRunAsync(runResponse.Value, toolOutputs);
+        run = await client.SubmitToolOutputsToRunAsync(run, toolOutputs);
     }
 }
-while (runResponse.Value.Status == RunStatus.Queued
-    || runResponse.Value.Status == RunStatus.InProgress);
+while (run.Status == RunStatus.Queued
+    || run.Status == RunStatus.InProgress);
+Assert.AreEqual(
+    RunStatus.Completed,
+    run.Status,
+    run.LastError?.Message);
 ```
 
 Calling function with streaming requires small modification of the code above. Streaming updates contain one ToolOutput per update and now the GetResolvedToolOutput function will look like it is shown on the code snippet below:
@@ -602,7 +603,7 @@ ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string 
 We parse streaming updates in two cycles. One iterates over the streaming run outputs and when we are getting update, requiring the action, we are starting the second cycle, which iterates over the outputs of the same run, after submission of the local functions calls results.
 
 ```C# Snippet:FunctionsWithStreamingUpdateCycle
-List<ToolOutput> toolOutputs = new();
+List<ToolOutput> toolOutputs = [];
 ThreadRun streamRun = null;
 await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
 {
@@ -630,6 +631,13 @@ await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync
                 else if (actionUpdate is RequiredActionUpdate newAction)
                 {
                     newActionUpdate = newAction;
+                    toolOutputs.Add(
+                        GetResolvedToolOutput(
+                            newActionUpdate.FunctionName,
+                            newActionUpdate.ToolCallId,
+                            newActionUpdate.FunctionArguments
+                        )
+                    );
                 }
                 else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
                 {
@@ -851,33 +859,36 @@ OpenApiToolDefinition openapiTool = new(
     auth: oaiAuth
 );
 
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4",
+Agent agent = await client.CreateAgentAsync(
+    model: modelDeploymentName,
     name: "azure-function-agent-foo",
     instructions: "You are a helpful assistant.",
-    tools: new List<ToolDefinition> { openapiTool }
-    );
-Agent agent = agentResponse.Value;
+    tools: [ openapiTool ]
+);
 ```
 
 In this example we are using the `weather_openapi.json` file and agent will request the wttr.in website for the weather in a location fron the prompt.
 ```C# Snippet:OpenAPIHandlePollingWithRequiredAction
-Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+AgentThread thread = await client.CreateThreadAsync();
+ThreadMessage message = await client.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What's the weather in Seattle?");
-ThreadMessage message = messageResponse.Value;
 
-Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
+ThreadRun run = await client.CreateRunAsync(thread, agent);
 
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+    run = await client.GetRunAsync(thread.Id, run.Id);
 }
-while (runResponse.Value.Status == RunStatus.Queued
-    || runResponse.Value.Status == RunStatus.InProgress
-    || runResponse.Value.Status == RunStatus.RequiresAction);
+while (run.Status == RunStatus.Queued
+    || run.Status == RunStatus.InProgress
+    || run.Status == RunStatus.RequiresAction);
+Assert.AreEqual(
+    RunStatus.Completed,
+    run.Status,
+    run.LastError?.Message);
 ```
 
 ## Troubleshooting
