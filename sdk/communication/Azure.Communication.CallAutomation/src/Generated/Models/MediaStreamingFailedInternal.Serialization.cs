@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class MediaStreamingFailed
+    internal partial class MediaStreamingFailedInternal
     {
-        internal static MediaStreamingFailed DeserializeMediaStreamingFailed(JsonElement element)
+        internal static MediaStreamingFailedInternal DeserializeMediaStreamingFailedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -64,7 +64,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new MediaStreamingFailed(
+            return new MediaStreamingFailedInternal(
                 mediaStreamingUpdate,
                 callConnectionId,
                 serverCallId,
@@ -75,10 +75,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MediaStreamingFailed FromResponse(Response response)
+        internal static MediaStreamingFailedInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMediaStreamingFailed(document.RootElement);
+            return DeserializeMediaStreamingFailedInternal(document.RootElement);
         }
     }
 }
