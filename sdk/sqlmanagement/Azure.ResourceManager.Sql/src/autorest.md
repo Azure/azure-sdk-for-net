@@ -594,4 +594,25 @@ directive:
       transform: >
           $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
           $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: ManagedInstances.json
+      where: $.definitions
+      transform: >
+          $.ManagedInstanceProperties.properties.provisioningState['enum'] = [
+            "Created",
+            "InProgress",
+            "Succeeded",
+            "Failed",
+            "Canceled"
+            "Creating",
+            "Deleting",
+            "Updating",
+            "Unknown",
+            "Accepted",
+            "Deleted",
+            "Unrecognized",
+            "Running",
+            "NotSpecified",
+            "Registering",
+            "TimedOut"
+          ];      
 ```

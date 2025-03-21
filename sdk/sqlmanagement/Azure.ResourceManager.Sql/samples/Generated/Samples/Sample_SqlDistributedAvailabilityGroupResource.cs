@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DistributedAvailabilityGroupData resourceData = result.Data;
+            SqlDistributedAvailabilityGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDistributedAvailabilityGroupResource sqlDistributedAvailabilityGroup = client.GetSqlDistributedAvailabilityGroupResource(sqlDistributedAvailabilityGroupResourceId);
 
             // invoke the operation
-            DistributedAvailabilityGroupData data = new DistributedAvailabilityGroupData
+            SqlDistributedAvailabilityGroupData data = new SqlDistributedAvailabilityGroupData
             {
                 ReplicationMode = ReplicationModeType.Sync,
             };
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DistributedAvailabilityGroupData resourceData = result.Data;
+            SqlDistributedAvailabilityGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DistributedAvailabilityGroupData resourceData = result.Data;
+            SqlDistributedAvailabilityGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DistributedAvailabilityGroupData resourceData = result.Data;
+            SqlDistributedAvailabilityGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsClientDiagnostics;
         private readonly DistributedAvailabilityGroupsRestOperations _sqlDistributedAvailabilityGroupDistributedAvailabilityGroupsRestClient;
-        private readonly DistributedAvailabilityGroupData _data;
+        private readonly SqlDistributedAvailabilityGroupData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/distributedAvailabilityGroups";
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref="SqlDistributedAvailabilityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlDistributedAvailabilityGroupResource(ArmClient client, DistributedAvailabilityGroupData data) : this(client, data.Id)
+        internal SqlDistributedAvailabilityGroupResource(ArmClient client, SqlDistributedAvailabilityGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DistributedAvailabilityGroupData Data
+        public virtual SqlDistributedAvailabilityGroupData Data
         {
             get
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The distributed availability group info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlDistributedAvailabilityGroupResource>> UpdateAsync(WaitUntil waitUntil, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlDistributedAvailabilityGroupResource>> UpdateAsync(WaitUntil waitUntil, SqlDistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The distributed availability group info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SqlDistributedAvailabilityGroupResource> Update(WaitUntil waitUntil, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlDistributedAvailabilityGroupResource> Update(WaitUntil waitUntil, SqlDistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

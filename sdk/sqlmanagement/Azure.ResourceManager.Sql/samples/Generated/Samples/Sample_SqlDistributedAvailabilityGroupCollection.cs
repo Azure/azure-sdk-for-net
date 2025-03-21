@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation
             string distributedAvailabilityGroupName = "dag";
-            DistributedAvailabilityGroupData data = new DistributedAvailabilityGroupData
+            SqlDistributedAvailabilityGroupData data = new SqlDistributedAvailabilityGroupData
             {
                 PartnerAvailabilityGroupName = "BoxLocalAg1",
                 PartnerEndpoint = "TCP://SERVER:7022",
@@ -59,7 +59,7 @@ DatabaseName = "testdb",
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DistributedAvailabilityGroupData resourceData = result.Data;
+            SqlDistributedAvailabilityGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -89,7 +89,7 @@ DatabaseName = "testdb",
 
             // invoke the operation
             string distributedAvailabilityGroupName = "dag";
-            DistributedAvailabilityGroupData data = new DistributedAvailabilityGroupData
+            SqlDistributedAvailabilityGroupData data = new SqlDistributedAvailabilityGroupData
             {
                 PartnerAvailabilityGroupName = "BoxLocalAg1",
                 PartnerEndpoint = "TCP://SERVER:7022",
@@ -104,7 +104,7 @@ DatabaseName = "testdb",
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DistributedAvailabilityGroupData resourceData = result.Data;
+            SqlDistributedAvailabilityGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -138,7 +138,7 @@ DatabaseName = "testdb",
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DistributedAvailabilityGroupData resourceData = result.Data;
+            SqlDistributedAvailabilityGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -171,7 +171,7 @@ DatabaseName = "testdb",
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DistributedAvailabilityGroupData resourceData = item.Data;
+                SqlDistributedAvailabilityGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -245,7 +245,7 @@ DatabaseName = "testdb",
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DistributedAvailabilityGroupData resourceData = result.Data;
+                SqlDistributedAvailabilityGroupData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

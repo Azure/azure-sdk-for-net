@@ -14,10 +14,10 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing the DistributedAvailabilityGroup data model.
+    /// A class representing the SqlDistributedAvailabilityGroup data model.
     /// Distributed availability group between box and Sql Managed Instance.
     /// </summary>
-    public partial class DistributedAvailabilityGroupData : ResourceData
+    public partial class SqlDistributedAvailabilityGroupData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupData"/>. </summary>
-        public DistributedAvailabilityGroupData()
+        /// <summary> Initializes a new instance of <see cref="SqlDistributedAvailabilityGroupData"/>. </summary>
+        public SqlDistributedAvailabilityGroupData()
         {
             Databases = new ChangeTrackingList<DistributedAvailabilityGroupDatabase>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDistributedAvailabilityGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
         /// <param name="databases"> Databases in the distributed availability group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, ReplicationModeType? replicationMode, LinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, LinkRole? instanceLinkRole, string instanceAvailabilityGroupName, FailoverModeType? failoverMode, SeedingModeType? seedingMode, IList<DistributedAvailabilityGroupDatabase> databases, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlDistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, ReplicationModeType? replicationMode, LinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, LinkRole? instanceLinkRole, string instanceAvailabilityGroupName, FailoverModeType? failoverMode, SeedingModeType? seedingMode, IList<DistributedAvailabilityGroupDatabase> databases, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DistributedAvailabilityGroupName = distributedAvailabilityGroupName;
             DistributedAvailabilityGroupId = distributedAvailabilityGroupId;

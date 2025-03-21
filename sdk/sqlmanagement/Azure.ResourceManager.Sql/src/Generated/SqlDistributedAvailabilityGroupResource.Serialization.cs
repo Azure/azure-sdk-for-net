@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDistributedAvailabilityGroupResource : IJsonModel<DistributedAvailabilityGroupData>
+    public partial class SqlDistributedAvailabilityGroupResource : IJsonModel<SqlDistributedAvailabilityGroupData>
     {
-        void IJsonModel<DistributedAvailabilityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DistributedAvailabilityGroupData>)Data).Write(writer, options);
+        void IJsonModel<SqlDistributedAvailabilityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlDistributedAvailabilityGroupData>)Data).Write(writer, options);
 
-        DistributedAvailabilityGroupData IJsonModel<DistributedAvailabilityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DistributedAvailabilityGroupData>)Data).Create(ref reader, options);
+        SqlDistributedAvailabilityGroupData IJsonModel<SqlDistributedAvailabilityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDistributedAvailabilityGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlDistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DistributedAvailabilityGroupData IPersistableModel<DistributedAvailabilityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DistributedAvailabilityGroupData>(data, options);
+        SqlDistributedAvailabilityGroupData IPersistableModel<SqlDistributedAvailabilityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDistributedAvailabilityGroupData>(data, options);
 
-        string IPersistableModel<DistributedAvailabilityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DistributedAvailabilityGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlDistributedAvailabilityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDistributedAvailabilityGroupData>)Data).GetFormatFromOptions(options);
     }
 }
