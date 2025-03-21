@@ -10,30 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
-    internal partial class CommunicationIdentityCreateRequest : IUtf8JsonSerializable
+    internal partial class TeamsExtensionAssignmentCreateOrUpdateRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomId))
+            writer.WritePropertyName("principalType"u8);
+            writer.WriteStringValue(PrincipalType.ToString());
+            if (Optional.IsCollectionDefined(ClientIds))
             {
-                writer.WritePropertyName("customId"u8);
-                writer.WriteStringValue(CustomId);
-            }
-            if (Optional.IsCollectionDefined(CreateTokenWithScopes))
-            {
-                writer.WritePropertyName("createTokenWithScopes"u8);
+                writer.WritePropertyName("clientIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in CreateTokenWithScopes)
+                foreach (var item in ClientIds)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ExpiresInMinutes))
-            {
-                writer.WritePropertyName("expiresInMinutes"u8);
-                writer.WriteNumberValue(ExpiresInMinutes.Value);
             }
             writer.WriteEndObject();
         }
