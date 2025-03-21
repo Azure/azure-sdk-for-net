@@ -95,7 +95,15 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-PageableList<ThreadMessage> messages = client.GetMessages(thread.Id);
+
+Assert.AreEqual(
+    RunStatus.Completed,
+    run.Status,
+    run.LastError?.Message);
+PageableList<ThreadMessage> messages = client.GetMessages(
+    threadId: thread.Id,
+    order: ListSortOrder.Ascending
+);
 WriteMessages(messages, dtReferences);
 ```
 
@@ -122,14 +130,14 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
-    threadId: thread.Id,
-    order: ListSortOrder.Ascending
-);
 Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
+PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+    threadId: thread.Id,
+    order: ListSortOrder.Ascending
+);
 WriteMessages(messages, dtReferences);
 ```
 

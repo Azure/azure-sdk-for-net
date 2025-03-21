@@ -179,11 +179,13 @@ purpose of 'agents' to make a file ID available:
 File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-Response<AgentFile> uploadAgentFileResponse = await client.UploadFileAsync(
+AgentFile uploadedAgentFile = await client.UploadFileAsync(
     filePath: "sample_file_for_upload.txt",
     purpose: AgentFilePurpose.Agents);
-
-AgentFile uploadedAgentFile = uploadAgentFileResponse.Value;
+Dictionary<string, string> fileIds = new()
+{
+    { uploadedAgentFile.Id, uploadedAgentFile.Filename }
+};
 ```
 
 Once uploaded, the file ID can then be provided to create a vector store for it
@@ -201,13 +203,12 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process assistant run
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-        model: "gpt-4",
+Agent agent = await client.CreateAgentAsync(
+        model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
         instructions: "You are a helpful agent that can help fetch data from files you know about.",
         tools: new List<ToolDefinition> { new FileSearchToolDefinition() },
         toolResources: new ToolResources() { FileSearch = fileSearchToolResource });
-Agent agent = agentResponse.Value;
 ```
 
 With a file ID association and a supported tool enabled, the agent will then be able to consume the associated
