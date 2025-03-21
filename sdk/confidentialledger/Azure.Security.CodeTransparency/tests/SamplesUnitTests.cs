@@ -167,7 +167,7 @@ namespace Azure.Security.CodeTransparency.Tests
             AccessToken accessToken = credential.GetToken(new TokenRequestContext(scopes), CancellationToken.None);
             CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), new AzureKeyCredential(accessToken.Token));
 #endif
-#endregion
+            #endregion Snippet:CodeTransparencySample3_CreateClientWithCredentials
         }
 
         [Test]

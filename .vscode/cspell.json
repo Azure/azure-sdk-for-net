@@ -342,6 +342,7 @@
         "cbor",
         "ccfs",
         "cose",
+        "Jwks",
         "scitt"
       ]
     },

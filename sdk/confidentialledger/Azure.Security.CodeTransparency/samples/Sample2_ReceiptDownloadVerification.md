@@ -46,6 +46,14 @@ The following examples will use a default public key resolver to get the keys fo
 
 When receipt is embedded in the signature then passing just the signature is enough.
 
+```C# Snippet:CodeTransparencyVerification
+Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
+byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
+client.RunTransparentStatementVerification(transparentStatementBytes);
+```
+
+Alternatively, you can provide your own JsonWebKey, the receipt and the corresponding signed claims
+
 ```C# Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
 // Create a JsonWebKey
 JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
