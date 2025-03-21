@@ -281,7 +281,7 @@ public partial class EventGridDomain : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridDomain.</param>
     public EventGridDomain(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/domains", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/domains", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -318,6 +318,11 @@ public partial class EventGridDomain : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>

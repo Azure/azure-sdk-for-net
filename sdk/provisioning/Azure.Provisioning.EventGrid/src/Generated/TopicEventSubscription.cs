@@ -214,7 +214,7 @@ public partial class TopicEventSubscription : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the TopicEventSubscription.</param>
     public TopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -245,6 +245,11 @@ public partial class TopicEventSubscription : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>

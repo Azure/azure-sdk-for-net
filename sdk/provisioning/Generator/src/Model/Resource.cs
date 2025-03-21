@@ -310,7 +310,7 @@ public class Resource(Specification spec, Type armType)
                             {
                                 writer.Write($"Name = BicepFunction.CreateGuid(");
                                 if (Properties.Any(p => p.Name == "Id")) { writer.Write("Id, "); }
-                                writer.WriteLine($"identity.PrincipalId, BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString())),");
+                                writer.WriteLine($"identity.Id, BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString())),");
                                 writer.WriteLine($"Scope = new IdentifierExpression(BicepIdentifier),");
                                 writer.WriteLine($"PrincipalType = RoleManagementPrincipalType.ServicePrincipal,");
                                 writer.WriteLine($"RoleDefinitionId = BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString()),");
