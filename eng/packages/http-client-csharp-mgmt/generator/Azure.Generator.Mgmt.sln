@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Tests", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjects.Local.Tests", "TestProjects\Local.Tests\TestProjects.Local.Tests.csproj", "{E6E6C66A-E1E2-4D4D-9E8A-FD97A1761F90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Tests.Common", "Azure.Generator.Tests.Common\Azure.Generator.Tests.Common.csproj", "{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +41,15 @@ Global
 		{E6E6C66A-E1E2-4D4D-9E8A-FD97A1761F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6E6C66A-E1E2-4D4D-9E8A-FD97A1761F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6E6C66A-E1E2-4D4D-9E8A-FD97A1761F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E9389E8-7266-4312-9710-1BE45A571319}
 	EndGlobalSection
 EndGlobal

@@ -7,60 +7,125 @@ using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Tests.Common
 {
+    /// <summary>
+    /// Provider methods to construct intput test data
+    /// </summary>
     public static class InputFactory
     {
+        /// <summary>
+        /// Primitive input data types
+        /// </summary>
         public static class Primitive
         {
+            /// <summary>
+            /// Construct string input data
+            /// </summary>
+            /// <param name="name"></param>
+            /// <param name="crossLanguageDefinitionId"></param>
+            /// <param name="encode"></param>
+            /// <returns></returns>
             public static InputPrimitiveType String(string? name = null, string? crossLanguageDefinitionId = null, string? encode = null)
             {
                 return new InputPrimitiveType(InputPrimitiveTypeKind.String, name ?? string.Empty, crossLanguageDefinitionId ?? string.Empty, encode);
             }
         }
 
+        /// <summary>
+        /// Construct input enum types
+        /// </summary>
         public static class EnumMember
         {
+            /// <summary>
+            /// Construct input enum type value for int32
+            /// </summary>
+            /// <param name="name"></param>
+            /// <param name="value"></param>
+            /// <returns></returns>
             public static InputEnumTypeValue Int32(string name, int value)
             {
                 return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, null, $"{name} description");
             }
 
+            /// <summary>
+            /// Construct input enum type value for float32
+            /// </summary>
+            /// <param name="name"></param>
+            /// <param name="value"></param>
+            /// <returns></returns>
             public static InputEnumTypeValue Float32(string name, float value)
             {
                 return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, null, $"{name} description");
             }
 
+            /// <summary>
+            /// Construct input enum type value for string
+            /// </summary>
+            /// <param name="name"></param>
+            /// <param name="value"></param>
+            /// <returns></returns>
             public static InputEnumTypeValue String(string name, string value)
             {
                 return new InputEnumTypeValue(name, value, InputPrimitiveType.String, null, $"{name} description");
             }
         }
 
+        /// <summary>
+        /// Construct input literal types
+        /// </summary>
         public static class Literal
         {
+            /// <summary>
+            /// Construct input literal type value for string
+            /// </summary>
+            /// <param name="value"></param>
+            /// <returns></returns>
             public static InputLiteralType String(string value)
             {
                 return new InputLiteralType(InputPrimitiveType.String, value);
             }
 
+            /// <summary>
+            /// Construct input enum type value for any
+            /// </summary>
+            /// <param name="value"></param>
+            /// <returns></returns>
             public static InputLiteralType Any(object value)
             {
                 return new InputLiteralType(InputPrimitiveType.Any, value);
             }
         }
 
+        /// <summary>
+        /// Construct input constants
+        /// </summary>
         public static class Constant
         {
+            /// <summary>
+            /// Construct input constnat for string
+            /// </summary>
+            /// <param name="value"></param>
+            /// <returns></returns>
             public static InputConstant String(string value)
             {
                 return new InputConstant(value, InputPrimitiveType.String);
             }
 
+            /// <summary>
+            /// Construct input constnat for int64
+            /// </summary>
+            /// <param name="value"></param>
+            /// <returns></returns>
             public static InputConstant Int64(long value)
             {
                 return new InputConstant(value, InputPrimitiveType.Int64);
             }
         }
 
+        /// <summary>
+        /// Construct input parameter with content type
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
         public static InputParameter ContentTypeParameter(string contentType)
             => Parameter(
                 "contentType",
@@ -72,6 +137,19 @@ namespace Azure.Generator.Tests.Common
                 isContentType: true,
                 kind: InputOperationParameterKind.Constant);
 
+        /// <summary>
+        /// Construct input paraemter
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="nameInRequest"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="location"></param>
+        /// <param name="isRequired"></param>
+        /// <param name="kind"></param>
+        /// <param name="isEndpoint"></param>
+        /// <param name="isContentType"></param>
+        /// <returns></returns>
         public static InputParameter Parameter(
             string name,
             InputType type,
@@ -102,40 +180,18 @@ namespace Azure.Generator.Tests.Common
                 null);
         }
 
-        public static InputNamespace Namespace(string name, IEnumerable<InputModelType>? models = null, IEnumerable<InputClient>? clients = null)
-        {
-            return new InputNamespace(
-                name,
-                [],
-                [],
-                models is null ? [] : [.. models],
-                clients is null ? [] : [.. clients],
-                new InputAuth());
-        }
-
-        public static InputEnumType Enum(
-            string name,
-            InputPrimitiveType underlyingType,
-            string access = "public",
-            InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input,
-            IEnumerable<InputEnumTypeValue>? values = null,
-            bool isExtensible = false,
-            string clientNamespace = "Sample.Models")
-        {
-            return new InputEnumType(
-                name,
-                clientNamespace,
-                name,
-                access,
-                null,
-                null,
-                $"{name} description",
-                usage,
-                underlyingType,
-                values is null ? [new InputEnumTypeValue("Value", 1, InputPrimitiveType.Int32, null, "Value description")] : [.. values],
-                isExtensible);
-        }
-
+        /// <summary>
+        /// Construct input model property
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="isRequired"></param>
+        /// <param name="isReadOnly"></param>
+        /// <param name="isDiscriminator"></param>
+        /// <param name="wireName"></param>
+        /// <param name="summary"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public static InputModelProperty Property(
             string name,
             InputType type,
@@ -157,6 +213,22 @@ namespace Azure.Generator.Tests.Common
                 new(json: new(wireName ?? name)));
         }
 
+        /// <summary>
+        /// Construct input model type
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="clientNamespace"></param>
+        /// <param name="access"></param>
+        /// <param name="usage"></param>
+        /// <param name="properties"></param>
+        /// <param name="baseModel"></param>
+        /// <param name="modelAsStruct"></param>
+        /// <param name="discriminatedKind"></param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="discriminatedModels"></param>
+        /// <param name="derivedModels"></param>
+        /// <param name="decorators"></param>
+        /// <returns></returns>
         public static InputModelType Model(
             string name,
             string clientNamespace = "Sample.Models",
@@ -199,21 +271,17 @@ namespace Azure.Generator.Tests.Common
             return model;
         }
 
-        public static InputType Array(InputType elementType)
-        {
-            return new InputArrayType("list", "list", elementType);
-        }
-
-        public static InputType Dictionary(InputType valueType, InputType? keyType = null)
-        {
-            return new InputDictionaryType("dictionary", keyType ?? InputPrimitiveType.String, valueType);
-        }
-
-        public static InputType Union(IList<InputType> types)
-        {
-            return new InputUnionType("union", [.. types]);
-        }
-
+        /// <summary>
+        /// Construct input operation
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="responses"></param>
+        /// <param name="requestMediaTypes"></param>
+        /// <param name="path"></param>
+        /// <param name="decorators"></param>
+        /// <returns></returns>
         public static InputOperation Operation(
             string name,
             string access = "public",
@@ -252,6 +320,12 @@ namespace Azure.Generator.Tests.Common
             return operation;
         }
 
+        /// <summary>
+        /// Construct input operation response
+        /// </summary>
+        /// <param name="statusCodes"></param>
+        /// <param name="bodytype"></param>
+        /// <returns></returns>
         public static InputOperationResponse OperationResponse(IEnumerable<int>? statusCodes = null, InputType? bodytype = null)
         {
             return new InputOperationResponse(
@@ -262,6 +336,18 @@ namespace Azure.Generator.Tests.Common
                 ["application/json"]);
         }
 
+        /// <summary>
+        /// Construct input client
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="clientNamespace"></param>
+        /// <param name="doc"></param>
+        /// <param name="operations"></param>
+        /// <param name="parameters"></param>
+        /// <param name="parent"></param>
+        /// <param name="decorators"></param>
+        /// <param name="crossLanguageDefinitionId"></param>
+        /// <returns></returns>
         public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
         {
             var client = new InputClient(

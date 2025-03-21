@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../src/Azure.Generator.csproj" />
+    <ProjectReference Include="..\..\..\..\http-client-csharp-mgmt\generator\Azure.Generator.Tests.Common\Azure.Generator.Tests.Common.csproj" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
