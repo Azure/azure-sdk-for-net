@@ -10,7 +10,7 @@ internal abstract class CollectionReader
         //For info on the different formats see the comments in ModelReaderWriterOptions.cs
         if (options.Format != "J" && options.Format != "W")
         {
-            throw new InvalidOperationException($"Format '{options.Format}' is not supported only 'J' or 'W' format can be read as collections");
+            throw new InvalidOperationException($"Format '{options.Format}' is not supported.  Only 'J' or 'W' format can be read as collections");
         }
 
         if (options.Format == "J")
@@ -22,7 +22,7 @@ internal abstract class CollectionReader
             var element = builder.CreateElement();
             if (element is not IPersistableModel<object> persistableModel)
             {
-                throw new InvalidOperationException($"'{element?.GetType().Name}' must implement IPersistableModel");
+                throw new InvalidOperationException($"'{element?.GetType().Name}' must implement {nameof(IPersistableModel<object>)}");
             }
             var wireFormat = persistableModel.GetFormatFromOptions(options);
             if (wireFormat == "J" && persistableModel is IJsonModel<object>)

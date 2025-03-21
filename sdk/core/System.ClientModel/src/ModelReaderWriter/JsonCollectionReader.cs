@@ -44,7 +44,6 @@ internal class JsonCollectionReader : CollectionReader
 
         Debug.Assert(builder.GetItemType() is not null);
 
-        bool isInnerCollection = false;
         bool isElementDictionary = false;
         IJsonModel<object>? jsonModel = null;
         string? propertyName = null;
@@ -53,7 +52,6 @@ internal class JsonCollectionReader : CollectionReader
         var itemInstance = itemBuilder.CreateObject();
         if (itemInstance is ModelReaderWriterTypeBuilder.CollectionWrapper itemCollectionWrapper)
         {
-            isInnerCollection = true;
             isElementDictionary = itemCollectionWrapper.Builder is IDictionary;
         }
         else if (itemInstance is IJsonModel<object> iJsonModel)
@@ -70,36 +68,39 @@ internal class JsonCollectionReader : CollectionReader
             switch (reader.TokenType)
             {
                 case JsonTokenType.StartObject:
-                    if (isInnerCollection)
+                    if (isElementDictionary)
                     {
-                        if (isElementDictionary)
-                        {
-                            var dictionaryWrapper = itemBuilder.CreateObject() as ModelReaderWriterTypeBuilder.CollectionWrapper;
-                            Debug.Assert(dictionaryWrapper != null);
-                            ReadJsonCollection(ref reader, dictionaryWrapper!, itemBuilder, options, context);
-                            collectionWrapper.AddItem(dictionaryWrapper!.ToCollection(), propertyName);
-                        }
-                        else
-                        {
-                            throw new FormatException("Unexpected JsonTokenType.StartObject found.");
-                        }
+                        var dictionaryWrapper = itemBuilder.CreateObject() as ModelReaderWriterTypeBuilder.CollectionWrapper;
+                        Debug.Assert(dictionaryWrapper != null);
+                        ReadJsonCollection(ref reader, dictionaryWrapper!, itemBuilder, options, context);
+                        collectionWrapper.AddItem(dictionaryWrapper!.ToCollection(), propertyName);
+                    }
+                    else if (jsonModel is not null)
+                    {
+                        collectionWrapper.AddItem(jsonModel!.Create(ref reader, options), propertyName);
+                    }
+                    else
+                    {
+                        throw new FormatException("Unexpected JsonTokenType.StartObject found.");
+                    }
+                    break;
+                case JsonTokenType.StartArray:
+                    if (isElementDictionary)
+                    {
+                        throw new FormatException("Unexpected JsonTokenType.StartArray found.");
+                    }
+
+                    var listWrapper = itemBuilder.CreateObject() as ModelReaderWriterTypeBuilder.CollectionWrapper;
+                    if (listWrapper is not null)
+                    {
+                        ReadJsonCollection(ref reader, listWrapper!, itemBuilder, options, context);
+                        collectionWrapper.AddItem(listWrapper!.ToCollection(), propertyName);
                     }
                     else
                     {
                         Debug.Assert(jsonModel != null);
                         collectionWrapper.AddItem(jsonModel!.Create(ref reader, options), propertyName);
                     }
-                    break;
-                case JsonTokenType.StartArray:
-                    if (!isInnerCollection || isElementDictionary)
-                    {
-                        throw new FormatException("Unexpected JsonTokenType.StartArray found.");
-                    }
-
-                    var listWrapper = itemBuilder.CreateObject() as ModelReaderWriterTypeBuilder.CollectionWrapper;
-                    Debug.Assert(listWrapper != null);
-                    ReadJsonCollection(ref reader, listWrapper!, itemBuilder, options, context);
-                    collectionWrapper.AddItem(listWrapper!.ToCollection(), propertyName);
                     break;
                 case JsonTokenType.EndArray:
                     return;

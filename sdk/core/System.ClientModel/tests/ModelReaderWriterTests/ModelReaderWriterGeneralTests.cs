@@ -162,7 +162,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<SubType>), new ModelReaderWriterOptions("X"), s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("Format 'X' is not supported only 'J' or 'W' format can be read as collections", ex!.Message);
+            Assert.AreEqual("Format 'X' is not supported.  Only 'J' or 'W' format can be read as collections", ex!.Message);
         }
 
         [Test]
@@ -509,6 +509,72 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("Can't use format 'W' format on an empty collection.  Please specify a concrete format", ex!.Message);
         }
 
+        [Test]
+        public void WriteMixedPersistableList()
+        {
+            List<object> list =
+            [
+                new ModelWithNoDefaultCtor(1),
+                new SubType()
+            ];
+            Assert.DoesNotThrow(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("J"), s_readerWriterContext));
+        }
+
+        [Test]
+        public void WriteMixedListWithNonJsonItem()
+        {
+            List<object> list =
+            [
+                new ModelWithNoDefaultCtor(1),
+                new PersistableModel()
+            ];
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("J"), s_readerWriterContext));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("PersistableModel does not implement IJsonModel or IEnumerable<IJsonModel>", ex!.Message);
+        }
+
+        [Test]
+        public void WriteMixedPersistableEnumerableList()
+        {
+            List<object> list =
+            [
+                new ModelWithNoDefaultCtor(1),
+                new List<SubType>([new SubType(), new SubType()]),
+            ];
+            Assert.DoesNotThrow(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("J"), s_readerWriterContext));
+        }
+
+        [Test]
+        public void WriteMixedPersistableDictionary()
+        {
+            Dictionary<string, object> dict = new()
+            {
+                { "key1", new ModelWithNoDefaultCtor(1) },
+                { "key2", new SubType() }
+            };
+            Assert.DoesNotThrow(() => ModelReaderWriter.Write(dict, new ModelReaderWriterOptions("J"), s_readerWriterContext));
+        }
+
+        [Test]
+        public void WriteMixedPersistableEnumerableDictionary()
+        {
+            Dictionary<string, object> dict = new()
+            {
+                { "key1", new ModelWithNoDefaultCtor(1) },
+                { "key2", new List<SubType>([new SubType(), new SubType()]) }
+            };
+            Assert.DoesNotThrow(() => ModelReaderWriter.Write(dict, new ModelReaderWriterOptions("J"), s_readerWriterContext));
+        }
+
+        [Test]
+        public void ReadMixedPersistableList()
+        {
+            var json = "[{},{}]";
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<object>), new ModelReaderWriterOptions("J"), s_readerWriterContext));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("No ModelBuilder found for List`1.", ex!.Message);
+        }
+
         private class ReadReturnsNull : IPersistableModel<ReadReturnsNull>
         {
             public ReadReturnsNull Create(BinaryData data, ModelReaderWriterOptions options)
@@ -598,7 +664,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 writer.WriteStartObject();
                 writer.WriteEndObject();
-                return;
             }
 
             BinaryData IPersistableModel<SubType>.Write(ModelReaderWriterOptions options)
@@ -652,7 +717,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             void IJsonModel<ModelWithNoDefaultCtor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {
-                return;
+                writer.WriteStartObject();
+                writer.WriteEndObject();
             }
 
             BinaryData IPersistableModel<ModelWithNoDefaultCtor>.Write(ModelReaderWriterOptions options)

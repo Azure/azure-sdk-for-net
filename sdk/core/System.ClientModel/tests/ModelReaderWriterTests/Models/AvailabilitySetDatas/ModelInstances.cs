@@ -75,5 +75,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             PlatformUpdateDomainCount = 8,
             PlatformFaultDomainCount = 6,
         };
+
+        internal static readonly AvailabilitySetData s_testAs_3379 = new(AzureLocation.EastUS)
+        {
+            Name = "testAS-3379",
+            Id = new ResourceIdentifier("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3379"),
+            ResourceType = new ResourceType("Microsoft.Compute/availabilitySets"),
+            Sku = new ComputeSku()
+            {
+                Name = "Classic"
+            },
+            Tags =
+                    {
+                        { "key", "value" },
+                    },
+            PlatformUpdateDomainCount = 9,
+            PlatformFaultDomainCount = 7,
+        };
     }
 }
