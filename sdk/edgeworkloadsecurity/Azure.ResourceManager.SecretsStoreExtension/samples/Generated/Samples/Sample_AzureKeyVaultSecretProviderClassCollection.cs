@@ -46,11 +46,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Samples
             {
                 Properties = new AzureKeyVaultSecretProviderClassProperties("example-ssc-key-vault", "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000000")
                 {
-                    Objects = "array: |\n  - |\n    objectName: my-secret-object\n    objectType: secret\n    objectVersionHistory: 1",
+                    Objects = "array:\n  - |\n    objectName: my-secret-object\n    objectType: secret\n",
                 },
                 ExtendedLocation = new ExtendedLocation
                 {
                     Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-ssc-example/providers/Microsoft.ExtendedLocation/customLocations/example-custom-location",
+                    ExtendedLocationType = new("CustomLocation")
                 },
                 Tags =
 {

@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Samples
 },
                 Properties = new SecretSyncUpdateProperties
                 {
-                    SecretProviderClassName = "jttlpenhtpxfrrlxdsmqqvmvtmgqrficvqngkggjwciilrexenlstxncyvkqcydxrivkioujssncoaiysdklfouukczzdbxniipbyiqsarqaespuqrbbydwtdaulllostoomntkadklihemfpeffvuyvyilequiqewzspaootvkibrynbqrsbiptjdhywynvydaadprdc",
-                    ServiceAccountName = "fcldqfdfpktndlntuoxicsftelhefevovmlycflfwzckvamiqjnjugandqaqqeccsbzztfmmeunvhsafgerbcsdbnmsyqivygornebbkusuvphwghgouxvcbvmbydqjzoxextnyowsnyymadniwdrrxtogeveldpejixmsrzzfqkquaxdpzwvecevqwasxgxxchrfa",
+                    SecretProviderClassName = "akvspc-ssc-example",
+                    ServiceAccountName = "example-k8s-sa-name",
                     KubernetesSecretType = KubernetesSecretType.Opaque,
                     ForceSynchronization = "arbitrarystring",
-                    ObjectSecretMapping = { new KubernetesSecretObjectMapping("ssrzmbvdiomkvzrdsyilwlfzicfydnbjwjsnohrppkukjddrunfslkrnexunuckmghixdssposvndpiqchpqrkjuqbapoisvqdvgstvdonsmlpsmticfvuhqlofpaxfdg", "lojegeqiqfjxyblfxhxloccqzwgpgcelrwqwsbsltcjvjvceejgdrmxhenokxrylhynkltvqntjcvujjrppzvcxyivxeksgmzhifrcklizbpntdepzdl") },
+                    ObjectSecretMapping = { new KubernetesSecretObjectMapping("my-secret-object", "my-secret-object") },
                 },
             };
             ArmOperation<SecretSyncResource> lro = await secretSync.UpdateAsync(WaitUntil.Completed, patch);
