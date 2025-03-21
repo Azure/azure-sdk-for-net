@@ -34,21 +34,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AppConfigurationKeyValueModifiedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("key"u8);
-            writer.WriteStringValue(Key);
-            if (Label != null)
+            if (Optional.IsDefined(Key))
+            {
+                writer.WritePropertyName("key"u8);
+                writer.WriteStringValue(Key);
+            }
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            else
+            if (Optional.IsDefined(Etag))
             {
-                writer.WriteNull("label");
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(Etag);
             }
-            writer.WritePropertyName("etag"u8);
-            writer.WriteStringValue(Etag);
-            writer.WritePropertyName("syncToken"u8);
-            writer.WriteStringValue(SyncToken);
+            if (Optional.IsDefined(SyncToken))
+            {
+                writer.WritePropertyName("syncToken"u8);
+                writer.WriteStringValue(SyncToken);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,11 +106,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("label"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        label = null;
-                        continue;
-                    }
                     label = property.Value.GetString();
                     continue;
                 }

@@ -14,15 +14,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AppConfigurationSnapshotModifiedEventData : AppConfigurationSnapshotEventData
     {
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/>. </summary>
-        /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
-        /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="etag"/> or <paramref name="syncToken"/> is null. </exception>
-        internal AppConfigurationSnapshotModifiedEventData(string name, string etag, string syncToken) : base(name, etag, syncToken)
+        internal AppConfigurationSnapshotModifiedEventData()
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(etag, nameof(etag));
-            Argument.AssertNotNull(syncToken, nameof(syncToken));
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/>. </summary>
@@ -31,11 +24,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppConfigurationSnapshotModifiedEventData(string name, string etag, string syncToken, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, etag, syncToken, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/> for deserialization. </summary>
-        internal AppConfigurationSnapshotModifiedEventData()
         {
         }
     }

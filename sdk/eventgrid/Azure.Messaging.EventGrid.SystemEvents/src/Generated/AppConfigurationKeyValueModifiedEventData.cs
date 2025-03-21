@@ -46,21 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueModifiedEventData"/>. </summary>
-        /// <param name="key"> The key used to identify the key-value that was modified. </param>
-        /// <param name="label"> The label, if any, used to identify the key-value that was modified. </param>
-        /// <param name="etag"> The etag representing the new state of the key-value. </param>
-        /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/>, <paramref name="etag"/> or <paramref name="syncToken"/> is null. </exception>
-        internal AppConfigurationKeyValueModifiedEventData(string key, string label, string etag, string syncToken)
+        internal AppConfigurationKeyValueModifiedEventData()
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(etag, nameof(etag));
-            Argument.AssertNotNull(syncToken, nameof(syncToken));
-
-            Key = key;
-            Label = label;
-            Etag = etag;
-            SyncToken = syncToken;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueModifiedEventData"/>. </summary>
@@ -76,11 +63,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Etag = etag;
             SyncToken = syncToken;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueModifiedEventData"/> for deserialization. </summary>
-        internal AppConfigurationKeyValueModifiedEventData()
-        {
         }
 
         /// <summary> The key used to identify the key-value that was modified. </summary>

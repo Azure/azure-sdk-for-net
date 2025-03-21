@@ -34,58 +34,61 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(MachineLearningServicesModelDeployedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("serviceName"u8);
-            writer.WriteStringValue(ServiceName);
-            writer.WritePropertyName("serviceComputeType"u8);
-            writer.WriteStringValue(ServiceComputeType);
-            writer.WritePropertyName("modelIds"u8);
-            writer.WriteStringValue(ModelIds);
-            if (Optional.IsCollectionDefined(ServiceTags))
+            if (Optional.IsDefined(ServiceName))
             {
-                writer.WritePropertyName("serviceTags"u8);
-                writer.WriteStartObject();
-                foreach (var item in ServiceTags)
+                writer.WritePropertyName("serviceName"u8);
+                writer.WriteStringValue(ServiceName);
+            }
+            if (Optional.IsDefined(ServiceComputeType))
+            {
+                writer.WritePropertyName("serviceComputeType"u8);
+                writer.WriteStringValue(ServiceComputeType);
+            }
+            if (Optional.IsDefined(ModelIds))
+            {
+                writer.WritePropertyName("modelIds"u8);
+                writer.WriteStringValue(ModelIds);
+            }
+            writer.WritePropertyName("serviceTags"u8);
+            writer.WriteStartObject();
+            foreach (var item in ServiceTags)
+            {
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
+                    writer.WriteNullValue();
+                    continue;
+                }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(ServiceProperties))
-            {
-                writer.WritePropertyName("serviceProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ServiceProperties)
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("serviceProperties"u8);
+            writer.WriteStartObject();
+            foreach (var item in ServiceProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
-                writer.WriteEndObject();
+#endif
             }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -149,10 +152,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("serviceTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -170,10 +169,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("serviceProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -199,8 +194,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 serviceName,
                 serviceComputeType,
                 modelIds,
-                serviceTags ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                serviceProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serviceTags,
+                serviceProperties,
                 serializedAdditionalRawData);
         }
 

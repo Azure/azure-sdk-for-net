@@ -46,25 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
-        /// <param name="dataDriftId"> The ID of the data drift monitor that triggered the event. </param>
-        /// <param name="dataDriftName"> The name of the data drift monitor that triggered the event. </param>
-        /// <param name="runId"> The ID of the Run that detected data drift. </param>
-        /// <param name="baseDatasetId"> The ID of the base Dataset used to detect drift. </param>
-        /// <param name="targetDatasetId"> The ID of the target Dataset used to detect drift. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataDriftId"/>, <paramref name="dataDriftName"/>, <paramref name="runId"/>, <paramref name="baseDatasetId"/> or <paramref name="targetDatasetId"/> is null. </exception>
-        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId)
+        internal MachineLearningServicesDatasetDriftDetectedEventData()
         {
-            Argument.AssertNotNull(dataDriftId, nameof(dataDriftId));
-            Argument.AssertNotNull(dataDriftName, nameof(dataDriftName));
-            Argument.AssertNotNull(runId, nameof(runId));
-            Argument.AssertNotNull(baseDatasetId, nameof(baseDatasetId));
-            Argument.AssertNotNull(targetDatasetId, nameof(targetDatasetId));
-
-            DataDriftId = dataDriftId;
-            DataDriftName = dataDriftName;
-            RunId = runId;
-            BaseDatasetId = baseDatasetId;
-            TargetDatasetId = targetDatasetId;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
@@ -88,11 +71,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             StartTime = startTime;
             EndTime = endTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/> for deserialization. </summary>
-        internal MachineLearningServicesDatasetDriftDetectedEventData()
-        {
         }
 
         /// <summary> The ID of the data drift monitor that triggered the event. </summary>
