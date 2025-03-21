@@ -179,7 +179,7 @@ function Set-ApiViewCommentForPR {
       $commentText += ""
       $commentText += "APIView identified API level changes in this PR and created the following API reviews"
       $commentText += ""
-      $commentText += "| Language | APIView |"
+      $commentText += "| Language | API Review for Package |"
       $commentText += "|----------|---------|"
       $response | ForEach-Object {
         $commentText += "| $($_.language) | [$($_.packageName)]($($_.url)) |"

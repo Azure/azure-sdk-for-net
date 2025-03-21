@@ -559,9 +559,10 @@ function Search-GitHubIssues {
   param (
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
-    $CommitHash
+    $CommitHash,
+    $State="open"
   )
-  $uri = "https://api.github.com/search/issues?q=sha:$CommitHash"
+  $uri = "https://api.github.com/search/issues?q=sha:$CommitHash+state:$State"
 
   return Invoke-RestMethod `
           -Method GET `
