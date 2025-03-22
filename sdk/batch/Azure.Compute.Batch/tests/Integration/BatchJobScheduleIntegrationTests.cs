@@ -43,7 +43,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 DoNotRunUntil = unboundDNRU,
             };
             // create a new pool
-            ImageReference imageReference = new ImageReference()
+            BatchVmImageReference imageReference = new BatchVmImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -68,7 +68,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             };
             BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions(jobScheduleId, schedule, jobSpecification);
 
             try
             {
@@ -91,12 +91,69 @@ namespace Azure.Compute.Batch.Tests.Integration
                 response = await client.EnableJobScheduleAsync(jobScheduleId);
                 Assert.AreEqual(204, response.Status);
 
-                response = await client.TerminateJobScheduleAsync(jobScheduleId, force: true);
-                Assert.AreEqual(202, response.Status);
+                TerminateJobScheduleOperation terminateJobScheduleOperation = await client.TerminateJobScheduleAsync(jobScheduleId, force: true);
+                await terminateJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                Assert.IsTrue(terminateJobScheduleOperation.HasCompleted);
+                Assert.IsTrue(terminateJobScheduleOperation.HasValue);
             }
             finally
             {
                 await client.DeleteJobScheduleAsync(jobScheduleId, force: true);
+            }
+        }
+
+        [RecordedTest]
+        public async Task JobScheduleTerminate()
+        {
+            var client = CreateBatchClient();
+            string jobScheduleId = "jobSchedule2";
+            BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
+            ;
+            // create a new pool
+            BatchVmImageReference imageReference = new BatchVmImageReference()
+            {
+                Publisher = "MicrosoftWindowsServer",
+                Offer = "WindowsServer",
+                Sku = "2019-datacenter-smalldisk",
+                Version = "latest"
+            };
+            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
+
+            BatchPoolSpecification batchPoolSpecification = new BatchPoolSpecification("STANDARD_D1_v2")
+            {
+                VirtualMachineConfiguration = virtualMachineConfiguration,
+                TargetDedicatedNodes = 1,
+            };
+            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+            {
+                KeepAlive = false,
+                Pool = batchPoolSpecification,
+            };
+            BatchPoolInfo poolInfo = new BatchPoolInfo()
+            {
+                AutoPoolSpecification = autoPoolSpecification,
+            };
+            BatchJobManagerTask batchJobManagerTask = new BatchJobManagerTask("task1", "cmd / c timeout 60");
+
+            BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo)
+            {
+                JobManagerTask = batchJobManagerTask,
+            };
+
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions(jobScheduleId, schedule, jobSpecification);
+
+            try
+            {
+                Response response = await client.CreateJobScheduleAsync(jobSchedule);
+
+                TerminateJobScheduleOperation terminateJobScheduleOperation = await client.TerminateJobScheduleAsync(jobScheduleId, force: false);
+                await terminateJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                Assert.IsTrue(terminateJobScheduleOperation.HasCompleted);
+                Assert.IsTrue(terminateJobScheduleOperation.HasValue);
+            }
+            finally
+            {
+                await client.DeleteJobScheduleAsync(jobScheduleId, force: false);
             }
         }
 
@@ -108,7 +165,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             ;
             // create a new pool
-            ImageReference imageReference = new ImageReference()
+            BatchVmImageReference imageReference = new BatchVmImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -138,7 +195,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 JobManagerTask = batchJobManagerTask,
             };
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions(jobScheduleId, schedule, jobSpecification);
 
             try
             {
@@ -180,7 +237,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 DoNotRunUntil = unboundDNRU,
             };
             // create a new pool
-            ImageReference imageReference = new ImageReference()
+            BatchVmImageReference imageReference = new BatchVmImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -205,7 +262,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             };
             BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions(jobScheduleId, schedule, jobSpecification);
 
             try
             {
@@ -237,7 +294,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 DoNotRunUntil = unboundDNRU,
             };
             // create a new pool
-            ImageReference imageReference = new ImageReference()
+            BatchVmImageReference imageReference = new BatchVmImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -262,14 +319,14 @@ namespace Azure.Compute.Batch.Tests.Integration
             };
             BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions(jobScheduleId, schedule, jobSpecification);
 
             try
             {
                 Response response = await client.CreateJobScheduleAsync(jobSchedule);
 
-                BatchJobScheduleUpdateContent batchJobScheduleUpdateContent = new BatchJobScheduleUpdateContent();
-                batchJobScheduleUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+                BatchJobScheduleUpdateOptions batchJobScheduleUpdateContent = new BatchJobScheduleUpdateOptions();
+                batchJobScheduleUpdateContent.Metadata.Add(new BatchMetadataItem("name", "value"));
 
                 response = await client.UpdateJobScheduleAsync(jobScheduleId, batchJobScheduleUpdateContent);
                 Assert.AreEqual(200, response.Status);

@@ -79,7 +79,7 @@ namespace Azure.Compute.Batch
             }
             bool encryptionAtHost = default;
             SecurityTypes securityType = default;
-            UefiSettings uefiSettings = default;
+            BatchUefiSettings uefiSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("uefiSettings"u8))
                 {
-                    uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value, options);
+                    uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -44,28 +44,10 @@ namespace Azure.Compute.Batch
         {
         }
 
-        /// <summary> Initializes a new instance of BatchClient. </summary>
-        /// <param name="endpoint"> Batch account endpoint (for example: https://batchaccount.eastus2.batch.azure.com). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BatchClient(Uri endpoint, TokenCredential credential, BatchClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new BatchClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-        }
-
         /// <summary> Gets information about the specified Application. </summary>
         /// <param name="applicationId"> The ID of the Application. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -80,20 +62,20 @@ namespace Azure.Compute.Batch
         /// available to Compute Nodes, use the Azure portal or the Azure Resource Manager
         /// API.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplicationAsync(string,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response<BatchApplication>> GetApplicationAsync(string applicationId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplicationAsync(string,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response<BatchApplication>> GetApplicationAsync(string applicationId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetApplicationAsync(applicationId, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await GetApplicationAsync(applicationId, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return Response.FromValue(BatchApplication.FromResponse(response), response);
         }
 
         /// <summary> Gets information about the specified Application. </summary>
         /// <param name="applicationId"> The ID of the Application. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -108,13 +90,13 @@ namespace Azure.Compute.Batch
         /// available to Compute Nodes, use the Azure portal or the Azure Resource Manager
         /// API.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplication(string,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response<BatchApplication> GetApplication(string applicationId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplication(string,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response<BatchApplication> GetApplication(string applicationId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetApplication(applicationId, timeOutInSeconds, ocpdate, context);
+            Response response = GetApplication(applicationId, timeOutInSeconds, ocpDate, context);
             return Response.FromValue(BatchApplication.FromResponse(response), response);
         }
 
@@ -128,14 +110,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetApplicationAsync(string,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetApplicationAsync(string,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The ID of the Application. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -145,8 +127,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplicationAsync(string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> GetApplicationAsync(string applicationId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplicationAsync(string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> GetApplicationAsync(string applicationId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
@@ -154,7 +136,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetApplicationRequest(applicationId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateGetApplicationRequest(applicationId, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -174,14 +156,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetApplication(string,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetApplication(string,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The ID of the Application. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -191,8 +173,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplication(string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response GetApplication(string applicationId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplication(string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response GetApplication(string applicationId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
@@ -200,7 +182,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetApplicationRequest(applicationId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateGetApplicationRequest(applicationId, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -213,7 +195,7 @@ namespace Azure.Compute.Batch
         /// <summary> Creates a Pool to the specified Account. </summary>
         /// <param name="pool"> The Pool to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -225,21 +207,21 @@ namespace Azure.Compute.Batch
         /// secret project names. This information may appear in telemetry logs accessible
         /// to Microsoft Support engineers.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreatePoolAsync(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> CreatePoolAsync(BatchPoolCreateContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreatePoolAsync(BatchPoolCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> CreatePoolAsync(BatchPoolCreateOptions pool, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(pool, nameof(pool));
 
             using RequestContent content = pool.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreatePoolAsync(content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await CreatePoolAsync(content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Creates a Pool to the specified Account. </summary>
         /// <param name="pool"> The Pool to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -251,14 +233,14 @@ namespace Azure.Compute.Batch
         /// secret project names. This information may appear in telemetry logs accessible
         /// to Microsoft Support engineers.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreatePool(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response CreatePool(BatchPoolCreateContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreatePool(BatchPoolCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response CreatePool(BatchPoolCreateOptions pool, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(pool, nameof(pool));
 
             using RequestContent content = pool.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreatePool(content, timeOutInSeconds, ocpdate, context);
+            Response response = CreatePool(content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -272,14 +254,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreatePoolAsync(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreatePoolAsync(BatchPoolCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -288,8 +270,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreatePoolAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> CreatePoolAsync(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreatePoolAsync(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> CreatePoolAsync(RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -297,7 +279,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreatePoolRequest(content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreatePoolRequest(content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -317,14 +299,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreatePool(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreatePool(BatchPoolCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -333,8 +315,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreatePool(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response CreatePool(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreatePool(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response CreatePool(RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -342,7 +324,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreatePoolRequest(content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreatePoolRequest(content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -365,7 +347,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -376,16 +358,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeletePoolAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> DeletePoolAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> DeletePoolInternalAsync(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeletePoolRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -408,7 +389,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -419,16 +400,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeletePool(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response DeletePool(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response DeletePoolInternal(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeletePoolRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -441,7 +421,7 @@ namespace Azure.Compute.Batch
         /// <summary> Gets information about the specified Pool. </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -452,20 +432,20 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response<BatchPool>> GetPoolAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<BatchPool>> GetPoolAsync(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetPoolAsync(poolId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context).ConfigureAwait(false);
+            Response response = await GetPoolAsync(poolId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context).ConfigureAwait(false);
             return Response.FromValue(BatchPool.FromResponse(response), response);
         }
 
         /// <summary> Gets information about the specified Pool. </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -476,13 +456,13 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
-        public virtual Response<BatchPool> GetPool(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPool(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        public virtual Response<BatchPool> GetPool(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetPool(poolId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+            Response response = GetPool(poolId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
             return Response.FromValue(BatchPool.FromResponse(response), response);
         }
 
@@ -496,14 +476,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPoolAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -516,8 +496,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetPoolAsync(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetPoolAsync(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -525,7 +505,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPoolRequest(poolId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+                using HttpMessage message = CreateGetPoolRequest(poolId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -545,14 +525,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPool(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -565,8 +545,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
-        public virtual Response GetPool(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPool(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        public virtual Response GetPool(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -574,7 +554,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPoolRequest(poolId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+                using HttpMessage message = CreateGetPoolRequest(poolId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -597,7 +577,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -608,8 +588,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> UpdatePoolAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePoolAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> UpdatePoolAsync(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -618,7 +598,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdatePoolRequest(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateUpdatePoolRequest(poolId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -641,7 +621,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -652,8 +632,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response UpdatePool(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePool(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response UpdatePool(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -662,7 +642,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdatePoolRequest(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateUpdatePoolRequest(poolId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -685,7 +665,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool on which to disable automatic scaling. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -695,8 +675,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisablePoolAutoScaleAsync(string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> DisablePoolAutoScaleAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisablePoolAutoScaleAsync(string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> DisablePoolAutoScaleAsync(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -704,7 +684,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisablePoolAutoScaleRequest(poolId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDisablePoolAutoScaleRequest(poolId, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -727,7 +707,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool on which to disable automatic scaling. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -737,8 +717,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisablePoolAutoScale(string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response DisablePoolAutoScale(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisablePoolAutoScale(string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response DisablePoolAutoScale(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -746,7 +726,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisablePoolAutoScaleRequest(poolId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDisablePoolAutoScaleRequest(poolId, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -760,7 +740,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The options to use for enabling automatic scaling. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -777,15 +757,15 @@ namespace Azure.Compute.Batch
         /// and/or a new evaluation interval. You cannot call this API for the same Pool
         /// more than once every 30 seconds.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnablePoolAutoScaleAsync(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response> EnablePoolAutoScaleAsync(string poolId, BatchPoolEnableAutoScaleContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnablePoolAutoScaleAsync(string,BatchPoolEnableAutoScaleOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response> EnablePoolAutoScaleAsync(string poolId, BatchPoolEnableAutoScaleOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await EnablePoolAutoScaleAsync(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            Response response = await EnablePoolAutoScaleAsync(poolId, content0, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
 
@@ -793,7 +773,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The options to use for enabling automatic scaling. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -810,15 +790,15 @@ namespace Azure.Compute.Batch
         /// and/or a new evaluation interval. You cannot call this API for the same Pool
         /// more than once every 30 seconds.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnablePoolAutoScale(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual Response EnablePoolAutoScale(string poolId, BatchPoolEnableAutoScaleContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnablePoolAutoScale(string,BatchPoolEnableAutoScaleOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual Response EnablePoolAutoScale(string poolId, BatchPoolEnableAutoScaleOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = EnablePoolAutoScale(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context);
+            Response response = EnablePoolAutoScale(poolId, content0, timeOutInSeconds, ocpDate, requestConditions, context);
             return response;
         }
 
@@ -832,7 +812,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EnablePoolAutoScaleAsync(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EnablePoolAutoScaleAsync(string,BatchPoolEnableAutoScaleOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -840,7 +820,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -851,8 +831,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnablePoolAutoScaleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> EnablePoolAutoScaleAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnablePoolAutoScaleAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> EnablePoolAutoScaleAsync(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -861,7 +841,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnablePoolAutoScaleRequest(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateEnablePoolAutoScaleRequest(poolId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -881,7 +861,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EnablePoolAutoScale(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EnablePoolAutoScale(string,BatchPoolEnableAutoScaleOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -889,7 +869,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -900,8 +880,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnablePoolAutoScale(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response EnablePoolAutoScale(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnablePoolAutoScale(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response EnablePoolAutoScale(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -910,7 +890,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnablePoolAutoScaleRequest(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateEnablePoolAutoScaleRequest(poolId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -924,7 +904,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool on which to evaluate the automatic scaling formula. </param>
         /// <param name="content"> The options to use for evaluating the automatic scaling formula. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -937,15 +917,15 @@ namespace Azure.Compute.Batch
         /// the result without applying the formula to the Pool. The Pool must have auto
         /// scaling enabled in order to evaluate a formula.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EvaluatePoolAutoScaleAsync(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response<AutoScaleRun>> EvaluatePoolAutoScaleAsync(string poolId, BatchPoolEvaluateAutoScaleContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EvaluatePoolAutoScaleAsync(string,BatchPoolEvaluateAutoScaleOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response<AutoScaleRun>> EvaluatePoolAutoScaleAsync(string poolId, BatchPoolEvaluateAutoScaleOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await EvaluatePoolAutoScaleAsync(poolId, content0, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await EvaluatePoolAutoScaleAsync(poolId, content0, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return Response.FromValue(AutoScaleRun.FromResponse(response), response);
         }
 
@@ -953,7 +933,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool on which to evaluate the automatic scaling formula. </param>
         /// <param name="content"> The options to use for evaluating the automatic scaling formula. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -966,15 +946,15 @@ namespace Azure.Compute.Batch
         /// the result without applying the formula to the Pool. The Pool must have auto
         /// scaling enabled in order to evaluate a formula.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EvaluatePoolAutoScale(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response<AutoScaleRun> EvaluatePoolAutoScale(string poolId, BatchPoolEvaluateAutoScaleContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EvaluatePoolAutoScale(string,BatchPoolEvaluateAutoScaleOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response<AutoScaleRun> EvaluatePoolAutoScale(string poolId, BatchPoolEvaluateAutoScaleOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = EvaluatePoolAutoScale(poolId, content0, timeOutInSeconds, ocpdate, context);
+            Response response = EvaluatePoolAutoScale(poolId, content0, timeOutInSeconds, ocpDate, context);
             return Response.FromValue(AutoScaleRun.FromResponse(response), response);
         }
 
@@ -988,7 +968,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EvaluatePoolAutoScaleAsync(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EvaluatePoolAutoScaleAsync(string,BatchPoolEvaluateAutoScaleOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -996,7 +976,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool on which to evaluate the automatic scaling formula. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1006,8 +986,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EvaluatePoolAutoScaleAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> EvaluatePoolAutoScaleAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EvaluatePoolAutoScaleAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> EvaluatePoolAutoScaleAsync(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1016,7 +996,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEvaluatePoolAutoScaleRequest(poolId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateEvaluatePoolAutoScaleRequest(poolId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1036,7 +1016,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EvaluatePoolAutoScale(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EvaluatePoolAutoScale(string,BatchPoolEvaluateAutoScaleOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1044,7 +1024,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool on which to evaluate the automatic scaling formula. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1054,8 +1034,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EvaluatePoolAutoScale(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response EvaluatePoolAutoScale(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EvaluatePoolAutoScale(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response EvaluatePoolAutoScale(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1064,7 +1044,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEvaluatePoolAutoScaleRequest(poolId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateEvaluatePoolAutoScaleRequest(poolId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1078,7 +1058,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The options to use for resizing the pool. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1096,15 +1076,15 @@ namespace Azure.Compute.Batch
         /// Batch service chooses which Compute Nodes to remove. To remove specific Compute
         /// Nodes, use the Pool remove Compute Nodes API instead.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ResizePoolAsync(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response> ResizePoolAsync(string poolId, BatchPoolResizeContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ResizePoolAsync(string,BatchPoolResizeOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response> ResizePoolAsync(string poolId, BatchPoolResizeOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ResizePoolAsync(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            Response response = await ResizePoolAsync(poolId, content0, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
 
@@ -1112,7 +1092,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The options to use for resizing the pool. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1130,15 +1110,15 @@ namespace Azure.Compute.Batch
         /// Batch service chooses which Compute Nodes to remove. To remove specific Compute
         /// Nodes, use the Pool remove Compute Nodes API instead.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ResizePool(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual Response ResizePool(string poolId, BatchPoolResizeContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ResizePool(string,BatchPoolResizeOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual Response ResizePool(string poolId, BatchPoolResizeOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ResizePool(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context);
+            Response response = ResizePool(poolId, content0, timeOutInSeconds, ocpDate, requestConditions, context);
             return response;
         }
 
@@ -1152,7 +1132,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ResizePoolAsync(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ResizePoolAsync(string,BatchPoolResizeOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1160,7 +1140,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1171,8 +1151,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ResizePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> ResizePoolAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ResizePoolAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> ResizePoolAsync(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1181,7 +1161,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateResizePoolRequest(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateResizePoolRequest(poolId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1201,7 +1181,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ResizePool(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ResizePool(string,BatchPoolResizeOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1209,7 +1189,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1220,8 +1200,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ResizePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response ResizePool(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ResizePool(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response ResizePool(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1230,7 +1210,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateResizePoolRequest(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateResizePoolRequest(poolId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1253,7 +1233,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1264,8 +1244,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='StopPoolResizeAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> StopPoolResizeAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='StopPoolResizeAsync(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> StopPoolResizeAsync(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -1273,7 +1253,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopPoolResizeRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateStopPoolResizeRequest(poolId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1296,7 +1276,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1307,8 +1287,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='StopPoolResize(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response StopPoolResize(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='StopPoolResize(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response StopPoolResize(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -1316,7 +1296,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopPoolResizeRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateStopPoolResizeRequest(poolId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1330,7 +1310,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to update. </param>
         /// <param name="pool"> The options to use for replacing properties on the pool. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1343,15 +1323,15 @@ namespace Azure.Compute.Batch
         /// the Pool has a StartTask associated with it and if StartTask is not specified
         /// with this request, then the Batch service will remove the existing StartTask.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplacePoolPropertiesAsync(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> ReplacePoolPropertiesAsync(string poolId, BatchPoolReplaceContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplacePoolPropertiesAsync(string,BatchPoolReplaceOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> ReplacePoolPropertiesAsync(string poolId, BatchPoolReplaceOptions pool, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
             using RequestContent content = pool.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReplacePoolPropertiesAsync(poolId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await ReplacePoolPropertiesAsync(poolId, content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
@@ -1359,7 +1339,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to update. </param>
         /// <param name="pool"> The options to use for replacing properties on the pool. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1372,15 +1352,15 @@ namespace Azure.Compute.Batch
         /// the Pool has a StartTask associated with it and if StartTask is not specified
         /// with this request, then the Batch service will remove the existing StartTask.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplacePoolProperties(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response ReplacePoolProperties(string poolId, BatchPoolReplaceContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplacePoolProperties(string,BatchPoolReplaceOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response ReplacePoolProperties(string poolId, BatchPoolReplaceOptions pool, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
             using RequestContent content = pool.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReplacePoolProperties(poolId, content, timeOutInSeconds, ocpdate, context);
+            Response response = ReplacePoolProperties(poolId, content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -1394,7 +1374,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplacePoolPropertiesAsync(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplacePoolPropertiesAsync(string,BatchPoolReplaceOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1402,7 +1382,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1412,8 +1392,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplacePoolPropertiesAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> ReplacePoolPropertiesAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplacePoolPropertiesAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> ReplacePoolPropertiesAsync(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1422,7 +1402,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplacePoolPropertiesRequest(poolId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateReplacePoolPropertiesRequest(poolId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1442,7 +1422,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplacePoolProperties(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplacePoolProperties(string,BatchPoolReplaceOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1450,7 +1430,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1460,8 +1440,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplacePoolProperties(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response ReplacePoolProperties(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplacePoolProperties(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response ReplacePoolProperties(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1470,7 +1450,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplacePoolPropertiesRequest(poolId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateReplacePoolPropertiesRequest(poolId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1484,7 +1464,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The options to use for removing the node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1498,15 +1478,15 @@ namespace Azure.Compute.Batch
         /// When this operation runs, the allocation state changes from steady to resizing.
         /// Each request may remove up to 100 nodes.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RemoveNodesAsync(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response> RemoveNodesAsync(string poolId, BatchNodeRemoveContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RemoveNodesAsync(string,BatchNodeRemoveOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response> RemoveNodesAsync(string poolId, BatchNodeRemoveOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RemoveNodesAsync(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            Response response = await RemoveNodesAsync(poolId, content0, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
 
@@ -1514,7 +1494,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The options to use for removing the node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1528,15 +1508,15 @@ namespace Azure.Compute.Batch
         /// When this operation runs, the allocation state changes from steady to resizing.
         /// Each request may remove up to 100 nodes.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RemoveNodes(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual Response RemoveNodes(string poolId, BatchNodeRemoveContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RemoveNodes(string,BatchNodeRemoveOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual Response RemoveNodes(string poolId, BatchNodeRemoveOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = RemoveNodes(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context);
+            Response response = RemoveNodes(poolId, content0, timeOutInSeconds, ocpDate, requestConditions, context);
             return response;
         }
 
@@ -1550,7 +1530,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RemoveNodesAsync(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RemoveNodesAsync(string,BatchNodeRemoveOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1558,7 +1538,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1569,8 +1549,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RemoveNodesAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> RemoveNodesAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RemoveNodesAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> RemoveNodesAsync(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1579,7 +1559,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveNodesRequest(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateRemoveNodesRequest(poolId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1599,7 +1579,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RemoveNodes(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RemoveNodes(string,BatchNodeRemoveOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1607,7 +1587,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1618,8 +1598,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RemoveNodes(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response RemoveNodes(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RemoveNodes(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response RemoveNodes(string poolId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1628,7 +1608,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveNodesRequest(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateRemoveNodesRequest(poolId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1651,7 +1631,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1663,16 +1643,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteJobAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> DeleteJobInternalAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobRequest(jobId, timeOutInSeconds, ocpdate, force, requestConditions, context);
+                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1695,7 +1674,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1707,16 +1686,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJob(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual Response DeleteJob(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response DeleteJobInternal(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobRequest(jobId, timeOutInSeconds, ocpdate, force, requestConditions, context);
+                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1729,7 +1707,7 @@ namespace Azure.Compute.Batch
         /// <summary> Gets information about the specified Job. </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1740,20 +1718,20 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response<BatchJob>> GetJobAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<BatchJob>> GetJobAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetJobAsync(jobId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context).ConfigureAwait(false);
+            Response response = await GetJobAsync(jobId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context).ConfigureAwait(false);
             return Response.FromValue(BatchJob.FromResponse(response), response);
         }
 
         /// <summary> Gets information about the specified Job. </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1764,13 +1742,13 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJob(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
-        public virtual Response<BatchJob> GetJob(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJob(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        public virtual Response<BatchJob> GetJob(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetJob(jobId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+            Response response = GetJob(jobId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
             return Response.FromValue(BatchJob.FromResponse(response), response);
         }
 
@@ -1784,14 +1762,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1804,8 +1782,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetJobAsync(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetJobAsync(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -1813,7 +1791,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetJobRequest(jobId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+                using HttpMessage message = CreateGetJobRequest(jobId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1833,14 +1811,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJob(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJob(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1853,8 +1831,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJob(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
-        public virtual Response GetJob(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJob(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        public virtual Response GetJob(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -1862,7 +1840,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetJobRequest(jobId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+                using HttpMessage message = CreateGetJobRequest(jobId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1885,7 +1863,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job whose properties you want to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1896,8 +1874,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateJobAsync(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1906,7 +1884,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateJobRequest(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateUpdateJobRequest(jobId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1929,7 +1907,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job whose properties you want to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1940,8 +1918,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response UpdateJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJob(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response UpdateJob(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1950,7 +1928,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateJobRequest(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateUpdateJobRequest(jobId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1964,7 +1942,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job whose properties you want to update. </param>
         /// <param name="job"> A job with updated properties. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1978,15 +1956,15 @@ namespace Azure.Compute.Batch
         /// the Job has constraints associated with it and if constraints is not specified
         /// with this request, then the Batch service will remove the existing constraints.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobAsync(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response> ReplaceJobAsync(string jobId, BatchJob job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobAsync(string,BatchJob,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response> ReplaceJobAsync(string jobId, BatchJob job, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
             using RequestContent content = job.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReplaceJobAsync(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            Response response = await ReplaceJobAsync(jobId, content, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
 
@@ -1994,7 +1972,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job whose properties you want to update. </param>
         /// <param name="job"> A job with updated properties. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2008,15 +1986,15 @@ namespace Azure.Compute.Batch
         /// the Job has constraints associated with it and if constraints is not specified
         /// with this request, then the Batch service will remove the existing constraints.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJob(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual Response ReplaceJob(string jobId, BatchJob job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJob(string,BatchJob,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual Response ReplaceJob(string jobId, BatchJob job, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
             using RequestContent content = job.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReplaceJob(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            Response response = ReplaceJob(jobId, content, timeOutInSeconds, ocpDate, requestConditions, context);
             return response;
         }
 
@@ -2030,7 +2008,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplaceJobAsync(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplaceJobAsync(string,BatchJob,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2038,7 +2016,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job whose properties you want to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2049,8 +2027,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> ReplaceJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> ReplaceJobAsync(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
@@ -2059,7 +2037,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplaceJobRequest(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateReplaceJobRequest(jobId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2079,7 +2057,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplaceJob(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplaceJob(string,BatchJob,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2087,7 +2065,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job whose properties you want to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2098,8 +2076,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response ReplaceJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJob(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response ReplaceJob(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
@@ -2108,7 +2086,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplaceJobRequest(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateReplaceJobRequest(jobId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2122,7 +2100,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="content"> The options to use for disabling the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2141,15 +2119,14 @@ namespace Azure.Compute.Batch
         /// disable a Job that is in any state other than active, disabling, or disabled,
         /// the request fails with status code 409.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableJobAsync(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response> DisableJobAsync(string jobId, BatchJobDisableContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DisableJobInternalAsync(string jobId, BatchJobDisableOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DisableJobAsync(jobId, content0, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            Response response = await DisableJobInternalAsync(jobId, content0, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
 
@@ -2157,7 +2134,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="content"> The options to use for disabling the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2176,15 +2153,14 @@ namespace Azure.Compute.Batch
         /// disable a Job that is in any state other than active, disabling, or disabled,
         /// the request fails with status code 409.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableJob(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual Response DisableJob(string jobId, BatchJobDisableContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        internal virtual Response DisableJobInternal(string jobId, BatchJobDisableOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DisableJob(jobId, content0, timeOutInSeconds, ocpdate, requestConditions, context);
+            Response response = DisableJobInternal(jobId, content0, timeOutInSeconds, ocpDate, requestConditions, context);
             return response;
         }
 
@@ -2198,7 +2174,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DisableJobAsync(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DisableJobInternalAsync(string,BatchJobDisableOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2206,7 +2182,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2217,17 +2193,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> DisableJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> DisableJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableJobRequest(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2247,7 +2222,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DisableJob(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DisableJobInternal(string,BatchJobDisableOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2255,7 +2230,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2266,17 +2241,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response DisableJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response DisableJobInternal(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableJobRequest(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2299,7 +2273,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2310,16 +2284,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableJobAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> EnableJobAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> EnableJobInternalAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.EnableJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.EnableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableJobRequest(jobId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2342,7 +2315,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2353,16 +2326,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableJob(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response EnableJob(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response EnableJobInternal(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.EnableJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.EnableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableJobRequest(jobId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2376,7 +2348,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="parameters"> The options to use for terminating the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2394,14 +2366,13 @@ namespace Azure.Compute.Batch
         /// state, they will remain in the active state. Once a Job is terminated, new
         /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response> TerminateJobAsync(string jobId, BatchJobTerminateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> TerminateJobInternalAsync(string jobId, BatchJobTerminateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await TerminateJobAsync(jobId, content, timeOutInSeconds, ocpdate, force, requestConditions, context).ConfigureAwait(false);
+            Response response = await TerminateJobInternalAsync(jobId, content, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
             return response;
         }
 
@@ -2409,7 +2380,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="parameters"> The options to use for terminating the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2427,14 +2398,13 @@ namespace Azure.Compute.Batch
         /// state, they will remain in the active state. Once a Job is terminated, new
         /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)']/*" />
-        public virtual Response TerminateJob(string jobId, BatchJobTerminateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        internal virtual Response TerminateJobInternal(string jobId, BatchJobTerminateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = TerminateJob(jobId, content, timeOutInSeconds, ocpdate, force, requestConditions, context);
+            Response response = TerminateJobInternal(jobId, content, timeOutInSeconds, ocpDate, force, requestConditions, context);
             return response;
         }
 
@@ -2448,7 +2418,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TerminateJobInternalAsync(string,BatchJobTerminateOptions,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2456,7 +2426,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2468,16 +2438,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobAsync(string,RequestContent,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> TerminateJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> TerminateJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobRequest(jobId, content, timeOutInSeconds, ocpdate, force, requestConditions, context);
+                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeOutInSeconds, ocpDate, force, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2497,7 +2466,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TerminateJobInternal(string,BatchJobTerminateOptions,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2505,7 +2474,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2517,16 +2486,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJob(string,RequestContent,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual Response TerminateJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response TerminateJobInternal(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobRequest(jobId, content, timeOutInSeconds, ocpdate, force, requestConditions, context);
+                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeOutInSeconds, ocpDate, force, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2539,7 +2507,7 @@ namespace Azure.Compute.Batch
         /// <summary> Creates a Job to the specified Account. </summary>
         /// <param name="job"> The Job to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2557,21 +2525,21 @@ namespace Azure.Compute.Batch
         /// This information may appear in telemetry logs accessible to Microsoft Support
         /// engineers.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobAsync(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> CreateJobAsync(BatchJobCreateContent job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobAsync(BatchJobCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> CreateJobAsync(BatchJobCreateOptions job, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(job, nameof(job));
 
             using RequestContent content = job.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateJobAsync(content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await CreateJobAsync(content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Creates a Job to the specified Account. </summary>
         /// <param name="job"> The Job to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2589,14 +2557,14 @@ namespace Azure.Compute.Batch
         /// This information may appear in telemetry logs accessible to Microsoft Support
         /// engineers.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJob(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response CreateJob(BatchJobCreateContent job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJob(BatchJobCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response CreateJob(BatchJobCreateOptions job, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(job, nameof(job));
 
             using RequestContent content = job.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateJob(content, timeOutInSeconds, ocpdate, context);
+            Response response = CreateJob(content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -2610,14 +2578,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateJobAsync(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateJobAsync(BatchJobCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2626,8 +2594,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> CreateJobAsync(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobAsync(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> CreateJobAsync(RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2635,7 +2603,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateJobRequest(content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateJobRequest(content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2655,14 +2623,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateJob(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateJob(BatchJobCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2671,8 +2639,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJob(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response CreateJob(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJob(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response CreateJob(RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2680,7 +2648,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateJobRequest(content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateJobRequest(content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2693,7 +2661,7 @@ namespace Azure.Compute.Batch
         /// <summary> Gets the Task counts for the specified Job. </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2707,20 +2675,20 @@ namespace Azure.Compute.Batch
         /// state are counted as running. Note that the numbers returned may not always be
         /// up to date. If you need exact task counts, use a list query.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobTaskCountsAsync(string,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response<BatchTaskCountsResult>> GetJobTaskCountsAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobTaskCountsAsync(string,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response<BatchTaskCountsResult>> GetJobTaskCountsAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetJobTaskCountsAsync(jobId, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await GetJobTaskCountsAsync(jobId, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return Response.FromValue(BatchTaskCountsResult.FromResponse(response), response);
         }
 
         /// <summary> Gets the Task counts for the specified Job. </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2734,13 +2702,13 @@ namespace Azure.Compute.Batch
         /// state are counted as running. Note that the numbers returned may not always be
         /// up to date. If you need exact task counts, use a list query.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobTaskCounts(string,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response<BatchTaskCountsResult> GetJobTaskCounts(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobTaskCounts(string,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response<BatchTaskCountsResult> GetJobTaskCounts(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetJobTaskCounts(jobId, timeOutInSeconds, ocpdate, context);
+            Response response = GetJobTaskCounts(jobId, timeOutInSeconds, ocpDate, context);
             return Response.FromValue(BatchTaskCountsResult.FromResponse(response), response);
         }
 
@@ -2754,14 +2722,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobTaskCountsAsync(string,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobTaskCountsAsync(string,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2771,8 +2739,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobTaskCountsAsync(string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> GetJobTaskCountsAsync(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobTaskCountsAsync(string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> GetJobTaskCountsAsync(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -2780,7 +2748,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetJobTaskCountsRequest(jobId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateGetJobTaskCountsRequest(jobId, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2800,14 +2768,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobTaskCounts(string,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobTaskCounts(string,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2817,8 +2785,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobTaskCounts(string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response GetJobTaskCounts(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobTaskCounts(string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response GetJobTaskCounts(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -2826,7 +2794,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetJobTaskCountsRequest(jobId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateGetJobTaskCountsRequest(jobId, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2839,42 +2807,42 @@ namespace Azure.Compute.Batch
         /// <summary> Creates a Certificate to the specified Account. </summary>
         /// <param name="certificate"> The Certificate to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificate"/> is null. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificateAsync(BatchCertificate,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> CreateCertificateAsync(BatchCertificate certificate, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificateAsync(BatchCertificate,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> CreateCertificateAsync(BatchCertificate certificate, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(certificate, nameof(certificate));
 
             using RequestContent content = certificate.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateCertificateAsync(content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await CreateCertificateAsync(content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Creates a Certificate to the specified Account. </summary>
         /// <param name="certificate"> The Certificate to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificate"/> is null. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificate(BatchCertificate,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response CreateCertificate(BatchCertificate certificate, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificate(BatchCertificate,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response CreateCertificate(BatchCertificate certificate, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(certificate, nameof(certificate));
 
             using RequestContent content = certificate.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateCertificate(content, timeOutInSeconds, ocpdate, context);
+            Response response = CreateCertificate(content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -2888,14 +2856,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateCertificateAsync(BatchCertificate,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateCertificateAsync(BatchCertificate,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2904,8 +2872,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificateAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> CreateCertificateAsync(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificateAsync(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> CreateCertificateAsync(RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2913,7 +2881,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCertificateRequest(content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateCertificateRequest(content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2933,14 +2901,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateCertificate(BatchCertificate,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateCertificate(BatchCertificate,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2949,8 +2917,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificate(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response CreateCertificate(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificate(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response CreateCertificate(RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2958,7 +2926,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCertificateRequest(content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateCertificateRequest(content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2982,7 +2950,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
         /// <param name="thumbprint"> The thumbprint of the Certificate being deleted. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2992,8 +2960,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CancelCertificateDeletionAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> CancelCertificateDeletionAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CancelCertificateDeletionAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> CancelCertificateDeletionAsync(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
@@ -3002,7 +2970,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelCertificateDeletionRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCancelCertificateDeletionRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3026,7 +2994,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
         /// <param name="thumbprint"> The thumbprint of the Certificate being deleted. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3036,8 +3004,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CancelCertificateDeletion(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response CancelCertificateDeletion(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CancelCertificateDeletion(string,string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response CancelCertificateDeletion(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
@@ -3046,7 +3014,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelCertificateDeletionRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCancelCertificateDeletionRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3070,7 +3038,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
         /// <param name="thumbprint"> The thumbprint of the Certificate to be deleted. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3080,17 +3048,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteCertificateAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual async Task<Response> DeleteCertificateInternalAsync(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteCertificate");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteCertificateInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDeleteCertificateInternalRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3114,7 +3081,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
         /// <param name="thumbprint"> The thumbprint of the Certificate to be deleted. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3124,17 +3091,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteCertificate(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response DeleteCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual Response DeleteCertificateInternal(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteCertificate");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteCertificateInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDeleteCertificateInternalRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3148,7 +3114,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
         /// <param name="thumbprint"> The thumbprint of the Certificate to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3157,14 +3123,14 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual async Task<Response<BatchCertificate>> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificateAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual async Task<Response<BatchCertificate>> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCertificateAsync(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context).ConfigureAwait(false);
+            Response response = await GetCertificateAsync(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, select, context).ConfigureAwait(false);
             return Response.FromValue(BatchCertificate.FromResponse(response), response);
         }
 
@@ -3172,7 +3138,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
         /// <param name="thumbprint"> The thumbprint of the Certificate to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3181,14 +3147,14 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Response<BatchCertificate> GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificate(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Response<BatchCertificate> GetCertificate(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCertificate(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context);
+            Response response = GetCertificate(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, select, context);
             return Response.FromValue(BatchCertificate.FromResponse(response), response);
         }
 
@@ -3202,7 +3168,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetCertificateAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3210,7 +3176,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
         /// <param name="thumbprint"> The thumbprint of the Certificate to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3221,8 +3187,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
-        public virtual async Task<Response> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificateAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        public virtual async Task<Response> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
@@ -3231,7 +3197,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context);
+                using HttpMessage message = CreateGetCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, select, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3251,7 +3217,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetCertificate(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3259,7 +3225,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
         /// <param name="thumbprint"> The thumbprint of the Certificate to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3270,8 +3236,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
-        public virtual Response GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificate(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        public virtual Response GetCertificate(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
@@ -3280,7 +3246,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context);
+                using HttpMessage message = CreateGetCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, select, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3303,7 +3269,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3315,16 +3281,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobScheduleAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> DeleteJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, force, requestConditions, context);
+                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3347,7 +3312,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3359,16 +3324,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobSchedule(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual Response DeleteJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response DeleteJobScheduleInternal(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, force, requestConditions, context);
+                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3381,7 +3345,7 @@ namespace Azure.Compute.Batch
         /// <summary> Gets information about the specified Job Schedule. </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3392,20 +3356,20 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response<BatchJobSchedule>> GetJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<BatchJobSchedule>> GetJobScheduleAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetJobScheduleAsync(jobScheduleId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context).ConfigureAwait(false);
+            Response response = await GetJobScheduleAsync(jobScheduleId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context).ConfigureAwait(false);
             return Response.FromValue(BatchJobSchedule.FromResponse(response), response);
         }
 
         /// <summary> Gets information about the specified Job Schedule. </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3416,13 +3380,13 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
-        public virtual Response<BatchJobSchedule> GetJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedule(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        public virtual Response<BatchJobSchedule> GetJobSchedule(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetJobSchedule(jobScheduleId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+            Response response = GetJobSchedule(jobScheduleId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
             return Response.FromValue(BatchJobSchedule.FromResponse(response), response);
         }
 
@@ -3436,14 +3400,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3456,8 +3420,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetJobScheduleAsync(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -3465,7 +3429,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+                using HttpMessage message = CreateGetJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3485,14 +3449,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobSchedule(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3505,8 +3469,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
-        public virtual Response GetJobSchedule(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedule(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        public virtual Response GetJobSchedule(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -3514,7 +3478,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+                using HttpMessage message = CreateGetJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3537,7 +3501,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobScheduleId"> The ID of the Job Schedule to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3548,8 +3512,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateJobScheduleAsync(string jobScheduleId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobScheduleAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateJobScheduleAsync(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(content, nameof(content));
@@ -3558,7 +3522,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateJobScheduleRequest(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateUpdateJobScheduleRequest(jobScheduleId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3581,7 +3545,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobScheduleId"> The ID of the Job Schedule to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3592,8 +3556,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response UpdateJobSchedule(string jobScheduleId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobSchedule(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response UpdateJobSchedule(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(content, nameof(content));
@@ -3602,7 +3566,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateJobScheduleRequest(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateUpdateJobScheduleRequest(jobScheduleId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3616,7 +3580,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobScheduleId"> The ID of the Job Schedule to update. </param>
         /// <param name="jobSchedule"> A Job Schedule with updated properties. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3632,15 +3596,15 @@ namespace Azure.Compute.Batch
         /// impact Jobs created by the schedule after the update has taken place; currently
         /// running Jobs are unaffected.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobScheduleAsync(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response> ReplaceJobScheduleAsync(string jobScheduleId, BatchJobSchedule jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobScheduleAsync(string,BatchJobSchedule,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response> ReplaceJobScheduleAsync(string jobScheduleId, BatchJobSchedule jobSchedule, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
             using RequestContent content = jobSchedule.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReplaceJobScheduleAsync(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            Response response = await ReplaceJobScheduleAsync(jobScheduleId, content, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
 
@@ -3648,7 +3612,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobScheduleId"> The ID of the Job Schedule to update. </param>
         /// <param name="jobSchedule"> A Job Schedule with updated properties. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3664,15 +3628,15 @@ namespace Azure.Compute.Batch
         /// impact Jobs created by the schedule after the update has taken place; currently
         /// running Jobs are unaffected.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobSchedule(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual Response ReplaceJobSchedule(string jobScheduleId, BatchJobSchedule jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobSchedule(string,BatchJobSchedule,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual Response ReplaceJobSchedule(string jobScheduleId, BatchJobSchedule jobSchedule, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
             using RequestContent content = jobSchedule.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReplaceJobSchedule(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            Response response = ReplaceJobSchedule(jobScheduleId, content, timeOutInSeconds, ocpDate, requestConditions, context);
             return response;
         }
 
@@ -3686,7 +3650,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplaceJobScheduleAsync(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplaceJobScheduleAsync(string,BatchJobSchedule,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3694,7 +3658,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobScheduleId"> The ID of the Job Schedule to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3705,8 +3669,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> ReplaceJobScheduleAsync(string jobScheduleId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobScheduleAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> ReplaceJobScheduleAsync(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(content, nameof(content));
@@ -3715,7 +3679,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplaceJobScheduleRequest(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateReplaceJobScheduleRequest(jobScheduleId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3735,7 +3699,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplaceJobSchedule(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplaceJobSchedule(string,BatchJobSchedule,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3743,7 +3707,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobScheduleId"> The ID of the Job Schedule to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3754,8 +3718,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response ReplaceJobSchedule(string jobScheduleId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceJobSchedule(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response ReplaceJobSchedule(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(content, nameof(content));
@@ -3764,7 +3728,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplaceJobScheduleRequest(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateReplaceJobScheduleRequest(jobScheduleId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3787,7 +3751,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to disable. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3798,8 +3762,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> DisableJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> DisableJobScheduleAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -3807,7 +3771,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDisableJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3830,7 +3794,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to disable. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3841,8 +3805,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response DisableJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableJobSchedule(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response DisableJobSchedule(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -3850,7 +3814,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDisableJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3873,7 +3837,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to enable. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3884,8 +3848,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> EnableJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> EnableJobScheduleAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -3893,7 +3857,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateEnableJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3916,7 +3880,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to enable. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3927,8 +3891,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response EnableJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableJobSchedule(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response EnableJobSchedule(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -3936,7 +3900,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateEnableJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3959,7 +3923,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3971,16 +3935,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobScheduleAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> TerminateJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> TerminateJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, force, requestConditions, context);
+                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4003,7 +3966,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4015,16 +3978,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobSchedule(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual Response TerminateJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response TerminateJobScheduleInternal(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, force, requestConditions, context);
+                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4037,42 +3999,42 @@ namespace Azure.Compute.Batch
         /// <summary> Creates a Job Schedule to the specified Account. </summary>
         /// <param name="jobSchedule"> The Job Schedule to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobSchedule"/> is null. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobScheduleAsync(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> CreateJobScheduleAsync(BatchJobScheduleCreateContent jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobScheduleAsync(BatchJobScheduleCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> CreateJobScheduleAsync(BatchJobScheduleCreateOptions jobSchedule, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
             using RequestContent content = jobSchedule.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateJobScheduleAsync(content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await CreateJobScheduleAsync(content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Creates a Job Schedule to the specified Account. </summary>
         /// <param name="jobSchedule"> The Job Schedule to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobSchedule"/> is null. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobSchedule(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response CreateJobSchedule(BatchJobScheduleCreateContent jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobSchedule(BatchJobScheduleCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response CreateJobSchedule(BatchJobScheduleCreateOptions jobSchedule, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
             using RequestContent content = jobSchedule.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateJobSchedule(content, timeOutInSeconds, ocpdate, context);
+            Response response = CreateJobSchedule(content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -4086,14 +4048,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateJobScheduleAsync(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateJobScheduleAsync(BatchJobScheduleCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4102,8 +4064,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobScheduleAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> CreateJobScheduleAsync(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobScheduleAsync(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> CreateJobScheduleAsync(RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -4111,7 +4073,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateJobScheduleRequest(content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateJobScheduleRequest(content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4131,14 +4093,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateJobSchedule(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateJobSchedule(BatchJobScheduleCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4147,8 +4109,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobSchedule(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response CreateJobSchedule(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateJobSchedule(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response CreateJobSchedule(RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -4156,7 +4118,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateJobScheduleRequest(content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateJobScheduleRequest(content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4170,7 +4132,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to which the Task is to be created. </param>
         /// <param name="task"> The Task to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4183,15 +4145,15 @@ namespace Azure.Compute.Batch
         /// Task has not completed within 180 days of being added it will be terminated by
         /// the Batch service and left in whatever state it was in at that time.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskAsync(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> CreateTaskAsync(string jobId, BatchTaskCreateContent task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskAsync(string,BatchTaskCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> CreateTaskAsync(string jobId, BatchTaskCreateOptions task, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(task, nameof(task));
 
             using RequestContent content = task.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateTaskAsync(jobId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await CreateTaskAsync(jobId, content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
@@ -4199,7 +4161,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to which the Task is to be created. </param>
         /// <param name="task"> The Task to be created. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4212,15 +4174,15 @@ namespace Azure.Compute.Batch
         /// Task has not completed within 180 days of being added it will be terminated by
         /// the Batch service and left in whatever state it was in at that time.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTask(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response CreateTask(string jobId, BatchTaskCreateContent task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTask(string,BatchTaskCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response CreateTask(string jobId, BatchTaskCreateOptions task, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(task, nameof(task));
 
             using RequestContent content = task.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateTask(jobId, content, timeOutInSeconds, ocpdate, context);
+            Response response = CreateTask(jobId, content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -4234,7 +4196,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateTaskAsync(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateTaskAsync(string,BatchTaskCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4242,7 +4204,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to which the Task is to be created. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4252,8 +4214,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> CreateTaskAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> CreateTaskAsync(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
@@ -4262,7 +4224,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateTaskRequest(jobId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateTaskRequest(jobId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4282,7 +4244,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateTask(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateTask(string,BatchTaskCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4290,7 +4252,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to which the Task is to be created. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4300,8 +4262,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTask(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response CreateTask(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTask(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response CreateTask(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
@@ -4310,7 +4272,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateTaskRequest(jobId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateTaskRequest(jobId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4324,7 +4286,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to which the Task collection is to be added. </param>
         /// <param name="taskCollection"> The Tasks to be added. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4348,23 +4310,23 @@ namespace Azure.Compute.Batch
         /// completed within 180 days of being added it will be terminated by the Batch
         /// service and left in whatever state it was in at that time.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollectionAsync(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response<BatchTaskAddCollectionResult>> CreateTaskCollectionAsync(string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollectionAsync(string,BatchTaskGroup,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response<BatchCreateTaskCollectionResult>> CreateTaskCollectionAsync(string jobId, BatchTaskGroup taskCollection, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(taskCollection, nameof(taskCollection));
 
             using RequestContent content = taskCollection.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateTaskCollectionAsync(jobId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
-            return Response.FromValue(BatchTaskAddCollectionResult.FromResponse(response), response);
+            Response response = await CreateTaskCollectionAsync(jobId, content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
+            return Response.FromValue(BatchCreateTaskCollectionResult.FromResponse(response), response);
         }
 
         /// <summary> Adds a collection of Tasks to the specified Job. </summary>
         /// <param name="jobId"> The ID of the Job to which the Task collection is to be added. </param>
         /// <param name="taskCollection"> The Tasks to be added. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4388,16 +4350,16 @@ namespace Azure.Compute.Batch
         /// completed within 180 days of being added it will be terminated by the Batch
         /// service and left in whatever state it was in at that time.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollection(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response<BatchTaskAddCollectionResult> CreateTaskCollection(string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollection(string,BatchTaskGroup,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response<BatchCreateTaskCollectionResult> CreateTaskCollection(string jobId, BatchTaskGroup taskCollection, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(taskCollection, nameof(taskCollection));
 
             using RequestContent content = taskCollection.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateTaskCollection(jobId, content, timeOutInSeconds, ocpdate, context);
-            return Response.FromValue(BatchTaskAddCollectionResult.FromResponse(response), response);
+            Response response = CreateTaskCollection(jobId, content, timeOutInSeconds, ocpDate, context);
+            return Response.FromValue(BatchCreateTaskCollectionResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -4410,7 +4372,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateTaskCollectionAsync(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateTaskCollectionAsync(string,BatchTaskGroup,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4418,7 +4380,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to which the Task collection is to be added. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4428,8 +4390,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollectionAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> CreateTaskCollectionAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollectionAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> CreateTaskCollectionAsync(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
@@ -4438,7 +4400,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateTaskCollectionRequest(jobId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateTaskCollectionRequest(jobId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4458,7 +4420,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateTaskCollection(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateTaskCollection(string,BatchTaskGroup,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4466,7 +4428,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to which the Task collection is to be added. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4476,8 +4438,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollection(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response CreateTaskCollection(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollection(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response CreateTaskCollection(string jobId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
@@ -4486,7 +4448,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateTaskCollectionRequest(jobId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateTaskCollectionRequest(jobId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4510,7 +4472,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job from which to delete the Task. </param>
         /// <param name="taskId"> The ID of the Task to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4521,8 +4483,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteTaskAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteTaskAsync(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteTaskAsync(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4531,7 +4493,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTaskRequest(jobId, taskId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDeleteTaskRequest(jobId, taskId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4555,7 +4517,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job from which to delete the Task. </param>
         /// <param name="taskId"> The ID of the Task to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4566,8 +4528,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response DeleteTask(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteTask(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response DeleteTask(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4576,7 +4538,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTaskRequest(jobId, taskId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDeleteTaskRequest(jobId, taskId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4590,7 +4552,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job that contains the Task. </param>
         /// <param name="taskId"> The ID of the Task to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4606,14 +4568,14 @@ namespace Azure.Compute.Batch
         /// nodeInfo refer to the primary Task. Use the list subtasks API to retrieve
         /// information about subtasks.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response<BatchTask>> GetTaskAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<BatchTask>> GetTaskAsync(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTaskAsync(jobId, taskId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context).ConfigureAwait(false);
+            Response response = await GetTaskAsync(jobId, taskId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context).ConfigureAwait(false);
             return Response.FromValue(BatchTask.FromResponse(response), response);
         }
 
@@ -4621,7 +4583,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job that contains the Task. </param>
         /// <param name="taskId"> The ID of the Task to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4637,14 +4599,14 @@ namespace Azure.Compute.Batch
         /// nodeInfo refer to the primary Task. Use the list subtasks API to retrieve
         /// information about subtasks.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTask(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
-        public virtual Response<BatchTask> GetTask(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTask(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        public virtual Response<BatchTask> GetTask(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTask(jobId, taskId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+            Response response = GetTask(jobId, taskId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
             return Response.FromValue(BatchTask.FromResponse(response), response);
         }
 
@@ -4658,7 +4620,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTaskAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTaskAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4666,7 +4628,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job that contains the Task. </param>
         /// <param name="taskId"> The ID of the Task to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4679,8 +4641,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetTaskAsync(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetTaskAsync(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4689,7 +4651,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTaskRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+                using HttpMessage message = CreateGetTaskRequest(jobId, taskId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4709,7 +4671,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTask(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTask(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4717,7 +4679,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job that contains the Task. </param>
         /// <param name="taskId"> The ID of the Task to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4730,8 +4692,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTask(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
-        public virtual Response GetTask(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTask(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        public virtual Response GetTask(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4740,7 +4702,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTaskRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, expand, requestConditions, context);
+                using HttpMessage message = CreateGetTaskRequest(jobId, taskId, timeOutInSeconds, ocpDate, select, expand, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4755,7 +4717,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task to update. </param>
         /// <param name="task"> The Task to update. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4764,8 +4726,8 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="task"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTaskAsync(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response> ReplaceTaskAsync(string jobId, string taskId, BatchTask task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTaskAsync(string,string,BatchTask,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response> ReplaceTaskAsync(string jobId, string taskId, BatchTask task, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4773,7 +4735,7 @@ namespace Azure.Compute.Batch
 
             using RequestContent content = task.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReplaceTaskAsync(jobId, taskId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            Response response = await ReplaceTaskAsync(jobId, taskId, content, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
 
@@ -4782,7 +4744,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task to update. </param>
         /// <param name="task"> The Task to update. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4791,8 +4753,8 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="task"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTask(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual Response ReplaceTask(string jobId, string taskId, BatchTask task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTask(string,string,BatchTask,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        public virtual Response ReplaceTask(string jobId, string taskId, BatchTask task, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4800,7 +4762,7 @@ namespace Azure.Compute.Batch
 
             using RequestContent content = task.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReplaceTask(jobId, taskId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            Response response = ReplaceTask(jobId, taskId, content, timeOutInSeconds, ocpDate, requestConditions, context);
             return response;
         }
 
@@ -4814,7 +4776,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplaceTaskAsync(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplaceTaskAsync(string,string,BatchTask,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4823,7 +4785,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4834,8 +4796,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTaskAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> ReplaceTaskAsync(string jobId, string taskId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTaskAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> ReplaceTaskAsync(string jobId, string taskId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4845,7 +4807,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplaceTaskRequest(jobId, taskId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateReplaceTaskRequest(jobId, taskId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4865,7 +4827,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplaceTask(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplaceTask(string,string,BatchTask,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4874,7 +4836,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4885,8 +4847,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTask(string,string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response ReplaceTask(string jobId, string taskId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTask(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response ReplaceTask(string jobId, string taskId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4896,7 +4858,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplaceTaskRequest(jobId, taskId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateReplaceTaskRequest(jobId, taskId, content, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4920,7 +4882,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job containing the Task. </param>
         /// <param name="taskId"> The ID of the Task to terminate. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4931,8 +4893,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> TerminateTaskAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateTaskAsync(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> TerminateTaskAsync(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4941,7 +4903,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateTaskRequest(jobId, taskId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateTerminateTaskRequest(jobId, taskId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4965,7 +4927,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job containing the Task. </param>
         /// <param name="taskId"> The ID of the Task to terminate. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4976,8 +4938,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response TerminateTask(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateTask(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response TerminateTask(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -4986,7 +4948,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateTaskRequest(jobId, taskId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateTerminateTaskRequest(jobId, taskId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5011,7 +4973,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job containing the Task. </param>
         /// <param name="taskId"> The ID of the Task to reactivate. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5022,8 +4984,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReactivateTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> ReactivateTaskAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReactivateTaskAsync(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> ReactivateTaskAsync(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5032,7 +4994,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReactivateTaskRequest(jobId, taskId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateReactivateTaskRequest(jobId, taskId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5057,7 +5019,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job containing the Task. </param>
         /// <param name="taskId"> The ID of the Task to reactivate. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5068,8 +5030,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReactivateTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response ReactivateTask(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReactivateTask(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        public virtual Response ReactivateTask(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5078,7 +5040,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReactivateTaskRequest(jobId, taskId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateReactivateTaskRequest(jobId, taskId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5103,7 +5065,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5119,8 +5081,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteTaskFileAsync(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteTaskFileAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? recursive = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteTaskFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,bool?,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteTaskFileAsync(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? recursive = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5130,7 +5092,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTaskFileRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, recursive, context);
+                using HttpMessage message = CreateDeleteTaskFileRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, recursive, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5155,7 +5117,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5171,8 +5133,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteTaskFile(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
-        public virtual Response DeleteTaskFile(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? recursive = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteTaskFile(string,string,string,TimeSpan?,DateTimeOffset?,bool?,RequestContext)']/*" />
+        public virtual Response DeleteTaskFile(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? recursive = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5182,7 +5144,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTaskFileRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, recursive, context);
+                using HttpMessage message = CreateDeleteTaskFileRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, recursive, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5197,7 +5159,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5210,15 +5172,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetTaskFileAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<BinaryData>> GetTaskFileAsync(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTaskFileAsync(jobId, taskId, filePath, timeOutInSeconds, ocpdate, ocpRange, requestConditions, context).ConfigureAwait(false);
+            Response response = await GetTaskFileAsync(jobId, taskId, filePath, timeOutInSeconds, ocpDate, ocpRange, requestConditions, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
 
@@ -5227,7 +5189,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5240,15 +5202,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
-        public virtual Response<BinaryData> GetTaskFile(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
+        public virtual Response<BinaryData> GetTaskFile(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTaskFile(jobId, taskId, filePath, timeOutInSeconds, ocpdate, ocpRange, requestConditions, context);
+            Response response = GetTaskFile(jobId, taskId, filePath, timeOutInSeconds, ocpDate, ocpRange, requestConditions, context);
             return Response.FromValue(response.Content, response);
         }
 
@@ -5262,7 +5224,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTaskFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5271,7 +5233,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5286,8 +5248,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetTaskFileAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetTaskFileAsync(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5306,7 +5268,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTaskFileRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, ocpRange, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFileRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, ocpRange, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5326,7 +5288,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTaskFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5335,7 +5297,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5350,8 +5312,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
-        public virtual Response GetTaskFile(string jobId, string taskId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
+        public virtual Response GetTaskFile(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5370,7 +5332,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTaskFileRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, ocpRange, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFileRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, ocpRange, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5395,7 +5357,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5406,7 +5368,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5425,7 +5387,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5450,7 +5412,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5461,7 +5423,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5480,7 +5442,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5495,7 +5457,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the machine on which you want to create a user Account. </param>
         /// <param name="user"> The options to use for creating the user. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5507,8 +5469,8 @@ namespace Azure.Compute.Batch
         /// You can add a user Account to a Compute Node only when it is in the idle or
         /// running state.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateNodeUserAsync(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> CreateNodeUserAsync(string poolId, string nodeId, BatchNodeUserCreateContent user, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateNodeUserAsync(string,string,BatchNodeUserCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> CreateNodeUserAsync(string poolId, string nodeId, BatchNodeUserCreateOptions user, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5516,7 +5478,7 @@ namespace Azure.Compute.Batch
 
             using RequestContent content = user.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateNodeUserAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await CreateNodeUserAsync(poolId, nodeId, content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
@@ -5525,7 +5487,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the machine on which you want to create a user Account. </param>
         /// <param name="user"> The options to use for creating the user. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5537,8 +5499,8 @@ namespace Azure.Compute.Batch
         /// You can add a user Account to a Compute Node only when it is in the idle or
         /// running state.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateNodeUser(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response CreateNodeUser(string poolId, string nodeId, BatchNodeUserCreateContent user, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateNodeUser(string,string,BatchNodeUserCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response CreateNodeUser(string poolId, string nodeId, BatchNodeUserCreateOptions user, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5546,7 +5508,7 @@ namespace Azure.Compute.Batch
 
             using RequestContent content = user.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateNodeUser(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+            Response response = CreateNodeUser(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -5560,7 +5522,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateNodeUserAsync(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateNodeUserAsync(string,string,BatchNodeUserCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5569,7 +5531,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the machine on which you want to create a user Account. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5579,8 +5541,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateNodeUserAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> CreateNodeUserAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateNodeUserAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> CreateNodeUserAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5590,7 +5552,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateNodeUserRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateNodeUserRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5610,7 +5572,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateNodeUser(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateNodeUser(string,string,BatchNodeUserCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5619,7 +5581,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the machine on which you want to create a user Account. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5629,8 +5591,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateNodeUser(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response CreateNodeUser(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateNodeUser(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response CreateNodeUser(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5640,7 +5602,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateNodeUserRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateCreateNodeUserRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5665,7 +5627,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the machine on which you want to delete a user Account. </param>
         /// <param name="userName"> The name of the user Account to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5675,8 +5637,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteNodeUserAsync(string,string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteNodeUserAsync(string poolId, string nodeId, string userName, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteNodeUserAsync(string,string,string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteNodeUserAsync(string poolId, string nodeId, string userName, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5686,7 +5648,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteNodeUserRequest(poolId, nodeId, userName, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDeleteNodeUserRequest(poolId, nodeId, userName, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5711,7 +5673,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the machine on which you want to delete a user Account. </param>
         /// <param name="userName"> The name of the user Account to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5721,8 +5683,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteNodeUser(string,string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response DeleteNodeUser(string poolId, string nodeId, string userName, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteNodeUser(string,string,string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response DeleteNodeUser(string poolId, string nodeId, string userName, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5732,7 +5694,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteNodeUserRequest(poolId, nodeId, userName, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDeleteNodeUserRequest(poolId, nodeId, userName, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5748,7 +5710,7 @@ namespace Azure.Compute.Batch
         /// <param name="userName"> The name of the user Account to update. </param>
         /// <param name="content"> The options to use for updating the user. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5762,8 +5724,8 @@ namespace Azure.Compute.Batch
         /// replaced with the default value, not left unmodified. You can update a user
         /// Account on a Compute Node only when it is in the idle or running state.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceNodeUserAsync(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> ReplaceNodeUserAsync(string poolId, string nodeId, string userName, BatchNodeUserUpdateContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceNodeUserAsync(string,string,string,BatchNodeUserUpdateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> ReplaceNodeUserAsync(string poolId, string nodeId, string userName, BatchNodeUserUpdateOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5772,7 +5734,7 @@ namespace Azure.Compute.Batch
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReplaceNodeUserAsync(poolId, nodeId, userName, content0, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await ReplaceNodeUserAsync(poolId, nodeId, userName, content0, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
@@ -5782,7 +5744,7 @@ namespace Azure.Compute.Batch
         /// <param name="userName"> The name of the user Account to update. </param>
         /// <param name="content"> The options to use for updating the user. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5796,8 +5758,8 @@ namespace Azure.Compute.Batch
         /// replaced with the default value, not left unmodified. You can update a user
         /// Account on a Compute Node only when it is in the idle or running state.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceNodeUser(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response ReplaceNodeUser(string poolId, string nodeId, string userName, BatchNodeUserUpdateContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceNodeUser(string,string,string,BatchNodeUserUpdateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response ReplaceNodeUser(string poolId, string nodeId, string userName, BatchNodeUserUpdateOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5806,7 +5768,7 @@ namespace Azure.Compute.Batch
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReplaceNodeUser(poolId, nodeId, userName, content0, timeOutInSeconds, ocpdate, context);
+            Response response = ReplaceNodeUser(poolId, nodeId, userName, content0, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -5820,7 +5782,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplaceNodeUserAsync(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplaceNodeUserAsync(string,string,string,BatchNodeUserUpdateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5830,7 +5792,7 @@ namespace Azure.Compute.Batch
         /// <param name="userName"> The name of the user Account to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5840,8 +5802,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceNodeUserAsync(string,string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> ReplaceNodeUserAsync(string poolId, string nodeId, string userName, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceNodeUserAsync(string,string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> ReplaceNodeUserAsync(string poolId, string nodeId, string userName, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5852,7 +5814,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplaceNodeUserRequest(poolId, nodeId, userName, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateReplaceNodeUserRequest(poolId, nodeId, userName, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5872,7 +5834,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReplaceNodeUser(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReplaceNodeUser(string,string,string,BatchNodeUserUpdateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5882,7 +5844,7 @@ namespace Azure.Compute.Batch
         /// <param name="userName"> The name of the user Account to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5892,8 +5854,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceNodeUser(string,string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response ReplaceNodeUser(string poolId, string nodeId, string userName, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceNodeUser(string,string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response ReplaceNodeUser(string poolId, string nodeId, string userName, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -5904,7 +5866,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReplaceNodeUserRequest(poolId, nodeId, userName, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateReplaceNodeUserRequest(poolId, nodeId, userName, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5918,7 +5880,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5927,14 +5889,14 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual async Task<Response<BatchNode>> GetNodeAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual async Task<Response<BatchNode>> GetNodeAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetNodeAsync(poolId, nodeId, timeOutInSeconds, ocpdate, select, context).ConfigureAwait(false);
+            Response response = await GetNodeAsync(poolId, nodeId, timeOutInSeconds, ocpDate, select, context).ConfigureAwait(false);
             return Response.FromValue(BatchNode.FromResponse(response), response);
         }
 
@@ -5942,7 +5904,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5951,14 +5913,14 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNode(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Response<BatchNode> GetNode(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNode(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Response<BatchNode> GetNode(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetNode(poolId, nodeId, timeOutInSeconds, ocpdate, select, context);
+            Response response = GetNode(poolId, nodeId, timeOutInSeconds, ocpDate, select, context);
             return Response.FromValue(BatchNode.FromResponse(response), response);
         }
 
@@ -5972,7 +5934,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5980,7 +5942,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -5991,8 +5953,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
-        public virtual async Task<Response> GetNodeAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        public virtual async Task<Response> GetNodeAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -6001,7 +5963,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeRequest(poolId, nodeId, timeOutInSeconds, ocpdate, select, context);
+                using HttpMessage message = CreateGetNodeRequest(poolId, nodeId, timeOutInSeconds, ocpDate, select, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6021,7 +5983,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNode(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNode(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6029,7 +5991,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6040,8 +6002,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNode(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
-        public virtual Response GetNode(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNode(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        public virtual Response GetNode(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -6050,7 +6012,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeRequest(poolId, nodeId, timeOutInSeconds, ocpdate, select, context);
+                using HttpMessage message = CreateGetNodeRequest(poolId, nodeId, timeOutInSeconds, ocpDate, select, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -6065,7 +6027,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for rebooting the Compute Node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6074,15 +6036,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can restart a Compute Node only if it is in an idle or running state. </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RebootNodeAsync(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> RebootNodeAsync(string poolId, string nodeId, BatchNodeRebootContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> RebootNodeInternalAsync(string poolId, string nodeId, BatchNodeRebootKinds parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RebootNodeAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await RebootNodeInternalAsync(poolId, nodeId, content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
@@ -6091,7 +6052,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for rebooting the Compute Node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6100,15 +6061,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can restart a Compute Node only if it is in an idle or running state. </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RebootNode(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response RebootNode(string poolId, string nodeId, BatchNodeRebootContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        internal virtual Response RebootNodeInternal(string poolId, string nodeId, BatchNodeRebootKinds parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = RebootNode(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+            Response response = RebootNodeInternal(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -6122,7 +6082,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RebootNodeAsync(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RebootNodeInternalAsync(string,string,BatchNodeRebootKinds,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6131,7 +6091,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6141,17 +6101,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RebootNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> RebootNodeAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual async Task<Response> RebootNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.RebootNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.RebootNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRebootNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6171,7 +6130,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RebootNode(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RebootNodeInternal(string,string,BatchNodeRebootKinds,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6180,7 +6139,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6190,17 +6149,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='RebootNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response RebootNode(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual Response RebootNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.RebootNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.RebootNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRebootNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -6224,7 +6182,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6234,17 +6192,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='StartNodeAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> StartNodeAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual async Task<Response> StartNodeInternalAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartNodeRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6268,7 +6225,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6278,17 +6235,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='StartNode(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response StartNode(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual Response StartNodeInternal(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartNodeRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -6303,7 +6259,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6316,15 +6272,14 @@ namespace Azure.Compute.Batch
         /// idle or running state. This API can be invoked only on Pools created with the
         /// cloud service configuration property.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> ReimageNodeAsync(string poolId, string nodeId, BatchNodeReimageContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> ReimageNodeInternalAsync(string poolId, string nodeId, BatchNodeReimageOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReimageNodeAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await ReimageNodeInternalAsync(poolId, nodeId, content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
@@ -6333,7 +6288,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6346,15 +6301,14 @@ namespace Azure.Compute.Batch
         /// idle or running state. This API can be invoked only on Pools created with the
         /// cloud service configuration property.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response ReimageNode(string poolId, string nodeId, BatchNodeReimageContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        internal virtual Response ReimageNodeInternal(string poolId, string nodeId, BatchNodeReimageOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReimageNode(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+            Response response = ReimageNodeInternal(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -6368,7 +6322,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReimageNodeInternalAsync(string,string,BatchNodeReimageOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6377,7 +6331,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6387,17 +6341,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> ReimageNodeAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual async Task<Response> ReimageNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReimageNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6417,7 +6370,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReimageNodeInternal(string,string,BatchNodeReimageOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6426,7 +6379,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6436,17 +6389,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response ReimageNode(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual Response ReimageNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReimageNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -6461,7 +6413,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for deallocating the Compute Node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6470,15 +6422,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can deallocate a Compute Node only if it is in an idle or running state. </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeallocateNodeAsync(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> DeallocateNodeAsync(string poolId, string nodeId, BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DeallocateNodeInternalAsync(string poolId, string nodeId, BatchNodeDeallocateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DeallocateNodeAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await DeallocateNodeInternalAsync(poolId, nodeId, content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
@@ -6487,7 +6438,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for deallocating the Compute Node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6496,15 +6447,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can deallocate a Compute Node only if it is in an idle or running state. </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeallocateNode(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response DeallocateNode(string poolId, string nodeId, BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        internal virtual Response DeallocateNodeInternal(string poolId, string nodeId, BatchNodeDeallocateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DeallocateNode(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+            Response response = DeallocateNodeInternal(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -6518,7 +6468,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeallocateNodeAsync(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeallocateNodeInternalAsync(string,string,BatchNodeDeallocateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6527,7 +6477,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6537,17 +6487,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeallocateNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> DeallocateNodeAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual async Task<Response> DeallocateNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeallocateNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6567,7 +6516,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeallocateNode(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeallocateNodeInternal(string,string,BatchNodeDeallocateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6576,7 +6525,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6586,17 +6535,16 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeallocateNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response DeallocateNode(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        internal virtual Response DeallocateNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeallocateNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -6611,7 +6559,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node on which you want to disable Task scheduling. </param>
         /// <param name="parameters"> The options to use for disabling scheduling on the Compute Node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6623,15 +6571,15 @@ namespace Azure.Compute.Batch
         /// You can disable Task scheduling on a Compute Node only if its current
         /// scheduling state is enabled.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableNodeSchedulingAsync(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> DisableNodeSchedulingAsync(string poolId, string nodeId, BatchNodeDisableSchedulingContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableNodeSchedulingAsync(string,string,BatchNodeDisableSchedulingOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> DisableNodeSchedulingAsync(string poolId, string nodeId, BatchNodeDisableSchedulingOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DisableNodeSchedulingAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await DisableNodeSchedulingAsync(poolId, nodeId, content, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return response;
         }
 
@@ -6640,7 +6588,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node on which you want to disable Task scheduling. </param>
         /// <param name="parameters"> The options to use for disabling scheduling on the Compute Node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6652,15 +6600,15 @@ namespace Azure.Compute.Batch
         /// You can disable Task scheduling on a Compute Node only if its current
         /// scheduling state is enabled.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableNodeScheduling(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response DisableNodeScheduling(string poolId, string nodeId, BatchNodeDisableSchedulingContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableNodeScheduling(string,string,BatchNodeDisableSchedulingOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response DisableNodeScheduling(string poolId, string nodeId, BatchNodeDisableSchedulingOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DisableNodeScheduling(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+            Response response = DisableNodeScheduling(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
             return response;
         }
 
@@ -6674,7 +6622,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DisableNodeSchedulingAsync(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DisableNodeSchedulingAsync(string,string,BatchNodeDisableSchedulingOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6683,7 +6631,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node on which you want to disable Task scheduling. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6693,8 +6641,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableNodeSchedulingAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> DisableNodeSchedulingAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableNodeSchedulingAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> DisableNodeSchedulingAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -6703,7 +6651,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableNodeSchedulingRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDisableNodeSchedulingRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6723,7 +6671,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DisableNodeScheduling(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DisableNodeScheduling(string,string,BatchNodeDisableSchedulingOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6732,7 +6680,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node on which you want to disable Task scheduling. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6742,8 +6690,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableNodeScheduling(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response DisableNodeScheduling(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DisableNodeScheduling(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response DisableNodeScheduling(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -6752,7 +6700,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableNodeSchedulingRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateDisableNodeSchedulingRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -6776,7 +6724,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node on which you want to enable Task scheduling. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6786,8 +6734,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableNodeSchedulingAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> EnableNodeSchedulingAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableNodeSchedulingAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> EnableNodeSchedulingAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -6796,7 +6744,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableNodeSchedulingRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateEnableNodeSchedulingRequest(poolId, nodeId, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6820,7 +6768,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node on which you want to enable Task scheduling. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6830,8 +6778,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableNodeScheduling(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response EnableNodeScheduling(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='EnableNodeScheduling(string,string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response EnableNodeScheduling(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -6840,7 +6788,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableNodeSchedulingRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateEnableNodeSchedulingRequest(poolId, nodeId, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -6854,7 +6802,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node for which to obtain the remote login settings. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6866,14 +6814,14 @@ namespace Azure.Compute.Batch
         /// Before you can remotely login to a Compute Node using the remote login settings,
         /// you must create a user Account on the Compute Node.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response<BatchNodeRemoteLoginSettings>> GetNodeRemoteLoginSettingsAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response<BatchNodeRemoteLoginSettings>> GetNodeRemoteLoginSettingsAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetNodeRemoteLoginSettingsAsync(poolId, nodeId, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await GetNodeRemoteLoginSettingsAsync(poolId, nodeId, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return Response.FromValue(BatchNodeRemoteLoginSettings.FromResponse(response), response);
         }
 
@@ -6881,7 +6829,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node for which to obtain the remote login settings. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6893,14 +6841,14 @@ namespace Azure.Compute.Batch
         /// Before you can remotely login to a Compute Node using the remote login settings,
         /// you must create a user Account on the Compute Node.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response<BatchNodeRemoteLoginSettings> GetNodeRemoteLoginSettings(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response<BatchNodeRemoteLoginSettings> GetNodeRemoteLoginSettings(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetNodeRemoteLoginSettings(poolId, nodeId, timeOutInSeconds, ocpdate, context);
+            Response response = GetNodeRemoteLoginSettings(poolId, nodeId, timeOutInSeconds, ocpDate, context);
             return Response.FromValue(BatchNodeRemoteLoginSettings.FromResponse(response), response);
         }
 
@@ -6914,7 +6862,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeRemoteLoginSettingsAsync(string,string,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6922,7 +6870,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node for which to obtain the remote login settings. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6932,8 +6880,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> GetNodeRemoteLoginSettingsAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> GetNodeRemoteLoginSettingsAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -6942,7 +6890,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeRemoteLoginSettingsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateGetNodeRemoteLoginSettingsRequest(poolId, nodeId, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -6962,7 +6910,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeRemoteLoginSettings(string,string,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -6970,7 +6918,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node for which to obtain the remote login settings. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6980,8 +6928,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response GetNodeRemoteLoginSettings(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response GetNodeRemoteLoginSettings(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -6990,7 +6938,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeRemoteLoginSettingsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateGetNodeRemoteLoginSettingsRequest(poolId, nodeId, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7011,7 +6959,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="content"> The Azure Batch service log files upload options. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7025,8 +6973,8 @@ namespace Azure.Compute.Batch
         /// Azure support. The Azure Batch service log files should be shared with Azure
         /// support to aid in debugging issues with the Batch service.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UploadNodeLogsAsync(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response<UploadBatchServiceLogsResult>> UploadNodeLogsAsync(string poolId, string nodeId, UploadBatchServiceLogsContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UploadNodeLogsAsync(string,string,UploadBatchServiceLogsOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response<UploadBatchServiceLogsResult>> UploadNodeLogsAsync(string poolId, string nodeId, UploadBatchServiceLogsOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7034,7 +6982,7 @@ namespace Azure.Compute.Batch
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UploadNodeLogsAsync(poolId, nodeId, content0, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            Response response = await UploadNodeLogsAsync(poolId, nodeId, content0, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
             return Response.FromValue(UploadBatchServiceLogsResult.FromResponse(response), response);
         }
 
@@ -7049,7 +6997,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="content"> The Azure Batch service log files upload options. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7063,8 +7011,8 @@ namespace Azure.Compute.Batch
         /// Azure support. The Azure Batch service log files should be shared with Azure
         /// support to aid in debugging issues with the Batch service.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UploadNodeLogs(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response<UploadBatchServiceLogsResult> UploadNodeLogs(string poolId, string nodeId, UploadBatchServiceLogsContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UploadNodeLogs(string,string,UploadBatchServiceLogsOptions,TimeSpan?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response<UploadBatchServiceLogsResult> UploadNodeLogs(string poolId, string nodeId, UploadBatchServiceLogsOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7072,7 +7020,7 @@ namespace Azure.Compute.Batch
 
             using RequestContent content0 = content.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UploadNodeLogs(poolId, nodeId, content0, timeOutInSeconds, ocpdate, context);
+            Response response = UploadNodeLogs(poolId, nodeId, content0, timeOutInSeconds, ocpDate, context);
             return Response.FromValue(UploadBatchServiceLogsResult.FromResponse(response), response);
         }
 
@@ -7087,7 +7035,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UploadNodeLogsAsync(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UploadNodeLogsAsync(string,string,UploadBatchServiceLogsOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -7099,7 +7047,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7109,8 +7057,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UploadNodeLogsAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> UploadNodeLogsAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UploadNodeLogsAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> UploadNodeLogsAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7120,7 +7068,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadNodeLogsRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateUploadNodeLogsRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7141,7 +7089,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UploadNodeLogs(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UploadNodeLogs(string,string,UploadBatchServiceLogsOptions,TimeSpan?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -7153,7 +7101,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7163,8 +7111,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UploadNodeLogs(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response UploadNodeLogs(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UploadNodeLogs(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response UploadNodeLogs(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7174,7 +7122,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadNodeLogsRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                using HttpMessage message = CreateUploadNodeLogsRequest(poolId, nodeId, content, timeOutInSeconds, ocpDate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7189,7 +7137,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that contains the extensions. </param>
         /// <param name="extensionName"> The name of the Compute Node Extension that you want to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7198,15 +7146,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensionAsync(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual async Task<Response<BatchNodeVMExtension>> GetNodeExtensionAsync(string poolId, string nodeId, string extensionName, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensionAsync(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual async Task<Response<BatchNodeVMExtension>> GetNodeExtensionAsync(string poolId, string nodeId, string extensionName, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetNodeExtensionAsync(poolId, nodeId, extensionName, timeOutInSeconds, ocpdate, select, context).ConfigureAwait(false);
+            Response response = await GetNodeExtensionAsync(poolId, nodeId, extensionName, timeOutInSeconds, ocpDate, select, context).ConfigureAwait(false);
             return Response.FromValue(BatchNodeVMExtension.FromResponse(response), response);
         }
 
@@ -7215,7 +7163,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that contains the extensions. </param>
         /// <param name="extensionName"> The name of the Compute Node Extension that you want to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7224,15 +7172,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtension(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Response<BatchNodeVMExtension> GetNodeExtension(string poolId, string nodeId, string extensionName, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtension(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Response<BatchNodeVMExtension> GetNodeExtension(string poolId, string nodeId, string extensionName, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetNodeExtension(poolId, nodeId, extensionName, timeOutInSeconds, ocpdate, select, context);
+            Response response = GetNodeExtension(poolId, nodeId, extensionName, timeOutInSeconds, ocpDate, select, context);
             return Response.FromValue(BatchNodeVMExtension.FromResponse(response), response);
         }
 
@@ -7246,7 +7194,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeExtensionAsync(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeExtensionAsync(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -7255,7 +7203,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that contains the extensions. </param>
         /// <param name="extensionName"> The name of the Compute Node Extension that you want to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7266,8 +7214,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensionAsync(string,string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
-        public virtual async Task<Response> GetNodeExtensionAsync(string poolId, string nodeId, string extensionName, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensionAsync(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        public virtual async Task<Response> GetNodeExtensionAsync(string poolId, string nodeId, string extensionName, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7277,7 +7225,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeExtensionRequest(poolId, nodeId, extensionName, timeOutInSeconds, ocpdate, select, context);
+                using HttpMessage message = CreateGetNodeExtensionRequest(poolId, nodeId, extensionName, timeOutInSeconds, ocpDate, select, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7297,7 +7245,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeExtension(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeExtension(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -7306,7 +7254,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that contains the extensions. </param>
         /// <param name="extensionName"> The name of the Compute Node Extension that you want to get information about. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7317,8 +7265,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtension(string,string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
-        public virtual Response GetNodeExtension(string poolId, string nodeId, string extensionName, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtension(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        public virtual Response GetNodeExtension(string poolId, string nodeId, string extensionName, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7328,7 +7276,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeExtensionRequest(poolId, nodeId, extensionName, timeOutInSeconds, ocpdate, select, context);
+                using HttpMessage message = CreateGetNodeExtensionRequest(poolId, nodeId, extensionName, timeOutInSeconds, ocpDate, select, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7353,7 +7301,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7369,8 +7317,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteNodeFileAsync(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteNodeFileAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? recursive = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteNodeFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,bool?,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteNodeFileAsync(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? recursive = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7380,7 +7328,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteNodeFileRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, recursive, context);
+                using HttpMessage message = CreateDeleteNodeFileRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, recursive, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7405,7 +7353,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7421,8 +7369,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteNodeFile(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
-        public virtual Response DeleteNodeFile(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? recursive = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteNodeFile(string,string,string,TimeSpan?,DateTimeOffset?,bool?,RequestContext)']/*" />
+        public virtual Response DeleteNodeFile(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? recursive = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7432,7 +7380,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteNodeFileRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, recursive, context);
+                using HttpMessage message = CreateDeleteNodeFileRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, recursive, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7447,7 +7395,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7460,15 +7408,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetNodeFileAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response<BinaryData>> GetNodeFileAsync(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetNodeFileAsync(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, ocpRange, requestConditions, context).ConfigureAwait(false);
+            Response response = await GetNodeFileAsync(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, ocpRange, requestConditions, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
 
@@ -7477,7 +7425,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7490,15 +7438,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
-        public virtual Response<BinaryData> GetNodeFile(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
+        public virtual Response<BinaryData> GetNodeFile(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetNodeFile(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, ocpRange, requestConditions, context);
+            Response response = GetNodeFile(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, ocpRange, requestConditions, context);
             return Response.FromValue(response.Content, response);
         }
 
@@ -7512,7 +7460,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -7521,7 +7469,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7536,8 +7484,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetNodeFileAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetNodeFileAsync(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7556,7 +7504,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeFileRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, ocpRange, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFileRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, ocpRange, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7576,7 +7524,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -7585,7 +7533,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7600,8 +7548,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
-        public virtual Response GetNodeFile(string poolId, string nodeId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
+        public virtual Response GetNodeFile(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7620,7 +7568,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeFileRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, ocpRange, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFileRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, ocpRange, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7645,7 +7593,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7656,7 +7604,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7675,7 +7623,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7700,7 +7648,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7711,7 +7659,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7730,7 +7678,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7742,7 +7690,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Lists all of the applications available in the specified Account. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7759,18 +7707,18 @@ namespace Azure.Compute.Batch
         /// available to Compute Nodes, use the Azure portal or the Azure Resource Manager
         /// API.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplicationsAsync(int?,DateTimeOffset?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchApplication> GetApplicationsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplicationsAsync(TimeSpan?,DateTimeOffset?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchApplication> GetApplicationsAsync(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpdate, maxresults, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpDate, maxresults, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchApplication.DeserializeBatchApplication(e), ClientDiagnostics, _pipeline, "BatchClient.GetApplications", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the applications available in the specified Account. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7787,12 +7735,12 @@ namespace Azure.Compute.Batch
         /// available to Compute Nodes, use the Azure portal or the Azure Resource Manager
         /// API.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplications(int?,DateTimeOffset?,int?,CancellationToken)']/*" />
-        public virtual Pageable<BatchApplication> GetApplications(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplications(TimeSpan?,DateTimeOffset?,int?,CancellationToken)']/*" />
+        public virtual Pageable<BatchApplication> GetApplications(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpdate, maxresults, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpDate, maxresults, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchApplication.DeserializeBatchApplication(e), ClientDiagnostics, _pipeline, "BatchClient.GetApplications", "value", "odata.nextLink", context);
         }
 
@@ -7806,13 +7754,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetApplicationsAsync(int?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetApplicationsAsync(TimeSpan?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7824,11 +7772,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplicationsAsync(int?,DateTimeOffset?,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetApplicationsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplicationsAsync(TimeSpan?,DateTimeOffset?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetApplicationsAsync(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpdate, maxresults, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpDate, maxresults, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetApplications", "value", "odata.nextLink", context);
         }
 
@@ -7842,13 +7790,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetApplications(int?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetApplications(TimeSpan?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7860,11 +7808,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplications(int?,DateTimeOffset?,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetApplications(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetApplications(TimeSpan?,DateTimeOffset?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetApplications(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpdate, maxresults, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpDate, maxresults, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetApplications", "value", "odata.nextLink", context);
         }
 
@@ -7873,7 +7821,7 @@ namespace Azure.Compute.Batch
         /// for the specified Account.
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7905,12 +7853,12 @@ namespace Azure.Compute.Batch
         /// times of the last aggregation interval currently available; that is, only the
         /// last aggregation interval is returned.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, DateTimeOffset? starttime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, DateTimeOffset? starttime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpDate, maxresults, starttime, endtime, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, starttime, endtime, filter, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPoolUsageMetrics.DeserializeBatchPoolUsageMetrics(e), ClientDiagnostics, _pipeline, "BatchClient.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
@@ -7919,7 +7867,7 @@ namespace Azure.Compute.Batch
         /// for the specified Account.
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7951,12 +7899,12 @@ namespace Azure.Compute.Batch
         /// times of the last aggregation interval currently available; that is, only the
         /// last aggregation interval is returned.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
-        public virtual Pageable<BatchPoolUsageMetrics> GetPoolUsageMetrics(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, DateTimeOffset? starttime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetrics(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
+        public virtual Pageable<BatchPoolUsageMetrics> GetPoolUsageMetrics(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, DateTimeOffset? starttime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpDate, maxresults, starttime, endtime, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, starttime, endtime, filter, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPoolUsageMetrics.DeserializeBatchPoolUsageMetrics(e), ClientDiagnostics, _pipeline, "BatchClient.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
@@ -7971,13 +7919,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPoolUsageMetricsAsync(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8003,11 +7951,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetPoolUsageMetricsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetPoolUsageMetricsAsync(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpDate, maxresults, starttime, endtime, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, starttime, endtime, filter, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
@@ -8022,13 +7970,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPoolUsageMetrics(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8054,17 +8002,17 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetPoolUsageMetrics(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetrics(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetPoolUsageMetrics(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpDate, maxresults, starttime, endtime, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, starttime, endtime, filter, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Pools which be mounted. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8080,18 +8028,18 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchPool> GetPoolsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchPool> GetPoolsAsync(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPool.DeserializeBatchPool(e), ClientDiagnostics, _pipeline, "BatchClient.GetPools", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Pools which be mounted. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8107,12 +8055,12 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchPool> GetPools(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPools(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchPool> GetPools(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPool.DeserializeBatchPool(e), ClientDiagnostics, _pipeline, "BatchClient.GetPools", "value", "odata.nextLink", context);
         }
 
@@ -8126,13 +8074,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPoolsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8150,11 +8098,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetPoolsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetPoolsAsync(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPools", "value", "odata.nextLink", context);
         }
 
@@ -8168,13 +8116,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPools(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8192,17 +8140,17 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetPools(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPools(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetPools(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPools", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all Virtual Machine Images supported by the Azure Batch service. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8216,18 +8164,18 @@ namespace Azure.Compute.Batch
         /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchSupportedImage> GetSupportedImagesAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImagesAsync(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchSupportedImage> GetSupportedImagesAsync(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpDate, maxresults, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchSupportedImage.DeserializeBatchSupportedImage(e), ClientDiagnostics, _pipeline, "BatchClient.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all Virtual Machine Images supported by the Azure Batch service. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8241,12 +8189,12 @@ namespace Azure.Compute.Batch
         /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImages(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
-        public virtual Pageable<BatchSupportedImage> GetSupportedImages(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImages(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
+        public virtual Pageable<BatchSupportedImage> GetSupportedImages(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpDate, maxresults, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchSupportedImage.DeserializeBatchSupportedImage(e), ClientDiagnostics, _pipeline, "BatchClient.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
@@ -8260,13 +8208,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSupportedImagesAsync(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8282,11 +8230,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSupportedImagesAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImagesAsync(TimeSpan?,DateTimeOffset?,int?,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSupportedImagesAsync(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpDate, maxresults, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
@@ -8300,13 +8248,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSupportedImages(int?,DateTimeOffset?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSupportedImages(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8322,11 +8270,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImages(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSupportedImages(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImages(TimeSpan?,DateTimeOffset?,int?,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSupportedImages(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpDate, maxresults, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
@@ -8336,7 +8284,7 @@ namespace Azure.Compute.Batch
         /// use a list query.
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8350,12 +8298,12 @@ namespace Azure.Compute.Batch
         /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchPoolNodeCounts> GetPoolNodeCountsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchPoolNodeCounts> GetPoolNodeCountsAsync(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpDate, maxresults, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPoolNodeCounts.DeserializeBatchPoolNodeCounts(e), ClientDiagnostics, _pipeline, "BatchClient.GetPoolNodeCounts", "value", "odata.nextLink", context);
         }
 
@@ -8365,7 +8313,7 @@ namespace Azure.Compute.Batch
         /// use a list query.
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8379,12 +8327,12 @@ namespace Azure.Compute.Batch
         /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
-        public virtual Pageable<BatchPoolNodeCounts> GetPoolNodeCounts(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCounts(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
+        public virtual Pageable<BatchPoolNodeCounts> GetPoolNodeCounts(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpDate, maxresults, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPoolNodeCounts.DeserializeBatchPoolNodeCounts(e), ClientDiagnostics, _pipeline, "BatchClient.GetPoolNodeCounts", "value", "odata.nextLink", context);
         }
 
@@ -8400,13 +8348,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPoolNodeCountsAsync(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8422,11 +8370,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetPoolNodeCountsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(TimeSpan?,DateTimeOffset?,int?,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetPoolNodeCountsAsync(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpDate, maxresults, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPoolNodeCounts", "value", "odata.nextLink", context);
         }
 
@@ -8442,13 +8390,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPoolNodeCounts(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8464,17 +8412,17 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetPoolNodeCounts(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCounts(TimeSpan?,DateTimeOffset?,int?,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetPoolNodeCounts(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpDate, maxresults, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPoolNodeCounts", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Jobs in the specified Account. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8490,18 +8438,18 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchJob> GetJobsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchJob> GetJobsAsync(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "BatchClient.GetJobs", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Jobs in the specified Account. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8517,12 +8465,12 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobs(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchJob> GetJobs(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobs(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchJob> GetJobs(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "BatchClient.GetJobs", "value", "odata.nextLink", context);
         }
 
@@ -8536,13 +8484,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8560,11 +8508,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetJobsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetJobsAsync(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetJobs", "value", "odata.nextLink", context);
         }
 
@@ -8578,13 +8526,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobs(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobs(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8602,18 +8550,18 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobs(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetJobs(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobs(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetJobs(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetJobs", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule from which you want to get a list of Jobs. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8631,21 +8579,21 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsFromSchedulesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchJob> GetJobsFromSchedulesAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsFromSchedulesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchJob> GetJobsFromSchedulesAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "BatchClient.GetJobsFromSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule from which you want to get a list of Jobs. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8663,14 +8611,14 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsFromSchedules(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchJob> GetJobsFromSchedules(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsFromSchedules(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchJob> GetJobsFromSchedules(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "BatchClient.GetJobsFromSchedules", "value", "odata.nextLink", context);
         }
 
@@ -8684,14 +8632,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobsFromSchedulesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobsFromSchedulesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule from which you want to get a list of Jobs. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8711,13 +8659,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsFromSchedulesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetJobsFromSchedulesAsync(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsFromSchedulesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetJobsFromSchedulesAsync(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetJobsFromSchedules", "value", "odata.nextLink", context);
         }
 
@@ -8731,14 +8679,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobsFromSchedules(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobsFromSchedules(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule from which you want to get a list of Jobs. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8758,13 +8706,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsFromSchedules(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetJobsFromSchedules(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobsFromSchedules(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetJobsFromSchedules(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetJobsFromSchedules", "value", "odata.nextLink", context);
         }
 
@@ -8774,7 +8722,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8799,14 +8747,14 @@ namespace Azure.Compute.Batch
         /// service returns HTTP status code 409 (Conflict) with an error code of
         /// JobPreparationTaskNotSpecified.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatusesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatusesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJobPreparationAndReleaseTaskStatus.DeserializeBatchJobPreparationAndReleaseTaskStatus(e), ClientDiagnostics, _pipeline, "BatchClient.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
         }
 
@@ -8816,7 +8764,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8841,14 +8789,14 @@ namespace Azure.Compute.Batch
         /// service returns HTTP status code 409 (Conflict) with an error code of
         /// JobPreparationTaskNotSpecified.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatuses(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatuses(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatuses(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatuses(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJobPreparationAndReleaseTaskStatus.DeserializeBatchJobPreparationAndReleaseTaskStatus(e), ClientDiagnostics, _pipeline, "BatchClient.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
         }
 
@@ -8863,14 +8811,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobPreparationAndReleaseTaskStatusesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobPreparationAndReleaseTaskStatusesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8889,13 +8837,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatusesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatusesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
         }
 
@@ -8910,14 +8858,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobPreparationAndReleaseTaskStatuses(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobPreparationAndReleaseTaskStatuses(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8936,19 +8884,19 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatuses(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetJobPreparationAndReleaseTaskStatuses(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatuses(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetJobPreparationAndReleaseTaskStatuses(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Certificates that have been added to the specified Account. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8963,18 +8911,18 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchCertificate> GetCertificatesAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificatesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchCertificate> GetCertificatesAsync(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchCertificate.DeserializeBatchCertificate(e), ClientDiagnostics, _pipeline, "BatchClient.GetCertificates", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Certificates that have been added to the specified Account. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8989,12 +8937,12 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchCertificate> GetCertificates(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificates(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchCertificate> GetCertificates(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchCertificate.DeserializeBatchCertificate(e), ClientDiagnostics, _pipeline, "BatchClient.GetCertificates", "value", "odata.nextLink", context);
         }
 
@@ -9008,13 +8956,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetCertificatesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9031,11 +8979,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetCertificatesAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificatesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetCertificatesAsync(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetCertificates", "value", "odata.nextLink", context);
         }
 
@@ -9049,13 +8997,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetCertificates(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9072,17 +9020,17 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetCertificates(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificates(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetCertificates(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetCertificates", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Job Schedules in the specified Account. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9098,18 +9046,18 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedulesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchJobSchedule> GetJobSchedulesAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedulesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchJobSchedule> GetJobSchedulesAsync(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJobSchedule.DeserializeBatchJobSchedule(e), ClientDiagnostics, _pipeline, "BatchClient.GetJobSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Job Schedules in the specified Account. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9125,12 +9073,12 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedules(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchJobSchedule> GetJobSchedules(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedules(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchJobSchedule> GetJobSchedules(TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJobSchedule.DeserializeBatchJobSchedule(e), ClientDiagnostics, _pipeline, "BatchClient.GetJobSchedules", "value", "odata.nextLink", context);
         }
 
@@ -9144,13 +9092,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobSchedulesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobSchedulesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9168,11 +9116,11 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedulesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetJobSchedulesAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedulesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetJobSchedulesAsync(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetJobSchedules", "value", "odata.nextLink", context);
         }
 
@@ -9186,13 +9134,13 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobSchedules(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobSchedules(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9210,18 +9158,18 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedules(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetJobSchedules(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedules(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetJobSchedules(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetJobSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Tasks that are associated with the specified Job. </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9244,21 +9192,21 @@ namespace Azure.Compute.Batch
         /// nodeInfo refer to the primary Task. Use the list subtasks API to retrieve
         /// information about subtasks.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTasksAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchTask> GetTasksAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTasksAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchTask> GetTasksAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchTask.DeserializeBatchTask(e), ClientDiagnostics, _pipeline, "BatchClient.GetTasks", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Tasks that are associated with the specified Job. </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9281,14 +9229,14 @@ namespace Azure.Compute.Batch
         /// nodeInfo refer to the primary Task. Use the list subtasks API to retrieve
         /// information about subtasks.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTasks(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchTask> GetTasks(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTasks(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchTask> GetTasks(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchTask.DeserializeBatchTask(e), ClientDiagnostics, _pipeline, "BatchClient.GetTasks", "value", "odata.nextLink", context);
         }
 
@@ -9302,14 +9250,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTasksAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTasksAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9329,13 +9277,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTasksAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTasksAsync(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTasksAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTasksAsync(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetTasks", "value", "odata.nextLink", context);
         }
 
@@ -9349,14 +9297,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTasks(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTasks(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9376,13 +9324,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTasks(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTasks(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTasks(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTasks(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpDate, maxresults, filter, select, expand, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetTasks", "value", "odata.nextLink", context);
         }
 
@@ -9393,7 +9341,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="taskId"> The ID of the Task. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9403,15 +9351,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> If the Task is not a multi-instance Task then this returns an empty collection. </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSubTasksAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchSubtask> GetSubTasksAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSubTasksAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchSubtask> GetSubTasksAsync(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpDate, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpDate, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchSubtask.DeserializeBatchSubtask(e), ClientDiagnostics, _pipeline, "BatchClient.GetSubTasks", "value", "odata.nextLink", context);
         }
 
@@ -9422,7 +9370,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="taskId"> The ID of the Task. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9432,15 +9380,15 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> If the Task is not a multi-instance Task then this returns an empty collection. </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSubTasks(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchSubtask> GetSubTasks(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSubTasks(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchSubtask> GetSubTasks(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpDate, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpDate, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchSubtask.DeserializeBatchSubtask(e), ClientDiagnostics, _pipeline, "BatchClient.GetSubTasks", "value", "odata.nextLink", context);
         }
 
@@ -9455,7 +9403,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSubTasksAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSubTasksAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -9463,7 +9411,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="taskId"> The ID of the Task. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9474,14 +9422,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSubTasksAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSubTasksAsync(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSubTasksAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSubTasksAsync(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpDate, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpDate, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetSubTasks", "value", "odata.nextLink", context);
         }
 
@@ -9496,7 +9444,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSubTasks(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSubTasks(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -9504,7 +9452,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job. </param>
         /// <param name="taskId"> The ID of the Task. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9515,14 +9463,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSubTasks(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSubTasks(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSubTasks(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSubTasks(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpDate, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpDate, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetSubTasks", "value", "odata.nextLink", context);
         }
 
@@ -9530,7 +9478,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job that contains the Task. </param>
         /// <param name="taskId"> The ID of the Task whose files you want to list. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9550,15 +9498,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchNodeFile> GetTaskFilesAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchNodeFile> GetTaskFilesAsync(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "BatchClient.GetTaskFiles", "value", "odata.nextLink", context);
         }
 
@@ -9566,7 +9514,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job that contains the Task. </param>
         /// <param name="taskId"> The ID of the Task whose files you want to list. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9586,15 +9534,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
-        public virtual Pageable<BatchNodeFile> GetTaskFiles(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
+        public virtual Pageable<BatchNodeFile> GetTaskFiles(string jobId, string taskId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "BatchClient.GetTaskFiles", "value", "odata.nextLink", context);
         }
 
@@ -9608,7 +9556,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTaskFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -9616,7 +9564,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job that contains the Task. </param>
         /// <param name="taskId"> The ID of the Task whose files you want to list. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9638,14 +9586,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTaskFilesAsync(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTaskFilesAsync(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetTaskFiles", "value", "odata.nextLink", context);
         }
 
@@ -9659,7 +9607,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTaskFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTaskFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -9667,7 +9615,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job that contains the Task. </param>
         /// <param name="taskId"> The ID of the Task whose files you want to list. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9689,21 +9637,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTaskFiles(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTaskFiles(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetTaskFiles", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
         /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9720,21 +9668,21 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchNode> GetNodesAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchNode> GetNodesAsync(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNode.DeserializeBatchNode(e), ClientDiagnostics, _pipeline, "BatchClient.GetNodes", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
         /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9751,14 +9699,14 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchNode> GetNodes(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodes(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchNode> GetNodes(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNode.DeserializeBatchNode(e), ClientDiagnostics, _pipeline, "BatchClient.GetNodes", "value", "odata.nextLink", context);
         }
 
@@ -9772,14 +9720,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9798,13 +9746,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetNodesAsync(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetNodesAsync(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetNodes", "value", "odata.nextLink", context);
         }
 
@@ -9818,14 +9766,14 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodes(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9844,13 +9792,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetNodes(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodes(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetNodes(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpDate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetNodes", "value", "odata.nextLink", context);
         }
 
@@ -9858,7 +9806,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to list extensions. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9871,15 +9819,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensionsAsync(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchNodeVMExtension> GetNodeExtensionsAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensionsAsync(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchNodeVMExtension> GetNodeExtensionsAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNodeVMExtension.DeserializeBatchNodeVMExtension(e), ClientDiagnostics, _pipeline, "BatchClient.GetNodeExtensions", "value", "odata.nextLink", context);
         }
 
@@ -9887,7 +9835,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to list extensions. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9900,15 +9848,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensions(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Pageable<BatchNodeVMExtension> GetNodeExtensions(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensions(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchNodeVMExtension> GetNodeExtensions(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNodeVMExtension.DeserializeBatchNodeVMExtension(e), ClientDiagnostics, _pipeline, "BatchClient.GetNodeExtensions", "value", "odata.nextLink", context);
         }
 
@@ -9922,7 +9870,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeExtensionsAsync(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeExtensionsAsync(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -9930,7 +9878,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to list extensions. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9945,14 +9893,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensionsAsync(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetNodeExtensionsAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensionsAsync(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetNodeExtensionsAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, select, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetNodeExtensions", "value", "odata.nextLink", context);
         }
 
@@ -9966,7 +9914,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeExtensions(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeExtensions(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -9974,7 +9922,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to list extensions. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9989,14 +9937,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensions(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetNodeExtensions(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, IEnumerable<string> select, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeExtensions(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetNodeExtensions(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetNodeExtensions", "value", "odata.nextLink", context);
         }
 
@@ -10004,7 +9952,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node whose files you want to list. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -10021,15 +9969,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchNodeFile> GetNodeFilesAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchNodeFile> GetNodeFilesAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "BatchClient.GetNodeFiles", "value", "odata.nextLink", context);
         }
 
@@ -10037,7 +9985,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node whose files you want to list. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -10054,15 +10002,15 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
-        public virtual Pageable<BatchNodeFile> GetNodeFiles(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
+        public virtual Pageable<BatchNodeFile> GetNodeFiles(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "BatchClient.GetNodeFiles", "value", "odata.nextLink", context);
         }
 
@@ -10076,7 +10024,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -10084,7 +10032,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node whose files you want to list. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -10103,14 +10051,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetNodeFilesAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetNodeFilesAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetNodeFiles", "value", "odata.nextLink", context);
         }
 
@@ -10124,7 +10072,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetNodeFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetNodeFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -10132,7 +10080,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node whose files you want to list. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -10151,18 +10099,18 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetNodeFiles(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetNodeFiles(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpDate, maxresults, filter, recursive, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetNodeFiles", "value", "odata.nextLink", context);
         }
 
-        internal HttpMessage CreateGetApplicationsRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, RequestContext context)
+        internal HttpMessage CreateGetApplicationsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10173,7 +10121,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -10183,14 +10131,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetApplicationRequest(string applicationId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateGetApplicationRequest(string applicationId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10202,20 +10150,20 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetPoolUsageMetricsRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolUsageMetricsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10226,7 +10174,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -10248,14 +10196,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateCreatePoolRequest(RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreatePoolRequest(RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -10266,22 +10214,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetPoolsRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetPoolsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10292,7 +10240,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -10314,14 +10262,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateDeletePoolRequest(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDeletePoolInternalRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10333,15 +10281,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10350,7 +10298,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreatePoolExistsRequest(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreatePoolExistsRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
@@ -10362,15 +10310,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10379,7 +10327,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolRequest(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetPoolRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10391,7 +10339,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -10405,9 +10353,9 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10416,7 +10364,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateUpdatePoolRequest(string poolId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateUpdatePoolRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10428,15 +10376,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10447,7 +10395,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDisablePoolAutoScaleRequest(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDisablePoolAutoScaleRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10460,20 +10408,20 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateEnablePoolAutoScaleRequest(string poolId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateEnablePoolAutoScaleRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10486,15 +10434,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10505,7 +10453,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateEvaluatePoolAutoScaleRequest(string poolId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateEvaluatePoolAutoScaleRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10518,22 +10466,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateResizePoolRequest(string poolId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateResizePoolRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10546,15 +10494,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10565,7 +10513,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateStopPoolResizeRequest(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateStopPoolResizeRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10578,15 +10526,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10595,7 +10543,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReplacePoolPropertiesRequest(string poolId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateReplacePoolPropertiesRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -10608,22 +10556,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateRemoveNodesRequest(string poolId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateRemoveNodesRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10636,15 +10584,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10655,7 +10603,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedImagesRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetSupportedImagesRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10666,7 +10614,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -10680,14 +10628,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetPoolNodeCountsRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolNodeCountsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10698,7 +10646,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -10712,14 +10660,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateDeleteJobRequest(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? force, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDeleteJobInternalRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, bool? force, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10731,7 +10679,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (force != null)
             {
@@ -10741,9 +10689,9 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10752,7 +10700,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobRequest(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetJobRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10764,7 +10712,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -10778,9 +10726,9 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10789,7 +10737,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateUpdateJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateUpdateJobRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10801,15 +10749,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10820,7 +10768,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReplaceJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateReplaceJobRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10832,15 +10780,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10851,7 +10799,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDisableJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDisableJobInternalRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10864,15 +10812,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10883,7 +10831,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateEnableJobRequest(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateEnableJobInternalRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10896,15 +10844,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10913,7 +10861,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateTerminateJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? force, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateTerminateJobInternalRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, bool? force, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10926,7 +10874,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (force != null)
             {
@@ -10936,9 +10884,9 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -10949,7 +10897,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateCreateJobRequest(RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateJobRequest(RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -10960,22 +10908,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetJobsRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -10986,7 +10934,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -11008,14 +10956,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetJobsFromSchedulesRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobsFromSchedulesRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11028,7 +10976,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -11050,14 +10998,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetJobPreparationAndReleaseTaskStatusesRequest(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetJobPreparationAndReleaseTaskStatusesRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11070,7 +11018,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -11088,14 +11036,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetJobTaskCountsRequest(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateGetJobTaskCountsRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11108,20 +11056,20 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateCreateCertificateRequest(RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateCertificateRequest(RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -11132,22 +11080,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetCertificatesRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetCertificatesRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11158,7 +11106,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -11176,14 +11124,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateCancelCertificateDeletionRequest(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCancelCertificateDeletionRequest(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -11198,20 +11146,20 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateDeleteCertificateRequest(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDeleteCertificateInternalRequest(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -11226,20 +11174,20 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetCertificateRequest(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetCertificateRequest(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11254,7 +11202,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -11264,14 +11212,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateJobScheduleExistsRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateJobScheduleExistsRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
@@ -11283,15 +11231,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11300,7 +11248,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? force, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDeleteJobScheduleInternalRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, bool? force, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -11312,7 +11260,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (force != null)
             {
@@ -11322,9 +11270,9 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11333,7 +11281,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetJobScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11345,7 +11293,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -11359,9 +11307,9 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11370,7 +11318,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateUpdateJobScheduleRequest(string jobScheduleId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateUpdateJobScheduleRequest(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11382,15 +11330,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11401,7 +11349,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReplaceJobScheduleRequest(string jobScheduleId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateReplaceJobScheduleRequest(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11413,15 +11361,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11432,7 +11380,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDisableJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDisableJobScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -11445,15 +11393,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11462,7 +11410,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateEnableJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateEnableJobScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -11475,15 +11423,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11492,7 +11440,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateTerminateJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? force, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateTerminateJobScheduleInternalRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, bool? force, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -11505,7 +11453,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (force != null)
             {
@@ -11515,9 +11463,9 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11526,7 +11474,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateCreateJobScheduleRequest(RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateJobScheduleRequest(RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -11537,22 +11485,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetJobSchedulesRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobSchedulesRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11563,7 +11511,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -11585,14 +11533,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateCreateTaskRequest(string jobId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateTaskRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -11605,22 +11553,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetTasksRequest(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetTasksRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11633,7 +11581,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -11655,14 +11603,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateCreateTaskCollectionRequest(string jobId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateTaskCollectionRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11675,22 +11623,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeleteTaskRequest(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDeleteTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11704,15 +11652,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11721,7 +11669,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTaskRequest(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11735,7 +11683,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -11749,9 +11697,9 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11760,7 +11708,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReplaceTaskRequest(string jobId, string taskId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateReplaceTaskRequest(string jobId, string taskId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11774,15 +11722,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11793,7 +11741,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetSubTasksRequest(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetSubTasksRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11808,7 +11756,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -11818,14 +11766,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateTerminateTaskRequest(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateTerminateTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -11840,15 +11788,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11857,7 +11805,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReactivateTaskRequest(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateReactivateTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -11872,15 +11820,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11889,7 +11837,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteTaskFileRequest(string jobId, string taskId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? recursive, RequestContext context)
+        internal HttpMessage CreateDeleteTaskFileRequest(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, bool? recursive, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11905,7 +11853,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (recursive != null)
             {
@@ -11915,14 +11863,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFileRequest(string jobId, string taskId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetTaskFileRequest(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11938,15 +11886,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (ocpRange != null)
             {
@@ -11959,7 +11907,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFilePropertiesInternalRequest(string jobId, string taskId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetTaskFilePropertiesInternalRequest(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -11975,15 +11923,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -11992,7 +11940,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFilesRequest(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateGetTaskFilesRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12007,7 +11955,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -12025,14 +11973,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateCreateNodeUserRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateNodeUserRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -12047,22 +11995,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeleteNodeUserRequest(string poolId, string nodeId, string userName, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDeleteNodeUserRequest(string poolId, string nodeId, string userName, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12078,20 +12026,20 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateReplaceNodeUserRequest(string poolId, string nodeId, string userName, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateReplaceNodeUserRequest(string poolId, string nodeId, string userName, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12107,22 +12055,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetNodeRequest(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetNodeRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12136,7 +12084,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -12146,14 +12094,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateRebootNodeRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateRebootNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -12168,22 +12116,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateStartNodeRequest(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateStartNodeInternalRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -12198,20 +12146,20 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateReimageNodeRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateReimageNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -12226,22 +12174,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeallocateNodeRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDeallocateNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -12256,22 +12204,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDisableNodeSchedulingRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDisableNodeSchedulingRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12286,22 +12234,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateEnableNodeSchedulingRequest(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateEnableNodeSchedulingRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12316,20 +12264,20 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetNodeRemoteLoginSettingsRequest(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateGetNodeRemoteLoginSettingsRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12344,20 +12292,20 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateUploadNodeLogsRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateUploadNodeLogsRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12372,22 +12320,22 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetNodesRequest(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetNodesRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12400,7 +12348,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -12418,14 +12366,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetNodeExtensionRequest(string poolId, string nodeId, string extensionName, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetNodeExtensionRequest(string poolId, string nodeId, string extensionName, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12441,7 +12389,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -12451,14 +12399,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetNodeExtensionsRequest(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetNodeExtensionsRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12473,7 +12421,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -12487,14 +12435,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateDeleteNodeFileRequest(string poolId, string nodeId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? recursive, RequestContext context)
+        internal HttpMessage CreateDeleteNodeFileRequest(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, bool? recursive, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12510,7 +12458,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (recursive != null)
             {
@@ -12520,14 +12468,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFileRequest(string poolId, string nodeId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetNodeFileRequest(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12543,15 +12491,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (ocpRange != null)
             {
@@ -12564,7 +12512,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFilePropertiesInternalRequest(string poolId, string nodeId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetNodeFilePropertiesInternalRequest(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12580,15 +12528,15 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             if (requestConditions != null)
             {
@@ -12597,7 +12545,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFilesRequest(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateGetNodeFilesRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12612,7 +12560,7 @@ namespace Azure.Compute.Batch
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             if (maxresults != null)
             {
@@ -12630,14 +12578,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetApplicationsNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, RequestContext context)
+        internal HttpMessage CreateGetApplicationsNextPageRequest(string nextLink, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12649,14 +12597,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetPoolUsageMetricsNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolUsageMetricsNextPageRequest(string nextLink, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12668,14 +12616,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12687,14 +12635,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedImagesNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetSupportedImagesNextPageRequest(string nextLink, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12706,14 +12654,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetPoolNodeCountsNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolNodeCountsNextPageRequest(string nextLink, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12725,14 +12673,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetJobsNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobsNextPageRequest(string nextLink, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12744,14 +12692,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetJobsFromSchedulesNextPageRequest(string nextLink, string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobsFromSchedulesNextPageRequest(string nextLink, string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12763,14 +12711,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(string nextLink, string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(string nextLink, string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12782,14 +12730,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetCertificatesNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetCertificatesNextPageRequest(string nextLink, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12801,14 +12749,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetJobSchedulesNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobSchedulesNextPageRequest(string nextLink, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12820,14 +12768,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetTasksNextPageRequest(string nextLink, string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetTasksNextPageRequest(string nextLink, string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12839,14 +12787,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetSubTasksNextPageRequest(string nextLink, string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetSubTasksNextPageRequest(string nextLink, string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12858,14 +12806,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFilesNextPageRequest(string nextLink, string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateGetTaskFilesNextPageRequest(string nextLink, string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12877,14 +12825,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetNodesNextPageRequest(string nextLink, string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetNodesNextPageRequest(string nextLink, string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12896,14 +12844,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetNodeExtensionsNextPageRequest(string nextLink, string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetNodeExtensionsNextPageRequest(string nextLink, string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12915,14 +12863,14 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFilesNextPageRequest(string nextLink, string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateGetNodeFilesNextPageRequest(string nextLink, string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12934,9 +12882,9 @@ namespace Azure.Compute.Batch
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
             }
             return message;
         }
