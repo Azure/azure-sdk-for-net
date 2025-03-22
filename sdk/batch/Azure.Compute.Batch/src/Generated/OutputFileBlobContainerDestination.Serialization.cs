@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUrl);
+            writer.WriteStringValue(ContainerUri.AbsoluteUri);
             if (Optional.IsDefined(IdentityReference))
             {
                 writer.WritePropertyName("identityReference"u8);
@@ -94,9 +94,9 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string path = default;
-            string containerUrl = default;
+            Uri containerUrl = default;
             BatchNodeIdentityReference identityReference = default;
-            IList<HttpHeader> uploadHeaders = default;
+            IList<OutputFileUploadHeader> uploadHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("containerUrl"u8))
                 {
-                    containerUrl = property.Value.GetString();
+                    containerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identityReference"u8))
@@ -126,10 +126,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<HttpHeader> array = new List<HttpHeader>();
+                    List<OutputFileUploadHeader> array = new List<OutputFileUploadHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpHeader.DeserializeHttpHeader(item, options));
+                        array.Add(OutputFileUploadHeader.DeserializeOutputFileUploadHeader(item, options));
                     }
                     uploadHeaders = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OutputFileBlobContainerDestination(path, containerUrl, identityReference, uploadHeaders ?? new ChangeTrackingList<HttpHeader>(), serializedAdditionalRawData);
+            return new OutputFileBlobContainerDestination(path, containerUrl, identityReference, uploadHeaders ?? new ChangeTrackingList<OutputFileUploadHeader>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutputFileBlobContainerDestination>.Write(ModelReaderWriterOptions options)

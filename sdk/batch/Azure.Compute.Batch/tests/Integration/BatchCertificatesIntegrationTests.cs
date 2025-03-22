@@ -126,7 +126,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreEqual(1, certificates.Count());
 
                 // create a pool to verify we have something to query for
-                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions();
+                BatchPoolCreateOptions batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions();
                 batchPoolCreateOptions.CertificateReferences.Add(
                     new BatchCertificateReference(certificates[0].Thumbprint, certificates[0].ThumbprintAlgorithm)
                 );
@@ -178,15 +178,15 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchApplicationPackageReference[] batchApplicationPackageReferences = new BatchApplicationPackageReference[] {
                 };
 
-                MetadataItem[] metadataIems = new MetadataItem[] {
-                    new MetadataItem("name", "value")
+                BatchMetadataItem[] metadataIems = new BatchMetadataItem[] {
+                    new BatchMetadataItem("name", "value")
                 };
 
                 BatchCertificateReference[] certificateReferences = new BatchCertificateReference[] {
                 new BatchCertificateReference(certificates[0].Thumbprint, certificates[0].ThumbprintAlgorithm)
                 };
 
-                BatchPoolReplaceContent replaceContent = new BatchPoolReplaceContent(certificateReferences, batchApplicationPackageReferences, metadataIems);
+                BatchPoolReplaceOptions replaceContent = new BatchPoolReplaceOptions(certificateReferences, batchApplicationPackageReferences, metadataIems);
                 Response response = await client.ReplacePoolPropertiesAsync(poolID, replaceContent);
                 BatchPool replacePool = await client.GetPoolAsync(poolID);
                 Assert.AreEqual(replacePool.Metadata.First().Value, "value");
@@ -211,7 +211,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         private async Task<List<BatchCertificate>> GenerateCertificatesAsync(BatchClient batchClient, string cerFilePath, string pfxFilePath, long seed=1)
         {
             X509Certificate2 cerCert = CertificateBuilder.CreateSelfSignedInFile2("Foo", cerFilePath, CertificateBuilder.Sha1Algorithm,seed:seed);
-            BatchCertificate cerCertificate = new BatchCertificate(cerCert.Thumbprint, "sha1", Convert.ToBase64String(cerCert.GetRawCertData()))
+            BatchCertificate cerCertificate = new BatchCertificate(cerCert.Thumbprint, "sha1", BinaryData.FromBytes(cerCert.GetRawCertData()))
             {
                 CertificateFormat = BatchCertificateFormat.Cer,
                 Password = "",

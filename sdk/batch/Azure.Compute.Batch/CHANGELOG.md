@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0 (2025-03-27)
+ 
+ This release is the first stable release of the Azure Compute Batch client library.
 
 ### Other Changes
+ 
+ Documenation updates.
 
 ## 1.0.0-beta.2 (2025-02-28)
 
@@ -26,8 +24,8 @@
   - Added `containerHostBatchBindMounts` of type `List<ContainerHostBatchBindMountEntry>` to `BatchTaskContainerSettings`.
 
 - Patch improvements for pool and job:
-  - Added `displayName`, `vmSize`, `taskSlotsPerNode`, `taskSchedulingPolicy`, `enableInterNodeCommunication`, `virtualMachineConfiguration`, `networkConfiguration`, `userAccounts`, `mountConfiguration`, `upgradePolicy`, and `resourceTags` to `BatchPoolUpdateContent`.
-  - Added `networkConfiguration` to `BatchJobUpdateContent`.
+  - Added `displayName`, `vmSize`, `taskSlotsPerNode`, `taskSchedulingPolicy`, `enableInterNodeCommunication`, `virtualMachineConfiguration`, `networkConfiguration`, `userAccounts`, `mountConfiguration`, `upgradePolicy`, and `resourceTags` to `BatchPoolUpdateOptions`.
+  - Added `networkConfiguration` to `BatchJobUpdateOptions`.
 
 - Confidential VM support:
   - Added `confidentialVM` to `SecurityTypes`.
