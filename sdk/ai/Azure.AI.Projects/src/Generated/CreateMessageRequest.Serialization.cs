@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -209,6 +211,15 @@ namespace Azure.AI.Projects
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            var options = new JsonWriterOptions
+            {
+                Indented = true
+            };
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream, options);
+            ((IJsonModel<CreateMessageRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+            writer.Flush();
+            string json = Encoding.UTF8.GetString(stream.ToArray());
             return content;
         }
     }
