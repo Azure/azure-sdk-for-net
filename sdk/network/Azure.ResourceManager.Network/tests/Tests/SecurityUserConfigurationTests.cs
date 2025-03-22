@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests
             _subscription = await GlobalClient.GetDefaultSubscriptionAsync();
 
             // Create a resource group
-            string resourceGroupName = SessionRecording.GenerateAssetName("rg-Café");
+            string resourceGroupName = SessionRecording.GenerateAssetName("rg-");
             _resourceGroup = await _subscription.CreateResourceGroupAsync(resourceGroupName, _location);
 
             // Create a network manager

@@ -44,8 +44,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             List<Task<SecurityUserRuleResource>> securityUserRuleTasks = new()
             {
                 securityUserCollection.CreateSecurityUserRuleAsync("rule1", SecurityConfigurationRuleProtocol.Tcp, "10.1.1.1/32", new List<string> { "22" }, AddressPrefixType.IPPrefix, "20.1.1.1/32", new List<string> { "22" }, AddressPrefixType.IPPrefix, SecurityConfigurationRuleDirection.Inbound),
-                securityUserCollection.CreateSecurityUserRuleAsync("rule2", SecurityConfigurationRuleProtocol.Any, "*", new List<string> { "0-65535" }, AddressPrefixType.IPPrefix, "*", new List<string> { "0-65535" }, AddressPrefixType.IPPrefix, SecurityConfigurationRuleDirection.Inbound),
-                securityUserCollection.CreateSecurityUserRuleAsync("rule3", SecurityConfigurationRuleProtocol.Any, "ApiManagement", new List<string> { "22" }, AddressPrefixType.ServiceTag, "*", new List<string> { "22" }, AddressPrefixType.IPPrefix, SecurityConfigurationRuleDirection.Outbound),
             };
 
             List<SecurityUserRuleResource> securityUserRules = (await Task.WhenAll(securityUserRuleTasks)).ToList();

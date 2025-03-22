@@ -3,29 +3,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 using Azure.Core;
 using System;
-using Azure.Identity;
-using Microsoft.Extensions.Logging;
-using System.Reflection;
-using System.Threading;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network.Tests.Helpers.Validation;
+using Azure.ResourceManager.Network.Tests.Tests;
 
 namespace Azure.ResourceManager.Network.Tests.Helpers
 {
     public static partial class NetworkManagerHelperExtensions
     {
-        public static async Task<(NetworkManagerRoutingConfigurationResource Configuration, List<RoutingRuleCollectionResource> Collections, List<RoutingRuleResource> Rules)> CreateRoutingConfigurationAsync(
+        public static async Task<(NetworkManagerRoutingConfigurationResource Configuration, List<RoutingRuleCollectionResource> Collections, List<RoutingRuleResource> Rules, RoutingConfigurationValidationData Expected)> CreateRoutingConfigurationAsync(
             this NetworkManagerResource networkManager,
-            List<ResourceIdentifier> networkGroupIds)
+            List<ResourceIdentifier> networkGroupIds,
+            DisableBgpRoutePropagation disableBgpRoutePropagation,
+            int numRules = 10)
         {
-            string routingConfigurationName = "routingConfiguration-1";
+            var routingConfigurationName = "routingConfiguration-1";
 
             NetworkManagerRoutingConfigurationData routingConfigurationData = new()
             {
@@ -37,34 +33,51 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             // Create a routing rule collection
             List<RoutingRuleCollectionResource> collections = new();
-            RoutingRuleCollectionResource routingCollection = await routingConfigurationResource.Value.CreateRoutingRuleCollectionAsync(networkGroupIds);
+            RoutingRuleCollectionResource routingCollection = await routingConfigurationResource.Value.CreateRoutingRuleCollectionAsync(networkGroupIds, disableBgpRoutePropagation);
             collections.Add(routingCollection);
 
             // Create multiple routing rules in parallel
-            List<Task<RoutingRuleResource>> routingRuleTasks = new()
-            {
-                routingCollection.CreateRoutingRuleAsync("rule1", "10.1.1.0/24", RoutingRuleDestinationType.AddressPrefix, "20.1.1.1", RoutingRuleNextHopType.VirtualAppliance),
-                routingCollection.CreateRoutingRuleAsync("rule2", "10.2.2.0/24", RoutingRuleDestinationType.AddressPrefix, string.Empty, RoutingRuleNextHopType.VirtualNetworkGateway),
-                routingCollection.CreateRoutingRuleAsync("rule3", "ApiManagement", RoutingRuleDestinationType.ServiceTag, string.Empty, RoutingRuleNextHopType.Internet),
-                routingCollection.CreateRoutingRuleAsync("rule4", "2001::1/128", RoutingRuleDestinationType.AddressPrefix, "2001::2", RoutingRuleNextHopType.VirtualAppliance),
-                // routingCollection.CreateRoutingRuleAsync("rule5", "2001::1/128", RoutingRuleDestinationType.AddressPrefix, "", RoutingRuleNextHopType.NoNextHop),
-                routingCollection.CreateRoutingRuleAsync("rule6", "10.1.5.0/24", RoutingRuleDestinationType.AddressPrefix, string.Empty, RoutingRuleNextHopType.VnetLocal),
-            };
-            List<RoutingRuleResource> routingRules = (await Task.WhenAll(routingRuleTasks)).ToList();
+            var routingRules = await CreateRoutingRules(routingCollection, numRules).ConfigureAwait(false);
 
-            return (routingConfigurationResource.Value, collections, routingRules);
+            // Validate the created routing configuration
+            var expectedData = new RoutingConfigurationValidationData
+            {
+                Description = routingConfigurationData.Description,
+                Name = routingConfigurationName,
+                RoutingRuleCollections = new List<RoutingRuleCollectionValidationData>
+                {
+                    new RoutingRuleCollectionValidationData
+                    {
+                        Description = routingCollection.Data.Description,
+                        Name = routingCollection.Data.Name,
+                        DisableBgpRoutePropagation = (DisableBgpRoutePropagation)routingCollection.Data.DisableBgpRoutePropagation,
+                        AppliesTo = routingCollection.Data.AppliesTo.ToList()
+                    }
+                },
+                RoutingRules = routingRules.Select(rule => new RoutingRuleValidationData
+                {
+                    Name = rule.Data.Name,
+                    DestinationAddress = rule.Data.Destination.DestinationAddress,
+                    DestinationType = rule.Data.Destination.DestinationType,
+                    NextHopAddress = rule.Data.NextHop.NextHopAddress,
+                    NextHopType = rule.Data.NextHop.NextHopType
+                }).ToList()
+            };
+
+            return (routingConfigurationResource.Value, collections, routingRules, expectedData);
         }
 
         public static async Task<RoutingRuleCollectionResource> CreateRoutingRuleCollectionAsync(
             this NetworkManagerRoutingConfigurationResource routingConfiguration,
-            List<ResourceIdentifier> networkGroupIds)
+            List<ResourceIdentifier> networkGroupIds,
+            DisableBgpRoutePropagation disableBgpRoutePropagation)
         {
             string routingCollectionName = "routingCollection-1";
 
             RoutingRuleCollectionData routingRuleCollectionData = new()
             {
                 Description = "My Test Routing Rule Collection",
-                DisableBgpRoutePropagation = "False",
+                DisableBgpRoutePropagation = disableBgpRoutePropagation,
             };
 
             foreach (ResourceIdentifier networkGroupId in networkGroupIds)
@@ -119,6 +132,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     deleteRuleTasks.Add(DeleteAndVerifyResourceAsync(collection.GetRoutingRules(), rule.Data.Name));
                 }
             }
+
             await Task.WhenAll(deleteRuleTasks);
 
             // Delete routing rule collections in parallel
@@ -127,6 +141,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 deleteCollectionTasks.Add(DeleteAndVerifyResourceAsync(collections, collection.Data.Name));
             }
+
             await Task.WhenAll(deleteCollectionTasks);
 
             // Delete the routing configuration
@@ -152,6 +167,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             IList<RouteData> routes,
             Dictionary<string, (string NextHopAddress, RoutingRuleNextHopType NextHopType)> expectedValues)
         {
+            // Validate the count of routes
+            Assert.AreEqual(routes.Count, expectedValues.Count);
+
             foreach (RouteData route in routes)
             {
                 Assert.AreEqual(NetworkProvisioningState.Succeeded, route.ProvisioningState);
@@ -166,34 +184,75 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
         }
 
+        public static async Task<RouteTableResource> CreateRouteTable(
+            this ResourceGroupResource resourceGroup,
+            string routeTableName,
+            string location)
+        {
+            var routeTable = new RouteTableData() { Location = location, };
+
+            // Put RouteTable
+            RouteTableCollection routeTableCollection = resourceGroup.GetRouteTables();
+            ArmOperation<RouteTableResource> putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
+            Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();
+            Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
+
+            // Get RouteTable
+            Response<RouteTableResource> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
+            return getRouteTableResponse.Value;
+        }
+
+        public static async Task AssociateRouteTableToSubnet(
+            this ResourceGroupResource resourceGroup,
+            VirtualNetworkResource vnet,
+            SubnetResource subnet,
+            RouteTableData routeTable)
+        {
+            // Associate RouteTable to Subnet
+            SubnetData subnetData = subnet.Data;
+            subnetData.RouteTable = routeTable;
+
+            var vnetData = vnet.Data;
+            ArmOperation<VirtualNetworkResource> vnetLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetData.Name, vnetData).ConfigureAwait(false);
+            ArmOperation<SubnetResource> subnetLro = await vnetLro.Value.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, subnetData.Name, subnetData).ConfigureAwait(false);
+        }
+
         public static async Task ValidateRouteTablesAsync(
             this ResourceGroupResource resourceGroup,
             SubscriptionResource subscription,
             List<VirtualNetworkResource> vnets,
-            Dictionary<string, (string NextHopAddress, RoutingRuleNextHopType NextHopType)> expectedValues,
+            RoutingConfigurationValidationData expectedValues,
             bool isEmpty = false)
         {
-            string routeTableRgName = $"AVNM_Rg_11434_{subscription.Data.SubscriptionId}";
+            string routeTableRgName = $"AVNM_Managed_ResourceGroup_{subscription.Data.SubscriptionId}";
             Response<ResourceGroupResource> routeTableRg = await subscription.GetResourceGroups().GetAsync(routeTableRgName);
             Assert.IsNotNull(routeTableRg);
 
             List<Task> validationTasks = new();
             foreach (VirtualNetworkResource vnet in vnets)
             {
-                validationTasks.Add(ValidateRouteTablesAsync(resourceGroup, routeTableRg.Value, vnet, expectedValues, isEmpty));
+                validationTasks.Add(ValidateRouteTablesForSubnetsAsync(resourceGroup, routeTableRg.Value, vnet, expectedValues, isEmpty));
             }
+
             await Task.WhenAll(validationTasks);
         }
 
-        private static async Task ValidateRouteTablesAsync(
+        private static async Task ValidateRouteTablesForSubnetsAsync(
             ResourceGroupResource resourceGroup,
             ResourceGroupResource routeTableRg,
             VirtualNetworkResource vnet,
-            Dictionary<string, (string NextHopAddress, RoutingRuleNextHopType NextHopType)> expectedValues,
+            RoutingConfigurationValidationData expectedValues,
             bool isEmpty)
         {
             Response<VirtualNetworkResource> virtualNetworkResource = await resourceGroup.GetVirtualNetworks().GetAsync(vnet.Data.Name);
             Assert.IsNotNull(virtualNetworkResource);
+
+            var routingRules = expectedValues.RoutingRules.ToDictionary(
+                rule => rule.DestinationAddress,
+                rule => (rule.NextHopAddress, rule.NextHopType));
+
+            // DisableBgpRoutePropagation is set to false if any of the collection is set to false
+            bool disableBgpRoutePropagation = expectedValues.RoutingRuleCollections.Any(collection => collection.DisableBgpRoutePropagation == DisableBgpRoutePropagation.False) == true ? false : true;
 
             IList<SubnetData> subnets = virtualNetworkResource.Value.Data.Subnets;
             foreach (SubnetData subnet in subnets)
@@ -201,15 +260,62 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 if (!isEmpty)
                 {
                     Assert.IsNotNull(subnet.RouteTable);
-                    string routeTableName = subnet.RouteTable?.Id.ToString().Split('/').Last();
+                    string routeTableName = subnet.RouteTable.Id.ToString().Split('/').Last();
                     Response<RouteTableResource> routeTable = await routeTableRg.GetRouteTables().GetAsync(routeTableName);
-                    ValidateUserDefinedRoutes(routeTable.Value.Data.Routes, expectedValues);
+
+                    Assert.IsNotNull(routeTable);
+                    Assert.AreEqual(routeTable.Value.Data.DisableBgpRoutePropagation.ToString(), disableBgpRoutePropagation.ToString());
+
+                    ValidateUserDefinedRoutes(routeTable.Value.Data.Routes, routingRules);
                 }
                 else
                 {
                     Assert.IsNull(subnet.RouteTable);
                 }
             }
+        }
+
+        private static async Task<List<RoutingRuleResource>> CreateRoutingRules(RoutingRuleCollectionResource routingCollection, int numRules)
+        {
+            var destinationAddresses = GenerateUniqueIPs(numRules).ToList();
+            var nextHopAddresses = GenerateUniqueIPs(numRules).ToList();
+
+            var routingRules = new List<RoutingRuleResource>();
+            for (int i = 0; i < numRules; i++)
+            {
+                var routingRule = await routingCollection.CreateRoutingRuleAsync($"rule{i}", $"{destinationAddresses[i]}/32", RoutingRuleDestinationType.AddressPrefix, $"{nextHopAddresses[i]}", RoutingRuleNextHopType.VirtualAppliance).ConfigureAwait(false);
+                routingRules.Add(routingRule);
+            }
+
+            return routingRules;
+        }
+
+        private static string GenerateIP()
+        {
+            var random = new Random();
+            return $"{random.Next(0, 256)}.{random.Next(0, 256)}.{random.Next(0, 256)}.{random.Next(0, 256)}";
+        }
+
+        private static HashSet<string> GenerateUniqueIPs(int count)
+        {
+            var ips = new HashSet<string>();
+            while (ips.Count < count)
+            {
+                string ip = GenerateIP();
+                if (!IsMulticastAddress(ip))
+                {
+                    ips.Add(ip);
+                }
+            }
+
+            return ips;
+        }
+
+        private static bool IsMulticastAddress(string ipAddress)
+        {
+            string[] parts = ipAddress.Split('.');
+            int firstOctet = int.Parse(parts[0]);
+            return (firstOctet >= 224 && firstOctet <= 239) || firstOctet == 127 || firstOctet == 0;
         }
     }
 }
