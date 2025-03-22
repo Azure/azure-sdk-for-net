@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("skipWithdrawFromVNet"u8);
-            writer.WriteBooleanValue(SkipWithdrawFromVNet);
+            writer.WriteBooleanValue(SkipWithdrawFromVnet);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
