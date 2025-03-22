@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
 
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (var item in Value)
+            foreach (var item in Values)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -78,17 +78,17 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<BatchTaskCreateContent> value = default;
+            IList<BatchTaskCreateOptions> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<BatchTaskCreateContent> array = new List<BatchTaskCreateContent>();
+                    List<BatchTaskCreateOptions> array = new List<BatchTaskCreateOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchTaskCreateContent.DeserializeBatchTaskCreateContent(item, options));
+                        array.Add(BatchTaskCreateOptions.DeserializeBatchTaskCreateOptions(item, options));
                     }
                     value = array;
                     continue;
