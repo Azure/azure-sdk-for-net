@@ -47,9 +47,9 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("wallClockTime"u8);
             writer.WriteStringValue(WallClockTime, "P");
             writer.WritePropertyName("readIOps"u8);
-            writer.WriteStringValue(ReadIOps.ToString());
+            writer.WriteStringValue(ReadIops.ToString());
             writer.WritePropertyName("writeIOps"u8);
-            writer.WriteStringValue(WriteIOps.ToString());
+            writer.WriteStringValue(WriteIops.ToString());
             writer.WritePropertyName("readIOGiB"u8);
             writer.WriteNumberValue(ReadIOGiB);
             writer.WritePropertyName("writeIOGiB"u8);

@@ -39,10 +39,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(DynamicVNetAssignmentScope))
+            if (Optional.IsDefined(DynamicVnetAssignmentScope))
             {
                 writer.WritePropertyName("dynamicVNetAssignmentScope"u8);
-                writer.WriteStringValue(DynamicVNetAssignmentScope.Value.ToString());
+                writer.WriteStringValue(DynamicVnetAssignmentScope.Value.ToString());
             }
             if (Optional.IsDefined(EndpointConfiguration))
             {
