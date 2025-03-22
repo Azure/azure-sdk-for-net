@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
             {
                 Properties = new IotOperationsDataflowEndpointProperties(DataflowEndpointType.Mqtt)
                 {
-                    MqttSettings = new DataflowEndpointMqtt(new DataflowEndpointMqttAuthentication(default)
+                    MqttSettings = new DataflowEndpointMqtt(new DataflowEndpointMqttAuthentication(new MqttAuthMethod("Kubernetes"))
                     {
                         ServiceAccountTokenAudience = "aio-internal",
                     })
@@ -600,6 +600,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
                             Mode = IotOperationsOperationalMode.Enabled,
                             TrustedCaCertificateConfigMapRef = "tectjjvukvelsreihwadh",
                         },
+                        CloudEventAttributes = new CloudEventAttributeType("PassThrough"),
                     },
                     LocalStoragePersistentVolumeClaimRef = "jjwqwvd",
                     MqttSettings = new DataflowEndpointMqtt(new DataflowEndpointMqttAuthentication(MqttAuthMethod.SystemAssignedManagedIdentity)
@@ -626,6 +627,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
                             Mode = IotOperationsOperationalMode.Enabled,
                             TrustedCaCertificateConfigMapRef = "tectjjvukvelsreihwadh",
                         },
+                        CloudEventAttributes = new CloudEventAttributeType("PassThrough"),
                     },
                 },
             };
