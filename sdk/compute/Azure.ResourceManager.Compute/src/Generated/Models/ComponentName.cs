@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup. </summary>
+    /// <summary> The ComponentName. </summary>
     public readonly partial struct ComponentName : IEquatable<ComponentName>
     {
         private readonly string _value;
