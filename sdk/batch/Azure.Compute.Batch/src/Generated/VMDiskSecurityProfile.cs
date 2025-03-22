@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Compute.Batch
 {
     /// <summary> Specifies the security profile settings for the managed disk. **Note**: It can only be set for Confidential VMs and required when using Confidential VMs. </summary>
-    public partial class VMDiskSecurityProfile
+    public partial class VmDiskSecurityProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VMDiskSecurityProfile"/>. </summary>
-        public VMDiskSecurityProfile()
+        /// <summary> Initializes a new instance of <see cref="VmDiskSecurityProfile"/>. </summary>
+        public VmDiskSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMDiskSecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmDiskSecurityProfile"/>. </summary>
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and is required when using Confidential VMs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMDiskSecurityProfile(SecurityEncryptionTypes? securityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VmDiskSecurityProfile(SecurityEncryptionTypes? securityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecurityEncryptionType = securityEncryptionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;

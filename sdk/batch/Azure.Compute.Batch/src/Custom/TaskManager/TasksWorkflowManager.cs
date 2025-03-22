@@ -27,7 +27,7 @@ namespace Azure.Compute.Batch
         private readonly CreateTasksOptions _parallelOptions;
         private readonly ConcurrentQueue<TrackedBatchTask> _remainingTasksToAdd;
         private readonly List<Task> _pendingAsyncOperations;
-        private readonly ICreateTaskResultHandler _bulkTaskCollectionResultHandler;
+        private readonly TaskResultHandler _bulkTaskCollectionResultHandler;
         private int _hasRun; //Have to use an int because CompareExchange doesn't support bool
         private int _maxTasks;
         private TimeSpan _timeBetweenCalls;
@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
         private const int HasNotRun = 0;
         private const int HasRun = 1;
         private bool _returnBatchTaskAddResults = false;
-        private readonly ConcurrentBag<BatchTaskAddResult> _taskAddResults;
+        private readonly ConcurrentBag<BatchTaskCreateResult> _taskAddResults;
         private readonly object _createTasksResultLock = new object();
         private CreateTasksResult _createTasksResult;
         private CancellationToken _cancellationToken;
@@ -45,7 +45,7 @@ namespace Azure.Compute.Batch
         {
             lock (_createTasksResultLock)
             {
-                _createTasksResult.Pass++;
+                _createTasksResult.PassCount++;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Compute.Batch
         {
             lock (_createTasksResultLock)
             {
-                _createTasksResult.Fail++;
+                _createTasksResult.FailCount++;
             }
         }
 
@@ -88,11 +88,11 @@ namespace Azure.Compute.Batch
             _jobId = jobId;
             _cancellationToken = cancellationToken;
             _remainingTasksToAdd = new ConcurrentQueue<TrackedBatchTask>();
-            _taskAddResults = new ConcurrentBag<BatchTaskAddResult>();
-            _createTasksResult = new CreateTasksResult(new List<BatchTaskAddResult>());
+            _taskAddResults = new ConcurrentBag<BatchTaskCreateResult>();
+            _createTasksResult = new CreateTasksResult(new List<BatchTaskCreateResult>());
             _hasRun = HasNotRun;
             _maxTasks = 100;
-            _returnBatchTaskAddResults = createTasksOptions.ReturnBatchTaskAddResults;
+            _returnBatchTaskAddResults = createTasksOptions.ReturnBatchTaskCreateResults;
             _pendingAsyncOperations = new List<Task>();
             _parallelOptions = createTasksOptions;
             _timeBetweenCalls = TimeSpan.FromMilliseconds(100);
@@ -108,7 +108,7 @@ namespace Azure.Compute.Batch
         /// <param name="timeOutInSeconds"></param>
         /// <exception cref="RunOnceException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        internal CreateTasksResult AddTasks(IEnumerable<BatchTaskCreateContent> tasksToAdd, string jobId, TimeSpan? timeOutInSeconds = null)
+        internal CreateTasksResult AddTasks(IEnumerable<BatchTaskCreateOptions> tasksToAdd, string jobId, TimeSpan? timeOutInSeconds = null)
         {
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
             Task<CreateTasksResult> task = AddTasksAsync(tasksToAdd, jobId, timeOutInSeconds);
@@ -126,14 +126,14 @@ namespace Azure.Compute.Batch
         /// <returns></returns>
         /// <exception cref="RunOnceException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        internal async System.Threading.Tasks.Task<CreateTasksResult> AddTasksAsync(IEnumerable<BatchTaskCreateContent> tasksToAdd, string jobId, TimeSpan? timeOutInSeconds = null)
+        internal async System.Threading.Tasks.Task<CreateTasksResult> AddTasksAsync(IEnumerable<BatchTaskCreateOptions> tasksToAdd, string jobId, TimeSpan? timeOutInSeconds = null)
         {
             //Ensure that this object has not already been used
             int original = Interlocked.CompareExchange(ref this._hasRun, HasRun, HasNotRun);
 
             if (original != HasNotRun)
             {
-                throw new RunOnceException(string.Format(CultureInfo.InvariantCulture, BatchErrorCodeStrings.CanOnlyBeRunOnceFailure, this.GetType().Name));
+                throw new RunOnceException(string.Format(CultureInfo.InvariantCulture, BatchErrorCode.CanOnlyBeRunOnceFailure.ToString(), this.GetType().Name));
             }
 
             if (tasksToAdd == null)
@@ -198,7 +198,7 @@ namespace Azure.Compute.Batch
             // Wait for all pending operations to complete
             await Task.WhenAll(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
 
-            _createTasksResult.BatchTaskAddResults.AddRange(_taskAddResults.ToList());
+            _createTasksResult.BatchTaskCreateResults.AddRange(_taskAddResults.ToList());
             return _createTasksResult;
         }
 
@@ -225,7 +225,7 @@ namespace Azure.Compute.Batch
                     taskCollection: taskGroup,
                     cancellationToken: _cancellationToken);
 
-                BatchTaskAddCollectionResult response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+                BatchCreateTaskCollectionResult response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
                 //
                 // Process the results of the add task collection request
                 //
@@ -233,11 +233,8 @@ namespace Azure.Compute.Batch
             }
             catch (RequestFailedException e)
             {
-                BatchError error = BatchError.FromException(e);
-                if (error != null)
-                {
-                    int currLength = tasksToAdd.Count;
-                    if (error.Code == BatchErrorCodeStrings.RequestBodyTooLarge && currLength != 1)
+                int currLength = tasksToAdd.Count;
+                if (e.ErrorCode == BatchErrorCode.RequestBodyTooLarge && currLength != 1)
                     {
                         // Our chunk sizes were too large to fit in a request, so universally reduce size
                         // This is an internal error due to us using greedy initial maximum chunk size,
@@ -256,7 +253,7 @@ namespace Azure.Compute.Batch
                             return;
                         }
                     }
-                    else if (error.Code == BatchErrorCodeStrings.TooManyRequests)
+                else if (e.ErrorCode == BatchErrorCode.TooManyRequests)
                     {
                         _timeBetweenCalls = TimeSpan.FromSeconds(Math.Min(_timeBetweenCalls.TotalSeconds + _timeIncrementInSeconds, _maxTimeBetweenCallsInSeconds));
                         foreach (TrackedBatchTask trackedTask in tasksToAdd.Values)
@@ -265,8 +262,6 @@ namespace Azure.Compute.Batch
                         }
                         return;
                     }
-                }
-                throw;
             }
         }
 
@@ -276,10 +271,10 @@ namespace Azure.Compute.Batch
         /// <param name="addTaskResults"></param>
         /// <param name="taskMap">Dictionary of task name to task object instance for the specific protocol response.</param>
         internal void ProcessAddTaskResults(
-            BatchTaskAddCollectionResult addTaskResults,
+            BatchCreateTaskCollectionResult addTaskResults,
             IReadOnlyDictionary<string, TrackedBatchTask> taskMap)
         {
-            foreach (BatchTaskAddResult protoAddTaskResult in addTaskResults.Value)
+            foreach (BatchTaskCreateResult protoAddTaskResult in addTaskResults.Values)
             {
                 string taskId = protoAddTaskResult.TaskId;
                 TrackedBatchTask trackedTask = taskMap[taskId];
@@ -380,7 +375,7 @@ namespace Azure.Compute.Batch
                 //Swallow the exception and throw a new one
 
                 IEnumerable<Exception> exceptions = tasks.Where(t => t.IsFaulted).SelectMany(t => t.Exception.InnerExceptions);
-                throw new ParallelOperationsException(BatchErrorCodeStrings.MultipleParallelRequestsHitUnexpectedErrors, exceptions);
+                throw new ParallelOperationsException(BatchErrorCode.MultipleParallelRequestsHitUnexpectedErrors.ToString(), exceptions);
             }
         }
 
@@ -396,19 +391,19 @@ namespace Azure.Compute.Batch
         #region Private classes
 
         /// <summary>
-        /// Internal task wrapper which tracks a tasks retry count and holds a reference to the BatchTaskCreateContent object.
+        /// Internal task wrapper which tracks a tasks retry count and holds a reference to the BatchTaskCreateOptions object.
         /// </summary>
         internal class TrackedBatchTask
         {
             public string JobId { get; private set; }
-            public BatchTaskCreateContent Task { get; private set; }
+            public BatchTaskCreateOptions Task { get; private set; }
             public int RetryCount { get; private set; }
 
             internal TrackedBatchTask(
                 string jobId,
-                BatchTaskCreateContent batchTaskCreateContent)
+                BatchTaskCreateOptions batchTaskCreateOptions)
             {
-                this.Task = batchTaskCreateContent;
+                this.Task = batchTaskCreateOptions;
                 this.JobId = jobId;
                this.RetryCount = 0;
             }

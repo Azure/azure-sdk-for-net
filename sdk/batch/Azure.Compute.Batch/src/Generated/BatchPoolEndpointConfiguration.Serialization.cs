@@ -78,17 +78,17 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<InboundNatPool> inboundNATPools = default;
+            IList<BatchInboundNatPool> inboundNATPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNATPools"u8))
                 {
-                    List<InboundNatPool> array = new List<InboundNatPool>();
+                    List<BatchInboundNatPool> array = new List<BatchInboundNatPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatPool.DeserializeInboundNatPool(item, options));
+                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item, options));
                     }
                     inboundNATPools = array;
                     continue;

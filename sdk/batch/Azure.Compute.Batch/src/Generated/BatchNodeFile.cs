@@ -52,14 +52,14 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeFile"/>. </summary>
         /// <param name="name"> The file path. </param>
-        /// <param name="url"> The URL of the file. </param>
+        /// <param name="uri"> The URL of the file. </param>
         /// <param name="isDirectory"> Whether the object represents a directory. </param>
         /// <param name="properties"> The file properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeFile(string name, string url, bool? isDirectory, FileProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchNodeFile(string name, Uri uri, bool? isDirectory, FileProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            Url = url;
+            Uri = uri;
             IsDirectory = isDirectory;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -68,7 +68,7 @@ namespace Azure.Compute.Batch
         /// <summary> The file path. </summary>
         public string Name { get; }
         /// <summary> The URL of the file. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
         /// <summary> Whether the object represents a directory. </summary>
         public bool? IsDirectory { get; }
         /// <summary> The file properties. </summary>

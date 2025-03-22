@@ -28,7 +28,7 @@ With the BatchAccountResource you can create a pool with the [batchAccount.GetBa
 
 ```C# Snippet:Batch_Sample01_PoolCreation
 var poolName = "HelloWorldPool";
-var imageReference = new BatchImageReference()
+var imageReference = new Azure.ResourceManager.Batch.Models.BatchImageReference()
 {
     Publisher = "canonical",
     Offer = "0001-com-ubuntu-server-jammy",
@@ -71,14 +71,14 @@ new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
 Before we can create Batch Tasks, we first need to create a Job for the tasks to be associatd with, this can be done via the `CreateJobAsync` command. The basic elements needed are an id for job itself and the name of the pool that this job will run against. 
 
 ```C# Snippet:Batch_Sample01_CreateBatchJob
-await batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+await batchClient.CreateJobAsync(new BatchJobCreateOptions("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
 ```
 
 ### Task creation
 
 Batch tasks can be created from the BatchClient via the `CreateTaskAsync`.  The basic elements needed are the name of the job the task will be assigned to, and id for the task itself, and a command to run.
 ```C# Snippet:Batch_Sample01_CreateBatchTask
-await batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+await batchClient.CreateTaskAsync("jobId", new BatchTaskCreateOptions("taskId", $"echo Hello world"));
 ```
 
 

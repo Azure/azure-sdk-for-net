@@ -54,7 +54,7 @@ namespace Azure.Compute.Batch
 
             CommonEnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
             PoolInfo = poolInfo;
-            Metadata = new ChangeTrackingList<MetadataItem>();
+            Metadata = new ChangeTrackingList<BatchMetadataItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchJobSpecification"/>. </summary>
@@ -63,8 +63,8 @@ namespace Azure.Compute.Batch
         /// <param name="maxParallelTasks"> The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. </param>
         /// <param name="displayName"> The display name for Jobs created under this schedule. The name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="usesTaskDependencies"> Whether Tasks in the Job can define dependencies on each other. The default is false. </param>
-        /// <param name="onAllTasksComplete"> The action the Batch service should take when all Tasks in a Job created under this schedule are in the completed state. Note that if a Job contains no Tasks, then all Tasks are considered complete. This option is therefore most commonly used with a Job Manager task; if you want to use automatic Job termination without a Job Manager, you should initially set onAllTasksComplete to noaction and update the Job properties to set onAllTasksComplete to terminatejob once you have finished adding Tasks. The default is noaction. </param>
-        /// <param name="onTaskFailure"> The action the Batch service should take when any Task fails in a Job created under this schedule. A Task is considered to have failed if it have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </param>
+        /// <param name="allTasksCompleteMode"> The action the Batch service should take when all Tasks in a Job created under this schedule are in the completed state. Note that if a Job contains no Tasks, then all Tasks are considered complete. This option is therefore most commonly used with a Job Manager task; if you want to use automatic Job termination without a Job Manager, you should initially set onAllTasksComplete to noaction and update the Job properties to set onAllTasksComplete to terminatejob once you have finished adding Tasks. The default is noaction. </param>
+        /// <param name="taskFailureMode"> The action the Batch service should take when any Task fails in a Job created under this schedule. A Task is considered to have failed if it have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </param>
         /// <param name="networkConfiguration"> The network configuration for the Job. </param>
         /// <param name="constraints"> The execution constraints for Jobs created under this schedule. </param>
         /// <param name="jobManagerTask"> The details of a Job Manager Task to be launched when a Job is started under this schedule. If the Job does not specify a Job Manager Task, the user must explicitly add Tasks to the Job using the Task API. If the Job does specify a Job Manager Task, the Batch service creates the Job Manager Task when the Job is created, and will try to schedule the Job Manager Task before scheduling other Tasks in the Job. </param>
@@ -74,15 +74,15 @@ namespace Azure.Compute.Batch
         /// <param name="poolInfo"> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </param>
         /// <param name="metadata"> A list of name-value pairs associated with each Job created under this schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobSpecification(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, string displayName, bool? usesTaskDependencies, OnAllBatchTasksComplete? onAllTasksComplete, OnBatchTaskFailure? onTaskFailure, BatchJobNetworkConfiguration networkConfiguration, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, IList<MetadataItem> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchJobSpecification(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, string displayName, bool? usesTaskDependencies, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, IList<BatchMetadataItem> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Priority = priority;
             AllowTaskPreemption = allowTaskPreemption;
             MaxParallelTasks = maxParallelTasks;
             DisplayName = displayName;
             UsesTaskDependencies = usesTaskDependencies;
-            OnAllTasksComplete = onAllTasksComplete;
-            OnTaskFailure = onTaskFailure;
+            AllTasksCompleteMode = allTasksCompleteMode;
+            TaskFailureMode = taskFailureMode;
             NetworkConfiguration = networkConfiguration;
             Constraints = constraints;
             JobManagerTask = jobManagerTask;
@@ -110,9 +110,9 @@ namespace Azure.Compute.Batch
         /// <summary> Whether Tasks in the Job can define dependencies on each other. The default is false. </summary>
         public bool? UsesTaskDependencies { get; set; }
         /// <summary> The action the Batch service should take when all Tasks in a Job created under this schedule are in the completed state. Note that if a Job contains no Tasks, then all Tasks are considered complete. This option is therefore most commonly used with a Job Manager task; if you want to use automatic Job termination without a Job Manager, you should initially set onAllTasksComplete to noaction and update the Job properties to set onAllTasksComplete to terminatejob once you have finished adding Tasks. The default is noaction. </summary>
-        public OnAllBatchTasksComplete? OnAllTasksComplete { get; set; }
+        public BatchAllTasksCompleteMode? AllTasksCompleteMode { get; set; }
         /// <summary> The action the Batch service should take when any Task fails in a Job created under this schedule. A Task is considered to have failed if it have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </summary>
-        public OnBatchTaskFailure? OnTaskFailure { get; set; }
+        public BatchTaskFailureMode? TaskFailureMode { get; set; }
         /// <summary> The network configuration for the Job. </summary>
         public BatchJobNetworkConfiguration NetworkConfiguration { get; set; }
         /// <summary> The execution constraints for Jobs created under this schedule. </summary>
@@ -128,6 +128,6 @@ namespace Azure.Compute.Batch
         /// <summary> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </summary>
         public BatchPoolInfo PoolInfo { get; set; }
         /// <summary> A list of name-value pairs associated with each Job created under this schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<MetadataItem> Metadata { get; }
+        public IList<BatchMetadataItem> Metadata { get; }
     }
 }

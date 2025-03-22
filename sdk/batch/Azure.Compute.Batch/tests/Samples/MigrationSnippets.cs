@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -25,18 +26,29 @@ namespace Azure.Compute.Batch.Tests.Samples
             var credential = new DefaultAzureCredential();
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), credential);
-            BatchPoolResizeContent resizeContent = new BatchPoolResizeContent();
+            BatchPoolResizeOptions resizeOptions = new BatchPoolResizeOptions();
             #region Snippet:Batch_Migration_Exception
             try
             {
-                Response response = batchClient.ResizePool("fakepool", resizeContent);
+                Response response = batchClient.ResizePool("fakepool", resizeOptions);
             }
             catch (Azure.RequestFailedException e)
             {
-                BatchError err = BatchError.FromException(e);
-                if (err.Code == BatchErrorCodeStrings.PoolNotFound)
+                if ( (e.ErrorCode == BatchErrorCode.PoolNotFound) &&
+                    ( e.Status == 404))
                 {
-                    // do something
+                    // write out the summary message
+                    Console.WriteLine(e.Message);
+
+                    // additional message details
+                    if (e.Data != null)
+                    {
+                        foreach (DictionaryEntry item in e.Data)
+                        {
+                            Console.WriteLine(item.Key);
+                            Console.WriteLine(item.Value);
+                        }
+                    }
                 }
             }
             #endregion
@@ -58,10 +70,10 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchPoolUpdateContent updateContent = new BatchPoolUpdateContent();
-            updateContent.Metadata.Add(new MetadataItem("name", "value"));
+            BatchPoolUpdateOptions updateOptions = new BatchPoolUpdateOptions();
+            updateOptions.Metadata.Add(new BatchMetadataItem("name", "value"));
 
-            batchClient.UpdatePool("poolID", updateContent);
+            batchClient.UpdatePool("poolID", updateOptions);
             #endregion
         }
 
@@ -71,8 +83,8 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            MetadataItem[] metadataItems = new MetadataItem[] {
-              new MetadataItem("name", "value")};
+            BatchMetadataItem[] metadataItems = new BatchMetadataItem[] {
+              new BatchMetadataItem("name", "value")};
 
             BatchApplicationPackageReference[] batchApplicationPackageReferences = new BatchApplicationPackageReference[] {
                     new BatchApplicationPackageReference("applicationPackage")
@@ -89,8 +101,8 @@ namespace Azure.Compute.Batch.Tests.Samples
                     }
             };
 
-            BatchPoolReplaceContent replaceContent = new BatchPoolReplaceContent(certificateReferences, batchApplicationPackageReferences, metadataItems);
-            batchClient.ReplacePoolProperties("poolID", replaceContent);
+            BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(certificateReferences, batchApplicationPackageReferences, metadataItems);
+            batchClient.ReplacePoolProperties("poolID", replaceOptions);
             #endregion
         }
 
@@ -100,13 +112,13 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchPoolResizeContent resizeContent = new BatchPoolResizeContent()
+            BatchPoolResizeOptions resizeOptions = new BatchPoolResizeOptions()
             {
                 TargetDedicatedNodes = 1,
                 ResizeTimeout = TimeSpan.FromMinutes(10),
             };
 
-            batchClient.ResizePool("poolID", resizeContent);
+            batchClient.ResizePool("poolID", resizeOptions);
             #endregion
         }
 
@@ -128,13 +140,13 @@ namespace Azure.Compute.Batch.Tests.Samples
             TimeSpan evalInterval = TimeSpan.FromMinutes(6);
             string poolASFormulaNew = "$TargetDedicated = 1;";
 
-            BatchPoolEnableAutoScaleContent batchPoolEnableAutoScaleContent = new BatchPoolEnableAutoScaleContent()
+            BatchPoolEnableAutoScaleOptions batchPoolEnableAutoScaleOptions = new BatchPoolEnableAutoScaleOptions()
             {
                 AutoScaleEvaluationInterval = evalInterval,
                 AutoScaleFormula = poolASFormulaNew,
             };
 
-            batchClient.EnablePoolAutoScale("poolId", batchPoolEnableAutoScaleContent);
+            batchClient.EnablePoolAutoScale("poolId", batchPoolEnableAutoScaleOptions);
             #endregion
         }
 
@@ -155,8 +167,8 @@ namespace Azure.Compute.Batch.Tests.Samples
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
             string poolASFormulaNew = "$TargetDedicated = 1;";
-            BatchPoolEvaluateAutoScaleContent batchPoolEvaluateAutoScaleContent = new BatchPoolEvaluateAutoScaleContent(poolASFormulaNew);
-            AutoScaleRun eval = batchClient.EvaluatePoolAutoScale("poolId", batchPoolEvaluateAutoScaleContent);
+            BatchPoolEvaluateAutoScaleOptions batchPoolEvaluateAutoScaleOptions = new BatchPoolEvaluateAutoScaleOptions(poolASFormulaNew);
+            AutoScaleRun eval = batchClient.EvaluatePoolAutoScale("poolId", batchPoolEvaluateAutoScaleOptions);
             #endregion
         }
 
@@ -210,7 +222,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchAccountResource batchAccount = _armClient.GetBatchAccountResource(batchAccountIdentifier);
 
             var poolName = "HelloWorldPool";
-            var imageReference = new BatchImageReference()
+            var imageReference = new Azure.ResourceManager.Batch.Models.BatchImageReference()
             {
                 Publisher = "canonical",
                 Offer = "0001-com-ubuntu-server-jammy",
@@ -264,7 +276,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
             BatchJob job = batchClient.GetJob("jobID");
-            job.OnAllTasksComplete = OnAllBatchTasksComplete.TerminateJob;
+            job.AllTasksCompleteMode = BatchAllTasksCompleteMode.TerminateJob;
             batchClient.ReplaceJob("jobID", job);
             #endregion
         }
@@ -275,10 +287,10 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchJobUpdateContent batchUpdateContent = new BatchJobUpdateContent();
-            batchUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+            BatchJobUpdateOptions batchUpdateOptions = new BatchJobUpdateOptions();
+            batchUpdateOptions.Metadata.Add(new BatchMetadataItem("name", "value"));
 
-            batchClient.UpdateJob("jobID", batchUpdateContent);
+            batchClient.UpdateJob("jobID", batchUpdateOptions);
             #endregion
         }
 
@@ -288,8 +300,8 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Requeue);
-            batchClient.DisableJob("jobID", content);
+            BatchJobDisableOptions options = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
+            batchClient.DisableJob("jobID", options);
             #endregion
         }
 
@@ -355,7 +367,7 @@ namespace Azure.Compute.Batch.Tests.Samples
                 JobManagerTask = batchJobManagerTask,
             };
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", schedule, jobSpecification);
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", schedule, jobSpecification);
 
             batchClient.CreateJobSchedule(jobSchedule);
             #endregion
@@ -417,10 +429,10 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchJobScheduleUpdateContent batchUpdateContent = new BatchJobScheduleUpdateContent();
-            batchUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+            BatchJobScheduleUpdateOptions batchUpdateOptions = new BatchJobScheduleUpdateOptions();
+            batchUpdateOptions.Metadata.Add(new BatchMetadataItem("name", "value"));
 
-            batchClient.UpdateJobSchedule("jobID", batchUpdateContent);
+            batchClient.UpdateJobSchedule("jobID", batchUpdateOptions);
             #endregion
         }
 
@@ -461,13 +473,13 @@ namespace Azure.Compute.Batch.Tests.Samples
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
             BatchTaskGroup taskCollection = new BatchTaskGroup(
-                new BatchTaskCreateContent[]
+                new BatchTaskCreateOptions[]
                 {
-                    new BatchTaskCreateContent("task1", "cmd / c echo Hello World"),
-                    new BatchTaskCreateContent("task2", "cmd / c echo Hello World")
+                    new BatchTaskCreateOptions("task1", "cmd / c echo Hello World"),
+                    new BatchTaskCreateOptions("task2", "cmd / c echo Hello World")
                 });
 
-            BatchTaskAddCollectionResult batchTaskAddCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
+            BatchCreateTaskCollectionResult batchCreateTaskCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
             #endregion
         }
 
@@ -534,7 +546,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("userName")
+            BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
             {
                 Password = "userPassWord"
             };
@@ -611,9 +623,9 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            UploadBatchServiceLogsContent uploadBatchServiceLogsContent = new UploadBatchServiceLogsContent("containerUrl", DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
+            UploadBatchServiceLogsOptions uploadBatchServiceLogsOptions = new UploadBatchServiceLogsOptions(new Uri("containerUrl"), DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
-            UploadBatchServiceLogsResult uploadBatchServiceLogsResult = batchClient.UploadNodeLogs("poolId", "computeNodeId", uploadBatchServiceLogsContent);
+            UploadBatchServiceLogsResult uploadBatchServiceLogsResult = batchClient.UploadNodeLogs("poolId", "computeNodeId", uploadBatchServiceLogsOptions);
             #endregion
         }
 
@@ -656,7 +668,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
             byte[] certData = File.ReadAllBytes("certPath");
-            BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", Convert.ToBase64String(certData))
+            BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
             {
                 CertificateFormat = BatchCertificateFormat.Cer,
                 Password = "",
@@ -673,7 +685,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
             byte[] certData = File.ReadAllBytes("certPath");
-            BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", Convert.ToBase64String(certData))
+            BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
             {
                 CertificateFormat = BatchCertificateFormat.Pfx,
                 Password = "password",
