@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task TestRoutingConfigurationCrud()
         {
             // Create a routing configuration, routing rule collection, and routing rules
@@ -104,6 +105,7 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task TestRoutingConfigurationCommit()
         {
             // Create a new routing configuration, routing rule collection, and routing rules
@@ -144,6 +146,7 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task TestRoutingConfigurationCommit_WithMultipleCollections_TargetingSameRouteTable()
         {
             // Create a new routing configuration, routing rule collection, and routing rules
@@ -218,6 +221,7 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         /*[Test]
+        [RecordedTest]
         public async Task TestRoutingConfigurationCommitWithExistingConfiguration()
         {
             var routeTable = await _resourceGroup.CreateRouteTable("rt-1", _location);
