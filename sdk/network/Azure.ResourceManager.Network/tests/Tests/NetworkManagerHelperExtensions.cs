@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             Response<NetworkManagerRoutingConfigurationResource> fetchedRoutingConfiguration = await networkManager
                 .GetNetworkManagerRoutingConfigurations()
-                .GetAsync(expected.Name);
+                .GetAsync(expected.Name).ConfigureAwait(false);
 
             Assert.AreEqual(NetworkProvisioningState.Succeeded, fetchedRoutingConfiguration.Value.Data.ProvisioningState);
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             try
             {
-                var response = await GetResourceIfExistsAsync(collection, resourceName);
+                var response = await GetResourceIfExistsAsync(collection, resourceName).ConfigureAwait(false);
                 if (response != null)
                 {
                     var hasValueProperty = response.GetType().GetProperty("HasValue");
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
                         for (int attempt = 0; attempt < retryOptions.MaxAttempts; attempt++)
                         {
-                            var verifyResponse = await GetResourceIfExistsAsync(collection, resourceName);
+                            var verifyResponse = await GetResourceIfExistsAsync(collection, resourceName).ConfigureAwait(false);
                             var verifyHasValueProperty = verifyResponse.GetType().GetProperty("HasValue");
                             bool verifyHasValue = (bool)verifyHasValueProperty.GetValue(verifyResponse);
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 networkManagerData.NetworkManagerScopeAccesses.Add(scopeAccess);
             }
 
-            var networkManagerResource = await resourceGroup.GetNetworkManagers().CreateOrUpdateAsync(WaitUntil.Completed, networkManagerName, networkManagerData);
+            var networkManagerResource = await resourceGroup.GetNetworkManagers().CreateOrUpdateAsync(WaitUntil.Completed, networkManagerName, networkManagerData).ConfigureAwait(false);
             return networkManagerResource.Value;
         }
 
