@@ -1387,31 +1387,33 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryTerm>> GetTermAsync(string termId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasGlossaryTerm>> GetTermAsync(string termId, bool? includeTermHierarchy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTermAsync(termId, context).ConfigureAwait(false);
+            Response response = await GetTermAsync(termId, includeTermHierarchy, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerm(string,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryTerm> GetTerm(string termId, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasGlossaryTerm> GetTerm(string termId, bool? includeTermHierarchy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTerm(termId, context);
+            Response response = GetTerm(termId, includeTermHierarchy, context);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
 
@@ -1425,19 +1427,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTermAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTermAsync(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermAsync(string termId, RequestContext context)
+        public virtual async Task<Response> GetTermAsync(string termId, bool? includeTermHierarchy, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
@@ -1445,7 +1448,7 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermRequest(termId, context);
+                using HttpMessage message = CreateGetTermRequest(termId, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1465,19 +1468,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTerm(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTerm(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerm(string,RequestContext)']/*" />
-        public virtual Response GetTerm(string termId, RequestContext context)
+        public virtual Response GetTerm(string termId, bool? includeTermHierarchy, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
@@ -1485,7 +1489,7 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermRequest(termId, context);
+                using HttpMessage message = CreateGetTermRequest(termId, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3953,7 +3957,7 @@ namespace Azure.Analytics.Purview.DataMap
             return message;
         }
 
-        internal HttpMessage CreateGetTermRequest(string termId, RequestContext context)
+        internal HttpMessage CreateGetTermRequest(string termId, bool? includeTermHierarchy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3963,6 +3967,10 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termId, true);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

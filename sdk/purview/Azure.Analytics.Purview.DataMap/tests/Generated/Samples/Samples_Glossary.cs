@@ -1125,7 +1125,7 @@ Info = "Example Steward info",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea", null);
+            Response response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1139,7 +1139,7 @@ Info = "Example Steward info",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea", null);
+            Response response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1153,7 +1153,7 @@ Info = "Example Steward info",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response<AtlasGlossaryTerm> response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea");
+            Response<AtlasGlossaryTerm> response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea", null);
         }
 
         [Test]
@@ -1164,7 +1164,7 @@ Info = "Example Steward info",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response<AtlasGlossaryTerm> response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea");
+            Response<AtlasGlossaryTerm> response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea", null);
         }
 
         [Test]
@@ -1175,7 +1175,7 @@ Info = "Example Steward info",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea", null);
+            Response response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1189,7 +1189,7 @@ Info = "Example Steward info",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea", null);
+            Response response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1203,7 +1203,7 @@ Info = "Example Steward info",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response<AtlasGlossaryTerm> response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea");
+            Response<AtlasGlossaryTerm> response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea", null);
         }
 
         [Test]
@@ -1214,7 +1214,7 @@ Info = "Example Steward info",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response<AtlasGlossaryTerm> response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea");
+            Response<AtlasGlossaryTerm> response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea", null);
         }
 
         [Test]
