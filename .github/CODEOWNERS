@@ -1125,7 +1125,7 @@
 /eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
 
 #PRLabel: %CodeGen %Mgmt
-/eng/packages/http-client-csharp/generator/Azure.Generator.Management/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
+/eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Mgmt/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
