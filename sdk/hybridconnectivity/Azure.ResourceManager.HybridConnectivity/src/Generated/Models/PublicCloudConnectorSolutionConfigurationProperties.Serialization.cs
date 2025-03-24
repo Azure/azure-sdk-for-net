@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            PublicCloudResourceProvistioningState? provisioningState = default;
+            PublicCloudResourceProvisioningState? provisioningState = default;
             string solutionType = default;
             PublicCloudConnectorSolutionSettings solutionSettings = default;
             PublicCloudConnectorSolutionConfigurationStatus? status = default;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    provisioningState = new PublicCloudResourceProvistioningState(property.Value.GetString());
+                    provisioningState = new PublicCloudResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("solutionType"u8))

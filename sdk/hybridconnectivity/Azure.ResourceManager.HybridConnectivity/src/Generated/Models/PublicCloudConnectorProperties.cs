@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="connectorPrimaryIdentifier"> Connector primary identifier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, PublicCloudHostType hostType, PublicCloudResourceProvistioningState? provisioningState, string connectorPrimaryIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, PublicCloudHostType hostType, PublicCloudResourceProvisioningState? provisioningState, string connectorPrimaryIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AwsCloudProfile = awsCloudProfile;
             HostType = hostType;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> Host cloud the public cloud connector. </summary>
         public PublicCloudHostType HostType { get; set; }
         /// <summary> The resource provisioning state. </summary>
-        public PublicCloudResourceProvistioningState? ProvisioningState { get; }
+        public PublicCloudResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Connector primary identifier. </summary>
         public string ConnectorPrimaryIdentifier { get; }
     }

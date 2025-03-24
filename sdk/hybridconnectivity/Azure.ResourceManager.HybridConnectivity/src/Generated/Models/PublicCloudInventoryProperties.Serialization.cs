@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             ResourceIdentifier azureResourceId = default;
             PublicCloudConnectorSolutionConfigurationStatus? status = default;
             string statusDetails = default;
-            PublicCloudResourceProvistioningState? provisioningState = default;
+            PublicCloudResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    provisioningState = new PublicCloudResourceProvistioningState(property.Value.GetString());
+                    provisioningState = new PublicCloudResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

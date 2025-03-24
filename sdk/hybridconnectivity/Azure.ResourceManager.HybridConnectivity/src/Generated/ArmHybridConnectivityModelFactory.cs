@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="statusDetails"> Gets or sets the status details. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <returns> A new <see cref="Models.PublicCloudInventoryProperties"/> instance for mocking. </returns>
-        public static PublicCloudInventoryProperties PublicCloudInventoryProperties(CloudNativeType? cloudNativeType = null, string cloudNativeResourceId = null, ResourceIdentifier azureResourceId = null, PublicCloudConnectorSolutionConfigurationStatus? status = null, string statusDetails = null, PublicCloudResourceProvistioningState? provisioningState = null)
+        public static PublicCloudInventoryProperties PublicCloudInventoryProperties(CloudNativeType? cloudNativeType = null, string cloudNativeResourceId = null, ResourceIdentifier azureResourceId = null, PublicCloudConnectorSolutionConfigurationStatus? status = null, string statusDetails = null, PublicCloudResourceProvisioningState? provisioningState = null)
         {
             return new PublicCloudInventoryProperties(
                 cloudNativeType,
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="statusDetails"> The detailed message of status details. </param>
         /// <param name="lastSyncedOn"> The last time resources were inventoried. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionConfigurationProperties"/> instance for mocking. </returns>
-        public static PublicCloudConnectorSolutionConfigurationProperties PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvistioningState? provisioningState = null, string solutionType = null, PublicCloudConnectorSolutionSettings solutionSettings = null, PublicCloudConnectorSolutionConfigurationStatus? status = null, string statusDetails = null, DateTimeOffset? lastSyncedOn = null)
+        public static PublicCloudConnectorSolutionConfigurationProperties PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvisioningState? provisioningState = null, string solutionType = null, PublicCloudConnectorSolutionSettings solutionSettings = null, PublicCloudConnectorSolutionConfigurationStatus? status = null, string statusDetails = null, DateTimeOffset? lastSyncedOn = null)
         {
             return new PublicCloudConnectorSolutionConfigurationProperties(
                 provisioningState,
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="connectorPrimaryIdentifier"> Connector primary identifier. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorProperties"/> instance for mocking. </returns>
-        public static PublicCloudConnectorProperties PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile = null, PublicCloudHostType hostType = default, PublicCloudResourceProvistioningState? provisioningState = null, string connectorPrimaryIdentifier = null)
+        public static PublicCloudConnectorProperties PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile = null, PublicCloudHostType hostType = default, PublicCloudResourceProvisioningState? provisioningState = null, string connectorPrimaryIdentifier = null)
         {
             return new PublicCloudConnectorProperties(awsCloudProfile, hostType, provisioningState, connectorPrimaryIdentifier, serializedAdditionalRawData: null);
         }
