@@ -9,6 +9,7 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
+using SystemData = Azure.ResourceManager.Models.SystemData;
 
 namespace Azure.ResourceManager.Sql
 {

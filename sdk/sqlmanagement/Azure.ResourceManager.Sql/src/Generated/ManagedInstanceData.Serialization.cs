@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            JobExecutionProvisioningState? provisioningState = default;
+            ManagedInstancePropertiesProvisioningState? provisioningState = default;
             ManagedServerCreateMode? managedInstanceCreateMode = default;
             string fullyQualifiedDomainName = default;
             bool? isGeneralPurposeV2 = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            provisioningState = new JobExecutionProvisioningState(property0.Value.GetString());
+                            provisioningState = new ManagedInstancePropertiesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managedInstanceCreateMode"u8))
