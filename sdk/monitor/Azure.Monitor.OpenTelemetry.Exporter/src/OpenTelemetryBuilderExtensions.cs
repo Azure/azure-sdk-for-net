@@ -12,6 +12,8 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using System;
+using OpenTelemetry.Trace;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -72,6 +74,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 .WithLogging()
                 .WithMetrics()
                 .WithTracing();
+
+            builder.Services.ConfigureOpenTelemetryTracerProvider((sp, tracerProviderBuilder) =>
+            {
+                var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
+                tracerProviderBuilder.SetSampler(new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
+            });
 
             builder.Services.Configure<OpenTelemetryLoggerOptions>((loggingOptions) =>
             {

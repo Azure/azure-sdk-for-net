@@ -12,6 +12,7 @@ trigger:
     - common/ManagementTestShared
     - common/ManagementCoreShared
     - sdk/advisor/Azure.ResourceManager.Advisor
+    - sdk/agricultureplatform/Azure.ResourceManager.AgriculturePlatform
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/analysisservices/Azure.ResourceManager.Analysis
@@ -220,6 +221,7 @@ pr:
     - common/ManagementTestShared
     - common/ManagementCoreShared
     - sdk/advisor/Azure.ResourceManager.Advisor
+    - sdk/agricultureplatform/Azure.ResourceManager.AgriculturePlatform
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/analysisservices/Azure.ResourceManager.Analysis
