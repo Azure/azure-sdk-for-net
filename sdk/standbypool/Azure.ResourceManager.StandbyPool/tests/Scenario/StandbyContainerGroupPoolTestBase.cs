@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using System;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StandbyPool.Models;
+using Azure.ResourceManager.Models;
+using System.Security.AccessControl;
+using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StandbyPool.Tests
 {
@@ -24,23 +28,22 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         protected async Task<StandbyContainerGroupPoolResource> CreateContainerGroupPoolResource(ResourceGroupResource resourceGroup, string standbyContainerGroupPoolName, long maxReadyCapacity, AzureLocation location, GenericResource containerGroupProfile, ResourceIdentifier subnetId)
         {
-            StandbyContainerGroupPoolProperties properties = new StandbyContainerGroupPoolProperties()
+            var ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile()
             {
-                ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile()
-                {
-                    MaxReadyCapacity = maxReadyCapacity,
-                    RefillPolicy = StandbyRefillPolicy.Always,
-                },
-                ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(containerGroupProfile.Id))
-                {
-                    SubnetIds = {
+                MaxReadyCapacity = maxReadyCapacity,
+                RefillPolicy = StandbyRefillPolicy.Always,
+            };
+            var ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(containerGroupProfile.Id))
+            {
+                SubnetIds = {
                         new WritableSubResource()
                         {
                             Id = subnetId,
                         }
                     }
-                }
             };
+            StandbyContainerGroupPoolProperties properties = new StandbyContainerGroupPoolProperties(ElasticityProfile, ContainerGroupProperties);
+            properties.Zones.Add("WestUs"); //maybe not right value
             StandbyContainerGroupPoolData input = new StandbyContainerGroupPoolData(location)
             {
                 Properties = properties

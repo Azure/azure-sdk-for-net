@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             StandbyVirtualMachinePoolRuntimeViewResource result = await standbyVirtualMachinePoolRuntimeViewResource.GetAsync();
             Assert.AreEqual(runtimeView, result.Data.Name);
             Assert.IsTrue(result.Data.Properties.InstanceCountSummary.Count > 0);
-            Assert.IsTrue(result.Data.Properties.InstanceCountSummary[0].InstanceCountsByState.Count > 0);
+            Assert.IsTrue(result.Data.Properties.InstanceCountSummary[0].InstanceCountsByStateUpdated.Count > 0);
 
             // Update
             var standbyVirtualMachinePoolUpdate =
