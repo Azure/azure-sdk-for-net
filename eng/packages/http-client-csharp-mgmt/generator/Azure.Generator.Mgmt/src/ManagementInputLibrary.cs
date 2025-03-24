@@ -8,13 +8,13 @@ using System.Linq;
 namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
-    public class MgmtInputLibrary : InputLibrary
+    public class ManagementInputLibrary : InputLibrary
     {
         private IReadOnlyDictionary<string, InputModelType>? _inputModelsByCrossLanguageDefinitionId = null;
         private IReadOnlyDictionary<string, InputModelType> InputModelsByCrossLanguageDefinitionId => _inputModelsByCrossLanguageDefinitionId ??= InputNamespace.Models.DistinctBy(x => x.CrossLanguageDefinitionId).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
         /// <inheritdoc/>
-        public MgmtInputLibrary(string configPath) : base(configPath)
+        public ManagementInputLibrary(string configPath) : base(configPath)
         {
         }
 

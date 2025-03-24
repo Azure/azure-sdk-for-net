@@ -23,7 +23,7 @@ const singleton = "Azure.ResourceManager.@singleton";
 const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
-  context.options["generator-name"] ??= "MgmtClientGenerator";
+  context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;

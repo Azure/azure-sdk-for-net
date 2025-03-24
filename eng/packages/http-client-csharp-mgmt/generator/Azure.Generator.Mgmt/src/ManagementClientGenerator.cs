@@ -13,33 +13,33 @@ namespace Azure.Generator.Management
     /// The Azure management client generator to generate the Azure management client SDK.
     /// </summary>
     [Export(typeof(CodeModelGenerator))]
-    [ExportMetadata(GeneratorMetadataName, nameof(MgmtClientGenerator))]
-    public class MgmtClientGenerator : AzureClientGenerator
+    [ExportMetadata(GeneratorMetadataName, nameof(ManagementClientGenerator))]
+    public class ManagementClientGenerator : AzureClientGenerator
     {
-        private static MgmtClientGenerator? _instance;
-        internal static MgmtClientGenerator Instance => _instance ?? throw new InvalidOperationException("MgmtClientGenerator is not loaded.");
+        private static ManagementClientGenerator? _instance;
+        internal static ManagementClientGenerator Instance => _instance ?? throw new InvalidOperationException("ManagementClientGenerator is not loaded.");
 
         /// <summary>
         /// The Azure management client generator to generate the Azure management client SDK.
         /// </summary>
         /// <param name="context"></param>
         [ImportingConstructor]
-        public MgmtClientGenerator(GeneratorContext context) : base(context)
+        public ManagementClientGenerator(GeneratorContext context) : base(context)
         {
-            TypeFactory = new MgmtTypeFactory();
-            InputLibrary = new MgmtInputLibrary(Configuration.OutputDirectory);
+            TypeFactory = new ManagementTypeFactory();
+            InputLibrary = new ManagementInputLibrary(Configuration.OutputDirectory);
             _instance = this;
         }
 
         /// <inheritdoc/>
-        public override MgmtInputLibrary InputLibrary { get; }
+        public override ManagementInputLibrary InputLibrary { get; }
 
-        private MgmtOutputLibrary? _azureOutputLibrary;
+        private ManagementOutputLibrary? _azureOutputLibrary;
         /// <inheritdoc/>
-        public override MgmtOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
+        public override ManagementOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
         /// <inheritdoc/>
-        public override MgmtTypeFactory TypeFactory { get; }
+        public override ManagementTypeFactory TypeFactory { get; }
 
         /// <summary>
         /// Customize the generation output for Azure client SDK.

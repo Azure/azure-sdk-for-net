@@ -14,12 +14,12 @@ using System.Reflection;
 
 namespace Azure.Generator.Management.Tests.TestHelpers
 {
-    internal class MgmtMockHelpers
+    internal class ManagementMockHelpers
     {
         private static readonly string _configFilePath = Path.Combine(AppContext.BaseDirectory, TestHelpersFolder);
         private const string TestHelpersFolder = "TestHelpers";
 
-        public static Mock<MgmtClientGenerator> LoadMockPlugin(
+        public static Mock<ManagementClientGenerator> LoadMockPlugin(
             Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
             Func<InputType, CSharpType>? createCSharpTypeCore = null,
             Func<InputApiKeyAuth>? apiKeyAuth = null,
@@ -36,7 +36,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
             IReadOnlyList<InputClient> inputNsClients = clients?.Invoke() ?? [];
             IReadOnlyList<InputModelType> inputNsModels = inputModels?.Invoke() ?? [];
-            var mgmtInstance = typeof(MgmtClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
+            var mgmtInstance = typeof(ManagementClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             InputAuth inputNsAuth = new InputAuth(apiKeyAuth?.Invoke(), oauth2Auth?.Invoke());
             var mockInputNs = new Mock<InputNamespace>(
                 "Samples",
@@ -46,13 +46,13 @@ namespace Azure.Generator.Management.Tests.TestHelpers
                 inputNsClients,
                 inputNsAuth,
                 null);
-            var mockInputLibrary = new Mock<MgmtInputLibrary>(_configFilePath);
+            var mockInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
-            Mock<MgmtTypeFactory>? mockTypeFactory = null;
+            Mock<ManagementTypeFactory>? mockTypeFactory = null;
             if (createCSharpTypeCore is not null)
             {
-                mockTypeFactory = new Mock<MgmtTypeFactory>() { CallBase = true };
+                mockTypeFactory = new Mock<ManagementTypeFactory>() { CallBase = true };
                 mockTypeFactory.Protected().Setup<CSharpType>("CreateCSharpTypeCore", ItExpr.IsAny<InputType>()).Returns(createCSharpTypeCore);
             }
 
@@ -65,7 +65,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             object?[] parameters = [_configFilePath, null];
             var config = loadMethod?.Invoke(null, parameters);
             var mockGeneratorContext = new Mock<GeneratorContext>(config!);
-            var mockPluginInstance = new Mock<MgmtClientGenerator>(mockGeneratorContext.Object) { CallBase = true };
+            var mockPluginInstance = new Mock<ManagementClientGenerator>(mockGeneratorContext.Object) { CallBase = true };
             codeModelInstance!.SetValue(null, mockPluginInstance.Object);
             clientModelInstance!.SetValue(null, mockPluginInstance.Object);
             azureInstance!.SetValue(null, mockPluginInstance.Object);
