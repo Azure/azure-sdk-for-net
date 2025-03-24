@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             builder.Path = BlobContainerName;
 
             // Start the pre-backup check
-            KeyVaultPreBackupOperation preBackupOperation = await Client.StartPreBackupAsync(builder.Uri, "?" + SasToken, source.Token);
+            KeyVaultBackupOperation preBackupOperation = await Client.StartPreBackupAsync(builder.Uri, "?" + SasToken, source.Token);
 
             // Wait for completion of the LRO
             var preBackupResult = await preBackupOperation.WaitForCompletionAsync(source.Token);

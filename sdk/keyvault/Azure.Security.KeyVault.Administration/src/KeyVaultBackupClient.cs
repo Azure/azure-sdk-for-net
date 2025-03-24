@@ -544,8 +544,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="KeyVaultPreBackupOperation"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<KeyVaultPreBackupOperation> StartPreBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<KeyVaultBackupOperation> StartPreBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
             Argument.AssertNotNull(sasToken, nameof(sasToken));
@@ -567,7 +567,7 @@ namespace Azure.Security.KeyVault.Administration
                 var headers = new AzureSecurityKeyVaultAdministrationPreFullBackupHeaders(operation.GetRawResponse());
                 var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
 
-                return new KeyVaultPreBackupOperation(this, responseWithHeaders);
+                return new KeyVaultBackupOperation(this, responseWithHeaders);
             }
             catch (Exception ex)
             {
@@ -584,8 +584,8 @@ namespace Azure.Security.KeyVault.Administration
          /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
          /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
          /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-         /// <returns>A <see cref="KeyVaultPreBackupOperation"/> representing the result of the operation.</returns>
-         public virtual KeyVaultPreBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+         /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the operation.</returns>
+         public virtual KeyVaultBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
          {
              Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
              Argument.AssertNotNull(sasToken, nameof(sasToken));
@@ -608,7 +608,7 @@ namespace Azure.Security.KeyVault.Administration
                 var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
 
                  // Should this return a KeyVaultBackupOperation?
-                 return new KeyVaultPreBackupOperation(this, responseWithHeaders);
+                 return new KeyVaultBackupOperation(this, responseWithHeaders);
              }
              catch (Exception ex)
              {

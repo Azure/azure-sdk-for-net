@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
@@ -14,7 +15,15 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultBackupOperation : Operation<KeyVaultBackupResult>
     {
-        private readonly BackupOperationInternal<AzureSecurityKeyVaultAdministrationFullBackupHeaders, KeyVaultBackupResult, FullBackupDetailsInternal> _operationInternal;
+        /// <summary>
+        /// The number of seconds recommended by the service to delay before checking on completion status.
+        /// </summary>
+        internal int? _retryAfterSeconds;
+        private readonly KeyVaultBackupClient _client;
+        private Response _response;
+        private FullBackupDetailsInternal _value;
+        private readonly string _id;
+        private RequestFailedException _requestFailedException;
 
         /// <summary>
         /// Creates an instance of a KeyVaultBackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
@@ -26,7 +35,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
         public KeyVaultBackupOperation(KeyVaultBackupClient client, string id)
         {
-            _operationInternal = new BackupOperationInternal<AzureSecurityKeyVaultAdministrationFullBackupHeaders, KeyVaultBackupResult, FullBackupDetailsInternal>(client, id);
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(client, nameof(client));
+
+            _client = client;
+            _id = id;
         }
 
         /// <summary>
@@ -36,7 +49,23 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.</param>
         internal KeyVaultBackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullBackupHeaders> response)
         {
-            _operationInternal = new BackupOperationInternal<AzureSecurityKeyVaultAdministrationFullBackupHeaders, KeyVaultBackupResult, FullBackupDetailsInternal>(client, response);
+            _client = client;
+            _response = response;
+            _retryAfterSeconds = response.Headers.RetryAfter;
+            _id = response.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
+        }
+
+        /// <summary>
+        /// Initializes a new instance of a KeyVaultBackupOperation.
+        /// </summary>
+        /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.</param>
+        internal KeyVaultBackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullBackupHeaders> response)
+        {
+            _client = client;
+            _response = response;
+            _retryAfterSeconds = response.Headers.RetryAfter;
+            _id = response.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
         }
 
         /// <summary>
@@ -47,49 +76,114 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         internal KeyVaultBackupOperation(FullBackupDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
-            _operationInternal = new BackupOperationInternal<AzureSecurityKeyVaultAdministrationFullBackupHeaders, KeyVaultBackupResult, FullBackupDetailsInternal>(value, response, client);
+            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(response, nameof(response));
+            Argument.AssertNotNull(client, nameof(client));
+
+            _response = response;
+            _value = value;
+            _id = value.JobId;
+            _client = client;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KeyVaultBackupOperation" /> for mocking. </summary>
+        protected KeyVaultBackupOperation() {}
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeyVaultBackupOperation"/> class.
+        /// The start time of the backup operation.
         /// </summary>
-        protected KeyVaultBackupOperation() { }
+        public DateTimeOffset? StartTime => _value?.StartTime;
+
+        /// <summary>
+        /// The end time of the backup operation.
+        /// </summary>
+        public DateTimeOffset? EndTime => _value?.EndTime;
 
         /// <inheritdoc/>
-        public DateTimeOffset? StartTime => _operationInternal.StartTime;
+        public override string Id => _id;
+
+        /// <summary>
+        /// Gets the <see cref="FullBackupDetailsInternal"/> of the backup operation.
+        /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to use a key in this pending state.
+        /// </summary>
+        public override KeyVaultBackupResult Value
+        {
+            get
+            {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                if (!HasCompleted)
+                {
+                    throw new InvalidOperationException("The operation is not complete.");
+                }
+                if (_requestFailedException != null)
+                {
+                    throw _requestFailedException;
+                }
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                return new KeyVaultBackupResult(new Uri(_value.AzureStorageBlobContainerUri), _value.StartTime.Value, _value.EndTime.Value);
+            }
+        }
 
         /// <inheritdoc/>
-        public DateTimeOffset? EndTime => _operationInternal.EndTime;
+        public override bool HasCompleted => _value?.EndTime.HasValue ?? false;
 
         /// <inheritdoc/>
-        public override string Id => _operationInternal.Id;
+        public override bool HasValue => _response != null && _value?.Error == null && HasCompleted;
 
         /// <inheritdoc/>
-        public override KeyVaultBackupResult Value => _operationInternal.Value;
-
-        /// <inheritdoc/>
-        public override bool HasCompleted => _operationInternal.HasCompleted;
-
-        /// <inheritdoc/>
-        public override bool HasValue => _operationInternal.HasValue;
-
-        /// <inheritdoc/>
-        public override Response GetRawResponse() => _operationInternal.GetRawResponse();
+        public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
-            _operationInternal.UpdateStatus(cancellationToken);
+            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc/>
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
-            _operationInternal.UpdateStatusAsync(cancellationToken);
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken = default)
+        {
+            if (!HasCompleted)
+            {
+                try
+                {
+                    Response<FullBackupDetailsInternal> response = async ?
+                        await _client.GetBackupDetailsAsync(Id, cancellationToken).ConfigureAwait(false)
+                        : _client.GetBackupDetails(Id, cancellationToken);
+
+                    _value = response.Value;
+                    _response = response.GetRawResponse();
+                }
+                catch (RequestFailedException ex)
+                {
+                    _requestFailedException = ex;
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    _requestFailedException = new RequestFailedException("Unexpected failure", ex);
+                    throw _requestFailedException;
+                }
+
+                if (_value != null && _value.EndTime.HasValue && _value.Error != null)
+                {
+                    _requestFailedException = _response != null ?
+                        new RequestFailedException(_response)
+                        : new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
+                    throw _requestFailedException;
+                }
+            }
+
+            return GetRawResponse();
+        }
 
         /// <inheritdoc/>
         public override ValueTask<Response<KeyVaultBackupResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            _operationInternal.WaitForCompletionAsync(cancellationToken);
+            _retryAfterSeconds.HasValue ? this.DefaultWaitForCompletionAsync(TimeSpan.FromSeconds(_retryAfterSeconds.Value), cancellationToken) :
+                this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
         public override ValueTask<Response<KeyVaultBackupResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken);
+                this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }
