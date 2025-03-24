@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"></param>
         /// <param name="status"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn, DateTimeOffset? stepEndOn, string timeElapsed, int? order, string name, ManagementOperationStepState? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn, DateTimeOffset? stepEndOn, string timeElapsed, int? order, string name, UpsertManagedServerOperationStepStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StepStartOn = stepStartOn;
             StepEndOn = stepEndOn;
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.Sql.Models
         public string Name { get; }
         /// <summary> Gets the status. </summary>
         [WirePath("status")]
-        public ManagementOperationStepState? Status { get; }
+        public UpsertManagedServerOperationStepStatus? Status { get; }
     }
 }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             SystemData systemData = default;
             IList<ServerTrustGroupServerInfo> groupMembers = default;
-            IList<TrustScope> trustScopes = default;
+            IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            List<TrustScope> array = new List<TrustScope>();
+                            List<ServerTrustGroupPropertiesTrustScopesItem> array = new List<ServerTrustGroupPropertiesTrustScopesItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new TrustScope(item.GetString()));
+                                array.Add(new ServerTrustGroupPropertiesTrustScopesItem(item.GetString()));
                             }
                             trustScopes = array;
                             continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                 type,
                 systemData,
                 groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(),
-                trustScopes ?? new ChangeTrackingList<TrustScope>(),
+                trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(),
                 serializedAdditionalRawData);
         }
 

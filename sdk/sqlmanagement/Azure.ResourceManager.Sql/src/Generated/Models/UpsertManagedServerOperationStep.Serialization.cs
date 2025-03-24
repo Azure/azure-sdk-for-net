@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Models
             string timeElapsed = default;
             int? order = default;
             string name = default;
-            ManagementOperationStepState? status = default;
+            UpsertManagedServerOperationStepStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    status = new ManagementOperationStepState(property.Value.GetString());
+                    status = new UpsertManagedServerOperationStepStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

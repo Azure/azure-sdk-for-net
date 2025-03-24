@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
-                foreach (var item in Details)
+                foreach (var item in AdditionalDetails)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Details), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalDetails), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    details: ");
@@ -1071,13 +1071,13 @@ namespace Azure.ResourceManager.Sql
             }
             else
             {
-                if (Optional.IsCollectionDefined(Details))
+                if (Optional.IsCollectionDefined(AdditionalDetails))
                 {
-                    if (Details.Any())
+                    if (AdditionalDetails.Any())
                     {
                         builder.Append("    details: ");
                         builder.AppendLine("{");
-                        foreach (var item in Details)
+                        foreach (var item in AdditionalDetails)
                         {
                             builder.Append($"        '{item.Key}': ");
                             if (item.Value == null)

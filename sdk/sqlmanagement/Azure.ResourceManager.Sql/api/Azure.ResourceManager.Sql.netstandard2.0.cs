@@ -294,18 +294,30 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class DistributedAvailabilityGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public DistributedAvailabilityGroupData() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Guid? DistributedAvailabilityGroupId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string LastHardenedLsn { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string LinkState { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string PrimaryAvailabilityGroupName { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode? ReplicationMode { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SecondaryAvailabilityGroupName { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SourceEndpoint { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Guid? SourceReplicaId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string TargetDatabase { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Guid? TargetReplicaId { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.DistributedAvailabilityGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -314,23 +326,33 @@ namespace Azure.ResourceManager.Sql
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class DistributedAvailabilityGroupResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DistributedAvailabilityGroupResource() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.Sql.DistributedAvailabilityGroupData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Sql.DistributedAvailabilityGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.DistributedAvailabilityGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.DistributedAvailabilityGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DistributedAvailabilityGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DistributedAvailabilityGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ElasticPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ElasticPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ElasticPoolResource>, System.Collections.IEnumerable
@@ -353,6 +375,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ElasticPoolData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ElasticPoolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.ElasticPoolData>
     {
         public ElasticPoolData(Azure.Core.AzureLocation location) { }
+        public int? AutoPauseDelay { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType? AvailabilityZone { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public int? HighAvailabilityReplicaCount { get { throw null; } set { } }
@@ -1040,8 +1063,6 @@ namespace Azure.ResourceManager.Sql
     public partial class LongTermRetentionPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.LongTermRetentionPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.LongTermRetentionPolicyData>
     {
         public LongTermRetentionPolicyData() { }
-        public Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? BackupStorageAccessTier { get { throw null; } set { } }
-        public bool? MakeBackupsImmutable { get { throw null; } set { } }
         public string MonthlyRetention { get { throw null; } set { } }
         public string WeeklyRetention { get { throw null; } set { } }
         public int? WeekOfYear { get { throw null; } set { } }
@@ -1283,8 +1304,8 @@ namespace Azure.ResourceManager.Sql
         public string Collation { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode? CreateMode { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier CrossSubscriptionRestorableDroppedDatabaseId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier CrossSubscriptionSourceDatabaseId { get { throw null; } set { } }
+        public string CrossSubscriptionRestorableDroppedDatabaseId { get { throw null; } set { } }
+        public string CrossSubscriptionSourceDatabaseId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CrossSubscriptionTargetManagedInstanceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? DefaultSecondaryLocation { get { throw null; } }
         public System.DateTimeOffset? EarliestRestorePoint { get { throw null; } }
@@ -1348,7 +1369,11 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource> GetManagedDatabaseSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SqlSecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource>> GetManagedDatabaseSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SqlSecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = null, int? skip = default(int?), int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = null, long? skip = default(long?), long? top = default(long?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = null, int? skip = default(int?), int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = null, long? skip = default(long?), long? top = default(long?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> GetManagedDatabaseSensitivityLabelsByDatabase(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> GetManagedDatabaseSensitivityLabelsByDatabaseAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> GetManagedDatabaseVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>> GetManagedDatabaseVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentCollection GetManagedDatabaseVulnerabilityAssessments() { throw null; }
@@ -1871,15 +1896,22 @@ namespace Azure.ResourceManager.Sql
         public string AdministratorLogin { get { throw null; } set { } }
         public string AdministratorLoginPassword { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceExternalAdministrator Administrators { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode? AuthenticationMetadata { get { throw null; } set { } }
         public string Collation { get { throw null; } set { } }
+        public System.DateTimeOffset? CreateOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat? DatabaseFormat { get { throw null; } set { } }
         public string DnsZone { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public string DnsZonePartner { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus? ExternalGovernanceStatus { get { throw null; } }
         public string FullyQualifiedDomainName { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.HybridSecondaryUsage? HybridSecondaryUsage { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected? HybridSecondaryUsageDetected { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InstancePoolId { get { throw null; } set { } }
+        public bool? IsGeneralPurposeV2 { get { throw null; } set { } }
         public bool? IsPublicDataEndpointEnabled { get { throw null; } set { } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
         public System.Uri KeyId { get { throw null; } set { } }
@@ -1888,6 +1920,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.Core.ResourceIdentifier ManagedDnsZonePartner { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedServerCreateMode? ManagedInstanceCreateMode { get { throw null; } set { } }
         public string MinimalTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.PricingModel? PricingModel { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedInstancePecProperty> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState? ProvisioningState { get { throw null; } }
@@ -1898,10 +1931,13 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceManagedInstanceId { get { throw null; } set { } }
         public string State { get { throw null; } }
+        public int? StorageIOps { get { throw null; } set { } }
         public int? StorageSizeInGB { get { throw null; } set { } }
+        public int? StorageThroughputMBps { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public string TimezoneId { get { throw null; } set { } }
         public int? VCores { get { throw null; } set { } }
+        public string VirtualClusterId { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.ManagedInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ManagedInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ManagedInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2067,6 +2103,7 @@ namespace Azure.ResourceManager.Sql
         public ManagedInstanceLongTermRetentionBackupData() { }
         public System.DateTimeOffset? BackupExpireOn { get { throw null; } }
         public System.DateTimeOffset? BackupOn { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? BackupStorageAccessTier { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? BackupStorageRedundancy { get { throw null; } }
         public System.DateTimeOffset? DatabaseDeletedOn { get { throw null; } }
         public string DatabaseName { get { throw null; } }
@@ -2099,6 +2136,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceLongTermRetentionPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyData>
     {
         public ManagedInstanceLongTermRetentionPolicyData() { }
+        public Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? BackupStorageAccessTier { get { throw null; } set { } }
         public string MonthlyRetention { get { throw null; } set { } }
         public string WeeklyRetention { get { throw null; } set { } }
         public int? WeekOfYear { get { throw null; } set { } }
@@ -2117,6 +2155,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.ManagedInstanceLongTermRetentionPolicyName policyName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyResource> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2291,8 +2331,11 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ReplicaType? replicaType = default(Azure.ResourceManager.Sql.Models.ReplicaType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource> GetDistributedAvailabilityGroup(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource>> GetDistributedAvailabilityGroupAsync(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.Sql.DistributedAvailabilityGroupCollection GetDistributedAvailabilityGroups() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.EndpointCertificateResource> GetEndpointCertificate(string endpointType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.EndpointCertificateResource>> GetEndpointCertificateAsync(string endpointType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2356,20 +2399,25 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseResource>> GetRestorableDroppedManagedDatabaseAsync(string restorableDroppedDatabaseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseCollection GetRestorableDroppedManagedDatabases() { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlAgentConfigurationResource GetSqlAgentConfiguration() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> GetSqlDistributedAvailabilityGroup(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>> GetSqlDistributedAvailabilityGroupAsync(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupCollection GetSqlDistributedAvailabilityGroups() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetSqlServerTrustGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetSqlServerTrustGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueries(Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueries(int? numberOfQueries = default(int?), string databases = null, string startTime = null, string endTime = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? interval = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), Azure.ResourceManager.Sql.Models.AggregationFunctionType? aggregationFunction = default(Azure.ResourceManager.Sql.Models.AggregationFunctionType?), Azure.ResourceManager.Sql.Models.SqlMetricType? observationMetric = default(Azure.ResourceManager.Sql.Models.SqlMetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueriesAsync(Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueriesAsync(int? numberOfQueries = default(int?), string databases = null, string startTime = null, string endTime = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? interval = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), Azure.ResourceManager.Sql.Models.AggregationFunctionType? aggregationFunction = default(Azure.ResourceManager.Sql.Models.AggregationFunctionType?), Azure.ResourceManager.Sql.Models.SqlMetricType? observationMetric = default(Azure.ResourceManager.Sql.Models.SqlMetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI> RefreshStatus(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI>> RefreshStatusAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceResource> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceResource>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceResource> Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceResource>> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Sql.ManagedInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ManagedInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ManagedInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.ManagedInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.ManagedInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2794,7 +2842,9 @@ namespace Azure.ResourceManager.Sql
     {
         protected OutboundFirewallRuleCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.OutboundFirewallRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string outboundRuleFqdn, Azure.ResourceManager.Sql.OutboundFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.OutboundFirewallRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string outboundRuleFqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.OutboundFirewallRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string outboundRuleFqdn, Azure.ResourceManager.Sql.OutboundFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.OutboundFirewallRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string outboundRuleFqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string outboundRuleFqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string outboundRuleFqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.OutboundFirewallRuleResource> Get(string outboundRuleFqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2835,7 +2885,9 @@ namespace Azure.ResourceManager.Sql
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.OutboundFirewallRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.OutboundFirewallRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.OutboundFirewallRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.OutboundFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.OutboundFirewallRuleResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.OutboundFirewallRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.OutboundFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.OutboundFirewallRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RecommendedActionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.RecommendedActionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RecommendedActionResource>, System.Collections.IEnumerable
     {
@@ -2855,6 +2907,8 @@ namespace Azure.ResourceManager.Sql
     public partial class RecommendedActionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.RecommendedActionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.RecommendedActionData>
     {
         public RecommendedActionData() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> AdditionalDetails { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Details { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.RecommendedActionErrorInfo ErrorDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord> EstimatedImpact { get { throw null; } }
@@ -3218,6 +3272,7 @@ namespace Azure.ResourceManager.Sql
     public partial class SensitivityLabelData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SensitivityLabelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SensitivityLabelData>
     {
         public SensitivityLabelData() { }
+        public Azure.ResourceManager.Sql.Models.ClientClassificationSource? ClientClassificationSource { get { throw null; } set { } }
         public string ColumnName { get { throw null; } }
         public string InformationType { get { throw null; } set { } }
         public string InformationTypeId { get { throw null; } set { } }
@@ -3699,6 +3754,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetricsAsync(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetSensitivityLabels(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetSensitivityLabelsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> GetSqlDatabaseAdvisor(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>> GetSqlDatabaseAdvisorAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlDatabaseAdvisorCollection GetSqlDatabaseAdvisors() { throw null; }
@@ -4192,6 +4249,67 @@ namespace Azure.ResourceManager.Sql
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.VulnerabilityAssessmentScanRecordData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.VulnerabilityAssessmentScanRecordData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SqlDistributedAvailabilityGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>, System.Collections.IEnumerable
+    {
+        protected SqlDistributedAvailabilityGroupCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string distributedAvailabilityGroupName, Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string distributedAvailabilityGroupName, Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> Get(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>> GetAsync(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> GetIfExists(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>> GetIfExistsAsync(string distributedAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDistributedAvailabilityGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>
+    {
+        public SqlDistributedAvailabilityGroupData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase> Databases { get { throw null; } }
+        public System.Guid? DistributedAvailabilityGroupId { get { throw null; } }
+        public string DistributedAvailabilityGroupName { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.FailoverModeType? FailoverMode { get { throw null; } set { } }
+        public string InstanceAvailabilityGroupName { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.LinkRole? InstanceLinkRole { get { throw null; } set { } }
+        public string PartnerAvailabilityGroupName { get { throw null; } set { } }
+        public string PartnerEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.LinkRole? PartnerLinkRole { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.ReplicationModeType? ReplicationMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SeedingModeType? SeedingMode { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SqlDistributedAvailabilityGroupResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDistributedAvailabilityGroupResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> Failover(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>> FailoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> SetRole(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole distributedAvailabilityGroupSetRole, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>> SetRoleAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole distributedAvailabilityGroupSetRole, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class SqlExtensions
     {
         public static Azure.Response<Azure.ResourceManager.Sql.Models.SqlNameAvailabilityResponse> CheckSqlServerNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Sql.Models.SqlNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4208,6 +4326,7 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.DeletedServerCollection GetDeletedServers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Sql.DeletedServerResource> GetDeletedServers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.DeletedServerResource> GetDeletedServersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource GetDistributedAvailabilityGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ElasticPoolResource GetElasticPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.EncryptionProtectorResource GetEncryptionProtectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -4273,10 +4392,18 @@ namespace Azure.ResourceManager.Sql
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.Sql.Models.ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Sql.Models.SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.Sql.Models.ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Sql.Models.SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Sql.LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.MaintenanceWindowOptionResource GetMaintenanceWindowOptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.MaintenanceWindowsResource GetMaintenanceWindowsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -4351,6 +4478,7 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource GetSqlDatabaseVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource GetSqlDatabaseVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource GetSqlDistributedAvailabilityGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlFirewallRuleResource GetSqlFirewallRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlPrivateEndpointConnectionResource GetSqlPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlPrivateLinkResource GetSqlPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -5151,6 +5279,7 @@ namespace Azure.ResourceManager.Sql
     {
         public SqlServerJobAgentData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier DatabaseId { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.JobAgentIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.JobAgentState? State { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6808,6 +6937,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Azure.ResourceManager.Sql.DataMaskingPolicyResource GetDataMaskingPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.DataWarehouseUserActivityResource GetDataWarehouseUserActivityResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.DeletedServerResource GetDeletedServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource GetDistributedAvailabilityGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.ElasticPoolResource GetElasticPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.EncryptionProtectorResource GetEncryptionProtectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -6884,6 +7014,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource GetSqlDatabaseVulnerabilityAssessmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource GetSqlDatabaseVulnerabilityAssessmentScanResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupResource GetSqlDistributedAvailabilityGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlFirewallRuleResource GetSqlFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlPrivateEndpointConnectionResource GetSqlPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlPrivateLinkResource GetSqlPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -6961,8 +7092,8 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(Azure.Core.AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(Azure.Core.AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(Azure.ResourceManager.Sql.Models.ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(Azure.ResourceManager.Sql.Models.ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource> GetManagedInstance(string managedInstanceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource>> GetManagedInstanceAsync(string managedInstanceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ManagedInstanceCollection GetManagedInstances() { throw null; }
@@ -7018,8 +7149,8 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(Azure.Core.AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(Azure.Core.AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(Azure.ResourceManager.Sql.Models.SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(Azure.ResourceManager.Sql.Models.SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceResource> GetManagedInstances(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceResource> GetManagedInstancesAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerResource> GetSqlServers(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -7099,6 +7230,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.AutomaticTuningServerOptions AutomaticTuningServerOptions(Azure.ResourceManager.Sql.Models.AutomaticTuningOptionModeDesired? desiredState = default(Azure.ResourceManager.Sql.Models.AutomaticTuningOptionModeDesired?), Azure.ResourceManager.Sql.Models.AutomaticTuningOptionModeActual? actualState = default(Azure.ResourceManager.Sql.Models.AutomaticTuningOptionModeActual?), int? reasonCode = default(int?), Azure.ResourceManager.Sql.Models.AutomaticTuningServerReason? reasonDesc = default(Azure.ResourceManager.Sql.Models.AutomaticTuningServerReason?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.AutoPauseDelayTimeRange AutoPauseDelayTimeRange(int? minValue = default(int?), int? maxValue = default(int?), int? stepSize = default(int?), int? @default = default(int?), Azure.ResourceManager.Sql.Models.PauseDelayTimeUnit? unit = default(Azure.ResourceManager.Sql.Models.PauseDelayTimeUnit?), int? doNotPauseValue = default(int?)) { throw null; }
         public static Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyData BackupShortTermRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? retentionDays = default(int?), Azure.ResourceManager.Sql.Models.DiffBackupIntervalInHours? diffBackupIntervalInHours = default(Azure.ResourceManager.Sql.Models.DiffBackupIntervalInHours?)) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.CertificateInfo CertificateInfo(string certificateName = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sql.DatabaseAdvancedThreatProtectionData DatabaseAdvancedThreatProtectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.AdvancedThreatProtectionState? state = default(Azure.ResourceManager.Sql.Models.AdvancedThreatProtectionState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sql.DatabaseColumnData DatabaseColumnData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.SqlColumnDataType? columnType = default(Azure.ResourceManager.Sql.Models.SqlColumnDataType?), Azure.ResourceManager.Sql.Models.TableTemporalType? temporalType = default(Azure.ResourceManager.Sql.Models.TableTemporalType?), bool? isMemoryOptimized = default(bool?), bool? isComputed = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.DatabaseExportDefinition DatabaseExportDefinition(Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType = default(Azure.ResourceManager.Sql.Models.StorageKeyType), string storageKey = null, System.Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, Azure.ResourceManager.Sql.Models.NetworkIsolationSettings networkIsolation = null) { throw null; }
@@ -7116,24 +7248,25 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.DataMaskingRule DataMaskingRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string kind = null, string aliasName = null, Azure.ResourceManager.Sql.Models.DataMaskingRuleState? ruleState = default(Azure.ResourceManager.Sql.Models.DataMaskingRuleState?), string schemaName = null, string tableName = null, string columnName = null, Azure.ResourceManager.Sql.Models.DataMaskingFunction? maskingFunction = default(Azure.ResourceManager.Sql.Models.DataMaskingFunction?), string numberFrom = null, string numberTo = null, string prefixSize = null, string suffixSize = null, string replacementString = null) { throw null; }
         public static Azure.ResourceManager.Sql.DataWarehouseUserActivityData DataWarehouseUserActivityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? activeQueriesCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.Sql.DeletedServerData DeletedServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string version = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier originalId = null, string fullyQualifiedDomainName = null) { throw null; }
-        public static Azure.ResourceManager.Sql.DistributedAvailabilityGroupData DistributedAvailabilityGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string targetDatabase = null, string sourceEndpoint = null, string primaryAvailabilityGroupName = null, string secondaryAvailabilityGroupName = null, Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode? replicationMode = default(Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode?), System.Guid? distributedAvailabilityGroupId = default(System.Guid?), System.Guid? sourceReplicaId = default(System.Guid?), System.Guid? targetReplicaId = default(System.Guid?), string linkState = null, string lastHardenedLsn = null) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.EditionCapability EditionCapability(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ServiceObjectiveCapability> supportedServiceLevelObjectives = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.ReadScaleCapability readScale = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.StorageCapability> supportedStorageCapabilities = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase DistributedAvailabilityGroupDatabase(string databaseName = null, System.Guid? instanceReplicaId = default(System.Guid?), System.Guid? partnerReplicaId = default(System.Guid?), string replicaState = null, string seedingProgress = null, Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth? synchronizationHealth = default(Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth?), Azure.ResourceManager.Sql.Models.ReplicaConnectedState? connectedState = default(Azure.ResourceManager.Sql.Models.ReplicaConnectedState?), string lastReceivedLsn = null, System.DateTimeOffset? lastReceivedOn = default(System.DateTimeOffset?), string lastSentLsn = null, System.DateTimeOffset? lastSentOn = default(System.DateTimeOffset?), string lastCommitLsn = null, System.DateTimeOffset? lastCommitOn = default(System.DateTimeOffset?), string lastHardenedLsn = null, System.DateTimeOffset? lastHardenedOn = default(System.DateTimeOffset?), string lastBackupLsn = null, System.DateTimeOffset? lastBackupOn = default(System.DateTimeOffset?), string mostRecentLinkError = null, Azure.ResourceManager.Sql.Models.CertificateInfo partnerAuthCertValidity = null, int? instanceSendReplicationLagSeconds = default(int?), int? instanceRedoReplicationLagSeconds = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.EditionCapability EditionCapability(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ServiceObjectiveCapability> supportedServiceLevelObjectives = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.ReadScaleCapability readScale = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.StorageCapability> supportedStorageCapabilities = null, bool? zonePinning = default(bool?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ElasticPoolActivity ElasticPoolActivity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? errorCode = default(int?), string errorMessage = null, int? errorSeverity = default(int?), string operation = null, System.Guid? operationId = default(System.Guid?), int? percentComplete = default(int?), int? requestedDatabaseDtuMax = default(int?), int? requestedDatabaseDtuMin = default(int?), int? requestedDtu = default(int?), string requestedElasticPoolName = null, long? requestedStorageLimitInGB = default(long?), string elasticPoolName = null, string serverName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string state = null, int? requestedStorageLimitInMB = default(int?), int? requestedDatabaseDtuGuarantee = default(int?), int? requestedDatabaseDtuCap = default(int?), int? requestedDtuGuarantee = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Sql.ElasticPoolData ElasticPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Sql.Models.SqlSku sku = null, string kind = null, Azure.ResourceManager.Sql.Models.ElasticPoolState? state = default(Azure.ResourceManager.Sql.Models.ElasticPoolState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), long? maxSizeBytes = default(long?), double? minCapacity = default(double?), Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseSettings perDatabaseSettings = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.ElasticPoolLicenseType? licenseType = default(Azure.ResourceManager.Sql.Models.ElasticPoolLicenseType?), Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, int? highAvailabilityReplicaCount = default(int?), Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default(Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType?), Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType? availabilityZone = default(Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType?)) { throw null; }
+        public static Azure.ResourceManager.Sql.ElasticPoolData ElasticPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Sql.Models.SqlSku sku = null, string kind = null, Azure.ResourceManager.Sql.Models.ElasticPoolState? state = default(Azure.ResourceManager.Sql.Models.ElasticPoolState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), long? maxSizeBytes = default(long?), double? minCapacity = default(double?), Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseSettings perDatabaseSettings = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.ElasticPoolLicenseType? licenseType = default(Azure.ResourceManager.Sql.Models.ElasticPoolLicenseType?), Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, int? highAvailabilityReplicaCount = default(int?), int? autoPauseDelay = default(int?), Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default(Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType?), Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType? availabilityZone = default(Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ElasticPoolDatabaseActivity ElasticPoolDatabaseActivity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string databaseName = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? errorCode = default(int?), string errorMessage = null, int? errorSeverity = default(int?), string operation = null, System.Guid? operationId = default(System.Guid?), int? percentComplete = default(int?), string requestedElasticPoolName = null, string currentElasticPoolName = null, string currentServiceObjective = null, string requestedServiceObjective = null, string serverName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string state = null) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ElasticPoolEditionCapability ElasticPoolEditionCapability(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ElasticPoolEditionCapability ElasticPoolEditionCapability(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels = null, bool? isZoneRedundant = default(bool?), bool? zonePinning = default(bool?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ElasticPoolOperationData ElasticPoolOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string elasticPoolName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = default(int?), string serverName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string state = null, int? errorCode = default(int?), string errorDescription = null, int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTimeOffset? estimatedCompleteOn = default(System.DateTimeOffset?), string description = null, bool? isCancellable = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseMaxPerformanceLevelCapability ElasticPoolPerDatabaseMaxPerformanceLevelCapability(double? limit = default(double?), Azure.ResourceManager.Sql.Models.PerformanceLevelUnit? unit = default(Azure.ResourceManager.Sql.Models.PerformanceLevelUnit?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseMinPerformanceLevelCapability ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit = default(double?), Azure.ResourceManager.Sql.Models.PerformanceLevelUnit? unit = default(Azure.ResourceManager.Sql.Models.PerformanceLevelUnit?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ElasticPoolPerformanceLevelCapability ElasticPoolPerformanceLevelCapability(Azure.ResourceManager.Sql.Models.PerformanceLevelCapability performanceLevel = null, Azure.ResourceManager.Sql.Models.SqlSku sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> supportedLicenseTypes = null, int? maxDatabaseCount = default(int?), Azure.ResourceManager.Sql.Models.MaxSizeCapability includedMaxSize = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> supportedMaxSizes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> supportedPerDatabaseMaxSizes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = null, bool? isZoneRedundant = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ElasticPoolPerformanceLevelCapability ElasticPoolPerformanceLevelCapability(Azure.ResourceManager.Sql.Models.PerformanceLevelCapability performanceLevel = null, Azure.ResourceManager.Sql.Models.SqlSku sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> supportedLicenseTypes = null, int? maxDatabaseCount = default(int?), Azure.ResourceManager.Sql.Models.MaxSizeCapability includedMaxSize = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> supportedMaxSizes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> supportedPerDatabaseMaxSizes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = null, bool? isZoneRedundant = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MinCapacityCapability> supportedMinCapacities = null, Azure.ResourceManager.Sql.Models.AutoPauseDelayTimeRange supportedAutoPauseDelay = null, Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange supportedPerDatabaseAutoPauseDelay = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ZonePinningCapability> supportedZones = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.EncryptionProtectorData EncryptionProtectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string subregion = null, string serverKeyName = null, Azure.ResourceManager.Sql.Models.SqlServerKeyType? serverKeyType = default(Azure.ResourceManager.Sql.Models.SqlServerKeyType?), System.Uri uri = null, string thumbprint = null, bool? isAutoRotationEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.EndpointCertificateData EndpointCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string publicBlob = null) { throw null; }
         public static Azure.ResourceManager.Sql.ExtendedDatabaseBlobAuditingPolicyData ExtendedDatabaseBlobAuditingPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string predicateExpression = null, int? retentionDays = default(int?), System.Collections.Generic.IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?), bool? isManagedIdentityInUse = default(bool?), Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? state = default(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState?), string storageEndpoint = null, string storageAccountAccessKey = null, System.Guid? storageAccountSubscriptionId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Sql.ExtendedServerBlobAuditingPolicyData ExtendedServerBlobAuditingPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isDevopsAuditEnabled = default(bool?), string predicateExpression = null, int? retentionDays = default(int?), System.Collections.Generic.IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?), bool? isManagedIdentityInUse = default(bool?), Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? state = default(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState?), string storageEndpoint = null, string storageAccountAccessKey = null, System.Guid? storageAccountSubscriptionId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Sql.FailoverGroupData FailoverGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Sql.Models.FailoverGroupReadWriteEndpoint readWriteEndpoint = null, Azure.ResourceManager.Sql.Models.FailoverGroupReadOnlyEndpoint readOnlyEndpoint = null, Azure.ResourceManager.Sql.Models.FailoverGroupReplicationRole? replicationRole = default(Azure.ResourceManager.Sql.Models.FailoverGroupReplicationRole?), string replicationState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.PartnerServerInfo> partnerServers = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> failoverDatabases = null, Azure.ResourceManager.Sql.Models.FailoverGroupDatabasesSecondaryType? secondaryType = default(Azure.ResourceManager.Sql.Models.FailoverGroupDatabasesSecondaryType?)) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability FreeLimitExhaustionBehaviorCapability(Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior? exhaustionBehaviorType = default(Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?)) { throw null; }
         public static Azure.ResourceManager.Sql.GeoBackupPolicyData GeoBackupPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.GeoBackupPolicyState state = Azure.ResourceManager.Sql.Models.GeoBackupPolicyState.Disabled, string storageType = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ImportExistingDatabaseDefinition ImportExistingDatabaseDefinition(Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType = default(Azure.ResourceManager.Sql.Models.StorageKeyType), string storageKey = null, System.Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, Azure.ResourceManager.Sql.Models.NetworkIsolationSettings networkIsolation = null) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ImportExportExtensionsOperationResult ImportExportExtensionsOperationResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? requestId = default(System.Guid?), string requestType = null, string lastModifiedTime = null, string serverName = null, string databaseName = null, string status = null, string errorMessage = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ImportExportExtensionsOperationResult ImportExportExtensionsOperationResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? requestId = default(System.Guid?), string requestType = null, string lastModifiedTime = null, string serverName = null, string databaseName = null, string status = null, string errorMessage = null, string queuedTime = null, System.Uri blobUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.PrivateEndpointConnectionRequestStatus> privateEndpointConnections = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ImportExportOperationResult ImportExportOperationResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? requestId = default(System.Guid?), string requestType = null, string queuedTime = null, string lastModifiedTime = null, System.Uri blobUri = null, string serverName = null, string databaseName = null, string status = null, string errorMessage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.PrivateEndpointConnectionRequestStatus> privateEndpointConnections = null) { throw null; }
         public static Azure.ResourceManager.Sql.InstanceFailoverGroupData InstanceFailoverGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.GeoSecondaryInstanceType? secondaryType = default(Azure.ResourceManager.Sql.Models.GeoSecondaryInstanceType?), Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint = null, Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy? readOnlyEndpointFailoverPolicy = default(Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy?), Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReplicationRole? replicationRole = default(Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReplicationRole?), string replicationState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.PartnerRegionInfo> partnerRegions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstancePairInfo> managedInstancePairs = null) { throw null; }
         public static Azure.ResourceManager.Sql.InstancePoolData InstancePoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Sql.Models.SqlSku sku = null, Azure.Core.ResourceIdentifier subnetId = null, int? vCores = default(int?), Azure.ResourceManager.Sql.Models.InstancePoolLicenseType? licenseType = default(Azure.ResourceManager.Sql.Models.InstancePoolLicenseType?), string dnsZone = null, Azure.Core.ResourceIdentifier maintenanceConfigurationId = null) { throw null; }
@@ -7144,6 +7277,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.InstancePoolUsageName InstancePoolUsageName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.InstancePoolVcoresCapability InstancePoolVcoresCapability(string name = null, int? value = default(int?), Azure.ResourceManager.Sql.Models.MaxSizeCapability storageLimit = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.IPv6FirewallRuleData IPv6FirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string startIPv6Address = null, string endIPv6Address = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.JobAgentEditionCapability JobAgentEditionCapability(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability> supportedServiceLevelObjectives = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability JobAgentServiceLevelObjectiveCapability(string name = null, Azure.ResourceManager.Sql.Models.SqlSku sku = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.JobAgentVersionCapability JobAgentVersionCapability(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.JobAgentEditionCapability> supportedEditions = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.JobExecutionTarget JobExecutionTarget(Azure.ResourceManager.Sql.Models.JobTargetType? targetType = default(Azure.ResourceManager.Sql.Models.JobTargetType?), string serverName = null, string databaseName = null) { throw null; }
         public static Azure.ResourceManager.Sql.LedgerDigestUploadData LedgerDigestUploadData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string digestStorageEndpoint = null, Azure.ResourceManager.Sql.Models.LedgerDigestUploadsState? state = default(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsState?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.LicenseTypeCapability LicenseTypeCapability(string name = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
@@ -7151,14 +7287,14 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.LogSizeCapability LogSizeCapability(int? limit = default(int?), Azure.ResourceManager.Sql.Models.LogSizeUnit? unit = default(Azure.ResourceManager.Sql.Models.LogSizeUnit?)) { throw null; }
         public static Azure.ResourceManager.Sql.LongTermRetentionBackupData LongTermRetentionBackupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string serverName = null, System.DateTimeOffset? serverCreateOn = default(System.DateTimeOffset?), string databaseName = null, System.DateTimeOffset? databaseDeletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupExpireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? backupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), bool? isBackupImmutable = default(bool?), Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? backupStorageAccessTier = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.LongTermRetentionBackupOperationResult LongTermRetentionBackupOperationResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? requestId = default(System.Guid?), string operationType = null, Azure.Core.ResourceIdentifier fromBackupResourceId = null, Azure.Core.ResourceIdentifier toBackupResourceId = null, Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? targetBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), string status = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.Sql.LongTermRetentionPolicyData LongTermRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? makeBackupsImmutable = default(bool?), Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? backupStorageAccessTier = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier?), string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Sql.LongTermRetentionPolicyData LongTermRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = default(int?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.MaintenanceConfigurationCapability MaintenanceConfigurationCapability(string name = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.MaintenanceWindowOptionData MaintenanceWindowOptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaintenanceWindowTimeRange> maintenanceWindowCycles = null, int? minDurationInMinutes = default(int?), int? defaultDurationInMinutes = default(int?), int? minCycles = default(int?), int? timeGranularityInMinutes = default(int?), bool? allowMultipleMaintenanceWindowsPerCycle = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.MaintenanceWindowsData MaintenanceWindowsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaintenanceWindowTimeRange> timeRanges = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData ManagedBackupShortTermRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? retentionDays = default(int?)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseAdvancedThreatProtectionData ManagedDatabaseAdvancedThreatProtectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.AdvancedThreatProtectionState? state = default(Azure.ResourceManager.Sql.Models.AdvancedThreatProtectionState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedDatabaseData ManagedDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string collation = null, Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus? status = default(Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? earliestRestorePoint = default(System.DateTimeOffset?), System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.Core.AzureLocation? defaultSecondaryLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.CatalogCollationType? catalogCollation = default(Azure.ResourceManager.Sql.Models.CatalogCollationType?), Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode? createMode = default(Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode?), System.Uri storageContainerUri = null, Azure.Core.ResourceIdentifier sourceDatabaseId = null, Azure.Core.ResourceIdentifier crossSubscriptionSourceDatabaseId = null, Azure.Core.ResourceIdentifier restorableDroppedDatabaseId = null, Azure.Core.ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = null, string storageContainerIdentity = null, string storageContainerSasToken = null, Azure.Core.ResourceIdentifier failoverGroupId = null, Azure.Core.ResourceIdentifier recoverableDatabaseId = null, Azure.Core.ResourceIdentifier longTermRetentionBackupResourceId = null, bool? allowAutoCompleteRestore = default(bool?), string lastBackupName = null, Azure.Core.ResourceIdentifier crossSubscriptionTargetManagedInstanceId = null, bool? isLedgerOn = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ManagedDatabasePatch ManagedDatabasePatch(System.Collections.Generic.IDictionary<string, string> tags = null, string collation = null, Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus? status = default(Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? earliestRestorePoint = default(System.DateTimeOffset?), System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.Core.AzureLocation? defaultSecondaryLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.CatalogCollationType? catalogCollation = default(Azure.ResourceManager.Sql.Models.CatalogCollationType?), Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode? createMode = default(Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode?), System.Uri storageContainerUri = null, Azure.Core.ResourceIdentifier sourceDatabaseId = null, Azure.Core.ResourceIdentifier crossSubscriptionSourceDatabaseId = null, Azure.Core.ResourceIdentifier restorableDroppedDatabaseId = null, Azure.Core.ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = null, string storageContainerIdentity = null, string storageContainerSasToken = null, Azure.Core.ResourceIdentifier failoverGroupId = null, Azure.Core.ResourceIdentifier recoverableDatabaseId = null, Azure.Core.ResourceIdentifier longTermRetentionBackupResourceId = null, bool? allowAutoCompleteRestore = default(bool?), string lastBackupName = null, Azure.Core.ResourceIdentifier crossSubscriptionTargetManagedInstanceId = null, bool? isLedgerOn = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedDatabaseData ManagedDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string collation = null, Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus? status = default(Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? earliestRestorePoint = default(System.DateTimeOffset?), System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.Core.AzureLocation? defaultSecondaryLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.CatalogCollationType? catalogCollation = default(Azure.ResourceManager.Sql.Models.CatalogCollationType?), Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode? createMode = default(Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode?), System.Uri storageContainerUri = null, Azure.Core.ResourceIdentifier sourceDatabaseId = null, string crossSubscriptionSourceDatabaseId = null, Azure.Core.ResourceIdentifier restorableDroppedDatabaseId = null, string crossSubscriptionRestorableDroppedDatabaseId = null, string storageContainerIdentity = null, string storageContainerSasToken = null, Azure.Core.ResourceIdentifier failoverGroupId = null, Azure.Core.ResourceIdentifier recoverableDatabaseId = null, Azure.Core.ResourceIdentifier longTermRetentionBackupResourceId = null, bool? allowAutoCompleteRestore = default(bool?), string lastBackupName = null, Azure.Core.ResourceIdentifier crossSubscriptionTargetManagedInstanceId = null, bool? isLedgerOn = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ManagedDatabasePatch ManagedDatabasePatch(System.Collections.Generic.IDictionary<string, string> tags = null, string collation = null, Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus? status = default(Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? earliestRestorePoint = default(System.DateTimeOffset?), System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.Core.AzureLocation? defaultSecondaryLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.CatalogCollationType? catalogCollation = default(Azure.ResourceManager.Sql.Models.CatalogCollationType?), Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode? createMode = default(Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode?), System.Uri storageContainerUri = null, Azure.Core.ResourceIdentifier sourceDatabaseId = null, string crossSubscriptionSourceDatabaseId = null, Azure.Core.ResourceIdentifier restorableDroppedDatabaseId = null, string crossSubscriptionRestorableDroppedDatabaseId = null, string storageContainerIdentity = null, string storageContainerSasToken = null, Azure.Core.ResourceIdentifier failoverGroupId = null, Azure.Core.ResourceIdentifier recoverableDatabaseId = null, Azure.Core.ResourceIdentifier longTermRetentionBackupResourceId = null, bool? allowAutoCompleteRestore = default(bool?), string lastBackupName = null, Azure.Core.ResourceIdentifier crossSubscriptionTargetManagedInstanceId = null, bool? isLedgerOn = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailBackupSetProperties ManagedDatabaseRestoreDetailBackupSetProperties(string status = null, string firstStripeName = null, int? numberOfStripes = default(int?), int? backupSizeInMB = default(int?), System.DateTimeOffset? restoreStartedOn = default(System.DateTimeOffset?), System.DateTimeOffset? restoreFinishedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailData ManagedDatabaseRestoreDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string restoreType = null, string status = null, string blockReason = null, string lastUploadedFileName = null, System.DateTimeOffset? lastUploadedFileOn = default(System.DateTimeOffset?), string lastRestoredFileName = null, System.DateTimeOffset? lastRestoredFileOn = default(System.DateTimeOffset?), int? completedPercent = default(int?), int? currentRestoredSizeInMB = default(int?), int? currentRestorePlanSizeInMB = default(int?), string currentBackupType = null, string currentRestoringFileName = null, int? numberOfFilesFound = default(int?), int? numberOfFilesQueued = default(int?), int? numberOfFilesSkipped = default(int?), int? numberOfFilesRestoring = default(int?), int? numberOfFilesRestored = default(int?), int? numberOfFilesUnrestorable = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailBackupSetProperties> fullBackupSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailBackupSetProperties> diffBackupSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailBackupSetProperties> logBackupSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailUnrestorableFileProperties> unrestorableFileList = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailUnrestorableFileProperties ManagedDatabaseRestoreDetailUnrestorableFileProperties(string name = null) { throw null; }
@@ -7167,44 +7303,46 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.ManagedInstanceAdministratorData ManagedInstanceAdministratorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.ManagedInstanceAdministratorType? administratorType = default(Azure.ResourceManager.Sql.Models.ManagedInstanceAdministratorType?), string login = null, System.Guid? sid = default(System.Guid?), System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceAdvancedThreatProtectionData ManagedInstanceAdvancedThreatProtectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.AdvancedThreatProtectionState? state = default(Azure.ResourceManager.Sql.Models.AdvancedThreatProtectionState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceAzureADOnlyAuthenticationData ManagedInstanceAzureADOnlyAuthenticationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isAzureADOnlyAuthenticationEnabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceData ManagedInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Sql.Models.SqlSku sku = null, Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState? provisioningState = default(Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState?), Azure.ResourceManager.Sql.Models.ManagedServerCreateMode? managedInstanceCreateMode = default(Azure.ResourceManager.Sql.Models.ManagedServerCreateMode?), string fullyQualifiedDomainName = null, string administratorLogin = null, string administratorLoginPassword = null, Azure.Core.ResourceIdentifier subnetId = null, string state = null, Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType? licenseType = default(Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType?), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = null, string dnsZone = null, Azure.Core.ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = default(bool?), Azure.Core.ResourceIdentifier sourceManagedInstanceId = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride? proxyOverride = default(Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride?), string timezoneId = null, Azure.Core.ResourceIdentifier instancePoolId = null, Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), bool? isZoneRedundant = default(bool?), Azure.Core.ResourceIdentifier primaryUserAssignedIdentityId = null, System.Uri keyId = null, Azure.ResourceManager.Sql.Models.ManagedInstanceExternalAdministrator administrators = null, Azure.ResourceManager.Sql.Models.SqlServicePrincipal servicePrincipal = null) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedInstanceData ManagedInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Sql.Models.SqlSku sku = null, Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState? provisioningState = default(Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState?), Azure.ResourceManager.Sql.Models.ManagedServerCreateMode? managedInstanceCreateMode = default(Azure.ResourceManager.Sql.Models.ManagedServerCreateMode?), string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = default(bool?), string administratorLogin = null, string administratorLoginPassword = null, Azure.Core.ResourceIdentifier subnetId = null, string state = null, Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType? licenseType = default(Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType?), Azure.ResourceManager.Sql.Models.HybridSecondaryUsage? hybridSecondaryUsage = default(Azure.ResourceManager.Sql.Models.HybridSecondaryUsage?), Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = default(Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected?), int? vCores = default(int?), int? storageSizeInGB = default(int?), int? storageIOps = default(int?), int? storageThroughputMBps = default(int?), string collation = null, string dnsZone = null, Azure.Core.ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = default(bool?), Azure.Core.ResourceIdentifier sourceManagedInstanceId = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride? proxyOverride = default(Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride?), string timezoneId = null, Azure.Core.ResourceIdentifier instancePoolId = null, Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), bool? isZoneRedundant = default(bool?), Azure.Core.ResourceIdentifier primaryUserAssignedIdentityId = null, System.Uri keyId = null, Azure.ResourceManager.Sql.Models.ManagedInstanceExternalAdministrator administrators = null, Azure.ResourceManager.Sql.Models.SqlServicePrincipal servicePrincipal = null, string virtualClusterId = null, Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus? externalGovernanceStatus = default(Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus?), Azure.ResourceManager.Sql.Models.PricingModel? pricingModel = default(Azure.ResourceManager.Sql.Models.PricingModel?), System.DateTimeOffset? createOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode? authenticationMetadata = default(Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode?), Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat? databaseFormat = default(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat?)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceDtcData ManagedInstanceDtcData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? dtcEnabled = default(bool?), Azure.ResourceManager.Sql.Models.ManagedInstanceDtcSecuritySettings securitySettings = null, System.Collections.Generic.IEnumerable<string> externalDnsSuffixSearchList = null, string dtcHostNameDnsSuffix = null, Azure.ResourceManager.Sql.Models.JobExecutionProvisioningState? provisioningState = default(Azure.ResourceManager.Sql.Models.JobExecutionProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ManagedInstanceEditionCapability ManagedInstanceEditionCapability(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceFamilyCapability> supportedFamilies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.StorageCapability> supportedStorageCapabilities = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ManagedInstanceEditionCapability ManagedInstanceEditionCapability(string name = null, bool? isGeneralPurposeV2 = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceFamilyCapability> supportedFamilies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.StorageCapability> supportedStorageCapabilities = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceEncryptionProtectorData ManagedInstanceEncryptionProtectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, string serverKeyName = null, Azure.ResourceManager.Sql.Models.SqlServerKeyType? serverKeyType = default(Azure.ResourceManager.Sql.Models.SqlServerKeyType?), System.Uri uri = null, string thumbprint = null, bool? isAutoRotationEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstanceEndpointDependency ManagedInstanceEndpointDependency(string domainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceEndpointDetail> endpointDetails = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstanceEndpointDetail ManagedInstanceEndpointDetail(int? port = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ManagedInstanceFamilyCapability ManagedInstanceFamilyCapability(string name = null, string sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> supportedLicenseTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceVcoresCapability> supportedVcoresValues = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ManagedInstanceFamilyCapability ManagedInstanceFamilyCapability(string name = null, string sku = null, bool? isZoneRedundant = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> supportedLicenseTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceVcoresCapability> supportedVcoresValues = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceKeyData ManagedInstanceKeyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ResourceManager.Sql.Models.SqlServerKeyType? serverKeyType = default(Azure.ResourceManager.Sql.Models.SqlServerKeyType?), System.Uri uri = null, string thumbprint = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), bool? isAutoRotationEnabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData ManagedInstanceLongTermRetentionBackupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string managedInstanceName = null, System.DateTimeOffset? managedInstanceCreateOn = default(System.DateTimeOffset?), string databaseName = null, System.DateTimeOffset? databaseDeletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupExpireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? backupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?)) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyData ManagedInstanceLongTermRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData ManagedInstanceLongTermRetentionBackupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string managedInstanceName = null, System.DateTimeOffset? managedInstanceCreateOn = default(System.DateTimeOffset?), string databaseName = null, System.DateTimeOffset? databaseDeletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupExpireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? backupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? backupStorageAccessTier = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier?)) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyData ManagedInstanceLongTermRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? backupStorageAccessTier = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier?), string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = default(int?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstanceMaintenanceConfigurationCapability ManagedInstanceMaintenanceConfigurationCapability(string name = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceOperationData ManagedInstanceOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string managedInstanceName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagementOperationState? state = default(Azure.ResourceManager.Sql.Models.ManagementOperationState?), int? errorCode = default(int?), string errorDescription = null, int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTimeOffset? estimatedCompleteOn = default(System.DateTimeOffset?), string description = null, bool? isCancellable = default(bool?), Azure.ResourceManager.Sql.Models.ManagedInstanceOperationParametersPair operationParameters = null, Azure.ResourceManager.Sql.Models.ManagedInstanceOperationSteps operationSteps = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstanceOperationParametersPair ManagedInstanceOperationParametersPair(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationParameters currentParameters = null, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationParameters requestedParameters = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstanceOperationSteps ManagedInstanceOperationSteps(string totalSteps = null, int? currentStep = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStep> stepsList = null) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ManagedInstancePatch ManagedInstancePatch(Azure.ResourceManager.Sql.Models.SqlSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState? provisioningState = default(Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState?), Azure.ResourceManager.Sql.Models.ManagedServerCreateMode? managedInstanceCreateMode = default(Azure.ResourceManager.Sql.Models.ManagedServerCreateMode?), string fullyQualifiedDomainName = null, string administratorLogin = null, string administratorLoginPassword = null, Azure.Core.ResourceIdentifier subnetId = null, string state = null, Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType? licenseType = default(Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType?), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = null, string dnsZone = null, Azure.Core.ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = default(bool?), Azure.Core.ResourceIdentifier sourceManagedInstanceId = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride? proxyOverride = default(Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride?), string timezoneId = null, Azure.Core.ResourceIdentifier instancePoolId = null, Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), bool? isZoneRedundant = default(bool?), Azure.Core.ResourceIdentifier primaryUserAssignedIdentityId = null, System.Uri keyId = null, Azure.ResourceManager.Sql.Models.ManagedInstanceExternalAdministrator administrators = null, Azure.ResourceManager.Sql.Models.SqlServicePrincipal servicePrincipal = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ManagedInstancePatch ManagedInstancePatch(Azure.ResourceManager.Sql.Models.SqlSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState? provisioningState = default(Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState?), Azure.ResourceManager.Sql.Models.ManagedServerCreateMode? managedInstanceCreateMode = default(Azure.ResourceManager.Sql.Models.ManagedServerCreateMode?), string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = default(bool?), string administratorLogin = null, string administratorLoginPassword = null, Azure.Core.ResourceIdentifier subnetId = null, string state = null, Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType? licenseType = default(Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType?), Azure.ResourceManager.Sql.Models.HybridSecondaryUsage? hybridSecondaryUsage = default(Azure.ResourceManager.Sql.Models.HybridSecondaryUsage?), Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = default(Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected?), int? vCores = default(int?), int? storageSizeInGB = default(int?), int? storageIOps = default(int?), int? storageThroughputMBps = default(int?), string collation = null, string dnsZone = null, Azure.Core.ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = default(bool?), Azure.Core.ResourceIdentifier sourceManagedInstanceId = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride? proxyOverride = default(Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride?), string timezoneId = null, Azure.Core.ResourceIdentifier instancePoolId = null, Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), bool? isZoneRedundant = default(bool?), Azure.Core.ResourceIdentifier primaryUserAssignedIdentityId = null, System.Uri keyId = null, Azure.ResourceManager.Sql.Models.ManagedInstanceExternalAdministrator administrators = null, Azure.ResourceManager.Sql.Models.SqlServicePrincipal servicePrincipal = null, string virtualClusterId = null, Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus? externalGovernanceStatus = default(Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus?), Azure.ResourceManager.Sql.Models.PricingModel? pricingModel = default(Azure.ResourceManager.Sql.Models.PricingModel?), System.DateTimeOffset? createOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode? authenticationMetadata = default(Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode?), Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat? databaseFormat = default(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstancePecProperty ManagedInstancePecProperty(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Sql.Models.ManagedInstancePrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstancePrivateEndpointConnectionProperties ManagedInstancePrivateEndpointConnectionProperties(Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstancePrivateLinkData ManagedInstancePrivateLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkProperties ManagedInstancePrivateLinkProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkProperties ManagedInstancePrivateLinkProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkServiceConnectionStateProperty ManagedInstancePrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstanceQuery ManagedInstanceQuery(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string queryText = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceServerConfigurationOptionData ManagedInstanceServerConfigurationOptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? serverConfigurationOptionValue = default(int?), Azure.ResourceManager.Sql.Models.JobExecutionProvisioningState? provisioningState = default(Azure.ResourceManager.Sql.Models.JobExecutionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceStartStopScheduleData ManagedInstanceStartStopScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string timeZoneId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.SqlScheduleItem> scheduleList = null, string nextRunAction = null, string nextExecutionTime = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstanceUpdateDnsServersOperationData ManagedInstanceUpdateDnsServersOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus? status = default(Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus?)) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name = null, int? value = default(int?), Azure.ResourceManager.Sql.Models.MaxSizeCapability includedMaxSize = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> supportedStorageSizes = null, bool? isInstancePoolSupported = default(bool?), bool? isStandaloneSupported = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name = null, int? value = default(int?), Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability supportedMemoryLimitsMB = null, Azure.ResourceManager.Sql.Models.MaxSizeCapability includedMaxSize = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> supportedStorageSizes = null, long? includedStorageIOps = default(long?), Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability supportedStorageIOps = null, double? iopsMinValueOverrideFactorPerSelectedStorageGB = default(double?), double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = default(double?), long? includedStorageThroughputMBps = default(long?), Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability supportedStorageThroughputMBps = null, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = default(double?), double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = default(double?), bool? isInstancePoolSupported = default(bool?), bool? isStandaloneSupported = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ManagedInstanceVersionCapability ManagedInstanceVersionCapability(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceEditionCapability> supportedEditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.InstancePoolEditionCapability> supportedInstancePoolEditions = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceVulnerabilityAssessmentData ManagedInstanceVulnerabilityAssessmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentRecurringScansProperties recurringScans = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedLedgerDigestUploadData ManagedLedgerDigestUploadData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string digestStorageEndpoint = null, Azure.ResourceManager.Sql.Models.ManagedLedgerDigestUploadsState? state = default(Azure.ResourceManager.Sql.Models.ManagedLedgerDigestUploadsState?)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedServerDnsAliasData ManagedServerDnsAliasData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string azureDnsRecord = null, string publicAzureDnsRecord = null) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedServerSecurityAlertPolicyData ManagedServerSecurityAlertPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState? state = default(Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState?), System.Collections.Generic.IEnumerable<string> disabledAlerts = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = default(bool?), string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedTransparentDataEncryptionData ManagedTransparentDataEncryptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.TransparentDataEncryptionState? state = default(Azure.ResourceManager.Sql.Models.TransparentDataEncryptionState?)) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability MaxLimitRangeCapability(long? minValue = default(long?), long? maxValue = default(long?), long? scaleSize = default(long?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.MaxSizeCapability MaxSizeCapability(int? limit = default(int?), Azure.ResourceManager.Sql.Models.MaxSizeUnit? unit = default(Azure.ResourceManager.Sql.Models.MaxSizeUnit?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability MaxSizeRangeCapability(Azure.ResourceManager.Sql.Models.MaxSizeCapability minValue = null, Azure.ResourceManager.Sql.Models.MaxSizeCapability maxValue = null, Azure.ResourceManager.Sql.Models.MaxSizeCapability scaleSize = null, Azure.ResourceManager.Sql.Models.LogSizeCapability logSize = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.MinCapacityCapability MinCapacityCapability(double? value = default(double?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.OutboundFirewallRuleData OutboundFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.PartnerRegionInfo PartnerRegionInfo(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReplicationRole? replicationRole = default(Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReplicationRole?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.PartnerServerInfo PartnerServerInfo(Azure.Core.ResourceIdentifier id = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.FailoverGroupReplicationRole? replicationRole = default(Azure.ResourceManager.Sql.Models.FailoverGroupReplicationRole?)) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange PerDatabaseAutoPauseDelayTimeRange(int? minValue = default(int?), int? maxValue = default(int?), int? stepSize = default(int?), int? @default = default(int?), Azure.ResourceManager.Sql.Models.PauseDelayTimeUnit? unit = default(Azure.ResourceManager.Sql.Models.PauseDelayTimeUnit?), int? doNotPauseValue = default(int?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.PerformanceLevelCapability PerformanceLevelCapability(double? value = default(double?), Azure.ResourceManager.Sql.Models.PerformanceLevelUnit? unit = default(Azure.ResourceManager.Sql.Models.PerformanceLevelUnit?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.PrivateEndpointConnectionRequestStatus PrivateEndpointConnectionRequestStatus(Azure.Core.ResourceIdentifier privateLinkServiceId = null, string privateEndpointConnectionName = null, string status = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ProxyResourceWithWritableName ProxyResourceWithWritableName(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?)) { throw null; }
@@ -7213,7 +7351,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.QueryStatistics QueryStatistics(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string databaseName = null, string queryId = null, string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.QueryMetricInterval> intervals = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.QueryStatisticsProperties QueryStatisticsProperties(string databaseName = null, string queryId = null, string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.QueryMetricInterval> intervals = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ReadScaleCapability ReadScaleCapability(int? maxNumberOfReplicas = default(int?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
-        public static Azure.ResourceManager.Sql.RecommendedActionData RecommendedActionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string recommendationReason = null, System.DateTimeOffset? validSince = default(System.DateTimeOffset?), System.DateTimeOffset? lastRefresh = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.RecommendedActionStateInfo state = null, bool? isExecutableAction = default(bool?), bool? isRevertableAction = default(bool?), bool? isArchivedAction = default(bool?), System.DateTimeOffset? executeActionStartOn = default(System.DateTimeOffset?), System.TimeSpan? executeActionDuration = default(System.TimeSpan?), System.DateTimeOffset? revertActionStartOn = default(System.DateTimeOffset?), System.TimeSpan? revertActionDuration = default(System.TimeSpan?), Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy? executeActionInitiatedBy = default(Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy?), System.DateTimeOffset? executeActionInitiatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy? revertActionInitiatedBy = default(Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy?), System.DateTimeOffset? revertActionInitiatedOn = default(System.DateTimeOffset?), int? score = default(int?), Azure.ResourceManager.Sql.Models.RecommendedActionImplementationInfo implementationDetails = null, Azure.ResourceManager.Sql.Models.RecommendedActionErrorInfo errorDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord> estimatedImpact = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord> observedImpact = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.RecommendedActionMetricInfo> timeSeries = null, System.Collections.Generic.IEnumerable<string> linkedObjects = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> details = null) { throw null; }
+        public static Azure.ResourceManager.Sql.RecommendedActionData RecommendedActionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string recommendationReason = null, System.DateTimeOffset? validSince = default(System.DateTimeOffset?), System.DateTimeOffset? lastRefresh = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.RecommendedActionStateInfo state = null, bool? isExecutableAction = default(bool?), bool? isRevertableAction = default(bool?), bool? isArchivedAction = default(bool?), System.DateTimeOffset? executeActionStartOn = default(System.DateTimeOffset?), System.TimeSpan? executeActionDuration = default(System.TimeSpan?), System.DateTimeOffset? revertActionStartOn = default(System.DateTimeOffset?), System.TimeSpan? revertActionDuration = default(System.TimeSpan?), Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy? executeActionInitiatedBy = default(Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy?), System.DateTimeOffset? executeActionInitiatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy? revertActionInitiatedBy = default(Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy?), System.DateTimeOffset? revertActionInitiatedOn = default(System.DateTimeOffset?), int? score = default(int?), Azure.ResourceManager.Sql.Models.RecommendedActionImplementationInfo implementationDetails = null, Azure.ResourceManager.Sql.Models.RecommendedActionErrorInfo errorDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord> estimatedImpact = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord> observedImpact = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.RecommendedActionMetricInfo> timeSeries = null, System.Collections.Generic.IEnumerable<string> linkedObjects = null, System.Collections.Generic.IReadOnlyDictionary<string, string> additionalDetails = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.RecommendedActionErrorInfo RecommendedActionErrorInfo(string errorCode = null, Azure.ResourceManager.Sql.Models.ActionRetryableState? isRetryable = default(Azure.ResourceManager.Sql.Models.ActionRetryableState?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord RecommendedActionImpactRecord(string dimensionName = null, string unit = null, double? absoluteValue = default(double?), double? changeValueAbsolute = default(double?), double? changeValueRelative = default(double?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.RecommendedActionImplementationInfo RecommendedActionImplementationInfo(Azure.ResourceManager.Sql.Models.ImplementationMethod? method = default(Azure.ResourceManager.Sql.Models.ImplementationMethod?), string script = null) { throw null; }
@@ -7223,30 +7361,32 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.RecoverableDatabaseData RecoverableDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string edition = null, string serviceLevelObjective = null, string elasticPoolName = null, System.DateTimeOffset? lastAvailableBackupOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.SqlDatabaseKey> keys = null) { throw null; }
         public static Azure.ResourceManager.Sql.RecoverableManagedDatabaseData RecoverableManagedDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string lastAvailableBackupDate = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResult RefreshExternalGovernanceStatusOperationResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? requestId = default(System.Guid?), string requestType = null, string queuedTime = null, string serverName = null, string status = null, string errorMessage = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI RefreshExternalGovernanceStatusOperationResultMI(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? requestId = default(System.Guid?), string requestType = null, string queuedTime = null, string managedInstanceName = null, string status = null, string errorMessage = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ResourceWithWritableName ResourceWithWritableName(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?)) { throw null; }
         public static Azure.ResourceManager.Sql.RestorableDroppedDatabaseData RestorableDroppedDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Sql.Models.SqlSku sku = null, string databaseName = null, long? maxSizeBytes = default(long?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? backupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.SqlDatabaseKey> keys = null) { throw null; }
         public static Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseData RestorableDroppedManagedDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string databaseName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SecurityEvent SecurityEvent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? eventOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.SecurityEventType? securityEventType = default(Azure.ResourceManager.Sql.Models.SecurityEventType?), string subscription = null, string server = null, string database = null, System.Net.IPAddress clientIP = null, string applicationName = null, string principalName = null, Azure.ResourceManager.Sql.Models.SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SecurityEventSqlInjectionAdditionalProperties SecurityEventSqlInjectionAdditionalProperties(string threatId = null, string statement = null, int? statementHighlightOffset = default(int?), int? statementHighlightLength = default(int?), int? errorCode = default(int?), int? errorSeverity = default(int?), string errorMessage = null) { throw null; }
-        public static Azure.ResourceManager.Sql.SensitivityLabelData SensitivityLabelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, string schemaName = null, string tableName = null, string columnName = null, string labelName = null, string labelId = null, string informationType = null, string informationTypeId = null, bool? isDisabled = default(bool?), Azure.ResourceManager.Sql.Models.SensitivityLabelRank? rank = default(Azure.ResourceManager.Sql.Models.SensitivityLabelRank?)) { throw null; }
+        public static Azure.ResourceManager.Sql.SensitivityLabelData SensitivityLabelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, string schemaName = null, string tableName = null, string columnName = null, string labelName = null, string labelId = null, string informationType = null, string informationTypeId = null, bool? isDisabled = default(bool?), Azure.ResourceManager.Sql.Models.SensitivityLabelRank? rank = default(Azure.ResourceManager.Sql.Models.SensitivityLabelRank?), Azure.ResourceManager.Sql.Models.ClientClassificationSource? clientClassificationSource = default(Azure.ResourceManager.Sql.Models.ClientClassificationSource?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SensitivityLabelUpdate SensitivityLabelUpdate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.SensitivityLabelUpdateKind? op = default(Azure.ResourceManager.Sql.Models.SensitivityLabelUpdateKind?), string schema = null, string table = null, string column = null, Azure.ResourceManager.Sql.SensitivityLabelData sensitivityLabel = null) { throw null; }
         public static Azure.ResourceManager.Sql.ServerAdvancedThreatProtectionData ServerAdvancedThreatProtectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.AdvancedThreatProtectionState? state = default(Azure.ResourceManager.Sql.Models.AdvancedThreatProtectionState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ServerOperationData ServerOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string operation = null, string operationFriendlyName = null, int? percentComplete = default(int?), string serverName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagementOperationState? state = default(Azure.ResourceManager.Sql.Models.ManagementOperationState?), int? errorCode = default(int?), string errorDescription = null, int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTimeOffset? estimatedCompleteOn = default(System.DateTimeOffset?), string description = null, bool? isCancellable = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ServerPrivateEndpointConnectionProperties ServerPrivateEndpointConnectionProperties(Azure.Core.ResourceIdentifier privateEndpointId = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.Sql.Models.SqlPrivateLinkServiceConnectionStateProperty connectionState = null, Azure.ResourceManager.Sql.Models.SqlPrivateEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.Sql.Models.SqlPrivateEndpointProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sql.ServerTrustCertificateData ServerTrustCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string publicBlob = null, string thumbprint = null, string certificateName = null) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ServiceObjectiveCapability ServiceObjectiveCapability(System.Guid? id = default(System.Guid?), string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> supportedMaxSizes = null, Azure.ResourceManager.Sql.Models.PerformanceLevelCapability performanceLevel = null, Azure.ResourceManager.Sql.Models.SqlSku sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> supportedLicenseTypes = null, Azure.ResourceManager.Sql.Models.MaxSizeCapability includedMaxSize = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.AutoPauseDelayTimeRange supportedAutoPauseDelay = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MinCapacityCapability> supportedMinCapacities = null, string computeModel = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ServiceObjectiveCapability ServiceObjectiveCapability(System.Guid? id = default(System.Guid?), string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> supportedMaxSizes = null, Azure.ResourceManager.Sql.Models.PerformanceLevelCapability performanceLevel = null, Azure.ResourceManager.Sql.Models.SqlSku sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> supportedLicenseTypes = null, Azure.ResourceManager.Sql.Models.MaxSizeCapability includedMaxSize = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.AutoPauseDelayTimeRange supportedAutoPauseDelay = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MinCapacityCapability> supportedMinCapacities = null, string computeModel = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, bool? zonePinning = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ZonePinningCapability> supportedZones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability> supportedFreeLimitExhaustionBehaviors = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.ServiceObjectiveData ServiceObjectiveData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string serviceObjectiveName = null, bool? isDefault = default(bool?), bool? isSystem = default(bool?), string description = null, bool? isEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlAdvisorData SqlAdvisorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.SqlAdvisorStatus? advisorStatus = default(Azure.ResourceManager.Sql.Models.SqlAdvisorStatus?), Azure.ResourceManager.Sql.Models.AutoExecuteStatus? autoExecuteStatus = default(Azure.ResourceManager.Sql.Models.AutoExecuteStatus?), Azure.ResourceManager.Sql.Models.AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = default(Azure.ResourceManager.Sql.Models.AutoExecuteStatusInheritedFrom?), string recommendationsStatus = null, System.DateTimeOffset? lastCheckedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RecommendedActionData> recommendedActions = null) { throw null; }
         public static Azure.ResourceManager.Sql.SqlAgentConfigurationData SqlAgentConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.SqlAgentConfigurationPropertiesState? state = default(Azure.ResourceManager.Sql.Models.SqlAgentConfigurationPropertiesState?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningData SqlDatabaseAutomaticTuningData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.AutomaticTuningMode? desiredState = default(Azure.ResourceManager.Sql.Models.AutomaticTuningMode?), Azure.ResourceManager.Sql.Models.AutomaticTuningMode? actualState = default(Azure.ResourceManager.Sql.Models.AutomaticTuningMode?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.AutomaticTuningOptions> options = null) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyData SqlDatabaseBlobAuditingPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, int? retentionDays = default(int?), System.Collections.Generic.IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?), bool? isManagedIdentityInUse = default(bool?), Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? state = default(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState?), string storageEndpoint = null, string storageAccountAccessKey = null, System.Guid? storageAccountSubscriptionId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseData SqlDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Sql.Models.SqlSku sku = null, string kind = null, string managedBy = null, Azure.ResourceManager.Sql.Models.DatabaseIdentity identity = null, Azure.ResourceManager.Sql.Models.SqlDatabaseCreateMode? createMode = default(Azure.ResourceManager.Sql.Models.SqlDatabaseCreateMode?), string collation = null, long? maxSizeBytes = default(long?), Azure.ResourceManager.Sql.Models.SampleSchemaName? sampleName = default(Azure.ResourceManager.Sql.Models.SampleSchemaName?), Azure.Core.ResourceIdentifier elasticPoolId = null, Azure.Core.ResourceIdentifier sourceDatabaseId = null, Azure.ResourceManager.Sql.Models.SqlDatabaseStatus? status = default(Azure.ResourceManager.Sql.Models.SqlDatabaseStatus?), System.Guid? databaseId = default(System.Guid?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string currentServiceObjectiveName = null, string requestedServiceObjectiveName = null, Azure.Core.AzureLocation? defaultSecondaryLocation = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier failoverGroupId = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), System.DateTimeOffset? sourceDatabaseDeletedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier recoveryServicesRecoveryPointId = null, Azure.Core.ResourceIdentifier longTermRetentionBackupResourceId = null, Azure.Core.ResourceIdentifier recoverableDatabaseId = null, Azure.Core.ResourceIdentifier restorableDroppedDatabaseId = null, Azure.ResourceManager.Sql.Models.CatalogCollationType? catalogCollation = default(Azure.ResourceManager.Sql.Models.CatalogCollationType?), bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.DatabaseLicenseType? licenseType = default(Azure.ResourceManager.Sql.Models.DatabaseLicenseType?), long? maxLogSizeBytes = default(long?), System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.DatabaseReadScale? readScale = default(Azure.ResourceManager.Sql.Models.DatabaseReadScale?), int? highAvailabilityReplicaCount = default(int?), Azure.ResourceManager.Sql.Models.SecondaryType? secondaryType = default(Azure.ResourceManager.Sql.Models.SecondaryType?), Azure.ResourceManager.Sql.Models.SqlSku currentSku = null, int? autoPauseDelay = default(int?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), double? minCapacity = default(double?), System.DateTimeOffset? pausedOn = default(System.DateTimeOffset?), System.DateTimeOffset? resumedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?), System.Guid? federatedClientId = default(System.Guid?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.SqlDatabaseKey> keys = null, string encryptionProtector = null, Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default(Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType?), bool? useFreeLimit = default(bool?), Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default(Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior?), Azure.Core.ResourceIdentifier sourceResourceId = null, bool? manualCutover = default(bool?), bool? performCutover = default(bool?), Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType? availabilityZone = default(Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType?), bool? encryptionProtectorAutoRotation = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.SqlDatabaseExtension SqlDatabaseExtension(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode? operationMode = default(Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode?), Azure.ResourceManager.Sql.Models.StorageKeyType? storageKeyType = default(Azure.ResourceManager.Sql.Models.StorageKeyType?), string storageKey = null, System.Uri storageUri = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlDatabaseExtension SqlDatabaseExtension(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode? operationMode = default(Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode?), Azure.ResourceManager.Sql.Models.StorageKeyType? storageKeyType = default(Azure.ResourceManager.Sql.Models.StorageKeyType?), string storageKey = null, System.Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, string databaseEdition = null, string serviceObjectiveName = null, string maxSizeBytes = null, Azure.ResourceManager.Sql.Models.NetworkIsolationSettings networkIsolation = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SqlDatabaseKey SqlDatabaseKey(Azure.ResourceManager.Sql.Models.SqlDatabaseKeyType? keyType = default(Azure.ResourceManager.Sql.Models.SqlDatabaseKeyType?), string thumbprint = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string subregion = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SqlDatabasePatch SqlDatabasePatch(Azure.ResourceManager.Sql.Models.SqlSku sku = null, Azure.ResourceManager.Sql.Models.DatabaseIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Sql.Models.SqlDatabaseCreateMode? createMode = default(Azure.ResourceManager.Sql.Models.SqlDatabaseCreateMode?), string collation = null, long? maxSizeBytes = default(long?), Azure.ResourceManager.Sql.Models.SampleSchemaName? sampleName = default(Azure.ResourceManager.Sql.Models.SampleSchemaName?), Azure.Core.ResourceIdentifier elasticPoolId = null, Azure.Core.ResourceIdentifier sourceDatabaseId = null, Azure.ResourceManager.Sql.Models.SqlDatabaseStatus? status = default(Azure.ResourceManager.Sql.Models.SqlDatabaseStatus?), System.Guid? databaseId = default(System.Guid?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string currentServiceObjectiveName = null, string requestedServiceObjectiveName = null, Azure.Core.AzureLocation? defaultSecondaryLocation = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier failoverGroupId = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), System.DateTimeOffset? sourceDatabaseDeletedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier recoveryServicesRecoveryPointId = null, Azure.Core.ResourceIdentifier longTermRetentionBackupResourceId = null, Azure.Core.ResourceIdentifier recoverableDatabaseId = null, Azure.Core.ResourceIdentifier restorableDroppedDatabaseId = null, Azure.ResourceManager.Sql.Models.CatalogCollationType? catalogCollation = default(Azure.ResourceManager.Sql.Models.CatalogCollationType?), bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.DatabaseLicenseType? licenseType = default(Azure.ResourceManager.Sql.Models.DatabaseLicenseType?), long? maxLogSizeBytes = default(long?), System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.DatabaseReadScale? readScale = default(Azure.ResourceManager.Sql.Models.DatabaseReadScale?), int? highAvailabilityReplicaCount = default(int?), Azure.ResourceManager.Sql.Models.SecondaryType? secondaryType = default(Azure.ResourceManager.Sql.Models.SecondaryType?), Azure.ResourceManager.Sql.Models.SqlSku currentSku = null, int? autoPauseDelay = default(int?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), double? minCapacity = default(double?), System.DateTimeOffset? pausedOn = default(System.DateTimeOffset?), System.DateTimeOffset? resumedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?), System.Guid? federatedClientId = default(System.Guid?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.SqlDatabaseKey> keys = null, string encryptionProtector = null, Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default(Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType?), bool? useFreeLimit = default(bool?), Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default(Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior?), bool? manualCutover = default(bool?), bool? performCutover = default(bool?), bool? encryptionProtectorAutoRotation = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyData SqlDatabaseSecurityAlertPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState? state = default(Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState?), System.Collections.Generic.IEnumerable<string> disabledAlerts = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = default(bool?), string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string distributedAvailabilityGroupName = null, System.Guid? distributedAvailabilityGroupId = default(System.Guid?), Azure.ResourceManager.Sql.Models.ReplicationModeType? replicationMode = default(Azure.ResourceManager.Sql.Models.ReplicationModeType?), Azure.ResourceManager.Sql.Models.LinkRole? partnerLinkRole = default(Azure.ResourceManager.Sql.Models.LinkRole?), string partnerAvailabilityGroupName = null, string partnerEndpoint = null, Azure.ResourceManager.Sql.Models.LinkRole? instanceLinkRole = default(Azure.ResourceManager.Sql.Models.LinkRole?), string instanceAvailabilityGroupName = null, Azure.ResourceManager.Sql.Models.FailoverModeType? failoverMode = default(Azure.ResourceManager.Sql.Models.FailoverModeType?), Azure.ResourceManager.Sql.Models.SeedingModeType? seedingMode = default(Azure.ResourceManager.Sql.Models.SeedingModeType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase> databases = null) { throw null; }
         public static Azure.ResourceManager.Sql.SqlFirewallRuleData SqlFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string startIPAddress = null, string endIPAddress = null) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.SqlLocationCapabilities SqlLocationCapabilities(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.SqlServerVersionCapability> supportedServerVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceVersionCapability> supportedManagedInstanceVersions = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlLocationCapabilities SqlLocationCapabilities(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.SqlServerVersionCapability> supportedServerVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceVersionCapability> supportedManagedInstanceVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability> supportedJobAgentVersions = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SqlMetric SqlMetric(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string timeGrain = null, Azure.ResourceManager.Sql.Models.SqlMetricUnitType? unit = default(Azure.ResourceManager.Sql.Models.SqlMetricUnitType?), Azure.ResourceManager.Sql.Models.SqlMetricName name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.SqlMetricValue> metricValues = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SqlMetricAvailability SqlMetricAvailability(string retention = null, string timeGrain = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SqlMetricDefinition SqlMetricDefinition(Azure.ResourceManager.Sql.Models.SqlMetricName name = null, Azure.ResourceManager.Sql.Models.SqlMetricPrimaryAggregationType? primaryAggregationType = default(Azure.ResourceManager.Sql.Models.SqlMetricPrimaryAggregationType?), string resourceUriString = null, Azure.ResourceManager.Sql.Models.SqlMetricDefinitionUnitType? unit = default(Azure.ResourceManager.Sql.Models.SqlMetricDefinitionUnitType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.SqlMetricAvailability> metricAvailabilities = null) { throw null; }
@@ -7271,7 +7411,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.SqlServerDatabaseRestorePointData SqlServerDatabaseRestorePointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.RestorePointType? restorePointType = default(Azure.ResourceManager.Sql.Models.RestorePointType?), System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), System.DateTimeOffset? restorePointCreatedOn = default(System.DateTimeOffset?), string restorePointLabel = null) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData SqlServerDevOpsAuditingSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isAzureMonitorTargetEnabled = default(bool?), bool? isManagedIdentityInUse = default(bool?), Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? state = default(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState?), string storageEndpoint = null, string storageAccountAccessKey = null, System.Guid? storageAccountSubscriptionId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerDnsAliasData SqlServerDnsAliasData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string azureDnsRecord = null) { throw null; }
-        public static Azure.ResourceManager.Sql.SqlServerJobAgentData SqlServerJobAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Sql.Models.SqlSku sku = null, Azure.Core.ResourceIdentifier databaseId = null, Azure.ResourceManager.Sql.Models.JobAgentState? state = default(Azure.ResourceManager.Sql.Models.JobAgentState?)) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobAgentData SqlServerJobAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Sql.Models.SqlSku sku = null, Azure.ResourceManager.Sql.Models.JobAgentIdentity identity = null, Azure.Core.ResourceIdentifier databaseId = null, Azure.ResourceManager.Sql.Models.JobAgentState? state = default(Azure.ResourceManager.Sql.Models.JobAgentState?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerJobCredentialData SqlServerJobCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string username = null, string password = null) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerJobData SqlServerJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, int? version = default(int?), Azure.ResourceManager.Sql.Models.SqlServerJobSchedule schedule = null) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerJobExecutionData SqlServerJobExecutionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? jobVersion = default(int?), string stepName = null, int? stepId = default(int?), System.Guid? jobExecutionId = default(System.Guid?), Azure.ResourceManager.Sql.Models.JobExecutionLifecycle? lifecycle = default(Azure.ResourceManager.Sql.Models.JobExecutionLifecycle?), Azure.ResourceManager.Sql.Models.JobExecutionProvisioningState? provisioningState = default(Azure.ResourceManager.Sql.Models.JobExecutionProvisioningState?), System.DateTimeOffset? createOn = default(System.DateTimeOffset?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? currentAttempts = default(int?), System.DateTimeOffset? currentAttemptStartOn = default(System.DateTimeOffset?), string lastMessage = null, Azure.ResourceManager.Sql.Models.JobExecutionTarget target = null) { throw null; }
@@ -7318,13 +7458,14 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.TdeCertificate TdeCertificate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string privateBlob = null, string certPassword = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.TopQueries TopQueries(int? numberOfQueries = default(int?), string aggregationFunction = null, string observationMetric = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? intervalType = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.QueryStatisticsProperties> queries = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationParameters UpsertManagedServerOperationParameters(string family = null, string tier = null, int? vCores = default(int?), int? storageSizeInGB = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStep UpsertManagedServerOperationStep(int? order = default(int?), string name = null, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus? status = default(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus?)) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStep UpsertManagedServerOperationStep(System.DateTimeOffset? stepStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? stepEndOn = default(System.DateTimeOffset?), string timeElapsed = null, int? order = default(int?), string name = null, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus? status = default(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus?)) { throw null; }
         public static Azure.ResourceManager.Sql.VirtualClusterData VirtualClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier subnetId = null, string version = null, System.Collections.Generic.IEnumerable<string> childResources = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.VirtualClusterPatch VirtualClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.ResourceIdentifier subnetId = null, string version = null, System.Collections.Generic.IEnumerable<string> childResources = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanError VulnerabilityAssessmentScanError(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Sql.VulnerabilityAssessmentScanRecordData VulnerabilityAssessmentScanRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scanId = null, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanTriggerType? triggerType = default(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanTriggerType?), Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanState? state = default(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanState?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanError> errors = null, string storageContainerPath = null, int? numberOfFailedSecurityChecks = default(int?)) { throw null; }
         public static Azure.ResourceManager.Sql.WorkloadClassifierData WorkloadClassifierData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string memberName = null, string label = null, string context = null, string startTime = null, string endTime = null, string importance = null) { throw null; }
         public static Azure.ResourceManager.Sql.WorkloadGroupData WorkloadGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? minResourcePercent = default(int?), int? maxResourcePercent = default(int?), double? minResourcePercentPerRequest = default(double?), double? maxResourcePercentPerRequest = default(double?), string importance = null, int? queryExecutionTimeout = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ZonePinningCapability ZonePinningCapability(string availabilityZone = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AuthenticationName : System.IEquatable<Azure.ResourceManager.Sql.Models.AuthenticationName>
@@ -7341,6 +7482,25 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(Azure.ResourceManager.Sql.Models.AuthenticationName left, Azure.ResourceManager.Sql.Models.AuthenticationName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sql.Models.AuthenticationName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.AuthenticationName left, Azure.ResourceManager.Sql.Models.AuthenticationName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AuthMetadataLookupMode : System.IEquatable<Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AuthMetadataLookupMode(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode AzureAD { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode Paired { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode left, Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode left, Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public enum AutoExecuteStatus
@@ -7481,6 +7641,18 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.CatalogCollationType left, Azure.ResourceManager.Sql.Models.CatalogCollationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class CertificateInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.CertificateInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.CertificateInfo>
+    {
+        internal CertificateInfo() { }
+        public string CertificateName { get { throw null; } }
+        public System.DateTimeOffset? ExpiryOn { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.CertificateInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.CertificateInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.CertificateInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.CertificateInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.CertificateInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.CertificateInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.CertificateInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ChangeLongTermRetentionBackupAccessTierParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ChangeLongTermRetentionBackupAccessTierParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ChangeLongTermRetentionBackupAccessTierParameters>
     {
         public ChangeLongTermRetentionBackupAccessTierParameters(string backupStorageAccessTier, string operationMode) { }
@@ -7492,6 +7664,26 @@ namespace Azure.ResourceManager.Sql.Models
         Azure.ResourceManager.Sql.Models.ChangeLongTermRetentionBackupAccessTierParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ChangeLongTermRetentionBackupAccessTierParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ChangeLongTermRetentionBackupAccessTierParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ChangeLongTermRetentionBackupAccessTierParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClientClassificationSource : System.IEquatable<Azure.ResourceManager.Sql.Models.ClientClassificationSource>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClientClassificationSource(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ClientClassificationSource MIP { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ClientClassificationSource Native { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ClientClassificationSource None { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ClientClassificationSource Recommended { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.ClientClassificationSource other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.ClientClassificationSource left, Azure.ResourceManager.Sql.Models.ClientClassificationSource right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.ClientClassificationSource (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.ClientClassificationSource left, Azure.ResourceManager.Sql.Models.ClientClassificationSource right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CompleteDatabaseRestoreDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.CompleteDatabaseRestoreDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.CompleteDatabaseRestoreDefinition>
     {
@@ -7571,6 +7763,8 @@ namespace Azure.ResourceManager.Sql.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DatabaseExtensionOperationMode(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode Export { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode Import { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode PolybaseImport { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -7683,9 +7877,11 @@ namespace Azure.ResourceManager.Sql.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DatabaseOperationPhase(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase BuildingHyperscaleComponents { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase Catchup { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase Copying { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase CutoverInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase LogTransitionInProgress { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase WaitingForCutover { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sql.Models.DatabaseOperationPhase other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -7839,23 +8035,86 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.DiffBackupIntervalInHours left, Azure.ResourceManager.Sql.Models.DiffBackupIntervalInHours right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DistributedAvailabilityGroupDatabase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase>
+    {
+        public DistributedAvailabilityGroupDatabase() { }
+        public Azure.ResourceManager.Sql.Models.ReplicaConnectedState? ConnectedState { get { throw null; } }
+        public string DatabaseName { get { throw null; } set { } }
+        public int? InstanceRedoReplicationLagSeconds { get { throw null; } }
+        public System.Guid? InstanceReplicaId { get { throw null; } }
+        public int? InstanceSendReplicationLagSeconds { get { throw null; } }
+        public string LastBackupLsn { get { throw null; } }
+        public System.DateTimeOffset? LastBackupOn { get { throw null; } }
+        public string LastCommitLsn { get { throw null; } }
+        public System.DateTimeOffset? LastCommitOn { get { throw null; } }
+        public string LastHardenedLsn { get { throw null; } }
+        public System.DateTimeOffset? LastHardenedOn { get { throw null; } }
+        public string LastReceivedLsn { get { throw null; } }
+        public System.DateTimeOffset? LastReceivedOn { get { throw null; } }
+        public string LastSentLsn { get { throw null; } }
+        public System.DateTimeOffset? LastSentOn { get { throw null; } }
+        public string MostRecentLinkError { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.CertificateInfo PartnerAuthCertValidity { get { throw null; } }
+        public System.Guid? PartnerReplicaId { get { throw null; } }
+        public string ReplicaState { get { throw null; } }
+        public string SeedingProgress { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth? SynchronizationHealth { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DistributedAvailabilityGroupReplicationMode : System.IEquatable<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public DistributedAvailabilityGroupReplicationMode(string value) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode Async { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode Sync { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator ==(Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode left, Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode right) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static implicit operator Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode (string value) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode left, Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupReplicationMode right) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public partial class DistributedAvailabilityGroupSetRole : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole>
+    {
+        public DistributedAvailabilityGroupSetRole(Azure.ResourceManager.Sql.Models.InstanceRole instanceRole, Azure.ResourceManager.Sql.Models.RoleChangeType roleChangeType) { }
+        public Azure.ResourceManager.Sql.Models.InstanceRole InstanceRole { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.RoleChangeType RoleChangeType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupSetRole>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DistributedAvailabilityGroupsFailoverContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent>
+    {
+        public DistributedAvailabilityGroupsFailoverContent(Azure.ResourceManager.Sql.Models.FailoverType failoverType) { }
+        public Azure.ResourceManager.Sql.Models.FailoverType FailoverType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupsFailoverContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DnsRefreshConfigurationPropertiesStatus : System.IEquatable<Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus>
@@ -7903,6 +8162,7 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ServiceObjectiveCapability> SupportedServiceLevelObjectives { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.StorageCapability> SupportedStorageCapabilities { get { throw null; } }
+        public bool? ZonePinning { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.Models.EditionCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.EditionCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.EditionCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7975,6 +8235,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ElasticPoolPerformanceLevelCapability> SupportedElasticPoolPerformanceLevels { get { throw null; } }
+        public bool? ZonePinning { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.Models.ElasticPoolEditionCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ElasticPoolEditionCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ElasticPoolEditionCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8027,6 +8288,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ElasticPoolPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ElasticPoolPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ElasticPoolPatch>
     {
         public ElasticPoolPatch() { }
+        public int? AutoPauseDelay { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType? AvailabilityZone { get { throw null; } set { } }
         public int? HighAvailabilityReplicaCount { get { throw null; } set { } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
@@ -8077,6 +8339,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ElasticPoolPerDatabaseSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseSettings>
     {
         public ElasticPoolPerDatabaseSettings() { }
+        public int? AutoPauseDelay { get { throw null; } set { } }
         public double? MaxCapacity { get { throw null; } set { } }
         public double? MinCapacity { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8096,11 +8359,15 @@ namespace Azure.ResourceManager.Sql.Models
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.AutoPauseDelayTimeRange SupportedAutoPauseDelay { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> SupportedLicenseTypes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> SupportedMaxSizes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MinCapacityCapability> SupportedMinCapacities { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange SupportedPerDatabaseAutoPauseDelay { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseMaxPerformanceLevelCapability> SupportedPerDatabaseMaxPerformanceLevels { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> SupportedPerDatabaseMaxSizes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ZonePinningCapability> SupportedZones { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.Models.ElasticPoolPerformanceLevelCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ElasticPoolPerformanceLevelCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ElasticPoolPerformanceLevelCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8244,6 +8511,42 @@ namespace Azure.ResourceManager.Sql.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FailoverModeType : System.IEquatable<Azure.ResourceManager.Sql.Models.FailoverModeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FailoverModeType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.FailoverModeType Manual { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.FailoverModeType None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.FailoverModeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.FailoverModeType left, Azure.ResourceManager.Sql.Models.FailoverModeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.FailoverModeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.FailoverModeType left, Azure.ResourceManager.Sql.Models.FailoverModeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FailoverType : System.IEquatable<Azure.ResourceManager.Sql.Models.FailoverType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FailoverType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.FailoverType ForcedAllowDataLoss { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.FailoverType Planned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.FailoverType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.FailoverType left, Azure.ResourceManager.Sql.Models.FailoverType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.FailoverType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.FailoverType left, Azure.ResourceManager.Sql.Models.FailoverType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FreeLimitExhaustionBehavior : System.IEquatable<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior>
     {
         private readonly object _dummy;
@@ -8260,6 +8563,18 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior left, Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class FreeLimitExhaustionBehaviorCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability>
+    {
+        internal FreeLimitExhaustionBehaviorCapability() { }
+        public Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehavior? ExhaustionBehaviorType { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GeoBackupPolicyName : System.IEquatable<Azure.ResourceManager.Sql.Models.GeoBackupPolicyName>
@@ -8301,6 +8616,42 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.GeoSecondaryInstanceType left, Azure.ResourceManager.Sql.Models.GeoSecondaryInstanceType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HybridSecondaryUsage : System.IEquatable<Azure.ResourceManager.Sql.Models.HybridSecondaryUsage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HybridSecondaryUsage(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.HybridSecondaryUsage Active { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.HybridSecondaryUsage Passive { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.HybridSecondaryUsage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.HybridSecondaryUsage left, Azure.ResourceManager.Sql.Models.HybridSecondaryUsage right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.HybridSecondaryUsage (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.HybridSecondaryUsage left, Azure.ResourceManager.Sql.Models.HybridSecondaryUsage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HybridSecondaryUsageDetected : System.IEquatable<Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HybridSecondaryUsageDetected(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected Active { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected Passive { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected left, Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected left, Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum ImplementationMethod
     {
         TSql = 0,
@@ -8326,9 +8677,12 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ImportExportExtensionsOperationResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ImportExportExtensionsOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ImportExportExtensionsOperationResult>
     {
         public ImportExportExtensionsOperationResult() { }
+        public System.Uri BlobUri { get { throw null; } }
         public string DatabaseName { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public string LastModifiedTime { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.PrivateEndpointConnectionRequestStatus> PrivateEndpointConnections { get { throw null; } }
+        public string QueuedTime { get { throw null; } }
         public System.Guid? RequestId { get { throw null; } }
         public string RequestType { get { throw null; } }
         public string ServerName { get { throw null; } }
@@ -8499,6 +8853,85 @@ namespace Azure.ResourceManager.Sql.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.InstancePoolVcoresCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InstanceRole : System.IEquatable<Azure.ResourceManager.Sql.Models.InstanceRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InstanceRole(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.InstanceRole Primary { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.InstanceRole Secondary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.InstanceRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.InstanceRole left, Azure.ResourceManager.Sql.Models.InstanceRole right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.InstanceRole (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.InstanceRole left, Azure.ResourceManager.Sql.Models.InstanceRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class JobAgentEditionCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentEditionCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentEditionCapability>
+    {
+        internal JobAgentEditionCapability() { }
+        public string Name { get { throw null; } }
+        public string Reason { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability> SupportedServiceLevelObjectives { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.JobAgentEditionCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentEditionCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentEditionCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.JobAgentEditionCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentEditionCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentEditionCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentEditionCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class JobAgentIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentIdentity>
+    {
+        public JobAgentIdentity(Azure.ResourceManager.Sql.Models.JobAgentIdentityType identityType) { }
+        public Azure.ResourceManager.Sql.Models.JobAgentIdentityType IdentityType { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.JobAgentIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.JobAgentIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct JobAgentIdentityType : System.IEquatable<Azure.ResourceManager.Sql.Models.JobAgentIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public JobAgentIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.JobAgentIdentityType None { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.JobAgentIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.JobAgentIdentityType SystemAssignedUserAssigned { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.JobAgentIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.JobAgentIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.JobAgentIdentityType left, Azure.ResourceManager.Sql.Models.JobAgentIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.JobAgentIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.JobAgentIdentityType left, Azure.ResourceManager.Sql.Models.JobAgentIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class JobAgentServiceLevelObjectiveCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability>
+    {
+        internal JobAgentServiceLevelObjectiveCapability() { }
+        public string Name { get { throw null; } }
+        public string Reason { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentServiceLevelObjectiveCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobAgentState : System.IEquatable<Azure.ResourceManager.Sql.Models.JobAgentState>
     {
         private readonly object _dummy;
@@ -8518,6 +8951,20 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.JobAgentState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.JobAgentState left, Azure.ResourceManager.Sql.Models.JobAgentState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class JobAgentVersionCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability>
+    {
+        internal JobAgentVersionCapability() { }
+        public string Name { get { throw null; } }
+        public string Reason { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.JobAgentEditionCapability> SupportedEditions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.JobAgentVersionCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.JobAgentVersionCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobExecutionLifecycle : System.IEquatable<Azure.ResourceManager.Sql.Models.JobExecutionLifecycle>
@@ -8643,6 +9090,8 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public partial class JobStepOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.JobStepOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.JobStepOutput>
     {
+        public JobStepOutput(string serverName, string databaseName, string tableName) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public JobStepOutput(string serverName, string databaseName, string tableName, string credential) { }
         public string Credential { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
@@ -8753,6 +9202,24 @@ namespace Azure.ResourceManager.Sql.Models
         Azure.ResourceManager.Sql.Models.LicenseTypeCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.LicenseTypeCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.LicenseTypeCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.LicenseTypeCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LinkRole : System.IEquatable<Azure.ResourceManager.Sql.Models.LinkRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LinkRole(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.LinkRole Primary { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.LinkRole Secondary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.LinkRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.LinkRole left, Azure.ResourceManager.Sql.Models.LinkRole right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.LinkRole (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.LinkRole left, Azure.ResourceManager.Sql.Models.LinkRole right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class LogSizeCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.LogSizeCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.LogSizeCapability>
     {
@@ -8906,8 +9373,8 @@ namespace Azure.ResourceManager.Sql.Models
         public string Collation { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode? CreateMode { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier CrossSubscriptionRestorableDroppedDatabaseId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier CrossSubscriptionSourceDatabaseId { get { throw null; } set { } }
+        public string CrossSubscriptionRestorableDroppedDatabaseId { get { throw null; } set { } }
+        public string CrossSubscriptionSourceDatabaseId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CrossSubscriptionTargetManagedInstanceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? DefaultSecondaryLocation { get { throw null; } }
         public System.DateTimeOffset? EarliestRestorePoint { get { throw null; } }
@@ -9015,6 +9482,24 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ManagedInstanceAdministratorType left, Azure.ResourceManager.Sql.Models.ManagedInstanceAdministratorType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedInstanceDatabaseFormat : System.IEquatable<Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedInstanceDatabaseFormat(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat AlwaysUpToDate { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat SqlServer2022 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat left, Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat left, Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ManagedInstanceDtcSecuritySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ManagedInstanceDtcSecuritySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ManagedInstanceDtcSecuritySettings>
     {
         public ManagedInstanceDtcSecuritySettings() { }
@@ -9049,6 +9534,8 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ManagedInstanceEditionCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ManagedInstanceEditionCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ManagedInstanceEditionCapability>
     {
         internal ManagedInstanceEditionCapability() { }
+        public bool? IsGeneralPurposeV2 { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? IsZoneRedundant { get { throw null; } }
         public string Name { get { throw null; } }
         public string Reason { get { throw null; } }
@@ -9104,6 +9591,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ManagedInstanceFamilyCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ManagedInstanceFamilyCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ManagedInstanceFamilyCapability>
     {
         internal ManagedInstanceFamilyCapability() { }
+        public bool? IsZoneRedundant { get { throw null; } }
         public string Name { get { throw null; } }
         public string Reason { get { throw null; } }
         public string Sku { get { throw null; } }
@@ -9208,13 +9696,20 @@ namespace Azure.ResourceManager.Sql.Models
         public string AdministratorLogin { get { throw null; } set { } }
         public string AdministratorLoginPassword { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceExternalAdministrator Administrators { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.AuthMetadataLookupMode? AuthenticationMetadata { get { throw null; } set { } }
         public string Collation { get { throw null; } set { } }
+        public System.DateTimeOffset? CreateOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseFormat? DatabaseFormat { get { throw null; } set { } }
         public string DnsZone { get { throw null; } }
         public string DnsZonePartner { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus? ExternalGovernanceStatus { get { throw null; } }
         public string FullyQualifiedDomainName { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.HybridSecondaryUsage? HybridSecondaryUsage { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.HybridSecondaryUsageDetected? HybridSecondaryUsageDetected { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InstancePoolId { get { throw null; } set { } }
+        public bool? IsGeneralPurposeV2 { get { throw null; } set { } }
         public bool? IsPublicDataEndpointEnabled { get { throw null; } set { } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
         public System.Uri KeyId { get { throw null; } set { } }
@@ -9223,6 +9718,7 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.Core.ResourceIdentifier ManagedDnsZonePartner { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedServerCreateMode? ManagedInstanceCreateMode { get { throw null; } set { } }
         public string MinimalTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.PricingModel? PricingModel { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedInstancePecProperty> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState? ProvisioningState { get { throw null; } }
@@ -9233,11 +9729,14 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceManagedInstanceId { get { throw null; } set { } }
         public string State { get { throw null; } }
+        public int? StorageIOps { get { throw null; } set { } }
         public int? StorageSizeInGB { get { throw null; } set { } }
+        public int? StorageThroughputMBps { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string TimezoneId { get { throw null; } set { } }
         public int? VCores { get { throw null; } set { } }
+        public string VirtualClusterId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.Models.ManagedInstancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ManagedInstancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ManagedInstancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9275,6 +9774,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal ManagedInstancePrivateLinkProperties() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9308,6 +9808,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState Deleted { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState Deleting { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState InProgress { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState Registering { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState Running { get { throw null; } }
@@ -9416,13 +9917,22 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal ManagedInstanceVcoresCapability() { }
         public Azure.ResourceManager.Sql.Models.MaxSizeCapability IncludedMaxSize { get { throw null; } }
+        public long? IncludedStorageIOps { get { throw null; } }
+        public long? IncludedStorageThroughputMBps { get { throw null; } }
+        public double? IopsIncludedValueOverrideFactorPerSelectedStorageGB { get { throw null; } }
+        public double? IopsMinValueOverrideFactorPerSelectedStorageGB { get { throw null; } }
         public bool? IsInstancePoolSupported { get { throw null; } }
         public bool? IsStandaloneSupported { get { throw null; } }
         public string Name { get { throw null; } }
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedInstanceMaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability SupportedMemoryLimitsMB { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability SupportedStorageIOps { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> SupportedStorageSizes { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability SupportedStorageThroughputMBps { get { throw null; } }
+        public double? ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB { get { throw null; } }
+        public double? ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB { get { throw null; } }
         public int? Value { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.Models.ManagedInstanceVcoresCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ManagedInstanceVcoresCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9560,6 +10070,21 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ManagementOperationState left, Azure.ResourceManager.Sql.Models.ManagementOperationState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MaxLimitRangeCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability>
+    {
+        internal MaxLimitRangeCapability() { }
+        public long? MaxValue { get { throw null; } }
+        public long? MinValue { get { throw null; } }
+        public string Reason { get { throw null; } }
+        public long? ScaleSize { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MaxSizeCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.MaxSizeCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.MaxSizeCapability>
     {
         internal MaxSizeCapability() { }
@@ -9675,6 +10200,22 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.PauseDelayTimeUnit left, Azure.ResourceManager.Sql.Models.PauseDelayTimeUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PerDatabaseAutoPauseDelayTimeRange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange>
+    {
+        internal PerDatabaseAutoPauseDelayTimeRange() { }
+        public int? Default { get { throw null; } }
+        public int? DoNotPauseValue { get { throw null; } }
+        public int? MaxValue { get { throw null; } }
+        public int? MinValue { get { throw null; } }
+        public int? StepSize { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.PauseDelayTimeUnit? Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PerDatabaseAutoPauseDelayTimeRange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class PerformanceLevelCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.PerformanceLevelCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PerformanceLevelCapability>
     {
         internal PerformanceLevelCapability() { }
@@ -9703,6 +10244,24 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(Azure.ResourceManager.Sql.Models.PerformanceLevelUnit left, Azure.ResourceManager.Sql.Models.PerformanceLevelUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sql.Models.PerformanceLevelUnit (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.PerformanceLevelUnit left, Azure.ResourceManager.Sql.Models.PerformanceLevelUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PricingModel : System.IEquatable<Azure.ResourceManager.Sql.Models.PricingModel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PricingModel(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.PricingModel Freemium { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.PricingModel Regular { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.PricingModel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.PricingModel left, Azure.ResourceManager.Sql.Models.PricingModel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.PricingModel (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.PricingModel left, Azure.ResourceManager.Sql.Models.PricingModel right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PrivateEndpointConnectionRequestStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.PrivateEndpointConnectionRequestStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PrivateEndpointConnectionRequestStatus>
@@ -10026,6 +10585,59 @@ namespace Azure.ResourceManager.Sql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RefreshExternalGovernanceStatusOperationResultMI : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI>
+    {
+        public RefreshExternalGovernanceStatusOperationResultMI() { }
+        public string ErrorMessage { get { throw null; } }
+        public string ManagedInstanceName { get { throw null; } }
+        public string QueuedTime { get { throw null; } }
+        public System.Guid? RequestId { get { throw null; } }
+        public string RequestType { get { throw null; } }
+        public string Status { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResultMI>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ReplicaConnectedState : System.IEquatable<Azure.ResourceManager.Sql.Models.ReplicaConnectedState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ReplicaConnectedState(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ReplicaConnectedState Connected { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ReplicaConnectedState Disconnected { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.ReplicaConnectedState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.ReplicaConnectedState left, Azure.ResourceManager.Sql.Models.ReplicaConnectedState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.ReplicaConnectedState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.ReplicaConnectedState left, Azure.ResourceManager.Sql.Models.ReplicaConnectedState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ReplicaSynchronizationHealth : System.IEquatable<Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ReplicaSynchronizationHealth(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth Healthy { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth NOTHealthy { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth PartiallyHealthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth left, Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth left, Azure.ResourceManager.Sql.Models.ReplicaSynchronizationHealth right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReplicationLinkState : System.IEquatable<Azure.ResourceManager.Sql.Models.ReplicationLinkState>
     {
@@ -10066,6 +10678,24 @@ namespace Azure.ResourceManager.Sql.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ReplicationModeType : System.IEquatable<Azure.ResourceManager.Sql.Models.ReplicationModeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ReplicationModeType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ReplicationModeType Async { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ReplicationModeType Sync { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.ReplicationModeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.ReplicationModeType left, Azure.ResourceManager.Sql.Models.ReplicationModeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.ReplicationModeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.ReplicationModeType left, Azure.ResourceManager.Sql.Models.ReplicationModeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReplicaType : System.IEquatable<Azure.ResourceManager.Sql.Models.ReplicaType>
     {
         private readonly object _dummy;
@@ -10082,6 +10712,16 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.ReplicaType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ReplicaType left, Azure.ResourceManager.Sql.Models.ReplicaType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions
+    {
+        public ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions(Azure.Core.AzureLocation locationName) { }
+        public Azure.ResourceManager.Sql.Models.SqlDatabaseState? DatabaseState { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public Azure.Core.AzureLocation LocationName { get { throw null; } }
+        public bool? OnlyLatestPerDatabase { get { throw null; } set { } }
+        public long? Skip { get { throw null; } set { } }
+        public long? Top { get { throw null; } set { } }
     }
     public partial class ResourceWithWritableName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ResourceWithWritableName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ResourceWithWritableName>
     {
@@ -10117,6 +10757,24 @@ namespace Azure.ResourceManager.Sql.Models
     {
         Continuous = 0,
         Discrete = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleChangeType : System.IEquatable<Azure.ResourceManager.Sql.Models.RoleChangeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleChangeType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.RoleChangeType Forced { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.RoleChangeType Planned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.RoleChangeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.RoleChangeType left, Azure.ResourceManager.Sql.Models.RoleChangeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.RoleChangeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.RoleChangeType left, Azure.ResourceManager.Sql.Models.RoleChangeType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SampleSchemaName : System.IEquatable<Azure.ResourceManager.Sql.Models.SampleSchemaName>
@@ -10208,6 +10866,24 @@ namespace Azure.ResourceManager.Sql.Models
         Undefined = 0,
         SqlInjectionVulnerability = 1,
         SqlInjectionExploit = 2,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SeedingModeType : System.IEquatable<Azure.ResourceManager.Sql.Models.SeedingModeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SeedingModeType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SeedingModeType Automatic { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SeedingModeType Manual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.SeedingModeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.SeedingModeType left, Azure.ResourceManager.Sql.Models.SeedingModeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.SeedingModeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.SeedingModeType left, Azure.ResourceManager.Sql.Models.SeedingModeType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum SensitivityLabelRank
     {
@@ -10415,10 +11091,13 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.AutoPauseDelayTimeRange SupportedAutoPauseDelay { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.FreeLimitExhaustionBehaviorCapability> SupportedFreeLimitExhaustionBehaviors { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> SupportedLicenseTypes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> SupportedMaxSizes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MinCapacityCapability> SupportedMinCapacities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ZonePinningCapability> SupportedZones { get { throw null; } }
+        public bool? ZonePinning { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.Models.ServiceObjectiveCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ServiceObjectiveCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ServiceObjectiveCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10587,6 +11266,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.SqlCapabilityGroup SupportedEditions { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.SqlCapabilityGroup SupportedElasticPoolEditions { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.SqlCapabilityGroup SupportedInstancePoolEditions { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlCapabilityGroup SupportedJobAgentVersions { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.SqlCapabilityGroup SupportedManagedInstanceEditions { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.SqlCapabilityGroup SupportedManagedInstanceVersions { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sql.Models.SqlCapabilityGroup other) { throw null; }
@@ -10685,7 +11365,14 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class SqlDatabaseExtension : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlDatabaseExtension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlDatabaseExtension>
     {
         public SqlDatabaseExtension() { }
+        public string AdministratorLogin { get { throw null; } set { } }
+        public string AdministratorLoginPassword { get { throw null; } set { } }
+        public string AuthenticationType { get { throw null; } set { } }
+        public string DatabaseEdition { get { throw null; } set { } }
+        public string MaxSizeBytes { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.NetworkIsolationSettings NetworkIsolation { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode? OperationMode { get { throw null; } set { } }
+        public string ServiceObjectiveName { get { throw null; } set { } }
         public string StorageKey { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.StorageKeyType? StorageKeyType { get { throw null; } set { } }
         public System.Uri StorageUri { get { throw null; } set { } }
@@ -10874,6 +11561,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string Name { get { throw null; } }
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability> SupportedJobAgentVersions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedInstanceVersionCapability> SupportedManagedInstanceVersions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.SqlServerVersionCapability> SupportedServerVersions { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -11273,6 +11961,8 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class SqlServerJobAgentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlServerJobAgentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlServerJobAgentPatch>
     {
         public SqlServerJobAgentPatch() { }
+        public Azure.ResourceManager.Sql.Models.JobAgentIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.Models.SqlServerJobAgentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlServerJobAgentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -11289,8 +11979,8 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
         public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } set { } }
-        public int? Skip { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
+        public long? Skip { get { throw null; } set { } }
+        public long? Top { get { throw null; } set { } }
     }
     public partial class SqlServerJobExecutionCollectionGetAllOptions
     {
@@ -11300,8 +11990,8 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
         public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } set { } }
-        public int? Skip { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
+        public long? Skip { get { throw null; } set { } }
+        public long? Top { get { throw null; } set { } }
     }
     public partial class SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions
     {
@@ -11312,8 +12002,8 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } set { } }
         public System.Guid JobExecutionId { get { throw null; } }
-        public int? Skip { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
+        public long? Skip { get { throw null; } set { } }
+        public long? Top { get { throw null; } set { } }
     }
     public partial class SqlServerJobExecutionStepCollectionGetAllOptions
     {
@@ -11323,8 +12013,8 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
         public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } set { } }
-        public int? Skip { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
+        public long? Skip { get { throw null; } set { } }
+        public long? Top { get { throw null; } set { } }
     }
     public partial class SqlServerJobExecutionStepTargetCollectionGetAllOptions
     {
@@ -11334,8 +12024,8 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
         public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } set { } }
-        public int? Skip { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
+        public long? Skip { get { throw null; } set { } }
+        public long? Top { get { throw null; } set { } }
     }
     public partial class SqlServerJobSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlServerJobSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlServerJobSchedule>
     {
@@ -11782,6 +12472,7 @@ namespace Azure.ResourceManager.Sql.Models
         private readonly int _dummyPrimitive;
         public StorageCapabilityStorageAccountType(string value) { throw null; }
         public static Azure.ResourceManager.Sql.Models.StorageCapabilityStorageAccountType Grs { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.StorageCapabilityStorageAccountType Gzrs { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.StorageCapabilityStorageAccountType Lrs { get { throw null; } }
         public static Azure.ResourceManager.Sql.Models.StorageCapabilityStorageAccountType Zrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sql.Models.StorageCapabilityStorageAccountType other) { throw null; }
@@ -11811,6 +12502,16 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.StorageKeyType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.StorageKeyType left, Azure.ResourceManager.Sql.Models.StorageKeyType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions
+    {
+        public SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions(Azure.Core.AzureLocation locationName) { }
+        public Azure.ResourceManager.Sql.Models.SqlDatabaseState? DatabaseState { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public Azure.Core.AzureLocation LocationName { get { throw null; } }
+        public bool? OnlyLatestPerDatabase { get { throw null; } set { } }
+        public long? Skip { get { throw null; } set { } }
+        public long? Top { get { throw null; } set { } }
     }
     public partial class SyncAgentKeyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SyncAgentKeyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SyncAgentKeyProperties>
     {
@@ -12186,6 +12887,9 @@ namespace Azure.ResourceManager.Sql.Models
         public string Name { get { throw null; } }
         public int? Order { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus? Status { get { throw null; } }
+        public System.DateTimeOffset? StepEndOn { get { throw null; } }
+        public System.DateTimeOffset? StepStartOn { get { throw null; } }
+        public string TimeElapsed { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStep System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStep>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStep>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -12319,5 +13023,18 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanTriggerType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanTriggerType left, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanTriggerType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ZonePinningCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ZonePinningCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ZonePinningCapability>
+    {
+        internal ZonePinningCapability() { }
+        public string AvailabilityZone { get { throw null; } }
+        public string Reason { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.ZonePinningCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ZonePinningCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ZonePinningCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.ZonePinningCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ZonePinningCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ZonePinningCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ZonePinningCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -359,9 +359,12 @@ rename-mapping:
   Phase: DatabaseOperationPhase
   PhaseDetails: DatabaseOperationPhaseDetails
   UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
-  ManagedInstanceProperties.properties.provisioningState: ManagedInstanceProvisioningState
   DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
   RecommendedAction.properties.details: AdditionalDetails
+  SqlAgentState: SqlAgentConfigurationPropertiesState
+  TrustScope: ServerTrustGroupPropertiesTrustScopesItem
+  ManagementOperationStepState: UpsertManagedServerOperationStepStatus
+  StorageAccountType: StorageCapabilityStorageAccountType
 
 prompted-enum-values:
   - Default

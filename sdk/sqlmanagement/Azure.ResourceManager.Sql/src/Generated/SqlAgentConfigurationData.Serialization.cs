@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            SqlAgentState? state = default;
+            SqlAgentConfigurationPropertiesState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            state = new SqlAgentState(property0.Value.GetString());
+                            state = new SqlAgentConfigurationPropertiesState(property0.Value.GetString());
                             continue;
                         }
                     }

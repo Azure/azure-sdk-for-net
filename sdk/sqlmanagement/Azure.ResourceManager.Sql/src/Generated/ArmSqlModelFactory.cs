@@ -432,15 +432,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="observedImpact"> Gets the observed/actual impact info for this recommended action e.g., Actual CPU gain, Actual Disk Space change. </param>
         /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
         /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
-        /// <param name="details"> Gets additional details specific to this recommended action. </param>
+        /// <param name="additionalDetails"> Gets additional details specific to this recommended action. </param>
         /// <returns> A new <see cref="Sql.RecommendedActionData"/> instance for mocking. </returns>
-        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, string> details = null)
+        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, string> additionalDetails = null)
         {
             estimatedImpact ??= new List<RecommendedActionImpactRecord>();
             observedImpact ??= new List<RecommendedActionImpactRecord>();
             timeSeries ??= new List<RecommendedActionMetricInfo>();
             linkedObjects ??= new List<string>();
-            details ??= new Dictionary<string, string>();
+            additionalDetails ??= new Dictionary<string, string>();
 
             return new RecommendedActionData(
                 id,
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Sql.Models
                 observedImpact?.ToList(),
                 timeSeries?.ToList(),
                 linkedObjects?.ToList(),
-                details,
+                additionalDetails,
                 serializedAdditionalRawData: null);
         }
 
@@ -1383,7 +1383,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.StorageCapability"/> instance for mocking. </returns>
-        public static StorageCapability StorageCapability(StorageAccountType? storageAccountType = null, SqlCapabilityStatus? status = null, string reason = null)
+        public static StorageCapability StorageCapability(StorageCapabilityStorageAccountType? storageAccountType = null, SqlCapabilityStatus? status = null, string reason = null)
         {
             return new StorageCapability(storageAccountType, status, reason, serializedAdditionalRawData: null);
         }
@@ -2256,7 +2256,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"></param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="Models.UpsertManagedServerOperationStep"/> instance for mocking. </returns>
-        public static UpsertManagedServerOperationStep UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn = null, DateTimeOffset? stepEndOn = null, string timeElapsed = null, int? order = null, string name = null, ManagementOperationStepState? status = null)
+        public static UpsertManagedServerOperationStep UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn = null, DateTimeOffset? stepEndOn = null, string timeElapsed = null, int? order = null, string name = null, UpsertManagedServerOperationStepStatus? status = null)
         {
             return new UpsertManagedServerOperationStep(
                 stepStartOn,
@@ -2805,10 +2805,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="groupMembers"> Group members information for the server trust group. </param>
         /// <param name="trustScopes"> Trust scope of the server trust group. </param>
         /// <returns> A new <see cref="Sql.SqlServerTrustGroupData"/> instance for mocking. </returns>
-        public static SqlServerTrustGroupData SqlServerTrustGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ServerTrustGroupServerInfo> groupMembers = null, IEnumerable<TrustScope> trustScopes = null)
+        public static SqlServerTrustGroupData SqlServerTrustGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ServerTrustGroupServerInfo> groupMembers = null, IEnumerable<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = null)
         {
             groupMembers ??= new List<ServerTrustGroupServerInfo>();
-            trustScopes ??= new List<TrustScope>();
+            trustScopes ??= new List<ServerTrustGroupPropertiesTrustScopesItem>();
 
             return new SqlServerTrustGroupData(
                 id,
@@ -2851,7 +2851,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> The state of Sql Agent. </param>
         /// <returns> A new <see cref="Sql.SqlAgentConfigurationData"/> instance for mocking. </returns>
-        public static SqlAgentConfigurationData SqlAgentConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlAgentState? state = null)
+        public static SqlAgentConfigurationData SqlAgentConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlAgentConfigurationPropertiesState? state = null)
         {
             return new SqlAgentConfigurationData(
                 id,

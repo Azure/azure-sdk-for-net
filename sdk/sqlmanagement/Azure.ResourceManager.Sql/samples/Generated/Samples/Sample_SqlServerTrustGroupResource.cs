@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerTrustGroupData data = new SqlServerTrustGroupData
             {
                 GroupMembers = { new ServerTrustGroupServerInfo(new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/managedInstances/managedInstance-1")), new ServerTrustGroupServerInfo(new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/managedInstances/managedInstance-2")) },
-                TrustScopes = { TrustScope.GlobalTransactions, TrustScope.ServiceBroker },
+                TrustScopes = { ServerTrustGroupPropertiesTrustScopesItem.GlobalTransactions, ServerTrustGroupPropertiesTrustScopesItem.ServiceBroker },
             };
             ArmOperation<SqlServerTrustGroupResource> lro = await sqlServerTrustGroup.UpdateAsync(WaitUntil.Completed, data);
             SqlServerTrustGroupResource result = lro.Value;

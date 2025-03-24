@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             SqlAgentConfigurationData data = new SqlAgentConfigurationData
             {
-                State = SqlAgentState.Enabled,
+                State = SqlAgentConfigurationPropertiesState.Enabled,
             };
             ArmOperation<SqlAgentConfigurationResource> lro = await sqlAgentConfiguration.CreateOrUpdateAsync(WaitUntil.Completed, data);
             SqlAgentConfigurationResource result = lro.Value;
