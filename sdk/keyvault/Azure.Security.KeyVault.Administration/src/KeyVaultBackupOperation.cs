@@ -120,7 +120,15 @@ namespace Azure.Security.KeyVault.Administration
                     throw _requestFailedException;
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                return new KeyVaultBackupResult(new Uri(_value.AzureStorageBlobContainerUri), _value.StartTime.Value, _value.EndTime.Value);
+
+                if (_value.AzureStorageBlobContainerUri is null)
+                {
+                    return new KeyVaultBackupResult(null, _value.StartTime.Value, _value.EndTime.Value);
+                }
+                else
+                {
+                    return new KeyVaultBackupResult(new Uri(_value.AzureStorageBlobContainerUri), _value.StartTime.Value, _value.EndTime.Value);
+                }
             }
         }
 
