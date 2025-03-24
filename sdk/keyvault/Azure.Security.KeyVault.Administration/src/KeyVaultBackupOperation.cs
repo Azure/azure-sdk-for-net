@@ -87,7 +87,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultBackupOperation" /> for mocking. </summary>
-        protected KeyVaultBackupOperation() {}
+        protected KeyVaultBackupOperation() { }
 
         /// <summary>
         /// The start time of the backup operation.
@@ -121,14 +121,12 @@ namespace Azure.Security.KeyVault.Administration
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
 
-                if (_value.AzureStorageBlobContainerUri is null)
-                {
-                    return new KeyVaultBackupResult(null, _value.StartTime.Value, _value.EndTime.Value);
-                }
-                else
-                {
-                    return new KeyVaultBackupResult(new Uri(_value.AzureStorageBlobContainerUri), _value.StartTime.Value, _value.EndTime.Value);
-                }
+                return new KeyVaultBackupResult(
+                    _value.AzureStorageBlobContainerUri is null ?
+                    null :
+                    new Uri(_value.AzureStorageBlobContainerUri) ,
+                    _value.StartTime.Value,
+                    _value.EndTime.Value);
             }
         }
 
