@@ -6,7 +6,7 @@ using Azure.Generator.Providers.Abstraction;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 
-namespace Azure.Generator.Mgmt.Providers.Abstraction
+namespace Azure.Generator.Management.Providers.Abstraction
 {
     internal record MgmtHttpPipelineProvider : HttpPipelineProvider
     {

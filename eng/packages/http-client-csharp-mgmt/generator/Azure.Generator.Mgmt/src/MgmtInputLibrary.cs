@@ -5,7 +5,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Generator.Mgmt
+namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
     public class MgmtInputLibrary : InputLibrary

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Mgmt.Primitives;
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Tests.Common;
 using Microsoft.TypeSpec.Generator.Input;
 
-namespace Azure.Generator.Mgmt.Tests.Common
+namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {

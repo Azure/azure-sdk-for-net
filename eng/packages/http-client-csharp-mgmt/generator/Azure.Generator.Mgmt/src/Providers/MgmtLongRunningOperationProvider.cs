@@ -3,7 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Mgmt.Utilities;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -17,7 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Mgmt.Providers
+namespace Azure.Generator.Management.Providers
 {
     internal class MgmtLongRunningOperationProvider : TypeProvider
     {

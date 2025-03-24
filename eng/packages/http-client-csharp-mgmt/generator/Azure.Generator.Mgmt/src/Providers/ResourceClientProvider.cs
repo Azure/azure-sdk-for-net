@@ -3,9 +3,9 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Mgmt.Models;
-using Azure.Generator.Mgmt.Primitives;
-using Azure.Generator.Mgmt.Utilities;
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -24,7 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Mgmt.Providers
+namespace Azure.Generator.Management.Providers
 {
     /// <summary>
     /// Provides a resource client type.

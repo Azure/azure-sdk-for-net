@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Tests", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjects.Local.Tests", "TestProjects\Local.Tests\TestProjects.Local.Tests.csproj", "{E6E6C66A-E1E2-4D4D-9E8A-FD97A1761F90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Tests.Common", "Azure.Generator.Tests.Common\Azure.Generator.Tests.Common.csproj", "{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Tests.Common", "..\..\http-client-csharp\generator\Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj", "{5C43C4D9-AC67-6643-B7AF-DF8096B8265A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{E6E6C66A-E1E2-4D4D-9E8A-FD97A1761F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6E6C66A-E1E2-4D4D-9E8A-FD97A1761F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6E6C66A-E1E2-4D4D-9E8A-FD97A1761F90}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CEED3E0-1C88-49F9-9D6F-3D8DC2C47A78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C43C4D9-AC67-6643-B7AF-DF8096B8265A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C43C4D9-AC67-6643-B7AF-DF8096B8265A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C43C4D9-AC67-6643-B7AF-DF8096B8265A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C43C4D9-AC67-6643-B7AF-DF8096B8265A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

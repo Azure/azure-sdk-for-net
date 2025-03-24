@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-		<PackageReference Include="Azure.ResourceManager" />
+    <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="System.ClientModel" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />

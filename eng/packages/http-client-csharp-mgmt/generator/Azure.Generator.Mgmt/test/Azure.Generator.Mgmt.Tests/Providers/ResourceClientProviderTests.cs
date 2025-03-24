@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Mgmt.Providers;
-using Azure.Generator.Mgmt.Tests.Common;
-using Azure.Generator.Mgmt.Tests.TestHelpers;
+using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Tests.Common;
+using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Tests.Common;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 
-namespace Azure.Generator.Mgmt.Tests.Providers
+namespace Azure.Generator.Management.Tests.Providers
 {
     internal class ResourceClientProviderTests
     {

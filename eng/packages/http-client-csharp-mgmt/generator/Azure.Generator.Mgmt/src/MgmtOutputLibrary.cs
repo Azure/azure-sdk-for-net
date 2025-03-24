@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Mgmt.Primitives;
-using Azure.Generator.Mgmt.Providers;
+using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Generator.Mgmt
+namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
     public class MgmtOutputLibrary : AzureOutputLibrary

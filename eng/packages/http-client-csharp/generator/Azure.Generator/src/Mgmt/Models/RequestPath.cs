@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Azure.Generator.Mgmt.Models
+namespace Azure.Generator.Management.Models
 {
     internal class RequestPath : IEquatable<RequestPath>, IReadOnlyList<string>
     {

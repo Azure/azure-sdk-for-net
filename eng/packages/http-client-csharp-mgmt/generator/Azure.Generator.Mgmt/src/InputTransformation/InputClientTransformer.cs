@@ -5,7 +5,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Generator.Mgmt.InputTransformation
+namespace Azure.Generator.Management.InputTransformation
 {
     internal static class InputClientTransformer
     {

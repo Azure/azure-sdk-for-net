@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\http-client-csharp\generator\Azure.Generator\src\Azure.Generator.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+	</ItemGroup>
 
 </Project>

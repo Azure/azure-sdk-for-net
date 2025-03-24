@@ -12,7 +12,7 @@ using Moq;
 using Moq.Protected;
 using System.Reflection;
 
-namespace Azure.Generator.Mgmt.Tests.TestHelpers
+namespace Azure.Generator.Management.Tests.TestHelpers
 {
     internal class MgmtMockHelpers
     {

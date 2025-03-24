@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Mgmt.InputTransformation;
-using Azure.Generator.Mgmt.Providers.Abstraction;
+using Azure.Generator.Management.InputTransformation;
+using Azure.Generator.Management.Providers.Abstraction;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using System.Collections.Generic;
 
-namespace Azure.Generator.Mgmt
+namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
     public class MgmtTypeFactory : AzureTypeFactory

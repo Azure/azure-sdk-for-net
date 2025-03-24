@@ -5,7 +5,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 
-namespace Azure.Generator.Mgmt.Utilities
+namespace Azure.Generator.Management.Utilities
 {
     internal static class ConstructorProviderHelper
     {

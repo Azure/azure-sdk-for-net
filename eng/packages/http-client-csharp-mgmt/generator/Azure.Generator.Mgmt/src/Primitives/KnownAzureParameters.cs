@@ -5,7 +5,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Threading;
 
-namespace Azure.Generator.Mgmt.Primitives
+namespace Azure.Generator.Management.Primitives
 {
     internal class KnownAzureParameters
     {

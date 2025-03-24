@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Mgmt.Primitives;
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Primitives;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -15,7 +15,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Mgmt.Providers
+namespace Azure.Generator.Management.Providers
 {
     internal class OperationSourceProvider : TypeProvider
     {

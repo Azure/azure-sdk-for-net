@@ -7,7 +7,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.IO;
 
-namespace Azure.Generator.Mgmt
+namespace Azure.Generator.Management
 {
     // only apply for MPG
     internal class RestClientVisitor : ScmLibraryVisitor

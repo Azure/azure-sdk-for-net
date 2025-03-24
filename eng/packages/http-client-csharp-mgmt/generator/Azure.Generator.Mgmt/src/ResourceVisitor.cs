@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Mgmt.Primitives;
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.IO;
 using System.Linq;
 
-namespace Azure.Generator.Mgmt
+namespace Azure.Generator.Management
 {
     internal class ResourceVisitor : ScmLibraryVisitor
     {

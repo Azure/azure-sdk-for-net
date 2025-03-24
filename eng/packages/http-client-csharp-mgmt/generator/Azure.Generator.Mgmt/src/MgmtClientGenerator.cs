@@ -7,7 +7,7 @@ using Microsoft.TypeSpec.Generator;
 using System;
 using System.ComponentModel.Composition;
 
-namespace Azure.Generator.Mgmt
+namespace Azure.Generator.Management
 {
     /// <summary>
     /// The Azure management client generator to generate the Azure management client SDK.

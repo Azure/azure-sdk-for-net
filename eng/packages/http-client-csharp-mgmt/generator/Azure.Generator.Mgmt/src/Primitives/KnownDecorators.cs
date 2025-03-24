@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Generator.Mgmt.Primitives
+namespace Azure.Generator.Management.Primitives
 {
     internal class KnownDecorators
     {
