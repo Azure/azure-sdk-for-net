@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
         {
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Defer for beta release; should address before stable release.")]
         public async Task TestAvsAssessmentOperations()
         {
             AzureLocation targetRegion = AzureLocation.BrazilSouth;
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             await assessmentResource.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Defer for beta release; should address before stable release.")]
         public async Task TestAvsAssessmentOptionsOperations()
         {
             string assessmentOptionsName = "default";

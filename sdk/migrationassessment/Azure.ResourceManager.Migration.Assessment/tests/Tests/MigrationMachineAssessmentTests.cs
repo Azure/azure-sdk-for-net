@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
         {
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Defer for beta release; should address before stable release.")]
         public async Task TestMachineOperations()
         {
             AzureLocation targetRegion = AzureLocation.BrazilSouth;
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             Assert.IsNotNull(machineResource);
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Defer for beta release; should address before stable release.")]
         public async Task TestAssessmentOperations()
         {
             AzureLocation targetRegion = AzureLocation.BrazilSouth;

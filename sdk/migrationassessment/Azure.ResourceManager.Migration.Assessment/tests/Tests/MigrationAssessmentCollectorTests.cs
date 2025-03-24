@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             };
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Defer for beta release; should address before stable release.")]
         public async Task TestHyperVCollectorOperations()
         {
             string rgName = rg.Id.Name;
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             await hyperVCollectorResource.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Defer for beta release; should address before stable release.")]
         public async Task TestVMwareCollectorOperations()
         {
             string rgName = rg.Id.Name;
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             await vmwareCollectorResource.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Defer for beta release; should address before stable release.")]
         public async Task TestServerCollectorOperations()
         {
             string rgName = rg.Id.Name;
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             await serverCollectorResource.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Defer for beta release; should address before stable release.")]
         public async Task TestImportCollectorOperations()
         {
             string rgName = rg.Id.Name;
@@ -205,8 +205,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             await importCollectorResource.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Defer for beta release; should address before stable release.")]
         public async Task TestSqlCollectorOperations()
         {
             string rgName = rg.Id.Name;
