@@ -418,7 +418,7 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNull(folderUri, nameof(folderUri));
             Argument.AssertNotNull(sasToken, nameof(sasToken));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreRestoreAsync)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreRestore)}");
             scope.Start();
             try
             {
@@ -550,7 +550,7 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
             Argument.AssertNotNull(sasToken, nameof(sasToken));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackupAsync)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackup)}");
             scope.Start();
             try
             {
