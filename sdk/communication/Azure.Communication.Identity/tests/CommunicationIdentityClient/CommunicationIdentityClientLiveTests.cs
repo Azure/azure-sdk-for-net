@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Azure.Communication.Identity.Models;
 using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -513,6 +515,7 @@ namespace Azure.Communication.Identity.Tests
         [TestCase(ServiceVersion.V2022_06_01, TestName = "CreateIdentityWithServiceVersion_V2022_06_01")]
         [TestCase(ServiceVersion.V2022_10_01, TestName = "CreateIdentityWithServiceVersion_V2022_10_01")]
         [TestCase(ServiceVersion.V2023_10_01, TestName = "CreateIdentityWithServiceVersion_V2023_10_01")]
+        [TestCase(ServiceVersion.V2025_03_02_PREVIEW, TestName = "CreateIdentityWithServiceVersion_V2025_03_02_PREVIEW")]
         public async Task CreateIdentityWithDifferentServiceVersions(ServiceVersion version)
         {
             try
@@ -520,6 +523,55 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationIdentityClient client = CreateClient(default, version);
                 CommunicationUserIdentifier userResponse = await client.CreateUserAsync();
                 Assert.IsNotNull(userResponse);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public async Task CreateUserWithCustomIdShouldFirstCreateThenGet()
+        {
+            try
+            {
+                var customId = "bob@contoso.com";
+                CommunicationIdentityClient client = CreateClient();
+                Response<CommunicationUserIdentifier> createResponse = await client.CreateUserAsync(customId);
+
+                Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
+                    || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
+                Assert.IsNotNull(createResponse.Value.Id);
+
+                Response<CommunicationUserIdentifier> getResponse = await client.CreateUserAsync(customId);
+                Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
+                Assert.AreEqual(createResponse.Value.Id, getResponse.Value.Id);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public async Task GetUserShouldReturnTheCustomId()
+        {
+            try
+            {
+                var customId = "alice@contoso.com";
+                CommunicationIdentityClient client = CreateClient();
+                Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateUserAndTokenAsync(customId,
+                    new List<CommunicationTokenScope> { CommunicationTokenScope.VoIP },
+                    TimeSpan.FromHours(2));
+                Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
+                    || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
+                Assert.IsNotNull(createResponse.Value.User);
+
+                Response<CommunicationUserDetail> getResponse = await client.GetUserDetailAsync(createResponse.Value.User);
+                Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
+                Assert.AreEqual(createResponse.Value.User.Id, getResponse.Value.User.Id);
+                Assert.AreEqual(customId, getResponse.Value.CustomId);
+                Assert.IsNotNull(getResponse.Value.LastTokenIssuedAt);
             }
             catch (Exception ex)
             {
