@@ -412,8 +412,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="KeyVaultPreRestoreOperation"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<KeyVaultPreRestoreOperation> StartPreRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="KeyVaultRestoreOperation"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<KeyVaultRestoreOperation> StartPreRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(folderUri, nameof(folderUri));
             Argument.AssertNotNull(sasToken, nameof(sasToken));
@@ -434,10 +434,10 @@ namespace Azure.Security.KeyVault.Administration
                     cancellationToken).ConfigureAwait(false);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders(operation.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders(operation.GetRawResponse());
                 var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
-                return new KeyVaultPreRestoreOperation(this, responseWithHeaders);
+                return new KeyVaultRestoreOperation(this, responseWithHeaders);
             }
             catch (Exception ex)
             {
@@ -459,7 +459,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual KeyVaultPreRestoreOperation StartPreRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
+        public virtual KeyVaultRestoreOperation StartPreRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(folderUri, nameof(folderUri));
             Argument.AssertNotNull(sasToken, nameof(sasToken));
@@ -480,10 +480,10 @@ namespace Azure.Security.KeyVault.Administration
                     cancellationToken);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders(operation.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders(operation.GetRawResponse());
                 var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
-                return new KeyVaultPreRestoreOperation(this, responseWithHeaders);
+                return new KeyVaultRestoreOperation(this, responseWithHeaders);
             }
             catch (Exception ex)
             {

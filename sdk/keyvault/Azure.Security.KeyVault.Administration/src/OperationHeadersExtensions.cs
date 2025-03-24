@@ -35,15 +35,6 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Extracts the operation JobId from the <see cref="AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders" /> AzureAsyncOperation.
-        /// </summary>
-        /// <returns>The operation JobId.</returns>
-        public static string JobId(this AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders header)
-        {
-            return GetJobIdFromAzureAsyncOperation(header.AzureAsyncOperation);
-        }
-
-        /// <summary>
         /// Extracts the operation JobId from the <see cref="AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders" /> AzureAsyncOperation.
         /// </summary>
         /// <returns>The operation JobId.</returns>

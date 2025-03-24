@@ -121,7 +121,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             await WaitForOperationAsync();
 
             // Start the pre-restore check using the backup folder URI
-            KeyVaultPreRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(backupResult.FolderUri, "?" + SasToken, source.Token);
+            KeyVaultRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(backupResult.FolderUri, "?" + SasToken, source.Token);
 
             // Wait for completion of the LRO
             var preRestoreResult = await preRestoreOperation.WaitForCompletionAsync(source.Token);
