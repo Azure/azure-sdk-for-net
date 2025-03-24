@@ -564,7 +564,7 @@ namespace Azure.Security.KeyVault.Administration
                     cancellationToken).ConfigureAwait(false);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationPreFullBackupHeaders(operation.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(operation.GetRawResponse());
                 var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
 
                 return new KeyVaultBackupOperation(this, responseWithHeaders);
@@ -604,7 +604,7 @@ namespace Azure.Security.KeyVault.Administration
                      cancellationToken);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationPreFullBackupHeaders(operation.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(operation.GetRawResponse());
                 var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
 
                  // Should this return a KeyVaultBackupOperation?

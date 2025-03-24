@@ -56,19 +56,6 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of a KeyVaultBackupOperation.
-        /// </summary>
-        /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.</param>
-        internal KeyVaultBackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullBackupHeaders> response)
-        {
-            _client = client;
-            _response = response;
-            _retryAfterSeconds = response.Headers.RetryAfter;
-            _id = response.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
-        }
-
-        /// <summary>
         /// Initializes a new instance of a KeyVaultBackupOperation for mocking purposes.
         /// </summary>
         /// <param name="value">The <see cref="FullBackupDetailsInternal" /> that will be returned from <see cref="Value" />.</param>
