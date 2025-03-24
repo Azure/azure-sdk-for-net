@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationEventProperties(string resourceType, string resourceName, string eventType, string eventName, DateTimeOffset? occurredOn, string severity, string description, string correlationId, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, EventModelCustomProperties customProperties, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationEventProperties(ResourceType? resourceType, string resourceName, string eventType, string eventName, DateTimeOffset? occurredOn, string severity, string description, string correlationId, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, EventModelCustomProperties customProperties, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             ResourceName = resourceName;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Gets or sets the resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> Gets or sets the resource name. </summary>
         public string ResourceName { get; }
         /// <summary> Gets or sets the event type. </summary>

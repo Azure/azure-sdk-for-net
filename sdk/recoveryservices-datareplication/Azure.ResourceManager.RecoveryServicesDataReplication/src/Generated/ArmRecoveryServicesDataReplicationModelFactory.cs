@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="causes"> Gets or sets possible causes of the error. </param>
         /// <param name="recommendation"> Gets or sets recommended action to resolve the error. </param>
         /// <returns> A new <see cref="Models.DataReplicationHealthErrorInfo"/> instance for mocking. </returns>
-        public static DataReplicationHealthErrorInfo DataReplicationHealthErrorInfo(string affectedResourceType = null, IEnumerable<string> affectedResourceCorrelationIds = null, IEnumerable<DataReplicationInnerHealthErrorInfo> childErrors = null, string code = null, string healthCategory = null, string category = null, string severity = null, string source = null, DateTimeOffset? createdOn = null, bool? isCustomerResolvable = null, string summary = null, string message = null, string causes = null, string recommendation = null)
+        public static DataReplicationHealthErrorInfo DataReplicationHealthErrorInfo(ResourceType? affectedResourceType = null, IEnumerable<string> affectedResourceCorrelationIds = null, IEnumerable<DataReplicationInnerHealthErrorInfo> childErrors = null, string code = null, string healthCategory = null, string category = null, string severity = null, string source = null, DateTimeOffset? createdOn = null, bool? isCustomerResolvable = null, string summary = null, string message = null, string causes = null, string recommendation = null)
         {
             affectedResourceCorrelationIds ??= new List<string>();
             childErrors ??= new List<DataReplicationInnerHealthErrorInfo>();
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the event. </param>
         /// <returns> A new <see cref="Models.DataReplicationEventProperties"/> instance for mocking. </returns>
-        public static DataReplicationEventProperties DataReplicationEventProperties(string resourceType = null, string resourceName = null, string eventType = null, string eventName = null, DateTimeOffset? occurredOn = null, string severity = null, string description = null, string correlationId = null, IEnumerable<DataReplicationHealthErrorInfo> healthErrors = null, EventModelCustomProperties customProperties = null, DataReplicationProvisioningState? provisioningState = null)
+        public static DataReplicationEventProperties DataReplicationEventProperties(ResourceType? resourceType = null, string resourceName = null, string eventType = null, string eventName = null, DateTimeOffset? occurredOn = null, string severity = null, string description = null, string correlationId = null, IEnumerable<DataReplicationHealthErrorInfo> healthErrors = null, EventModelCustomProperties customProperties = null, DataReplicationProvisioningState? provisioningState = null)
         {
             healthErrors ??= new List<DataReplicationHealthErrorInfo>();
 

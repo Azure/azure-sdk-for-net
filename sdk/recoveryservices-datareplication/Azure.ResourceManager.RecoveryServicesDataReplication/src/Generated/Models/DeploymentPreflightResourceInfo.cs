@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="apiVersion"> Gets or sets the Api version. </param>
         /// <param name="properties"> Gets or sets the properties of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentPreflightResourceInfo(string name, string type, AzureLocation? location, string apiVersion, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentPreflightResourceInfo(string name, ResourceType? type, AzureLocation? location, string apiVersion, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Type = type;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the resource name. </summary>
         public string Name { get; set; }
         /// <summary> Gets or sets the resource type. </summary>
-        public string Type { get; set; }
+        public ResourceType? Type { get; set; }
         /// <summary> Gets or sets the location of the resource. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> Gets or sets the Api version. </summary>

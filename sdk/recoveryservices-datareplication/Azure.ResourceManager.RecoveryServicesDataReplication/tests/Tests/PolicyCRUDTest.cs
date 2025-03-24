@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
+                DataReplicationTestUtilities.DefaultResourceGroupName);
 
             DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
+                DataReplicationTestUtilities.DefaultVaultName);
 
-            var policyName = $"policy{IsAsync.ToString()}123";
+            var policyName = $"policy{IsAsync.ToString()}12";
             var policyModelData = new DataReplicationPolicyData
             {
                 Properties = new Models.DataReplicationPolicyProperties
                 {
-                    CustomProperties = new Models.VMwareToAzStackHciPolicyModelCustomProperties
+                    CustomProperties = new Models.HyperVToAzStackHciPolicyModelCustomProperties
                     {
-                        InstanceType = "VMwareToAzStackHCI",
+                        InstanceType = DataReplicationTestUtilities.HyperVToAzStackHCI,
                         RecoveryPointHistoryInMinutes =
-                            RecoveryServicesDataReplicationManagementTestUtilities.RecoveryPointHistoryInMinutes,
+                            DataReplicationTestUtilities.RecoveryPointHistoryInMinutes,
                         CrashConsistentFrequencyInMinutes =
-                            RecoveryServicesDataReplicationManagementTestUtilities.CrashConsistentFrequencyInMinutes,
+                            DataReplicationTestUtilities.CrashConsistentFrequencyInMinutes,
                         AppConsistentFrequencyInMinutes =
-                            RecoveryServicesDataReplicationManagementTestUtilities.AppConsistentFrequencyInMinutes
+                            DataReplicationTestUtilities.AppConsistentFrequencyInMinutes
                     }
                 }
             };

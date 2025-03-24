@@ -26,49 +26,49 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
+                DataReplicationTestUtilities.DefaultResourceGroupName);
 
             DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
+                DataReplicationTestUtilities.DefaultVaultName);
 
-            var disk = new Models.VMwareToAzStackHciDiskInput
+            var disk = new Models.HyperVToAzStackHciDiskInput
             {
-                DiskFileFormat = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemDiskFileFormat,
-                DiskSizeGB = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemDiskSizeInGB,
-                DiskId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemDiskId,
+                DiskFileFormat = DataReplicationTestUtilities.DefaultProtectedItemDiskFileFormat,
+                DiskSizeGB = DataReplicationTestUtilities.DefaultProtectedItemDiskSizeInGB,
+                DiskId = DataReplicationTestUtilities.DefaultProtectedItemDiskId,
                 IsDynamic = true,
                 IsOSDisk = true
             };
 
-            var nic = new Models.VMwareToAzStackHciNicInput
+            var nic = new Models.HyperVToAzStackHciNicInput
             {
-                NicId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemNicId,
-                TargetNetworkId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetNetworkId,
-                TestNetworkId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetNetworkId,
+                NicId = DataReplicationTestUtilities.DefaultProtectedItemNicId,
+                TargetNetworkId = DataReplicationTestUtilities.DefaultProtectedItemTargetNetworkId,
+                TestNetworkId = DataReplicationTestUtilities.DefaultProtectedItemTargetNetworkId,
                 SelectionTypeForFailover = Models.VmNicSelection.SelectedByUser
             };
 
-            var customeProperties = new Models.VMwareToAzStackHciProtectedItemModelCustomProperties
+            var customeProperties = new Models.HyperVToAzStackHciProtectedItemModelCustomProperties
                (
-                   targetHciClusterId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetHciClusterId),
-                   targetArcClusterCustomLocationId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetArcClusterCustomLocationId),
-                   storageContainerId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemStorageContainerId),
-                   targetResourceGroupId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetResourceGroupId),
-                   customLocationRegion: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemCustomLocationRegion,
-                   disksToInclude: new List<Models.VMwareToAzStackHciDiskInput> { disk },
-                   nicsToInclude: new List<Models.VMwareToAzStackHciNicInput> { nic },
-                   hyperVGeneration: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemHyperVGeneration,
-                   fabricDiscoveryMachineId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemFabricDiscoveryMachineId),
-                   runAsAccountId: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemRunAsAccountId,
-                   sourceFabricAgentName: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemSourceFabricAgentName,
-                   targetFabricAgentName: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetFabricAgentName
+                   targetHciClusterId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemTargetHciClusterId),
+                   targetArcClusterCustomLocationId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemTargetArcClusterCustomLocationId),
+                   storageContainerId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemStorageContainerId),
+                   targetResourceGroupId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemTargetResourceGroupId),
+                   customLocationRegion: DataReplicationTestUtilities.DefaultProtectedItemCustomLocationRegion,
+                   disksToInclude: new List<Models.HyperVToAzStackHciDiskInput> { disk },
+                   nicsToInclude: new List<Models.HyperVToAzStackHciNicInput> { nic },
+                   hyperVGeneration: DataReplicationTestUtilities.DefaultProtectedItemHyperVGeneration,
+                   fabricDiscoveryMachineId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemFabricDiscoveryMachineId),
+                   runAsAccountId: DataReplicationTestUtilities.DefaultProtectedItemRunAsAccountId,
+                   sourceFabricAgentName: DataReplicationTestUtilities.DefaultProtectedItemSourceFabricAgentName,
+                   targetFabricAgentName: DataReplicationTestUtilities.DefaultProtectedItemTargetFabricAgentName
                );
 
-            customeProperties.InstanceType = "VMwareToAzStackHCI";
-            customeProperties.TargetVmName = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetVMName;
-            customeProperties.TargetCpuCores = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetCpuCore;
-            customeProperties.IsDynamicRam = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemIsDynamicRam;
-            customeProperties.TargetMemoryInMegaBytes = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetMemoryInMegaByte;
+            customeProperties.InstanceType = DataReplicationTestUtilities.HyperVToAzStackHCI;
+            customeProperties.TargetVmName = DataReplicationTestUtilities.DefaultProtectedItemTargetVMName;
+            customeProperties.TargetCpuCores = DataReplicationTestUtilities.DefaultProtectedItemTargetCpuCore;
+            customeProperties.IsDynamicRam = DataReplicationTestUtilities.DefaultProtectedItemIsDynamicRam;
+            customeProperties.TargetMemoryInMegaBytes = DataReplicationTestUtilities.DefaultProtectedItemTargetMemoryInMegaByte;
             customeProperties.DynamicMemoryConfig = new Models.ProtectedItemDynamicMemoryConfig
             {
                 MaximumMemoryInMegaBytes = 1048576,
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             {
                 Properties = new Models.DataReplicationProtectedItemProperties
                 {
-                    PolicyName = RecoveryServicesDataReplicationManagementTestUtilities.DefaultPolicyName,
-                    ReplicationExtensionName = RecoveryServicesDataReplicationManagementTestUtilities.DefaultReplicationExtensionName,
+                    PolicyName = DataReplicationTestUtilities.DefaultPolicyName,
+                    ReplicationExtensionName = DataReplicationTestUtilities.DefaultReplicationExtensionName,
                     CustomProperties = customeProperties
                 }
             };
@@ -89,19 +89,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             // Create
             var createProtectedItemOperation = await vault.GetDataReplicationProtectedItems().CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemName,
+                DataReplicationTestUtilities.DefaultProtectedItemName,
                 protectedItemData);
             Assert.IsTrue(createProtectedItemOperation.HasCompleted);
             Assert.IsTrue(createProtectedItemOperation.HasValue);
 
             // Get
             var getProtectedItemOperation = await vault.GetDataReplicationProtectedItems().GetAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemName);
+                DataReplicationTestUtilities.DefaultProtectedItemName);
             var protecteItemModelResource = getProtectedItemOperation.Value;
             Assert.IsNotNull(protecteItemModelResource);
 
             bool canDelete = protecteItemModelResource.Data.Properties.AllowedJobs.Contains("DisableProtection");
-            for (int i = 0; i < RecoveryServicesDataReplicationManagementTestUtilities.RetryCount; i++)
+            for (int i = 0; i < DataReplicationTestUtilities.RetryCount; i++)
             {
                 // check if resource is ready for delete operation
                 if (canDelete)
@@ -109,11 +109,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                     break;
                 }
 
-                // sleep for 15 seconds
-                Thread.Sleep(RecoveryServicesDataReplicationManagementTestUtilities.ThreadSleepTime);
+                Thread.Sleep(DataReplicationTestUtilities.ThreadSleepTime);
 
                 getProtectedItemOperation = await vault.GetDataReplicationProtectedItems().GetAsync(
-                         RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemName);
+                         DataReplicationTestUtilities.DefaultProtectedItemName);
                 protecteItemModelResource = getProtectedItemOperation.Value;
                 canDelete = protecteItemModelResource.Data.Properties.AllowedJobs.Contains("DisableProtection");
             }

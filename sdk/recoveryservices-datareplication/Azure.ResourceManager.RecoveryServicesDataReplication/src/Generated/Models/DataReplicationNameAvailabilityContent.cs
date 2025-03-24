@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="name"> Gets or sets the resource name. </param>
         /// <param name="type"> Gets or sets the resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationNameAvailabilityContent(string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationNameAvailabilityContent(string name, ResourceType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Type = type;
@@ -64,6 +65,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the resource name. </summary>
         public string Name { get; set; }
         /// <summary> Gets or sets the resource type. </summary>
-        public string Type { get; set; }
+        public ResourceType? Type { get; set; }
     }
 }

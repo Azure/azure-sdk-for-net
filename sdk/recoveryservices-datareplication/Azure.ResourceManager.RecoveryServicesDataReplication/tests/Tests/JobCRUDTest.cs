@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
+                DataReplicationTestUtilities.DefaultResourceGroupName);
 
             DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
+                DataReplicationTestUtilities.DefaultVaultName);
 
             var getJobOperation = await vault.GetDataReplicationJobs().GetAsync(
-                RecoveryServicesDataReplicationManagementTestUtilities.DefaultJobName);
+                DataReplicationTestUtilities.DefaultJobName);
 
             var jobModelResource = getJobOperation.Value;
             Assert.IsNotNull(jobModelResource);

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
                 Resources = {new DeploymentPreflightResourceInfo
 {
 Name = "xtgugoflfc",
-Type = "nsnaptduolqcxsikrewvgjbxqpt",
+Type = new ResourceType("nsnaptduolqcxsikrewvgjbxqpt"),
 Location = new AzureLocation("cbsgtxkjdzwbyp"),
 ApiVersion = "otihymhvzblycdoxo",
 }},

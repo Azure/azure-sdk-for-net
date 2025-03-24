@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests
         public async Task CreateCommonClient()
         {
             Client = GetArmClient(
-                subscriptionId: RecoveryServicesDataReplicationManagementTestUtilities.DefaultSubscriptionId);
+                subscriptionId: DataReplicationTestUtilities.DefaultSubscriptionId);
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 

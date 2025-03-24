@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             DataReplicationNameAvailabilityContent content = new DataReplicationNameAvailabilityContent
             {
                 Name = "updkdcixs",
-                Type = "gngmcancdauwhdixjjvqnfkvqc",
+                Type = new ResourceType("gngmcancdauwhdixjjvqnfkvqc"),
             };
             DataReplicationNameAvailabilityResult result = await subscriptionResource.PostCheckNameAvailabilityAsync(location, content: content);
 
