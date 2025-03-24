@@ -655,7 +655,7 @@ namespace Azure.Communication.CallAutomation
                 @from == null ? null : CommunicationIdentifierSerializer.Serialize(@from),
                 callerDisplayName,
                 serverCallId,
-                customContext == null ? null : new CustomCallingContextInternal(customContext.SipHeaders, customContext.VoipHeaders),
+                customContext == null ? null : new CustomCallingContextInternal(customContext.VoipHeaders, customContext.SipHeaders),
                 incomingCallContext,
                 onBehalfOfCallee == null ? null : CommunicationIdentifierSerializer.Serialize(onBehalfOfCallee),
                 correlationId

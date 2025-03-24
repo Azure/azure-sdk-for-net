@@ -1093,6 +1093,12 @@
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
+# PRLabel: %Migration Assessment
+/sdk/migrationassessment/Azure.ResourceManager.*/                   @srilipta-swain
+
+# ServiceLabel: %%Migration Assessment %Mgmt
+# ServiceOwners:                                                   @srilipta-swain
+
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
