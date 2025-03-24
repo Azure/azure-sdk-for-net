@@ -279,18 +279,18 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<PublicCloudConnectorResource>> UpdateAsync(PublicCloudConnectorData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<PublicCloudConnectorResource>> UpdateAsync(PublicCloudConnectorPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _publicCloudConnectorClientDiagnostics.CreateScope("PublicCloudConnectorResource.Update");
             scope.Start();
             try
             {
-                var response = await _publicCloudConnectorRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _publicCloudConnectorRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PublicCloudConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,18 +321,18 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<PublicCloudConnectorResource> Update(PublicCloudConnectorData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<PublicCloudConnectorResource> Update(PublicCloudConnectorPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _publicCloudConnectorClientDiagnostics.CreateScope("PublicCloudConnectorResource.Update");
             scope.Start();
             try
             {
-                var response = _publicCloudConnectorRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _publicCloudConnectorRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new PublicCloudConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PublicCloudConnectorData(current.Location);
+                    var patch = new PublicCloudConnectorPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PublicCloudConnectorData(current.Location);
+                    var patch = new PublicCloudConnectorPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PublicCloudConnectorData(current.Location);
+                    var patch = new PublicCloudConnectorPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PublicCloudConnectorData(current.Location);
+                    var patch = new PublicCloudConnectorPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PublicCloudConnectorData(current.Location);
+                    var patch = new PublicCloudConnectorPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PublicCloudConnectorData(current.Location);
+                    var patch = new PublicCloudConnectorPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

@@ -345,18 +345,18 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<PublicCloudConnectorSolutionConfigurationResource>> UpdateAsync(PublicCloudConnectorSolutionConfigurationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<PublicCloudConnectorSolutionConfigurationResource>> UpdateAsync(PublicCloudConnectorSolutionConfigurationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = await _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.UpdateAsync(Id.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,18 +387,18 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<PublicCloudConnectorSolutionConfigurationResource> Update(PublicCloudConnectorSolutionConfigurationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<PublicCloudConnectorSolutionConfigurationResource> Update(PublicCloudConnectorSolutionConfigurationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsClientDiagnostics.CreateScope("PublicCloudConnectorSolutionConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
+                var response = _publicCloudConnectorSolutionConfigurationSolutionConfigurationsRestClient.Update(Id.Parent, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new PublicCloudConnectorSolutionConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

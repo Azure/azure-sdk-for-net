@@ -90,14 +90,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             PublicCloudConnectorSolutionConfigurationResource publicCloudConnectorSolutionConfiguration = client.GetPublicCloudConnectorSolutionConfigurationResource(publicCloudConnectorSolutionConfigurationResourceId);
 
             // invoke the operation
-            PublicCloudConnectorSolutionConfigurationData data = new PublicCloudConnectorSolutionConfigurationData
+            PublicCloudConnectorSolutionConfigurationPatch patch = new PublicCloudConnectorSolutionConfigurationPatch
             {
-                Properties = new PublicCloudConnectorSolutionConfigurationProperties("myzljlstvmgkp")
+                Properties = new SolutionConfigurationPropertiesUpdate
                 {
+                    SolutionType = "myzljlstvmgkp",
                     SolutionSettings = new PublicCloudConnectorSolutionSettings(),
                 },
             };
-            PublicCloudConnectorSolutionConfigurationResource result = await publicCloudConnectorSolutionConfiguration.UpdateAsync(data);
+            PublicCloudConnectorSolutionConfigurationResource result = await publicCloudConnectorSolutionConfiguration.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

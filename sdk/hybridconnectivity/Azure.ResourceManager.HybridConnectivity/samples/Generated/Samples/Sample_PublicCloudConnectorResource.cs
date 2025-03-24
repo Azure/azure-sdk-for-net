@@ -93,15 +93,12 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             PublicCloudConnectorResource publicCloudConnector0 = client.GetPublicCloudConnectorResource(publicCloudConnectorResourceId);
 
             // invoke the operation
-            PublicCloudConnectorData data = new PublicCloudConnectorData(default)
+            PublicCloudConnectorPatch patch = new PublicCloudConnectorPatch
             {
-                Properties = new PublicCloudConnectorProperties(new AwsCloudProfile(null)
-                {
-                    ExcludedAccounts = { "zrbtd" },
-                }, default),
+                AwsCloudExcludedAccounts = { "zrbtd" },
                 Tags = { },
             };
-            PublicCloudConnectorResource result = await publicCloudConnector0.UpdateAsync(data);
+            PublicCloudConnectorResource result = await publicCloudConnector0.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
