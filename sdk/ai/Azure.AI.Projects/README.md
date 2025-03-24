@@ -338,7 +338,7 @@ ToolResources searchResource = new ToolResources
 {
     AzureAISearch = new AzureAISearchResource
     {
-        IndexList = { new IndexResource(connection.Id, "sample_index") }
+        IndexList = { new AISearchIndexResource(connection.Id, "sample_index") }
     }
 };
 

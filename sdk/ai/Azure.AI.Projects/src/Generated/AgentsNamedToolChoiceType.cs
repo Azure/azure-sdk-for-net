@@ -26,7 +26,7 @@ namespace Azure.AI.Projects
         private const string CodeInterpreterValue = "code_interpreter";
         private const string FileSearchValue = "file_search";
         private const string BingGroundingValue = "bing_grounding";
-        private const string MicrosoftFabricValue = "fabric_aiskill";
+        private const string MicrosoftFabricValue = "fabric_dataagent";
         private const string SharepointValue = "sharepoint_grounding";
         private const string AzureAISearchValue = "azure_ai_search";
 
@@ -38,7 +38,7 @@ namespace Azure.AI.Projects
         public static AgentsNamedToolChoiceType FileSearch { get; } = new AgentsNamedToolChoiceType(FileSearchValue);
         /// <summary> Tool type `bing_grounding`. </summary>
         public static AgentsNamedToolChoiceType BingGrounding { get; } = new AgentsNamedToolChoiceType(BingGroundingValue);
-        /// <summary> Tool type `fabric_aiskill`. </summary>
+        /// <summary> Tool type `fabric_dataagent`. </summary>
         public static AgentsNamedToolChoiceType MicrosoftFabric { get; } = new AgentsNamedToolChoiceType(MicrosoftFabricValue);
         /// <summary> Tool type `sharepoint_grounding`. </summary>
         public static AgentsNamedToolChoiceType Sharepoint { get; } = new AgentsNamedToolChoiceType(SharepointValue);
