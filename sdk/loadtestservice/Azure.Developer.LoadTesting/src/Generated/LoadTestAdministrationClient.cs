@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Developer.LoadTesting.Models;
 
 namespace Azure.Developer.LoadTesting
 {

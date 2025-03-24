@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Developer.LoadTesting.Models;
 using Azure.Identity;
 using NUnit.Framework;
 
