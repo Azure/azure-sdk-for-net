@@ -44,7 +44,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
         {
             AzureAISearch = new AzureAISearchResource
             {
-                IndexList = { new IndexResource(connection.Id, "sample_index") }
+                IndexList = { new AISearchIndexResource(connection.Id, "sample_index") }
             }
         };
 
