@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Developer.LoadTesting.Models;
 
 namespace Azure.Developer.LoadTesting
 {
