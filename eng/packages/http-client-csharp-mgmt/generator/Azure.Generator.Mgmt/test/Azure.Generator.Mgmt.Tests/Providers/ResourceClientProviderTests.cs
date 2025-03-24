@@ -45,7 +45,7 @@ namespace Azure.Generator.Management.Tests.Providers
         private static ResourceClientProvider GetResourceClientProvider()
         {
             var (client, models) = InputResourceData.ClientWithResource();
-            var plugin = MgmtMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
             Assert.NotNull(resourceProvider);
             return resourceProvider!;

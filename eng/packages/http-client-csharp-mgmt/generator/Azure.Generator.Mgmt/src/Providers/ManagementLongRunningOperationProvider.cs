@@ -19,7 +19,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class MgmtLongRunningOperationProvider : TypeProvider
+    internal class ManagementLongRunningOperationProvider : TypeProvider
     {
         private class Template<T> { }
         private readonly CSharpType _t = typeof(Template<>).GetGenericArguments()[0];
@@ -30,7 +30,7 @@ namespace Azure.Generator.Management.Providers
         private FieldProvider _nextLinkOperationField;
         private FieldProvider _operationIdField;
 
-        public MgmtLongRunningOperationProvider(bool isGeneric)
+        public ManagementLongRunningOperationProvider(bool isGeneric)
         {
             _isGeneric = isGeneric;
             _operationField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, isGeneric ? new CSharpType(typeof(OperationInternal<>), _t) : typeof(OperationInternal), "_operation", this);
@@ -39,7 +39,7 @@ namespace Azure.Generator.Management.Providers
             _operationIdField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(string), "_operationId", this);
         }
 
-        private readonly string _serviceName = MgmtClientGenerator.Instance.InputLibrary.InputNamespace.Name.Split('.').Last();
+        private readonly string _serviceName = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Name.Split('.').Last();
         protected override string BuildName() => $"{_serviceName}ArmOperation";
 
         protected override CSharpType[] GetTypeArguments() => _isGeneric ? new CSharpType[] { _t } : base.GetTypeArguments();

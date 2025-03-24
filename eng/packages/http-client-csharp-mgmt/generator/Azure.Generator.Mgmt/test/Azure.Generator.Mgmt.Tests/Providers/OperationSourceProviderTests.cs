@@ -64,7 +64,7 @@ namespace Azure.Generator.Management.Tests.Providers
         private static OperationSourceProvider GetOperationSourceProvider()
         {
             var (client, models) = InputResourceData.ClientWithResource();
-            var plugin = MgmtMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var operationSourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is OperationSourceProvider) as OperationSourceProvider;
             Assert.NotNull(operationSourceProvider);
             return operationSourceProvider!;
