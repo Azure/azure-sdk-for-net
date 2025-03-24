@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         private const string RunningValue = "Running";
         private const string DeallocatedValue = "Deallocated";
+        private const string HibernatedValue = "Hibernated";
 
         /// <summary> The virtual machine is up and running. </summary>
         public static StandbyVirtualMachineState Running { get; } = new StandbyVirtualMachineState(RunningValue);
         /// <summary> The virtual machine has released the lease on the underlying hardware and is powered off. </summary>
         public static StandbyVirtualMachineState Deallocated { get; } = new StandbyVirtualMachineState(DeallocatedValue);
+        /// <summary> The virtual machine has released the lease on the underlying hardware and is powered off. Memory contents of the VM are stored in the OS disk.  When started again, applications and processes that were previously running in your VM resume from the state prior to hibernation. </summary>
+        public static StandbyVirtualMachineState Hibernated { get; } = new StandbyVirtualMachineState(HibernatedValue);
         /// <summary> Determines if two <see cref="StandbyVirtualMachineState"/> values are the same. </summary>
         public static bool operator ==(StandbyVirtualMachineState left, StandbyVirtualMachineState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StandbyVirtualMachineState"/> values are not the same. </summary>
