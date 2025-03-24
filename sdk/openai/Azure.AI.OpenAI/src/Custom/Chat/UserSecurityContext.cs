@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI;
 
 /// <summary> User security context contains several parameters that describe the application itself, and the end user that interacts with the application. These fields assist your security operations teams to investigate and mitigate security incidents by providing a comprehensive approach to protecting your AI applications. [Learn more](https://aka.ms/TP4AI/Documentation/EndUserContext) about protecting AI applications using Microsoft Defender for Cloud. </summary>
-[CodeGenModel("AzureUserSecurityContext")]
+[CodeGenType("AzureUserSecurityContext")]
 [Experimental("AOAI001")]
 public partial class UserSecurityContext
 {

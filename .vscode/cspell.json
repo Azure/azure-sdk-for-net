@@ -188,6 +188,13 @@
       ]
     },
     {
+      "filename": "**/sdk/agricultureplatform/**/*.cs",
+      "words": [
+        "agri",
+        "mobo"
+      ]
+    },
+    {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
         "Ubinary"
@@ -276,8 +283,10 @@
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
         "cifs",
+        "Cleanedup",
         "ocpdate",
         "Reimage",
+        "Reimaged",
         "Reimaging",
         "reimaging",
         "SSDLRS"
