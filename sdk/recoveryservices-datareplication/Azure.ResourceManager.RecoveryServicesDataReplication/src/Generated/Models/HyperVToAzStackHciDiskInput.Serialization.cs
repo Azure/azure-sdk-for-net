@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             long? diskLogicalSectorSize = default;
             long? diskPhysicalSectorSize = default;
             string diskIdentifier = default;
-            DiskControllerInputs diskController = default;
+            DataReplicationDiskControllerInputs diskController = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    diskController = DiskControllerInputs.DeserializeDiskControllerInputs(property.Value, options);
+                    diskController = DataReplicationDiskControllerInputs.DeserializeDataReplicationDiskControllerInputs(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

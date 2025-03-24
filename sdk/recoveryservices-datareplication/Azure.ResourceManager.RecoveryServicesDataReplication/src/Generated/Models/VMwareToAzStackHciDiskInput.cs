@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="diskIdentifier"> Gets or sets a value of disk identifier. </param>
         /// <param name="diskController"> Disk controller. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareToAzStackHciDiskInput(string diskId, ResourceIdentifier storageContainerId, bool? isDynamic, long diskSizeGB, string diskFileFormat, bool isOSDisk, long? diskBlockSize, long? diskLogicalSectorSize, long? diskPhysicalSectorSize, string diskIdentifier, DiskControllerInputs diskController, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VMwareToAzStackHciDiskInput(string diskId, ResourceIdentifier storageContainerId, bool? isDynamic, long diskSizeGB, string diskFileFormat, bool isOSDisk, long? diskBlockSize, long? diskLogicalSectorSize, long? diskPhysicalSectorSize, string diskIdentifier, DataReplicationDiskControllerInputs diskController, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             StorageContainerId = storageContainerId;
@@ -118,6 +118,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets a value of disk identifier. </summary>
         public string DiskIdentifier { get; set; }
         /// <summary> Disk controller. </summary>
-        public DiskControllerInputs DiskController { get; set; }
+        public DataReplicationDiskControllerInputs DiskController { get; set; }
     }
 }

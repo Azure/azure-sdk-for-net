@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             PrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
             ManualPrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
             PrivateLinkServiceProxies = new ChangeTrackingList<PrivateLinkServiceProxy>();
-            ConnectionDetails = new ChangeTrackingList<ConnectionDetails>();
+            ConnectionDetails = new ChangeTrackingList<RemotePrivateEndpointConnectionDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpoint"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="privateLinkServiceProxies"> Gets or sets the list of private link service proxies. </param>
         /// <param name="connectionDetails"> Gets or sets the list of Connection Details. This is the connection details for private endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePrivateEndpoint(string id, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<PrivateLinkServiceProxy> privateLinkServiceProxies, IList<ConnectionDetails> connectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemotePrivateEndpoint(string id, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<PrivateLinkServiceProxy> privateLinkServiceProxies, IList<RemotePrivateEndpointConnectionDetails> connectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PrivateLinkServiceConnections = privateLinkServiceConnections;
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the list of private link service proxies. </summary>
         public IList<PrivateLinkServiceProxy> PrivateLinkServiceProxies { get; }
         /// <summary> Gets or sets the list of Connection Details. This is the connection details for private endpoint. </summary>
-        public IList<ConnectionDetails> ConnectionDetails { get; }
+        public IList<RemotePrivateEndpointConnectionDetails> ConnectionDetails { get; }
     }
 }

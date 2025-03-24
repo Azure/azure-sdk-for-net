@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // invoke the operation
             string deploymentId = "lnfcwsmlowbwkndkztzvaj";
-            DeploymentPreflightModel body = new DeploymentPreflightModel
+            DeploymentPreflight body = new DeploymentPreflight
             {
                 Resources = {new DeploymentPreflightResourceInfo
 {
@@ -48,60 +48,7 @@ Location = new AzureLocation("cbsgtxkjdzwbyp"),
 ApiVersion = "otihymhvzblycdoxo",
 }},
             };
-            DeploymentPreflightModel result = await resourceGroupResource.PostDeploymentPreflightAsync(deploymentId, body: body);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetOperationResult_GetsTheOperationResults()
-        {
-            // Generated from example definition: 2024-09-01/OperationResults_Get.json
-            // this example is just showing the usage of "ArmResponse_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgswagger_2024-09-01";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // invoke the operation
-            string operationId = "lghle";
-            OperationStatus result = await resourceGroupResource.GetOperationResultAsync(operationId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetLocationBasedOperationResult_GetsTheLocationBasedOperationResultStatus()
-        {
-            // Generated from example definition: 2024-09-01/LocationBasedOperationResults_Get.json
-            // this example is just showing the usage of "ArmResponse_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgswagger_2024-09-01";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("Central US EUAP");
-            string operationId = "lghle";
-            OperationStatus result = await resourceGroupResource.GetLocationBasedOperationResultAsync(location, operationId);
+            DeploymentPreflight result = await resourceGroupResource.PostDeploymentPreflightAsync(deploymentId, body: body);
 
             Console.WriteLine($"Succeeded: {result}");
         }

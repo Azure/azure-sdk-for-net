@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             string comments = default;
             string instanceType = default;
-            JobModelCustomPropertiesAffectedObjectDetails affectedObjectDetails = default;
+            AffectedObjectDetails affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    affectedObjectDetails = JobModelCustomPropertiesAffectedObjectDetails.DeserializeJobModelCustomPropertiesAffectedObjectDetails(property.Value, options);
+                    affectedObjectDetails = AffectedObjectDetails.DeserializeAffectedObjectDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="sourceApplianceName"> Gets or sets the source appliance name. </param>
         /// <param name="targetApplianceName"> Gets or sets the target appliance name. </param>
         /// <param name="failoverRecoveryPointId"> Gets or sets the recovery point Id to which the VM was failed over. </param>
-        /// <param name="lastRecoveryPointReceived"> Gets or sets the last recovery point received time. </param>
+        /// <param name="lastRecoveryPointReceivedOn"> Gets or sets the last recovery point received time. </param>
         /// <param name="lastRecoveryPointId"> Gets or sets the last recovery point Id. </param>
         /// <param name="initialReplicationProgressPercentage"> Gets or sets the initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </param>
         /// <param name="migrationProgressPercentage"> Gets or sets the migration progress percentage. </param>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="performAutoResync"> Gets or sets a value indicating whether auto resync is to be done. </param>
         /// <param name="resumeRetryCount"> Gets or sets the resume retry count. </param>
         /// <param name="lastReplicationUpdateOn"> Gets or sets the latest timestamp that replication status is updated. </param>
-        internal VMwareToAzStackHciProtectedItemModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ProtectedItemActiveLocation? activeLocation, ResourceIdentifier targetHciClusterId, ResourceIdentifier targetArcClusterCustomLocationId, string targetAzStackHciClusterName, ResourceIdentifier storageContainerId, ResourceIdentifier targetResourceGroupId, string targetLocation, string customLocationRegion, IList<VMwareToAzStackHciDiskInput> disksToInclude, IList<VMwareToAzStackHciNicInput> nicsToInclude, IReadOnlyList<VMwareToAzStackHciProtectedDiskProperties> protectedDisks, IReadOnlyList<VMwareToAzStackHciProtectedNicProperties> protectedNics, string targetVmBiosId, string targetVmName, string hyperVGeneration, string targetNetworkId, string testNetworkId, int? targetCpuCores, bool? isDynamicRam, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig, int? targetMemoryInMegaBytes, string osType, string osName, string firmwareType, ResourceIdentifier fabricDiscoveryMachineId, string sourceVmName, int? sourceCpuCores, double? sourceMemoryInMegaBytes, string runAsAccountId, string sourceFabricAgentName, string targetFabricAgentName, string sourceApplianceName, string targetApplianceName, string failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialReplicationProgressPercentage, int? migrationProgressPercentage, int? resumeProgressPercentage, int? resyncProgressPercentage, long? resyncRetryCount, bool? resyncRequired, VMwareToAzureMigrateResyncState? resyncState, bool? performAutoResync, long? resumeRetryCount, DateTimeOffset? lastReplicationUpdateOn) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareToAzStackHciProtectedItemModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ProtectedItemActiveLocation? activeLocation, ResourceIdentifier targetHciClusterId, ResourceIdentifier targetArcClusterCustomLocationId, string targetAzStackHciClusterName, ResourceIdentifier storageContainerId, ResourceIdentifier targetResourceGroupId, string targetLocation, string customLocationRegion, IList<VMwareToAzStackHciDiskInput> disksToInclude, IList<VMwareToAzStackHciNicInput> nicsToInclude, IReadOnlyList<VMwareToAzStackHciProtectedDiskProperties> protectedDisks, IReadOnlyList<VMwareToAzStackHciProtectedNicProperties> protectedNics, string targetVmBiosId, string targetVmName, string hyperVGeneration, string targetNetworkId, string testNetworkId, int? targetCpuCores, bool? isDynamicRam, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig, int? targetMemoryInMegaBytes, string osType, string osName, string firmwareType, ResourceIdentifier fabricDiscoveryMachineId, string sourceVmName, int? sourceCpuCores, double? sourceMemoryInMegaBytes, string runAsAccountId, string sourceFabricAgentName, string targetFabricAgentName, string sourceApplianceName, string targetApplianceName, string failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceivedOn, string lastRecoveryPointId, int? initialReplicationProgressPercentage, int? migrationProgressPercentage, int? resumeProgressPercentage, int? resyncProgressPercentage, long? resyncRetryCount, bool? resyncRequired, VMwareToAzureMigrateResyncState? resyncState, bool? performAutoResync, long? resumeRetryCount, DateTimeOffset? lastReplicationUpdateOn) : base(instanceType, serializedAdditionalRawData)
         {
             ActiveLocation = activeLocation;
             TargetHciClusterId = targetHciClusterId;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             SourceApplianceName = sourceApplianceName;
             TargetApplianceName = targetApplianceName;
             FailoverRecoveryPointId = failoverRecoveryPointId;
-            LastRecoveryPointReceived = lastRecoveryPointReceived;
+            LastRecoveryPointReceivedOn = lastRecoveryPointReceivedOn;
             LastRecoveryPointId = lastRecoveryPointId;
             InitialReplicationProgressPercentage = initialReplicationProgressPercentage;
             MigrationProgressPercentage = migrationProgressPercentage;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the recovery point Id to which the VM was failed over. </summary>
         public string FailoverRecoveryPointId { get; }
         /// <summary> Gets or sets the last recovery point received time. </summary>
-        public DateTimeOffset? LastRecoveryPointReceived { get; }
+        public DateTimeOffset? LastRecoveryPointReceivedOn { get; }
         /// <summary> Gets or sets the last recovery point Id. </summary>
         public string LastRecoveryPointId { get; }
         /// <summary> Gets or sets the initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </summary>

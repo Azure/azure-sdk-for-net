@@ -19,10 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
     {
         private ClientDiagnostics _deploymentPreflightClientDiagnostics;
         private DeploymentPreflightRestOperations _deploymentPreflightRestClient;
-        private ClientDiagnostics _operationResultsClientDiagnostics;
-        private OperationResultsRestOperations _operationResultsRestClient;
-        private ClientDiagnostics _locationBasedOperationResultsClientDiagnostics;
-        private LocationBasedOperationResultsRestOperations _locationBasedOperationResultsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource"/> class for mocking. </summary>
         protected MockableRecoveryServicesDataReplicationResourceGroupResource()
@@ -38,10 +34,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
 
         private ClientDiagnostics DeploymentPreflightClientDiagnostics => _deploymentPreflightClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DeploymentPreflightRestOperations DeploymentPreflightRestClient => _deploymentPreflightRestClient ??= new DeploymentPreflightRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics LocationBasedOperationResultsClientDiagnostics => _locationBasedOperationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private LocationBasedOperationResultsRestOperations LocationBasedOperationResultsRestClient => _locationBasedOperationResultsRestClient ??= new LocationBasedOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -209,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> is null. </exception>
-        public virtual async Task<Response<DeploymentPreflightModel>> PostDeploymentPreflightAsync(string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentPreflight>> PostDeploymentPreflightAsync(string deploymentId, DeploymentPreflight body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
@@ -249,7 +241,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> is null. </exception>
-        public virtual Response<DeploymentPreflightModel> PostDeploymentPreflight(string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentPreflight> PostDeploymentPreflight(string deploymentId, DeploymentPreflight body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
@@ -258,164 +250,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
             try
             {
                 var response = DeploymentPreflightRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, deploymentId, body, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/operationResults/{operationId}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArmResponse_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatus>> GetOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = OperationResultsClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await OperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/operationResults/{operationId}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArmResponse_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatus> GetOperationResult(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = OperationResultsClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = OperationResultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the location based operation result.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/locations/{location}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArmResponse_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatus>> GetLocationBasedOperationResultAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = LocationBasedOperationResultsClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.GetLocationBasedOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await LocationBasedOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, location, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the location based operation result.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/locations/{location}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArmResponse_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatus> GetLocationBasedOperationResult(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = LocationBasedOperationResultsClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.GetLocationBasedOperationResult");
-            scope.Start();
-            try
-            {
-                var response = LocationBasedOperationResultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, location, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary>
     /// Policy model custom properties.
     /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
+    /// The available derived classes include <see cref="HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
     /// </summary>
     public abstract partial class PolicyModelCustomProperties
     {

@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.PostDeploymentPreflight(string,DeploymentPreflightModel,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.PostDeploymentPreflight(string,DeploymentPreflight,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deploymentId"/> is null. </exception>
-        public static async Task<Response<DeploymentPreflightModel>> PostDeploymentPreflightAsync(this ResourceGroupResource resourceGroupResource, string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeploymentPreflight>> PostDeploymentPreflightAsync(this ResourceGroupResource resourceGroupResource, string deploymentId, DeploymentPreflight body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.PostDeploymentPreflight(string,DeploymentPreflightModel,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.PostDeploymentPreflight(string,DeploymentPreflight,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -527,145 +527,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deploymentId"/> is null. </exception>
-        public static Response<DeploymentPreflightModel> PostDeploymentPreflight(this ResourceGroupResource resourceGroupResource, string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
+        public static Response<DeploymentPreflight> PostDeploymentPreflight(this ResourceGroupResource resourceGroupResource, string deploymentId, DeploymentPreflight body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).PostDeploymentPreflight(deploymentId, body, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/operationResults/{operationId}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArmResponse_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.GetOperationResult(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response<OperationStatus>> GetOperationResultAsync(this ResourceGroupResource resourceGroupResource, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetOperationResultAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/operationResults/{operationId}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArmResponse_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.GetOperationResult(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="operationId"/> is null. </exception>
-        public static Response<OperationStatus> GetOperationResult(this ResourceGroupResource resourceGroupResource, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetOperationResult(operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the location based operation result.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/locations/{location}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArmResponse_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.GetLocationBasedOperationResult(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response<OperationStatus>> GetLocationBasedOperationResultAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetLocationBasedOperationResultAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the location based operation result.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/locations/{location}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArmResponse_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.GetLocationBasedOperationResult(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="operationId"/> is null. </exception>
-        public static Response<OperationStatus> GetLocationBasedOperationResult(this ResourceGroupResource resourceGroupResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetLocationBasedOperationResult(location, operationId, cancellationToken);
         }
 
         /// <summary>

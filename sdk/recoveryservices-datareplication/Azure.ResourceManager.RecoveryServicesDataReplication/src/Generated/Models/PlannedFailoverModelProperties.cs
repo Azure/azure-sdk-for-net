@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Planned failover model custom properties.
         /// Please note <see cref="PlannedFailoverModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPlannedFailoverModelCustomProperties"/> and <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPlannedFailoverCustomProperties"/> and <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         public PlannedFailoverModelProperties(PlannedFailoverModelCustomProperties customProperties)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Planned failover model custom properties.
         /// Please note <see cref="PlannedFailoverModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPlannedFailoverModelCustomProperties"/> and <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPlannedFailoverCustomProperties"/> and <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PlannedFailoverModelProperties(PlannedFailoverModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary>
         /// Planned failover model custom properties.
         /// Please note <see cref="PlannedFailoverModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPlannedFailoverModelCustomProperties"/> and <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPlannedFailoverCustomProperties"/> and <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/>.
         /// </summary>
         public PlannedFailoverModelCustomProperties CustomProperties { get; set; }
     }

@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("failoverRecoveryPointId"u8);
                 writer.WriteStringValue(FailoverRecoveryPointId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceivedOn))
             {
                 writer.WritePropertyName("lastRecoveryPointReceived"u8);
-                writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
+                writer.WriteStringValue(LastRecoveryPointReceivedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointId))
             {

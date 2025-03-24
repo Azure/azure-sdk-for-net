@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 return null;
             }
-            DataReplicationProperties properties = default;
+            DataReplicationJobProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     {
                         continue;
                     }
-                    properties = DataReplicationProperties.DeserializeDataReplicationProperties(property.Value, options);
+                    properties = DataReplicationJobProperties.DeserializeDataReplicationJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -134,7 +134,7 @@ RedirectMapId = "pezncxcq",
 PrivateLinkServiceArmRegion = "rerkqqxinteevmlbrdkktaqhcch",
 }},
 }},
-                        ConnectionDetails = {new ConnectionDetails
+                        ConnectionDetails = {new RemotePrivateEndpointConnectionDetails
 {
 Id = "lenqkogzkes",
 PrivateIPAddress = "cyiacdzzyqmxjpijjbwgasegehtqe",
@@ -216,7 +216,7 @@ RedirectMapId = "pezncxcq",
 PrivateLinkServiceArmRegion = "rerkqqxinteevmlbrdkktaqhcch",
 }},
 }},
-                        ConnectionDetails = {new ConnectionDetails
+                        ConnectionDetails = {new RemotePrivateEndpointConnectionDetails
 {
 Id = "lenqkogzkes",
 PrivateIPAddress = "cyiacdzzyqmxjpijjbwgasegehtqe",

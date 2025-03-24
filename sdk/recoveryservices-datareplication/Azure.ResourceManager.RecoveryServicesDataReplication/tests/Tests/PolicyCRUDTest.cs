@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             {
                 Properties = new Models.DataReplicationPolicyProperties
                 {
-                    CustomProperties = new Models.HyperVToAzStackHciPolicyModelCustomProperties
+                    CustomProperties = new Models.HyperVToAzStackHciPolicyCustomProperties
                     {
                         InstanceType = DataReplicationTestUtilities.HyperVToAzStackHCI,
                         RecoveryPointHistoryInMinutes =

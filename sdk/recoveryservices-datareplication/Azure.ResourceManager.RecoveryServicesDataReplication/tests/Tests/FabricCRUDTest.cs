@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             {
                 Properties = new Models.DataReplicationFabricProperties
                 {
-                    CustomProperties = new Models.HyperVMigrateFabricModelCustomProperties()
+                    CustomProperties = new Models.HyperVMigrateFabricCustomProperties()
                     {
                         InstanceType = DataReplicationTestUtilities.DefaultFabricInstanceType,
                         HyperVSiteId = new ResourceIdentifier(DataReplicationTestUtilities.DefaultFabricSourceSiteId),

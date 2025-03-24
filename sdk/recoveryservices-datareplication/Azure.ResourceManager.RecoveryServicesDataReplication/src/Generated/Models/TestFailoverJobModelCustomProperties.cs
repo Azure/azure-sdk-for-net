@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Test failover job model custom properties. </summary>
-    public partial class TestFailoverJobModelCustomProperties : JobModelCustomProperties
+    public partial class TestFailoverJobModelCustomProperties : DataReplicationJobCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="TestFailoverJobModelCustomProperties"/>. </summary>
         internal TestFailoverJobModelCustomProperties()
@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TestFailoverJobModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Discriminator property for JobModelCustomProperties. </param>
+        /// <param name="instanceType"> Discriminator property for DataReplicationJobCustomProperties. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="protectedItemDetails"> Gets or sets the test VM details. </param>
-        internal TestFailoverJobModelCustomProperties(string instanceType, JobModelCustomPropertiesAffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FailoverProtectedItemProperties> protectedItemDetails) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
+        internal TestFailoverJobModelCustomProperties(string instanceType, AffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FailoverProtectedItemProperties> protectedItemDetails) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
         {
             ProtectedItemDetails = protectedItemDetails;
             InstanceType = instanceType ?? "TestFailoverJobDetails";

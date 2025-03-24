@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Protected item model custom properties.
         /// Please note <see cref="ProtectedItemModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemModelCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/>, <paramref name="replicationExtensionName"/> or <paramref name="customProperties"/> is null. </exception>
         public DataReplicationProtectedItemProperties(string policyName, string replicationExtensionName, ProtectedItemModelCustomProperties customProperties)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Protected item model custom properties.
         /// Please note <see cref="ProtectedItemModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemModelCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataReplicationProtectedItemProperties(string policyName, string replicationExtensionName, string correlationId, DataReplicationProvisioningState? provisioningState, DataReplicationProtectionState? protectionState, string protectionStateDescription, DataReplicationTestFailoverState? testFailoverState, string testFailoverStateDescription, DataReplicationResynchronizationState? resynchronizationState, string fabricObjectId, string fabricObjectName, string sourceFabricProviderId, string targetFabricProviderId, string fabricId, string targetFabricId, string fabricAgentId, string targetFabricAgentId, bool? isResyncRequired, DateTimeOffset? lastSuccessfulPlannedFailoverOn, DateTimeOffset? lastSuccessfulUnplannedFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, ProtectedItemJobProperties currentJob, IReadOnlyList<string> allowedJobs, ProtectedItemJobProperties lastFailedEnableProtectionJob, ProtectedItemJobProperties lastFailedPlannedFailoverJob, ProtectedItemJobProperties lastTestFailoverJob, DataReplicationHealthStatus? replicationHealth, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, ProtectedItemModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary>
         /// Protected item model custom properties.
         /// Please note <see cref="ProtectedItemModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemModelCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
         /// </summary>
         public ProtectedItemModelCustomProperties CustomProperties { get; set; }
     }

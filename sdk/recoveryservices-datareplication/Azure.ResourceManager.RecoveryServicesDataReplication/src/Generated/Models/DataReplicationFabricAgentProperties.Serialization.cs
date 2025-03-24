@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string versionNumber = default;
             DataReplicationProvisioningState? provisioningState = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
-            FabricAgentModelCustomProperties customProperties = default;
+            DataReplicationFabricAgentCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = FabricAgentModelCustomProperties.DeserializeFabricAgentModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationFabricAgentCustomProperties.DeserializeDataReplicationFabricAgentCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             IList<PrivateLinkServiceConnection> privateLinkServiceConnections = default;
             IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
             IList<PrivateLinkServiceProxy> privateLinkServiceProxies = default;
-            IList<ConnectionDetails> connectionDetails = default;
+            IList<RemotePrivateEndpointConnectionDetails> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    List<ConnectionDetails> array = new List<ConnectionDetails>();
+                    List<RemotePrivateEndpointConnectionDetails> array = new List<RemotePrivateEndpointConnectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConnectionDetails.DeserializeConnectionDetails(item, options));
+                        array.Add(RemotePrivateEndpointConnectionDetails.DeserializeRemotePrivateEndpointConnectionDetails(item, options));
                     }
                     connectionDetails = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 privateLinkServiceConnections ?? new ChangeTrackingList<PrivateLinkServiceConnection>(),
                 manualPrivateLinkServiceConnections ?? new ChangeTrackingList<PrivateLinkServiceConnection>(),
                 privateLinkServiceProxies ?? new ChangeTrackingList<PrivateLinkServiceProxy>(),
-                connectionDetails ?? new ChangeTrackingList<ConnectionDetails>(),
+                connectionDetails ?? new ChangeTrackingList<RemotePrivateEndpointConnectionDetails>(),
                 serializedAdditionalRawData);
         }
 

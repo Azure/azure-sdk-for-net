@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string description = default;
             string correlationId = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
-            EventModelCustomProperties customProperties = default;
+            DataReplicationEventCustomProperties customProperties = default;
             DataReplicationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = EventModelCustomProperties.DeserializeEventModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationEventCustomProperties.DeserializeDataReplicationEventCustomProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

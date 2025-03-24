@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 SelectionTypeForFailover = Models.VmNicSelection.SelectedByUser
             };
 
-            var customeProperties = new Models.HyperVToAzStackHciProtectedItemModelCustomProperties
+            var customeProperties = new Models.HyperVToAzStackHciProtectedItemCustomProperties
                (
                    targetHciClusterId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemTargetHciClusterId),
                    targetArcClusterCustomLocationId: new ResourceIdentifier(DataReplicationTestUtilities.DefaultProtectedItemTargetArcClusterCustomLocationId),

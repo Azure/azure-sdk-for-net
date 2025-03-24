@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreatePostRequestUri(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflightModel body)
+        internal RequestUriBuilder CreatePostRequestUri(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflight body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return uri;
         }
 
-        internal HttpMessage CreatePostRequest(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflightModel body)
+        internal HttpMessage CreatePostRequest(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflight body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentPreflightModel>> PostAsync(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentPreflight>> PostAsync(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflight body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        DeploymentPreflightModel value = default;
+                        DeploymentPreflight value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentPreflightModel.DeserializeDeploymentPreflightModel(document.RootElement);
+                        value = DeploymentPreflight.DeserializeDeploymentPreflight(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentPreflightModel> Post(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
+        public Response<DeploymentPreflight> Post(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflight body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        DeploymentPreflightModel value = default;
+                        DeploymentPreflight value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeploymentPreflightModel.DeserializeDeploymentPreflightModel(document.RootElement);
+                        value = DeploymentPreflight.DeserializeDeploymentPreflight(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

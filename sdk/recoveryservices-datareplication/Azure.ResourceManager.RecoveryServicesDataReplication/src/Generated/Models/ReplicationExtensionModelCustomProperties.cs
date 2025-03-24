@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary>
     /// Replication extension model custom properties.
     /// Please note <see cref="ReplicationExtensionModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="HyperVToAzStackHciReplicationExtensionModelCustomProperties"/> and <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>.
+    /// The available derived classes include <see cref="HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>.
     /// </summary>
     public abstract partial class ReplicationExtensionModelCustomProperties
     {

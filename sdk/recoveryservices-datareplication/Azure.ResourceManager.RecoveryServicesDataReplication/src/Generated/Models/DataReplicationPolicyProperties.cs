@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Policy model custom properties.
         /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         public DataReplicationPolicyProperties(PolicyModelCustomProperties customProperties)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Policy model custom properties.
         /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataReplicationPolicyProperties(DataReplicationProvisioningState? provisioningState, PolicyModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary>
         /// Policy model custom properties.
         /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
         /// </summary>
         public PolicyModelCustomProperties CustomProperties { get; set; }
     }

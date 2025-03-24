@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMware fabric agent model custom properties. </summary>
-    public partial class VMwareFabricAgentModelCustomProperties : FabricAgentModelCustomProperties
+    public partial class VMwareFabricAgentModelCustomProperties : DataReplicationFabricAgentCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="VMwareFabricAgentModelCustomProperties"/>. </summary>
         /// <param name="biosId"> Gets or sets the BIOS Id of the fabric agent machine. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareFabricAgentModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Discriminator property for FabricAgentModelCustomProperties. </param>
+        /// <param name="instanceType"> Discriminator property for DataReplicationFabricAgentCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="biosId"> Gets or sets the BIOS Id of the fabric agent machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>

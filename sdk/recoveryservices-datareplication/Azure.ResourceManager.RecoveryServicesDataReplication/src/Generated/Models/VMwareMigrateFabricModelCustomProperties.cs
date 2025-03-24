@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMware migrate fabric model custom properties. </summary>
-    public partial class VMwareMigrateFabricModelCustomProperties : FabricModelCustomProperties
+    public partial class VMwareMigrateFabricModelCustomProperties : DataReplicationFabricCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="VMwareMigrateFabricModelCustomProperties"/>. </summary>
         /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareMigrateFabricModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Discriminator property for FabricModelCustomProperties. </param>
+        /// <param name="instanceType"> Discriminator property for DataReplicationFabricCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the ARM Id of the migration solution. </param>

@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceAccessIdentity"> Identity model. </param>
         /// <param name="customProperties">
         /// Fabric agent model custom properties.
-        /// Please note <see cref="FabricAgentModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataReplicationFabricAgentCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareFabricAgentModelCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineId"/>, <paramref name="machineName"/>, <paramref name="authenticationIdentity"/>, <paramref name="resourceAccessIdentity"/> or <paramref name="customProperties"/> is null. </exception>
-        public DataReplicationFabricAgentProperties(string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, FabricAgentModelCustomProperties customProperties)
+        public DataReplicationFabricAgentProperties(string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, DataReplicationFabricAgentCustomProperties customProperties)
         {
             Argument.AssertNotNull(machineId, nameof(machineId));
             Argument.AssertNotNull(machineName, nameof(machineName));
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="healthErrors"> Gets or sets the list of health errors. </param>
         /// <param name="customProperties">
         /// Fabric agent model custom properties.
-        /// Please note <see cref="FabricAgentModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataReplicationFabricAgentCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareFabricAgentModelCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationFabricAgentProperties(string correlationId, string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, bool? isResponsive, DateTimeOffset? lastHeartbeatOn, string versionNumber, DataReplicationProvisioningState? provisioningState, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, FabricAgentModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationFabricAgentProperties(string correlationId, string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, bool? isResponsive, DateTimeOffset? lastHeartbeatOn, string versionNumber, DataReplicationProvisioningState? provisioningState, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DataReplicationFabricAgentCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CorrelationId = correlationId;
             MachineId = machineId;
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public IReadOnlyList<DataReplicationHealthErrorInfo> HealthErrors { get; }
         /// <summary>
         /// Fabric agent model custom properties.
-        /// Please note <see cref="FabricAgentModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataReplicationFabricAgentCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareFabricAgentModelCustomProperties"/>.
         /// </summary>
-        public FabricAgentModelCustomProperties CustomProperties { get; set; }
+        public DataReplicationFabricAgentCustomProperties CustomProperties { get; set; }
     }
 }
