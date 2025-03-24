@@ -10,8 +10,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md
-#tag: package-2024-11-04
+require: https://github.com/Azure/azure-rest-api-specs/blob/8e064cb38f22bc60d94ce8ec2c987aa04dbc618e/specification/compute/resource-manager/readme.md
+#tag: package-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -301,6 +301,7 @@ rename-mapping:
   GalleryImageVersionSafetyProfile.blockDeletionBeforeEndOfLife: IsBlockedDeletionBeforeEndOfLife
   ExecutedValidation: GalleryImageExecutedValidation
   Placement: VirtualMachinePlacement
+  Modes: HostEndpointSettingsMode
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

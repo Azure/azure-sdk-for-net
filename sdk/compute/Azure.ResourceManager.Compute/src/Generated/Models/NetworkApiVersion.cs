@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         private const string TwoThousandTwenty1101Value = "2020-11-01";
+        private const string TwoThousandTwentyTwo1101Value = "2022-11-01";
 
         /// <summary> 2020-11-01. </summary>
         public static NetworkApiVersion TwoThousandTwenty1101 { get; } = new NetworkApiVersion(TwoThousandTwenty1101Value);
+        /// <summary> 2022-11-01. </summary>
+        public static NetworkApiVersion TwoThousandTwentyTwo1101 { get; } = new NetworkApiVersion(TwoThousandTwentyTwo1101Value);
         /// <summary> Determines if two <see cref="NetworkApiVersion"/> values are the same. </summary>
         public static bool operator ==(NetworkApiVersion left, NetworkApiVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkApiVersion"/> values are not the same. </summary>
