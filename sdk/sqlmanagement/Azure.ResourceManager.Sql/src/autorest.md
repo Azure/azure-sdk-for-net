@@ -361,6 +361,7 @@ rename-mapping:
   UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
   ManagedInstanceProperties.properties.provisioningState: ManagedInstanceProvisioningState
   DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
+  RecommendedAction.properties.details: AdditionalDetails
 
 prompted-enum-values:
   - Default
@@ -619,6 +620,20 @@ directive:
     - from: DatabaseRecommendedActions.json
       where: $.definitions.RecommendedAction
       transform: >
-          delete $['allOf'];
-
+          delete $.allOf;
+          $.properties.id = {
+            description: "Resource ID.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.name = {
+            description: "Resource name.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.type = {
+            description: "Resource type.",
+            type: "string",
+            readOnly: true
+          };
 ```

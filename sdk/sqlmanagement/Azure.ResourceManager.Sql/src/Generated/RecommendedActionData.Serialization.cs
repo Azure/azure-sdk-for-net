@@ -13,14 +13,15 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace Azure.ResourceManager.Sql
 {
-    public partial class RecommendedAction : IUtf8JsonSerializable, IJsonModel<RecommendedAction>
+    public partial class RecommendedActionData : IUtf8JsonSerializable, IJsonModel<RecommendedActionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedActionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RecommendedAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecommendedActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +32,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendedAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -194,19 +195,19 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteEndObject();
         }
 
-        RecommendedAction IJsonModel<RecommendedAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RecommendedActionData IJsonModel<RecommendedActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendedAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecommendedAction(document.RootElement, options);
+            return DeserializeRecommendedActionData(document.RootElement, options);
         }
 
-        internal static RecommendedAction DeserializeRecommendedAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RecommendedActionData DeserializeRecommendedActionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -531,7 +532,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RecommendedAction(
+            return new RecommendedActionData(
                 id,
                 name,
                 type,
@@ -1104,9 +1105,9 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<RecommendedAction>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RecommendedActionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendedAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -1115,26 +1116,26 @@ namespace Azure.ResourceManager.Sql.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RecommendedAction IPersistableModel<RecommendedAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RecommendedActionData IPersistableModel<RecommendedActionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendedAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRecommendedAction(document.RootElement, options);
+                        return DeserializeRecommendedActionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RecommendedAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecommendedActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
