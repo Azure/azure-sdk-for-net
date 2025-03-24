@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Identity.Models
 {
     /// <summary> The EntraPrincipalType. </summary>
-    public readonly partial struct EntraPrincipalType : IEquatable<EntraPrincipalType>
+    internal readonly partial struct EntraPrincipalType : IEquatable<EntraPrincipalType>
     {
         private readonly string _value;
 

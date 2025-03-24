@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Identity.Models
 {
     /// <summary> The type of principal the assignment is for. </summary>
-    public readonly partial struct TeamsExtensionPrincipalType : IEquatable<TeamsExtensionPrincipalType>
+    internal readonly partial struct TeamsExtensionPrincipalType : IEquatable<TeamsExtensionPrincipalType>
     {
         private readonly string _value;
 

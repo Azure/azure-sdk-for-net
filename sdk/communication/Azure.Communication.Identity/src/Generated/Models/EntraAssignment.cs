@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.Identity.Models
 {
     /// <summary> The EntraAssignment. </summary>
-    public partial class EntraAssignment
+    internal partial class EntraAssignment
     {
         /// <summary> Initializes a new instance of <see cref="EntraAssignment"/>. </summary>
         /// <param name="objectId"></param>

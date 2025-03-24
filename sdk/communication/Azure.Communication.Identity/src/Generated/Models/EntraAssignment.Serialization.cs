@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.Identity.Models
 {
-    public partial class EntraAssignment
+    internal partial class EntraAssignment
     {
         internal static EntraAssignment DeserializeEntraAssignment(JsonElement element)
         {

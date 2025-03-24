@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.Identity.Models
 {
-    public partial class CommunicationIdentity
+    internal partial class CommunicationIdentity
     {
         internal static CommunicationIdentity DeserializeCommunicationIdentity(JsonElement element)
         {

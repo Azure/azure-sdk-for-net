@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Identity.Models
 {
     /// <summary> The TeamsExtensionAssignmentResponse. </summary>
-    public partial class TeamsExtensionAssignmentResponse
+    internal partial class TeamsExtensionAssignmentResponse
     {
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionAssignmentResponse"/>. </summary>
         /// <param name="objectId"></param>

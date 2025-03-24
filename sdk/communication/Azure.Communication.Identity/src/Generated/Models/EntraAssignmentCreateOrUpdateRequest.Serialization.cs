@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
-    public partial class EntraAssignmentCreateOrUpdateRequest : IUtf8JsonSerializable
+    internal partial class EntraAssignmentCreateOrUpdateRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
