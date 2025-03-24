@@ -8,11 +8,17 @@ param(
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
 
+Write-Host "Script root: $PSScriptRoot" -ForegroundColor Cyan
 $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
+Write-Host "Package root: $packageRoot" -ForegroundColor Cyan
+$mgmtPackageRoot = Resolve-Path (Join-Path $packageRoot '..' 'http-client-csharp-mgmt')
+Write-Host "Mgmt Package root: $packageRoot" -ForegroundColor Cyan
 $solutionDir = Join-Path $packageRoot 'generator'
+$mgmtSolutionDir = Join-Path $mgmtPackageRoot 'generator'
 
 if (-not $LaunchOnly) {
     Refresh-Build
+    Refresh-Mgmt-Build
 
     if ($null -eq $filter -or $filter -eq "Basic-TypeSpec") {
         Write-Host "Generating BasicTypeSpec" -ForegroundColor Cyan
@@ -38,11 +44,11 @@ if (-not $LaunchOnly) {
 
     if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec") {
         Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
-        $testProjectsLocalDir = Join-Path $packageRoot 'generator' 'TestProjects' 'Local'
+        $testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Local'
 
         $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
 
-        Invoke (Get-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -forceNewProject $ForceNewProject)
+        Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -forceNewProject $ForceNewProject)
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
@@ -50,7 +56,7 @@ if (-not $LaunchOnly) {
         }
 
         Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
-        Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
+        Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
@@ -160,7 +166,7 @@ foreach ($directory in $directories) {
     if (-not (Test-Path $generationDir)) {
         New-Item -ItemType Directory -Path $generationDir | Out-Null
     }
-    
+
     if ($folders.Contains("versioning")) {
         Generate-Versioning $directory.FullName $generationDir -generateStub $stubbed
         $spectorLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
@@ -180,7 +186,7 @@ foreach ($directory in $directories) {
     if ($LaunchOnly) {
         continue
     }
-    
+
     Write-Host "Generating $subPath" -ForegroundColor Cyan
     Invoke (Get-TspCommand $specFile $generationDir $stubbed -forceNewProject $ForceNewProject)
 
@@ -194,25 +200,19 @@ foreach ($directory in $directories) {
 if ($null -eq $filter) {
     Write-Host "Writing new launch settings" -ForegroundColor Cyan
     $mgcExe = "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.exe"
-    $sampleExe = "`$(SolutionDir)/../generator/artifacts/bin/SamplePlugin/Debug/net8.0/Microsoft.Generator.CSharp.exe"
     $basicSpec = "TestProjects/Local/Basic-TypeSpec"
     $mgmtSpec = "TestProjects/Local/Mgmt-TypeSpec"
 
     $launchSettings = @{}
     $launchSettings.Add("profiles", @{})
     $launchSettings["profiles"].Add("Basic-TypeSpec", @{})
-    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$basicSpec -p AzureClientPlugin")
+    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$basicSpec -g AzureClientGenerator")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandName", "Executable")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", "dotnet")
-    
-    $launchSettings["profiles"].Add("Mgmt-TypeSpec", @{})
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -p AzureClientPlugin")
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
 
     foreach ($kvp in $spectorLaunchProjects.GetEnumerator()) {
         $launchSettings["profiles"].Add($kvp.Key, @{})
-        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$($kvp.Value) -p AzureStubPlugin")
+        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$($kvp.Value) -g AzureClientGenerator")
         $launchSettings["profiles"][$kvp.Key].Add("commandName", "Executable")
         $launchSettings["profiles"][$kvp.Key].Add("executablePath", "dotnet")
     }
@@ -237,4 +237,34 @@ if ($null -eq $filter) {
     $launchSettingsPath = Join-Path $solutionDir "Azure.Generator" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
     $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $launchSettingsPath
+    
+    # Write the launch settings for Mgmt
+    $mgmtLaunchSettings = @{}
+    $mgmtLaunchSettings.Add("profiles", @{})
+
+    $mgmtLaunchSettings["profiles"].Add("Mgmt-TypeSpec", @{})
+    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -g MgmtClientGenerator")
+    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
+    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
+    
+    $mgmtSortedLaunchSettings = @{}
+    $mgmtSortedLaunchSettings.Add("profiles", [ordered]@{})
+    $mgmtLaunchSettings["profiles"].Keys | Sort-Object | ForEach-Object {
+        $profileKey = $_
+        $originalProfile = $mgmtLaunchSettings["profiles"][$profileKey]
+
+        # Sort the keys inside each profile
+        # This is needed due to non deterministic ordering of json elements in powershell
+        $sortedProfile = [ordered]@{}
+        $originalProfile.GetEnumerator() | Sort-Object Key | ForEach-Object {
+            $sortedProfile[$_.Key] = $_.Value
+        }
+
+        $mgmtSortedLaunchSettings["profiles"][$profileKey] = $sortedProfile
+    }
+    
+    # Write the launch settings to the launchSettings.json file
+    $mgmtLaunchSettingsPath = Join-Path $mgmtSolutionDir "Azure.Generator.Mgmt" "src" "Properties" "launchSettings.json"
+    # Write the settings to JSON and normalize line endings to Unix style (LF)
+    $mgmtSortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $mgmtLaunchSettingsPath
 }

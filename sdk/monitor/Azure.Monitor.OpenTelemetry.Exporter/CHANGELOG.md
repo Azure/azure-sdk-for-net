@@ -4,6 +4,9 @@
 
 ### Features Added
 
+* Added support for emitting Application Insights Custom Events.
+  ([#48378](https://github.com/Azure/azure-sdk-for-net/pull/48378))
+
 ### Breaking Changes
 
 ### Bugs Fixed

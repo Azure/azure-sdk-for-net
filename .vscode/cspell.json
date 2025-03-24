@@ -188,6 +188,13 @@
       ]
     },
     {
+      "filename": "**/sdk/agricultureplatform/**/*.cs",
+      "words": [
+        "agri",
+        "mobo"
+      ]
+    },
+    {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
         "Ubinary"
@@ -276,8 +283,10 @@
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
         "cifs",
+        "Cleanedup",
         "ocpdate",
         "Reimage",
+        "Reimaged",
         "Reimaging",
         "reimaging",
         "SSDLRS"
@@ -772,6 +781,32 @@
         "Hhmm",
         "Hhmmss",
         "Hhmms"
+      ]
+    },
+    {
+      "filename": "**/sdk/migrationassessment/**/*.cs",
+      "words": [
+        "Paas",
+        "Reasonings",
+        "Vcpu",
+        "Hadr",
+        "Mbps",
+        "MSAZR",
+        "MSAZRDE",
+        "MSAZRUSGOV",
+        "MSMCAZR",
+        "Dadsv",
+        "Dasv",
+        "Ddsv",
+        "Eadsv",
+        "Easv",
+        "Ebdsv",
+        "Ebsv",
+        "Edsv",
+        "Mdsv",
+        "Idms",
+        "Recieved",
+        "Cluter"
       ]
     },
     {

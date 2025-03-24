@@ -26,8 +26,8 @@ class PackageProps {
         $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
     }
 
-    PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory, [string]$group = "") {
-        $this.Initialize($name, $version, $directoryPath, $serviceDirectory, $group)
+    PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory, [string]$group = "", [string]$artifactName = "") {
+        $this.Initialize($name, $version, $directoryPath, $serviceDirectory, $group, $artifactName)
     }
 
     hidden [void]Initialize(
@@ -70,20 +70,32 @@ class PackageProps {
         [string]$version,
         [string]$directoryPath,
         [string]$serviceDirectory,
-        [string]$group
+        [string]$group,
+        [string]$artifactName
     ) {
-        $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
         $this.Group = $group
+        $this.ArtifactName = $artifactName
+        $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
     }
-
     hidden [PSCustomObject]ParseYmlForArtifact([string]$ymlPath) {
         $content = LoadFrom-Yaml $ymlPath
         if ($content) {
             $artifacts = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "Artifacts")
             $artifactForCurrentPackage = $null
-
             if ($artifacts) {
-                $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }
+                # If there's an artifactName match that to the name field from the yml
+                if ($this.ArtifactName) {
+                    # Additionally, if there's a group, then the group and artifactName need to match the groupId and name in the yml
+                    if ($this.Group) {
+                        $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -and $_["groupId"] -eq $this.Group}
+                    } else {
+                        # just matching the artifactName
+                        $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName }
+                    }
+                } else {
+                    # This is the default, match the Name to the name field from the yml
+                    $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.Name }
+                }
             }
 
             # if we found an artifact for the current package, we should count this ci file as the source of the matrix for this package
