@@ -114,7 +114,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
     {
         #region Snippet:VectorStoreBatchFileSearchCreateVectorStore
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;

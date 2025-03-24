@@ -15,7 +15,7 @@ Console.WriteLine(result.Content[0].Text);
 
 Asynchronous sample:
 ```C# Snippet:AzureOpenAIAsync
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(connectionString);
 ChatClient chatClient = client.GetAzureOpenAIChatClient(modelDeploymentName);

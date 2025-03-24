@@ -4,7 +4,7 @@
 
 Synchronous sample:
 ```C# Snippet:VectorStoreBatchFileSearchCreateVectorStore
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var filePath = GetFile();
 AgentsClient client = new(connectionString, new DefaultAzureCredential());

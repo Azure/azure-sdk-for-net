@@ -10,7 +10,7 @@ In this example we will use the existing Azure AI Search Index as a tool for an 
 
 1. First we need to create project client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:AzureAISearchExample_CreateProjectClient
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
 ```

@@ -22,7 +22,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
     {
         #region Snippet:AzureAISearchExample_CreateProjectClient
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
