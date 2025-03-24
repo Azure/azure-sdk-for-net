@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string ClusterExtendedLocation => GetRecordedVariable("CLUSTER_EXTENDED_LOCATION");
         public string ClusterRG => GetRecordedVariable("CLUSTER_RG");
         public string ClusterVersion => GetRecordedVariable("CLUSTER_VERSION");
-        public string ContainerUri => GetRecordedVariable("CONTAINER_URI");
+        public string ContainerUri => GetVariable("CONTAINER_URI");
         public string UserAssignedIdentity => GetRecordedVariable("USER_ASSIGNED_IDENTITY");
 
         // Kubernetes Cluster
