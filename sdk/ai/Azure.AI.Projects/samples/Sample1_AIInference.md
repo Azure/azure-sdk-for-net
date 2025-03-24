@@ -10,7 +10,7 @@ Set these two environment variables before running the sample:
 
 The inferencing can be called synchronously and asynchronously.
 ```C# Snippet:ExtensionsChatClientSync
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(connectionString);
 ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
@@ -30,9 +30,9 @@ Console.WriteLine(response.Value.Content);
 
 Asynchronous call:
 ```C# Snippet:ExtensionsChatClientAsync
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIProjectClient client = new AIProjectClient(connectionString);
+AIProjectClient client = new(connectionString);
 ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
 
 var requestOptions = new ChatCompletionsOptions()
@@ -56,7 +56,7 @@ Set these two environment variables before running the sample:
 
 Embedding also can be called synchronously and asynchronously.
 ```C# Snippet:ExtensionsEmbeddingSync
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(connectionString);
 EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
@@ -77,7 +77,7 @@ foreach (EmbeddingItem item in response.Value.Data)
 
 Asynchronous call:
 ```C# Snippet:ExtensionsEmbeddingAsync
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(connectionString);
 EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();

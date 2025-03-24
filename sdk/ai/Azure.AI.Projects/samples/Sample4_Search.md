@@ -8,7 +8,7 @@ In the example we will
  
 Synchronous sample:
 ```C# Snippet:ExtensionsSearch
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 AIProjectClient client = new(connectionString);
 SearchClient searchClient = client.GetSearchClient("index");
 
@@ -24,7 +24,7 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
 
 Asynchronous sample:
 ```C# Snippet:ExtensionsSearchAsync
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 AIProjectClient client = new(connectionString);
 SearchClient searchClient = client.GetSearchClient("index");
 

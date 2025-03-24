@@ -4,7 +4,7 @@
 
 Synchronous sample:
 ```C# Snippet:Sample_Agent_Multiple_Messages_Create
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var projectClient = new AIProjectClient(
     connectionString,
@@ -20,7 +20,7 @@ Agent agent = agentClient.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:Sample_Agent_Multiple_Messages_CreateAsync
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var projectClient = new AIProjectClient(
     connectionString,

@@ -4,7 +4,7 @@ In this example we are demonstrating how to use the local functions with the age
 
 1. First we need to create agent client and read the environment variables that will be used in the next steps.
 ```C# Snippet:Functions_CreateClient
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AgentsClient client = new(connectionString, new DefaultAzureCredential());
 ```

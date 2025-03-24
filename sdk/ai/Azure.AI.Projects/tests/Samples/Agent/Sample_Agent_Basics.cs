@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -20,7 +19,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
     {
         #region Snippet:OverviewCreateAgentClient
 #if SNIPPET
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
@@ -112,7 +111,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
     public void BasicExampleSync()
     {
 #if SNIPPET
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;

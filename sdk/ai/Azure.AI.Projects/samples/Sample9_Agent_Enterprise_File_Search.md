@@ -4,7 +4,7 @@ In the enterprise file search, as opposed to regular file search, we are assumin
 
 1. First we need to create agent client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:EnterpriseFileSearch_CreateProject
-var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AgentsClient client = new(connectionString, new DefaultAzureCredential());
@@ -70,7 +70,7 @@ ThreadMessage message = client.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
-    );
+);
 
 ThreadRun run = client.CreateRun(
     thread.Id,
@@ -134,7 +134,7 @@ do
     storeFiles = client.GetVectorStoreFiles(
         vectorStoreId: vectorStore.Id,
         after: after
-        );
+    );
     after = storeFiles.LastId;
     foreach (VectorStoreFile fle in storeFiles.Data)
     {
@@ -162,7 +162,7 @@ do
     storeFiles = await client.GetVectorStoreFilesAsync(
         vectorStoreId: vectorStore.Id,
         after: after
-        );
+    );
     after = storeFiles.LastId;
     foreach (VectorStoreFile fle in storeFiles.Data)
     {

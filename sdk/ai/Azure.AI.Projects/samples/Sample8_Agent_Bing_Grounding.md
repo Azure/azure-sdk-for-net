@@ -4,7 +4,7 @@ To enable your Agent to perform search through Bing search API, you use `BingGro
 1. First we need to create agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:BingGrounding_CreateProject
-var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var bingConnectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_NAME");
 

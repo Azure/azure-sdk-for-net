@@ -21,7 +21,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
     {
         #region Snippet:AzureFunctionsDefineFunctionTools
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 #else

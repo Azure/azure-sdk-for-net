@@ -18,7 +18,7 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
     {
         #region Snippet:CodeInterpreterEnterpriseSearch_CreateClient
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
 #else
@@ -95,7 +95,7 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
     public void CodeInterpreterEnterpriseSearchSync()
     {
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
 #else

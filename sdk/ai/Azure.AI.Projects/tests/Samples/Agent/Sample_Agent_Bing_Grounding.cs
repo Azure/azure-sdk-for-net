@@ -4,10 +4,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -21,7 +19,7 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
     {
         #region Snippet:BingGrounding_CreateProject
 #if SNIPPET
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var bingConnectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_NAME");
 #else
@@ -122,7 +120,7 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
     public void BingGroundingExample()
     {
 #if SNIPPET
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var bingConnectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_NAME");
 #else

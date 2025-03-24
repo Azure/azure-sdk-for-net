@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using OpenAI.VectorStores;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -22,7 +21,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIProjectsTestEnvironm
     {
         #region Snippet:Functions_CreateClient
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
@@ -200,7 +199,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIProjectsTestEnvironm
     public void FunctionCallingExampleSync()
     {
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;

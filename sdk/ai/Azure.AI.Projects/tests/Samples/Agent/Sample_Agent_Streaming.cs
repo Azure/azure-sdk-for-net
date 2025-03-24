@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Tests
         {
             #region Snippet:StreamingAsync_CreateClient
 #if SNIPPET
-            var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+            var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
             var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
@@ -69,7 +69,7 @@ namespace Azure.AI.Projects.Tests
         public void Streaming()
         {
 #if SNIPPET
-            var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+            var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
             var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;

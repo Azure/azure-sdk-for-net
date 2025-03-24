@@ -81,7 +81,7 @@ Agents in the Azure AI Projects client library are designed to facilitate variou
 
 First, you need to create an `AgentsClient`
 ```C# Snippet:OverviewCreateAgentClient
-var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AgentsClient client = new(connectionString, new DefaultAzureCredential());
 ```
@@ -249,16 +249,15 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-var vectorStoreTask = await client.CreateVectorStoreAsync(
+VectorStore vectorStore = await client.CreateVectorStoreAsync(
     name: "sample_vector_store"
 );
-var vectorStore = vectorStoreTask.Value;
 
-var uploadTask = await client.CreateVectorStoreFileBatchAsync(
+VectorStoreFileBatch vctFile = await client.CreateVectorStoreFileBatchAsync(
     vectorStoreId: vectorStore.Id,
-    dataSources: new List<VectorStoreDataSource> { ds }
+    dataSources: [ ds ]
 );
-Console.WriteLine($"Created vector store file batch, vector store file batch ID: {uploadTask.Value.Id}");
+Console.WriteLine($"Created vector store file batch, vector store file batch ID: {vctFile.Id}");
 
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 ```
@@ -661,7 +660,7 @@ await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync
 
 We can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. See below for the instructions on function deployment.
 ```C# Snippet:AzureFunctionsDefineFunctionTools
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 

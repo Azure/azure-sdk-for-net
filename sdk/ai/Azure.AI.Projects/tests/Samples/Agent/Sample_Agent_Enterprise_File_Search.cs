@@ -18,7 +18,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIProject
     {
         #region Snippet:EnterpriseFileSearch_CreateProject
 #if SNIPPET
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
@@ -93,7 +93,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIProject
             storeFiles = await client.GetVectorStoreFilesAsync(
                 vectorStoreId: vectorStore.Id,
                 after: after
-                );
+            );
             after = storeFiles.LastId;
             foreach (VectorStoreFile fle in storeFiles.Data)
             {
@@ -125,7 +125,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIProject
     public void EnterpriseFileSearch()
     {
 #if SNIPPET
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
@@ -166,7 +166,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIProject
             threadId: thread.Id,
             role: MessageRole.User,
             content: "What feature does Smart Eyewear offer?"
-            );
+        );
 
         ThreadRun run = client.CreateRun(
             thread.Id,
@@ -199,7 +199,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIProject
             storeFiles = client.GetVectorStoreFiles(
                 vectorStoreId: vectorStore.Id,
                 after: after
-                );
+            );
             after = storeFiles.LastId;
             foreach (VectorStoreFile fle in storeFiles.Data)
             {

@@ -4,7 +4,7 @@ In this example we will demonstrate getting the `Serverless` connection to the A
 
 Synchronous sample:
 ```C# Snippet:ConnectionExampleSync
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new(connectionString, new DefaultAzureCredential());
 ConnectionsClient connectionsClient = client.GetConnectionsClient();
@@ -44,7 +44,7 @@ if (connection.Properties.AuthType == AuthenticationType.ApiKey)
 
 Asynchronous sample:
 ```C# Snippet:ConnectionExampleAsync
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new(connectionString, new DefaultAzureCredential());
 ConnectionsClient connectionsClient = client.GetConnectionsClient();

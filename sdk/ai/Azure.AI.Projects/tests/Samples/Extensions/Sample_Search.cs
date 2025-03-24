@@ -20,7 +20,7 @@ public class Sample_Search : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:ExtensionsSearch
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
 #endif
@@ -44,7 +44,7 @@ public class Sample_Search : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:ExtensionsSearchAsync
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
 #endif

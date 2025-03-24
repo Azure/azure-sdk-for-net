@@ -1,7 +1,8 @@
-# Sample for Azure.AI.Projects and file search.
+# Sample for Azure.AI.Projects and batch file search.
 
-To perform file search by an Agent, we first need to upload a file, create a vector store, and associate the file to the vector store. Here is an example:
+1. To perform batch file search by an Agent, we first need to upload a file, create a vector store, and associate the file to the vector store. Here is an example:
 
+Synchronous sample:
 ```C# Snippet:VectorStoreBatchFileSearchCreateVectorStore
 var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
 var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -36,10 +37,9 @@ Agent agent = client.CreateAgent(
 );
 ```
 
-The same can be done using asynchronous API:
-
+Asynchronous sample:
 ```C# Snippet:VectorStoreBatchFileAsyncSearchCreateVectorStore
-var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var filePath = GetFile();
 AgentsClient client = new(connectionString, new DefaultAzureCredential());
@@ -72,8 +72,8 @@ Agent agent = await client.CreateAgentAsync(
 );
 ```
 
-Then we need to create thread, add the message and start the run:
-
+2. Then we need to create thread, add the message and start the run. If the run did not completed successfully, we will show the last error message, otherwise we will list messages in chronological order.
+Synchronous sample:
 ```C# Snippet:VectorStoreBatchFileSearchThreadAndResponse
 AgentThread thread = client.CreateThread();
 
@@ -107,8 +107,7 @@ PageableList<ThreadMessage> messages = client.GetMessages(
 WriteMessages(messages, dtReferences);
 ```
 
-Async API:
-
+Asynchronous sample:
 ```C# Snippet:VectorStoreBatchFileSearchAsyncThreadAndResponse
 AgentThread thread = await client.CreateThreadAsync();
 
@@ -141,8 +140,7 @@ PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
 WriteMessages(messages, dtReferences);
 ```
 
-After the run complete, we will use `WriteMessages` method to swap reference placeholders by the actual file names.
-
+3. After the run complete, we will use `WriteMessages` method to swap reference placeholders by the actual file names.
 ```C# Snippet:VectorStoreBatchFileSearchParseResults
 private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
 {
@@ -192,8 +190,8 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 }
 ```
 
-When the experiment is complete, we will clean up the resources.
-
+4. When the experiment is complete, we will clean up the resources.
+Synchronous sample:
 ```C# Snippet:VectorStoreBatchFileSearchCleanup
 VectorStoreDeletionStatus delTask = client.DeleteVectorStore(vectorStore.Id);
 if (delTask.Deleted)
@@ -207,8 +205,7 @@ else
 client.DeleteAgent(agent.Id);
 ```
 
-Async cleanup:
-
+Asynchronous sample:
 ```C# Snippet:VectorStoreBatchFileSearchAsyncCleanup
 VectorStoreDeletionStatus delTask = await client.DeleteVectorStoreAsync(vectorStore.Id);
 if (delTask.Deleted)

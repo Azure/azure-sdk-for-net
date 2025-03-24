@@ -18,7 +18,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
     {
         #region Snippet:Sample_Agent_Multiple_Messages_CreateAsync
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
@@ -93,7 +93,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
     {
         #region Snippet:Sample_Agent_Multiple_Messages_Create
 #if SNIPPET
-        var connectionString = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING"));
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
