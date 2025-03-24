@@ -26,7 +26,7 @@ namespace Azure.Generator.Management
         [ImportingConstructor]
         public ManagementClientGenerator(GeneratorContext context) : base(context)
         {
-            TypeFactory = new ManagementypeFactory();
+            TypeFactory = new ManagementTypeFactory();
             InputLibrary = new ManagementInputLibrary(Configuration.OutputDirectory);
             _instance = this;
         }
@@ -39,7 +39,7 @@ namespace Azure.Generator.Management
         public override ManagementOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
         /// <inheritdoc/>
-        public override ManagementypeFactory TypeFactory { get; }
+        public override ManagementTypeFactory TypeFactory { get; }
 
         /// <summary>
         /// Customize the generation output for Azure client SDK.

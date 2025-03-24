@@ -49,10 +49,10 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             var mockInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
-            Mock<ManagementypeFactory>? mockTypeFactory = null;
+            Mock<ManagementTypeFactory>? mockTypeFactory = null;
             if (createCSharpTypeCore is not null)
             {
-                mockTypeFactory = new Mock<ManagementypeFactory>() { CallBase = true };
+                mockTypeFactory = new Mock<ManagementTypeFactory>() { CallBase = true };
                 mockTypeFactory.Protected().Setup<CSharpType>("CreateCSharpTypeCore", ItExpr.IsAny<InputType>()).Returns(createCSharpTypeCore);
             }
 

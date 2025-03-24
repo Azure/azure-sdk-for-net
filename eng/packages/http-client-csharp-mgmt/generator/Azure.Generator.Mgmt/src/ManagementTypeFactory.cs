@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
-    public class ManagementypeFactory : AzureTypeFactory
+    public class ManagementTypeFactory : AzureTypeFactory
     {
         /// <inheritdoc/>
         public override IClientPipelineApi ClientPipelineApi => MgmtHttpPipelineProvider.Instance;
