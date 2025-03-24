@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Load test model. </summary>
-    public partial class Test
+    public partial class LoadTest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Test"/>. </summary>
-        public Test()
+        /// <summary> Initializes a new instance of <see cref="LoadTest"/>. </summary>
+        public LoadTest()
         {
             Secrets = new ChangeTrackingDictionary<string, TestSecret>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             EngineBuiltInIdentityIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Test"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTest"/>. </summary>
         /// <param name="passFailCriteria"> Pass fail criteria for a test. </param>
         /// <param name="autoStopCriteria"> Auto stop criteria for a test. This will automatically stop a load test if the error percentage is high for a certain time window. </param>
         /// <param name="secrets">
@@ -85,7 +85,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Test(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, TestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadTest(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, LoadTestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PassFailCriteria = passFailCriteria;
             AutoStopCriteria = autoStopCriteria;
@@ -127,7 +127,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         public IDictionary<string, TestSecret> Secrets { get; }
         /// <summary> Certificates metadata. </summary>
-        public CertificateMetadata Certificate { get; set; }
+        public TestCertificate Certificate { get; set; }
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; }
         /// <summary> The load test configuration. </summary>
@@ -145,7 +145,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Subnet ID on which the load test instances should run. </summary>
         public string SubnetId { get; set; }
         /// <summary> Kind of test. </summary>
-        public TestKind? Kind { get; set; }
+        public LoadTestKind? Kind { get; set; }
         /// <summary> Inject load test engines without deploying public IP for outbound access. </summary>
         public bool? PublicIpDisabled { get; set; }
         /// <summary> Type of the managed identity referencing the Key vault. </summary>

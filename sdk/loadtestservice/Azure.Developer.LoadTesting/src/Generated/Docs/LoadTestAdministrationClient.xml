@@ -403,7 +403,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response<Test> response = await client.GetTestAsync("12345678-1234-1234-1234-123456789012");
+Response<LoadTest> response = await client.GetTestAsync("12345678-1234-1234-1234-123456789012");
 ]]></code></example>
     </member>
     <member name="GetTest(string,CancellationToken)">
@@ -414,7 +414,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response<Test> response = client.GetTest("12345678-1234-1234-1234-123456789012");
+Response<LoadTest> response = client.GetTest("12345678-1234-1234-1234-123456789012");
 ]]></code></example>
     </member>
     <member name="GetTestAsync(string,RequestContext)">
@@ -495,7 +495,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("fileName").ToString());
 ]]></code></example>
     </member>
-    <member name="UploadTestFileAsync(string,string,BinaryData,FileType?,CancellationToken)">
+    <member name="UploadTestFileAsync(string,string,BinaryData,LoadTestingFileType?,CancellationToken)">
       <example>
 This sample shows how to call UploadTestFileAsync.
 <code><![CDATA[
@@ -506,7 +506,7 @@ LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint,
 Response<TestFileInfo> response = await client.UploadTestFileAsync("12345678-1234-1234-1234-123456789012", "sample.jmx", BinaryData.FromObjectAsJson("application/octet-stream content"));
 ]]></code></example>
     </member>
-    <member name="UploadTestFile(string,string,BinaryData,FileType?,CancellationToken)">
+    <member name="UploadTestFile(string,string,BinaryData,LoadTestingFileType?,CancellationToken)">
       <example>
 This sample shows how to call UploadTestFile.
 <code><![CDATA[

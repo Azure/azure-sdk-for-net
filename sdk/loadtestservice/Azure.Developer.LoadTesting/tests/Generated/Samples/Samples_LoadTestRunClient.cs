@@ -434,7 +434,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            Response<TestRun> response = client.GetTestRun("12316678-1234-1234-1234-122451189012");
+            Response<LoadTestRun> response = client.GetTestRun("12316678-1234-1234-1234-122451189012");
         }
 
         [Test]
@@ -445,7 +445,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            Response<TestRun> response = await client.GetTestRunAsync("12316678-1234-1234-1234-122451189012");
+            Response<LoadTestRun> response = await client.GetTestRunAsync("12316678-1234-1234-1234-122451189012");
         }
 
         [Test]
@@ -634,7 +634,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            Response<TestRun> response = client.StopTestRun("12316678-1234-1234-1234-122451189012");
+            Response<LoadTestRun> response = client.StopTestRun("12316678-1234-1234-1234-122451189012");
         }
 
         [Test]
@@ -645,7 +645,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            Response<TestRun> response = await client.StopTestRunAsync("12316678-1234-1234-1234-122451189012");
+            Response<LoadTestRun> response = await client.StopTestRunAsync("12316678-1234-1234-1234-122451189012");
         }
 
         [Test]

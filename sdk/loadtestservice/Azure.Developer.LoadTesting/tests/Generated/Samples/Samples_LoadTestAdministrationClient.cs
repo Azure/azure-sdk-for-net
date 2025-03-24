@@ -448,7 +448,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response<Test> response = client.GetTest("12345678-1234-1234-1234-123456789012");
+            Response<LoadTest> response = client.GetTest("12345678-1234-1234-1234-123456789012");
         }
 
         [Test]
@@ -459,7 +459,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response<Test> response = await client.GetTestAsync("12345678-1234-1234-1234-123456789012");
+            Response<LoadTest> response = await client.GetTestAsync("12345678-1234-1234-1234-123456789012");
         }
 
         [Test]

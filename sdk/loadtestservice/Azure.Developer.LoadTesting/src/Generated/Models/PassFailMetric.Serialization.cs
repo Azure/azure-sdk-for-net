@@ -111,7 +111,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 return null;
             }
-            PFMetrics? clientMetric = default;
+            PfMetrics? clientMetric = default;
             PassFailAggregationFunction? aggregate = default;
             string condition = default;
             string requestName = default;
@@ -129,7 +129,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    clientMetric = new PFMetrics(property.Value.GetString());
+                    clientMetric = new PfMetrics(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("aggregate"u8))

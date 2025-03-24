@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Types of file supported. </summary>
-    public readonly partial struct FileType : IEquatable<FileType>
+    public readonly partial struct LoadTestingFileType : IEquatable<LoadTestingFileType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="FileType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingFileType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FileType(string value)
+        public LoadTestingFileType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -30,29 +30,29 @@ namespace Azure.Developer.LoadTesting.Models
         private const string TestScriptValue = "TEST_SCRIPT";
 
         /// <summary> If the file is a JMX script. </summary>
-        public static FileType JmxFile { get; } = new FileType(JmxFileValue);
+        public static LoadTestingFileType JmxFile { get; } = new LoadTestingFileType(JmxFileValue);
         /// <summary> If the file is a user properties file. </summary>
-        public static FileType UserProperties { get; } = new FileType(UserPropertiesValue);
+        public static LoadTestingFileType UserProperties { get; } = new LoadTestingFileType(UserPropertiesValue);
         /// <summary> If the file is not among any of the other supported file types. </summary>
-        public static FileType AdditionalArtifacts { get; } = new FileType(AdditionalArtifactsValue);
+        public static LoadTestingFileType AdditionalArtifacts { get; } = new LoadTestingFileType(AdditionalArtifactsValue);
         /// <summary> If the file is a compressed archive containing a collection of various artifacts or resources. </summary>
-        public static FileType ZippedArtifacts { get; } = new FileType(ZippedArtifactsValue);
+        public static LoadTestingFileType ZippedArtifacts { get; } = new LoadTestingFileType(ZippedArtifactsValue);
         /// <summary> If the file is a JSON config file to define the requests for a URL test. </summary>
-        public static FileType UrlTestConfig { get; } = new FileType(UrlTestConfigValue);
+        public static LoadTestingFileType UrlTestConfig { get; } = new LoadTestingFileType(UrlTestConfigValue);
         /// <summary> If the file is a test script. </summary>
-        public static FileType TestScript { get; } = new FileType(TestScriptValue);
-        /// <summary> Determines if two <see cref="FileType"/> values are the same. </summary>
-        public static bool operator ==(FileType left, FileType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="FileType"/> values are not the same. </summary>
-        public static bool operator !=(FileType left, FileType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FileType"/>. </summary>
-        public static implicit operator FileType(string value) => new FileType(value);
+        public static LoadTestingFileType TestScript { get; } = new LoadTestingFileType(TestScriptValue);
+        /// <summary> Determines if two <see cref="LoadTestingFileType"/> values are the same. </summary>
+        public static bool operator ==(LoadTestingFileType left, LoadTestingFileType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="LoadTestingFileType"/> values are not the same. </summary>
+        public static bool operator !=(LoadTestingFileType left, LoadTestingFileType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadTestingFileType"/>. </summary>
+        public static implicit operator LoadTestingFileType(string value) => new LoadTestingFileType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FileType other && Equals(other);
+        public override bool Equals(object obj) => obj is LoadTestingFileType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(FileType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LoadTestingFileType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

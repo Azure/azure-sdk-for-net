@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class CertificateMetadata : IUtf8JsonSerializable, IJsonModel<CertificateMetadata>
+    public partial class TestCertificate : IUtf8JsonSerializable, IJsonModel<TestCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CertificateMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TestCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateMetadata)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TestCertificate)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Value))
@@ -66,19 +66,19 @@ namespace Azure.Developer.LoadTesting.Models
             }
         }
 
-        CertificateMetadata IJsonModel<CertificateMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TestCertificate IJsonModel<TestCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateMetadata)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TestCertificate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCertificateMetadata(document.RootElement, options);
+            return DeserializeTestCertificate(document.RootElement, options);
         }
 
-        internal static CertificateMetadata DeserializeCertificateMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TestCertificate DeserializeTestCertificate(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -118,46 +118,46 @@ namespace Azure.Developer.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CertificateMetadata(value, type, name, serializedAdditionalRawData);
+            return new TestCertificate(value, type, name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CertificateMetadata>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TestCertificate>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestCertificate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateMetadata)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestCertificate)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CertificateMetadata IPersistableModel<CertificateMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TestCertificate IPersistableModel<TestCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestCertificate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCertificateMetadata(document.RootElement, options);
+                        return DeserializeTestCertificate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateMetadata)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestCertificate)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CertificateMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TestCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CertificateMetadata FromResponse(Response response)
+        internal static TestCertificate FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCertificateMetadata(document.RootElement);
+            return DeserializeTestCertificate(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

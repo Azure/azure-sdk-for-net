@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class Test : IUtf8JsonSerializable, IJsonModel<Test>
+    public partial class LoadTest : IUtf8JsonSerializable, IJsonModel<LoadTest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Test>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Test>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LoadTest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Test>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Test)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTest)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(PassFailCriteria))
@@ -188,19 +188,19 @@ namespace Azure.Developer.LoadTesting.Models
             }
         }
 
-        Test IJsonModel<Test>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LoadTest IJsonModel<LoadTest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Test>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Test)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTest(document.RootElement, options);
+            return DeserializeLoadTest(document.RootElement, options);
         }
 
-        internal static Test DeserializeTest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LoadTest DeserializeLoadTest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -211,7 +211,7 @@ namespace Azure.Developer.LoadTesting.Models
             PassFailCriteria passFailCriteria = default;
             AutoStopCriteria autoStopCriteria = default;
             IDictionary<string, TestSecret> secrets = default;
-            CertificateMetadata certificate = default;
+            TestCertificate certificate = default;
             IDictionary<string, string> environmentVariables = default;
             LoadTestConfiguration loadTestConfiguration = default;
             string baselineTestRunId = default;
@@ -220,7 +220,7 @@ namespace Azure.Developer.LoadTesting.Models
             string description = default;
             string displayName = default;
             string subnetId = default;
-            TestKind? kind = default;
+            LoadTestKind? kind = default;
             bool? publicIPDisabled = default;
             string keyvaultReferenceIdentityType = default;
             string keyvaultReferenceIdentityId = default;
@@ -274,7 +274,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    certificate = CertificateMetadata.DeserializeCertificateMetadata(property.Value, options);
+                    certificate = TestCertificate.DeserializeTestCertificate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -340,7 +340,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    kind = new TestKind(property.Value.GetString());
+                    kind = new LoadTestKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publicIPDisabled"u8))
@@ -433,7 +433,7 @@ namespace Azure.Developer.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Test(
+            return new LoadTest(
                 passFailCriteria,
                 autoStopCriteria,
                 secrets ?? new ChangeTrackingDictionary<string, TestSecret>(),
@@ -461,43 +461,43 @@ namespace Azure.Developer.LoadTesting.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Test>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LoadTest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Test>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Test)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Test IPersistableModel<Test>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LoadTest IPersistableModel<LoadTest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Test>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTest(document.RootElement, options);
+                        return DeserializeLoadTest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Test)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Test>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LoadTest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Test FromResponse(Response response)
+        internal static LoadTest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTest(document.RootElement);
+            return DeserializeLoadTest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

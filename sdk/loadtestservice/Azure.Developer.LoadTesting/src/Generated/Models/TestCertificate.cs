@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Certificates metadata. </summary>
-    public partial class CertificateMetadata
+    public partial class TestCertificate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CertificateMetadata"/>. </summary>
-        public CertificateMetadata()
+        /// <summary> Initializes a new instance of <see cref="TestCertificate"/>. </summary>
+        public TestCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertificateMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestCertificate"/>. </summary>
         /// <param name="value"> The value of the certificate for respective type. </param>
         /// <param name="certificateKind"> Type of certificate. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateMetadata(string value, CertificateType? certificateKind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestCertificate(string value, CertificateType? certificateKind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             CertificateKind = certificateKind;

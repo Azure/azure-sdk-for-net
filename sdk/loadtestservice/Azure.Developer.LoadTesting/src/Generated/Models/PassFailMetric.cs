@@ -68,7 +68,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailMetric(PFMetrics? clientMetric, PassFailAggregationFunction? aggregate, string condition, string requestName, double? value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PassFailMetric(PfMetrics? clientMetric, PassFailAggregationFunction? aggregate, string condition, string requestName, double? value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientMetric = clientMetric;
             Aggregate = aggregate;
@@ -82,7 +82,7 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> The client metric on which the criteria should be applied. </summary>
-        public PFMetrics? ClientMetric { get; set; }
+        public PfMetrics? ClientMetric { get; set; }
         /// <summary>
         /// The aggregation function to be applied on the client metric. Allowed functions
         /// - ‘percentage’ - for error metric , ‘avg’, percentiles like ‘p50’, ‘p90’, &amp; so on, ‘min’,

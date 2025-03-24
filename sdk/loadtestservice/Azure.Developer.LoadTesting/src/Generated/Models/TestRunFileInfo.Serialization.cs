@@ -100,7 +100,7 @@ namespace Azure.Developer.LoadTesting.Models
             }
             string fileName = default;
             Uri url = default;
-            FileType? fileType = default;
+            LoadTestingFileType? fileType = default;
             DateTimeOffset? expireDateTime = default;
             FileValidationStatus? validationStatus = default;
             string validationFailureDetails = default;
@@ -128,7 +128,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    fileType = new FileType(property.Value.GetString());
+                    fileType = new LoadTestingFileType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expireDateTime"u8))

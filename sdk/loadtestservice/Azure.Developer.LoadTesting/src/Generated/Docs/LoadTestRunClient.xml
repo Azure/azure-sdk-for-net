@@ -389,7 +389,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-Response<TestRun> response = await client.GetTestRunAsync("12316678-1234-1234-1234-122451189012");
+Response<LoadTestRun> response = await client.GetTestRunAsync("12316678-1234-1234-1234-122451189012");
 ]]></code></example>
     </member>
     <member name="GetTestRun(string,CancellationToken)">
@@ -400,7 +400,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-Response<TestRun> response = client.GetTestRun("12316678-1234-1234-1234-122451189012");
+Response<LoadTestRun> response = client.GetTestRun("12316678-1234-1234-1234-122451189012");
 ]]></code></example>
     </member>
     <member name="GetTestRunAsync(string,RequestContext)">
@@ -589,7 +589,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-Response<TestRun> response = await client.StopTestRunAsync("12316678-1234-1234-1234-122451189012");
+Response<LoadTestRun> response = await client.StopTestRunAsync("12316678-1234-1234-1234-122451189012");
 ]]></code></example>
     </member>
     <member name="StopTestRun(string,CancellationToken)">
@@ -600,7 +600,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-Response<TestRun> response = client.StopTestRun("12316678-1234-1234-1234-122451189012");
+Response<LoadTestRun> response = client.StopTestRun("12316678-1234-1234-1234-122451189012");
 ]]></code></example>
     </member>
     <member name="StopTestRunAsync(string,RequestContext)">
@@ -891,7 +891,7 @@ foreach (BinaryData item in client.GetMetricDimensionValues("12316678-1234-1234-
 }
 ]]></code></example>
     </member>
-    <member name="GetMetricsAsync(string,string,string,string,MetricRequestPayload,string,TimeGrain?,CancellationToken)">
+    <member name="GetMetricsAsync(string,string,string,string,MetricsFilters,string,TimeGrain?,CancellationToken)">
       <example>
 This sample shows how to call GetMetricsAsync.
 <code><![CDATA[
@@ -904,7 +904,7 @@ await foreach (TimeSeriesElement item in client.GetMetricsAsync("12316678-1234-1
 }
 ]]></code></example>
     </member>
-    <member name="GetMetrics(string,string,string,string,MetricRequestPayload,string,TimeGrain?,CancellationToken)">
+    <member name="GetMetrics(string,string,string,string,MetricsFilters,string,TimeGrain?,CancellationToken)">
       <example>
 This sample shows how to call GetMetrics.
 <code><![CDATA[

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Load test run model. </summary>
-    public partial class TestRun
+    public partial class LoadTestRun
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,8 +45,8 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TestRun"/>. </summary>
-        public TestRun()
+        /// <summary> Initializes a new instance of <see cref="LoadTestRun"/>. </summary>
+        public LoadTestRun()
         {
             Secrets = new ChangeTrackingDictionary<string, TestSecret>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
@@ -55,7 +55,7 @@ namespace Azure.Developer.LoadTesting.Models
             RegionalStatistics = new ChangeTrackingDictionary<string, TestRunStatistics>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestRun"/>. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="passFailCriteria"> Pass fail criteria for a test. </param>
         /// <param name="autoStopCriteria"> Auto stop criteria for a test. This will automatically stop a load test if the error percentage is high for a certain time window. </param>
@@ -104,7 +104,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, TestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadTestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, LoadTestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TestRunId = testRunId;
             PassFailCriteria = passFailCriteria;
@@ -157,7 +157,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         public IDictionary<string, TestSecret> Secrets { get; }
         /// <summary> Certificates metadata. </summary>
-        public CertificateMetadata Certificate { get; set; }
+        public TestCertificate Certificate { get; set; }
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; }
         /// <summary> Error details if there is any failure in load test run. </summary>
@@ -205,7 +205,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Subnet ID on which the load test instances should run. </summary>
         public string SubnetId { get; }
         /// <summary> Type of test. </summary>
-        public TestKind? Kind { get; }
+        public LoadTestKind? Kind { get; }
         /// <summary> Request data collection level for test run. </summary>
         public RequestDataLevel? RequestDataLevel { get; set; }
         /// <summary> Enable or disable debug level logging. True if debug logs are enabled for the test run. False otherwise. </summary>

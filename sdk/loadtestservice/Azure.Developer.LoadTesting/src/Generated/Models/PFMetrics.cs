@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Metrics for pass/fail criteria. </summary>
-    public readonly partial struct PFMetrics : IEquatable<PFMetrics>
+    public readonly partial struct PfMetrics : IEquatable<PfMetrics>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="PFMetrics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PfMetrics"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PFMetrics(string value)
+        public PfMetrics(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -29,27 +29,27 @@ namespace Azure.Developer.LoadTesting.Models
         private const string RequestsPerSecondValue = "requests_per_sec";
 
         /// <summary> Pass fail criteria for response time metric in milliseconds. </summary>
-        public static PFMetrics ResponseTimeInMilliseconds { get; } = new PFMetrics(ResponseTimeInMillisecondsValue);
+        public static PfMetrics ResponseTimeInMilliseconds { get; } = new PfMetrics(ResponseTimeInMillisecondsValue);
         /// <summary> Pass fail criteria for latency metric in milliseconds. </summary>
-        public static PFMetrics Latency { get; } = new PFMetrics(LatencyValue);
+        public static PfMetrics Latency { get; } = new PfMetrics(LatencyValue);
         /// <summary> Pass fail criteria for error metric. </summary>
-        public static PFMetrics Error { get; } = new PFMetrics(ErrorValue);
+        public static PfMetrics Error { get; } = new PfMetrics(ErrorValue);
         /// <summary> Pass fail criteria for total requests. </summary>
-        public static PFMetrics Requests { get; } = new PFMetrics(RequestsValue);
+        public static PfMetrics Requests { get; } = new PfMetrics(RequestsValue);
         /// <summary> Pass fail criteria for request per second. </summary>
-        public static PFMetrics RequestsPerSecond { get; } = new PFMetrics(RequestsPerSecondValue);
-        /// <summary> Determines if two <see cref="PFMetrics"/> values are the same. </summary>
-        public static bool operator ==(PFMetrics left, PFMetrics right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="PFMetrics"/> values are not the same. </summary>
-        public static bool operator !=(PFMetrics left, PFMetrics right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PFMetrics"/>. </summary>
-        public static implicit operator PFMetrics(string value) => new PFMetrics(value);
+        public static PfMetrics RequestsPerSecond { get; } = new PfMetrics(RequestsPerSecondValue);
+        /// <summary> Determines if two <see cref="PfMetrics"/> values are the same. </summary>
+        public static bool operator ==(PfMetrics left, PfMetrics right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PfMetrics"/> values are not the same. </summary>
+        public static bool operator !=(PfMetrics left, PfMetrics right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PfMetrics"/>. </summary>
+        public static implicit operator PfMetrics(string value) => new PfMetrics(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PFMetrics other && Equals(other);
+        public override bool Equals(object obj) => obj is PfMetrics other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(PFMetrics other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PfMetrics other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

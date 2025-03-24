@@ -63,7 +63,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestFileInfo(string fileName, Uri uri, FileType? fileType, DateTimeOffset? expiresOn, FileValidationStatus? validationStatus, string validationFailureDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestFileInfo(string fileName, Uri uri, LoadTestingFileType? fileType, DateTimeOffset? expiresOn, FileValidationStatus? validationStatus, string validationFailureDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileName = fileName;
             Uri = uri;
@@ -84,7 +84,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> File URL. </summary>
         public Uri Uri { get; }
         /// <summary> File type. </summary>
-        public FileType? FileType { get; }
+        public LoadTestingFileType? FileType { get; }
         /// <summary> Expiry time of the file (RFC 3339 literal format). </summary>
         public DateTimeOffset? ExpiresOn { get; }
         /// <summary> Validation status of the file. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Filters to fetch the set of metric. </summary>
-    public partial class MetricRequestPayload
+    public partial class MetricsFilters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MetricRequestPayload"/>. </summary>
-        public MetricRequestPayload()
+        /// <summary> Initializes a new instance of <see cref="MetricsFilters"/>. </summary>
+        public MetricsFilters()
         {
             Filters = new ChangeTrackingList<DimensionFilter>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricRequestPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsFilters"/>. </summary>
         /// <param name="filters">
         /// Get metrics for specific dimension values. Example: Metric contains dimension
         /// like SamplerName, Error. To retrieve all the time series data where SamplerName
@@ -59,7 +59,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// {"SamplerName", ["HTTPRequest1", "HTTPRequest2"}
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricRequestPayload(IList<DimensionFilter> filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetricsFilters(IList<DimensionFilter> filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Filters = filters;
             _serializedAdditionalRawData = serializedAdditionalRawData;

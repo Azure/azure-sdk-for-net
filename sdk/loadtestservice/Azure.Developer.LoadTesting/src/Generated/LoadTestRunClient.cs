@@ -639,13 +639,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TestRun>> GetTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadTestRun>> GetTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTestRunAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(TestRun.FromResponse(response), response);
+            return Response.FromValue(LoadTestRun.FromResponse(response), response);
         }
 
         /// <summary> Get test run details by test run Id. </summary>
@@ -654,13 +654,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRun(string,CancellationToken)']/*" />
-        public virtual Response<TestRun> GetTestRun(string testRunId, CancellationToken cancellationToken = default)
+        public virtual Response<LoadTestRun> GetTestRun(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTestRun(testRunId, context);
-            return Response.FromValue(TestRun.FromResponse(response), response);
+            return Response.FromValue(LoadTestRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1119,13 +1119,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRunAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TestRun>> StopTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadTestRun>> StopTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await StopTestRunAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(TestRun.FromResponse(response), response);
+            return Response.FromValue(LoadTestRun.FromResponse(response), response);
         }
 
         /// <summary> Stop test run by test run Id. </summary>
@@ -1134,13 +1134,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRun(string,CancellationToken)']/*" />
-        public virtual Response<TestRun> StopTestRun(string testRunId, CancellationToken cancellationToken = default)
+        public virtual Response<LoadTestRun> StopTestRun(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = StopTestRun(testRunId, context);
-            return Response.FromValue(TestRun.FromResponse(response), response);
+            return Response.FromValue(LoadTestRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1749,8 +1749,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(string,string,string,string,MetricRequestPayload,string,TimeGrain?,CancellationToken)']/*" />
-        public virtual AsyncPageable<TimeSeriesElement> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, MetricRequestPayload body = null, string aggregation = null, TimeGrain? interval = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(string,string,string,string,MetricsFilters,string,TimeGrain?,CancellationToken)']/*" />
+        public virtual AsyncPageable<TimeSeriesElement> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, MetricsFilters body = null, string aggregation = null, TimeGrain? interval = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(metricname, nameof(metricname));
@@ -1778,8 +1778,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetrics(string,string,string,string,MetricRequestPayload,string,TimeGrain?,CancellationToken)']/*" />
-        public virtual Pageable<TimeSeriesElement> GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, MetricRequestPayload body = null, string aggregation = null, TimeGrain? interval = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetrics(string,string,string,string,MetricsFilters,string,TimeGrain?,CancellationToken)']/*" />
+        public virtual Pageable<TimeSeriesElement> GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, MetricsFilters body = null, string aggregation = null, TimeGrain? interval = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(metricname, nameof(metricname));
@@ -1809,12 +1809,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="status"> Comma separated list of test run status. </param>
         /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<TestRun> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadTestRun> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TestRun.DeserializeTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LoadTestRun.DeserializeLoadTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -1833,12 +1833,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="status"> Comma separated list of test run status. </param>
         /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<TestRun> GetTestRuns(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadTestRun> GetTestRuns(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TestRun.DeserializeTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LoadTestRun.DeserializeLoadTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> List test profile runs. </summary>
