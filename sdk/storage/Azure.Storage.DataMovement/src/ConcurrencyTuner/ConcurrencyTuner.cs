@@ -28,14 +28,18 @@ namespace Azure.Storage.DataMovement
         internal Channel<ConcurrencyRecommendation> _recommendations;
         private CancellationToken _cancellationToken;
 
+        private IProcessor<Func<Task>> _processor;
+
         internal ConcurrencyTuner(
             ResourceMonitor resourceMonitor,
+            IProcessor<Func<Task>> processor,
             TimeSpan monitoringInterval,
             double maxMemoryUsage,
             int initialConcurrency,
             int maxConcurrency,
             float maxCpuUsage)
         {
+            _processor = processor;
             _initialConcurrency = initialConcurrency;
             _maxConcurrency = maxConcurrency;
             _maxMemoryUsage = maxMemoryUsage;
