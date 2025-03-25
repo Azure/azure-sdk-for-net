@@ -31,13 +31,13 @@ public partial class TranscriptionResult
             }
             var TranscribedPhrases = new List<TranscribedPhrases>();
 
-            var CombinedPhrases = this.CombinedPhrases.ToDictionary((phrase) => phrase.Channel);
-            var Phrases = this.Phrases.GroupBy((phrase) => phrase.Channel).ToDictionary((e) => e.Key, (e) => e.ToList());
+            var CombinedPhrases = this.CombinedPhrases.ToDictionary((phrase) => phrase.Channel ?? -1);
+            var Phrases = this.Phrases.GroupBy((phrase) => phrase.Channel).ToDictionary((e) => e.Key ?? -1, (e) => e.ToList());
             foreach (var key in CombinedPhrases.Keys)
             {
                 var CombinedPhrase = CombinedPhrases[key];
                 var Phrase = Phrases[key];
-                TranscribedPhrases.Add(new TranscribedPhrases(key, CombinedPhrase.Text, Phrase));
+                TranscribedPhrases.Add(new TranscribedPhrases(key == -1 ? null : key, CombinedPhrase.Text, Phrase));
             }
 
             _TranscribedPhrases = TranscribedPhrases;
