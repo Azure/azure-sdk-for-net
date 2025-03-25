@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
     public class NetworkCloudManagementTestEnvironment : TestEnvironment
     {
         private TokenCredential _credential;
-        public static string FakeContainerUri => "https://fakeaccount.blob.core.windows.net/container";
 
         // Cluster Manager
         public string ManagerExtendedLocation => GetRecordedVariable("MANAGER_EXTENDED_LOCATION");
@@ -23,8 +22,9 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string ClusterExtendedLocation => GetRecordedVariable("CLUSTER_EXTENDED_LOCATION");
         public string ClusterRG => GetRecordedVariable("CLUSTER_RG");
         public string ClusterVersion => GetRecordedVariable("CLUSTER_VERSION");
-        public string UserAssignedIdentity => GetRecordedVariable("USER_ASSIGNED_IDENTITY");
-        public string ContainerUri => GetRecordedVariable("CONTAINER_URI");
+        public string UserAssignedIdentity => GetRecordedVariable("USER_ASSIGNED_IDENTITY", options => options.IsSecret("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sanitized"));
+        public string ContainerUri => GetRecordedVariable("CONTAINER_URI", options => options.IsSecret("https://sanitized.blob.core.windows.net/container"));
+        public string VaultUri => GetRecordedVariable("VAULT_URI", options => options.IsSecret("https://sanitized.vault.azure.net"));
 
         // Kubernetes Cluster
 
@@ -94,20 +94,6 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
 
                 return _credential;
             }
-        }
-
-        public string GetContainerUri()
-        {
-            if (!string.IsNullOrEmpty(ContainerUri))
-            {
-                // In playback mode, the SAS URI is sanitized to avoid sharing secrets.
-                if (string.Equals(ContainerUri, "Sanitized", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return FakeContainerUri;
-                }
-                return ContainerUri;
-            }
-            return $"{GetRecordedVariable("CONTAINER_URI")}";
         }
     }
 }

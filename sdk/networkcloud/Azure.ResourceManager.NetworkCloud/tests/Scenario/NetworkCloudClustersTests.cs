@@ -17,9 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class NetworkCloudClustersTests : NetworkCloudManagementTestBase
     {
-        public NetworkCloudClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {
-            SanitizersToRemove.Add("AZSDK3402");
-        }
+        public NetworkCloudClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
         public NetworkCloudClustersTests(bool isAsync) : base(isAsync) {}
 
         [Test]
@@ -95,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                         IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
                         UserAssignedIdentityResourceId = new ResourceIdentifier(TestEnvironment.UserAssignedIdentity)
                     },
-                    ContainerUri = new Uri(TestEnvironment.GetContainerUri()),
+                    ContainerUri = new Uri(TestEnvironment.ContainerUri),
                 },
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
@@ -169,7 +167,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 SecretArchiveSettings = new SecretArchiveSettings
                 {
-                    VaultUri = new Uri(TestEnvironment.GetContainerUri()),
+                    VaultUri = new Uri(TestEnvironment.VaultUri),
                 }
             };
             var secretArchiveResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch3);
