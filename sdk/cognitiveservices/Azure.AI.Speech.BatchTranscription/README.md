@@ -1,4 +1,4 @@
-# Azure.AI.Speech.BatchTranscription client library for .NET
+# Azure AI Speech BatchTranscription client library for .NET
 
 Azure.AI.Speech.BatchTranscription is a managed service that helps developers get secret simply and securely.
 

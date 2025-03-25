@@ -1,4 +1,4 @@
-# Azure.AI.Speech.Transcription client library for .NET
+# Azure AI Speech Transcription client library for .NET
 
 Azure.AI.Speech.Transcription is a managed service that helps developers get secret simply and securely.
 
