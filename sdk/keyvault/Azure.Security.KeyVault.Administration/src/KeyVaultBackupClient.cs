@@ -607,7 +607,6 @@ namespace Azure.Security.KeyVault.Administration
                 var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(operation.GetRawResponse());
                 var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
 
-                 // Should this return a KeyVaultBackupOperation?
                  return new KeyVaultBackupOperation(this, responseWithHeaders);
              }
              catch (Exception ex)
