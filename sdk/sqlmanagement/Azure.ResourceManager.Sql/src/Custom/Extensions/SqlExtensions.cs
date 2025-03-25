@@ -493,13 +493,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options = new ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions(locationName)
-            {
-                OnlyLatestPerDatabase = onlyLatestPerDatabase,
-                DatabaseState = databaseState
-            };
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(options, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -535,13 +529,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options = new ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions(locationName)
-            {
-                OnlyLatestPerDatabase = onlyLatestPerDatabase,
-                DatabaseState = databaseState
-            };
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(options, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -577,13 +565,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options = new SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions(locationName)
-            {
-                OnlyLatestPerDatabase = onlyLatestPerDatabase,
-                DatabaseState = databaseState
-            };
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(options, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -619,13 +601,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options = new SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions(locationName)
-            {
-                OnlyLatestPerDatabase = onlyLatestPerDatabase,
-                DatabaseState = databaseState
-            };
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(options, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
     }
 }
