@@ -46,7 +46,7 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        using Activity? activity = ActivitySource.StartClientActivity(_options, nameof(GetCountryCode));
+        using Activity? activity = ActivitySource.StartClientActivity(_options, $"{nameof(MapsClient)}.{nameof(GetCountryCode)}");
 
         try
         {
@@ -70,7 +70,7 @@ public class MapsClient
 
         options ??= new RequestOptions();
 
-        using Activity? activity = ActivitySource.StartClientActivity(_options, nameof(GetCountryCode));
+        using Activity? activity = ActivitySource.StartClientActivity(_options, $"{nameof(MapsClient)}.{nameof(GetCountryCode)}");
 
         try
         {
@@ -99,7 +99,7 @@ public class MapsClient
         if (ipAddress is null)
             throw new ArgumentNullException(nameof(ipAddress));
 
-        using Activity? activity = ActivitySource.StartClientActivity(_options, nameof(GetCountryCode));
+        using Activity? activity = ActivitySource.StartClientActivity(_options, $"{nameof(MapsClient)}.{nameof(GetCountryCode)}");
 
         try
         {
@@ -123,7 +123,7 @@ public class MapsClient
 
         options ??= new RequestOptions();
 
-        using Activity? activity = ActivitySource.StartClientActivity(_options, nameof(GetCountryCode));
+        using Activity? activity = ActivitySource.StartClientActivity(_options, $"{nameof(MapsClient)}.{nameof(GetCountryCode)}");
 
         try
         {
