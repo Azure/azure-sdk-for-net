@@ -406,11 +406,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="folderUri">
         /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
         /// This would be the exact value that is returned as the result of a <see cref="KeyVaultBackupOperation"/>.
-        /// An example Uri may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
+        /// An example <paramref name="folderUri" /> may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
         /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> are <c>null</c>.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultRestoreOperation"/> representing the result of the asynchronous operation.</returns>
         public virtual async Task<KeyVaultRestoreOperation> StartPreRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
@@ -452,11 +452,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="folderUri">
         /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
         /// This would be the exact value that is returned as the result of a <see cref="KeyVaultBackupOperation"/>.
-        /// An example Uri path may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
+        /// An example <paramref name="folderUri" /> path may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
         /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> are <c>null</c>.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
         public virtual KeyVaultRestoreOperation StartPreRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
@@ -559,7 +559,7 @@ namespace Azure.Security.KeyVault.Administration
                     new PreBackupOperationParameters(
                         blobStorageUri.AbsoluteUri,
                         sasToken,
-                        useManagedIdentity: sasToken == null
+                        useManagedIdentity: (sasToken == default)
                         ),
                     cancellationToken).ConfigureAwait(false);
 
@@ -599,7 +599,7 @@ namespace Azure.Security.KeyVault.Administration
                      new PreBackupOperationParameters(
                          blobStorageUri.AbsoluteUri,
                          sasToken,
-                         useManagedIdentity: sasToken == null
+                         useManagedIdentity: (sasToken == default)
                          ),
                      cancellationToken);
 
