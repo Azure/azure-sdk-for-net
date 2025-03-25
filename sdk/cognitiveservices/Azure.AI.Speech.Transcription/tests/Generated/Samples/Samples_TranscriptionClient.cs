@@ -71,7 +71,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscribeRequest body = new TranscribeRequest((Stream)null);
+            TranscribeRequest body = new TranscribeRequest(null);
             Response<TranscriptionResult> response = client.Transcribe(body);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscribeRequest body = new TranscribeRequest((Stream)null);
+            TranscribeRequest body = new TranscribeRequest(null);
             Response<TranscriptionResult> response = await client.TranscribeAsync(body);
         }
 
@@ -197,7 +197,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscribeRequest body = new TranscribeRequest((Stream)null)
+            TranscribeRequest body = new TranscribeRequest(null)
             {
                 Options = new TranscriptionOptions
                 {
@@ -226,7 +226,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-            TranscribeRequest body = new TranscribeRequest((Stream)null)
+            TranscribeRequest body = new TranscribeRequest(null)
             {
                 Options = new TranscriptionOptions
                 {

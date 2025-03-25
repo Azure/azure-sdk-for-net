@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-TranscribeRequest body = new TranscribeRequest((Stream)null);
+TranscribeRequest body = new TranscribeRequest(null);
 Response<TranscriptionResult> response = await client.TranscribeAsync(body);
 ]]></code>
 This sample shows how to call TranscribeAsync with all parameters.
@@ -18,7 +18,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-TranscribeRequest body = new TranscribeRequest((Stream)null)
+TranscribeRequest body = new TranscribeRequest(null)
 {
     Options = new TranscriptionOptions
     {
@@ -47,7 +47,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-TranscribeRequest body = new TranscribeRequest((Stream)null);
+TranscribeRequest body = new TranscribeRequest(null);
 Response<TranscriptionResult> response = client.Transcribe(body);
 ]]></code>
 This sample shows how to call Transcribe with all parameters.
@@ -56,7 +56,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
-TranscribeRequest body = new TranscribeRequest((Stream)null)
+TranscribeRequest body = new TranscribeRequest(null)
 {
     Options = new TranscriptionOptions
     {
