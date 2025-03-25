@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Security;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -1157,6 +1158,153 @@ namespace Azure.AI.Projects.Tests
             Assert.True(foundId);
         }
 
+        [RecordedTest]
+        public async Task TestAzureAiSearch()
+        {
+            AgentsClient client = GetClient();
+            ListConnectionsResponse connections = await GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
+
+            ConnectionResponse connection = connections.Value[0];
+
+            ToolResources searchResource = new()
+            {
+                AzureAISearch = new AzureAISearchResource
+                {
+                    IndexList = { new AISearchIndexResource(connection.Id, "sample_index") }
+                }
+            };
+
+            Agent agent = await client.CreateAgentAsync(
+                model: "gpt-4",
+                name: AGENT_NAME,
+                instructions: "You are a helpful assistant.",
+                tools: [new AzureAISearchToolDefinition()],
+                toolResources: searchResource);
+
+            // Create thread for communication
+            AgentThread thread = await client.CreateThreadAsync();
+
+            // Create message to thread
+            await client.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "What is the temperature rating of the cozynights sleeping bag?");
+            Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
+
+            do
+            {
+                await Task.Delay(TimeSpan.FromMilliseconds(500));
+                runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+            }
+            while (runResponse.Value.Status == RunStatus.Queued
+                || runResponse.Value.Status == RunStatus.InProgress);
+
+            Assert.AreEqual(
+                RunStatus.Completed,
+                runResponse.Value.Status,
+                runResponse.Value.LastError?.Message);
+            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+                threadId: thread.Id,
+                order: ListSortOrder.Ascending
+            );
+
+            // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
+            foreach (ThreadMessage threadMessage in messages)
+            {
+                Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+                foreach (MessageContent contentItem in threadMessage.ContentItems)
+                {
+                    if (contentItem is MessageTextContent textItem)
+                    {
+                        // We need to annotate only Agent messages.
+                        if (threadMessage.Role == MessageRole.Agent && textItem.Annotations.Count > 0)
+                        {
+                            string annotatedText = textItem.Text;
+                            foreach (MessageTextAnnotation annotation in textItem.Annotations)
+                            {
+                                if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                                {
+                                    annotatedText = annotatedText.Replace(
+                                        urlAnnotation.Text,
+                                        $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                                }
+                            }
+                            Console.Write(annotatedText);
+                        }
+                        else
+                        {
+                            Console.Write(textItem.Text);
+                        }
+                    }
+                    else if (contentItem is MessageImageFileContent imageFileItem)
+                    {
+                        Console.Write($"<image from ID: {imageFileItem.FileId}");
+                    }
+                    Console.WriteLine();
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestAzureAiSearchStreaming()
+        {
+            if (!IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
+            AgentsClient client = GetClient();
+            ListConnectionsResponse connections = await GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
+
+            ConnectionResponse connection = connections.Value[0];
+
+            ToolResources searchResource = new()
+            {
+                AzureAISearch = new AzureAISearchResource
+                {
+                    IndexList = { new AISearchIndexResource(connection.Id, "sample_index") }
+                }
+            };
+
+            Agent agent = await client.CreateAgentAsync(
+                model: "gpt-4",
+                name: AGENT_NAME,
+                instructions: "You are a helpful assistant.",
+                tools: [new AzureAISearchToolDefinition()],
+                toolResources: searchResource);
+
+            // Create thread for communication
+            AgentThread thread = await client.CreateThreadAsync();
+
+            // Create message to thread
+            await client.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "What is the temperature rating of the cozynights sleeping bag?");
+            await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+            {
+                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+                {
+                    Console.WriteLine("--- Run started! ---");
+                }
+                else if (streamingUpdate is MessageContentUpdate contentUpdate)
+                {
+                    if (contentUpdate.TextAnnotation != null)
+                    {
+                        Console.Write($" [see {contentUpdate.TextAnnotation.Title}] ({contentUpdate.TextAnnotation.Url})");
+                    }
+                    else
+                    {
+                        //Detect the reference placeholder and skip it. Instead we will print the actual reference.
+                        if (contentUpdate.Text[0] != (char)12304 || contentUpdate.Text[contentUpdate.Text.Length - 1] != (char)12305)
+                            Console.Write(contentUpdate.Text);
+                    }
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("--- Run completed! ---");
+                }
+            }
+        }
+
         #region Helpers
 
         private static string CreateTempDirMayBe()
@@ -1281,6 +1429,29 @@ namespace Azure.AI.Projects.Tests
             }
             while (agentsResp.HasMore);
             return count;
+        }
+
+        private ConnectionsClient GetConnectionsClient()
+        {
+            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            // If we are in the Playback, do not ask for authentication.
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return InstrumentClient(new ConnectionsClient(connectionString, new MockCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+            }
+            // For local testing if you are using non default account
+            // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
+            // also provide the PATH variable.
+            // This path should allow launching az command.
+            var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
+            if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
+            {
+                return InstrumentClient(new ConnectionsClient(connectionString, new AzureCliCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+            }
+            else
+            {
+                return InstrumentClient(new ConnectionsClient(connectionString, new DefaultAzureCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+            }
         }
         #endregion
         #region Cleanup
