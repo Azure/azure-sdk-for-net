@@ -13,7 +13,7 @@ var projectClient = new AIProjectClient(connectionString, new DefaultAzureCreden
 AgentsClient agentClient = projectClient.GetAgentsClient();
 ```
 
-2. Next we will get the bing connection by neme using connection client. This connection will be used to initialize the `BingGroundingToolDefinition`.
+2. Next we will get the bing connection by name using connection client. This connection will be used to initialize the `BingGroundingToolDefinition`.
 
 Synchronous sample:
 ```C# Snippet:BingGrounding_GetConnection

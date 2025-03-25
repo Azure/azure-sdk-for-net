@@ -1,6 +1,6 @@
 # Sample for using Azure Functions with agents in Azure.AI.Projects.
 
-# Prereqiosites
+# Prerequisites
 To make a function call we need to create and deploy the Azure function. In the code snippet below, we have an example of function on C# which can be used by the code above.
 
 ```C#

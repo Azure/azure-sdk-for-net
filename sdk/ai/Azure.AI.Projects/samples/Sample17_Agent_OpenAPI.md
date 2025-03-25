@@ -17,7 +17,7 @@ AgentsClient client = new(connectionString, new DefaultAzureCredential());
 var file_path = GetFile();
 ```
 
-2. Next we will create the agent with `OpenApiToolDefinition` and anonimous authentication.
+2. Next we will create the agent with `OpenApiToolDefinition` and anonymous authentication.
 
 Synchronous sample:
 ```C# Snippet:OpenAPISyncDefineFunctionTools
@@ -55,7 +55,7 @@ Agent agent = await client.CreateAgentAsync(
 );
 ```
 
-3. Now we will create a `ThreadRun` and wait untill it is complete. If the run will not be successful, we will print the last error.
+3. Now we will create a `ThreadRun` and wait until it is complete. If the run will not be successful, we will print the last error.
 
 Synchronous sample:
 ```C# Snippet:OpenAPISyncHandlePollingWithRequiredAction

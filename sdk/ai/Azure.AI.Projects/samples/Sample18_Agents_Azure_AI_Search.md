@@ -75,7 +75,7 @@ Agent agent = await agentClient.CreateAgentAsync(
    toolResources: searchResource);
 ```
 
-3. Now we will create a `ThreadRun` and wait untill it is complete. If the run will not be successful, we will print the last error.
+3. Now we will create a `ThreadRun` and wait until it is complete. If the run will not be successful, we will print the last error.
 
 Synchronous sample:
 ```C# Snippet:AzureAISearchExample_CreateRun_Sync
@@ -135,7 +135,7 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 
-4. In our search we have used an index containing "embedding", "token", "url" and also "title" fields. This allowed us to get reference title and url. In the code below, we iterate messages in cronological order and replace the reference placeholders by url and title.
+4. In our search we have used an index containing "embedding", "token", "url" and also "title" fields. This allowed us to get reference title and url. In the code below, we iterate messages in chronological order and replace the reference placeholders by url and title.
 
 Synchronous sample:
 ```C# Snippet:PopulateReferencesAgentWithAzureAISearchTool_Sync
