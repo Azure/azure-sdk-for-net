@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The number of pending requests in the batch.
         /// </summary>
-        public int RequestCount => _messages.Count;
+        public virtual int RequestCount => _messages.Count;
 
         /// <summary>
         /// If this BlobBatch is container scoped.
