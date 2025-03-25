@@ -21,6 +21,11 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Indicates whether the user wants to tune the concurrency.
+        /// </summary>
+        public bool EnableConcurrencyTuner { get; set; }
+
+        /// <summary>
         /// Resource providers for the transfer manager to use in resuming a transfer.
         /// Expects one provider for each storage provider in use. E.g. when transfering
         /// between local storage and Azure Blob Storage, you can set this value to the
