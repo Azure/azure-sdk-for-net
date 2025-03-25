@@ -199,7 +199,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 
             TranscribeRequest body = new TranscribeRequest((Stream)null)
             {
-                Definition = new TranscriptionOptions
+                Options = new TranscriptionOptions
                 {
                     Locales = { "<locales>" },
                     Models =
@@ -228,7 +228,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 
             TranscribeRequest body = new TranscribeRequest((Stream)null)
             {
-                Definition = new TranscriptionOptions
+                Options = new TranscriptionOptions
                 {
                     Locales = { "<locales>" },
                     Models =

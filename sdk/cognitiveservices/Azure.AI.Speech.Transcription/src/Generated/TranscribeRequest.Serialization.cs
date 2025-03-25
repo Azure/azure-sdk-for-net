@@ -35,10 +35,10 @@ namespace Azure.AI.Speech.Transcription
                 throw new FormatException($"The model {nameof(TranscribeRequest)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Definition))
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue<TranscriptionOptions>(Definition, options);
+                writer.WriteObjectValue(Options, options);
             }
             writer.WritePropertyName("audio"u8);
 #if NET6_0_OR_GREATER
@@ -133,9 +133,9 @@ namespace Azure.AI.Speech.Transcription
         internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
         {
             MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
-            if (Optional.IsDefined(Definition))
+            if (Optional.IsDefined(Options))
             {
-                content.Add(ModelReaderWriter.Write<TranscriptionOptions>(Definition, ModelSerializationExtensions.WireOptions), "definition");
+                content.Add(ModelReaderWriter.Write(Options, ModelSerializationExtensions.WireOptions), "definition");
             }
             content.Add(Audio, "audio", "audio", "application/octet-stream");
             return content;

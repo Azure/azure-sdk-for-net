@@ -20,7 +20,7 @@ TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
 TranscribeRequest body = new TranscribeRequest((Stream)null)
 {
-    Definition = new TranscriptionOptions
+    Options = new TranscriptionOptions
     {
         Locales = { "<locales>" },
         Models =
@@ -58,7 +58,7 @@ TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 
 TranscribeRequest body = new TranscribeRequest((Stream)null)
 {
-    Definition = new TranscriptionOptions
+    Options = new TranscriptionOptions
     {
         Locales = { "<locales>" },
         Models =

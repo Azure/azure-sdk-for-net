@@ -13,12 +13,12 @@ namespace Azure.AI.Speech.Transcription
     public static partial class AISpeechTranscriptionModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Transcription.TranscribeRequest"/>. </summary>
-        /// <param name="definition"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscribeDefinition`. </param>
+        /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscribeDefinition`. </param>
         /// <param name="audio"> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. </param>
         /// <returns> A new <see cref="Transcription.TranscribeRequest"/> instance for mocking. </returns>
-        public static TranscribeRequest TranscribeRequest(TranscriptionOptions definition = null, Stream audio = null)
+        public static TranscribeRequest TranscribeRequest(TranscriptionOptions options = null, Stream audio = null)
         {
-            return new TranscribeRequest(definition, audio, serializedAdditionalRawData: null);
+            return new TranscribeRequest(options, audio, serializedAdditionalRawData: null);
         }
     }
 }

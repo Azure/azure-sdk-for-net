@@ -14,5 +14,7 @@ namespace Azure.AI.Speech.Transcription
     /// <summary> The TranscribeRequest. </summary>
     public partial class TranscribeRequest
     {
+        /// <summary> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscribeDefinition`. </summary>
+        public TranscriptionOptions Options { get; set; }
     }
 }
