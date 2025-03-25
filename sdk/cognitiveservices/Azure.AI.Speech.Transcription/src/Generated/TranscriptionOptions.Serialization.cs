@@ -65,10 +65,10 @@ namespace Azure.AI.Speech.Transcription
                 writer.WritePropertyName("profanityFilterMode"u8);
                 writer.WriteStringValue(ProfanityFilterMode.Value.ToString());
             }
-            if (Optional.IsDefined(DiarizationProperties))
+            if (Optional.IsDefined(DiarizationOptions))
             {
                 writer.WritePropertyName("diarization"u8);
-                writer.WriteObjectValue(DiarizationProperties, options);
+                writer.WriteObjectValue(DiarizationOptions, options);
             }
             if (Optional.IsCollectionDefined(ActiveChannels))
             {

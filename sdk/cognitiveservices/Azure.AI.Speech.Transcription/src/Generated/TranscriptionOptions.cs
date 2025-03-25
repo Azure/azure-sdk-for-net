@@ -57,15 +57,15 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="locales"> A list of possible locales for the transcription. If not specified, the locale of the speech in the audio is detected automatically from all supported locales. </param>
         /// <param name="models"> Maps some or all candidate locales to a model URI to be used for transcription. If no mapping is given, the default model for the locale is used. </param>
         /// <param name="profanityFilterMode"> Mode of profanity filtering. </param>
-        /// <param name="diarizationProperties"> Mode of diarization. </param>
+        /// <param name="diarizationOptions"> Mode of diarization. </param>
         /// <param name="activeChannels"> The 0-based indices of the channels to be transcribed separately. If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionOptions(IList<string> locales, IDictionary<string, Uri> models, ProfanityFilterMode? profanityFilterMode, TranscriptionDiarizationOptions diarizationProperties, IList<int> activeChannels, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranscriptionOptions(IList<string> locales, IDictionary<string, Uri> models, ProfanityFilterMode? profanityFilterMode, TranscriptionDiarizationOptions diarizationOptions, IList<int> activeChannels, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Locales = locales;
             Models = models;
             ProfanityFilterMode = profanityFilterMode;
-            DiarizationProperties = diarizationProperties;
+            DiarizationOptions = diarizationOptions;
             ActiveChannels = activeChannels;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -77,7 +77,7 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> Mode of profanity filtering. </summary>
         public ProfanityFilterMode? ProfanityFilterMode { get; set; }
         /// <summary> Mode of diarization. </summary>
-        public TranscriptionDiarizationOptions DiarizationProperties { get; set; }
+        public TranscriptionDiarizationOptions DiarizationOptions { get; set; }
         /// <summary> The 0-based indices of the channels to be transcribed separately. If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported. </summary>
         public IList<int> ActiveChannels { get; }
     }

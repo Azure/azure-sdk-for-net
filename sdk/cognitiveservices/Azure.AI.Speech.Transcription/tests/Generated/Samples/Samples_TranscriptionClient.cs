@@ -207,7 +207,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 ["key"] = new Uri("http://localhost:3000")
 },
                     ProfanityFilterMode = ProfanityFilterMode.None,
-                    DiarizationProperties = new TranscriptionDiarizationOptions
+                    DiarizationOptions = new TranscriptionDiarizationOptions
                     {
                         Enabled = true,
                         MaxSpeakers = 1234,
@@ -236,7 +236,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 ["key"] = new Uri("http://localhost:3000")
 },
                     ProfanityFilterMode = ProfanityFilterMode.None,
-                    DiarizationProperties = new TranscriptionDiarizationOptions
+                    DiarizationOptions = new TranscriptionDiarizationOptions
                     {
                         Enabled = true,
                         MaxSpeakers = 1234,

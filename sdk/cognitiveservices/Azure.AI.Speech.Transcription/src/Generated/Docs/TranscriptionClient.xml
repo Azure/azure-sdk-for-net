@@ -28,7 +28,7 @@ TranscribeRequest body = new TranscribeRequest((Stream)null)
             ["key"] = new Uri("http://localhost:3000")
         },
         ProfanityFilterMode = ProfanityFilterMode.None,
-        DiarizationProperties = new TranscriptionDiarizationOptions
+        DiarizationOptions = new TranscriptionDiarizationOptions
         {
             Enabled = true,
             MaxSpeakers = 1234,
@@ -66,7 +66,7 @@ TranscribeRequest body = new TranscribeRequest((Stream)null)
             ["key"] = new Uri("http://localhost:3000")
         },
         ProfanityFilterMode = ProfanityFilterMode.None,
-        DiarizationProperties = new TranscriptionDiarizationOptions
+        DiarizationOptions = new TranscriptionDiarizationOptions
         {
             Enabled = true,
             MaxSpeakers = 1234,
