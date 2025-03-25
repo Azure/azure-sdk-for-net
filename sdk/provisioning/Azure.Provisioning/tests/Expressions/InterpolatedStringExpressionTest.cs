@@ -24,9 +24,7 @@ namespace Azure.Provisioning.Tests.Expressions
                     BicepFunction.Interpolate(
                         $"Var={new ProvisioningVariable("foo", typeof(string))}"
                         ))
-                {
-                    ExpectedResult = "'Var=${foo}'"
-                };
+                    .Returns("'Var=${foo}'");
 
                 // test index expression in interpolation
                 yield return new TestCaseData(
@@ -35,9 +33,7 @@ namespace Azure.Provisioning.Tests.Expressions
                             new IdentifierExpression("foo"),
                             new StringLiteralExpression("bar")
                         )}"))
-                {
-                    ExpectedResult = "'Endpoint=${foo['bar']}'"
-                };
+                    .Returns("'Endpoint=${foo['bar']}'");
             }
         }
     }
