@@ -78,6 +78,7 @@ internal static class ChannelProcessing
                 }
             }
         }
+        private int _taskCount;
 
         protected ChannelProcessor(Channel<TItem, TItem> channel)
         {
@@ -152,25 +153,25 @@ internal static class ChannelProcessing
 
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
-            List<Task> chunkRunners = new List<Task>(_maxConcurrentProcessing);
+            List<Task> itemRunners = new List<Task>(_maxConcurrentProcessing);
             try
             {
                 while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
                     TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                    if (chunkRunners.Count >= _maxConcurrentProcessing)
+                    if (itemRunners.Count >= _maxConcurrentProcessing)
                     {
                         // Clear any completed blocks from the task list
-                        int removedRunners = chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
+                        int removedRunners = itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
                         // If no runners have finished..
                         if (removedRunners == 0)
                         {
                             // Wait for at least one runner to finish
-                            await Task.WhenAny(chunkRunners).ConfigureAwait(false);
-                            chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
+                            await Task.WhenAny(itemRunners).ConfigureAwait(false);
+                            itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
                         }
                     }
-                    chunkRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
+                    itemRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
                 }
             }
             finally
