@@ -33,11 +33,11 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Designated checkpointer for the respective transfer manager.
-        ///
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
         private readonly ITransferCheckpointer _checkpointer;
         private readonly ConcurrencyTuner _concurrencyTuner;
+        private readonly bool _concurrencyTunerEnabled;
 
         private readonly List<StorageResourceProvider> _resumeProviders;
 
@@ -74,7 +74,9 @@ namespace Azure.Storage.DataMovement
             CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
             options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
             default)
-        {}
+        {
+            _concurrencyTunerEnabled = options.ConcurrencyTunerEnabled;
+        }
 
         /// <summary>
         /// Dependency injection constructor.
@@ -98,7 +100,9 @@ namespace Azure.Storage.DataMovement
             _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
-            _concurrencyTuner = new ConcurrencyTuner(
+
+            if (_concurrencyTunerEnabled)
+                _concurrencyTuner = new ConcurrencyTuner(
                     new ResourceMonitor(),
                     _chunksProcessor,
                     DataMovementConstants.TransferManagerOptions.MonitoringInterval,
@@ -106,7 +110,7 @@ namespace Azure.Storage.DataMovement
                     DataMovementConstants.TransferManagerOptions.InitialConcurrency,
                     DataMovementConstants.TransferManagerOptions.MaxConcurrency,
                     DataMovementConstants.TransferManagerOptions.MaxCpuUsage
-                    );
+                );
 
             ConfigureProcessorCallbacks();
         }
@@ -408,7 +412,8 @@ namespace Azure.Storage.DataMovement
 
                 DataMovementEventSource.Singleton.TransferQueued(transferId, sourceResource, destinationResource);
 
-                StartConcurrencyTuner();
+                if (_concurrencyTunerEnabled)
+                    StartConcurrencyTuner();
                 //TODO: If we need to shut off the concurrency tuner in the future after perf testing, then we can
                 //StopConcurrencyTunerWhenTransfersComplete();
 
