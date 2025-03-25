@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `DefaultTenant` property in `ArmClient` to get the default tenant.
+
 ### Breaking Changes
 
 ### Bugs Fixed
