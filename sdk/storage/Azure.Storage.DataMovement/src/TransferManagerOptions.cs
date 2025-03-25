@@ -62,7 +62,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Indicates whether the user wants to tune the concurrency.
         /// </summary>
-        public bool EnableConcurrencyTuner { get; set; }
+        public bool ConcurrencyTunerEnabled { get; set; }
 
         /// <summary>
         /// Resource providers for the transfer manager to use in resuming a transfer.
