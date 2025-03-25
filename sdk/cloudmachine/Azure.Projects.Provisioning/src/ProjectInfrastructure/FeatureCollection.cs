@@ -4,21 +4,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Projects.Core;
 
+// This is a special collection that can be added to while it's being enumerated.
 public class FeatureCollection : IEnumerable<AzureProjectFeature>
 {
-    private AzureProjectFeature[] _items = new AzureProjectFeature[4];
+    private AzureProjectFeature[] _features = new AzureProjectFeature[4];
+    private Dictionary<string, int> _featureIndex = new(StringComparer.OrdinalIgnoreCase);
     private int _count;
-
-    internal Dictionary<Provisionable, FeatureRole[]> RoleAnnotations =>
-        _items.Take(_count)
-        .Select(feature => feature.RequiredSystemRoles)
-        .SelectMany(role => role)
-        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
     internal FeatureCollection() { }
 
@@ -26,52 +20,47 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
     {
         for (int i = 0; i < _count; i++)
         {
-            if (_items[i] is T item)
+            if (_features[i] is T item)
             {
                 yield return item;
             }
         }
     }
 
-    public bool TryGet<T>(out T? item) where T : AzureProjectFeature
+    public bool TryGet<T>(out T? feature) where T : AzureProjectFeature
+    {
+        string name = typeof(T).FullName!;
+        return TryGet(name, out feature);
+    }
+
+    public bool TryGet<T>(string id, out T? feature) where T : AzureProjectFeature
     {
         for (int i = 0; i < _count; i++)
         {
-            if (_items[i] is T typed)
+            var item = _features[i];
+            if (item.Id == id && item is T typed)
             {
-                item = typed;
+                feature = typed;
                 return true;
             }
         }
-        item = default;
+        feature = default;
         return false;
     }
 
-    public void Add(AzureProjectFeature item)
+    public void Append(AzureProjectFeature feature)
     {
-        if (_count == _items.Length)
+        if (_count == _features.Length)
         {
             Resize();
         }
-        _items[_count++] = item;
+        _features[_count++] = feature;
 
         void Resize()
         {
-            var newItems = new AzureProjectFeature[_items.Length * 2];
-            Array.Copy(_items, newItems, _items.Length);
-            _items = newItems;
-        }
-    }
-
-    internal void Emit(ProjectInfrastructure infrastructure)
-    {
-        int index = 0;
-        while (true)
-        {
-            if (index >= _count)
-                break;
-            AzureProjectFeature feature = _items[index++];
-            feature.Emit(infrastructure);
+            var newItems = new AzureProjectFeature[_features.Length * 2];
+            Array.Copy(_features, newItems, _features.Length);
+            _features = newItems;
         }
     }
 
@@ -79,10 +68,25 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
     {
         for (int i=0; i < _count; i++)
         {
-            yield return _items[i];
+            yield return _features[i];
         }
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-        => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public string CreateUniqueBicepIdentifier(string baseIdentifier)
+    {
+        lock (_featureIndex) {
+            if (_featureIndex.TryGetValue(baseIdentifier, out int index))
+            {
+                _featureIndex[baseIdentifier] = index + 1;
+                return $"{baseIdentifier}{index}";
+            }
+            else
+            {
+                _featureIndex[baseIdentifier] = 2;
+                return baseIdentifier;
+            }
+        }
+    }
 }

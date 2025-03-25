@@ -4,12 +4,40 @@ param location string = resourceGroup().location
 @description('The objectId of the current user principal.')
 param principalId string
 
-resource project_identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+resource projectIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: 'cm0c420d2f21084cd'
   location: location
 }
 
-resource cm_kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
+resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-05-01' = {
+  name: 'cm0c420d2f21084cd'
+  location: location
+  sku: {
+    name: 'Free'
+  }
+}
+
+resource appConfiguration_admin_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('appConfiguration', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
+  properties: {
+    principalId: principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b')
+    principalType: 'User'
+  }
+  scope: appConfiguration
+}
+
+resource appConfiguration_projectIdentity_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('appConfiguration', projectIdentity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
+  properties: {
+    principalId: projectIdentity.properties.principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b')
+    principalType: 'ServicePrincipal'
+  }
+  scope: appConfiguration
+}
+
+resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: 'cm0c420d2f21084cd'
   location: location
   properties: {
@@ -20,7 +48,7 @@ resource cm_kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
     }
     accessPolicies: [
       {
-        tenantId: project_identity.properties.tenantId
+        tenantId: projectIdentity.properties.tenantId
         objectId: principalId
         permissions: {
           secrets: [
@@ -34,24 +62,24 @@ resource cm_kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   }
 }
 
-resource cm_kv_1_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('cm_kv', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
+resource keyVault_admin_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('keyVault', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
   properties: {
     principalId: principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483')
     principalType: 'User'
   }
-  scope: cm_kv
+  scope: keyVault
 }
 
-resource cm_kv_project_identity_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('cm_kv', project_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
+resource keyVault_projectIdentity_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('keyVault', projectIdentity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
   properties: {
-    principalId: project_identity.properties.principalId
+    principalId: projectIdentity.properties.principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483')
     principalType: 'ServicePrincipal'
   }
-  scope: cm_kv
+  scope: keyVault
 }
 
 resource openai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
@@ -67,7 +95,7 @@ resource openai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   }
 }
 
-resource openai_1_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource openai_admin_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('openai', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442'))
   properties: {
     principalId: principalId
@@ -77,17 +105,17 @@ resource openai_1_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/ro
   scope: openai
 }
 
-resource openai_project_identity_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('openai', project_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442'))
+resource openai_projectIdentity_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('openai', projectIdentity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442'))
   properties: {
-    principalId: project_identity.properties.principalId
+    principalId: projectIdentity.properties.principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442')
     principalType: 'ServicePrincipal'
   }
   scope: openai
 }
 
-resource openai_cm0c420d2f21084cd_chat 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
+resource openai_chat 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
   name: 'cm0c420d2f21084cd_chat'
   properties: {
     model: {
@@ -105,7 +133,7 @@ resource openai_cm0c420d2f21084cd_chat 'Microsoft.CognitiveServices/accounts/dep
   parent: openai
 }
 
-resource openai_cm0c420d2f21084cd_embedding 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
+resource openai_embedding 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
   name: 'cm0c420d2f21084cd_embedding'
   properties: {
     model: {
@@ -122,11 +150,11 @@ resource openai_cm0c420d2f21084cd_embedding 'Microsoft.CognitiveServices/account
   }
   parent: openai
   dependsOn: [
-    openai_cm0c420d2f21084cd_chat
+    openai_chat
   ]
 }
 
-resource cm_hosting_plan 'Microsoft.Web/serverfarms@2024-04-01' = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
   name: 'cm0c420d2f21084cd'
   location: location
   kind: 'app'
@@ -136,18 +164,18 @@ resource cm_hosting_plan 'Microsoft.Web/serverfarms@2024-04-01' = {
   }
 }
 
-resource cm_website 'Microsoft.Web/sites@2024-04-01' = {
+resource appServiceWebsite 'Microsoft.Web/sites@2024-04-01' = {
   name: 'cm0c420d2f21084cd'
   location: location
   properties: {
-    serverFarmId: cm_hosting_plan.id
+    serverFarmId: appServicePlan.id
     enabled: true
     httpsOnly: true
     siteConfig: {
       appSettings: [
         {
           name: 'CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID'
-          value: project_identity.properties.clientId
+          value: projectIdentity.properties.clientId
         }
       ]
       webSocketsEnabled: true
@@ -158,7 +186,7 @@ resource cm_website 'Microsoft.Web/sites@2024-04-01' = {
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      '${project_identity.id}': { }
+      '${projectIdentity.id}': { }
     }
   }
   kind: 'app'
@@ -167,4 +195,44 @@ resource cm_website 'Microsoft.Web/sites@2024-04-01' = {
   }
 }
 
-output project_identity_id string = project_identity.id
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Security.KeyVault.Secrets.SecretClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.vault.azure.net/'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.AI.OpenAI.AzureOpenAIClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.openai.azure.com'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'OpenAI.Chat.ChatClient'
+  properties: {
+    value: 'cm0c420d2f21084cd_chat'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection5 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'OpenAI.Embeddings.EmbeddingClient'
+  properties: {
+    value: 'cm0c420d2f21084cd_embedding'
+  }
+  parent: appConfiguration
+}
+
+output project_identity_id string = projectIdentity.id
