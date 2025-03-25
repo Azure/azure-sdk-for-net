@@ -1318,7 +1318,7 @@ namespace Azure.AI.Projects.Tests
             return tempDir;
         }
 
-        private AgentsClient GetClient()
+        private AgentsClient GetClient() 
         {
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
             // If we are in the Playback, do not ask for authentication.
