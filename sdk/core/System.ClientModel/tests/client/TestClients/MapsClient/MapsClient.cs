@@ -17,7 +17,7 @@ public class MapsClient
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
-    private readonly bool _enableDistributedTracing;
+    private readonly ClientPipelineOptions _options;
 
     internal static ActivitySource ActivitySource { get; } = new(typeof(MapsClient).FullName!);
 
@@ -33,7 +33,7 @@ public class MapsClient
         _endpoint = endpoint;
         _credential = credential;
         _apiVersion = options.Version;
-        _enableDistributedTracing = options.EnableDistributedTracing ?? false;
+        _options = options;
 
         var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, "subscription-key");
         _pipeline = ClientPipeline.Create(options,
@@ -46,7 +46,7 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        using Activity? activity = ActivitySource.StartClientActivity(_enableDistributedTracing, "MapsClient.GetCountryCodeAsync");
+        using Activity? activity = ActivitySource.StartClientActivity(_options, nameof(GetCountryCode));
 
         try
         {
@@ -70,7 +70,7 @@ public class MapsClient
 
         options ??= new RequestOptions();
 
-        using Activity? activity = ActivitySource.StartClientActivity(_enableDistributedTracing, "MapsClient.GetCountryCodeAsync");
+        using Activity? activity = ActivitySource.StartClientActivity(_options, nameof(GetCountryCode));
 
         try
         {
@@ -99,7 +99,7 @@ public class MapsClient
         if (ipAddress is null)
             throw new ArgumentNullException(nameof(ipAddress));
 
-        using Activity? activity = ActivitySource.StartClientActivity(_enableDistributedTracing, "MapsClient.GetCountryCode");
+        using Activity? activity = ActivitySource.StartClientActivity(_options, nameof(GetCountryCode));
 
         try
         {
@@ -123,7 +123,7 @@ public class MapsClient
 
         options ??= new RequestOptions();
 
-        using Activity? activity = ActivitySource.StartClientActivity(_enableDistributedTracing, "MapsClient.GetCountryCode");
+        using Activity? activity = ActivitySource.StartClientActivity(_options, nameof(GetCountryCode));
 
         try
         {

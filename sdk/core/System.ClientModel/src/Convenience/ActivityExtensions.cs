@@ -25,19 +25,19 @@ public static class ActivityExtensions
     /// should use one of the overloads of <see cref="ActivitySource.StartActivity(string, ActivityKind)"/>
     /// to create and start <see cref="Activity"/> instances.</remarks>
     /// <param name="activitySource">The <see cref="ActivitySource"/> to use to create the <see cref="Activity"/>.</param>
-    /// <param name="isDistributedTracingEnabled">Whether distributed tracing is enabled in the client.</param>
+    /// <param name="options">The options used to configure the client pipeline.</param>
     /// <param name="name">The operation name of the activity.</param>
     /// <param name="kind">The activity kind.</param>
     /// <param name="parentContext">The parent <see cref="ActivityContext"/> object to initialize the created Activity object with.</param>
     /// <param name="tags">The optional tags list to initialize the created Activity object with.</param>
     public static Activity? StartClientActivity(this ActivitySource activitySource,
-                                                bool isDistributedTracingEnabled,
+                                                ClientPipelineOptions options,
                                                 string name,
                                                 ActivityKind kind = ActivityKind.Internal,
                                                 ActivityContext parentContext = default,
                                                 IEnumerable<KeyValuePair<string, object?>>? tags = null)
     {
-        if (!isDistributedTracingEnabled)
+        if (options.EnableDistributedTracing != true)
         {
             return null;
         }

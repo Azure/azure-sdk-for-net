@@ -21,8 +21,9 @@ public class ActivityExtensionsTests
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
 
-        Activity? activity = activitySource.StartClientActivity(true, "Client.Method");
+        Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
         Assert.NotNull(activity);
         Assert.AreEqual("Client.Method", activity!.OperationName);
@@ -43,8 +44,9 @@ public class ActivityExtensionsTests
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = false };
 
-        using Activity? activity = activitySource.StartClientActivity(false, "Client.Method");
+        using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
         Assert.IsNull(Activity.Current);
         Assert.IsNull(activity);
@@ -56,8 +58,9 @@ public class ActivityExtensionsTests
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
 
-        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method", ActivityKind.Client);
+        using Activity? activity = activitySource.StartClientActivity(options, "Client.Method", ActivityKind.Client);
 
         Assert.NotNull(activity);
         Assert.NotNull(Activity.Current);
@@ -73,7 +76,8 @@ public class ActivityExtensionsTests
         ActivityTraceId traceId = ActivityTraceId.CreateRandom();
         ActivitySpanId spanId = ActivitySpanId.CreateRandom();
         ActivityContext context = new(traceId, spanId, ActivityTraceFlags.Recorded);
-        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method", ActivityKind.Internal, context);
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
+        using Activity? activity = activitySource.StartClientActivity(options, "Client.Method", ActivityKind.Internal, context);
 
         Assert.NotNull(activity);
         Assert.AreEqual(spanId, activity!.ParentSpanId);
@@ -85,6 +89,7 @@ public class ActivityExtensionsTests
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
 
         KeyValuePair<string, object?>[] tags =
         [
@@ -92,7 +97,7 @@ public class ActivityExtensionsTests
             new KeyValuePair<string, object?>("tag2", "value2"),
         ];
 
-        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method", tags: tags);
+        using Activity? activity = activitySource.StartClientActivity(options, "Client.Method", tags: tags);
 
         Assert.NotNull(activity);
         Assert.AreEqual(2, activity!.Tags.Count());
@@ -105,8 +110,9 @@ public class ActivityExtensionsTests
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
 
-        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method");
+        using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
         string message = "Client failed";
         MockPipelineResponse response = new(500, "Internal Server error");
@@ -124,11 +130,16 @@ public class ActivityExtensionsTests
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
 
-        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method");
+        using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
         ArgumentNullException exception = new("parameter");
+#if NET462
+        string message = "Value cannot be null.\r\nParameter name: parameter";
+#else
         string message = "Value cannot be null. (Parameter 'parameter')";
+#endif
 
         activity?.MarkFailed(exception);
 
@@ -142,8 +153,9 @@ public class ActivityExtensionsTests
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
 
-        using Activity? activity = activitySource.StartClientActivity(true, "Client.Method");
+        using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
         activity?.MarkFailed(null);
 
@@ -157,9 +169,10 @@ public class ActivityExtensionsTests
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
 
-        using Activity? parent = activitySource.StartClientActivity(true, "Client.Method", ActivityKind.Client);
-        using Activity? child = activitySource.StartClientActivity(true, "Client.Method", ActivityKind.Internal);
+        using Activity? parent = activitySource.StartClientActivity(options, "Client.Method", ActivityKind.Client);
+        using Activity? child = activitySource.StartClientActivity(options, "Client.Method", ActivityKind.Internal);
 
         Assert.NotNull(parent);
         Assert.Null(child);
