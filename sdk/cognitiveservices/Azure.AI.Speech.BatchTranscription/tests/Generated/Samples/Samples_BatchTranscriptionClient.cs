@@ -311,7 +311,7 @@ namespace Azure.AI.Speech.BatchTranscription.Samples
                 Model = default,
                 Dataset = default,
                 Contents = { new Uri("http://localhost:3000") },
-                SourceContainerUrl = new Uri("http://localhost:3000"),
+                SourceContainer = new Uri("http://localhost:3000"),
                 Description = "<description>",
                 CustomProperties =
 {
@@ -352,7 +352,7 @@ namespace Azure.AI.Speech.BatchTranscription.Samples
                 Model = default,
                 Dataset = default,
                 Contents = { new Uri("http://localhost:3000") },
-                SourceContainerUrl = new Uri("http://localhost:3000"),
+                SourceContainer = new Uri("http://localhost:3000"),
                 Description = "<description>",
                 CustomProperties =
 {

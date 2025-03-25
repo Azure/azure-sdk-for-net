@@ -41,7 +41,7 @@ TranscriptionJob resource = new TranscriptionJob(new TranscriptionProperties(123
     Model = default,
     Dataset = default,
     Contents = { new Uri("http://localhost:3000") },
-    SourceContainerUrl = new Uri("http://localhost:3000"),
+    SourceContainer = new Uri("http://localhost:3000"),
     Description = "<description>",
     CustomProperties =
     {
@@ -91,7 +91,7 @@ TranscriptionJob resource = new TranscriptionJob(new TranscriptionProperties(123
     Model = default,
     Dataset = default,
     Contents = { new Uri("http://localhost:3000") },
-    SourceContainerUrl = new Uri("http://localhost:3000"),
+    SourceContainer = new Uri("http://localhost:3000"),
     Description = "<description>",
     CustomProperties =
     {

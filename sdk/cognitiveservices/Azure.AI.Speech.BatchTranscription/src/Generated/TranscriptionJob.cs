@@ -74,7 +74,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// A list of content urls to get audio files to transcribe. Up to 1000 urls are allowed.
         /// This property will not be returned in a response.
         /// </param>
-        /// <param name="sourceContainerUrl">
+        /// <param name="sourceContainer">
         /// A URL for an Azure blob container that contains the audio files. A container is allowed to have a maximum size of 5GB and a maximum number of 10000 blobs.
         /// The maximum size for a blob is 2.5GB.
         /// Container SAS should contain 'r' (read) and 'l' (list) permissions.
@@ -99,7 +99,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// ("YYYY-MM-DDThh:mm:ssZ", see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations).
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionJob(TranscriptionLinks links, TranscriptionProperties properties, string id, Uri self, EntityReference model, EntityReference dataset, IList<Uri> contents, Uri sourceContainerUrl, string locale, string displayName, string description, IDictionary<string, string> customProperties, DateTimeOffset? lastActionDateTime, TranscriptionStatus status, DateTimeOffset? created, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranscriptionJob(TranscriptionLinks links, TranscriptionProperties properties, string id, Uri self, EntityReference model, EntityReference dataset, IList<Uri> contents, Uri sourceContainer, string locale, string displayName, string description, IDictionary<string, string> customProperties, DateTimeOffset? lastActionDateTime, TranscriptionStatus status, DateTimeOffset? created, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Links = links;
             Properties = properties;
@@ -108,7 +108,7 @@ namespace Azure.AI.Speech.BatchTranscription
             Model = model;
             Dataset = dataset;
             Contents = contents;
-            SourceContainerUrl = sourceContainerUrl;
+            SourceContainer = sourceContainer;
             Locale = locale;
             DisplayName = displayName;
             Description = description;
@@ -140,7 +140,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// Container SAS should contain 'r' (read) and 'l' (list) permissions.
         /// This property will not be returned in a response.
         /// </summary>
-        public Uri SourceContainerUrl { get; set; }
+        public Uri SourceContainer { get; set; }
         /// <summary> The locale of the contained data. If Language Identification is used, this locale is used to transcribe speech for which no language could be detected. </summary>
         public string Locale { get; set; }
         /// <summary> The display name of the object. </summary>

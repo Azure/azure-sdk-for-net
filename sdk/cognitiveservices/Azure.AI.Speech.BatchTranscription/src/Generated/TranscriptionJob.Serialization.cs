@@ -76,10 +76,10 @@ namespace Azure.AI.Speech.BatchTranscription
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceContainerUrl))
+            if (Optional.IsDefined(SourceContainer))
             {
                 writer.WritePropertyName("contentContainerUrl"u8);
-                writer.WriteStringValue(SourceContainerUrl.AbsoluteUri);
+                writer.WriteStringValue(SourceContainer.AbsoluteUri);
             }
             writer.WritePropertyName("locale"u8);
             writer.WriteStringValue(Locale);
