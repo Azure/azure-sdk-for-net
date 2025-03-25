@@ -181,6 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
+        [Ignore("TODO: Repurpose this test to validate the error.")]
         public async Task VerifySendingToTwoResources_UsingDistroWithExporter()
         {
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY

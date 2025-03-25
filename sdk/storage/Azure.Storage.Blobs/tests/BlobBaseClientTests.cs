@@ -18,6 +18,7 @@ using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Files.Shares;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
@@ -3375,6 +3376,54 @@ namespace Azure.Storage.Blobs.Test
                     source: srcBlob.Uri,
                     options: options),
                 e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task SyncCopyFromUri_SourceBearerToken_FilesSource()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+
+            ShareServiceClient shareServiceClient = GetShareServiceClient_OAuthAccount_SharedKey();
+            ShareClient shareClient = await shareServiceClient.CreateShareAsync(GetNewContainerName());
+
+            try
+            {
+                ShareDirectoryClient directoryClient = await shareClient.CreateDirectoryAsync(GetNewBlobName());
+                ShareFileClient fileClient = await directoryClient.CreateFileAsync(GetNewBlobName(), Constants.KB);
+                await fileClient.UploadAsync(stream);
+
+                BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+                string sourceBearerToken = await GetAuthToken();
+
+                HttpAuthorization sourceAuth = new HttpAuthorization(
+                    "Bearer",
+                    sourceBearerToken);
+
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    SourceAuthentication = sourceAuth,
+                    SourceShareTokenIntent = FileShareTokenIntent.Backup
+                };
+
+                // Act
+                Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(
+                    source: fileClient.Uri,
+                    options: options);
+            }
+            finally
+            {
+                await shareClient.DeleteAsync();
+            }
         }
 
         [RecordedTest]

@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Basic UE Information.
-    /// Serialized Name: UeInfo
-    /// </summary>
+    /// <summary> Basic UE Information. </summary>
     public partial class UEInfo : ResourceData
     {
         /// <summary>
@@ -51,14 +48,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UEInfo"/>. </summary>
-        /// <param name="ratType">
-        /// RAT Type
-        /// Serialized Name: UeInfo.properties.ratType
-        /// </param>
-        /// <param name="ueState">
-        /// State of the UE.
-        /// Serialized Name: UeInfo.properties.ueState
-        /// </param>
+        /// <param name="ratType"> RAT Type. </param>
+        /// <param name="ueState"> State of the UE. </param>
         public UEInfo(RatType ratType, UEState ueState)
         {
             RatType = ratType;
@@ -71,19 +62,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="ratType">
-        /// RAT Type
-        /// Serialized Name: UeInfo.properties.ratType
-        /// </param>
-        /// <param name="ueState">
-        /// State of the UE.
-        /// Serialized Name: UeInfo.properties.ueState
-        /// </param>
-        /// <param name="ueIPAddresses"> Serialized Name: UeInfo.properties.ueIpAddresses. </param>
-        /// <param name="lastReadOn">
-        /// The timestamp of last list UEs call to the packet core (UTC).
-        /// Serialized Name: UeInfo.properties.lastReadAt
-        /// </param>
+        /// <param name="ratType"> RAT Type. </param>
+        /// <param name="ueState"> State of the UE. </param>
+        /// <param name="ueIPAddresses"></param>
+        /// <param name="lastReadOn"> The timestamp of last list UEs call to the packet core (UTC). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UEInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RatType ratType, UEState ueState, IList<DnnIPPair> ueIPAddresses, DateTimeOffset? lastReadOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -99,25 +81,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// RAT Type
-        /// Serialized Name: UeInfo.properties.ratType
-        /// </summary>
+        /// <summary> RAT Type. </summary>
         [WirePath("properties.ratType")]
         public RatType RatType { get; set; }
-        /// <summary>
-        /// State of the UE.
-        /// Serialized Name: UeInfo.properties.ueState
-        /// </summary>
+        /// <summary> State of the UE. </summary>
         [WirePath("properties.ueState")]
         public UEState UEState { get; set; }
-        /// <summary> Serialized Name: UeInfo.properties.ueIpAddresses. </summary>
+        /// <summary> Gets the ueip addresses. </summary>
         [WirePath("properties.ueIpAddresses")]
         public IList<DnnIPPair> UEIPAddresses { get; }
-        /// <summary>
-        /// The timestamp of last list UEs call to the packet core (UTC).
-        /// Serialized Name: UeInfo.properties.lastReadAt
-        /// </summary>
+        /// <summary> The timestamp of last list UEs call to the packet core (UTC). </summary>
         [WirePath("properties.lastReadAt")]
         public DateTimeOffset? LastReadOn { get; set; }
     }

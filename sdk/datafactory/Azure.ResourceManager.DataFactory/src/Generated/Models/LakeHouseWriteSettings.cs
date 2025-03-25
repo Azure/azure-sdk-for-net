@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Microsoft Fabric LakeHouse Files write settings. </summary>
+    /// <summary> Microsoft Fabric Lakehouse Files write settings. </summary>
     public partial class LakeHouseWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseWriteSettings"/>. </summary>
