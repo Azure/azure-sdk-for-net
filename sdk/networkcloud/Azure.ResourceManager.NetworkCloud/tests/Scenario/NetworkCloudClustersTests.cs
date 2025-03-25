@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                         IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
                         UserAssignedIdentityResourceId = new ResourceIdentifier(TestEnvironment.UserAssignedIdentity)
                     },
-                    ContainerUri = new Uri(TestEnvironment.ContainerUri),
+                    ContainerUri = new Uri(TestEnvironment.GetContainerUri()),
                 },
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 SecretArchiveSettings = new SecretArchiveSettings
                 {
-                    VaultUri = new Uri(TestEnvironment.ContainerUri),
+                    VaultUri = new Uri(TestEnvironment.GetContainerUri()),
                 }
             };
             var secretArchiveResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch3);

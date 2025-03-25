@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         : base(isAsync, mode)
         {
             BodyKeySanitizers.Add(new BodyKeySanitizer("properties.vmImageRepositoryCredentials.password") { Value = "fake-password123" });
-            BodyKeySanitizers.Add(new BodyKeySanitizer("..containerUrl") { Value = @"https://sanitized.blob.core.windows.net/mycontainer?restype=container" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..containerUrl") { Value = NetworkCloudManagementTestEnvironment.FakeContainerUri });
         }
 
         protected NetworkCloudManagementTestBase(bool isAsync)
             : base(isAsync)
         {
             BodyKeySanitizers.Add(new BodyKeySanitizer("properties.vmImageRepositoryCredentials.password") { Value = "fake-password123" });
-            BodyKeySanitizers.Add(new BodyKeySanitizer("..containerUrl") { Value = @"https://sanitized.blob.core.windows.net/mycontainer?restype=container" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..containerUrl") { Value = NetworkCloudManagementTestEnvironment.FakeContainerUri });
         }
 
         [SetUp]
