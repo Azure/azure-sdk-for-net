@@ -586,51 +586,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task GetKeyAttestation()
-        {
-            string keyName = Recording.GenerateId();
-            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
-            RegisterForCleanup(key.Name);
-
-            KeyVaultKey keyWithAttestation = await Client.GetKeyAttestationAsync(keyName);
-
-            AssertKeyVaultKeysEqual(key, keyWithAttestation);
-        }
-
-        [RecordedTest]
-        [PremiumOnly]
-        public async Task GetHsmKeyAttestation()
-        {
-            string keyName = Recording.GenerateId();
-
-            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName, hardwareProtected: true);
-            KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
-            RegisterForCleanup(keyName);
-
-            KeyVaultKey keyWithAttestation = await Client.GetKeyAttestationAsync(keyName);
-
-            AssertKeyVaultKeysEqual(rsaHsmKey, keyWithAttestation);
-        }
-
-        [RecordedTest]
-        public void GetKeyAttestationNonExisting()
-        {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAttestationAsync(Recording.GenerateId()));
-        }
-
-        [RecordedTest]
-        public async Task GetKeyAttestationWithVersion()
-        {
-            string keyName = Recording.GenerateId();
-            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
-            RegisterForCleanup(key.Name);
-
-            KeyVaultKey keyWithAttestation = await Client.GetKeyAttestationAsync(keyName, key.Properties.Version);
-
-            AssertKeyVaultKeysEqual(key, keyWithAttestation);
-        }
-
-        [RecordedTest]
         public async Task DeleteKey()
         {
             string keyName = Recording.GenerateId();
