@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2963,6 +2962,34 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <summary> Uploads a file for use by other operations. </summary>
+        /// <param name="body"> Multipart body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<AgentFile>> UploadFileAsync(UploadFileRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
+            return Response.FromValue(AgentFile.FromResponse(response), response);
+        }
+
+        /// <summary> Uploads a file for use by other operations. </summary>
+        /// <param name="body"> Multipart body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<AgentFile> UploadFile(UploadFileRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UploadFile(content, content.ContentType, context);
+            return Response.FromValue(AgentFile.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Uploads a file for use by other operations.
         /// <list type="bullet">
@@ -2973,7 +3000,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UploadFileAsync(Stream,AgentFilePurpose,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UploadFileAsync(UploadFileRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3012,7 +3039,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UploadFile(Stream,AgentFilePurpose,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UploadFile(UploadFileRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
