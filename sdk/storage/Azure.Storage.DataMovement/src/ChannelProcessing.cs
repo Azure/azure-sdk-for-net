@@ -150,9 +150,16 @@ internal static class ChannelProcessing
             _maxConcurrentProcessing = maxConcurrentProcessing;
         }
 
+        internal int MaxConcurrentProcessing {
+            get => _maxConcurrentProcessing;
+            // Installed IsExternalInit polyfill for .NETSTANDARD20
+            // https://github.com/manuelroemer/IsExternalInit
+            init => _maxConcurrentProcessing = value;
+        }
+
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
-            List<Task> itemRunners = new List<Task>(_maxConcurrentProcessing);
+            List<Task> itemRunners = new List<Task>(MaxConcurrentProcessing);
             // 1. Create a variable that can be set from the outside (
             // 2. change the condition from `>= _maxConcurrentProcessing` to `>=
             try
@@ -160,7 +167,7 @@ internal static class ChannelProcessing
                 while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
                     TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                    if (itemRunners.Count >= _maxConcurrentProcessing)
+                    if (itemRunners.Count >= MaxConcurrentProcessing)
                     {
                         // Clear any completed blocks from the task list
                         int removedRunners = itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
