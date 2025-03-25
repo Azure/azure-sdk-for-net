@@ -1,0 +1,28 @@
+{
+  "testAS-3376": {
+    "sku": {
+      "name": "Classic"
+    },
+    "tags": {
+      "key": "value"
+    },
+    "location": "eastus",
+    "properties": {
+      "platformUpdateDomainCount": 6,
+      "platformFaultDomainCount": 4
+    }
+  },
+  "testAS-3375": {
+    "sku": {
+      "name": "Classic"
+    },
+    "tags": {
+      "key": "value"
+    },
+    "location": "eastus",
+    "properties": {
+      "platformUpdateDomainCount": 5,
+      "platformFaultDomainCount": 3
+    }
+  }
+}
