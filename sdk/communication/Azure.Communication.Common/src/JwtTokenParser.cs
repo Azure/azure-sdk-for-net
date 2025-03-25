@@ -19,19 +19,26 @@ namespace Azure.Communication
 
         internal static JwtPayload DecodeJwtPayload(string token)
         {
-            const string TokenNotFormattedCorrectly = "Token is not formatted correctly.";
+            const string TokenPartsIncorrect = "Token does not have the correct number of parts.";
+            const string TokenPayloadIncorrect = "Token payload is not formatted correctly.";
+            const string TokenDeserializationFailed = "Failed to deserialize the token payload.";
 
             var tokenParts = token.Split('.');
-            if (tokenParts.Length < 2)
-                throw new FormatException(TokenNotFormattedCorrectly);
+            if (tokenParts.Length != 3)
+                throw new FormatException(TokenPartsIncorrect);
 
             try
             {
-                return JsonSerializer.Deserialize<JwtPayload>(Base64Url.DecodeString(tokenParts[1]));
+                var payloadJson = Base64Url.DecodeString(tokenParts[1]);
+                return JsonSerializer.Deserialize<JwtPayload>(payloadJson) ?? throw new FormatException(TokenDeserializationFailed);
             }
             catch (JsonException ex)
             {
-                throw new FormatException(TokenNotFormattedCorrectly, ex);
+                throw new FormatException(TokenPayloadIncorrect, ex);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new FormatException(TokenPayloadIncorrect, ex);
             }
         }
 
