@@ -1,14 +1,17 @@
 # Release History
 
-## 1.9.0-beta.2 (Unreleased)
+## 1.9.0 (2025-03-28)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-2024-11-04' to 'package-2025-02-01'. Tag detail available at https://github.com/Azure/azure-sdk-for-net/blob/6b1e2c24d807ffb6faf338f670cca5f35b01428c/sdk/compute/Azure.ResourceManager.Compute/src/autorest.md.
+  - Added operation `AvailabilitySets.StartMigrationToVirtualMachineScaleSet`.
+  - Added operation `AvailabilitySets.CancelMigrationToVirtualMachineScaleSet`.
+  - Added operation `AvailabilitySets.ValidateMigrationToVirtualMachineScaleSet`.
+  - Added operation `AvailabilitySets.ConvertToVirtualMachineScaleSet`.
+  - Added operation `VirtualMachineImages.ListWithProperties`
+  - Added operation `VirtualMachines.MigrateToVmScaleSet`.
+  - Added new classes :`AutomaticZoneRebalancingPolicy`, `ConvertToVirtualMachineScaleSetContent`, `HostEndpointSettings`, `MigrateToVirtualMachineScaleSetInput`, `MigrateVmToVirtualMachineScaleSetContent`, `RebalanceStrategy`, `SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions`, `VirtualMachineImagesWithPropertiesListResult`, `VirtualMachineScaleSetMigrationInfo`, 
 
 ## 1.9.0-beta.1 (2025-02-22)
 
