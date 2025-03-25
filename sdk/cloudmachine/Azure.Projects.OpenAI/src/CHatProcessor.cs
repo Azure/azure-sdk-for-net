@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.AI.OpenAI;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
@@ -17,7 +18,7 @@ namespace Azure.Projects.OpenAI
         /// <summary>
         /// Vector db.
         /// </summary>
-        public EmbeddingsVectorbase? VectorDb { get; set; }
+        public EmbeddingsStore? VectorDb { get; set; }
 
         /// <summary>
         /// Tools to call.
@@ -58,7 +59,7 @@ namespace Azure.Projects.OpenAI
         /// <param name="prompt"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public ChatCompletion TakeTurn(List<ChatMessage> conversation, string prompt)
+        public async Task<ChatCompletion> TakeTurnAsync(List<ChatMessage> conversation, string prompt)
         {
             OnGround(conversation, prompt);
 
@@ -76,7 +77,7 @@ namespace Azure.Projects.OpenAI
                     OnLength(conversation, completion);
                     goto complete;
                 case ChatFinishReason.ToolCalls:
-                    OnToolCalls(conversation, completion);
+                    await OnToolCalls(conversation, completion).ConfigureAwait(false);
                     goto complete;
                 default:
                     //case ChatFinishReason.ContentFilter:
@@ -142,21 +143,21 @@ namespace Azure.Projects.OpenAI
         /// </summary>
         /// <param name="conversation"></param>
         /// <param name="completion"></param>
-        protected virtual void OnToolCalls(List<ChatMessage> conversation, ChatCompletion completion)
+        protected virtual async Task OnToolCalls(List<ChatMessage> conversation, ChatCompletion completion)
         {
             if (Tools == null)
                 throw new InvalidOperationException("No tools defined.");
 
             // for some reason I am getting tool calls for tools that dont exist.
-            IEnumerable<ToolChatMessage> toolResults = Tools.CallAll(completion.ToolCalls, out List<string>? failed);
-            if (failed != null)
+            var toolResults = await Tools.CallAllWithErrors(completion.ToolCalls).ConfigureAwait(false);
+            if (toolResults.Failed != null)
             {
-                OnToolError(failed, conversation, completion);
+                OnToolError(toolResults.Failed, conversation, completion);
             }
             else
             {
                 conversation.Add(completion);
-                conversation.AddRange(toolResults);
+                conversation.AddRange(toolResults.Messages);
             }
         }
 
