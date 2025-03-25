@@ -1,5 +1,15 @@
 # Release History
 
+## 11.7.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 11.7.0-beta.3 (2025-03-25)
 
 ### Features Added
