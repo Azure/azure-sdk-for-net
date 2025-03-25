@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using Azure.Core;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {

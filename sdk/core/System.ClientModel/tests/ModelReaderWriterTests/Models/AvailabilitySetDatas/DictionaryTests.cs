@@ -7,6 +7,7 @@ using System.ClientModel.SourceGeneration.Tests;
 #endif
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {

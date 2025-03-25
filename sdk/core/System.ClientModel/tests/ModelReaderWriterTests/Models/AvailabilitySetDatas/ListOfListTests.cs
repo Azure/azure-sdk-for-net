@@ -7,6 +7,8 @@ using System.ClientModel.SourceGeneration.Tests;
 #endif
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Azure.Core;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
