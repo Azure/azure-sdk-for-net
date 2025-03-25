@@ -78,7 +78,6 @@ internal static class ChannelProcessing
                 }
             }
         }
-        private int _taskCount;
 
         protected ChannelProcessor(Channel<TItem, TItem> channel)
         {
@@ -154,6 +153,8 @@ internal static class ChannelProcessing
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
             List<Task> itemRunners = new List<Task>(_maxConcurrentProcessing);
+            // 1. Create a variable that can be set from the outside (
+            // 2. change the condition from `>= _maxConcurrentProcessing` to `>=
             try
             {
                 while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
