@@ -1,8 +1,8 @@
-# Transcribe a local File
+# Transcribe a Local File
 
 This sample shows how to transcribe a local file using the `Azure.AI.Speech.Transcription` SDK.
 
-## Create a transcription client
+## Create a Transcription Client
 
 To create a TranscriptionClient, you will need the service endpoint and credentials of your SpeechService resource. You can specify the service version by providing a TranscriptionClientOptions instance.
 
@@ -13,7 +13,7 @@ TranscriptionClientOptions options = new TranscriptionClientOptions(Transcriptio
 TranscriptionClient client = new TranscriptionClient(endpoint, credential, options);
 ```
 
-## Transcribe local file (Synchronous)
+## Transcribe Local File (Synchronous)
 
 To transcribe a local file synchronously, create a stream from the file and call `Transcribe` on the `TranscriptionClient` clientlet, which returns the transcribed phrases and total duration of the file
 
@@ -31,9 +31,9 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 }
 ```
 
-## Transcribe local file (Asynchronous)
+## Transcribe Local File (Asynchronous)
 
-To transcribe a local file asynchronously, create a stream from the file and call `Transcribe` on the `TranscriptionClient` clientlet, which returns the transcribed phrases and total duration of the file
+To transcribe a local file asynchronously, create a stream from the file and call `TranscribeAsync` on the `TranscriptionClient` clientlet, which returns the transcribed phrases and total duration of the file
 
 ```C# Snippet:TranscribeLocalFileAsync
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))

@@ -1,8 +1,8 @@
-# Transcribe with options
+# Transcribe with Options
 
 This sample shows how to transcribe files using the options of the `Azure.AI.Speech.Transcription` SDK.
 
-## Create a transcription client
+## Create a Transcription Client
 
 To create a TranscriptionClient, you will need the service endpoint and credentials of your SpeechService resource. You can specify the service version by providing a TranscriptionClientOptions instance.
 
@@ -15,7 +15,7 @@ TranscriptionClient client = new TranscriptionClient(endpoint, credential, optio
 
 ## Transcribe with Locale Options
 
-To transcribe a file using manually specified locales, create a stream from the file, add the locale in the `TranscriptionOptions` and call `Transcribe` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
+To transcribe a file using manually specified locales, create a stream from the file, add the locale in the `TranscriptionOptions` and call `TranscribeAsync` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
 
 If not specified, the locale of the speech in the audio is detected automatically from all supported locales.
 
@@ -40,7 +40,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 
 ## Transcribe with Model Options
 
-To transcribe a file using specific models for specific locales, create a stream from the file, add the model mapping in the `TranscriptionOptions` and call `Transcribe` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
+To transcribe a file using specific models for specific locales, create a stream from the file, add the model mapping in the `TranscriptionOptions` and call `TranscribeAsync` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
 
 If no mapping is given, the default model for the locale is used.
 
@@ -65,7 +65,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 
 ## Transcribe with Profanity Filter Options
 
-To transcribe a file using profanity filters, create a stream from the file, specify the filter mode in the `TranscriptionOptions` and call `Transcribe` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
+To transcribe a file using profanity filters, create a stream from the file, specify the filter mode in the `TranscriptionOptions` and call `TranscribeAsync` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
 
 ```C# Snippet:TranscribeWithProfinityFilter
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
@@ -88,7 +88,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 
 ## Transcribe with Active Channels Options
 
-To transcribe a file using only a subset of the channels, create a stream from the file, specify the 0-based indices of the active channels in the `TranscriptionOptions` and call `Transcribe` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
+To transcribe a file using only a subset of the channels, create a stream from the file, specify the 0-based indices of the active channels in the `TranscriptionOptions` and call `TranscribeAsync` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
 
 If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported.
 
@@ -113,7 +113,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 
 ## Transcribe with Diarization Options
 
-To transcribe a file with speaker identification, create a stream from the file, specify the diarization options in the `TranscriptionOptions` and call `Transcribe` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
+To transcribe a file with speaker identification, create a stream from the file, specify the diarization options in the `TranscriptionOptions` and call `TranscribeAsync` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
 
 If not specified, no speaker information is included in the transcribed phrases.
 
