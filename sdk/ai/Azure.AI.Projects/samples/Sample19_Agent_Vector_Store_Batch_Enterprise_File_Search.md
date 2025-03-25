@@ -9,6 +9,7 @@ AgentsClient client = new(connectionString, new DefaultAzureCredential());
 ```
 
 2. Next we will use the preexisting Azure Blob Asset ID to create the `VectorStoreDataSource`.  We will use it to create `VectorStore`, which will needed to create `FileSearchToolResource`.
+
 Synchronous sample:
 ```C# Snippet:BatchFileAttachment_Sync
 var ds = new VectorStoreDataSource(
@@ -48,6 +49,7 @@ FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 ```
 
 3. Now we will create the agent and thread.
+
 Synchronous sample:
 ```C# Snippet:VectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
@@ -139,6 +141,7 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 ```
 
 5. Now we shell wait for run to complete and if it will fail, we shell print last error message, or print messages in chronological order if the run succeeds. To swap reference placeholders with the file names, we will build the map, correlating file IDs to file names.
+
 Synchronous sample:
 ```C# Snippet:VectorStoreBatchEnterpriseFileSearch_ThreadRun
 ThreadRun run = client.CreateRun(
@@ -228,6 +231,7 @@ WriteMessages(messages, dtFiles);
 ```
 
 6. Finally, we shell delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet:VectorStoreBatchEnterpriseFileSearch_Cleanup
 VectorStoreDeletionStatus delStatus = client.DeleteVectorStore(vectorStore.Id);

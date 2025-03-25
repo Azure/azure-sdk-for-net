@@ -98,6 +98,7 @@ ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string 
 ```
 
 4. Create Agent with the `FunctionToolDefinitions` we have created in step 2.
+
 Synchronous sample:
 ```C# Snippet:FunctionsWithStreamingSync_CreateAgent
 Agent agent = client.CreateAgent(
@@ -123,6 +124,7 @@ Agent agent = await client.CreateAgentAsync(
 ```
 
 5. Create `Thread` with the message.
+
 Synchronous sample:
 ```C# Snippet:FunctionsWithStreamingSync_CreateThread
 AgentThread thread = client.CreateThread();
@@ -144,6 +146,7 @@ ThreadMessage message = await client.CreateMessageAsync(
 ```
 
 6. Create a stream and wait for the stream update of the `RequiredActionUpdate` type. This update will mark the point, when we need to submit tool outputs to the stream. We will submit outputs in the inner cycle. Please note that `RequiredActionUpdate` keeps only one required action, while our run may require multiple function calls, this case is handled in the inner cycle, so that we can add tool output to the existing array of outputs. After all required actions were submitted we clean up the array of required actions.
+
 Synchronous sample:
 ```C# Snippet:FunctionsWithStreamingSyncUpdateCycle
 List<ToolOutput> toolOutputs = [];
@@ -258,6 +261,7 @@ await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync
 ```
 
 7. Finally, we delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet:FunctionsWithStreamingSync_Cleanup
 client.DeleteThread(thread.Id);

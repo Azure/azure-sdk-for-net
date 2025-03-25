@@ -10,6 +10,7 @@ AgentsClient client = new(connectionString, new DefaultAzureCredential());
 ```
 
 2. Now we will create a file and upload it to the data store.
+
 Synchronous sample:
 ```C# Snippet:UploadAgentFilesToUse_Sync
 // Upload a file and wait for it to be processed
@@ -41,6 +42,7 @@ Dictionary<string, string> fileIds = new()
 ```
 
 3.  To create agent capable of using file search, we will create `VectorStore`, with the ID of uploaded file.
+
 Synchronous sample:
 ```C# Snippet:CreateVectorStore_Sync
 // Create a vector store with the file and wait for it to be processed.
@@ -61,6 +63,7 @@ VectorStore vectorStore = await client.CreateVectorStoreAsync(
 
 
 4  The ID of the created vector store will be used in the `FileSearchToolResource` used for agent creation.
+
 Synchronous sample:
 ```C# Snippet:CreateAgentWithFiles_Sync
 FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
@@ -140,6 +143,7 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 ```
 
 6. We will ask a question to the file contents and add it to the thread, create run and wait while it will terminate. If the run was successful, we will render the response and provide the reference to the uploaded file.
+
 Synchronous sample:
 ```C# Snippet:FilesSearchExample_CreateThreadAndRun_Sync
 // Create thread for communication
@@ -205,6 +209,7 @@ WriteMessages(messages, fileIds);
 ```
 
 7. Finally, we delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet:FilesSearchExample_Cleanup_Sync
 client.DeleteVectorStore(vectorStore.Id);

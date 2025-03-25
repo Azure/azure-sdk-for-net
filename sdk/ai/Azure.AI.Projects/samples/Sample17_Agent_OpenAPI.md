@@ -18,6 +18,7 @@ var file_path = GetFile();
 ```
 
 2. Next we will create the agent with `OpenApiToolDefinition` and anonimous authentication.
+
 Synchronous sample:
 ```C# Snippet:OpenAPISyncDefineFunctionTools
 OpenApiAnonymousAuthDetails oaiAuth = new();
@@ -55,6 +56,7 @@ Agent agent = await client.CreateAgentAsync(
 ```
 
 3. Now we will create a `ThreadRun` and wait untill it is complete. If the run will not be successful, we will print the last error.
+
 Synchronous sample:
 ```C# Snippet:OpenAPISyncHandlePollingWithRequiredAction
 AgentThread thread = client.CreateThread();
@@ -104,6 +106,7 @@ Assert.AreEqual(
 ```
 
 4. Print the messages to the console in chronological order.
+
 Synchronous sample:
 ```C# Snippet:OpenAPISync_Print
 PageableList<ThreadMessage> messages = client.GetMessages(
@@ -155,6 +158,7 @@ foreach (ThreadMessage threadMessage in messages)
 ```
 
 5. Finally, we delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet:OpenAPISync_Cleanup
 client.DeleteThread(thread.Id);

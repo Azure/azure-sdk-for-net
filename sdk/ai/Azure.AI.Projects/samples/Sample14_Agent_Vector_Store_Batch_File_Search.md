@@ -73,6 +73,7 @@ Agent agent = await client.CreateAgentAsync(
 ```
 
 2. Then we need to create thread, add the message and start the run. If the run did not completed successfully, we will show the last error message, otherwise we will list messages in chronological order.
+
 Synchronous sample:
 ```C# Snippet:VectorStoreBatchFileSearchThreadAndResponse
 AgentThread thread = client.CreateThread();
@@ -191,6 +192,7 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 ```
 
 4. When the experiment is complete, we will clean up the resources.
+
 Synchronous sample:
 ```C# Snippet:VectorStoreBatchFileSearchCleanup
 VectorStoreDeletionStatus delTask = client.DeleteVectorStore(vectorStore.Id);

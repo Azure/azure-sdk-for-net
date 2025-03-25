@@ -14,6 +14,7 @@ AgentsClient agentClient = projectClient.GetAgentsClient();
 ```
 
 2. Next we will get the bing connection by neme using connection client. This connection will be used to initialize the `BingGroundingToolDefinition`.
+
 Synchronous sample:
 ```C# Snippet:BingGrounding_GetConnection
 ConnectionResponse bingConnection = projectClient.GetConnectionsClient().GetConnection(bingConnectionName);
@@ -39,6 +40,7 @@ BingGroundingToolDefinition bingGroundingTool = new(connectionList);
 ```
 
 3. We will use the `BingGroundingToolDefinition` during the agent initialization.
+
 Synchronous sample:
 ```C# Snippet:BingGrounding_CreateAgent
 Agent agent = agentClient.CreateAgent(
@@ -58,6 +60,7 @@ Agent agent = await agentClient.CreateAgentAsync(
 ```
 
 4. Now we will create the thread, add the message , containing a question for agent and start the run.
+
 Synchronous sample:
 ```C# Snippet:BingGrounding_CreateThreadMessage
 AgentThread thread = agentClient.CreateThread();
@@ -111,6 +114,8 @@ Assert.AreEqual(
 ```
 
 5. Print the agent messages to console in chronological order.
+
+Synchronous sample:
 ```C# Snippet:BingGrounding_Print
 PageableList<ThreadMessage> messages = agentClient.GetMessages(
     threadId: thread.Id,
@@ -183,6 +188,7 @@ foreach (ThreadMessage threadMessage in messages)
 ```
 
 6. Clean up resources by deleting thread and agent.
+
 Synchronous sample:
 ```C# Snippet:BingGroundingCleanup
 agentClient.DeleteThread(threadId: thread.Id);

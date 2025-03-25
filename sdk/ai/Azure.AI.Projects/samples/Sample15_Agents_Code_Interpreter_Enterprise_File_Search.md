@@ -10,6 +10,7 @@ var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
 AgentsClient client = new(connectionString, new DefaultAzureCredential());
 ```
 2. Create agent.
+
 Synchronous sample:
 ```C# Snippet:CodeInterpreterEnterpriseSearch_CreateAgent
 List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
@@ -46,6 +47,7 @@ var attachment = new MessageAttachment(
 ```
 
 4. Create a `ThreadMessage`, which contains the `VectorStoreDataSource` as an attachment.
+
 Synchronous sample:
 ```C# Snippet:CodeInterpreterEnterpriseSearch_CreateThreadRun
 AgentThread thread = client.CreateThread();
@@ -126,6 +128,7 @@ private static void WriteMessages(IEnumerable<ThreadMessage> messages)
 ```
 
 6. Wait when the run is completed.
+
 Synchronous sample:
 ```C# Snippet:CodeInterpreterEnterpriseSearch_CreateThreadRun
 AgentThread thread = client.CreateThread();
@@ -183,6 +186,7 @@ Assert.AreEqual(
 ```
 
 7. Print the messages to the console in chronological order.
+
 Synchronous sample:
 ```C# Snippet:CodeInterpreterEnterpriseSearch_PrintMessages
 PageableList<ThreadMessage> messages = client.GetMessages(
@@ -203,6 +207,7 @@ WriteMessages(messages);
 
 
 8. Finally, we delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet:CodeInterpreterEnterpriseSearch_Cleanup
 client.DeleteThread(thread.Id);

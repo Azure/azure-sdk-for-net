@@ -10,6 +10,7 @@ AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredent
 ```
 
 2. We need to create an agent, create and upload file and `ThreadMessage` with the uploaded file ID in the `MessageAttachment`.
+
 Synchronous sample:
 ```C# Snippet:CreateAgentWithInterpreterToolSync
 List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
@@ -77,6 +78,7 @@ ThreadMessage message = await client.CreateMessageAsync(
 ```
 
 3. Next we will create a `ThreadRun` and wait until the run is completed. If the run was not successful we will print the last error message.
+
 Synchronous sample:
 ```C# Snippet:CodeInterpreterFileAttachmentSync_CreateRun
 ThreadRun run = client.CreateRun(
@@ -141,6 +143,7 @@ private static void WriteMessages(IEnumerable<ThreadMessage> messages)
 ```
 
 5. Print the messages to the console in chronological order.
+
 Synchronous sample:
 ```C# Snippet:CodeInterpreterFileAttachmentSync_PrintMessages
 PageableList<ThreadMessage> messages = client.GetMessages(
@@ -160,6 +163,7 @@ WriteMessages(messages);
 ```
 
 6. Finally, we delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet:CodeInterpreterFileAttachmentSync_Cleanup
 client.DeleteThread(thread.Id);

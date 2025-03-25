@@ -16,6 +16,7 @@ var projectClient = new AIProjectClient(connectionString, new DefaultAzureCreden
 ```
 
 2. Create an agent with `AzureAISearchToolDefinition` and `ToolResources` with the only member `AzureAISearchResource` to be able to perform search. We will use `ConnectionsClient` to find the Azure AI Search resource.
+
 Synchronous sample:
 ```C# Snippet:CreateAgentWithAzureAISearchTool_Sync
 ListConnectionsResponse connections = projectClient.GetConnectionsClient().GetConnections(ConnectionType.AzureAISearch);
@@ -75,6 +76,7 @@ Agent agent = await agentClient.CreateAgentAsync(
 ```
 
 3. Now we will create a `ThreadRun` and wait untill it is complete. If the run will not be successful, we will print the last error.
+
 Synchronous sample:
 ```C# Snippet:AzureAISearchExample_CreateRun_Sync
 // Create thread for communication
@@ -134,6 +136,7 @@ Assert.AreEqual(
 ```
 
 4. In our search we have used an index containing "embedding", "token", "url" and also "title" fields. This allowed us to get reference title and url. In the code below, we iterate messages in cronological order and replace the reference placeholders by url and title.
+
 Synchronous sample:
 ```C# Snippet:PopulateReferencesAgentWithAzureAISearchTool_Sync
 PageableList<ThreadMessage> messages = agentClient.GetMessages(
@@ -221,6 +224,7 @@ foreach (ThreadMessage threadMessage in messages)
 ```
 
 5. Finally, we delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet:AzureAISearchExample_Cleanup_Sync
 agentClient.DeleteThread(thread.Id);

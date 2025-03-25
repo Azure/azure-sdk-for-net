@@ -129,6 +129,10 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
             }
         }
         #endregion
+        #region Snippet:AzureFunctionsCleanup
+        await client.DeleteThreadAsync(thread.Id);
+        await client.DeleteAgentAsync(agent.Id);
+        #endregion
     }
 
     [Test]
@@ -242,6 +246,10 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
                 Console.WriteLine();
             }
         }
+        #endregion
+        #region Snippet:AzureFunctionsCleanupSync
+        client.DeleteThread(thread.Id);
+        client.DeleteAgent(agent.Id);
         #endregion
     }
 }

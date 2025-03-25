@@ -101,6 +101,7 @@ ToolOutput GetResolvedToolOutput(RequiredToolCall toolCall)
 ```
 
 4. Create Agent with the `FunctionToolDefinitions` we have created in step 2.
+
 Synchronous sample:
 ```C# Snippet:FunctionsSyncCreateAgentWithFunctionTools
 // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
@@ -128,6 +129,7 @@ Agent agent = await client.CreateAgentAsync(
 ```
 
 5. Create `ThreadRun`.
+
 Synchronous sample:
 ```C# Snippet:FunctionsSync_CreateRun
 AgentThread thread = client.CreateThread();
@@ -153,6 +155,7 @@ ThreadRun run = await client.CreateRunAsync(thread, agent);
 ```
 
 6. We will wait for the run to complete; if the local function call is required, run status will be set to `RunStatus.RequiresAction` and the run's `RequiredAction` property will be of `SubmitToolOutputsAction` type. In this case we will need to execute required functions locally and submit their outputs to the agent. The `RequiredAction` property contains a list of required calls in `ToolCalls` property.
+
 Synchronous sample:
 ```C# Snippet:FunctionsSyncHandlePollingWithRequiredAction
 do
@@ -206,6 +209,7 @@ Assert.AreEqual(
 ```
 
 7. Write the messages from the agent to console in chronological order.
+
 Synchronous sample:
 ```C# Snippet:FunctionsSync_ListMessages
 PageableList<ThreadMessage> messages = client.GetMessages(
@@ -257,6 +261,7 @@ foreach (ThreadMessage threadMessage in messages)
 ```
 
 8. Finally, we delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet:FunctionsSync_Cleanup
 client.DeleteThread(thread.Id);

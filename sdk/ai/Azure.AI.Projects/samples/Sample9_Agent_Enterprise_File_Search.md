@@ -12,31 +12,6 @@ AgentsClient client = new(connectionString, new DefaultAzureCredential());
 
 2. To create agent capable of using Enterprise file search, we will create `VectorStoreDataSource` and will supply it to `VectorStore` constructor. The ID of the created vector store will be used in the `FileSearchToolResource` used for agent creation. 
 Synchronous sample: 
-```C# Snippet:CreateVectorStoreBlob
-var ds = new VectorStoreDataSource(
-    assetIdentifier: blobURI,
-    assetType: VectorStoreDataSourceAssetType.UriAsset
-);
-VectorStore vectorStore = await client.CreateVectorStoreAsync(
-    name: "sample_vector_store",
-    storeConfiguration: new VectorStoreConfiguration(
-        dataSources: [ ds ]
-    )
-);
-
-FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
-
-List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-Agent agent = await client.CreateAgentAsync(
-    model: modelDeploymentName,
-    name: "my-assistant",
-    instructions: "You are helpful assistant.",
-    tools: tools,
-    toolResources: new ToolResources() { FileSearch = fileSearchResource }
-);
-```
-
-Asynchronous sample:
 ```C# Snippet:CreateVectorStoreBlobSync
 var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
@@ -61,7 +36,33 @@ Agent agent = client.CreateAgent(
 );
 ```
 
+Asynchronous sample:
+```C# Snippet:CreateVectorStoreBlob
+var ds = new VectorStoreDataSource(
+    assetIdentifier: blobURI,
+    assetType: VectorStoreDataSourceAssetType.UriAsset
+);
+VectorStore vectorStore = await client.CreateVectorStoreAsync(
+    name: "sample_vector_store",
+    storeConfiguration: new VectorStoreConfiguration(
+        dataSources: [ ds ]
+    )
+);
+
+FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
+
+List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+Agent agent = await client.CreateAgentAsync(
+    model: modelDeploymentName,
+    name: "my-assistant",
+    instructions: "You are helpful assistant.",
+    tools: tools,
+    toolResources: new ToolResources() { FileSearch = fileSearchResource }
+);
+```
+
 3. In this example we will ask a question to the file contents and add it to the thread; we will create run and wait while it will terminate.
+
 Synchronous sample:
 ```C# Snippet:EnterpriseFileSearch_CreateThreadMessage
 AgentThread thread = client.CreateThread();
@@ -119,6 +120,7 @@ Assert.AreEqual(
 ```
 
 4. When we create `VectorStore`, it ingests the contents of the Azure Blob, provided in the `VectorStoreDataSource` object and associates it with File ID. To provide the file name we will need to get the file name by ID, which in our case will be Azure Resource ID and take its last segment.
+
 Synchronous sample:
 ```C# Snippet:EnterpriseFileSearch_ListUpdatedMessages
 PageableList<ThreadMessage> messages = client.GetMessages(
@@ -225,6 +227,7 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 ```
 
 6. Finally, we delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet:EnterpriseFileSearch_Cleanup
 VectorStoreDeletionStatus delTask = client.DeleteVectorStore(vectorStore.Id);

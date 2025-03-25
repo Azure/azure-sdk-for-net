@@ -101,7 +101,8 @@ Please note that the input `CorrelationId` is the same as output.
 *Hint:* Place multiple messages to input queue and keep second internet browser window with the output queue open and hit the refresh button on the portal user interface, so that you will not miss the message. If the message instead went to `azure-function-foo-input-poison` queue, the function completed with error, please check your setup.
 After we have tested the function and made sure it works, please make sure that the Azure AI Project have the next roles for the storage account: `Storage Account Contributor`, `Storage Blob Data Contributor`, `Storage File Data Privileged Contributor`, `Storage Queue Data Contributor` and `Storage Table Data Contributor`. Now the function is ready to be used by the agent.
 
-We can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. See below for the instructions on function deployment.
+In the example below we are calling function "foo", which responds "Bar". 
+1. We create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. Plus we need to read in environment variables to get necessary parameters.
 ```C# Snippet:AzureFunctionsDefineFunctionTools
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -147,7 +148,8 @@ AzureFunctionToolDefinition azureFnTool = new(
 );
 ```
 
-Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
+2. Next we need to create an agent. Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
+
 Synchronous sample:
 ```C# Snippet:AzureFunctionsCreateAgentWithFunctionToolsSync
 Agent agent = client.CreateAgent(
@@ -176,7 +178,8 @@ Agent agent = await client.CreateAgentAsync(
     );
 ```
 
-After we have created a message with request to ask "What would foo say?", we need to wait while the run is in queued, in progress or requires action states.
+3. After we have created a message with request to ask "What would foo say?", we need to wait while the run is in queued, in progress or requires action states.
+
 Synchronous sample:
 ```C# Snippet:AzureFunctionsHandlePollingWithRequiredActionSync
 AgentThread thread = client.CreateThread();
@@ -227,7 +230,7 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 
-Finally, we will print out the messages to the console in chronological order.
+4. Finally, we will print out the messages to the console in chronological order.
 
 Synchronous sample:
 ```C# Snippet:AzureFunctionsPrintSync
@@ -277,4 +280,18 @@ foreach (ThreadMessage threadMessage in messages)
         Console.WriteLine();
     }
 }
+```
+
+5. Finally, we delete all the resources, we have created in this sample.
+
+Synchronous sample:
+```C# Snippet:AzureFunctionsCleanupSync
+client.DeleteThread(thread.Id);
+client.DeleteAgent(agent.Id);
+```
+
+Asynchronous sample:
+```C# Snippet:AzureFunctionsCleanup
+await client.DeleteThreadAsync(thread.Id);
+await client.DeleteAgentAsync(agent.Id);
 ```

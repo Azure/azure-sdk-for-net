@@ -9,6 +9,8 @@ Set these two environment variables before running the sample:
 2. MODEL_DEPLOYMENT_NAME - The model's name to be used for the inferencing.
 
 The inferencing can be called synchronously and asynchronously.
+
+Synchronous sample:
 ```C# Snippet:ExtensionsChatClientSync
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -28,7 +30,7 @@ Response<ChatCompletions> response = chatClient.Complete(requestOptions);
 Console.WriteLine(response.Value.Content);
 ```
 
-Asynchronous call:
+Asynchronous sample:
 ```C# Snippet:ExtensionsChatClientAsync
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -55,6 +57,8 @@ Set these two environment variables before running the sample:
 2. EMBEDDING_MODEL_DEPLOYMENT_NAME - The model's name to be used for embedding generation.
 
 Embedding also can be called synchronously and asynchronously.
+
+Synchronous sample:
 ```C# Snippet:ExtensionsEmbeddingSync
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
@@ -75,7 +79,7 @@ foreach (EmbeddingItem item in response.Value.Data)
 }
 ```
 
-Asynchronous call:
+Asynchronous sample:
 ```C# Snippet:ExtensionsEmbeddingAsync
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");

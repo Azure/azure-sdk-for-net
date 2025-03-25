@@ -9,6 +9,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 AgentsClient client = new(connectionString, new DefaultAzureCredential());
 ```
 2. We will create agent with the Interpreter tool support. It is needed to allow fow writing mathematical formulas in [LaTeX](https://en.wikipedia.org/wiki/LaTeX) format.
+
 Synchronous sample:
 ```C# Snippet:Streaming_CreateAgent
 Agent agent = client.CreateAgent(
@@ -30,6 +31,7 @@ Agent agent = await client.CreateAgentAsync(
 ```
 
 3. Create `Thread` with the message.
+
 Synchronous sample:
 ```C# Snippet:Streaming_CreateThread
 AgentThread thread = client.CreateThread();
@@ -51,6 +53,7 @@ ThreadMessage message = await client.CreateMessageAsync(
 ```
 
 4. Read the output from the stream.
+
 Synchronous sample:
 ```C# Snippet:Streaming_StreamLoop
 foreach (StreamingUpdate streamingUpdate in client.CreateRunStreaming(thread.Id, agent.Id))
@@ -90,6 +93,7 @@ await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync
 ```
 
 5. Finally, we delete all the resources, we have created in this sample.
+
 Synchronous sample:
 ```C# Snippet::Streaming_Cleanup
 client.DeleteThread(thread.Id);
