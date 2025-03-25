@@ -194,6 +194,18 @@ try {
         -serviceDirectoryName $serviceName `
         -CI $CI
 
+    if ($wellKnownTMETenants.Contains($TenantId)) {
+        # Add a prefix to the resource group name to avoid flagging the usages of local auth
+        # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
+        $ResourceGroupName = "SSS3PT_" + $ResourceGroupName
+    }
+
+    if ($ResourceGroupName.Length -gt 90) {
+        # See limits at https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
+        Write-Warning -Message "Resource group name '$ResourceGroupName' is too long. So pruning it to be the first 90 characters."
+        $ResourceGroupName = $ResourceGroupName.Substring(0, 90)
+    }
+
     # Make sure pre- and post-scripts are passed formerly required arguments.
     $PSBoundParameters['BaseName'] = $BaseName
 

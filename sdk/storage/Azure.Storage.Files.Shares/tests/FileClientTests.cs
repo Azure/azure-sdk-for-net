@@ -182,6 +182,13 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(exists);
         }
 
+        [Test]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareFileClient("UseDevelopmentStorage=true", "share", "dir/file"));
+            Assert.AreEqual("connectionString", ex.ParamName);
+        }
+
         [RecordedTest]
         public async Task Ctor_CustomAudience()
         {
@@ -6866,7 +6873,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
         public async Task CreateGetSymbolicLinkAsync()
         {
@@ -6920,7 +6926,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
         public async Task CreateGetSymbolicLinkAsync_Error()
         {
@@ -6943,7 +6948,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
         public async Task CreateGetSymbolicLinkAsync_OAuth()
         {

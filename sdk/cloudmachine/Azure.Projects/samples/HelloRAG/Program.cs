@@ -5,7 +5,6 @@ using Azure.AI.OpenAI;
 using Azure.Projects;
 using Azure.Projects.OpenAI;
 using OpenAI.Chat;
-using OpenAI.Embeddings;
 
 ProjectInfrastructure infrastructure = new();
 infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
@@ -16,8 +15,7 @@ if (infrastructure.TryExecuteCommand(args)) return;
 
 ProjectClient project = new();
 ChatClient chat = project.GetOpenAIChatClient();
-EmbeddingClient embeddings = project.GetOpenAIEmbeddingClient();
-EmbeddingsVectorbase vectorDb = new(embeddings);
+EmbeddingsStore embeddings = new(project.GetOpenAIEmbeddingClient());
 List<ChatMessage> conversation = [];
 ChatTools tools = new ChatTools(typeof(Tools));
 
@@ -32,11 +30,11 @@ while (true)
     if (prompt.StartsWith("fact:", StringComparison.OrdinalIgnoreCase))
     {
         string fact = prompt[5..].Trim();
-        vectorDb.Add(fact);
+        embeddings.Add(fact);
         continue;
     }
 
-    var related = vectorDb.Find(prompt);
+    var related = embeddings.Find(prompt);
     conversation.Add(related);
 
     conversation.Add(ChatMessage.CreateUserMessage(prompt));
@@ -55,18 +53,17 @@ complete:
             goto complete;
         case ChatFinishReason.ToolCalls:
 
-            // for some reason I am getting tool calls for tools that dont exist. 
-            List<string> failed;
-            IEnumerable<ToolChatMessage> toolResults = tools.CallAll(completion.ToolCalls, out failed);
-            if (failed != null)
+            // for some reason I am getting tool calls for tools that dont exist.
+            ToolCallResult toolResults = await tools.CallAllWithErrors(completion.ToolCalls).ConfigureAwait(false);
+            if (toolResults.Failed != null)
             {
-                failed.ForEach(f => Console.WriteLine($"Failed to call tool: {f}"));
+                toolResults.Failed.ForEach(f => Console.WriteLine($"Failed to call tool: {f}"));
                 conversation.Add(ChatMessage.CreateUserMessage("don't call tools that dont exist"));
             }
             else
             {
                 conversation.Add(completion);
-                conversation.AddRange(toolResults);
+                conversation.AddRange(toolResults.Messages);
             }
             goto complete;
         default:
