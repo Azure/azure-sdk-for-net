@@ -82,8 +82,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new SortedSet<AvailabilitySetData>(new AvailabilitySetDataComparer());
 
                 protected override void AddItem(object collection, object item)

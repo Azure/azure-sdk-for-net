@@ -55,8 +55,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override Type ItemType => typeof(List<AvailabilitySetData>);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new Dictionary<string, List<AvailabilitySetData>>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)

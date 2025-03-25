@@ -52,8 +52,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => ImmutableSortedDictionary<string, AvailabilitySetData>.Empty.ToBuilder();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)

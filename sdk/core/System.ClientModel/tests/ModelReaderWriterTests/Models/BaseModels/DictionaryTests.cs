@@ -69,8 +69,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
 
                 protected override Type ItemType => typeof(BaseModel);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new Dictionary<string, BaseModel>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)

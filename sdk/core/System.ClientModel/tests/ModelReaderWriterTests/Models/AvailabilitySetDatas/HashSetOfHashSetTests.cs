@@ -59,8 +59,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override Type ItemType => typeof(HashSet<AvailabilitySetData>);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new HashSet<HashSet<AvailabilitySetData>>();
 
                 protected override void AddItem(object collection, object item)

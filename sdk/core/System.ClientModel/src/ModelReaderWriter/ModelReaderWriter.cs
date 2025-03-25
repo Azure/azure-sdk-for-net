@@ -125,7 +125,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            var enumerable = model as IEnumerable ?? context.GetTypeBuilder(model!.GetType()).GetItems(model);
+            var enumerable = model as IEnumerable ?? context.GetTypeBuilder(model!.GetType()).ToEnumerable(model);
             if (enumerable is not null)
             {
                 var collectionWriter = CollectionWriter.GetCollectionWriter(enumerable, options);

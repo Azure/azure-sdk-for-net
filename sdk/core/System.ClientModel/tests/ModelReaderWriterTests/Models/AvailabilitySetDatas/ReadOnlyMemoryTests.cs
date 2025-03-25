@@ -49,8 +49,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new List<AvailabilitySetData>();
 
                 protected override void AddItem(object collection, object item)
@@ -59,7 +57,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override object ToCollection(object builder)
                     => new ReadOnlyMemory<AvailabilitySetData>([.. (List<AvailabilitySetData>)builder]);
 
-                protected internal override IEnumerable GetItems(object obj)
+                protected override IEnumerable GetItems(object obj)
                 {
                     if (obj is ReadOnlyMemory<AvailabilitySetData> rom)
                     {

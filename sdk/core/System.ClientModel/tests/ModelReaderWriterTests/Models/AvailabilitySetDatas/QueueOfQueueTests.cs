@@ -59,8 +59,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override Type ItemType => typeof(Queue<AvailabilitySetData>);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new Queue<Queue<AvailabilitySetData>>();
 
                 protected override void AddItem(object collection, object item)
