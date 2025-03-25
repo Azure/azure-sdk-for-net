@@ -293,7 +293,7 @@ namespace Azure.Storage.DataMovement
 
         private void UpdateChunkProcessorConcurrency(int newMaxConcurrency)
         {
-            var parallelProcessor = _chunksProcessor as object;
+            var parallelProcessor = _processor as object;
             if (parallelProcessor != null)
             {
                 var methodInfo = parallelProcessor.GetType().GetMethod("UpdateMaxConcurrentProcessing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
