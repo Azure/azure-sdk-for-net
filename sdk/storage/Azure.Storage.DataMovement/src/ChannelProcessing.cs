@@ -150,24 +150,29 @@ internal static class ChannelProcessing
             _maxConcurrentProcessing = maxConcurrentProcessing;
         }
 
-        internal int MaxConcurrentProcessing {
-            get => _maxConcurrentProcessing;
-            // Installed IsExternalInit polyfill for .NETSTANDARD20
-            // https://github.com/manuelroemer/IsExternalInit
-            init => _maxConcurrentProcessing = value;
+        public void UpdateMaxConcurrentProcessing(int newMax)
+        {
+            // Can't change _maxConcurrentProcessing because it is readonly
+            // using to bypass `readonly` and keep the class consistent
+            typeof(ParallelChannelProcessor<TItem>).GetField("_maxConcurrentProcessing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .SetValue(this, newMax);
         }
 
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
-            List<Task> itemRunners = new List<Task>(MaxConcurrentProcessing);
-            // 1. Create a variable that can be set from the outside (
-            // 2. change the condition from `>= _maxConcurrentProcessing` to `>=
+            List<Task> itemRunners = new List<Task>(_maxConcurrentProcessing);
+            TItem item = default;
+
             try
             {
                 while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
-                    TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                    if (itemRunners.Count >= MaxConcurrentProcessing)
+                    if (item.Equals(default))
+                    {
+                        item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                    }
+
+                    if (itemRunners.Count >= _maxConcurrentProcessing)
                     {
                         // Clear any completed blocks from the task list
                         int removedRunners = itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
@@ -179,7 +184,10 @@ internal static class ChannelProcessing
                             itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
                         }
                     }
-                    itemRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
+                    else
+                    {
+                        itemRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
+                    }
                 }
             }
             finally

@@ -28,14 +28,18 @@ namespace Azure.Storage.DataMovement
         internal Channel<ConcurrencyRecommendation> _recommendations;
         private CancellationToken _cancellationToken;
 
+        private IProcessor<Func<Task>> _processor;
+
         internal ConcurrencyTuner(
             ResourceMonitor resourceMonitor,
+            IProcessor<Func<Task>> processor,
             TimeSpan monitoringInterval,
             double maxMemoryUsage,
             int initialConcurrency,
             int maxConcurrency,
             float maxCpuUsage)
         {
+            _processor = processor;
             _initialConcurrency = initialConcurrency;
             _maxConcurrency = maxConcurrency;
             _maxMemoryUsage = maxMemoryUsage;
@@ -284,6 +288,28 @@ namespace Azure.Storage.DataMovement
                 await GetCurrentSpeedAsync(_cancellationToken).ConfigureAwait(false); // read from the channel
 
                 //SignalStability()        // in case anyone new has "subscribed"
+            }
+        }
+
+        private void UpdateChunkProcessorConcurrency(int newMaxConcurrency)
+        {
+            var parallelProcessor = _chunksProcessor as object;
+            if (parallelProcessor != null)
+            {
+                var methodInfo = parallelProcessor.GetType().GetMethod("UpdateMaxConcurrentProcessing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+                if (methodInfo != null)
+                {
+                    methodInfo.Invoke(parallelProcessor, new object[] { newMaxConcurrency });
+                }
+                else
+                {
+                    throw new InvalidOperationException("The method UpdateMaxConcurrentProcessing was not found.");
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("The chunks processor is not a ParallelChannelProcessor.");
             }
         }
 

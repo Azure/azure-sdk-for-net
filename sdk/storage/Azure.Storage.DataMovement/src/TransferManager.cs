@@ -73,14 +73,6 @@ namespace Azure.Storage.DataMovement
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
             CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
             options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
-            new ConcurrencyTuner(
-                    new ResourceMonitor(),
-                    options?.MonitoringInterval ?? DataMovementConstants.TransferManagerOptions.MonitoringInterval,
-                    options?.MaximumMemoryUsage ?? DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
-                    options?.InitialConcurrency ?? DataMovementConstants.TransferManagerOptions.InitialConcurrency,
-                    options?.MaximumConcurrency ?? DataMovementConstants.TransferManagerOptions.MaxConcurrency,
-                    options?.MaximumCpuUsage ?? DataMovementConstants.TransferManagerOptions.MaxCpuUsage
-                    ),
             default)
         {}
 
@@ -106,8 +98,9 @@ namespace Azure.Storage.DataMovement
             _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
-            _concurrencyTuner = concurrencyTuner ?? new ConcurrencyTuner(
+            _concurrencyTuner = new ConcurrencyTuner(
                     new ResourceMonitor(),
+                    _chunksProcessor,
                     DataMovementConstants.TransferManagerOptions.MonitoringInterval,
                     DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
                     DataMovementConstants.TransferManagerOptions.InitialConcurrency,
