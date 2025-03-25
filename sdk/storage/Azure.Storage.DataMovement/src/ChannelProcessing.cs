@@ -141,6 +141,13 @@ internal static class ChannelProcessing
     {
         private readonly int _maxConcurrentProcessing;
 
+        public int MaxConcurrentProcessing
+        {
+            get => _maxConcurrentProcessing;
+            set => typeof(ParallelChannelProcessor<TItem>).GetField("_maxConcurrentProcessing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .SetValue(this, value);
+        }
+
         public ParallelChannelProcessor(
             Channel<TItem, TItem> channel,
             int maxConcurrentProcessing)
@@ -148,14 +155,6 @@ internal static class ChannelProcessing
         {
             Argument.AssertInRange(maxConcurrentProcessing, 2, int.MaxValue, nameof(maxConcurrentProcessing));
             _maxConcurrentProcessing = maxConcurrentProcessing;
-        }
-
-        public void UpdateMaxConcurrentProcessing(int newMax)
-        {
-            // Can't change _maxConcurrentProcessing because it is readonly
-            // using to bypass `readonly` and keep the class consistent
-            typeof(ParallelChannelProcessor<TItem>).GetField("_maxConcurrentProcessing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .SetValue(this, newMax);
         }
 
         protected override async ValueTask NotifyOfPendingItemProcessing()
