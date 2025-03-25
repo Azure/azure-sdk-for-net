@@ -831,4 +831,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_docs_features]: https://learn.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_refdocs]: https://learn.microsoft.com/dotnet/api/azure.ai.language.conversations
 [conversationanalysis_restdocs]: https://learn.microsoft.com/rest/api/language/
-[conversationalauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/Azure.AI.Language.Conversations_1.1.0/sdk/cognitivelanguage/Azure.AI.Language.Conversations#create-a-conversationauthoringclient
+[conversationalauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/blob/Azure.AI.Language.Conversations.Authoring_1.0.0-beta.1/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/README.md
