@@ -225,7 +225,7 @@ namespace Azure.Compute.Batch
                     taskCollection: taskGroup,
                     cancellationToken: _cancellationToken);
 
-                BatchTaskAddCollectionResult response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+                BatchCreateTaskCollectionResult response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
                 //
                 // Process the results of the add task collection request
                 //
@@ -276,7 +276,7 @@ namespace Azure.Compute.Batch
         /// <param name="addTaskResults"></param>
         /// <param name="taskMap">Dictionary of task name to task object instance for the specific protocol response.</param>
         internal void ProcessAddTaskResults(
-            BatchTaskAddCollectionResult addTaskResults,
+            BatchCreateTaskCollectionResult addTaskResults,
             IReadOnlyDictionary<string, TrackedBatchTask> taskMap)
         {
             foreach (BatchTaskAddResult protoAddTaskResult in addTaskResults.Value)

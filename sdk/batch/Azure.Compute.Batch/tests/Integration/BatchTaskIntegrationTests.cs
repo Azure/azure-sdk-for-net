@@ -111,7 +111,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     new BatchTaskCreateContent(taskID, commandLine)
                 });
 
-                BatchTaskAddCollectionResult batchTaskAddCollectionResult = await client.CreateTaskCollectionAsync(jobID, taskCollection);
+                BatchCreateTaskCollectionResult batchTaskAddCollectionResult = await client.CreateTaskCollectionAsync(jobID, taskCollection);
 
                 Assert.IsNotNull(batchTaskAddCollectionResult);
                 BatchTaskAddResult batchTaskAddResult = null;

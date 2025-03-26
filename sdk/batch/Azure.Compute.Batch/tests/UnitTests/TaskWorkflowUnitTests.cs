@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchTaskAddCollectionJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
-            var batchTaskAddCollectionResult = BatchTaskAddCollectionResult.FromResponse(mockResponse.Object);
+            var batchTaskAddCollectionResult = BatchCreateTaskCollectionResult.FromResponse(mockResponse.Object);
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                 It.IsAny<string>(),
@@ -132,7 +132,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchTaskAddCollectionJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
-            var batchTaskAddCollectionResult = BatchTaskAddCollectionResult.FromResponse(mockResponse.Object);
+            var batchTaskAddCollectionResult = BatchCreateTaskCollectionResult.FromResponse(mockResponse.Object);
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                 It.IsAny<string>(),
@@ -196,7 +196,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                {
                    // one the second pass there should have have all the tasks requests
                    Assert.AreEqual(2, taskCollection.Value.Count);
-                   BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+                   BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                    return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
                }
            }
@@ -250,7 +250,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                    // The quue should be 50 as we halved the request size
                    Assert.AreEqual(50, taskCollection.Value.Count);
 
-                   BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+                   BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                    return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
                }
            }
@@ -295,7 +295,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                // The defaul size should be 100
                Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -346,7 +346,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                // The defaul size should be 100
                Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -407,7 +407,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                // The defaul size should be 100
                Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -463,7 +463,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                // The defaul size should be 100
                Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -511,8 +511,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
            )
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
-               // creating a BatchTaskAddCollectionResult with 50% success rate, should triger retries
-               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection,0.5);
+               // creating a BatchCreateTaskCollectionResult with 50% success rate, should triger retries
+               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection,0.5);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -576,7 +576,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                    // The defaul size should be 100
                    Assert.AreEqual(100, taskCollection.Value.Count);
 
-                   BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+                   BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                    return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
                }
            }
@@ -629,7 +629,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                // The defaul size should be 100
                Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -679,7 +679,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                // The defaul size should be 100
                Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -710,11 +710,11 @@ namespace Azure.Compute.Batch.Tests.UnitTests
         }
 
         /// <summary>
-        /// Helper method to create a BatchTaskAddCollectionResult
+        /// Helper method to create a BatchCreateTaskCollectionResult
         /// </summary>
         /// <param name="batchTaskGroup"></param>
-        /// <returns>A BatchTaskAddCollectionResult object</returns>
-        private BatchTaskAddCollectionResult CreateBatchTaskAddCollectionResult(BatchTaskGroup batchTaskGroup, double passPercentage=1)
+        /// <returns>A BatchCreateTaskCollectionResult object</returns>
+        private BatchCreateTaskCollectionResult CreateBatchCreateTaskCollectionResult(BatchTaskGroup batchTaskGroup, double passPercentage=1)
         {
             var mockResponse = new Mock<Response>();
 
@@ -772,7 +772,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchTaskAddCollectionJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
-            return BatchTaskAddCollectionResult.FromResponse(mockResponse.Object);
+            return BatchCreateTaskCollectionResult.FromResponse(mockResponse.Object);
         }
 
         /// <summary>

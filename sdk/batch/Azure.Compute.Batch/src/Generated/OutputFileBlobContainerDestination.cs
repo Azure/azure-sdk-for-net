@@ -53,7 +53,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNull(containerUrl, nameof(containerUrl));
 
             ContainerUrl = containerUrl;
-            UploadHeaders = new ChangeTrackingList<HttpHeader>();
+            UploadHeaders = new ChangeTrackingList<OutputFileUploadHeader>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OutputFileBlobContainerDestination"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.Compute.Batch
         /// <param name="identityReference"> The reference to the user assigned identity to use to access Azure Blob Storage specified by containerUrl. The identity must have write access to the Azure Blob Storage container. </param>
         /// <param name="uploadHeaders"> A list of name-value pairs for headers to be used in uploading output files. These headers will be specified when uploading files to Azure Storage. Official document on allowed headers when uploading blobs: https://learn.microsoft.com/rest/api/storageservices/put-blob#request-headers-all-blob-types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OutputFileBlobContainerDestination(string path, string containerUrl, BatchNodeIdentityReference identityReference, IList<HttpHeader> uploadHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OutputFileBlobContainerDestination(string path, string containerUrl, BatchNodeIdentityReference identityReference, IList<OutputFileUploadHeader> uploadHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             ContainerUrl = containerUrl;
@@ -83,6 +83,6 @@ namespace Azure.Compute.Batch
         /// <summary> The reference to the user assigned identity to use to access Azure Blob Storage specified by containerUrl. The identity must have write access to the Azure Blob Storage container. </summary>
         public BatchNodeIdentityReference IdentityReference { get; set; }
         /// <summary> A list of name-value pairs for headers to be used in uploading output files. These headers will be specified when uploading files to Azure Storage. Official document on allowed headers when uploading blobs: https://learn.microsoft.com/rest/api/storageservices/put-blob#request-headers-all-blob-types. </summary>
-        public IList<HttpHeader> UploadHeaders { get; }
+        public IList<OutputFileUploadHeader> UploadHeaders { get; }
     }
 }

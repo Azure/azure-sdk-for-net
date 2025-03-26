@@ -1151,14 +1151,14 @@ namespace Azure.Compute.Batch
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskAddCollectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchCreateTaskCollectionResult"/>. </summary>
         /// <param name="value"> The results of the add Task collection operation. </param>
-        /// <returns> A new <see cref="Batch.BatchTaskAddCollectionResult"/> instance for mocking. </returns>
-        public static BatchTaskAddCollectionResult BatchTaskAddCollectionResult(IEnumerable<BatchTaskAddResult> value = null)
+        /// <returns> A new <see cref="Batch.BatchCreateTaskCollectionResult"/> instance for mocking. </returns>
+        public static BatchCreateTaskCollectionResult BatchCreateTaskCollectionResult(IEnumerable<BatchTaskAddResult> value = null)
         {
             value ??= new List<BatchTaskAddResult>();
 
-            return new BatchTaskAddCollectionResult(value?.ToList(), serializedAdditionalRawData: null);
+            return new BatchCreateTaskCollectionResult(value?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskAddResult"/>. </summary>

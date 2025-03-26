@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> The result of adding a collection of Tasks to a Job. </summary>
-    public partial class BatchTaskAddCollectionResult
+    /// <summary> The result of creating a collection of Tasks to a Job. </summary>
+    public partial class BatchCreateTaskCollectionResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskAddCollectionResult"/>. </summary>
-        internal BatchTaskAddCollectionResult()
+        /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
+        internal BatchCreateTaskCollectionResult()
         {
             Value = new ChangeTrackingList<BatchTaskAddResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskAddCollectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
         /// <param name="value"> The results of the add Task collection operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskAddCollectionResult(IReadOnlyList<BatchTaskAddResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchCreateTaskCollectionResult(IReadOnlyList<BatchTaskAddResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
