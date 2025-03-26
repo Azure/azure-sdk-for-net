@@ -15,7 +15,7 @@ namespace System.ClientModel.SourceGeneration
     /// SourceGenerator to create ModelReaderWriterContext.
     /// </summary>
     [Generator]
-    public sealed partial class ContextGenerator : IIncrementalGenerator
+    internal sealed partial class ContextGenerator : IIncrementalGenerator
     {
         private static readonly SymbolDisplayFormat s_FullyQualifiedNoGlobal = new SymbolDisplayFormat(
             typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
@@ -345,7 +345,7 @@ namespace System.ClientModel.SourceGeneration
 
             if (typeSymbol is INamedTypeSymbol namedTypeSymbol)
             {
-                return namedTypeSymbol.IsList() || namedTypeSymbol.IsDictionary();
+                return namedTypeSymbol.IsList() || namedTypeSymbol.IsDictionary() || namedTypeSymbol.IsReadOnlyMemory();
             }
 
             return typeSymbol is IArrayTypeSymbol;

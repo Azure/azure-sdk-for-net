@@ -11,7 +11,7 @@ namespace System.ClientModel.SourceGeneration
     /// Provides an immutable list implementation which implements sequence equality.
     /// </summary>
 #pragma warning disable SA1402 // File may only contain a single type
-    public sealed class ImmutableEquatableArray<T> : IEquatable<ImmutableEquatableArray<T>>, IReadOnlyList<T>
+    internal sealed class ImmutableEquatableArray<T> : IEquatable<ImmutableEquatableArray<T>>, IReadOnlyList<T>
 #pragma warning restore SA1402 // File may only contain a single type
         where T : IEquatable<T>
     {

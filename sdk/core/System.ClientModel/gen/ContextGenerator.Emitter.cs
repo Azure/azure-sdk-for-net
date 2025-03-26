@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace System.ClientModel.SourceGeneration
 {
-    public sealed partial class ContextGenerator
+    internal sealed partial class ContextGenerator
     {
         private sealed partial class Emitter
         {
@@ -80,6 +80,7 @@ namespace System.ClientModel.SourceGeneration
 
                     builder.AppendLine(indent, $"private static {contextName} _{contextName.ToCamelCase()};");
                     builder.AppendLine(indent, $"public static {contextName} Default => _{contextName.ToCamelCase()} ??= new();");
+                    builder.AppendLine();
 
                     builder.AppendLine(indent, $"private {contextName}()");
                     builder.AppendLine(indent, "{");
@@ -149,8 +150,6 @@ namespace System.ClientModel.SourceGeneration
                 }
                 builder.RemoveLastLine();
 
-                builder.AppendLine(indent, $"");
-
                 indent--;
                 builder.AppendLine(indent, "}");
 
@@ -190,9 +189,69 @@ namespace System.ClientModel.SourceGeneration
                     case ModelInfoKind.MultiDimensionalArray:
                         EmitMultiDimensionalArrayModelInfo(indent, builder, modelInfo, context, referenceContextLookup, identifierLookup);
                         break;
+                    case ModelInfoKind.ReadOnlyMemory:
+                        EmitReadOnlyMemoryModelInfo(indent, builder, modelInfo, context, referenceContextLookup, identifierLookup);
+                        break;
                     default:
-                        throw new InvalidOperationException($"Unknown ModelBuilderKind: {modelInfo.Kind}");
+                        //give warning and skip
+                        break;
                 }
+            }
+
+            private static void EmitReadOnlyMemoryModelInfo(
+                int indent,
+                StringBuilder builder,
+                TypeGenerationSpec modelInfo,
+                TypeRef context,
+                Dictionary<string, TypeRef> referenceContextLookup,
+                Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
+            {
+                var elementType = modelInfo.Type.GenericArguments[0];
+                builder.AppendLine(indent, $"internal class {identifierLookup[modelInfo.Type].TypeCase}Builder : ModelReaderWriterTypeBuilder");
+                builder.AppendLine(indent, "{");
+                indent++;
+
+                builder.AppendLine(indent, $"protected override Type BuilderType => typeof(List<{elementType.Name}>);");
+                builder.AppendLine();
+
+                builder.AppendLine(indent, $"protected override Type ItemType => typeof({elementType.Name});");
+                builder.AppendLine();
+
+                builder.AppendLine(indent, $"protected override object CreateInstance() => new List<{elementType.Name}>();");
+                builder.AppendLine();
+
+                builder.AppendLine(indent, "protected override void AddItem(object collection, object item)");
+                indent++;
+                builder.AppendLine(indent, $"=> ((List<{elementType.Name}>)collection).Add(({elementType.Name})item);");
+                indent--;
+                builder.AppendLine();
+
+                builder.AppendLine(indent, "protected override object ToCollection(object builder)");
+                indent++;
+                builder.AppendLine(indent, $"=> new {modelInfo.Type.Name}([.. (List<{elementType.Name}>)builder]);");
+                indent--;
+                builder.AppendLine();
+
+                builder.AppendLine(indent, "protected override IEnumerable GetItems(object obj)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, $"if (obj is {modelInfo.Type.Name} rom)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, "for (int i = 0; i < rom.Length; i++)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, "yield return rom.Span[i];");
+                indent--;
+                builder.AppendLine(indent, "}");
+                indent--;
+                builder.AppendLine(indent, "}");
+                builder.AppendLine(indent, "yield break;");
+                indent--;
+                builder.AppendLine(indent, "}");
+
+                indent--;
+                builder.AppendLine(indent, "}");
             }
 
             private static void EmitMultiDimensionalArrayModelInfo(
@@ -217,9 +276,6 @@ namespace System.ClientModel.SourceGeneration
                 builder.AppendVariableList(modelInfo.Type.ArrayRank - 1, elementType.Name);
                 builder.AppendLine(");");
                 builder.AppendLine();
-
-                //builder.AppendLine(indent, $"protected override bool IsCollection => true;");
-                //builder.AppendLine();
 
                 builder.Append(indent, "protected override object CreateInstance() => new ");
                 builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.Name);
@@ -284,9 +340,6 @@ namespace System.ClientModel.SourceGeneration
                 builder.AppendLine(indent, $"protected override Type ItemType => typeof({elementType.Name});");
                 builder.AppendLine();
 
-                //builder.AppendLine(indent, "protected override bool IsCollection => true;");
-                //builder.AppendLine();
-
                 builder.AppendLine(indent, $"protected override object CreateInstance() => new List<{elementType.Name}>();");
                 builder.AppendLine();
 
@@ -323,9 +376,6 @@ namespace System.ClientModel.SourceGeneration
 
                 builder.AppendLine(indent, $"protected override Type ItemType => typeof({elementType.Name});");
                 builder.AppendLine();
-
-                //builder.AppendLine(indent, "protected override bool IsCollection => true;");
-                //builder.AppendLine();
 
                 builder.AppendLine(indent, $"protected override object CreateInstance() => new Dictionary<string, {elementType.Name}>();");
                 builder.AppendLine();
@@ -373,9 +423,6 @@ namespace System.ClientModel.SourceGeneration
                 builder.AppendLine(indent, $"protected override Type ItemType => typeof({elementType.Name});");
                 builder.AppendLine();
 
-                //builder.AppendLine(indent, "protected override bool IsCollection => true;");
-                //builder.AppendLine();
-
                 builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.Name}();");
                 builder.AppendLine();
 
@@ -417,6 +464,7 @@ namespace System.ClientModel.SourceGeneration
                 [
                     "System",
                     "System.ClientModel.Primitives",
+                    "System.Collections",
                     "System.Collections.Generic",
                     "System.Diagnostics.CodeAnalysis"
                 ];

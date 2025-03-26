@@ -10,5 +10,6 @@ namespace System.ClientModel.SourceGeneration
         IDictionary,
         Array,
         MultiDimensionalArray,
+        ReadOnlyMemory,
     }
 }

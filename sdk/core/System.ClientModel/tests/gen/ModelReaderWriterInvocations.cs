@@ -17,6 +17,7 @@ namespace System.ClientModel.SourceGeneration.Tests
             ModelReaderWriter.Read<List<List<AvailabilitySetData>>>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
             ModelReaderWriter.Read<AvailabilitySetData[][]>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
             ModelReaderWriter.Read<AvailabilitySetData[,]>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
+            ModelReaderWriter.Read<ReadOnlyMemory<AvailabilitySetData>>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
         }
     }
 }

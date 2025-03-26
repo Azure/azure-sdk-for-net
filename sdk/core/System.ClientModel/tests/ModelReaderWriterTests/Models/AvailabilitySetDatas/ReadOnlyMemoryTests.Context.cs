@@ -3,34 +3,24 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
-    public class ReadOnlyCollectionTests : MrwCollectionTests<ReadOnlyCollection<AvailabilitySetData>, AvailabilitySetData>
+    public partial class ReadOnlyMemoryTests
     {
-        protected override string GetJsonCollectionType() => "List";
-
-        protected override ModelReaderWriterContext Context => new LocalContext();
-
-        protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
-            => AvailabilitySetDataTests.CompareAvailabilitySetData(model, model2, format);
-
-        protected override ReadOnlyCollection<AvailabilitySetData> GetModelInstance()
-            => new([ModelInstances.s_testAs_3375, ModelInstances.s_testAs_3376]);
-
 #nullable disable
-        public class LocalContext : ModelReaderWriterContext
+        private class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private ReadOnlyCollection_AvailabilitySetData_Builder _readOnlyCollection_AvailabilitySetData_Builder;
+            private ReadOnlyMemory_AvailabilitySetData_Builder _readOnlyMemory_AvailabilitySetData_Builder;
 
             protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
-                    Type t when t == typeof(ReadOnlyCollection<AvailabilitySetData>) => _readOnlyCollection_AvailabilitySetData_Builder ??= new(),
+                    Type t when t == typeof(ReadOnlyMemory<AvailabilitySetData>) => _readOnlyMemory_AvailabilitySetData_Builder ??= new(),
                     _ => GetFromDependencies(type)
                 };
                 return builder is not null;
@@ -43,7 +33,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return null;
             }
 
-            private class ReadOnlyCollection_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
+            private class ReadOnlyMemory_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
                 protected override Type BuilderType => typeof(List<AvailabilitySetData>);
 
@@ -55,7 +45,19 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                     => ((List<AvailabilitySetData>)collection).Add((AvailabilitySetData)item);
 
                 protected override object ToCollection(object builder)
-                    => ((List<AvailabilitySetData>)builder).AsReadOnly();
+                    => new ReadOnlyMemory<AvailabilitySetData>([.. (List<AvailabilitySetData>)builder]);
+
+                protected override IEnumerable GetItems(object obj)
+                {
+                    if (obj is ReadOnlyMemory<AvailabilitySetData> rom)
+                    {
+                        for (int i = 0; i < rom.Length; i++)
+                        {
+                            yield return rom.Span[i];
+                        }
+                    }
+                    yield break;
+                }
             }
         }
 #nullable enable

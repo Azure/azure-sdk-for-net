@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 
 namespace System.ClientModel.SourceGeneration
 {
-    public sealed partial class ContextGenerator
+    internal sealed partial class ContextGenerator
     {
         internal static class DiagnosticDescriptors
         {

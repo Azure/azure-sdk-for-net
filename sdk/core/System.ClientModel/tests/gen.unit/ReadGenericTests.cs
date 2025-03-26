@@ -325,6 +325,61 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             AssertArrayJsonModel(dict);
         }
 
+        [Test]
+        public void ReadGeneric_ReadOnlyMemory()
+        {
+            string source = $$"""
+                using System;
+                using System.ClientModel.Primitives;
+
+                namespace TestProject
+                {
+                    public partial class LocalContext : ModelReaderWriterContext
+                    {
+                    }
+
+                    public class JsonModel : IJsonModel<JsonModel>
+                    {
+                    }
+
+                    public class Caller
+                    {
+                        public void Call()
+                        {
+                             ModelReaderWriter.Read<ReadOnlyMemory<JsonModel>>(BinaryData.Empty, new LocalContext());
+                        }
+                    }
+                }
+                """;
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+
+            var result = CompilationHelper.RunSourceGenerator(compilation);
+
+            Assert.AreEqual(0, result.Diagnostics.Length);
+
+            Assert.AreEqual(2, result.ContextFile!.Types.Count);
+            var dict = result.ContextFile.Types.ToDictionary(t => t.Type.Name, t => t);
+
+            AssertJsonModel(dict);
+            AssertReadOnlyMemoryJsonModel(dict);
+        }
+
+        private void AssertReadOnlyMemoryJsonModel(Dictionary<string, TypeGenerationSpec> dict)
+        {
+            Assert.IsTrue(dict.ContainsKey("ReadOnlyMemory<JsonModel>"));
+            var arrayJsonModel = dict["ReadOnlyMemory<JsonModel>"];
+            Assert.AreEqual("ReadOnlyMemory<JsonModel>", arrayJsonModel.Type.Name);
+            Assert.AreEqual("System", arrayJsonModel.Type.Namespace);
+            Assert.AreEqual(1, arrayJsonModel.Type.GenericArguments.Count);
+            Assert.AreEqual(ModelInfoKind.ReadOnlyMemory, arrayJsonModel.Kind);
+
+            var genericArgument = arrayJsonModel.Type.GenericArguments[0];
+            Assert.AreEqual("JsonModel", genericArgument.Name);
+            Assert.AreEqual("TestProject", genericArgument.Namespace);
+            Assert.AreEqual(0, genericArgument.GenericArguments.Count);
+        }
+
         private void AssertArrayJsonModel(Dictionary<string, TypeGenerationSpec> dict)
         {
             Assert.IsTrue(dict.ContainsKey("JsonModel[]"));

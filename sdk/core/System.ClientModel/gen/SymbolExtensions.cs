@@ -33,6 +33,11 @@ namespace System.ClientModel.SourceGeneration
                 {
                     return ModelInfoKind.IDictionary;
                 }
+
+                if (namedTypeSymbol.IsReadOnlyMemory())
+                {
+                    return ModelInfoKind.ReadOnlyMemory;
+                }
             }
             else if (symbol is IArrayTypeSymbol arraySymbol)
             {
@@ -40,6 +45,11 @@ namespace System.ClientModel.SourceGeneration
             }
 
             return ModelInfoKind.IPersistableModel;
+        }
+
+        internal static bool IsReadOnlyMemory(this INamedTypeSymbol namedSymbol)
+        {
+            return namedSymbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).StartsWith("System.ReadOnlyMemory<", StringComparison.Ordinal);
         }
 
         internal static bool IsList(this INamedTypeSymbol typeSymbol)
