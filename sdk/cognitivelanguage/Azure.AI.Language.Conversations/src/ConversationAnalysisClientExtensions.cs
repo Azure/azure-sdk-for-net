@@ -7,6 +7,7 @@ using Azure.AI.Language.Conversations;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
 using Azure.Core.Extensions;
+using System.ComponentModel;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -20,6 +21,7 @@ namespace Microsoft.Extensions.Azure
 
         /// <returns>An Azure client builder for Conversation Authoring Client.</returns>
         [Obsolete("This method is obsolete and will be removed in a future release.", true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<ConversationAuthoringClient, ConversationsClientOptions> AddConversationAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
@@ -30,6 +32,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
         [Obsolete("This method is obsolete and will be removed in a future release.", true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<ConversationAuthoringClient, ConversationsClientOptions> AddConversationAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
