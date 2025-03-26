@@ -77,6 +77,10 @@ namespace Azure.Storage.DataMovement
         /// transfer state so transfers can be resumed.
         /// </summary>
         public TransferCheckpointStoreOptions CheckpointStoreOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the concurrency tuner is enabled.
+        /// </summary>
         public bool ConcurrencyTunerEnabled { get; set; } = true;
 
         internal TransferManagerClientOptions ClientOptions { get; } = new();
