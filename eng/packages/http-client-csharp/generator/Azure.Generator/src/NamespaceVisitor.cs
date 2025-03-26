@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -12,7 +13,7 @@ namespace Azure.Generator
     {
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
-            if (type is not null)
+            if (type is not null && type is not SystemObjectTypeProvider)
             {
                 UpdateModelsNamespace(type);
             }
