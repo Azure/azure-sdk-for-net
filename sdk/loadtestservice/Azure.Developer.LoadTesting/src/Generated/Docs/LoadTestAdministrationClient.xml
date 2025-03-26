@@ -495,58 +495,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("fileName").ToString());
 ]]></code></example>
     </member>
-    <member name="UploadTestFileAsync(string,string,BinaryData,LoadTestingFileType?,CancellationToken)">
-      <example>
-This sample shows how to call UploadTestFileAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-Response<TestFileInfo> response = await client.UploadTestFileAsync("12345678-1234-1234-1234-123456789012", "sample.jmx", BinaryData.FromObjectAsJson("application/octet-stream content"));
-]]></code></example>
-    </member>
-    <member name="UploadTestFile(string,string,BinaryData,LoadTestingFileType?,CancellationToken)">
-      <example>
-This sample shows how to call UploadTestFile.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-Response<TestFileInfo> response = client.UploadTestFile("12345678-1234-1234-1234-123456789012", "sample.jmx", BinaryData.FromObjectAsJson("application/octet-stream content"));
-]]></code></example>
-    </member>
-    <member name="UploadTestFileAsync(string,string,RequestContent,string,RequestContext)">
-      <example>
-This sample shows how to call UploadTestFileAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create("application/octet-stream content");
-Response response = await client.UploadTestFileAsync("12345678-1234-1234-1234-123456789012", "sample.jmx", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("fileName").ToString());
-]]></code></example>
-    </member>
-    <member name="UploadTestFile(string,string,RequestContent,string,RequestContext)">
-      <example>
-This sample shows how to call UploadTestFile and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create("application/octet-stream content");
-Response response = client.UploadTestFile("12345678-1234-1234-1234-123456789012", "sample.jmx", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("fileName").ToString());
-]]></code></example>
-    </member>
     <member name="DeleteTestFileAsync(string,string,RequestContext)">
       <example>
 This sample shows how to call DeleteTestFileAsync.

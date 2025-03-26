@@ -513,58 +513,6 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AdministrationOperations_UploadTestFile_UploadInputFileForAGivenTestName()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create("application/octet-stream content");
-            Response response = client.UploadTestFile("12345678-1234-1234-1234-123456789012", "sample.jmx", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("fileName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AdministrationOperations_UploadTestFile_UploadInputFileForAGivenTestName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create("application/octet-stream content");
-            Response response = await client.UploadTestFileAsync("12345678-1234-1234-1234-123456789012", "sample.jmx", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("fileName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AdministrationOperations_UploadTestFile_UploadInputFileForAGivenTestName_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response<TestFileInfo> response = client.UploadTestFile("12345678-1234-1234-1234-123456789012", "sample.jmx", BinaryData.FromObjectAsJson("application/octet-stream content"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AdministrationOperations_UploadTestFile_UploadInputFileForAGivenTestName_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response<TestFileInfo> response = await client.UploadTestFileAsync("12345678-1234-1234-1234-123456789012", "sample.jmx", BinaryData.FromObjectAsJson("application/octet-stream content"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_TestFileInfo_DeleteTestFile_DeleteAFileFromALoadTest()
         {
             Uri endpoint = new Uri("<endpoint>");
