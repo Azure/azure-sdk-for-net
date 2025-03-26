@@ -3036,26 +3036,6 @@ namespace Azure.Compute.Batch
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.FileProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.FileProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GetCertificateResponse : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.GetCertificateResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.GetCertificateResponse>
-    {
-        internal GetCertificateResponse() { }
-        public Azure.Compute.Batch.DeleteBatchCertificateError DeleteCertificateError { get { throw null; } }
-        public Azure.Compute.Batch.BatchCertificateState? PreviousState { get { throw null; } }
-        public System.DateTimeOffset? PreviousStateTransitionTime { get { throw null; } }
-        public string PublicData { get { throw null; } }
-        public Azure.Compute.Batch.BatchCertificateState? State { get { throw null; } }
-        public System.DateTimeOffset? StateTransitionTime { get { throw null; } }
-        public string Thumbprint { get { throw null; } }
-        public string ThumbprintAlgorithm { get { throw null; } }
-        public string Url { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.GetCertificateResponse System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.GetCertificateResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.GetCertificateResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.GetCertificateResponse System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.GetCertificateResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.GetCertificateResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.GetCertificateResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-
-    }
     public partial interface ICreateTaskResultHandler
     {
         Azure.Compute.Batch.CreateTaskResultStatus CreateTaskResultHandler(Azure.Compute.Batch.CreateTaskResult addTaskResult, System.Threading.CancellationToken cancellationToken);
