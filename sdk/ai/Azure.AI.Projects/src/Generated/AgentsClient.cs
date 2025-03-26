@@ -2962,34 +2962,6 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="body"> Multipart body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        internal virtual async Task<Response<AgentFile>> UploadFileAsync(UploadFileRequest body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(AgentFile.FromResponse(response), response);
-        }
-
-        /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="body"> Multipart body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        internal virtual Response<AgentFile> UploadFile(UploadFileRequest body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UploadFile(content, content.ContentType, context);
-            return Response.FromValue(AgentFile.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Uploads a file for use by other operations.
         /// <list type="bullet">
