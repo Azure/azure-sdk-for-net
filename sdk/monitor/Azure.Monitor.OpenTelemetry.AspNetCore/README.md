@@ -349,17 +349,32 @@ Severity is not recorded, but depending on your configuration it may be filtered
 Users should take care to select a severity for CustomEvents that is not filtered out by their configuration.
 
 ```csharp
-var loggerFactory = LoggerFactory.Create(builder =>
-{
-    builder.AddOpenTelemetry(logging =>
-    {
-        logging.AddAzureMonitorLogExporter();
-    });
-});
+var builder = WebApplication.CreateBuilder(args);
 
-var logger = loggerFactory.CreateLogger(logCategoryName);
-logger.LogInformation("{microsoft.custom_event.name} {key1} {key2}", "MyCustomEventName", "value1", "value2");
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+
+var app = builder.Build();
+
+app.Logger.LogInformation("{microsoft.custom_event.name} {key1} {key2}", "MyCustomEventName", "value1", "value2");
 ```
+
+This example generates a CustomEvent structured like this:
+
+```json
+{
+    "name": "Event",
+    "data": {
+        "baseType": "EventData",
+        "baseData": {
+            "name": "MyCustomEventName",
+            "properties": {
+                "key1": "value1",
+                "key2": "value2"
+            }
+        }
+    }
+}
+``
 
 ## Troubleshooting
 
