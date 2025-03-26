@@ -96,6 +96,11 @@ internal static class BicepTypeMapping
             // in bicep source and you need to use a parameter file for larger
             // values
             long i => BicepSyntax.Value((int)i),
+            // Note: bicep does not offically support floating numbers
+            // therefore for floating numbers we are taking a workaround from
+            // https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+            float f => FromFloat(f),
+            double d => FromDouble(d),
             string s => BicepSyntax.Value(s),
             Uri u => BicepSyntax.Value(ToLiteralString(u, format)),
             DateTimeOffset d => BicepSyntax.Value(ToLiteralString(d, format)),
@@ -120,6 +125,30 @@ internal static class BicepTypeMapping
             IBicepValue v when (v.Kind == BicepValueKind.Unset) => BicepSyntax.Null(),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };
+
+        BicepExpression FromFloat(float f)
+        {
+            // see if the value is a whole number
+            var i = (int)f;
+            if (f == i)
+            {
+                return BicepSyntax.Value(i);
+            }
+            // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+            return BicepFunction.ParseJson(BicepSyntax.Value(f.ToString())).Compile();
+        }
+
+        BicepExpression FromDouble(double d)
+        {
+            // see if the value is a whole number
+            var i = (int)d;
+            if (d == i)
+            {
+                return BicepSyntax.Value(i);
+            }
+            // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+            return BicepFunction.ParseJson(BicepSyntax.Value(d.ToString())).Compile();
+        }
 
         ArrayExpression ToArray(IEnumerable<object> seq) =>
             BicepSyntax.Array([.. seq.Select(v => ToBicep(v, v is BicepValue b ? b.Format : null))]);
