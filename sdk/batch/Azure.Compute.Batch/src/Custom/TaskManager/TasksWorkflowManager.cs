@@ -92,7 +92,7 @@ namespace Azure.Compute.Batch
             _createTasksResult = new CreateTasksResult(new List<BatchTaskCreateResult>());
             _hasRun = HasNotRun;
             _maxTasks = 100;
-            _returnBatchTaskAddResults = createTasksOptions.ReturnBatchTaskAddResults;
+            _returnBatchTaskAddResults = createTasksOptions.ReturnBatchTaskCreateResults;
             _pendingAsyncOperations = new List<Task>();
             _parallelOptions = createTasksOptions;
             _timeBetweenCalls = TimeSpan.FromMilliseconds(100);
@@ -198,7 +198,7 @@ namespace Azure.Compute.Batch
             // Wait for all pending operations to complete
             await Task.WhenAll(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
 
-            _createTasksResult.BatchTaskAddResults.AddRange(_taskAddResults.ToList());
+            _createTasksResult.BatchTaskCreateResults.AddRange(_taskAddResults.ToList());
             return _createTasksResult;
         }
 

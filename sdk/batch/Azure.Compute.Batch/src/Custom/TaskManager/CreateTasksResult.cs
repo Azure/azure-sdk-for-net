@@ -20,13 +20,13 @@ namespace Azure.Compute.Batch
         /// <param name="batchTaskAddResults"></param>
         public CreateTasksResult(List<BatchTaskCreateResult> batchTaskAddResults)
         {
-            BatchTaskAddResults = batchTaskAddResults;
+            BatchTaskCreateResults = batchTaskAddResults;
         }
 
         /// <summary> The results of the CreateTasks operation. This list will
         /// be empty unless CreateTasksOptions is passed into the AddTasks method
         /// with the field ReturnBatchTaskAddResults set to true.</summary>
-        public List<BatchTaskCreateResult> BatchTaskAddResults { get; }
+        public List<BatchTaskCreateResult> BatchTaskCreateResults { get; }
 
         /// <summary> Gets or sets the number of successful tasks. </summary>
         public int Pass { get; set; }

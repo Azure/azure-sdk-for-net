@@ -94,7 +94,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             // Create 1000 tasks in a single request over 10 parallel requests
             CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
-            foreach (BatchTaskCreateResult t in result.BatchTaskAddResults)
+            foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
             {
                 Console.WriteLine("Task {0} created with status {1}. ",
                     t.TaskId, t.Status);
@@ -136,13 +136,13 @@ namespace Azure.Compute.Batch.Tests.Samples
             CreateTasksOptions createTaskOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = 10,
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
 
             // Create 1000 tasks in a single request over 10 parallel requests
             CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
-            foreach (BatchTaskCreateResult t in result.BatchTaskAddResults)
+            foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
             {
                 Console.WriteLine("Task {0} created with status  {1}. ",
                     t.TaskId, t.Status);
@@ -187,13 +187,13 @@ namespace Azure.Compute.Batch.Tests.Samples
             {
                 MaxDegreeOfParallelism = 10,
                 MaxTimeBetweenCallsInSeconds = 60,
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
 
             // Create 1000 tasks in a single request over 10 parallel requests
             CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
-            foreach (BatchTaskCreateResult t in result.BatchTaskAddResults)
+            foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
             {
                 Console.WriteLine("Task {0} created with status  {1}. ",
                     t.TaskId, t.Status);
@@ -234,14 +234,14 @@ namespace Azure.Compute.Batch.Tests.Samples
             CreateTasksOptions createTaskOptions = new CreateTasksOptions()
             {
                 CreateTaskResultHandler = new CustomTaskCollectionResultHandler(),
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
 
             // Create 1000 tasks in a single request using the default settings
             CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
             // Print the status of each task creation
-            foreach (BatchTaskCreateResult t in result.BatchTaskAddResults)
+            foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
             {
                 Console.WriteLine("Task {0} created with status  {1}. ",
                     t.TaskId, t.Status);
@@ -287,7 +287,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             CreateTasksOptions createTaskOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = 10,
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
 
             try

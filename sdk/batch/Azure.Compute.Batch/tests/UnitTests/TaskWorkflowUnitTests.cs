@@ -148,7 +148,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTasksOptions = new CreateTasksOptions()
             {
                 CreateTaskResultHandler = new CustomTaskCollectionResultHandler(),
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTasksOptions);
 
@@ -161,7 +161,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(2, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(2, result.BatchTaskCreateResults.Count);
             Assert.AreEqual(1, result.Pass);
             Assert.AreEqual(1, result.Fail);
         }
@@ -304,7 +304,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTasksOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = parrellelTasks,
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTasksOptions);
@@ -320,7 +320,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
             Assert.AreEqual(tasksCount, result.Pass);
             Assert.AreEqual(0, result.Fail);
         }
@@ -472,7 +472,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTaskOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = parrellelTasks,
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
@@ -488,7 +488,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
             Assert.AreEqual(tasksCount, result.Pass);
             Assert.AreEqual(0, result.Fail);
         }
@@ -521,7 +521,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTaskOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = parrellelTasks,
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
@@ -537,7 +537,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
             Assert.AreEqual(tasksCount, result.Pass);
             Assert.AreEqual(0, result.Fail);
         }
@@ -587,7 +587,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             {
                 MaxDegreeOfParallelism = parrellelTasks,
                 MaxTimeBetweenCallsInSeconds = 0,
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
@@ -603,7 +603,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
             Assert.AreEqual(tasksCount, result.Pass);
             Assert.AreEqual(0, result.Fail);
         }
@@ -653,7 +653,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(0, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(0, result.BatchTaskCreateResults.Count);
             Assert.AreEqual(tasksCount, result.Pass);
             Assert.AreEqual(0, result.Fail);
         }
@@ -688,7 +688,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTaskOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = parrellelTasks,
-                ReturnBatchTaskAddResults = true
+                ReturnBatchTaskCreateResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
@@ -704,7 +704,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
             Assert.AreEqual(tasksCount, result.Pass);
             Assert.AreEqual(0, result.Fail);
         }

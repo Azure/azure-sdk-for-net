@@ -136,7 +136,7 @@ CreateTasksOptions createTaskOptions = new CreateTasksOptions(returnBatchTaskAdd
 // Create 1000 tasks in a single request over 10 parallel requests
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
-foreach (BatchTaskAddResult t in result.BatchTaskAddResults)
+foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
 {
     Console.WriteLine("Task {0} created with status {1}. ",
         t.TaskId, t.Status);
@@ -157,13 +157,13 @@ for (int i = 0; i < tasksCount; i++)
 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
 {
     MaxDegreeOfParallelism = 10,
-    ReturnBatchTaskAddResults = true
+    ReturnBatchTaskCreateResults = true
 };
 
 // Create 1000 tasks in a single request over 10 parallel requests
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
-foreach (BatchTaskAddResult t in result.BatchTaskAddResults)
+foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
 {
     Console.WriteLine("Task {0} created with status  {1}. ",
         t.TaskId, t.Status);
@@ -187,13 +187,13 @@ CreateTasksOptions createTaskOptions = new CreateTasksOptions()
 {
     MaxDegreeOfParallelism = 10,
     MaxTimeBetweenCallsInSeconds = 60,
-    ReturnBatchTaskAddResults = true
+    ReturnBatchTaskCreateResults = true
 };
 
 // Create 1000 tasks in a single request over 10 parallel requests
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
-foreach (BatchTaskAddResult t in result.BatchTaskAddResults)
+foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
 {
     Console.WriteLine("Task {0} created with status  {1}. ",
         t.TaskId, t.Status);
@@ -218,7 +218,7 @@ var cts = new CancellationTokenSource();
 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
 {
     MaxDegreeOfParallelism = 10,
-    ReturnBatchTaskAddResults = true
+    ReturnBatchTaskCreateResults = true
 };
 
 try
@@ -307,14 +307,14 @@ for (int i = 0; i < tasksCount; i++)
 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
 {
     CreateTaskResultHandler = new CustomTaskCollectionResultHandler(),
-    ReturnBatchTaskAddResults = true
+    ReturnBatchTaskCreateResults = true
 };
 
 // Create 1000 tasks in a single request using the default settings
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
 // Print the status of each task creation
-foreach (BatchTaskAddResult t in result.BatchTaskAddResults)
+foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
 {
     Console.WriteLine("Task {0} created with status  {1}. ",
         t.TaskId, t.Status);
