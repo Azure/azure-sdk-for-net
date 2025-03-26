@@ -41,8 +41,6 @@ namespace Azure.Communication.Identity
             new object[] { new string[] { communicationClientsScope, teamsExtensionScope } },
             new object[] { new string[] { teamsExtensionScope, communicationClientsScope } },
             new object[] { new string[] { "invalidScope" } },
-            new object[] { new string[] { "" } },
-            new object[] { new string[] { } }
         };
 
         [SetUp]
@@ -53,41 +51,6 @@ namespace Azure.Communication.Identity
             _mockTokenCredential
               .Setup(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
               .ReturnsAsync(new AccessToken(SampleToken, expiryTime));
-        }
-
-        [Test, TestCaseSource(nameof(validScopes))]
-        public void EntraTokenCredential_Init_ThrowsErrorWithNulls(string[] scopes)
-        {
-            Assert.Throws<ArgumentNullException>(() => new EntraCommunicationTokenCredentialOptions(
-                null,
-                _mockTokenCredential.Object)
-            {
-                Scopes = scopes
-            });
-
-            Assert.Throws<ArgumentException>(() => new EntraCommunicationTokenCredentialOptions(
-                "",
-                _mockTokenCredential.Object)
-            {
-                Scopes = scopes
-            });
-
-            Assert.Throws<ArgumentNullException>(() => new EntraCommunicationTokenCredentialOptions(
-                _resourceEndpoint,
-                null)
-            {
-                Scopes = scopes
-            });
-        }
-
-        [Test]
-        public void EntraTokenCredential_InitWithoutScopes_InitsWithDefaultScope()
-        {
-            var credential = new EntraCommunicationTokenCredentialOptions(
-                _resourceEndpoint,
-                _mockTokenCredential.Object);
-            var scopes = new[] { "https://communication.azure.com/clients/.default" };
-            Assert.AreEqual(credential.Scopes, scopes);
         }
 
         [Test, TestCaseSource(nameof(validScopes))]
@@ -274,10 +237,7 @@ namespace Azure.Communication.Identity
 
         private EntraCommunicationTokenCredentialOptions CreateEntraTokenCredentialOptions(string[] scopes)
         {
-            return new EntraCommunicationTokenCredentialOptions(_resourceEndpoint, _mockTokenCredential.Object)
-            {
-                Scopes = scopes
-            };
+            return new EntraCommunicationTokenCredentialOptions(_resourceEndpoint, _mockTokenCredential.Object, scopes);
         }
 
         private MockResponse CreateMockResponse(int statusCode, string body)

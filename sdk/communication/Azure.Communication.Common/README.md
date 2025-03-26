@@ -118,17 +118,15 @@ var entraTokenCredential = new InteractiveBrowserCredential(options);
 
 var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
     resourceEndpoint: "https://<your-resource>.communication.azure.com",
-    entraTokenCredential: entraTokenCredential)
-    {
-      Scopes = new[] { "https://communication.azure.com/clients/VoIP" }
-    };
+    entraTokenCredential: entraTokenCredential,
+    "https://communication.azure.com/clients/VoIP");
 
 var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
 
 ```
 
 The same approach can be used for authorizing an Entra user with a Teams license to use Teams Phone Extensibility features through your Azure Communication Services resource.
-This requires providing the `https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls` scope
+This requires providing the `https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls` scope. Only one of those scopes can be used at a time.
 ```C# 
 var options = new InteractiveBrowserCredentialOptions
     {
@@ -140,11 +138,8 @@ var entraTokenCredential = new InteractiveBrowserCredential(options);
 
 var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
     resourceEndpoint: "https://<your-resource>.communication.azure.com",
-    entraTokenCredential: entraTokenCredential)
-    )
-    {
-      Scopes = new[] { "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls" }
-    };
+    entraTokenCredential: entraTokenCredential,
+    "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls");
 
 var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
 
