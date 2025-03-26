@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlMigrationServiceData(document.RootElement, options);
                     }
                 default:

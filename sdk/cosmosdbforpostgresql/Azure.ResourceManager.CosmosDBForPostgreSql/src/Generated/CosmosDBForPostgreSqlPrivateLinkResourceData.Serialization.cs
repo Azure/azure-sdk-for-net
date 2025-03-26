@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

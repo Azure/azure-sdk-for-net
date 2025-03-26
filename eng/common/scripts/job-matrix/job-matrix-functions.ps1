@@ -99,8 +99,12 @@ function GenerateMatrix(
     [Array]$nonSparseParameters = @(),
     [Switch]$skipEnvironmentVariables
 ) {
-    $matrixParameters, $importedMatrix, $combinedDisplayNameLookup = `
-        ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
+    $result = ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
+
+    $matrixParameters          = $result.Matrix
+    $importedMatrix            = $result.ImportedMatrix
+    $combinedDisplayNameLookup = $result.DisplayNamesLookup
+
     if ($selectFromMatrixType -eq "sparse") {
         $matrix = GenerateSparseMatrix $matrixParameters $config.displayNamesLookup $nonSparseParameters
     }
@@ -144,6 +148,9 @@ function ProcessNonSparseParameters(
     $nonSparse = [MatrixParameter[]]@()
 
     foreach ($param in $parameters) {
+        if ($null -eq $param){
+            continue
+        }
         if ($param.Name -in $nonSparseParameters) {
             $nonSparse += $param
         }
@@ -422,7 +429,11 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         }
     }
     if ((!$matrix -and !$importPath) -or !$importPath) {
-        return $matrix, @(), $displayNamesLookup
+        return [PSCustomObject]@{
+            Matrix                = $matrix
+            ImportedMatrix        = @()
+            DisplayNamesLookup    = $displayNamesLookup
+        }
     }
 
     if (!(Test-Path $importPath)) {
@@ -444,7 +455,11 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         $combinedDisplayNameLookup[$lookup.Name] = $lookup.Value
     }
 
-    return $matrix, $importedMatrix, $combinedDisplayNameLookup
+    return [PSCustomObject]@{
+        Matrix                = $matrix ?? @()
+        ImportedMatrix        = $importedMatrix
+        DisplayNamesLookup    = $combinedDisplayNameLookup
+    }
 }
 
 function CombineMatrices([Array]$matrix1, [Array]$matrix2, [Hashtable]$displayNamesLookup = @{}) {
@@ -628,6 +643,9 @@ function InitializeMatrix {
 function GetMatrixDimensions([MatrixParameter[]]$parameters) {
     $dimensions = @()
     foreach ($param in $parameters) {
+        if ($null -eq $param){
+            continue
+        }
         $dimensions += $param.Length()
     }
 

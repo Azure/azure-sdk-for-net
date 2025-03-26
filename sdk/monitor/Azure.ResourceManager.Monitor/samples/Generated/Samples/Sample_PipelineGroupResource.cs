@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrievesAPipelineGroupInstanceByName()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupGet.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupGet.json
             // this example is just showing the usage of "PipelineGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAPipelineGroupInstance()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupDelete.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupDelete.json
             // this example is just showing the usage of "PipelineGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesAPipelineGroupInstance()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupUpdate.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupUpdate.json
             // this example is just showing the usage of "PipelineGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,18 +95,15 @@ namespace Azure.ResourceManager.Monitor.Samples
             // invoke the operation
             PipelineGroupPatch patch = new PipelineGroupPatch
             {
-                Tags =
-{
-["tag1"] = "A",
-["tag2"] = "B"
-},
-                Replicas = 3,
-                Receivers = {new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog, "syslog-receiver1")
+                Properties = new PipelineGroupPropertiesUpdate
+                {
+                    Replicas = 3,
+                    Receivers = {new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog, "syslog-receiver1")
 {
 Syslog = new SyslogReceiver("0.0.0.0:514"),
 }},
-                Processors = { },
-                Exporters = {new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
+                    Processors = { },
+                    Exporters = {new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new MonitorWorkspaceLogsExporter(new MonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"), "Custom-MyTableRawData_CL", "dcr-00000000000000000000000000000000", new MonitorWorkspaceLogsSchemaMap(new MonitorWorkspaceLogsRecordMap[]
 {
@@ -122,13 +119,19 @@ BatchQueueSize = 100,
 },
 },
 }},
-                Service = new PipelineGroupService(new PipelineGroupServicePipeline[]
-            {
-new PipelineGroupServicePipeline("MyPipelineForLogs1", PipelineGroupServicePipelineType.Logs, new string[]{"syslog-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
+                    Service = new PipelineGroupServiceUpdate
+                    {
+                        Pipelines = {new PipelineGroupServicePipeline("MyPipelineForLogs1", new PipelineGroupServicePipelineType("Logs"), new string[]{"syslog-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
 {
 Processors = {},
-}
-            }),
+}},
+                    },
+                },
+                Tags =
+{
+["tag1"] = "A",
+["tag2"] = "B"
+},
             };
             ArmOperation<PipelineGroupResource> lro = await pipelineGroup.UpdateAsync(WaitUntil.Completed, patch);
             PipelineGroupResource result = lro.Value;

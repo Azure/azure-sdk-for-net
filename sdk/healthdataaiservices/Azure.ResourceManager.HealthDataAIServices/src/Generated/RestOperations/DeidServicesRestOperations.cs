@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeidServiceData.DeserializeDeidServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeidServiceData.DeserializeDeidServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeidServiceListResult.DeserializeDeidServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeidServiceListResult.DeserializeDeidServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeidServiceListResult.DeserializeDeidServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeidServiceListResult.DeserializeDeidServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeidServiceListResult.DeserializeDeidServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeidServiceListResult.DeserializeDeidServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeidServiceListResult.DeserializeDeidServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         DeidServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeidServiceListResult.DeserializeDeidServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

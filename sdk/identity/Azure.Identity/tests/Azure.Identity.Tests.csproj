@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsPackable>false</IsPackable>
+    <NoWarn>$(NoWarn);0618</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
