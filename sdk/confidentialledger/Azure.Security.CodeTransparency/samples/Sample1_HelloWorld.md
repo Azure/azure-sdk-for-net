@@ -14,7 +14,7 @@ To create a new `CodeTransparencyClient` that will interact with the service, wi
 want to get the publicly accessible data only. Then use a subclient to work with entries:
 
 ```C# Snippet:CodeTransparencySample_CreateClient
-CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 ```
 
 ## Submit the file
@@ -22,7 +22,7 @@ CodeTransparencyClient client = new(new Uri("https://<< service name >>.confiden
 The most basic usage is to submit a valid signature file to the service. Acceptance of the submission is a long running operation which is why the response will contain the operation id.
 
 ```C# Snippet:CodeTransparencySubmission
-CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
 Operation<BinaryData> operation = await client.CreateEntryAsync(content);

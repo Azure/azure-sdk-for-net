@@ -104,7 +104,7 @@ namespace Azure.Security.CodeTransparency
                     cborReader.SkipValue();
             }
 
-            if (!Enum.TryParse(status, true, out OperationStatus parsedStatus))
+            if (!Enum.TryParse(status, true, out CodeTransparencyOperationStatus parsedStatus))
             {
                 RequestFailedException ex = new(response);
                 return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
@@ -113,11 +113,11 @@ namespace Azure.Security.CodeTransparency
             {
                 switch (parsedStatus)
                 {
-                    case OperationStatus.Succeeded:
+                    case CodeTransparencyOperationStatus.Succeeded:
                         return OperationState.Success(response);
-                    case OperationStatus.Failed:
+                    case CodeTransparencyOperationStatus.Failed:
                         return OperationState.Failure(response, new RequestFailedException($"Operation failed. OperationId '{Id}'"));
-                    case OperationStatus.Running:
+                    case CodeTransparencyOperationStatus.Running:
                         return OperationState.Pending(response);
                     default:
                         RequestFailedException ex = new(response);

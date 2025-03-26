@@ -18,64 +18,64 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// <summary>
         /// Expected tree algorithm value in the receipt.
         /// </summary>
-        public const string SUPPORTED_TREE_ALGORITHM = "CCF";
+        public static readonly string SupportedTreeAlgorithm = "CCF";
         /// <summary>
         /// Key ID header key.
         /// </summary>
-        public const ulong RECEIPT_HEADER_KEY_ID = 4;
+        public static readonly ulong ReceiptHeaderKeyId = 4;
         /// <summary>
         /// Issuer header key.
         /// </summary>
-        public const ulong RECEIPT_HEADER_ISSUER = 391;
+        public static readonly ulong ReceiptHeaderIssuer = 391;
         /// <summary>
         /// Header key to get access to the embedded receipts.
         /// </summary>
-        public const int COSE_HEADER_EMBEDDED_RECEIPTS = 394;
+        public static readonly int CoseHeaderEmbeddedReceipts = 394;
         /// <summary>
         /// Service identifier header key.
         /// </summary>
-        public const string RECEIPT_HEADER_SERVICE_ID = "service_id";
+        public static readonly string ReceiptHeaderServiceId = "service_id";
         /// <summary>
         /// Tree algorithm header id.
         /// </summary>
-        public const string RECEIPT_HEADER_TREE_ALGORITHM = "tree_alg";
+        public static readonly string ReceiptHeaderTreeAlgorithm = "tree_alg";
         /// <summary>
         /// Countersign time header key.
         /// </summary>
-        public const string RECEIPT_HEADER_REGISTRATION_TIME = "registration_time";
+        public static readonly string ReceiptHeaderRegistrationTime = "registration_time";
         /// <summary>
         /// CWT ISS Claim (RFC9597) defined in https://www.iana.org/assignments/cwt/cwt.xhtml
         /// </summary>
-        public const int COSE_RECEIPT_CWT_ISS_LABEL = 1;
+        public static readonly int CoseReceiptCwtIssLabel = 1;
         /// <summary>
         /// CWT Map Claim (RFC9597) defined in https://www.iana.org/assignments/cwt/cwt.xhtml
         /// </summary>
-        public const int COSE_RECEIPT_CWT_MAP_LABEL = 15;
+        public static readonly int CoseReceiptCwtMapLabel = 15;
         /// <summary>
         /// Protected header key for verifiable proofs.
         /// </summary>
-        public const int COSE_PHDR_VDP_LABEL = 396;
+        public static readonly int CosePhdrVdpLabel = 396;
         /// <summary>
         /// Protected header key for the verifiable data structure,
         /// as per COSE Receipts (draft) RFC (https://datatracker.ietf.org/doc/draft-ietf-cose-merkle-tree-proofs/)
         /// </summary>
-        public const int COSE_PHDR_VDS_LABEL = 395;
+        public static readonly int CosePhdrVdsLabel = 395;
         /// <summary>
         /// Label for the inclusion proof.
         /// </summary>
-        public const int COSE_RECEIPT_INCLUSION_PROOF_LABEL = -1;
+        public static readonly int CoseReceiptInclusionProofLabel = -1;
         /// <summary>
         /// Label for the leaf in the inclusion proof
         /// </summary>
-        public const int CCF_PROOF_LEAF_LABEL = 1;
+        public static readonly int CcfProofLeafLabel = 1;
         /// <summary>
         /// Label for the path in the inclusion proof
         /// </summary>
-        public const int CCF_PROOF_PATH_LABEL = 2;
+        public static readonly int CcfProofPathLabel = 2;
         /// <summary>
         /// Protected header key for the tree algorithm
         /// </summary>
-        public const int CCF_TREE_ALG_LABEL = 2;
+        public static readonly int CcfTreeAlgLabel = 2;
 
         internal static Dictionary<int, byte[]> ReadCborMap(CborReader reader)
         {
@@ -94,7 +94,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// <summary>
         /// ProofElement is a representation of a tree node (left or right) in the ledger and its hash value.
         /// </summary>
-        public class ProofElement
+        internal class ProofElement
         {
             /// <summary>
             /// If the element is on the left side.
@@ -109,7 +109,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// <summary>
         /// Representation of the countersign structure in the ledger.
         /// </summary>
-        public class Leaf
+        internal class Leaf
         {
             /// <summary>
             /// Internal Transaction Hash value.

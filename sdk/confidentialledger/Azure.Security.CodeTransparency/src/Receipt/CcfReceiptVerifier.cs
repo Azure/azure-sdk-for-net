@@ -87,26 +87,26 @@ namespace Azure.Security.CodeTransparency.Receipt
             }
 
             // Get VDS from ProtectedHeaders
-            if (!receipt.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(COSE_PHDR_VDS_LABEL), out CoseHeaderValue vds))
+            if (!receipt.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(CosePhdrVdsLabel), out CoseHeaderValue vds))
             {
                 throw new InvalidOperationException("Verifiable Data Structure is required");
             }
 
-            if (vds.GetValueAsInt32() != CCF_TREE_ALG_LABEL)
+            if (vds.GetValueAsInt32() != CcfTreeAlgLabel)
             {
                 throw new InvalidOperationException("Verifiable Data Structure is not CCF.");
             }
 
-            if (!receipt.UnprotectedHeaders.TryGetValue(new CoseHeaderLabel(COSE_PHDR_VDP_LABEL), out CoseHeaderValue vdp))
+            if (!receipt.UnprotectedHeaders.TryGetValue(new CoseHeaderLabel(CosePhdrVdpLabel), out CoseHeaderValue vdp))
             {
-                throw new InvalidOperationException($"Verifiable data proof {COSE_PHDR_VDP_LABEL} is required");
+                throw new InvalidOperationException($"Verifiable data proof {CosePhdrVdpLabel} is required");
             }
 
             var proofBytes = vdp.EncodedValue.ToArray();
             CborReader cborReader = new CborReader(proofBytes);
             Dictionary<int, byte[]> proof = ReadCborMap(cborReader);
 
-            if (!proof.TryGetValue(COSE_RECEIPT_INCLUSION_PROOF_LABEL, out var proofs))
+            if (!proof.TryGetValue(CoseReceiptInclusionProofLabel, out var proofs))
             {
                 throw new InvalidOperationException("Inclusion proof is required");
             }
@@ -133,13 +133,13 @@ namespace Azure.Security.CodeTransparency.Receipt
                 Dictionary<int, byte[]> inclusionProof = ReadCborMap(reader1);
 
                 // Ensure Leaf exists in inclusionProof
-                if (!inclusionProof.TryGetValue(CCF_PROOF_LEAF_LABEL, out var leafBytes))
+                if (!inclusionProof.TryGetValue(CcfProofLeafLabel, out var leafBytes))
                 {
                     throw new InvalidOperationException("Leaf must be present");
                 }
 
                 // Ensure Path exist in inclusionProof
-                if (!inclusionProof.TryGetValue(CCF_PROOF_PATH_LABEL, out var proofPaths))
+                if (!inclusionProof.TryGetValue(CcfProofPathLabel, out var proofPaths))
                 {
                     throw new InvalidOperationException("Path must be present");
                 }

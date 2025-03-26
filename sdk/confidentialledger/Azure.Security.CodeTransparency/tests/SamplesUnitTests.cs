@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Security.CodeTransparency.Receipt;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
@@ -90,10 +89,10 @@ namespace Azure.Security.CodeTransparency.Tests
             #region Snippet:CodeTransparencySubmission
             #region Snippet:CodeTransparencySample_CreateClient
 #if !SNIPPET
-            CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+            CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), options);
 #endif
 #if SNIPPET
-            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 #endif
             #endregion Snippet:CodeTransparencySample_CreateClient
 #if !SNIPPET
@@ -103,7 +102,7 @@ namespace Azure.Security.CodeTransparency.Tests
             FileStream fileStream = File.OpenRead("signature.cose");
             BinaryData content = BinaryData.FromStream(fileStream);
 #endif
-            Operation<BinaryData> operation = await client.CreateEntryAsync(content);
+            Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
             #endregion Snippet:CodeTransparencySubmission
 
             #region Snippet:CodeTransparencySample1_WaitForResult
@@ -145,7 +144,14 @@ namespace Azure.Security.CodeTransparency.Tests
             JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
             byte[] inputSignedStatement = readFileBytes("<input_signed_claims");
 
-            CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
+            try
+            {
+                CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 #endif
             #endregion Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
 
@@ -198,7 +204,15 @@ namespace Azure.Security.CodeTransparency.Tests
 #if SNIPPET
             Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
             byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
-            client.RunTransparentStatementVerification(transparentStatementBytes);
+
+            try
+            {
+                client.RunTransparentStatementVerification(transparentStatementBytes);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 #endif
             #endregion
 #endif

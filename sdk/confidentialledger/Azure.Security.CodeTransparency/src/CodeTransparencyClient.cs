@@ -53,6 +53,18 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
+        /// Initializes a new instance of CodeTransparencyClient. The client will download its own
+        /// TLS CA cert to perform server cert authentication.
+        /// If the CA changes then there is a TTL which will help healing the long lived clients.
+        /// </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public CodeTransparencyClient(Uri endpoint, CodeTransparencyClientOptions options = default) : this(endpoint, null, options)
+        {
+        }
+
+        /// <summary>
         /// Creates the transport option which will pull a custom TLS CA for the verification purposes.
         /// The CA is hosted in the confidential ledger identity service which in turn gets populated
         /// with the cert when the CCF enclave application boots.
@@ -109,10 +121,11 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Operation<BinaryData> CreateEntry(BinaryData body, CancellationToken cancellationToken = default)
+        public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -154,7 +167,14 @@ namespace Azure.Security.CodeTransparency
                 }
                 else
                 {
-                    return new CreateEntryOperation(this, operationId);
+                    var entryOperation = new CreateEntryOperation(this, operationId);
+
+                    if (waitUntil == WaitUntil.Completed)
+                    {
+                        entryOperation.WaitForCompletionResponse(cancellationToken);
+                    }
+
+                    return entryOperation;
                 }
             }
             catch (Exception e)
@@ -165,10 +185,11 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Operation<BinaryData>> CreateEntryAsync(BinaryData body, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -210,7 +231,14 @@ namespace Azure.Security.CodeTransparency
                 }
                 else
                 {
-                    return new CreateEntryOperation(this, operationId);
+                    var entryOperation = new CreateEntryOperation(this, operationId);
+
+                    if (waitUntil == WaitUntil.Completed)
+                    {
+                       await entryOperation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    }
+
+                    return entryOperation;
                 }
             }
             catch (Exception e)
@@ -237,7 +265,7 @@ namespace Azure.Security.CodeTransparency
             // Embedded receipt bytes contain receipt under the map with key as 394 and the value as the receipt bytes
             // See https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-10.html#name-transparent-statements
             if (!coseSign1Message.UnprotectedHeaders.
-                TryGetValue(new CoseHeaderLabel(CcfReceipt.COSE_HEADER_EMBEDDED_RECEIPTS),
+                TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts),
                 out CoseHeaderValue embeddedReceipts))
             {
                 throw new InvalidOperationException("embeddedReceipts not found");
@@ -287,7 +315,7 @@ namespace Azure.Security.CodeTransparency
         {
             CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(receiptBytes);
 
-            if (!coseSign1Message.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(CcfReceipt.COSE_RECEIPT_CWT_MAP_LABEL), out CoseHeaderValue cwtMap))
+            if (!coseSign1Message.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseReceiptCwtMapLabel), out CoseHeaderValue cwtMap))
             {
                 throw new InvalidOperationException("CWT-MAP not found in receipt.");
             }
@@ -299,7 +327,7 @@ namespace Azure.Security.CodeTransparency
             while (cborReader.PeekState() != CborReaderState.EndMap)
             {
                 int key = cborReader.ReadInt32();
-                if (key == CcfReceipt.COSE_RECEIPT_CWT_ISS_LABEL)
+                if (key == CcfReceipt.CoseReceiptCwtIssLabel)
                     issuer = cborReader.ReadTextString();
                 else
                     cborReader.SkipValue();

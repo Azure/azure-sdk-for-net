@@ -49,7 +49,14 @@ When receipt is embedded in the signature then passing just the signature is eno
 ```C# Snippet:CodeTransparencyVerification
 Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
 byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
-client.RunTransparentStatementVerification(transparentStatementBytes);
+try
+{
+    client.RunTransparentStatementVerification(transparentStatementBytes);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+}
 ```
 
 Alternatively, you can provide your own JsonWebKey, the receipt and the corresponding signed claims
@@ -59,5 +66,12 @@ Alternatively, you can provide your own JsonWebKey, the receipt and the correspo
 JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
 byte[] inputSignedStatement = readFileBytes("<input_signed_claims");
 
-CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
+try
+{
+    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+}
 ```
