@@ -2966,7 +2966,7 @@ namespace Azure.AI.Projects
         /// <param name="body"> Multipart body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<AgentFile>> UploadFileAsync(UploadFileRequest body, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<AgentFile>> UploadFileAsync(UploadFileRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -2980,7 +2980,7 @@ namespace Azure.AI.Projects
         /// <param name="body"> Multipart body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<AgentFile> UploadFile(UploadFileRequest body, CancellationToken cancellationToken = default)
+        internal virtual Response<AgentFile> UploadFile(UploadFileRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

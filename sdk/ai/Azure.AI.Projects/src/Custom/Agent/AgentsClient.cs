@@ -306,7 +306,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            using FileStream stream = File.OpenRead(filePath);
+            using FileStream stream = System.IO.File.OpenRead(filePath);
             return UploadFile(stream, purpose, filePath, cancellationToken);
         }
 
@@ -323,7 +323,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            using FileStream stream = File.OpenRead(filePath);
+            using FileStream stream = System.IO.File.OpenRead(filePath);
             return await UploadFileAsync(stream, purpose, filePath, cancellationToken).ConfigureAwait(false);
         }
 
@@ -337,8 +337,9 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+            File azureFile = new(BinaryData.FromStream(data));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(azureFile, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
@@ -355,8 +356,9 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+            File azureFile = new(BinaryData.FromStream(data));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(azureFile, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
