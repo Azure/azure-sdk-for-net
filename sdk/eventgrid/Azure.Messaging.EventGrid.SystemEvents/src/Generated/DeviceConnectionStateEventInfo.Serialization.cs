@@ -34,11 +34,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(DeviceConnectionStateEventInfo)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(SequenceNumber))
-            {
-                writer.WritePropertyName("sequenceNumber"u8);
-                writer.WriteStringValue(SequenceNumber);
-            }
+            writer.WritePropertyName("sequenceNumber"u8);
+            writer.WriteStringValue(SequenceNumber);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

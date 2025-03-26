@@ -34,16 +34,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AvsScriptExecutionEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(OperationId))
-            {
-                writer.WritePropertyName("operationId"u8);
-                writer.WriteStringValue(OperationId);
-            }
-            if (Optional.IsDefined(CmdletId))
-            {
-                writer.WritePropertyName("cmdletId"u8);
-                writer.WriteStringValue(CmdletId);
-            }
+            writer.WritePropertyName("operationId"u8);
+            writer.WriteStringValue(OperationId);
+            writer.WritePropertyName("cmdletId"u8);
+            writer.WriteStringValue(CmdletId);
             if (Optional.IsCollectionDefined(Output))
             {
                 writer.WritePropertyName("output"u8);

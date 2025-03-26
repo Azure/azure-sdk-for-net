@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
             else
             {
-                var data = new byte[0];
+                byte[] data = GetRandomBuffer(objectLength ?? 0);
                 using (var stream = new MemoryStream(data))
                 {
                     await UploadPagesAsync(

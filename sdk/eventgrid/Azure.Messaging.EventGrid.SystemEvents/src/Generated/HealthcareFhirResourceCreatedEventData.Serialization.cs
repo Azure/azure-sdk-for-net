@@ -34,18 +34,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(HealthcareFhirResourceCreatedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("resourceType"u8);
-            writer.WriteStringValue(FhirResourceType.ToString());
-            if (Optional.IsDefined(FhirServiceHostName))
+            if (Optional.IsDefined(FhirResourceType))
             {
-                writer.WritePropertyName("resourceFhirAccount"u8);
-                writer.WriteStringValue(FhirServiceHostName);
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(FhirResourceType.Value.ToString());
             }
-            if (Optional.IsDefined(FhirResourceId))
-            {
-                writer.WritePropertyName("resourceFhirId"u8);
-                writer.WriteStringValue(FhirResourceId);
-            }
+            writer.WritePropertyName("resourceFhirAccount"u8);
+            writer.WriteStringValue(FhirServiceHostName);
+            writer.WritePropertyName("resourceFhirId"u8);
+            writer.WriteStringValue(FhirResourceId);
             if (Optional.IsDefined(FhirResourceVersionId))
             {
                 writer.WritePropertyName("resourceVersionId"u8);
@@ -88,7 +85,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            HealthcareFhirResourceType resourceType = default;
+            HealthcareFhirResourceType? resourceType = default;
             string resourceFhirAccount = default;
             string resourceFhirId = default;
             long? resourceVersionId = default;
@@ -98,6 +95,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("resourceType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     resourceType = new HealthcareFhirResourceType(property.Value.GetString());
                     continue;
                 }

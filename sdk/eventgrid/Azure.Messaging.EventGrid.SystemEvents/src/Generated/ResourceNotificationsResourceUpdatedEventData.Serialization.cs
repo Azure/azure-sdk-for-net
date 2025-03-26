@@ -38,11 +38,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteObjectValue(ResourceDetails, options);
             writer.WritePropertyName("operationalInfo"u8);
             writer.WriteObjectValue(OperationalDetails, options);
-            if (Optional.IsDefined(ApiVersion))
-            {
-                writer.WritePropertyName("apiVersion"u8);
-                writer.WriteStringValue(ApiVersion);
-            }
+            writer.WritePropertyName("apiVersion"u8);
+            writer.WriteStringValue(ApiVersion);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

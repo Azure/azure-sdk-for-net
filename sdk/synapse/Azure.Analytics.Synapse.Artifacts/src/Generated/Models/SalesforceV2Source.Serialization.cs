@@ -24,10 +24,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("SOQLQuery"u8);
                 writer.WriteObjectValue<object>(SoqlQuery);
             }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteObjectValue<object>(Query);
+            }
             if (Optional.IsDefined(IncludeDeletedObjects))
             {
                 writer.WritePropertyName("includeDeletedObjects"u8);
                 writer.WriteObjectValue<object>(IncludeDeletedObjects);
+            }
+            if (Optional.IsDefined(PageSize))
+            {
+                writer.WritePropertyName("pageSize"u8);
+                writer.WriteObjectValue<object>(PageSize);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -71,7 +81,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object soqlQuery = default;
+            object query = default;
             object includeDeletedObjects = default;
+            object pageSize = default;
             object queryTimeout = default;
             object additionalColumns = default;
             string type = default;
@@ -91,6 +103,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     soqlQuery = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("query"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    query = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("includeDeletedObjects"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -98,6 +119,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     includeDeletedObjects = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("pageSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pageSize = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -162,7 +192,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 queryTimeout,
                 additionalColumns,
                 soqlQuery,
-                includeDeletedObjects);
+                query,
+                includeDeletedObjects,
+                pageSize);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

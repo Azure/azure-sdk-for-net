@@ -34,16 +34,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(SubscriptionValidationEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ValidationCode))
-            {
-                writer.WritePropertyName("validationCode"u8);
-                writer.WriteStringValue(ValidationCode);
-            }
-            if (Optional.IsDefined(ValidationUrl))
-            {
-                writer.WritePropertyName("validationUrl"u8);
-                writer.WriteStringValue(ValidationUrl);
-            }
+            writer.WritePropertyName("validationCode"u8);
+            writer.WriteStringValue(ValidationCode);
+            writer.WritePropertyName("validationUrl"u8);
+            writer.WriteStringValue(ValidationUrl);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

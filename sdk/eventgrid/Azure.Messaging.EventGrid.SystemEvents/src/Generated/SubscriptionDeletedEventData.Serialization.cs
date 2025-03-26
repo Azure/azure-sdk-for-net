@@ -34,11 +34,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(SubscriptionDeletedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(EventSubscriptionId))
-            {
-                writer.WritePropertyName("eventSubscriptionId"u8);
-                writer.WriteStringValue(EventSubscriptionId);
-            }
+            writer.WritePropertyName("eventSubscriptionId"u8);
+            writer.WriteStringValue(EventSubscriptionId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

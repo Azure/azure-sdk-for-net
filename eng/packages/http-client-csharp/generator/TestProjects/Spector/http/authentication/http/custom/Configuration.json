@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Authentication.Http.Custom",
-  "library-name": "Authentication.Http.Custom"
+  "package-name": "Authentication.Http.Custom"
 }

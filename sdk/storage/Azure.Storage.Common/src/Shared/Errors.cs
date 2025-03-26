@@ -48,7 +48,7 @@ namespace Azure.Storage
             => new ArgumentException($"Invalid service: '{s}'");
 
         public static ArgumentException InsufficientStorageTransferOptions(long streamLength, long statedMaxBlockSize, long necessaryMinBlockSize)
-            => new ArgumentException($"Cannot upload {streamLength} bytes with a maximum transfer size of {statedMaxBlockSize} bytes per block. Please increase the StorageTransferOptions.MaximumTransferSize to at least {necessaryMinBlockSize}.");
+            => new ArgumentException($"Cannot transfer {streamLength} bytes with a maximum transfer size of {statedMaxBlockSize} bytes per block. Please increase the TransferOptions.MaximumTransferChunkSize to at least {necessaryMinBlockSize}.");
 
         public static InvalidDataException HashMismatch(string hashHeaderName)
             => new InvalidDataException($"{hashHeaderName} did not match hash of recieved data.");

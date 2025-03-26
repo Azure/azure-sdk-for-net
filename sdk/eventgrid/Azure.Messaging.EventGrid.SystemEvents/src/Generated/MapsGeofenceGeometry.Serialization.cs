@@ -34,21 +34,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(MapsGeofenceGeometry)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(DeviceId))
-            {
-                writer.WritePropertyName("deviceId"u8);
-                writer.WriteStringValue(DeviceId);
-            }
+            writer.WritePropertyName("deviceId"u8);
+            writer.WriteStringValue(DeviceId);
             if (Optional.IsDefined(Distance))
             {
                 writer.WritePropertyName("distance"u8);
                 writer.WriteNumberValue(Distance.Value);
             }
-            if (Optional.IsDefined(GeometryId))
-            {
-                writer.WritePropertyName("geometryId"u8);
-                writer.WriteStringValue(GeometryId);
-            }
+            writer.WritePropertyName("geometryId"u8);
+            writer.WriteStringValue(GeometryId);
             if (Optional.IsDefined(NearestLat))
             {
                 writer.WritePropertyName("nearestLat"u8);

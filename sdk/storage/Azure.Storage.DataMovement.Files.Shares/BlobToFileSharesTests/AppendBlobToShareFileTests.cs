@@ -42,7 +42,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         private const string _fileResourcePrefix = "test-file-";
         private const string _expectedOverwriteExceptionMessage = "Cannot overwrite file.";
         protected readonly object _serviceVersion;
-        private const string _defaultContentType = "text/plain";
+        private const string _defaultContentType = "image/jpeg";
         private readonly string[] _defaultContentLanguageFile = { "en-US" };
         private const string _defaultContentLanguageBlob = "en-US";
         private const string _defaultContentDisposition = "inline";
@@ -122,9 +122,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 }
                 else
                 {
-                    var data = GetRandomBuffer(objectLength.Value);
-                    using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await UploadAppendBlocksAsync(blobClient, originalStream, cancellationToken);
+                    byte[] data = GetRandomBuffer(objectLength.Value);
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await UploadAppendBlocksAsync(blobClient, stream, cancellationToken);
+                    }
                 }
             }
             Uri sourceUri = blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));

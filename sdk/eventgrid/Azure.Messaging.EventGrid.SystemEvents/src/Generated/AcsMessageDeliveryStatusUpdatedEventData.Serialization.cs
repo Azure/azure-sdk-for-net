@@ -40,10 +40,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("channelType"u8);
-            writer.WriteStringValue(ChannelKind.ToString());
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(ChannelKind))
+            {
+                writer.WritePropertyName("channelType"u8);
+                writer.WriteStringValue(ChannelKind.Value.ToString());
+            }
         }
 
         AcsMessageDeliveryStatusUpdatedEventData IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,11 +73,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string messageId = default;
-            AcsMessageDeliveryStatus status = default;
-            AcsMessageChannelKind channelType = default;
+            AcsMessageDeliveryStatus? status = default;
+            AcsMessageChannelKind? channelType = default;
             string @from = default;
             string to = default;
-            DateTimeOffset receivedTimeStamp = default;
+            DateTimeOffset? receivedTimeStamp = default;
             AcsMessageChannelEventError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,11 +90,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("status"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     status = new AcsMessageDeliveryStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("channelType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     channelType = new AcsMessageChannelKind(property.Value.GetString());
                     continue;
                 }
@@ -104,11 +118,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("receivedTimeStamp"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     receivedTimeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("error"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     error = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(property.Value, options);
                     continue;
                 }
