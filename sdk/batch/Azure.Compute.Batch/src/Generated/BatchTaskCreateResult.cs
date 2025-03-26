@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Result for a single Task added as part of an add Task collection operation. </summary>
-    public partial class BatchTaskAddResult
+    /// <summary> Result for a single Task created as part of an add Task collection operation. </summary>
+    public partial class BatchTaskCreateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskAddResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchTaskCreateResult"/>. </summary>
         /// <param name="status"> The status of the add Task request. </param>
         /// <param name="taskId"> The ID of the Task for which this is the result. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        internal BatchTaskAddResult(BatchTaskAddStatus status, string taskId)
+        internal BatchTaskCreateResult(BatchTaskAddStatus status, string taskId)
         {
             Argument.AssertNotNull(taskId, nameof(taskId));
 
@@ -57,7 +57,7 @@ namespace Azure.Compute.Batch
             TaskId = taskId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskAddResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchTaskCreateResult"/>. </summary>
         /// <param name="status"> The status of the add Task request. </param>
         /// <param name="taskId"> The ID of the Task for which this is the result. </param>
         /// <param name="eTag"> The ETag of the Task, if the Task was successfully added. You can use this to detect whether the Task has changed between requests. In particular, you can be pass the ETag with an Update Task request to specify that your changes should take effect only if nobody else has modified the Job in the meantime. </param>
@@ -65,7 +65,7 @@ namespace Azure.Compute.Batch
         /// <param name="location"> The URL of the Task, if the Task was successfully added. </param>
         /// <param name="error"> The error encountered while attempting to add the Task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskAddResult(BatchTaskAddStatus status, string taskId, string eTag, DateTimeOffset? lastModified, string location, BatchError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchTaskCreateResult(BatchTaskAddStatus status, string taskId, string eTag, DateTimeOffset? lastModified, string location, BatchError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             TaskId = taskId;
@@ -76,8 +76,8 @@ namespace Azure.Compute.Batch
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskAddResult"/> for deserialization. </summary>
-        internal BatchTaskAddResult()
+        /// <summary> Initializes a new instance of <see cref="BatchTaskCreateResult"/> for deserialization. </summary>
+        internal BatchTaskCreateResult()
         {
         }
 

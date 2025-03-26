@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
         private const int HasNotRun = 0;
         private const int HasRun = 1;
         private bool _returnBatchTaskAddResults = false;
-        private readonly ConcurrentBag<BatchTaskAddResult> _taskAddResults;
+        private readonly ConcurrentBag<BatchTaskCreateResult> _taskAddResults;
         private readonly object _createTasksResultLock = new object();
         private CreateTasksResult _createTasksResult;
         private CancellationToken _cancellationToken;
@@ -88,8 +88,8 @@ namespace Azure.Compute.Batch
             _jobId = jobId;
             _cancellationToken = cancellationToken;
             _remainingTasksToAdd = new ConcurrentQueue<TrackedBatchTask>();
-            _taskAddResults = new ConcurrentBag<BatchTaskAddResult>();
-            _createTasksResult = new CreateTasksResult(new List<BatchTaskAddResult>());
+            _taskAddResults = new ConcurrentBag<BatchTaskCreateResult>();
+            _createTasksResult = new CreateTasksResult(new List<BatchTaskCreateResult>());
             _hasRun = HasNotRun;
             _maxTasks = 100;
             _returnBatchTaskAddResults = createTasksOptions.ReturnBatchTaskAddResults;
@@ -279,7 +279,7 @@ namespace Azure.Compute.Batch
             BatchCreateTaskCollectionResult addTaskResults,
             IReadOnlyDictionary<string, TrackedBatchTask> taskMap)
         {
-            foreach (BatchTaskAddResult protoAddTaskResult in addTaskResults.Value)
+            foreach (BatchTaskCreateResult protoAddTaskResult in addTaskResults.Value)
             {
                 string taskId = protoAddTaskResult.TaskId;
                 TrackedBatchTask trackedTask = taskMap[taskId];

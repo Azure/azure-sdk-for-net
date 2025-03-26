@@ -1126,26 +1126,26 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchCreateTaskCollectionResult"/>. </summary>
-        /// <param name="value"> The results of the add Task collection operation. </param>
+        /// <param name="value"> The results of the create Task collection operation. </param>
         /// <returns> A new <see cref="Batch.BatchCreateTaskCollectionResult"/> instance for mocking. </returns>
-        public static BatchCreateTaskCollectionResult BatchCreateTaskCollectionResult(IEnumerable<BatchTaskAddResult> value = null)
+        public static BatchCreateTaskCollectionResult BatchCreateTaskCollectionResult(IEnumerable<BatchTaskCreateResult> value = null)
         {
-            value ??= new List<BatchTaskAddResult>();
+            value ??= new List<BatchTaskCreateResult>();
 
             return new BatchCreateTaskCollectionResult(value?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskAddResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskCreateResult"/>. </summary>
         /// <param name="status"> The status of the add Task request. </param>
         /// <param name="taskId"> The ID of the Task for which this is the result. </param>
         /// <param name="eTag"> The ETag of the Task, if the Task was successfully added. You can use this to detect whether the Task has changed between requests. In particular, you can be pass the ETag with an Update Task request to specify that your changes should take effect only if nobody else has modified the Job in the meantime. </param>
         /// <param name="lastModified"> The last modified time of the Task. </param>
         /// <param name="location"> The URL of the Task, if the Task was successfully added. </param>
         /// <param name="error"> The error encountered while attempting to add the Task. </param>
-        /// <returns> A new <see cref="Batch.BatchTaskAddResult"/> instance for mocking. </returns>
-        public static BatchTaskAddResult BatchTaskAddResult(BatchTaskAddStatus status = default, string taskId = null, string eTag = null, DateTimeOffset? lastModified = null, string location = null, BatchError error = null)
+        /// <returns> A new <see cref="Batch.BatchTaskCreateResult"/> instance for mocking. </returns>
+        public static BatchTaskCreateResult BatchTaskCreateResult(BatchTaskAddStatus status = default, string taskId = null, string eTag = null, DateTimeOffset? lastModified = null, string location = null, BatchError error = null)
         {
-            return new BatchTaskAddResult(
+            return new BatchTaskCreateResult(
                 status,
                 taskId,
                 eTag,

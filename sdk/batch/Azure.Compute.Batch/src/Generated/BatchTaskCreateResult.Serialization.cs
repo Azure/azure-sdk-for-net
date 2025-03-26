@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchTaskAddResult : IUtf8JsonSerializable, IJsonModel<BatchTaskAddResult>
+    public partial class BatchTaskCreateResult : IUtf8JsonSerializable, IJsonModel<BatchTaskCreateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskAddResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskCreateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BatchTaskAddResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchTaskCreateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskAddResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchTaskAddResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchTaskCreateResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("status"u8);
@@ -75,19 +75,19 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchTaskAddResult IJsonModel<BatchTaskAddResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchTaskCreateResult IJsonModel<BatchTaskCreateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskAddResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchTaskAddResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchTaskCreateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchTaskAddResult(document.RootElement, options);
+            return DeserializeBatchTaskCreateResult(document.RootElement, options);
         }
 
-        internal static BatchTaskAddResult DeserializeBatchTaskAddResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchTaskCreateResult DeserializeBatchTaskCreateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -149,7 +149,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchTaskAddResult(
+            return new BatchTaskCreateResult(
                 status,
                 taskId,
                 eTag,
@@ -159,43 +159,43 @@ namespace Azure.Compute.Batch
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BatchTaskAddResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchTaskCreateResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskAddResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskAddResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchTaskCreateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BatchTaskAddResult IPersistableModel<BatchTaskAddResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchTaskCreateResult IPersistableModel<BatchTaskCreateResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskAddResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBatchTaskAddResult(document.RootElement, options);
+                        return DeserializeBatchTaskCreateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskAddResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchTaskCreateResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BatchTaskAddResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchTaskCreateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchTaskAddResult FromResponse(Response response)
+        internal static BatchTaskCreateResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchTaskAddResult(document.RootElement);
+            return DeserializeBatchTaskCreateResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

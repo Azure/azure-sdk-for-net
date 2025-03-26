@@ -18,7 +18,7 @@ namespace Azure.Compute.Batch
         /// Initializes a new instance of the <see cref="CreateTasksResult"/> class.
         /// </summary>
         /// <param name="batchTaskAddResults"></param>
-        public CreateTasksResult(List<BatchTaskAddResult> batchTaskAddResults)
+        public CreateTasksResult(List<BatchTaskCreateResult> batchTaskAddResults)
         {
             BatchTaskAddResults = batchTaskAddResults;
         }
@@ -26,7 +26,7 @@ namespace Azure.Compute.Batch
         /// <summary> The results of the CreateTasks operation. This list will
         /// be empty unless CreateTasksOptions is passed into the AddTasks method
         /// with the field ReturnBatchTaskAddResults set to true.</summary>
-        public List<BatchTaskAddResult> BatchTaskAddResults { get; }
+        public List<BatchTaskCreateResult> BatchTaskAddResults { get; }
 
         /// <summary> Gets or sets the number of successful tasks. </summary>
         public int Pass { get; set; }

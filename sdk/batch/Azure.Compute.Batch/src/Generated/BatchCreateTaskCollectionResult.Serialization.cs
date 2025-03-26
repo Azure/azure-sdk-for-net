@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IReadOnlyList<BatchTaskAddResult> value = default;
+            IReadOnlyList<BatchTaskCreateResult> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<BatchTaskAddResult> array = new List<BatchTaskAddResult>();
+                    List<BatchTaskCreateResult> array = new List<BatchTaskCreateResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchTaskAddResult.DeserializeBatchTaskAddResult(item, options));
+                        array.Add(BatchTaskCreateResult.DeserializeBatchTaskCreateResult(item, options));
                     }
                     value = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchCreateTaskCollectionResult(value ?? new ChangeTrackingList<BatchTaskAddResult>(), serializedAdditionalRawData);
+            return new BatchCreateTaskCollectionResult(value ?? new ChangeTrackingList<BatchTaskCreateResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchCreateTaskCollectionResult>.Write(ModelReaderWriterOptions options)

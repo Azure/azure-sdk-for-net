@@ -48,19 +48,19 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
         internal BatchCreateTaskCollectionResult()
         {
-            Value = new ChangeTrackingList<BatchTaskAddResult>();
+            Value = new ChangeTrackingList<BatchTaskCreateResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
-        /// <param name="value"> The results of the add Task collection operation. </param>
+        /// <param name="value"> The results of the create Task collection operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchCreateTaskCollectionResult(IReadOnlyList<BatchTaskAddResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchCreateTaskCollectionResult(IReadOnlyList<BatchTaskCreateResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The results of the add Task collection operation. </summary>
-        public IReadOnlyList<BatchTaskAddResult> Value { get; }
+        /// <summary> The results of the create Task collection operation. </summary>
+        public IReadOnlyList<BatchTaskCreateResult> Value { get; }
     }
 }
