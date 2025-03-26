@@ -25,7 +25,7 @@ namespace Azure.Communication.Identity
         protected string TokenResponse = string.Format(TokenResponseTemplate, SampleToken, SampleTokenExpiry);
 
         private Mock<TokenCredential> _mockTokenCredential = null!;
-        private const string comunicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
+        private const string communicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
         private const string communicationClientsPrefix = "https://communication.azure.com/clients/";
         private const string communicationClientsScope = communicationClientsPrefix + "VoIP";
         private const string teamsExtensionEndpoint = "/access/teamsExtension/:exchangeAccessToken";
@@ -124,13 +124,13 @@ namespace Azure.Communication.Identity
             }
             else
             {
-                Assert.AreEqual(comunicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
+                Assert.AreEqual(communicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
             }
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
-        public async Task EntraTokenCredential_InitWithoutScopes_ReturnsComunicationClientsToken()
+        public async Task EntraTokenCredential_InitWithoutScopes_ReturnsCommunicationClientsToken()
         {
             // Arrange
             var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
@@ -144,7 +144,7 @@ namespace Azure.Communication.Identity
             // Assert
             Assert.AreEqual(SampleToken, token.Token);
             Assert.AreEqual(token.ExpiresOn, expiryTime);
-            Assert.AreEqual(comunicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
+            Assert.AreEqual(communicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
