@@ -42,7 +42,7 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Browses for available phone numbers to purchase. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="phoneNumbersBrowseRequest"> An object defining the criteria to browse for available phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Browses for available phone numbers to purchase. The response will be a randomized list of phone numbers available to purchase matching the browsing criteria. This operation is not paginated. Since the results are randomized, repeating the same request will not guarantee the same results. </remarks>
         public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
@@ -62,7 +62,7 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Browses for available phone numbers to purchase. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="phoneNumbersBrowseRequest"> An object defining the criteria to browse for available phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Browses for available phone numbers to purchase. The response will be a randomized list of phone numbers available to purchase matching the browsing criteria. This operation is not paginated. Since the results are randomized, repeating the same request will not guarantee the same results. </remarks>
         public virtual Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
@@ -440,26 +440,26 @@ namespace Azure.Communication.PhoneNumbers
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberOffering.DeserializePhoneNumberOffering, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListOfferings", "phoneNumberOfferings", "nextLink", cancellationToken);
         }
 
-        /// <summary> Get all reservations. </summary>
+        /// <summary> Lists all reservations. </summary>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Retrieves a paginated list of all phone number reservations. Note that the reservations will not be populated with the phone numbers associated with them. </remarks>
-        public virtual AsyncPageable<PhoneNumbersReservation> GetReservationsAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumbersReservation> ListReservationsAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetReservationsRequest(maxPageSize);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetReservationsNextPageRequest(nextLink, maxPageSize);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.GetReservations", "reservations", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListReservationsRequest(maxPageSize);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListReservationsNextPageRequest(nextLink, maxPageSize);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListReservations", "reservations", "nextLink", cancellationToken);
         }
 
-        /// <summary> Get all reservations. </summary>
+        /// <summary> Lists all reservations. </summary>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Retrieves a paginated list of all phone number reservations. Note that the reservations will not be populated with the phone numbers associated with them. </remarks>
-        public virtual Pageable<PhoneNumbersReservation> GetReservations(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumbersReservation> ListReservations(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetReservationsRequest(maxPageSize);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetReservationsNextPageRequest(nextLink, maxPageSize);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.GetReservations", "reservations", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListReservationsRequest(maxPageSize);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListReservationsNextPageRequest(nextLink, maxPageSize);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListReservations", "reservations", "nextLink", cancellationToken);
         }
 
         /// <summary> Gets the list of all purchased phone numbers. </summary>

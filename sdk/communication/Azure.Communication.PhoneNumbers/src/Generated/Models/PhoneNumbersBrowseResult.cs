@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> The PhoneNumbersBrowseResult. </summary>
+    /// <summary> The result of a phone number browse operation. </summary>
     public partial class PhoneNumbersBrowseResult
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumbersBrowseResult"/>. </summary>

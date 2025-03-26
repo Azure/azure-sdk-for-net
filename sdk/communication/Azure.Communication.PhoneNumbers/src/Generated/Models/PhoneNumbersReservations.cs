@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> The PhoneNumbersReservations. </summary>
+    /// <summary> Represents a list of phone numbers reservations. Note that the phone numbers from each reservation are not included. </summary>
     internal partial class PhoneNumbersReservations
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumbersReservations"/>. </summary>

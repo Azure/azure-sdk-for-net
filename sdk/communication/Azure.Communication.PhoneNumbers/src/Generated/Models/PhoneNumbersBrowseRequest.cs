@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> The PhoneNumbersBrowseRequest. </summary>
+    /// <summary> The parameters for the browse operation. </summary>
     public partial class PhoneNumbersBrowseRequest
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumbersBrowseRequest"/>. </summary>

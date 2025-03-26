@@ -128,7 +128,7 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Browses for available phone numbers to purchase. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="phoneNumbersBrowseRequest"> An object defining the criteria to browse for available phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
         /// <remarks> Browses for available phone numbers to purchase. The response will be a randomized list of phone numbers available to purchase matching the browsing criteria. This operation is not paginated. Since the results are randomized, repeating the same request will not guarantee the same results. </remarks>
@@ -161,7 +161,7 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Browses for available phone numbers to purchase. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseRequest"/> to use. </param>
+        /// <param name="phoneNumbersBrowseRequest"> An object defining the criteria to browse for available phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
         /// <remarks> Browses for available phone numbers to purchase. The response will be a randomized list of phone numbers available to purchase matching the browsing criteria. This operation is not paginated. Since the results are randomized, repeating the same request will not guarantee the same results. </remarks>
@@ -260,7 +260,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateGetReservationsRequest(int? maxPageSize)
+        internal HttpMessage CreateListReservationsRequest(int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -278,13 +278,13 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        /// <summary> Get all reservations. </summary>
+        /// <summary> Lists all reservations. </summary>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Retrieves a paginated list of all phone number reservations. Note that the reservations will not be populated with the phone numbers associated with them. </remarks>
-        public async Task<Response<PhoneNumbersReservations>> GetReservationsAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PhoneNumbersReservations>> ListReservationsAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetReservationsRequest(maxPageSize);
+            using var message = CreateListReservationsRequest(maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -300,13 +300,13 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Get all reservations. </summary>
+        /// <summary> Lists all reservations. </summary>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Retrieves a paginated list of all phone number reservations. Note that the reservations will not be populated with the phone numbers associated with them. </remarks>
-        public Response<PhoneNumbersReservations> GetReservations(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<PhoneNumbersReservations> ListReservations(int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetReservationsRequest(maxPageSize);
+            using var message = CreateListReservationsRequest(maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1147,7 +1147,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateGetReservationsNextPageRequest(string nextLink, int? maxPageSize)
+        internal HttpMessage CreateListReservationsNextPageRequest(string nextLink, int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1160,20 +1160,20 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        /// <summary> Get all reservations. </summary>
+        /// <summary> Lists all reservations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         /// <remarks> Retrieves a paginated list of all phone number reservations. Note that the reservations will not be populated with the phone numbers associated with them. </remarks>
-        public async Task<Response<PhoneNumbersReservations>> GetReservationsNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PhoneNumbersReservations>> ListReservationsNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetReservationsNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListReservationsNextPageRequest(nextLink, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1189,20 +1189,20 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Get all reservations. </summary>
+        /// <summary> Lists all reservations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         /// <remarks> Retrieves a paginated list of all phone number reservations. Note that the reservations will not be populated with the phone numbers associated with them. </remarks>
-        public Response<PhoneNumbersReservations> GetReservationsNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<PhoneNumbersReservations> ListReservationsNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetReservationsNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListReservationsNextPageRequest(nextLink, maxPageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
