@@ -28,18 +28,40 @@ namespace Azure.Storage.DataMovement
         internal Channel<ConcurrencyRecommendation> _recommendations;
         private CancellationToken _cancellationToken;
 
-        private IProcessor<Func<Task>> _processor;
+        private IProcessor<Func<Task>> _chunkProcessor;
+
+        public int MaxConcurrency
+        {
+            get
+            {
+                return _maxConcurrency;
+            }
+            set
+            {
+                var chunkProcessor = _chunkProcessor as object;
+                if (chunkProcessor != null)
+                {
+                    var methodInfo = chunkProcessor.GetType().GetMethod("UpdateMaxConcurrentProcessing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+                    if (methodInfo != null)
+                    {
+                        methodInfo.Invoke(chunkProcessor, new object[] { value });
+                        _maxConcurrency = value;
+                    }
+                }
+            }
+        }
 
         internal ConcurrencyTuner(
             ResourceMonitor resourceMonitor,
-            IProcessor<Func<Task>> processor,
+            IProcessor<Func<Task>> _chunkProcessor,
             TimeSpan monitoringInterval,
             double maxMemoryUsage,
             int initialConcurrency,
             int maxConcurrency,
             float maxCpuUsage)
         {
-            _processor = processor;
+            this._chunkProcessor = _chunkProcessor;
             _initialConcurrency = initialConcurrency;
             _maxConcurrency = maxConcurrency;
             _maxMemoryUsage = maxMemoryUsage;
@@ -293,7 +315,7 @@ namespace Azure.Storage.DataMovement
 
         private void UpdateChunkProcessorConcurrency(int newMaxConcurrency)
         {
-            var parallelProcessor = _processor as object;
+            var parallelProcessor = _chunkProcessor as object;
             if (parallelProcessor != null)
             {
                 var methodInfo = parallelProcessor.GetType().GetMethod("UpdateMaxConcurrentProcessing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
