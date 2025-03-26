@@ -194,7 +194,7 @@ new AllocationEndpoint(new ResourceIdentifier("/subscriptions/00000000-0000-0000
 
             // this example assumes you already have this OnboardingServiceResource created on azure
             // for more information of creating OnboardingServiceResource, please refer to the document of OnboardingServiceResource
-            string subscriptionId = "A213D41A-DD8E-4F40-BDA8-2F007FE14CF7";
+            string subscriptionId = "ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb";
             string resourceGroupName = "rgopenapi";
             string onboardingServiceName = "onboardingServiceName";
             ResourceIdentifier onboardingServiceResourceId = OnboardingServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, onboardingServiceName);

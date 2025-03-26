@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.DeviceOnboarding.Samples
             {
                 Properties = new DiscoveryServiceProperties(),
                 Tags =
-{
-["key4985"] = "ohlusfqwktu"
-},
+                {
+                    ["key4985"] = "ohlusfqwktu"
+                },
             };
             ArmOperation<DiscoveryServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, discoveryServiceName, data);
             DiscoveryServiceResource result = lro.Value;

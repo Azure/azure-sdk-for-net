@@ -7,5 +7,7 @@ namespace Azure.ResourceManager.DeviceOnboarding.Tests
 {
     public class DeviceOnboardingManagementTestEnvironment : TestEnvironment
     {
+        public string DeviceOnboardingResourceGroup => GetRecordedVariable("DEVICEONBOARDING_RESOURCE_GROUP");
+        public string DeviceOnboardingSubscription => GetRecordedVariable("DEVICEONBOARDING_SUBSCRIPTION_ID");
     }
 }
