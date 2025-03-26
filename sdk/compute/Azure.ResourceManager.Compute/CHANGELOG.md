@@ -9,9 +9,9 @@
   - Added operation `AvailabilitySets.CancelMigrationToVirtualMachineScaleSet`.
   - Added operation `AvailabilitySets.ValidateMigrationToVirtualMachineScaleSet`.
   - Added operation `AvailabilitySets.ConvertToVirtualMachineScaleSet`.
-  - Added operation `VirtualMachineImages.ListWithProperties`
-  - Added operation `VirtualMachines.MigrateToVmScaleSet`.
-  - Added new classes :`AutomaticZoneRebalancingPolicy`, `ConvertToVirtualMachineScaleSetContent`, `HostEndpointSettings`, `MigrateToVirtualMachineScaleSetInput`, `MigrateVmToVirtualMachineScaleSetContent`, `RebalanceStrategy`, `SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions`, `VirtualMachineImagesWithPropertiesListResult`, `VirtualMachineScaleSetMigrationInfo`, 
+  - Added operation `GetVirtualMachineImagesWithProperties`
+  - Added operation `VirtualMachines.MigrateToVirtualMachineScaleSet`.
+  - Added new classes :`AutomaticZoneRebalancingPolicy`, `ConvertToVirtualMachineScaleSetContent`, `HostEndpointSettings`, `MigrateToVirtualMachineScaleSetInput`, `MigrateVmToVirtualMachineScaleSetContent`, `VmssRebalanceStrategy`, `VmssRebalanceBehavior`, `SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions`, `VirtualMachineImagesWithPropertiesListResult`, `VirtualMachineScaleSetMigrationInfo`, 
 
 ## 1.9.0-beta.1 (2025-02-22)
 

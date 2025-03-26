@@ -3354,7 +3354,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetWithPropertiesVirtualMachineImages(SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagesWithProperties(SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3362,11 +3362,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImage> GetWithPropertiesVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineImage> GetVirtualMachineImagesWithPropertiesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetWithPropertiesVirtualMachineImagesAsync(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesWithPropertiesAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -3386,7 +3386,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetWithPropertiesVirtualMachineImages(SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagesWithProperties(SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3394,11 +3394,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImage> GetWithPropertiesVirtualMachineImages(this SubscriptionResource subscriptionResource, SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineImage> GetVirtualMachineImagesWithProperties(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetWithPropertiesVirtualMachineImages(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesWithProperties(options, cancellationToken);
         }
 
         /// <summary>

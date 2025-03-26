@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool? enabled = default;
-            RebalanceStrategy? rebalanceStrategy = default;
-            RebalanceBehavior? rebalanceBehavior = default;
+            VmssRebalanceStrategy? rebalanceStrategy = default;
+            VmssRebalanceBehavior? rebalanceBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rebalanceStrategy = new RebalanceStrategy(property.Value.GetString());
+                    rebalanceStrategy = new VmssRebalanceStrategy(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rebalanceBehavior"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rebalanceBehavior = new RebalanceBehavior(property.Value.GetString());
+                    rebalanceBehavior = new VmssRebalanceBehavior(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

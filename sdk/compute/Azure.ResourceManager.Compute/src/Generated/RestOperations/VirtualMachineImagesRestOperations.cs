@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal RequestUriBuilder CreateListWithPropertiesRequestUri(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, Expand expand, int? top, string orderby)
+        internal RequestUriBuilder CreateListWithPropertiesRequestUri(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand, int? top, string orderby)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Compute
             return uri;
         }
 
-        internal HttpMessage CreateListWithPropertiesRequest(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, Expand expand, int? top, string orderby)
+        internal HttpMessage CreateListWithPropertiesRequest(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand, int? top, string orderby)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineImagesWithPropertiesListResult>> ListWithPropertiesAsync(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, Expand expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineImagesWithPropertiesListResult>> ListWithPropertiesAsync(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineImagesWithPropertiesListResult> ListWithProperties(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, Expand expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineImagesWithPropertiesListResult> ListWithProperties(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal RequestUriBuilder CreateListWithPropertiesNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, Expand expand, int? top, string orderby)
+        internal RequestUriBuilder CreateListWithPropertiesNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand, int? top, string orderby)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Compute
             return uri;
         }
 
-        internal HttpMessage CreateListWithPropertiesNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, Expand expand, int? top, string orderby)
+        internal HttpMessage CreateListWithPropertiesNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand, int? top, string orderby)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineImagesWithPropertiesListResult>> ListWithPropertiesNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, Expand expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineImagesWithPropertiesListResult>> ListWithPropertiesNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineImagesWithPropertiesListResult> ListWithPropertiesNextPage(string nextLink, string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, Expand expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineImagesWithPropertiesListResult> ListWithPropertiesNextPage(string nextLink, string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions. </summary>
-    public partial class SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions
+    /// <summary> The SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions. </summary>
+    public partial class SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions
     {
-        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions"/>. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        public SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions(AzureLocation location, string publisherName, string offer, string skus, Expand expand)
+        public SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions(AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand)
         {
             Argument.AssertNotNull(publisherName, nameof(publisherName));
             Argument.AssertNotNull(offer, nameof(offer));
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Compute.Models
             Expand = expand;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions"/> for deserialization. </summary>
-        internal SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions()
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions()
         {
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A valid image SKU. </summary>
         public string Skus { get; }
         /// <summary> The expand expression to apply on the operation. </summary>
-        public Expand Expand { get; }
+        public GetVirtualMachineImagesWithPropertiesExpand Expand { get; }
         /// <summary> The top. </summary>
         public int? Top { get; set; }
         /// <summary> The orderby. </summary>

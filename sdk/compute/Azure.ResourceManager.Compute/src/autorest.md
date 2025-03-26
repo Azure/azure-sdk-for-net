@@ -99,6 +99,8 @@ override-operation-name:
   LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
   LogAnalytics_ExportThrottledRequests: ExportLogAnalyticsThrottledRequests
   ResourceSkus_List: GetComputeResourceSkus
+  VirtualMachineImages_ListWithProperties: GetVirtualMachineImagesWithProperties
+  VirtualMachines_MigrateToVmScaleSet: MigrateToVirtualMachineScaleSet
 
 request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
@@ -302,6 +304,10 @@ rename-mapping:
   ExecutedValidation: GalleryImageExecutedValidation
   Placement: VirtualMachinePlacement
   Modes: HostEndpointSettingsMode
+  Mode: VirtualMachineMigrationMode
+  Expand: GetVirtualMachineImagesWithPropertiesExpand
+  RebalanceBehavior: VmssRebalanceBehavior
+  RebalanceStrategy: VmssRebalanceStrategy 
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

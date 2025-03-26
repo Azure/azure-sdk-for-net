@@ -1150,7 +1150,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task MigrateToVmScaleSet_MigrateAVirtualMachineToFlexibleVirtualMachineScaleSer()
+        public async Task MigrateToVirtualMachineScaleSet_MigrateAVirtualMachineToFlexibleVirtualMachineScaleSer()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_MigrateToVirtualMachineScaleSet.json
             // this example is just showing the usage of "VirtualMachines_MigrateToVmScaleSet" operation, for the dependent resources, they will have to be created separately.
@@ -1174,7 +1174,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
                 TargetFaultDomain = 0,
                 TargetVmSize = "Standard_D1_v2",
             };
-            await virtualMachine.MigrateToVmScaleSetAsync(WaitUntil.Completed, content: content);
+            await virtualMachine.MigrateToVirtualMachineScaleSetAsync(WaitUntil.Completed, content: content);
 
             Console.WriteLine("Succeeded");
         }

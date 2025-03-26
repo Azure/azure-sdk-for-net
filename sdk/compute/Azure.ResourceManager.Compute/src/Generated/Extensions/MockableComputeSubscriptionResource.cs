@@ -1018,13 +1018,13 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImage> GetWithPropertiesVirtualMachineImagesAsync(SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImage> GetVirtualMachineImagesWithPropertiesAsync(SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListWithPropertiesRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineImagesRestClient.CreateListWithPropertiesNextPageRequest(nextLink, Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VirtualMachineImage.DeserializeVirtualMachineImage(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetWithPropertiesVirtualMachineImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VirtualMachineImage.DeserializeVirtualMachineImage(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesWithProperties", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1047,13 +1047,13 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImage> GetWithPropertiesVirtualMachineImages(SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImage> GetVirtualMachineImagesWithProperties(SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListWithPropertiesRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineImagesRestClient.CreateListWithPropertiesNextPageRequest(nextLink, Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VirtualMachineImage.DeserializeVirtualMachineImage(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetWithPropertiesVirtualMachineImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VirtualMachineImage.DeserializeVirtualMachineImage(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesWithProperties", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

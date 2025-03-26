@@ -941,8 +941,8 @@ EnableIPForwarding = true,
                         AutomaticZoneRebalancingPolicy = new AutomaticZoneRebalancingPolicy
                         {
                             Enabled = true,
-                            RebalanceStrategy = RebalanceStrategy.Recreate,
-                            RebalanceBehavior = RebalanceBehavior.CreateBeforeDelete,
+                            RebalanceStrategy = VmssRebalanceStrategy.Recreate,
+                            RebalanceBehavior = VmssRebalanceBehavior.CreateBeforeDelete,
                         },
                     },
                 },

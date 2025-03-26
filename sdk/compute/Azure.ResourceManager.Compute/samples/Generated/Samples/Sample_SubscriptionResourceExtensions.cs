@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetWithPropertiesVirtualMachineImages_VirtualMachineImagesListWithPropertiesMaximumSet()
+        public async Task GetVirtualMachineImagesWithProperties_VirtualMachineImagesListWithPropertiesMaximumSet()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListWithProperties_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListWithProperties" operation, for the dependent resources, they will have to be created separately.
@@ -464,9 +464,9 @@ namespace Azure.ResourceManager.Compute.Samples
             string publisherName = "MicrosoftWindowsServer";
             string offer = "WindowsServer";
             string skus = "2022-datacenter-azure-edition";
-            Expand expand = Expand.Properties;
-            SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions options = new SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions(location, publisherName, offer, skus, expand) { Top = 4, Orderby = "aa" };
-            await foreach (VirtualMachineImage item in subscriptionResource.GetWithPropertiesVirtualMachineImagesAsync(options))
+            GetVirtualMachineImagesWithPropertiesExpand expand = GetVirtualMachineImagesWithPropertiesExpand.Properties;
+            SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options = new SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions(location, publisherName, offer, skus, expand) { Top = 4, Orderby = "aa" };
+            await foreach (VirtualMachineImage item in subscriptionResource.GetVirtualMachineImagesWithPropertiesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetWithPropertiesVirtualMachineImages_VirtualMachineImagesListWithPropertiesMinimumSet()
+        public async Task GetVirtualMachineImagesWithProperties_VirtualMachineImagesListWithPropertiesMinimumSet()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListWithProperties_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListWithProperties" operation, for the dependent resources, they will have to be created separately.
@@ -497,9 +497,9 @@ namespace Azure.ResourceManager.Compute.Samples
             string publisherName = "MicrosoftWindowsServer";
             string offer = "WindowsServer";
             string skus = "2022-datacenter-azure-edition";
-            Expand expand = Expand.Properties;
-            SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions options = new SubscriptionResourceGetWithPropertiesVirtualMachineImagesOptions(location, publisherName, offer, skus, expand);
-            await foreach (VirtualMachineImage item in subscriptionResource.GetWithPropertiesVirtualMachineImagesAsync(options))
+            GetVirtualMachineImagesWithPropertiesExpand expand = GetVirtualMachineImagesWithPropertiesExpand.Properties;
+            SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options = new SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions(location, publisherName, offer, skus, expand);
+            await foreach (VirtualMachineImage item in subscriptionResource.GetVirtualMachineImagesWithPropertiesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
