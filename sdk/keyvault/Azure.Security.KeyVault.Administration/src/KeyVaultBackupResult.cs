@@ -13,8 +13,6 @@ namespace Azure.Security.KeyVault.Administration
     {
         internal KeyVaultBackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            Argument.AssertNotNull(folderUri, nameof(folderUri));
-
             FolderUri = folderUri;
             StartTime = startTime;
             EndTime = endTime;

@@ -22,9 +22,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string OAuthClientCredentialsValue = "OAuthClientCredentials";
-        private const string ApiKeyAuthCredentialsValue = "ApiKeyAuthCredentials";
-
         /// <summary> OAuth Client Credential type. </summary>
         public static AuthCredentialsKind OAuthClientCredentials { get; } = new AuthCredentialsKind(OAuthClientCredentialsValue);
         /// <summary> API Key Auth Credential type. </summary>

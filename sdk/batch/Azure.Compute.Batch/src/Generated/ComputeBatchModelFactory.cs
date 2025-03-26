@@ -820,32 +820,6 @@ namespace Azure.Compute.Batch
             return new DeleteBatchCertificateError(code, message, values?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.GetCertificateResponse"/>. </summary>
-        /// <param name="thumbprint"> The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex digits (it may include spaces but these are removed). </param>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint. This must be sha1. </param>
-        /// <param name="url"> The URL of the Certificate. </param>
-        /// <param name="state"> The state of the Certificate. </param>
-        /// <param name="stateTransitionTime"> The time at which the Certificate entered its current state. </param>
-        /// <param name="previousState"> The previous state of the Certificate. This property is not set if the Certificate is in its initial active state. </param>
-        /// <param name="previousStateTransitionTime"> The time at which the Certificate entered its previous state. This property is not set if the Certificate is in its initial Active state. </param>
-        /// <param name="publicData"> The public part of the Certificate as a base-64 encoded .cer file. </param>
-        /// <param name="deleteCertificateError"> The error that occurred on the last attempt to delete this Certificate. This property is set only if the Certificate is in the DeleteFailed state. </param>
-        /// <returns> A new <see cref="Batch.GetCertificateResponse"/> instance for mocking. </returns>
-        public static GetCertificateResponse GetCertificateResponse(string thumbprint = null, string thumbprintAlgorithm = null, string url = null, BatchCertificateState? state = null, DateTimeOffset? stateTransitionTime = null, BatchCertificateState? previousState = null, DateTimeOffset? previousStateTransitionTime = null, string publicData = null, DeleteBatchCertificateError deleteCertificateError = null)
-        {
-            return new GetCertificateResponse(
-                thumbprint,
-                thumbprintAlgorithm,
-                url,
-                state,
-                stateTransitionTime,
-                previousState,
-                previousStateTransitionTime,
-                publicData,
-                deleteCertificateError,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Batch.BatchJobSchedule"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the schedule within the Account. </param>
         /// <param name="displayName"> The display name for the schedule. </param>

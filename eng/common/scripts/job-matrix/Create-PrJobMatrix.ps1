@@ -144,7 +144,7 @@ function GeneratePRMatrixForBatch {
       }
     }
 
-    if ($matrixConfig.PSObject.Properties['PRBatching']) {
+    if ($matrixConfig.PSObject.Properties['PRBatching'] -and $matrixResults) {
       # if we are doing a PR Batch, we need to just add the matrix items directly to the OverallResult
       # as the users have explicitly disabled PR batching for this matrix.
       if (!$matrixConfig.PRBatching) {

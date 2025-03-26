@@ -1630,7 +1630,7 @@ With `Azure.Compute.Batch` call `GetCertificate` to get the certificate which wi
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-GetCertificateResponse cerCertificateResponse = batchClient.GetCertificate("ThumbprintAlgorithm", "Thumbprint");
+BatchCertificate cerCertificateResponse = batchClient.GetCertificate("ThumbprintAlgorithm", "Thumbprint");
 ```
 
 #### ListCertificates

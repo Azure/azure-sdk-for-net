@@ -3507,6 +3507,7 @@ Value = "myvalue",
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("thumbprint").ToString());
             Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+            Console.WriteLine(result.GetProperty("data").ToString());
         }
 
         [Test]
@@ -3522,6 +3523,7 @@ Value = "myvalue",
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("thumbprint").ToString());
             Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+            Console.WriteLine(result.GetProperty("data").ToString());
         }
 
         [Test]
@@ -3532,7 +3534,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<GetCertificateResponse> response = client.GetCertificate("sha1", "0123456789abcdef0123456789abcdef01234567");
+            Response<BatchCertificate> response = client.GetCertificate("sha1", "0123456789abcdef0123456789abcdef01234567");
         }
 
         [Test]
@@ -3543,7 +3545,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<GetCertificateResponse> response = await client.GetCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
+            Response<BatchCertificate> response = await client.GetCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
         }
 
         [Test]

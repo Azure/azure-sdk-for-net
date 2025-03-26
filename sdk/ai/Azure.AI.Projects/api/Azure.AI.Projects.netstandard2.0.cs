@@ -2661,6 +2661,8 @@ namespace Azure.AI.Projects
         public string OutputFileId { get { throw null; } }
         public int? StartIndex { get { throw null; } }
         public string TextToReplace { get { throw null; } }
+        public string Title { get { throw null; } }
+        public string Url { get { throw null; } }
     }
     public partial class ThreadMessage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ThreadMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ThreadMessage>
     {
