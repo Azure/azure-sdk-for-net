@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using Azure.Provisioning.Expressions;
 using NUnit.Framework;
@@ -10,13 +9,13 @@ namespace Azure.Provisioning.Tests.Expressions
 {
     public class ArrayExpressionTests
     {
-        [TestCaseSource(nameof(_validateArrayExpressionTestData))]
+        [TestCaseSource(nameof(ValidateArrayExpressionTestData))]
         public string ValidateArrayExpressions(ArrayExpression expression)
         {
             return expression.ToString();
         }
 
-        private static IEnumerable<TestCaseData> _validateArrayExpressionTestData()
+        private static IEnumerable<TestCaseData> ValidateArrayExpressionTestData()
         {
             // NOTE: our AST always produces multi-line arrays with indents
             // empty array

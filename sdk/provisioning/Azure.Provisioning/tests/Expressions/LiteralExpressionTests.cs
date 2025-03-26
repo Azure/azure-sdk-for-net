@@ -9,13 +9,13 @@ namespace Azure.Provisioning.Tests.Expressions
 {
     public class LiteralExpressionTests
     {
-        [TestCaseSource(nameof(_validateLiteralExpressionTestData))]
+        [TestCaseSource(nameof(ValidateLiteralExpressionTestData))]
         public string? ValidateLiteralExpression(LiteralExpression literal)
         {
             return literal.ToString();
         }
 
-        private static IEnumerable<TestCaseData> _validateLiteralExpressionTestData()
+        private static IEnumerable<TestCaseData> ValidateLiteralExpressionTestData()
         {
             yield return new TestCaseData(new NullLiteralExpression()).Returns("null");
 
