@@ -6924,6 +6924,24 @@ namespace Azure.ResourceManager.Compute.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Mode : System.IEquatable<Azure.ResourceManager.Compute.Models.Mode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Mode(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.Mode Audit { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.Mode Enforce { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.Mode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.Mode left, Azure.ResourceManager.Compute.Models.Mode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.Mode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.Mode left, Azure.ResourceManager.Compute.Models.Mode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkAccessPolicy : System.IEquatable<Azure.ResourceManager.Compute.Models.NetworkAccessPolicy>
     {
         private readonly object _dummy;
@@ -7339,7 +7357,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Enabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HostEndpointSettings Imds { get { throw null; } set { } }
         public int? KeyIncarnationId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode? Mode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.Mode? Mode { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HostEndpointSettings WireServer { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ProxyAgentSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ProxyAgentSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9097,24 +9115,6 @@ namespace Azure.ResourceManager.Compute.Models
         Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VirtualMachineMigrationMode : System.IEquatable<Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VirtualMachineMigrationMode(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode Audit { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode Enforce { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode left, Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode left, Azure.ResourceManager.Compute.Models.VirtualMachineMigrationMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class VirtualMachineNetworkInterfaceConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceConfiguration>
     {

@@ -304,7 +304,6 @@ rename-mapping:
   ExecutedValidation: GalleryImageExecutedValidation
   Placement: VirtualMachinePlacement
   Modes: HostEndpointSettingsMode
-  Mode: VirtualMachineMigrationMode
   Expand: GetVirtualMachineImagesWithPropertiesExpand
   RebalanceBehavior: VmssRebalanceBehavior
   RebalanceStrategy: VmssRebalanceStrategy 

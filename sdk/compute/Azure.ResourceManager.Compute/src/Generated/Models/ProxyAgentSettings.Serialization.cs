@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool? enabled = default;
-            VirtualMachineMigrationMode? mode = default;
+            Mode? mode = default;
             int? keyIncarnationId = default;
             HostEndpointSettings wireServer = default;
             HostEndpointSettings imds = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    mode = new VirtualMachineMigrationMode(property.Value.GetString());
+                    mode = new Mode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyIncarnationId"u8))
