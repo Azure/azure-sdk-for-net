@@ -9,32 +9,29 @@ namespace Azure.Provisioning.Tests.Expressions
 {
     public class InterpolatedStringExpressionTest
     {
-        [TestCaseSource(nameof(_bicepFunctionInterpolateTestData))]
+        [TestCaseSource(nameof(BicepFunctionInterpolateTestData))]
         public string ValidateBicepFunctionInterpolate(BicepValue<string> expression)
         {
             return expression.ToString();
         }
 
-        private static IEnumerable<TestCaseData> _bicepFunctionInterpolateTestData
+        private static IEnumerable<TestCaseData> BicepFunctionInterpolateTestData()
         {
-            get
-            {
-                // test provisionable variable
-                yield return new TestCaseData(
-                    BicepFunction.Interpolate(
-                        $"Var={new ProvisioningVariable("foo", typeof(string))}"
-                        ))
-                    .Returns("'Var=${foo}'");
+            // test provisionable variable
+            yield return new TestCaseData(
+                BicepFunction.Interpolate(
+                    $"Var={new ProvisioningVariable("foo", typeof(string))}"
+                    ))
+                .Returns("'Var=${foo}'");
 
-                // test index expression in interpolation
-                yield return new TestCaseData(
-                    BicepFunction.Interpolate(
-                        $"Endpoint={new IndexExpression(
-                            new IdentifierExpression("foo"),
-                            new StringLiteralExpression("bar")
-                        )}"))
-                    .Returns("'Endpoint=${foo['bar']}'");
-            }
+            // test index expression in interpolation
+            yield return new TestCaseData(
+                BicepFunction.Interpolate(
+                    $"Endpoint={new IndexExpression(
+                        new IdentifierExpression("foo"),
+                        new StringLiteralExpression("bar")
+                    )}"))
+                .Returns("'Endpoint=${foo['bar']}'");
         }
     }
 }
