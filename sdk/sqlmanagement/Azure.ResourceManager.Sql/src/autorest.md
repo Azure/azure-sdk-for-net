@@ -18,6 +18,7 @@ sample-gen:
   - ManagedDatabaseSensitivityLabels_Delete
   - SensitivityLabels_CreateOrUpdate
   - SensitivityLabels_Delete
+  - ManagedDatabaseSecurityEvents_ListByDatabase
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
