@@ -21,6 +21,7 @@ namespace Azure.Storage.DataMovement
         internal int _initialConcurrency;
         internal int _maxConcurrency;
         internal float _maxCpuUsage;
+        internal TimeSpan _monitoringInterval;
         internal int _finalReason; // ConcurrencyTunerState
         internal int _finalConcurrency;
         internal SemaphoreSlim _lockFinal;
@@ -44,6 +45,7 @@ namespace Azure.Storage.DataMovement
             _maxConcurrency = maxConcurrency;
             _maxMemoryUsage = maxMemoryUsage;
             _maxCpuUsage = maxCpuUsage;
+            _monitoringInterval = monitoringInterval;
             _resourceMonitor = resourceMonitor;
             _finalReason = (int) ConcurrencyTunerState.ConcurrencyReasonNone;
             _finalConcurrency = _initialConcurrency;
