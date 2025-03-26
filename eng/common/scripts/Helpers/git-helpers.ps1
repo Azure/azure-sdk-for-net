@@ -2,6 +2,33 @@
 # cSpell:ignore PULLREQUEST
 # cSpell:ignore TARGETBRANCH
 # cSpell:ignore SOURCECOMMITID
+
+function RequestGithubGraphQL {
+  param (
+    [string]$query,
+    [object]$variables = @{}
+  )
+
+  $payload = @{
+    query = $query
+    variables = $variables
+  } | ConvertTo-Json -Depth 100
+
+  $response = $payload | gh api graphql --input -
+  $data = $response | ConvertFrom-Json
+
+  if ($LASTEXITCODE) {
+    LogWarning "Failed graphql operation:"
+    LogWarning ($payload -replace '\\n', "`n")
+    if ($data.errors) {
+      LogWarning ($data.errors.message -join '`n')
+    }
+    throw "graphql operation failed ($LASTEXITCODE)"
+  }
+
+  return $data
+}
+
 function Get-ChangedFiles {
   param (
     [string]$SourceCommittish= "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
@@ -247,4 +274,93 @@ function Write-RateLimit {
   Write-Host "    remaining=$($RateLimit.remaining)"
   Write-Host "    reset=$($RateLimit.reset)"
   Write-Host ""
+}
+
+function GetAIReviewThreads {
+  param(
+    [string]$repoOwner,
+    [string]$repoName,
+    [string]$prNumber,
+    [array]$reviewers
+  )
+
+  $reviewers ??= @('copilot-pull-request-reviewer')
+
+  $reviewThreadsQuery = @'
+query ReviewThreads($owner: String!, $name: String!, $number: Int!) {
+  repository(owner: $owner, name: $name) {
+    pullRequest(number: $number) {
+      reviewThreads(first: 100) {
+        nodes {
+          id
+          isResolved
+          comments(first: 100) {
+            nodes {
+              body
+              author {
+                login
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+'@
+
+  $variables = @{ owner = $repoOwner; name = $repoName; number = [int]$prNumber }
+  $response = RequestGithubGraphQL -query $reviewThreadsQuery -variables $variables
+  $reviews = $response.data.repository.pullRequest.reviewThreads.nodes
+
+  $threadIds = @()
+  # There should be only one threadId for copilot, but make it an array in case there
+  # are more, or if we want to resolve threads from multiple ai authors in the future.
+  # Don't mark threads from humans as resolved, as those may be real questions/blockers.
+  foreach ($thread in $reviews) {
+    if ($thread.comments.nodes | Where-Object { $_.author.login -in $reviewers }) {
+      $threadIds += $thread.id
+      continue
+    }
+  }
+
+  return $threadIds
+}
+
+function TryResolveAIReviewThreads {
+  param(
+    [string]$repoOwner,
+    [string]$repoName,
+    [string]$prNumber,
+    [array]$reviewers
+  )
+
+  $resolveThreadMutation = @'
+mutation ResolveThread($id: ID!) {
+  resolveReviewThread(input: { threadId: $id }) {
+    thread {
+      isResolved
+    }
+  }
+}
+'@
+
+  $threadIds = GetAIReviewThreads -repoOwner $repoOwner -repoName $repoName -prNumber $prNumber -reviewers $reviewers
+
+  if (!$threadIds) {
+    return $false
+  }
+
+  if ($SkipMerge) {
+    LogWarning "Skipping resolution of $($threadIds.Count) AI review threads"
+    return $false
+  }
+
+  foreach ($threadId in $threadIds) {
+    LogInfo "Resolving review thread '$threadId' for '$repoName' PR '$prNumber'"
+    $response = RequestGithubGraphQL -query $resolveThreadMutation -variables @{ id = $threadId }
+    $reviews = $response.data.repository.pullRequest.reviewThreads.nodes
+  }
+
+  return $true
 }
