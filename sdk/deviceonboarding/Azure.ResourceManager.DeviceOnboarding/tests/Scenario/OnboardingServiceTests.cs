@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.DeviceOnboarding.Tests.Scenario
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task TestOnboardingServiceCRUD()
         {
             //create
@@ -65,6 +66,7 @@ namespace Azure.ResourceManager.DeviceOnboarding.Tests.Scenario
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task TestDeviceOnboarding()
         {
             //Create onboarding service

@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.DeviceOnboarding.Tests.Scenario
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task TestDiscoveryServiceCRUD()
         {
             //create
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.DeviceOnboarding.Tests.Scenario
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task TestOwnerShipVoucher()
         {
             //discovery service setup
