@@ -60,6 +60,8 @@ internal static class BicepTypeMapping
             bool b => b.ToString(),
             int i => i.ToString(),
             long i => i.ToString(),
+            float f => f.ToString(),
+            double d => d.ToString(),
             string s => s,
             Uri u => u.AbsoluteUri,
             DateTimeOffset d => d.ToString("o"),
