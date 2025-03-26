@@ -141,7 +141,7 @@ class PackageProps {
         if (-not $this.ArtifactDetails) {
             $ciArtifactResult = $this.GetCIYmlForArtifact()
 
-            if ($ciArtifactResult) {
+            if ($ciArtifactResult -and $null -ne $ciArtifactResult.ArtifactConfig) {
                 $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
 
                 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
