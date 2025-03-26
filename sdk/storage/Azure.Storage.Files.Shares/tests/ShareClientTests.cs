@@ -939,6 +939,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task DeleteIfExistsAsync_SnapshotNotFound()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            await share.CreateIfNotExistsAsync();
+            ShareClient shareWithSnapshot = InstrumentClient(service.GetShareClient(shareName)).WithSnapshot("2025-02-04T10:17:47.0000000Z");
+
+            // Act
+            Response<bool> response = await shareWithSnapshot.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [RecordedTest]
         public async Task DeleteIfExistsAsync_Error()
         {
             // Arrange
