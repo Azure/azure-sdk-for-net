@@ -4857,6 +4857,7 @@
  "clients": [
   {
    "$id": "611",
+   "kind": "client",
    "name": "NotificationMessagesClient",
    "namespace": "Azure.Communication.Messages",
    "operations": [
@@ -5379,10 +5380,16 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "ClientForAcsMessages.NotificationMessagesClient"
+   "crossLanguageDefinitionId": "ClientForAcsMessages.NotificationMessagesClient",
+   "apiVersions": [
+    "2024-02-01",
+    "2024-08-30",
+    "2025-01-15-preview"
+   ]
   },
   {
    "$id": "667",
+   "kind": "client",
    "name": "MessageTemplateClient",
    "namespace": "Azure.Communication.Messages",
    "operations": [
@@ -5616,7 +5623,12 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "ClientForAcsMessages.MessageTemplateClient"
+   "crossLanguageDefinitionId": "ClientForAcsMessages.MessageTemplateClient",
+   "apiVersions": [
+    "2024-02-01",
+    "2024-08-30",
+    "2025-01-15-preview"
+   ]
   }
  ],
  "auth": {
