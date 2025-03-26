@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;

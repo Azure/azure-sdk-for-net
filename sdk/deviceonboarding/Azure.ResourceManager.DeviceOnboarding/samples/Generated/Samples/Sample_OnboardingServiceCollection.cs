@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DeviceOnboarding.Samples
                     PublicNetworkAccess = PublicNetworkAccessOption.Enabled,
                 },
                 Tags =
-{
-["key746"] = "byqsmjkgnjrqf"
-},
+                {
+                    ["key746"] = "byqsmjkgnjrqf"
+                },
             };
             ArmOperation<OnboardingServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, onboardingServiceName, data);
             OnboardingServiceResource result = lro.Value;

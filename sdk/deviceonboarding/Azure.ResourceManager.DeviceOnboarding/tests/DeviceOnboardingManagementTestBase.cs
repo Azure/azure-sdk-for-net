@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -18,11 +19,13 @@ namespace Azure.ResourceManager.DeviceOnboarding.Tests
         protected DeviceOnboardingManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..containerUri") { Value = @"https://sanitized.blob.core.windows.net/mycontainer" });
         }
 
         protected DeviceOnboardingManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..containerUri") { Value = @"https://sanitized.blob.core.windows.net/mycontainer" });
         }
 
         [SetUp]
