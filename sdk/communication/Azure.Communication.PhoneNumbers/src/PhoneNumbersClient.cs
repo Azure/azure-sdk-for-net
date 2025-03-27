@@ -1059,13 +1059,13 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="agreeToNotResell"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<PurchaseReservationOperation> StartReservationPurchaseAsync(Guid id, bool agreeToNotResell = false, CancellationToken cancellationToken = default)
+        public virtual async Task<PurchaseReservationOperation> StartPurchaseReservationAsync(Guid id, bool agreeToNotResell = false, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReservationPurchaseAsync)}");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchaseReservationAsync)}");
             scope.Start();
             try
             {
-                var originalResponse = await InternalClient.StartStartReservationPurchaseAsync(id, agreeToNotResell, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await InternalClient.StartPurchaseReservationAsync(id, agreeToNotResell, cancellationToken).ConfigureAwait(false);
                 return new PurchaseReservationOperation(originalResponse);
             }
             catch (Exception e)
@@ -1082,13 +1082,13 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="agreeToNotResell"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual PurchaseReservationOperation StartReservationPurchase(Guid id, bool agreeToNotResell = false, CancellationToken cancellationToken = default)
+        public virtual PurchaseReservationOperation StartPurchaseReservation(Guid id, bool agreeToNotResell = false, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReservationPurchase)}");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchaseReservation)}");
             scope.Start();
             try
             {
-                var originalResponse = InternalClient.StartStartReservationPurchase(id, agreeToNotResell, cancellationToken);
+                var originalResponse = InternalClient.StartPurchaseReservation(id, agreeToNotResell, cancellationToken);
                 return new PurchaseReservationOperation(originalResponse);
             }
             catch (Exception e)

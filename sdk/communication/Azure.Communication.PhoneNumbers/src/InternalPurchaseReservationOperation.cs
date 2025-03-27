@@ -6,7 +6,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    [CodeGenModel("InternalPhoneNumbersStartReservationPurchaseOperation")]
+    [CodeGenModel("InternalPhoneNumbersPurchaseReservationOperation")]
     internal partial class InternalPurchaseReservationOperation
     {
         internal InternalPurchaseReservationOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)

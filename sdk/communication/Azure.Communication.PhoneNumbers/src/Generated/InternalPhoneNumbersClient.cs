@@ -489,14 +489,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="agreeToNotResell"> The agreement to not resell the phone numbers. Defaults to false if not provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Starts a long running operation to purchase all of the phone numbers in the reservation. Purchase can only be started for active reservations that at least one phone number. If any of the phone numbers in the reservation is from a country where reselling is not permitted, do not resell agreement is required. The response will include an 'Operation-Location' header that can be used to query the status of the operation. </remarks>
-        public virtual async Task<InternalPurchaseReservationOperation> StartStartReservationPurchaseAsync(Guid reservationId, bool? agreeToNotResell = null, CancellationToken cancellationToken = default)
+        public virtual async Task<InternalPurchaseReservationOperation> StartPurchaseReservationAsync(Guid reservationId, bool? agreeToNotResell = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartStartReservationPurchase");
+            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartPurchaseReservation");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.StartReservationPurchaseAsync(reservationId, agreeToNotResell, cancellationToken).ConfigureAwait(false);
-                return new InternalPurchaseReservationOperation(_clientDiagnostics, _pipeline, RestClient.CreateStartReservationPurchaseRequest(reservationId, agreeToNotResell).Request, originalResponse);
+                var originalResponse = await RestClient.PurchaseReservationAsync(reservationId, agreeToNotResell, cancellationToken).ConfigureAwait(false);
+                return new InternalPurchaseReservationOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchaseReservationRequest(reservationId, agreeToNotResell).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -510,14 +510,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="agreeToNotResell"> The agreement to not resell the phone numbers. Defaults to false if not provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Starts a long running operation to purchase all of the phone numbers in the reservation. Purchase can only be started for active reservations that at least one phone number. If any of the phone numbers in the reservation is from a country where reselling is not permitted, do not resell agreement is required. The response will include an 'Operation-Location' header that can be used to query the status of the operation. </remarks>
-        public virtual InternalPurchaseReservationOperation StartStartReservationPurchase(Guid reservationId, bool? agreeToNotResell = null, CancellationToken cancellationToken = default)
+        public virtual InternalPurchaseReservationOperation StartPurchaseReservation(Guid reservationId, bool? agreeToNotResell = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartStartReservationPurchase");
+            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartPurchaseReservation");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.StartReservationPurchase(reservationId, agreeToNotResell, cancellationToken);
-                return new InternalPurchaseReservationOperation(_clientDiagnostics, _pipeline, RestClient.CreateStartReservationPurchaseRequest(reservationId, agreeToNotResell).Request, originalResponse);
+                var originalResponse = RestClient.PurchaseReservation(reservationId, agreeToNotResell, cancellationToken);
+                return new InternalPurchaseReservationOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchaseReservationRequest(reservationId, agreeToNotResell).Request, originalResponse);
             }
             catch (Exception e)
             {

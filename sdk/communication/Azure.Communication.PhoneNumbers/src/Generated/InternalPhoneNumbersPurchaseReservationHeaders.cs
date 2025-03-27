@@ -9,10 +9,10 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class InternalPhoneNumbersStartReservationPurchaseHeaders
+    internal partial class InternalPhoneNumbersPurchaseReservationHeaders
     {
         private readonly Response _response;
-        public InternalPhoneNumbersStartReservationPurchaseHeaders(Response response)
+        public InternalPhoneNumbersPurchaseReservationHeaders(Response response)
         {
             _response = response;
         }

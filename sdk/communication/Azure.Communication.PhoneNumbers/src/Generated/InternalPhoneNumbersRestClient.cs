@@ -508,7 +508,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateStartReservationPurchaseRequest(Guid reservationId, bool? agreeToNotResell)
+        internal HttpMessage CreatePurchaseReservationRequest(Guid reservationId, bool? agreeToNotResell)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -537,11 +537,11 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="agreeToNotResell"> The agreement to not resell the phone numbers. Defaults to false if not provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Starts a long running operation to purchase all of the phone numbers in the reservation. Purchase can only be started for active reservations that at least one phone number. If any of the phone numbers in the reservation is from a country where reselling is not permitted, do not resell agreement is required. The response will include an 'Operation-Location' header that can be used to query the status of the operation. </remarks>
-        public async Task<ResponseWithHeaders<InternalPhoneNumbersStartReservationPurchaseHeaders>> StartReservationPurchaseAsync(Guid reservationId, bool? agreeToNotResell = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<InternalPhoneNumbersPurchaseReservationHeaders>> PurchaseReservationAsync(Guid reservationId, bool? agreeToNotResell = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateStartReservationPurchaseRequest(reservationId, agreeToNotResell);
+            using var message = CreatePurchaseReservationRequest(reservationId, agreeToNotResell);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new InternalPhoneNumbersStartReservationPurchaseHeaders(message.Response);
+            var headers = new InternalPhoneNumbersPurchaseReservationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -556,11 +556,11 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="agreeToNotResell"> The agreement to not resell the phone numbers. Defaults to false if not provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Starts a long running operation to purchase all of the phone numbers in the reservation. Purchase can only be started for active reservations that at least one phone number. If any of the phone numbers in the reservation is from a country where reselling is not permitted, do not resell agreement is required. The response will include an 'Operation-Location' header that can be used to query the status of the operation. </remarks>
-        public ResponseWithHeaders<InternalPhoneNumbersStartReservationPurchaseHeaders> StartReservationPurchase(Guid reservationId, bool? agreeToNotResell = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<InternalPhoneNumbersPurchaseReservationHeaders> PurchaseReservation(Guid reservationId, bool? agreeToNotResell = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateStartReservationPurchaseRequest(reservationId, agreeToNotResell);
+            using var message = CreatePurchaseReservationRequest(reservationId, agreeToNotResell);
             _pipeline.Send(message, cancellationToken);
-            var headers = new InternalPhoneNumbersStartReservationPurchaseHeaders(message.Response);
+            var headers = new InternalPhoneNumbersPurchaseReservationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
