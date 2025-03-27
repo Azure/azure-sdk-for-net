@@ -4,7 +4,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +16,6 @@ public class MapsClient
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
-    private readonly ClientPipelineOptions _options;
-
-    internal static ActivitySource ActivitySource { get; } = new(typeof(MapsClient).FullName!);
 
     public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions? options = default)
     {
@@ -33,7 +29,6 @@ public class MapsClient
         _endpoint = endpoint;
         _credential = credential;
         _apiVersion = options.Version;
-        _options = options;
 
         var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, "subscription-key");
         _pipeline = ClientPipeline.Create(options,
@@ -46,22 +41,12 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        using Activity? activity = ActivitySource.StartClientActivity(_options, $"{nameof(MapsClient)}.{nameof(GetCountryCode)}");
+        ClientResult result = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
 
-        try
-        {
-            ClientResult result = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
+        PipelineResponse response = result.GetRawResponse();
+        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
-            PipelineResponse response = result.GetRawResponse();
-            IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
-
-            return ClientResult.FromValue(value, response);
-        }
-        catch (Exception ex)
-        {
-            activity?.MarkFailed(ex);
-            throw;
-        }
+        return ClientResult.FromValue(value, response);
     }
 
     public virtual async Task<ClientResult> GetCountryCodeAsync(string ipAddress, RequestOptions? options = null)
@@ -70,51 +55,30 @@ public class MapsClient
 
         options ??= new RequestOptions();
 
-        using Activity? activity = ActivitySource.StartClientActivity(_options, $"{nameof(MapsClient)}.{nameof(GetCountryCode)}");
+        using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
 
-        try
+        _pipeline.Send(message);
+
+        PipelineResponse response = message.Response!;
+
+        if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
         {
-            using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
-
-            _pipeline.Send(message);
-
-            PipelineResponse response = message.Response!;
-
-            if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
-            {
-                throw await ClientResultException.CreateAsync(response).ConfigureAwait(false);
-            }
-
-            return ClientResult.FromResponse(response);
+            throw await ClientResultException.CreateAsync(response).ConfigureAwait(false);
         }
-        catch (Exception ex)
-        {
-            activity?.MarkFailed(ex);
-            throw;
-        }
+
+        return ClientResult.FromResponse(response);
     }
 
     public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
     {
-        if (ipAddress is null)
-            throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        using Activity? activity = ActivitySource.StartClientActivity(_options, $"{nameof(MapsClient)}.{nameof(GetCountryCode)}");
+        ClientResult result = GetCountryCode(ipAddress.ToString());
 
-        try
-        {
-            ClientResult result = GetCountryCode(ipAddress.ToString());
+        PipelineResponse response = result.GetRawResponse();
+        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
-            PipelineResponse response = result.GetRawResponse();
-            IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
-
-            return ClientResult.FromValue(value, response);
-        }
-        catch (Exception ex)
-        {
-            activity?.MarkFailed(ex);
-            throw;
-        }
+        return ClientResult.FromValue(value, response);
     }
 
     public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions? options = null)
@@ -123,28 +87,18 @@ public class MapsClient
 
         options ??= new RequestOptions();
 
-        using Activity? activity = ActivitySource.StartClientActivity(_options, $"{nameof(MapsClient)}.{nameof(GetCountryCode)}");
+        using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
 
-        try
+        _pipeline.Send(message);
+
+        PipelineResponse response = message.Response!;
+
+        if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
         {
-            using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
-
-            _pipeline.Send(message);
-
-            PipelineResponse response = message.Response!;
-
-            if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
-            {
-                throw new ClientResultException(response);
-            }
-
-            return ClientResult.FromResponse(response);
+            throw new ClientResultException(response);
         }
-        catch (Exception ex)
-        {
-            activity?.MarkFailed(ex);
-            throw;
-        }
+
+        return ClientResult.FromResponse(response);
     }
 
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
@@ -182,7 +136,7 @@ public class MapsClient
         return message;
     }
 
-    // Fake method used to illustrate creating input content in ClientModel
+    // Fake method used to illlustrate creating input content in ClientModel
     // samples. No such operation exists on the Azure Maps service, and this
     // operation implementation will not succeed against a live service.
 

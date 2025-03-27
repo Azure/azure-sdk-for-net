@@ -19,7 +19,8 @@ public static class ActivityExtensions
     private static readonly object ScmScopeValue = bool.TrueString;
 
     /// <summary>
-    /// Creates and starts a new <see cref="Activity"/> with the specified name and kind.
+    /// Creates and starts a new <see cref="Activity"/> if there are active listeners and if distributed
+    /// tracing is enabled. Creates the Activity using the specified name, kind, parent activity content and tags.
     /// </summary>
     /// <remarks>This extension method is intended to be used by client library authors only. Applications
     /// should use one of the overloads of <see cref="ActivitySource.StartActivity(string, ActivityKind)"/>
@@ -74,6 +75,15 @@ public static class ActivityExtensions
             return;
         }
 
+        // See: https://opentelemetry.io/docs/specs/semconv/general/recording-errors/
+
+        // SHOULD set the span status code to error
+        // When the operation fails with an exception the span status description SHOULD be set to the
+        // exception message
+        activity.SetStatus(ActivityStatusCode.Error, exception?.Message);
+
+        // SHOULD set error.type see https://opentelemetry.io/docs/specs/semconv/attributes-registry/error/#error-type
+        // This instrumentation uses [HTTP status code] or [full name of the exception type] or [_OTHER] in that order
         string? errorCode = null;
         if (exception is ClientResultException clientResultException)
         {
@@ -83,6 +93,26 @@ public static class ActivityExtensions
         errorCode ??= "_OTHER";
 
         activity.SetTag("error.type", errorCode);
-        activity.SetStatus(ActivityStatusCode.Error, exception?.Message);
+
+        // If there is an exception, SHOULD record this exception as a span event
+        // see https://opentelemetry.io/docs/specs/semconv/general/recording-errors/#recording-exceptions
+        if (exception == null)
+        {
+            return;
+        }
+        // TODO - we should use AddException added in .NET 9 when we can
+        const string ExceptionEventName = "exception";
+        const string ExceptionMessageTag = "exception.message";
+        const string ExceptionStackTraceTag = "exception.stacktrace";
+        const string ExceptionTypeTag = "exception.type";
+
+        ActivityTagsCollection keyValuePairs = new()
+        {
+            { ExceptionMessageTag, exception.Message },
+            { ExceptionStackTraceTag, exception.StackTrace },
+            { ExceptionTypeTag, exception.GetType().ToString() }
+        };
+
+        activity.AddEvent(new ActivityEvent(ExceptionEventName, default, keyValuePairs));
     }
 }
