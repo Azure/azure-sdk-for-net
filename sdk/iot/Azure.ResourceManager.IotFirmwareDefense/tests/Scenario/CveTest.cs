@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
-            var results = testFirmware.GetCvesAsync();
+            var results = testFirmware.GetCommonVulnerabilitiesAndExposuresAsync();
             await foreach ( CveResource result in results ) {
                 Console.WriteLine($"Fetched: {result}");
             }

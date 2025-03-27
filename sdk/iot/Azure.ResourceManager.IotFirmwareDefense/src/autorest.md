@@ -19,7 +19,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-mgmt-debug: 
+mgmt-debug:
   show-serialized-names: true
 
 format-by-name-rules:
@@ -55,40 +55,30 @@ acronym-mapping:
 
 override-operation-name:
   BinaryHardening_ListByFirmware: GetBinaryHardeningResults
+  Cves_ListByFirmware: GetCommonVulnerabilitiesAndExposures
+
+parameter-rename-mapping:
+  Workspaces_Create:
+    resource: WorkspaceResource
 
 rename-mapping:
-  GenerateUploadUrlRequest: FirmwareUploadUrlRequest
   Workspace: FirmwareAnalysisWorkspace
-  # BinaryHardeningResult: BinaryHardeningResultProperties
-  # BinaryHardeningResource: BinaryHardeningResult
-  BinaryHardeningSummaryResource: BinaryHardeningSummary
-  # CveResult: CveResultProperties
-  # CveResource: CveResult
-  # PasswordHashResource: PasswordHashResult
-  # SbomComponentResource: SbomComponentResult
-  SummaryType: FirmwareAnalysisSummaryType
-  SummaryType.CVE: Cve
-  # CryptoCertificateResource: CryptoCertificateResult
-  CryptoCertificateSummaryResource: CryptoCertificateSummary
-  # CryptoKeyResource: CryptoKeyResult
-  CryptoKeyResource.properties.cryptoKeyId: CryptoKeyId
-  CryptoKeySummaryResource: CryptoKeySummary
+
   Firmware: IotFirmware
+  FirmwareListResult: IotFirmwareCollection
   ProvisioningState: FirmwareProvisioningState
+  Status: FirmwareAnalysisStatus
+
+  SummaryType: FirmwareAnalysisSummaryType
   SummaryResource: FirmwareAnalysisSummary
   SummaryResourceProperties: FirmwareAnalysisSummaryProperties
-  # BinaryHardeningResource.properties.features.nx: NXFlag
-  # BinaryHardeningResource.properties.features.pie: PieFlag
-  # BinaryHardeningResource.properties.features.relro: RelroFlag
-  # BinaryHardeningResource.properties.features.canary: CanaryFlag
-  # BinaryHardeningResource.properties.features.stripped: StrippedFlag
-  # BinaryHardeningSummaryResource.nx: NXPercentage
-  # BinaryHardeningSummaryResource.pie: PiePercentage
-  # BinaryHardeningSummaryResource.relro: RelroPercentage
-  # BinaryHardeningSummaryResource.canary: CanaryPercentage
-  # BinaryHardeningSummaryResource.stripped: StrippedPercentage
-  Status: FirmwareAnalysisStatus
-  StatusMessage: FirmwareAnalysisStatusMessage
+
+  GetFirmwareAnalysisSummaryResource: GetFirmwareAnalysisSummary
+
+  BinaryHardeningSummaryResource: BinaryHardeningSummary
+  CryptoCertificateSummaryResource: CryptoCertificateSummary
+  CryptoKeySummaryResource: CryptoKeySummary
+
   PairedKey: CryptoPairedKey
   UrlToken: FirmwareUrlToken
 
