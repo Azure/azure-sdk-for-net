@@ -24,6 +24,14 @@ namespace System.ClientModel.SourceGeneration
                 category: "ContextGenerator",
                 defaultSeverity: DiagnosticSeverity.Error,
                 isEnabledByDefault: true);
+
+            public static readonly DiagnosticDescriptor BuildableAttributeRequiresContext = new(
+                id: "SCM0003",
+                title: "ModelReaderWriterBuildableAttribute requires a class that inherits from ModelReaderWriterContext",
+                messageFormat: "ModelReaderWriterBuildableAttribute can only be applied to classes that inherit from ModelReaderWriterContext",
+                category: "ContextGenerator",
+                defaultSeverity: DiagnosticSeverity.Warning,
+                isEnabledByDefault: true);
         }
     }
 }

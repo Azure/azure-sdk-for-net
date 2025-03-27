@@ -20,6 +20,18 @@ namespace System.ClientModel.SourceGeneration
         private static readonly SymbolDisplayFormat s_FullyQualifiedNoGlobal = new SymbolDisplayFormat(
             typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
 
+        private readonly struct AttributeInfo
+        {
+            public AttributeInfo(ISymbol? symbol, List<Diagnostic>? diagnostics = null)
+            {
+                Symbol = symbol;
+                Diagnostics = diagnostics ?? [];
+            }
+
+            public ISymbol? Symbol { get; }
+            public List<Diagnostic> Diagnostics { get; }
+        }
+
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
@@ -80,10 +92,39 @@ namespace System.ClientModel.SourceGeneration
                 .Where(typeSymbol => typeSymbol is not null)
                 .Collect();
 
+            // Collect all types used in ModelReaderWriterBuildableAttribute constructors
+            var attributeInfos = context.SyntaxProvider
+                .CreateSyntaxProvider(
+                    predicate: (node, _) => node is AttributeSyntax,
+                    transform: (ctx, _) => GetAttributeInfo(ctx.Node as AttributeSyntax, ctx.SemanticModel))
+                .Where(info => info.Symbol != null || info.Diagnostics?.Count > 0)
+                .Collect();
+
+            context.RegisterSourceOutput(attributeInfos, (productionContext, infos) =>
+            {
+                foreach (var info in infos)
+                {
+                    foreach (var diagnostic in info.Diagnostics)
+                    {
+                        productionContext.ReportDiagnostic(diagnostic);
+                    }
+                }
+            });
+
+            var attributeInvocations = attributeInfos
+                .SelectMany((infos, _) => infos.Where(info => info.Symbol != null).Select(info => info.Symbol!))
+                .SelectMany((symbol, _) => GetRecursiveGenericTypes(symbol))
+                .Where(typeSymbol => typeSymbol != null)
+                .Collect();
+
             var assemblyNameProvider = context.CompilationProvider.Select((compilation, _) => compilation.Assembly.Identity.Name ?? "UnknownAssembly");
 
             var modelInfoTypes = persistableModelDeclarations
                 .Combine(methodInvocations)
+                .Select((tuple, _) => tuple.Left.AddRange(tuple.Right));
+
+            modelInfoTypes = modelInfoTypes
+                .Combine(attributeInvocations)
                 .Select((tuple, _) => tuple.Left.AddRange(tuple.Right));
 
             var combined = classDeclarations
@@ -157,20 +198,95 @@ namespace System.ClientModel.SourceGeneration
         /// </summary>
         internal Action<ContextGenerationSpec>? OnSourceEmitting { get; init; }
 
+        private AttributeInfo GetAttributeInfo(AttributeSyntax? attribute, SemanticModel semanticModel)
+        {
+            {
+                if (attribute == null)
+                    return default;
+
+                // Check if this is ModelReaderWriterBuildableAttribute
+                var attributeSymbol = semanticModel.GetSymbolInfo(attribute).Symbol?.ContainingType;
+                if (attributeSymbol == null ||
+                    attributeSymbol.ToDisplayString(s_FullyQualifiedNoGlobal) != "System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute")
+                    return default;
+
+                // Check if it's applied to a class
+                var parent = attribute.Parent?.Parent as ClassDeclarationSyntax;
+                if (parent == null)
+                    return default;
+
+                var classSymbol = semanticModel.GetDeclaredSymbol(parent);
+                if (classSymbol == null)
+                    return default;
+
+                // Check if the class inherits from ModelReaderWriterContext
+                var baseType = classSymbol.BaseType;
+                bool inheritsFromContext = false;
+
+                while (baseType != null)
+                {
+                    if (baseType.ToDisplayString(s_FullyQualifiedNoGlobal) == "System.ClientModel.Primitives.ModelReaderWriterContext")
+                    {
+                        inheritsFromContext = true;
+                        break;
+                    }
+
+                    baseType = baseType.BaseType;
+                }
+
+                // Extract the type from attribute
+                ISymbol? typeSymbol = null;
+                if (attribute.ArgumentList?.Arguments.Count > 0)
+                {
+                    var firstArg = attribute.ArgumentList.Arguments[0];
+                    if (firstArg.Expression is TypeOfExpressionSyntax typeOfExpr)
+                    {
+                        typeSymbol = semanticModel.GetTypeInfo(typeOfExpr.Type).Type;
+                    }
+                }
+
+                // If it doesn't inherit from ModelReaderWriterContext, create a diagnostic
+                if (!inheritsFromContext)
+                {
+                    var diagnostics = new List<Diagnostic>
+                            {
+                                Diagnostic.Create(
+                                    DiagnosticDescriptors.BuildableAttributeRequiresContext,
+                                    attribute.GetLocation())
+                            };
+
+                    return new AttributeInfo(null, diagnostics);
+                }
+
+                return new AttributeInfo(typeSymbol);
+            }
+        }
+
         private static ISymbol? GetGenericType(InvocationExpressionSyntax? invocation, SemanticModel semanticModel)
         {
             if (invocation is null)
                 return null;
 
-            if (invocation.Expression is not MemberAccessExpressionSyntax memberAccess ||
-                memberAccess.Name is not GenericNameSyntax genericName)
+            if (invocation.Expression is not MemberAccessExpressionSyntax memberAccess)
                 return null;
 
-            if (genericName.TypeArgumentList.Arguments.Count != 1)
-                return null;
+            ITypeSymbol? symbol;
 
-            var typeSyntax = genericName.TypeArgumentList.Arguments[0];
-            var symbol = semanticModel.GetTypeInfo(typeSyntax).Type;
+            if (memberAccess.Name is GenericNameSyntax genericName)
+            {
+                if (genericName.TypeArgumentList.Arguments.Count != 1)
+                    return null;
+
+                symbol = semanticModel.GetTypeInfo(genericName.TypeArgumentList.Arguments[0]).Type;
+            }
+            else
+            {
+                var argIndex = memberAccess.Name.Identifier.Text.Equals("Read", StringComparison.Ordinal) ? 1 : 0;
+                if (invocation.ArgumentList.Arguments.Count < argIndex + 1)
+                    return null;
+
+                symbol = GetUnderlyingType(semanticModel, invocation.ArgumentList.Arguments[argIndex].Expression);
+            }
 
             if (symbol is INamedTypeSymbol || symbol is IArrayTypeSymbol)
                 return symbol;
@@ -178,20 +294,83 @@ namespace System.ClientModel.SourceGeneration
             return null;
         }
 
+        private static ITypeSymbol? GetUnderlyingType(SemanticModel semanticModel, ExpressionSyntax argExpression)
+        {
+            while (true)
+            {
+                switch (argExpression)
+                {
+                    case CastExpressionSyntax castExpr:
+                        argExpression = castExpr.Expression;
+                        continue;
+
+                    case ParenthesizedExpressionSyntax parenExpr:
+                        argExpression = parenExpr.Expression;
+                        continue;
+
+                    case ObjectCreationExpressionSyntax creationExpr:
+                        return semanticModel.GetTypeInfo(creationExpr).Type;
+
+                    case TypeOfExpressionSyntax typeOfExpr:
+                        return semanticModel.GetTypeInfo(typeOfExpr.Type).Type;
+
+                    case IdentifierNameSyntax identifierName:
+                        var symbol = semanticModel.GetSymbolInfo(identifierName).Symbol;
+                        if (symbol is ILocalSymbol localSymbol)
+                        {
+                            if (localSymbol.Type.Name == "Type" && localSymbol.HasConstantValue)
+                            {
+                                var constantValue = localSymbol.ConstantValue as Type;
+                                if (constantValue != null)
+                                {
+                                    return semanticModel.Compilation.GetTypeByMetadataName(constantValue.FullName);
+                                }
+                            }
+
+                            if (localSymbol.DeclaringSyntaxReferences.Length > 0)
+                            {
+                                var declSyntax = localSymbol.DeclaringSyntaxReferences[0].GetSyntax();
+                                if (declSyntax is VariableDeclaratorSyntax variableDecl && variableDecl.Initializer != null)
+                                {
+                                    argExpression = variableDecl.Initializer.Value;
+                                    continue;
+                                }
+                            }
+                            return localSymbol.Type;
+                        }
+                        if (symbol is IParameterSymbol parameterSymbol)
+                            return parameterSymbol.Type;
+                        if (symbol is IFieldSymbol fieldSymbol)
+                            return fieldSymbol.Type;
+                        if (symbol is IPropertySymbol propertySymbol)
+                            return propertySymbol.Type;
+                        return null;
+
+                    case MemberAccessExpressionSyntax memberAccess:
+                        var memberSymbol = semanticModel.GetSymbolInfo(memberAccess).Symbol;
+                        if (memberSymbol is IFieldSymbol field)
+                            return field.Type;
+                        if (memberSymbol is IPropertySymbol property)
+                            return property.Type;
+                        return semanticModel.GetTypeInfo(memberAccess).Type;
+
+                    default:
+                        return semanticModel.GetTypeInfo(argExpression).Type ?? semanticModel.GetTypeInfo(argExpression).ConvertedType;
+                }
+            }
+        }
+
         private static bool IsTargetMethod(InvocationExpressionSyntax invocation, SemanticModel semanticModel)
         {
             if (invocation.Expression is not MemberAccessExpressionSyntax memberAccess)
                 return false;
 
-            if (memberAccess.Name is not GenericNameSyntax genericName)
-                return false;
-
-            if (!genericName.Identifier.Text.Equals("Read", StringComparison.Ordinal))
-                return false;
-
             var symbol = semanticModel.GetSymbolInfo(memberAccess.Expression).Symbol;
 
             if (symbol is not INamedTypeSymbol namedSymbol)
+                return false;
+
+            if (!memberAccess.Name.Identifier.Text.Equals("Read", StringComparison.Ordinal) && !memberAccess.Name.Identifier.Text.Equals("Write", StringComparison.Ordinal))
                 return false;
 
             return namedSymbol.ToDisplayString(s_FullyQualifiedNoGlobal).Equals("System.ClientModel.Primitives.ModelReaderWriter", StringComparison.Ordinal) == true;

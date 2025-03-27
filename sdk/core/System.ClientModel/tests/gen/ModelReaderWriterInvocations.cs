@@ -11,13 +11,14 @@ namespace System.ClientModel.SourceGeneration.Tests
     {
         public void Invoke()
         {
+            object dict = new Dictionary<string, AvailabilitySetData>();
             ModelReaderWriter.Read<List<AvailabilitySetData>>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
-            ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
+            ModelReaderWriter.Write(dict, ModelReaderWriterOptions.Json, BasicContext.Default);
             ModelReaderWriter.Read<AvailabilitySetData[]>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
-            ModelReaderWriter.Read<List<List<AvailabilitySetData>>>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
+            ModelReaderWriter.Write<List<List<AvailabilitySetData>>>([], ModelReaderWriterOptions.Json, BasicContext.Default);
             ModelReaderWriter.Read<AvailabilitySetData[][]>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
             ModelReaderWriter.Read<AvailabilitySetData[,]>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
-            ModelReaderWriter.Read<ReadOnlyMemory<AvailabilitySetData>>(BinaryData.Empty, ModelReaderWriterOptions.Json, BasicContext.Default);
+            ModelReaderWriter.Read(BinaryData.Empty, typeof(ReadOnlyMemory<AvailabilitySetData>), ModelReaderWriterOptions.Json, BasicContext.Default);
         }
     }
 }

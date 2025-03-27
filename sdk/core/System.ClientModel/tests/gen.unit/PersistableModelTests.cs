@@ -10,23 +10,29 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
     {
         [TestCase("public")]
         [TestCase("internal")]
-        [TestCase("private")]
         public void PersistableModel(string modifier)
         {
-            string source = $@"
-                using System.ClientModel.Primitives;
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
 
-                namespace TestProject
-                {{
-                    public partial class LocalContext : ModelReaderWriterContext
-                    {{
-                    }}
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext
+    {
+    }
 
-                    {modifier} class PersistableModel : IPersistableModel<PersistableModel>
-                    {{
-                    }}
-                }}
-                ";
+    {{modifier}} class PersistableModel : IPersistableModel<PersistableModel>
+    {
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+
+        PersistableModel IPersistableModel<PersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new PersistableModel();
+    }
+}
+""";
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -43,23 +49,36 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
 
         [TestCase("public")]
         [TestCase("internal")]
-        [TestCase("private")]
         public void JsonModel(string modifier)
         {
-            string source = $@"
-                using System.ClientModel.Primitives;
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 
-                namespace TestProject
-                {{
-                    public partial class LocalContext : ModelReaderWriterContext
-                    {{
-                    }}
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext
+    {
+    }
 
-                    {modifier} class JsonModel : IJsonModel<JsonModel>
-                    {{
-                    }}
-                }}
-                ";
+    {{modifier}} class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+        }
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -76,19 +95,32 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
 
         [TestCase("public")]
         [TestCase("internal")]
-        [TestCase("private")]
         public void NoContextJsonModel(string modifier)
         {
-            string source = $$"""
-                using System.ClientModel.Primitives;
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 
-                namespace TestProject
-                {
-                    {{modifier}} class JsonModel : IJsonModel<JsonModel>
-                    {
-                    }
-                }
-                """;
+namespace TestProject
+{
+    {{modifier}} class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+        }
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -104,19 +136,25 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
 
         [TestCase("public")]
         [TestCase("internal")]
-        [TestCase("private")]
         public void NoContextPersistableModel(string modifier)
         {
-            string source = $@"
-                using System.ClientModel.Primitives;
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
 
-                namespace TestProject
-                {{
-                    {modifier} class PersistableModel : IPersistableModel<PersistableModel>
-                    {{
-                    }}
-                }}
-                ";
+namespace TestProject
+{
+    {{modifier}} class PersistableModel : IPersistableModel<PersistableModel>
+    {
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+
+        PersistableModel IPersistableModel<PersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new PersistableModel();
+    }
+}
+""";
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
