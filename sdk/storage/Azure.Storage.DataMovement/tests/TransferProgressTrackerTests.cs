@@ -51,6 +51,8 @@ namespace Azure.Storage.DataMovement.Tests
         {
             public ProcessAsync<Args> Process { get; set; }
 
+            public int MaxConcurrentProcessing { get; set; }
+
             public async ValueTask QueueAsync(Args item, CancellationToken cancellationToken = default)
             {
                 // Just call the process method immediately so it can be tested
