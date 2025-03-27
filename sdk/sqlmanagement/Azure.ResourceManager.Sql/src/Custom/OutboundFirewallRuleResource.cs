@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The <see cref="OutboundFirewallRuleData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<OutboundFirewallRuleResource>> UpdateAsync(WaitUntil waitUntil, OutboundFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             return await UpdateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
@@ -70,6 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The <see cref="OutboundFirewallRuleData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<OutboundFirewallRuleResource> Update(WaitUntil waitUntil, OutboundFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             return Update(waitUntil, cancellationToken);
