@@ -54,7 +54,7 @@ public class ActivityExtensionsTests
     }
 
     [Test]
-    public void DistributedTracingDisabledByDefault()
+    public void DistributedTracingEnabledByDefault()
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");

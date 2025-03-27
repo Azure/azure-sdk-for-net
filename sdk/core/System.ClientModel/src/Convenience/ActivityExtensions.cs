@@ -21,7 +21,7 @@ public static class ActivityExtensions
 
     /// <summary>
     /// Creates and starts a new <see cref="Activity"/> if there are active listeners and if distributed
-    /// tracing is enabled. Creates the Activity using the specified name, kind, parent activity content and tags.
+    /// tracing is enabled. Creates the Activity using the specified name, kind, parent activity context, and tags.
     /// </summary>
     /// <remarks>This extension method is intended to be used by client library authors only. Applications
     /// should use one of the overloads of <see cref="ActivitySource.StartActivity(string, ActivityKind)"/>
@@ -39,7 +39,7 @@ public static class ActivityExtensions
                                                 ActivityContext parentContext = default,
                                                 IEnumerable<KeyValuePair<string, object?>>? tags = null)
     {
-        if (options.EnableDistributedTracing != true)
+        if (options.EnableDistributedTracing == false)
         {
             return null;
         }
@@ -96,7 +96,7 @@ public static class ActivityExtensions
         {
             return activity;
         }
-        // TODO - we should switch the the runtime AddException added in .NET 9 when we can
+        // TODO - we should switch to the runtime AddException added in .NET 9 when we can
 
         activity.AddException(exception);
         return activity;
