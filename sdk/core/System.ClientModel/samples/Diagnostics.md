@@ -6,7 +6,7 @@ Instrumentation is an essential part of developing client libraries. System.Clie
 
 ### Adding distributed tracing instrumentation to service clients
 
-System.ClientModel provides APIs for library authors to use to create distributed tracing spans in each public method call. These APIs are extensions on System.Diagnostics.Activity and System.Diagnostics.ActivitySource. See [Add distributed tracing instrumentation](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs) for more information about these APIs and how to further customize telemetry using them.
+System.ClientModel provides extension methods on System.Diagnostics.Activity and System.Diagnostics.ActivitySource for library authors to use to create distributed tracing spans in each public method call. See [Add distributed tracing instrumentation](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs) for more information about Activity and ActivitySource and how to further customize telemetry using them.
 
 The following sample shows an example of instrumenting a service client implementation.
 
@@ -41,8 +41,8 @@ public class SampleClient
     public ClientResult<SampleResource> UpdateResource(SampleResource resource)
     {
         // Attempt to create and start an Activity for this operation.
-        // StartClientActivity does nothing and returns null if distributed tracing wasn't
-        // enabled by the consuming application or if there are not any active listeners.
+        // StartClientActivity does nothing and returns null if distributed tracing was
+        // disabled by the consuming application or if there are not any active listeners.
         using Activity? activity = ActivitySource.StartClientActivity(_sampleClientOptions, $"{nameof(SampleClient)}.{nameof(UpdateResource)}");
 
         try

@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Samples;
 
-public class DiagnosticsSamples
+public class LoggingSamples
 {
     #region Snippet:OpenTelemetryInClient
     public class SampleClient
@@ -44,8 +44,8 @@ public class DiagnosticsSamples
         public ClientResult<SampleResource> UpdateResource(SampleResource resource)
         {
             // Attempt to create and start an Activity for this operation.
-            // StartClientActivity does nothing and returns null if distributed tracing wasn't
-            // enabled by the consuming application or if there are not any active listeners.
+            // StartClientActivity does nothing and returns null if distributed tracing was
+            // disabled by the consuming application or if there are not any active listeners.
             using Activity? activity = ActivitySource.StartClientActivity(_sampleClientOptions, $"{nameof(SampleClient)}.{nameof(UpdateResource)}");
 
             try
