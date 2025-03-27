@@ -13,7 +13,7 @@ To create a new `CodeTransparencyClient` that will interact with the service, wi
 want to get the publicly accessible data only. Then use a subclient to work with entries:
 
 ```C# Snippet:CodeTransparencySample_CreateClient
-CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 ```
 
 ## Download receipt
@@ -49,6 +49,7 @@ When receipt is embedded in the signature then passing just the signature is eno
 ```C# Snippet:CodeTransparencyVerification
 Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
 byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
+
 try
 {
     client.RunTransparentStatementVerification(transparentStatementBytes);

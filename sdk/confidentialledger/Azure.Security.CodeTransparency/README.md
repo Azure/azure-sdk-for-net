@@ -42,35 +42,17 @@ Before submitting the cose file, the service must be configured with the relevan
 To submit the signature, use the following code:
 
 ```C# Snippet:CodeTransparencySubmission
-CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-Operation<BinaryData> operation = await client.CreateEntryAsync(content);
-Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
-
-string entryId = string.Empty;
-CborReader cborReader = new CborReader(operationResult.Value);
-cborReader.ReadStartMap();
-while (cborReader.PeekState() != CborReaderState.EndMap)
-{
-    string key = cborReader.ReadTextString();
-    if (key == "EntryId")
-    {
-        entryId = cborReader.ReadTextString();
-    }
-    else
-        cborReader.SkipValue();
-}
-Console.WriteLine($"The entry id to use to get the entry and receipt is {{{entryId}}}");
-Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryAsync(entryId);
-BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
-byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
+Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
 ```
 
 Once you have the receipt and the signature, you can verify whether the signature was actually included in the Code Transparency service by running the receipt verification logic. The verifier checks if the receipt was issued for a given signature and if the receipt signature was endorsed by the service.
 
 ```C# Snippet:CodeTransparencyVerifyReceipt
 Response<JwksDocument> key = client.GetPublicKeys();
+
 CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes);
 ```
 
@@ -79,7 +61,15 @@ Alternatively, you can retrieve the Transparent Statement of the corresponding s
 ```C# Snippet:CodeTransparencyVerification
 Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
 byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
-client.RunTransparentStatementVerification(transparentStatementBytes);
+
+try
+{
+    client.RunTransparentStatementVerification(transparentStatementBytes);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+}
 ```
 
 If the verification completes without exception, you can trust the signature and the receipt. This allows you to safely inspect the contents of the files, especially the contents of the payload embedded in a cose signature envelope.

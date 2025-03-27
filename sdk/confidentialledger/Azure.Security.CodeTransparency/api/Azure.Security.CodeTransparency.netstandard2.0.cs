@@ -3,8 +3,8 @@ namespace Azure.Security.CodeTransparency
     public partial class CodeTransparencyCertificateClient
     {
         protected CodeTransparencyCertificateClient() { }
-        public CodeTransparencyCertificateClient(System.Uri certificateEndpoint) { }
-        public CodeTransparencyCertificateClient(System.Uri certificateEndpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
+        public CodeTransparencyCertificateClient(System.Uri endpoint) { }
+        public CodeTransparencyCertificateClient(System.Uri endpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
         public virtual Azure.Response GetServiceIdentity(string ledgerId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Security.CodeTransparency.ServiceIdentityResult> GetServiceIdentity(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetServiceIdentityAsync(string ledgerId, Azure.RequestContext context) { throw null; }
@@ -15,9 +15,10 @@ namespace Azure.Security.CodeTransparency
         protected CodeTransparencyClient() { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
+        public CodeTransparencyClient(System.Uri endpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateEntry(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateEntryAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateEntry(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateEntryAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetEntry(string entryId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.BinaryData> GetEntry(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryAsync(string entryId, Azure.RequestContext context) { throw null; }
@@ -38,7 +39,7 @@ namespace Azure.Security.CodeTransparency
         public virtual Azure.Response<System.BinaryData> GetTransparencyConfigCbor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTransparencyConfigCborAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetTransparencyConfigCborAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes, byte[] signedStatement) { }
+        public void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes) { }
     }
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {
@@ -50,6 +51,12 @@ namespace Azure.Security.CodeTransparency
         {
             V2025_01_31_Preview = 1,
         }
+    }
+    public enum CodeTransparencyOperationStatus
+    {
+        Running = 0,
+        Failed = 1,
+        Succeeded = 2,
     }
     public partial class JsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JsonWebKey>
     {
@@ -89,12 +96,6 @@ namespace Azure.Security.CodeTransparency
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum OperationStatus
-    {
-        Running = 0,
-        Failed = 1,
-        Succeeded = 2,
-    }
     public static partial class SecurityCodeTransparencyModelFactory
     {
         public static Azure.Security.CodeTransparency.JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, System.Collections.Generic.IEnumerable<string> x5c = null, string y = null) { throw null; }
@@ -112,35 +113,22 @@ namespace Azure.Security.CodeTransparency.Receipt
 {
     public partial class CcfReceipt
     {
-        public const int CCF_PROOF_LEAF_LABEL = 1;
-        public const int CCF_PROOF_PATH_LABEL = 2;
-        public const int CCF_TREE_ALG_LABEL = 2;
-        public const int COSE_HEADER_EMBEDDED_RECEIPTS = 394;
-        public const int COSE_PHDR_VDP_LABEL = 396;
-        public const int COSE_PHDR_VDS_LABEL = 395;
-        public const int COSE_RECEIPT_CWT_ISS_LABEL = 1;
-        public const int COSE_RECEIPT_CWT_MAP_LABEL = 15;
-        public const int COSE_RECEIPT_INCLUSION_PROOF_LABEL = -1;
-        public const ulong RECEIPT_HEADER_ISSUER = (ulong)391;
-        public const ulong RECEIPT_HEADER_KEY_ID = (ulong)4;
-        public const string RECEIPT_HEADER_REGISTRATION_TIME = "registration_time";
-        public const string RECEIPT_HEADER_SERVICE_ID = "service_id";
-        public const string RECEIPT_HEADER_TREE_ALGORITHM = "tree_alg";
-        public const string SUPPORTED_TREE_ALGORITHM = "CCF";
+        public static readonly int CcfProofLeafLabel;
+        public static readonly int CcfProofPathLabel;
+        public static readonly int CcfTreeAlgLabel;
+        public static readonly int CoseHeaderEmbeddedReceipts;
+        public static readonly int CosePhdrVdpLabel;
+        public static readonly int CosePhdrVdsLabel;
+        public static readonly int CoseReceiptCwtIssLabel;
+        public static readonly int CoseReceiptCwtMapLabel;
+        public static readonly int CoseReceiptInclusionProofLabel;
+        public static readonly ulong ReceiptHeaderIssuer;
+        public static readonly ulong ReceiptHeaderKeyId;
+        public static readonly string ReceiptHeaderRegistrationTime;
+        public static readonly string ReceiptHeaderServiceId;
+        public static readonly string ReceiptHeaderTreeAlgorithm;
+        public static readonly string SupportedTreeAlgorithm;
         public CcfReceipt() { }
-        public partial class Leaf
-        {
-            public Leaf() { }
-            public byte[] DataHash { get { throw null; } set { } }
-            public string InternalEvidence { get { throw null; } set { } }
-            public byte[] InternalTransactionHash { get { throw null; } set { } }
-        }
-        public partial class ProofElement
-        {
-            public ProofElement() { }
-            public byte[] Hash { get { throw null; } set { } }
-            public bool Left { get { throw null; } set { } }
-        }
     }
     public partial class CcfReceiptVerifier
     {

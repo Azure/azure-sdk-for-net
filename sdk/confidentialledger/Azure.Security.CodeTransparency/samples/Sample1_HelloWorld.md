@@ -25,7 +25,7 @@ The most basic usage is to submit a valid signature file to the service. Accepta
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-Operation<BinaryData> operation = await client.CreateEntryAsync(content);
+Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
 ```
 
 ## Verify if operation was successful
