@@ -10,7 +10,7 @@ function RequestGithubGraphQL {
   )
 
   $payload = @{
-    query = $query
+    query     = $query
     variables = $variables
   } | ConvertTo-Json -Depth 100
 
@@ -31,7 +31,7 @@ function RequestGithubGraphQL {
 
 function Get-ChangedFiles {
   param (
-    [string]$SourceCommittish= "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
+    [string]$SourceCommittish = "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
     [string]$TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/"),
     [string]$DiffPath,
     [string]$DiffFilterType = "d"
@@ -48,18 +48,18 @@ function Get-ChangedFiles {
   # Git PR diff: https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-comparing-branches-in-pull-requests#three-dot-and-two-dot-git-diff-comparisons
   $command = "git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff `"$TargetCommittish...$SourceCommittish`" --name-only --diff-filter=$DiffFilterType"
   if ($DiffPath) {
-  $command = $command + " -- `'$DiffPath`'"
+    $command = $command + " -- `'$DiffPath`'"
   }
   Write-Host $command
   $changedFiles = Invoke-Expression -Command $command
-  if(!$changedFiles) {
+  if (!$changedFiles) {
     Write-Host "No changed files in git diff between $TargetCommittish and $SourceCommittish"
   }
   else {
-  Write-Host "Here are the diff files:"
-  foreach ($file in $changedFiles) {
+    Write-Host "Here are the diff files:"
+    foreach ($file in $changedFiles) {
       Write-Host "    $file"
-  }
+    }
   }
   return $changedFiles
 }
@@ -85,7 +85,7 @@ class ConflictedFile {
     $this.ParseContent($this.Content)
   }
 
-  [array] Left(){
+  [array] Left() {
     if ($this.IsConflicted) {
       # we are forced to get this line by line and reassemble via join because of how powershell is interacting with
       # git show --textconv commitsh:path
@@ -102,7 +102,7 @@ class ConflictedFile {
     }
   }
 
-  [array] Right(){
+  [array] Right() {
     if ($this.IsConflicted) {
       $toShow = "$($this.RightSource):$($this.Path)" -replace "\\", "/"
       Write-Host "git show $toShow"
@@ -119,7 +119,7 @@ class ConflictedFile {
     $l = @()
     $r = @()
 
-    foreach($line in $lines) {
+    foreach ($line in $lines) {
       if ($line -match "^<<<<<<<\s*(.+)") {
         $this.IsConflicted = $true
         $this.LeftSource = $matches[1]
