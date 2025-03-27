@@ -16,8 +16,6 @@
 - This SDK version supports 2024-10-01-preview API version.
 - Cluster resource supports SecretArchiveSettings.
 - Cluster create and update commands support new parameter AnalyticsOutputSettings for configuring Log Analytics Workspace
-- Cluster resource supports ClustersPatchVulnerabilityScanning with the ability to scan for cluster vulnerabilities.
-- Upgraded api-version tag from 'package-2023-07-01' to 'package-2024-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f999652ecea2a4bddc2b08a113617e23e98f10d4/specification/networkcloud/resource-manager/readme.md.
 - ClusterManager commands are updated with custom parameters AssociatedIdentity to support managing identity.
 - Cluster commands are updated with custom parameters AssociatedIdentity to support managing identity.
 - This version introduces custom code to validate the CommandOutputSettings property of a cluster for both create and update operations.
