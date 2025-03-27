@@ -62,9 +62,9 @@ public class ActivityExtensionsTests
 
         using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
-        Assert.IsNull(Activity.Current);
-        Assert.IsNull(activity);
-        Assert.AreEqual(0, listener.Activities.Count);
+        Assert.IsNotNull(Activity.Current);
+        Assert.IsNotNull(activity);
+        Assert.AreEqual(1, listener.Activities.Count);
     }
 
     [Test]
