@@ -77,6 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
             exporterOptions.SamplingRatio = SamplingRatio;
             exporterOptions.StorageDirectory = StorageDirectory;
+            exporterOptions.EnableLiveMetrics = EnableLiveMetrics;
             if (Transport != null)
             {
                 exporterOptions.Transport = Transport;
@@ -85,19 +86,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
         }
 
-        internal void SetValueToLiveMetricsOptions(AzureMonitorLiveMetricsOptions liveMetricsOptions)
-        {
-            liveMetricsOptions.ConnectionString = ConnectionString;
-            liveMetricsOptions.Credential = Credential;
-            liveMetricsOptions.EnableLiveMetrics = EnableLiveMetrics;
+        //internal void SetValueToLiveMetricsOptions(AzureMonitorLiveMetricsOptions liveMetricsOptions)
+        //{
+        //    liveMetricsOptions.ConnectionString = ConnectionString;
+        //    liveMetricsOptions.Credential = Credential;
+        //    liveMetricsOptions.EnableLiveMetrics = EnableLiveMetrics;
 
-            if (Transport != null)
-            {
-                liveMetricsOptions.Transport = Transport;
-            }
+        //    if (Transport != null)
+        //    {
+        //        liveMetricsOptions.Transport = Transport;
+        //    }
 
-            liveMetricsOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
-            liveMetricsOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
-        }
+        //    liveMetricsOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
+        //    liveMetricsOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
+        //}
     }
 }

@@ -149,6 +149,7 @@ namespace Azure.Storage.Blobs
             _uri = conn.BlobEndpoint;
             options ??= new BlobClientOptions();
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
+            _accountName = conn.AccountName;
 
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(_authenticationPolicy),
@@ -330,6 +331,7 @@ namespace Azure.Storage.Blobs
                   authentication,
                   options?._clientSideEncryptionOptions?.Clone())
         {
+            _accountName ??= storageSharedKeyCredential?.AccountName;
         }
 
         /// <summary>

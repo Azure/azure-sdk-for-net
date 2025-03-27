@@ -1,16 +1,29 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
-
-* Added `ConnectionProvider` abstraction in `AIProjectClient` to enable seamless connectivity with Azure OpenAI, Inference, and Search SDKs.
+* Added `QueryType` parameter to `AISearchIndexResource` to allow different search types performed by an agent [issue](https://github.com/Azure/azure-sdk-for-net/issues/49069).
+* Added sample for Azure AI Search in streaming scenarios [issue](https://github.com/Azure/azure-sdk-for-net/issues/49069).
 
 ### Breaking Changes
 
 ### Bugs Fixed
+* Fixed Azure AI Search in streaming scenarios.
 
 ### Other Changes
+
+### Sample updates
+* Added documentation for each sample.
+* The unnecessary code was removed from samples.
+
+## 1.0.0-beta.5 (2025-03-17)
+
+### Features Added
+
+* Added `ConnectionProvider` abstraction in `AIProjectClient` to enable seamless connectivity with Azure OpenAI, Inference, and Search SDKs.
+* Added `CognitiveService` connection type.
+* Added support for URL citations with the `MessageTextUrlCitationAnnotation` class. `MessageTextContent` objects now can possibly have `Annotations` populated in order to provide information on URL citations.
 
 ## 1.0.0-beta.4 (2025-02-28)
 

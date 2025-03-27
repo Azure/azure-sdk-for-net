@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Projects.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.Expressions;
@@ -12,7 +11,19 @@ using Azure.Provisioning.Roles;
 
 namespace Azure.Projects;
 
-internal class RoleResolver(string id, Dictionary<Provisionable, FeatureRole[]> annotations, IEnumerable<UserAssignedIdentity> managedIdentities, IEnumerable<BicepValue<Guid>> userPrincipals) : InfrastructureResolver
+internal readonly struct FeatureRole
+{
+    public FeatureRole(string name, string id)
+    {
+        Name = name;
+        Id = id;
+    }
+
+    public string Name { get; }
+    public string Id { get; }
+}
+
+internal class RoleResolver(string id, Dictionary<Provisionable, List<FeatureRole>> annotations, IEnumerable<UserAssignedIdentity> managedIdentities, IEnumerable<BicepValue<Guid>> userPrincipals) : InfrastructureResolver
 {
     public override IEnumerable<Provisionable> ResolveResources(IEnumerable<Provisionable> resources, ProvisioningBuildOptions options)
     {
@@ -20,7 +31,7 @@ internal class RoleResolver(string id, Dictionary<Provisionable, FeatureRole[]> 
         foreach (Provisionable provisionable in base.ResolveResources(resources, options))
         {
             yield return provisionable;
-            if (annotations.TryGetValue(provisionable, out FeatureRole[]? roles) && provisionable is ProvisionableResource resource && roles is not null)
+            if (annotations.TryGetValue(provisionable, out List<FeatureRole>? roles) && provisionable is ProvisionableResource resource && roles is not null)
             {
                 foreach (FeatureRole role in roles)
                 {
@@ -29,7 +40,7 @@ internal class RoleResolver(string id, Dictionary<Provisionable, FeatureRole[]> 
                         string roleKey = $"{resource.BicepIdentifier}_{userPrincipal.Value.ToString()}_{role.Name}";
                         if (roleCount.TryGetValue(roleKey, out int count))
                         {
-                            count = count + 1;
+                            count++;
                         }
                         else
                         {
@@ -37,7 +48,9 @@ internal class RoleResolver(string id, Dictionary<Provisionable, FeatureRole[]> 
                         }
                         roleCount[roleKey] = count;
 
-                        yield return new RoleAssignment($"{resource.BicepIdentifier}_{count}_{role.Name}")
+                        string bicepId = $"{resource.BicepIdentifier}_admin_{role.Name}";
+                        if (count > 1) bicepId = $"{resource.BicepIdentifier}_admin_{role.Name}_{count}";
+                        yield return new RoleAssignment(bicepId)
                         {
                             Name = BicepFunction.CreateGuid(resource.BicepIdentifier, id, userPrincipal, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.Id)),
                             Scope = new IdentifierExpression(resource.BicepIdentifier),

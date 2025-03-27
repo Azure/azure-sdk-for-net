@@ -306,7 +306,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            using FileStream stream = File.OpenRead(filePath);
+            using FileStream stream = System.IO.File.OpenRead(filePath);
             return UploadFile(stream, purpose, filePath, cancellationToken);
         }
 
@@ -323,7 +323,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            using FileStream stream = File.OpenRead(filePath);
+            using FileStream stream = System.IO.File.OpenRead(filePath);
             return await UploadFileAsync(stream, purpose, filePath, cancellationToken).ConfigureAwait(false);
         }
 
@@ -337,8 +337,9 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+            File azureFile = new(BinaryData.FromStream(data));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(azureFile, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
@@ -355,9 +356,38 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+            File azureFile = new(BinaryData.FromStream(data));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(azureFile, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UploadFile(content, content.ContentType, context);
+            return Response.FromValue(AgentFile.FromResponse(response), response);
+        }
+
+        /// <summary> Uploads a file for use by other operations. </summary>
+        /// <param name="body"> Multipart body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        internal virtual async Task<Response<AgentFile>> UploadFileAsync(UploadFileRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
+            return Response.FromValue(AgentFile.FromResponse(response), response);
+        }
+
+        /// <summary> Uploads a file for use by other operations. </summary>
+        /// <param name="body"> Multipart body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        internal virtual Response<AgentFile> UploadFile(UploadFileRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue(AgentFile.FromResponse(response), response);
