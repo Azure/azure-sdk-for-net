@@ -234,6 +234,11 @@ namespace System.ClientModel.Primitives
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
     }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true)]
+    public partial class ModelReaderWriterBuildableAttribute : System.Attribute
+    {
+        public ModelReaderWriterBuildableAttribute(System.Type type) { }
+    }
     public abstract partial class ModelReaderWriterContext
     {
         protected ModelReaderWriterContext() { }
