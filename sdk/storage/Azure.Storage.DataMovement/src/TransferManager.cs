@@ -75,7 +75,18 @@ namespace Azure.Storage.DataMovement
             options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
             default)
         {
-            _concurrencyTunerEnabled = options.ConcurrencyTunerEnabled;
+            _concurrencyTunerEnabled = options?.ConcurrencyTunerEnabled ?? true;
+
+            if (_concurrencyTunerEnabled)
+                _concurrencyTuner = new ConcurrencyTuner(
+                    new ResourceMonitor(),
+                    _chunksProcessor,
+                    DataMovementConstants.TransferManagerOptions.MonitoringInterval,
+                    DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
+                    DataMovementConstants.TransferManagerOptions.InitialConcurrency,
+                    DataMovementConstants.TransferManagerOptions.MaxConcurrency,
+                    DataMovementConstants.TransferManagerOptions.MaxCpuUsage
+                );
         }
 
         /// <summary>
@@ -88,7 +99,6 @@ namespace Azure.Storage.DataMovement
             JobBuilder jobBuilder,
             ITransferCheckpointer checkpointer,
             ICollection<StorageResourceProvider> resumeProviders,
-            ConcurrencyTuner concurrencyTuner,
             Func<string> generateTransferId = default
             )
         {
@@ -100,17 +110,6 @@ namespace Azure.Storage.DataMovement
             _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
-
-            if (_concurrencyTunerEnabled)
-                _concurrencyTuner = new ConcurrencyTuner(
-                    new ResourceMonitor(),
-                    _chunksProcessor,
-                    DataMovementConstants.TransferManagerOptions.MonitoringInterval,
-                    DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
-                    DataMovementConstants.TransferManagerOptions.InitialConcurrency,
-                    DataMovementConstants.TransferManagerOptions.MaxConcurrency,
-                    DataMovementConstants.TransferManagerOptions.MaxCpuUsage
-                );
 
             ConfigureProcessorCallbacks();
         }
