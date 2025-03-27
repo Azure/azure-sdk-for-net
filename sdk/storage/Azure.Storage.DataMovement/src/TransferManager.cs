@@ -111,6 +111,17 @@ namespace Azure.Storage.DataMovement
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
 
+            if (_concurrencyTunerEnabled)
+                _concurrencyTuner = new ConcurrencyTuner(
+                    new ResourceMonitor(),
+                    _chunksProcessor,
+                    DataMovementConstants.TransferManagerOptions.MonitoringInterval,
+                    DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
+                    DataMovementConstants.TransferManagerOptions.InitialConcurrency,
+                    DataMovementConstants.TransferManagerOptions.MaxConcurrency,
+                    DataMovementConstants.TransferManagerOptions.MaxCpuUsage
+                );
+
             ConfigureProcessorCallbacks();
         }
 
