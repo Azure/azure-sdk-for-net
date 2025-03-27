@@ -276,7 +276,7 @@ function Write-RateLimit {
   Write-Host ""
 }
 
-function GetAIReviewThreads {
+function GetUnresolvedAIReviewThreads {
   param(
     [string]$repoOwner,
     [string]$repoName,
@@ -319,7 +319,9 @@ query ReviewThreads($owner: String!, $name: String!, $number: Int!) {
   # Don't mark threads from humans as resolved, as those may be real questions/blockers.
   foreach ($thread in $reviews) {
     if ($thread.comments.nodes | Where-Object { $_.author.login -in $reviewers }) {
-      $threadIds += $thread.id
+      if (!$thread.isResolved) {
+        $threadIds += $thread.id
+      }
       continue
     }
   }
@@ -345,7 +347,7 @@ mutation ResolveThread($id: ID!) {
 }
 '@
 
-  $threadIds = GetAIReviewThreads -repoOwner $repoOwner -repoName $repoName -prNumber $prNumber -reviewers $reviewers
+  $threadIds = GetUnresolvedAIReviewThreads -repoOwner $repoOwner -repoName $repoName -prNumber $prNumber -reviewers $reviewers
 
   if (!$threadIds) {
     return $false
