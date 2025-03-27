@@ -781,6 +781,7 @@ internal static partial class MockExtensions
     {
         srcResource.VerifyGet(r => r.Uri);
         srcResource.VerifyGet(r => r.ResourceId);
+        srcResource.VerifyGet(r => r.IsContainer);
     }
 
     public static void VerifyDestinationResourceOnJobProcess(this Mock<StorageResourceItem> dstResource)

@@ -22,6 +22,7 @@ namespace Azure.Storage.DataMovement
             };
         }
 
+        // TODO: Remove
         public static StreamToUriJobPart ToStreamToUriJobPartAsync(
             this TransferJobInternal baseJob,
             JobPartPlanHeader header,
@@ -51,6 +52,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
+        // TODO: Remove
         public static ServiceToServiceJobPart ToServiceToServiceJobPartAsync(
             this TransferJobInternal baseJob,
             JobPartPlanHeader header,
@@ -80,6 +82,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
+        // TODO: Remove
         public static UriToStreamJobPart ToUriToStreamJobPartAsync(
             this TransferJobInternal baseJob,
             JobPartPlanHeader header,
@@ -115,10 +118,16 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)
         {
+            // If saved path equals the cotnainer Uri, its a single item trasfer, so the resource name
+            // does not matter. Just set it to the path.
             string childSourcePath = header.SourcePath;
-            string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
+            string childSourceName = header.SourcePath == sourceResource.Uri.AbsoluteUri.ToString() ?
+                childSourcePath :
+                childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
-            string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
+            string childDestinationName = header.DestinationPath == destinationResource.Uri.AbsoluteUri.ToString() ?
+                childDestinationPath :
+                childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
             // Override header values if options were specified by user.
             long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
             long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
@@ -148,8 +157,16 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)
         {
+            // If saved path equals the cotnainer Uri, its a single item trasfer, so the resource name
+            // does not matter. Just set it to the path.
             string childSourcePath = header.SourcePath;
+            string childSourceName = header.SourcePath == sourceResource.Uri.AbsoluteUri.ToString() ?
+                childSourcePath :
+                childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
+            string childDestinationName = header.DestinationPath == destinationResource.Uri.AbsoluteUri.ToString() ?
+                childDestinationPath :
+                childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
             // Override header values if options were specified by user.
             long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
             long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
@@ -179,11 +196,16 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)
         {
-            // Apply credentials to the saved transfer job path
+            // If saved path equals the cotnainer Uri, its a single item trasfer, so the resource name
+            // does not matter. Just set it to the path.
             string childSourcePath = header.SourcePath;
-            string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
+            string childSourceName = header.SourcePath == sourceResource.Uri.AbsoluteUri.ToString() ?
+                childSourcePath :
+                childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
-            string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
+            string childDestinationName = header.DestinationPath == destinationResource.Uri.AbsoluteUri.ToString() ?
+                childDestinationPath :
+                childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
             // Override header values if options were specified by user.
             long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
             long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
