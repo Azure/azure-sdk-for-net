@@ -330,13 +330,13 @@
 /sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Phone Numbers
-/sdk/communication/Azure.Communication.PhoneNumbers/               @whisper6284 @danielav7
+/sdk/communication/Azure.Communication.PhoneNumbers/               @Arazan @whisper6284 @danielortega-msft @sofiar-msft
 
 # PRLabel: %Communication - Programmable Connectivity
 /sdk/communication/Azure.Communication.ProgrammableConnectivity/   @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Short Codes
-/sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @danielav7
+/sdk/communication/Azure.Communication.ShortCodes/                 @Arazan @whisper6284 @danielortega-msft @sofiar-msft
 
 # PRLabel: %Communication - SMS
 /sdk/communication/Azure.Communication.Sms/                        @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft @besh2014
@@ -449,9 +449,6 @@
 
 # ServiceLabel: %Data Lake
 # ServiceOwners:                                                   @sumantmehtams
-
-# ServiceLabel: %Data Lake Storage Gen1
-# ServiceOwners:                                                   @sumantmehtams @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
 # ServiceLabel: %Data Lake Storage Gen2
 # ServiceOwners:                                                   @sumantmehtams @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
@@ -581,7 +578,7 @@
 
 # ServiceLabel: %KeyVault
 # AzureSdkOwners:                                                  @JonathanCrd
-# ServiceOwners:                                                   @RandalliLama
+# ServiceOwners:                                                   @cheathamb36 @chen-karen @lgonsoulin
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
@@ -985,6 +982,12 @@
 # ServiceLabel: %Container Orchestrator Runtime
 # ServiceOwners:                                                   @ddadaal
 
+# PRLabel: %Database Watcher
+/sdk/databasewatcher/Azure.ResourceManager.*/                      @Renyx1219
+
+# ServiceLabel: %Database Watcher %Mgmt
+# ServiceOwners:                                                   @Renyx1219
+
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
@@ -1075,6 +1078,12 @@
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
+# PRLabel: %Secret Store Extension
+/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @locomotiveviaduct
+
+# ServiceLabel: %Secret Store Extension %Mgmt
+# ServiceOwners:                                                   @cjoprey @locomotiveviaduct
+
 # PRLabel: %Self Help
 /sdk/selfhelp/Azure.ResourceManager.*/                             @ArcturusZhang @ArthurMa1978
 
@@ -1083,6 +1092,12 @@
 
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
+
+# PRLabel: %Migration Assessment
+/sdk/migrationassessment/Azure.ResourceManager.*/                   @srilipta-swain
+
+# ServiceLabel: %%Migration Assessment %Mgmt
+# ServiceOwners:                                                   @srilipta-swain
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
@@ -1104,13 +1119,16 @@
 # ######## Code Generation ########
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft
+/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire
+
+#PRLabel: %CodeGen %Mgmt
+/eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ServiceLabel: %CodeGen
 # AzureSdkOwners:                                                  @JoshLove-msft
 
-#PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
+# ServiceLabel: %CodeGen %Mgmt
+# AzureSdkOwners:                                                  @live1206 @ArcturusZhang
 
 #PRLabel: %CodeGen %Client
-/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
+/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
