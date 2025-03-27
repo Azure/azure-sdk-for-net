@@ -21,7 +21,7 @@ function RequestGithubGraphQL {
     LogWarning "Failed graphql operation:"
     LogWarning ($payload -replace '\\n', "`n")
     if ($data.errors) {
-      LogWarning ($data.errors.message -join '`n')
+      LogWarning ($data.errors.message -join "`n")
     }
     throw "graphql operation failed ($LASTEXITCODE)"
   }
