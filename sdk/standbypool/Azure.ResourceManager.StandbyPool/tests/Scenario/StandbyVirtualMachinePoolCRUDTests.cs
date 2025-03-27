@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         [RecordedTest]
         public async Task StandbyVirtualMachinePoolCRUDTest()
         {
-            // Setup - Expected testProperties
+            // Setup - Initialize testProperties
             standbyVirtualMachinePoolTestProperties = await InitializeStandbyVirtualMachinePoolTestProperties();
 
             // Create
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         private void VerifyStandbyVirtualMachinePool(StandbyVirtualMachinePoolTestProperties expected, StandbyVirtualMachinePoolResource actual)
         {
-            Assert.AreEqual(expected.Name, actual.Data.Name);
+            Assert.AreEqual(expected.StandbyPoolName, actual.Data.Name);
             Assert.AreEqual(expected.MaxReadyCapacity, actual.Data.Properties.ElasticityProfile.MaxReadyCapacity);
             Assert.AreEqual(expected.MinReadyCapacity, actual.Data.Properties.ElasticityProfile.MinReadyCapacity);
             Assert.AreEqual(expected.AttachedVirtualMachineScaleSetId, actual.Data.Properties.AttachedVirtualMachineScaleSetId);
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             Assert.AreEqual(expected.StandbyVirtualMachineState, actual.Data.Properties.VirtualMachineState);
         }
 
-        private async Task GetStandbyVirtualMachineRuntimeViewAndVerify(StandbyVirtualMachinePoolTestProperties expectedStandbyVirtualMachinePoolResourceProperties, string runtimeViewName = "latest")
+        private async Task GetStandbyVirtualMachineRuntimeViewAndVerify(StandbyVirtualMachinePoolTestProperties expectedStandbyVirtualMachinePoolTestProperties, string runtimeViewName = "latest")
         {
             StandbyVirtualMachinePoolRuntimeViewResource standbyVirtualMachinePool_RUNTIMEVIEW =
-                await Client.GetStandbyVirtualMachinePoolRuntimeViewResource(expectedStandbyVirtualMachinePoolResourceProperties.StandbyVirtualMachinePoolRuntimeViewResourceId).GetAsync();
+                await Client.GetStandbyVirtualMachinePoolRuntimeViewResource(expectedStandbyVirtualMachinePoolTestProperties.StandbyVirtualMachinePoolRuntimeViewResourceId).GetAsync();
 
             Assert.AreEqual(runtimeViewName, standbyVirtualMachinePool_RUNTIMEVIEW.Data.Name);
             Assert.IsTrue(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary.Count > 0);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         {
             var standbyVirtualMachinePool_CREATE = await this.CreateStandbyVirtualMachinePoolResource(
                 resourceGroup: standbyVirtualMachinePoolResourceProperties.ResourceGroup,
-                standbyVirtualMachinePoolName: standbyVirtualMachinePoolResourceProperties.Name,
+                standbyVirtualMachinePoolName: standbyVirtualMachinePoolResourceProperties.StandbyPoolName,
                 maxReadyCapacity: standbyVirtualMachinePoolResourceProperties.MaxReadyCapacity,
                 location: location,
                 vmssId: standbyVirtualMachinePoolResourceProperties.AttachedVirtualMachineScaleSetId,
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");
             string standbyPoolName = Recording.GenerateAssetName("standbyVM-");
             StandbyVirtualMachinePoolTestProperties standbyVirtualMachinePoolResourceProperties = new StandbyVirtualMachinePoolTestProperties();
-            standbyVirtualMachinePoolResourceProperties.Name = standbyPoolName;
+            standbyVirtualMachinePoolResourceProperties.StandbyPoolName = standbyPoolName;
             standbyVirtualMachinePoolResourceProperties.MaxReadyCapacity = 2;
             standbyVirtualMachinePoolResourceProperties.MinReadyCapacity = 2;
             standbyVirtualMachinePoolResourceProperties.StandbyVirtualMachineState = StandbyVirtualMachineState.Running;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             public ResourceIdentifier AttachedVirtualMachineScaleSetId { get; set; }
             public ResourceIdentifier StandbyVirtualMachinePoolRuntimeViewResourceId { get; set; }
             public StandbyVirtualMachineState StandbyVirtualMachineState { get; set; }
-            public string Name { get; set; }
+            public string StandbyPoolName { get; set; }
             public ResourceGroupResource ResourceGroup { get; set; }
 
             public StandbyVirtualMachinePoolTestProperties()
