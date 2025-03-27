@@ -15,12 +15,19 @@
 ### Features Added
 - This SDK version supports 2024-10-01-preview API version.
 - Cluster resource supports SecretArchiveSettings.
+- Cluster create and update commands support new parameter AnalyticsOutputSettings for configuring Log Analytics Workspace
 - Cluster resource supports ClustersPatchVulnerabilityScanning with the ability to scan for cluster vulnerabilities.
-- 
+- Upgraded api-version tag from 'package-2023-07-01' to 'package-2024-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f999652ecea2a4bddc2b08a113617e23e98f10d4/specification/networkcloud/resource-manager/readme.md.
+- ClusterManager commands are updated with custom parameters AssociatedIdentity to support managing identity.
+- Cluster commands are updated with custom parameters AssociatedIdentity to support managing identity.
+- This version introduces custom code to validate the CommandOutputSettings property of a cluster for both create and update operations.
+- Cluster includes VulnerabilityScanningContainerScan which determines how security vulnerability scanning is applied to the cluster.
+- VirtualMachine is updated to display the extended location to use for creation of a VirtualMachine console resource.
+- VirtualMachine is updated to support persistent storage for OS disk.
+- VirtualMachine's property VmDeviceModel gets a new option 'T3'. When 'T3' is selected, SecureBoot and vTPM are automatically enabled. This is to support Windows users.
 - Upgraded api-version tag from 'package-2023-07-01' to 'package-2024-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f999652ecea2a4bddc2b08a113617e23e98f10d4/specification/networkcloud/resource-manager/readme.md.
 
 ### Other Changes
-
 - Upgraded Azure.Core from 1.36.0 to 1.44.1
 - Upgraded Azure.ResourceManager from 1.9.0 to 1.13.0
 
