@@ -106,7 +106,8 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new AIServicesFeature("DeepSeek-V3", "1"));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "maas.bicep"), actualBicep);
+        string path = Path.Combine(Path.GetTempPath(), "maas.bicep");
+        File.WriteAllText(path, actualBicep);
 
         string expectedBicep = LoadTestFile("maas.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
