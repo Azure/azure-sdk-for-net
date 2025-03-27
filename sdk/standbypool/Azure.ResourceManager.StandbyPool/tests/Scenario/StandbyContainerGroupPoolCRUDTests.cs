@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
     public class StandbyContainerGroupPoolCRUDTests : StandbyContainerGroupPoolTestBase
     {
         public StandbyContainerGroupPoolCRUDTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Playback)
+            : base(isAsync) //, RecordedTestMode.Playback)
         {
         }
 

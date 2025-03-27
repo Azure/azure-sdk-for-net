@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
                     }
             };
             StandbyContainerGroupPoolProperties properties = new StandbyContainerGroupPoolProperties(ElasticityProfile, ContainerGroupProperties);
-            properties.Zones.Add("WestUs"); //maybe not right value
+            properties.Zones.Add("1");
             StandbyContainerGroupPoolData input = new StandbyContainerGroupPoolData(location)
             {
                 Properties = properties
