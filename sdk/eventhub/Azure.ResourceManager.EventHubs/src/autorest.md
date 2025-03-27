@@ -11,7 +11,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/412364b282e52b50eadc
 tag: package-2024-01
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -19,7 +19,7 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 request-path-to-resource-name:
