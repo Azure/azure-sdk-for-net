@@ -51,25 +51,20 @@ public class DiagnosticsSamples
             try
             {
                 using PipelineMessage message = _pipeline.CreateMessage();
-
                 PipelineRequest request = message.Request;
                 request.Method = "PATCH";
                 request.Uri = new Uri($"https://www.example.com/update?id={resource.Id}");
                 request.Headers.Add("Accept", "application/json");
-
                 request.Content = BinaryContent.Create(resource);
 
                 _pipeline.Send(message);
 
                 PipelineResponse response = message.Response!;
-
                 if (response.IsError)
                 {
                     throw new ClientResultException(response);
                 }
-
                 SampleResource updated = ModelReaderWriter.Read<SampleResource>(response.Content)!;
-
                 return ClientResult.FromValue(updated, response);
             }
             catch (Exception ex)

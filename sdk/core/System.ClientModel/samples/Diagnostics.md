@@ -1,12 +1,15 @@
 # Diagnostics in System.ClientModel-based clients
+
 Instrumentation is an essential part of developing client libraries. System.ClientModel leverages existing .NET observability APIs and tools to provide building blocks that are tailored to client-specific needs.
 
 ## Distributed tracing
 
 ### Adding distributed tracing instrumentation to service clients
+
 System.ClientModel provides APIs for library authors to use to create distributed tracing spans in each public method call. These APIs are extensions on System.Diagnostics.Activity and System.Diagnostics.ActivitySource. See [Add distributed tracing instrumentation](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs) for more information about these APIs and how to further customize telemetry using them.
 
 The following sample shows an example of instrumenting a service client implementation.
+
 ```C# Snippet:OpenTelemetryInClient
 public class SampleClient
 {
@@ -45,25 +48,20 @@ public class SampleClient
         try
         {
             using PipelineMessage message = _pipeline.CreateMessage();
-
             PipelineRequest request = message.Request;
             request.Method = "PATCH";
             request.Uri = new Uri($"https://www.example.com/update?id={resource.Id}");
             request.Headers.Add("Accept", "application/json");
-
             request.Content = BinaryContent.Create(resource);
 
             _pipeline.Send(message);
 
             PipelineResponse response = message.Response!;
-
             if (response.IsError)
             {
                 throw new ClientResultException(response);
             }
-
             SampleResource updated = ModelReaderWriter.Read<SampleResource>(response.Content)!;
-
             return ClientResult.FromValue(updated, response);
         }
         catch (Exception ex)
