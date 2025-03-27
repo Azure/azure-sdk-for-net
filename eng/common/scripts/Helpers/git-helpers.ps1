@@ -351,15 +351,9 @@ mutation ResolveThread($id: ID!) {
     return $false
   }
 
-  if ($SkipMerge) {
-    LogWarning "Skipping resolution of $($threadIds.Count) AI review threads"
-    return $false
-  }
-
   foreach ($threadId in $threadIds) {
     LogInfo "Resolving review thread '$threadId' for '$repoName' PR '$prNumber'"
-    $response = RequestGithubGraphQL -query $resolveThreadMutation -variables @{ id = $threadId }
-    $reviews = $response.data.repository.pullRequest.reviewThreads.nodes
+    RequestGithubGraphQL -query $resolveThreadMutation -variables @{ id = $threadId }
   }
 
   return $true
