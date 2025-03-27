@@ -8,17 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UploadFileRequest : IUtf8JsonSerializable, IJsonModel<UploadFileRequest>
+    internal partial class File : IUtf8JsonSerializable, IJsonModel<File>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadFileRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<File>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UploadFileRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<File>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,21 +28,24 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UploadFileRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<File>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UploadFileRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(File)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("file"u8);
-            writer.WriteObjectValue(Data, options);
-            writer.WritePropertyName("purpose"u8);
-            writer.WriteStringValue(Purpose.ToString());
+            if (Optional.IsDefined(ContentType))
+            {
+                writer.WritePropertyName("contentType"u8);
+                writer.WriteStringValue(ContentType);
+            }
             if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
+            writer.WritePropertyName("contents"u8);
+            writer.WriteBase64StringValue(Contents.ToArray(), "D");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -61,19 +63,19 @@ namespace Azure.AI.Projects
             }
         }
 
-        UploadFileRequest IJsonModel<UploadFileRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        File IJsonModel<File>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UploadFileRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<File>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UploadFileRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(File)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUploadFileRequest(document.RootElement, options);
+            return DeserializeFile(document.RootElement, options);
         }
 
-        internal static UploadFileRequest DeserializeUploadFileRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static File DeserializeFile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,26 +83,26 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            File file = default;
-            AgentFilePurpose purpose = default;
+            string contentType = default;
             string filename = default;
+            BinaryData contents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("file"u8))
+                if (property.NameEquals("contentType"u8))
                 {
-                    file = File.DeserializeFile(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("purpose"u8))
-                {
-                    purpose = new AgentFilePurpose(property.Value.GetString());
+                    contentType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("filename"u8))
                 {
                     filename = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contents"u8))
+                {
+                    contents = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (options.Format != "W")
@@ -109,63 +111,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UploadFileRequest(file, purpose, filename, serializedAdditionalRawData);
+            return new File(contentType, filename, contents, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeMultipart(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<File>.Write(ModelReaderWriterOptions options)
         {
-            using MultipartFormDataRequestContent content = ToMultipartRequestContent();
-            using MemoryStream stream = new MemoryStream();
-            content.WriteTo(stream);
-            if (stream.Position > int.MaxValue)
-            {
-                return BinaryData.FromStream(stream);
-            }
-            else
-            {
-                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-            }
-        }
-
-        BinaryData IPersistableModel<UploadFileRequest>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UploadFileRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<File>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "MFD":
-                    return SerializeMultipart(options);
                 default:
-                    throw new FormatException($"The model {nameof(UploadFileRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(File)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UploadFileRequest IPersistableModel<UploadFileRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        File IPersistableModel<File>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UploadFileRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<File>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUploadFileRequest(document.RootElement, options);
+                        return DeserializeFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UploadFileRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(File)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UploadFileRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MFD";
+        string IPersistableModel<File>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static UploadFileRequest FromResponse(Response response)
+        internal static File FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeUploadFileRequest(document.RootElement);
+            return DeserializeFile(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
