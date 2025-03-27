@@ -14,24 +14,14 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Starts a long running operation to purchase all of the phone numbers in the reservation. Purchase can only be started for active reservations that at least one phone number. If any of the phone numbers in the reservation is from a country where reselling is not permitted, do not resell agreement is required. The response will include an 'Operation-Location' header that can be used to query the status of the operation. </summary>
-    internal partial class InternalPhoneNumbersStartReservationPurchaseOperation : Operation
+    internal partial class InternalPurchaseReservationOperation : Operation
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of InternalPhoneNumbersStartReservationPurchaseOperation for mocking. </summary>
-        protected InternalPhoneNumbersStartReservationPurchaseOperation()
+        /// <summary> Initializes a new instance of InternalPurchaseReservationOperation for mocking. </summary>
+        protected InternalPurchaseReservationOperation()
         {
         }
-
-        internal InternalPhoneNumbersStartReservationPurchaseOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
-        {
-            IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "InternalPhoneNumbersStartReservationPurchaseOperation");
-        }
-
-        /// <inheritdoc />
-#pragma warning disable CA1822
-        public override string Id => throw new NotImplementedException();
 #pragma warning restore CA1822
 
         /// <inheritdoc />
