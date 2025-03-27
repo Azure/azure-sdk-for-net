@@ -29,7 +29,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPurchasedPhoneNumbersUsingConnectionString")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GetPurchasedPhoneNumbersUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GetPurchasedPhoneNumbersUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPurchasedPhoneNumbersUsingKeyCredential")]
         [AsyncOnly]
         public async Task GetPurchasedPhoneNumbersAsync(AuthMethod authMethod)
@@ -43,7 +43,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPurchasedPhoneNumbersUsingConnectionString")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GetPurchasedPhoneNumbersUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GetPurchasedPhoneNumbersUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPurchasedPhoneNumbersUsingKeyCredential")]
         [SyncOnly]
         public void GetPurchasedPhoneNumbers(AuthMethod authMethod)
@@ -57,7 +57,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPhoneNumberUsingConnectionString")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumberUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumberUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPhoneNumberUsingKeyCredential")]
         [AsyncOnly]
         public async Task GetPhoneNumberAsync(AuthMethod authMethod)
@@ -73,7 +73,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPhoneNumberUsingConnectionString")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumberUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumberUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPhoneNumberUsingKeyCredential")]
         [SyncOnly]
         public void GetPhoneNumber(AuthMethod authMethod)
