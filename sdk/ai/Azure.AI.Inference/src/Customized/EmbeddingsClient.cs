@@ -42,6 +42,25 @@ namespace Azure.AI.Inference
             _apiVersion = options.Version;
         }
 
+        /// <summary> Initializes a new instance of EmbeddingsClient. </summary>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="authorizationScopes"> The authorization scopes for token. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public EmbeddingsClient(Uri endpoint, TokenCredential credential, string[] authorizationScopes, AzureAIInferenceClientOptions options=default)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureAIInferenceClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, authorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary>
         /// Return the embedding vectors for given text prompts.
         /// The method makes a REST API call to the `/embeddings` route on the given endpoint.

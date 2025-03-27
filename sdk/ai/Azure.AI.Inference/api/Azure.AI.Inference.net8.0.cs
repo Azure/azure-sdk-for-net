@@ -2,8 +2,8 @@ namespace Azure.AI.Inference
 {
     public static partial class AIInferenceExtensions
     {
-        public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
-        public static Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
+        public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? connectionName = null, Azure.AI.Inference.AzureAIInferenceClientOptions? options = null) { throw null; }
+        public static Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? connectionName = null, Azure.AI.Inference.AzureAIInferenceClientOptions? options = null) { throw null; }
     }
     public static partial class AIInferenceModelFactory
     {
@@ -92,6 +92,7 @@ namespace Azure.AI.Inference
         public ChatCompletionsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Inference.AzureAIInferenceClientOptions options) { }
         public ChatCompletionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public ChatCompletionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Inference.AzureAIInferenceClientOptions options) { }
+        public ChatCompletionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string[] authorizationScopes, Azure.AI.Inference.AzureAIInferenceClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Inference.ChatCompletions> Complete(Azure.AI.Inference.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Inference.ChatCompletions>> CompleteAsync(Azure.AI.Inference.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -572,6 +573,7 @@ namespace Azure.AI.Inference
         public EmbeddingsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Inference.AzureAIInferenceClientOptions options) { }
         public EmbeddingsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public EmbeddingsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Inference.AzureAIInferenceClientOptions options) { }
+        public EmbeddingsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string[] authorizationScopes, Azure.AI.Inference.AzureAIInferenceClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Inference.EmbeddingsResult> Embed(Azure.AI.Inference.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Embed(Azure.Core.RequestContent content, string extraParams = null, Azure.RequestContext context = null) { throw null; }
