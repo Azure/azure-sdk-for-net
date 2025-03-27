@@ -563,6 +563,21 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.VectorStoreStaticChunkingStrategyResponse VectorStoreStaticChunkingStrategyResponse(Azure.AI.Projects.VectorStoreStaticChunkingStrategyOptions @static = null) { throw null; }
         public static Azure.AI.Projects.WorkspaceProperties WorkspaceProperties(string applicationInsights = null) { throw null; }
     }
+    public partial class AISearchIndexResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AISearchIndexResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AISearchIndexResource>
+    {
+        public AISearchIndexResource(string indexConnectionId, string indexName) { }
+        public string Filter { get { throw null; } set { } }
+        public string IndexConnectionId { get { throw null; } set { } }
+        public string IndexName { get { throw null; } set { } }
+        public Azure.AI.Projects.AzureAISearchQueryType? QueryType { get { throw null; } set { } }
+        public int? TopK { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AISearchIndexResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AISearchIndexResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AISearchIndexResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AISearchIndexResource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AISearchIndexResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AISearchIndexResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AISearchIndexResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AOAIModelConfig : Azure.AI.Projects.TargetModelConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AOAIModelConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AOAIModelConfig>
     {
         public AOAIModelConfig(string azureEndpoint, string apiKey, string azureDeployment) { }
@@ -598,10 +613,31 @@ namespace Azure.AI.Projects
         Custom = 3,
         None = 4,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureAISearchQueryType : System.IEquatable<Azure.AI.Projects.AzureAISearchQueryType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureAISearchQueryType(string value) { throw null; }
+        public static Azure.AI.Projects.AzureAISearchQueryType Semantic { get { throw null; } }
+        public static Azure.AI.Projects.AzureAISearchQueryType Simple { get { throw null; } }
+        public static Azure.AI.Projects.AzureAISearchQueryType Vector { get { throw null; } }
+        public static Azure.AI.Projects.AzureAISearchQueryType VectorSemanticHybrid { get { throw null; } }
+        public static Azure.AI.Projects.AzureAISearchQueryType VectorSimpleHybrid { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AzureAISearchQueryType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AzureAISearchQueryType left, Azure.AI.Projects.AzureAISearchQueryType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AzureAISearchQueryType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AzureAISearchQueryType left, Azure.AI.Projects.AzureAISearchQueryType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AzureAISearchResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAISearchResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchResource>
     {
         public AzureAISearchResource() { }
-        public System.Collections.Generic.IList<Azure.AI.Projects.IndexResource> IndexList { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.AISearchIndexResource> IndexList { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.AzureAISearchResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAISearchResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAISearchResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1164,18 +1200,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IncompleteRunDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IncompleteRunDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IndexResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.IndexResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IndexResource>
-    {
-        public IndexResource(string indexConnectionId, string indexName) { }
-        public string IndexConnectionId { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.IndexResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.IndexResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.IndexResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.IndexResource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IndexResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IndexResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IndexResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public abstract partial class InputData : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputData>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputData>
     {
         protected InputData() { }
@@ -1650,8 +1674,8 @@ namespace Azure.AI.Projects
     }
     public partial class MicrosoftFabricToolDefinition : Azure.AI.Projects.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.MicrosoftFabricToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.MicrosoftFabricToolDefinition>
     {
-        public MicrosoftFabricToolDefinition(Azure.AI.Projects.ToolConnectionList fabricAiskill) { }
-        public Azure.AI.Projects.ToolConnectionList FabricAiskill { get { throw null; } set { } }
+        public MicrosoftFabricToolDefinition(Azure.AI.Projects.ToolConnectionList fabricDataagent) { }
+        public Azure.AI.Projects.ToolConnectionList FabricDataagent { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.MicrosoftFabricToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.MicrosoftFabricToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.MicrosoftFabricToolDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2637,6 +2661,8 @@ namespace Azure.AI.Projects
         public string OutputFileId { get { throw null; } }
         public int? StartIndex { get { throw null; } }
         public string TextToReplace { get { throw null; } }
+        public string Title { get { throw null; } }
+        public string Url { get { throw null; } }
     }
     public partial class ThreadMessage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ThreadMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ThreadMessage>
     {

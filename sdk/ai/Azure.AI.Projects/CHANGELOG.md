@@ -3,12 +3,19 @@
 ## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
+* Added `QueryType` parameter to `AISearchIndexResource` to allow different search types performed by an agent [issue](https://github.com/Azure/azure-sdk-for-net/issues/49069).
+* Added sample for Azure AI Search in streaming scenarios [issue](https://github.com/Azure/azure-sdk-for-net/issues/49069).
 
 ### Breaking Changes
 
 ### Bugs Fixed
+* Fixed Azure AI Search in streaming scenarios.
 
 ### Other Changes
+
+### Sample updates
+* Added documentation for each sample.
+* The unnecessary code was removed from samples.
 
 ## 1.0.0-beta.5 (2025-03-17)
 
