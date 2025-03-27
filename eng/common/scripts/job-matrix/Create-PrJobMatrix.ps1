@@ -230,7 +230,7 @@ if (!(Test-Path $PRMatrixFile)) {
   exit 1
 }
 
-Write-Host "Generating PR job matrix for $PackagePropertiesFolder"
+Write-Host "Generating PR job matrix for $PackagePropertiesFolder using accesskey $PRMatrixKey to determine artifact batches."
 
 $configs = Get-Content -Raw $PRMatrixFile | ConvertFrom-Json
 
