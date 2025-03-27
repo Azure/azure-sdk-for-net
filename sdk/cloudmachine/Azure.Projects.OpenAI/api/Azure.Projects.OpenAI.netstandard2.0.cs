@@ -1,5 +1,22 @@
+namespace Azure.AI.Models
+{
+    public partial class ModelsClient
+    {
+        protected ModelsClient() { }
+        public ModelsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ModelsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, OpenAI.OpenAIClientOptions options) { }
+        public ModelsClient(System.Uri endpoint, System.ClientModel.ApiKeyCredential credential) { }
+        public ModelsClient(System.Uri endpoint, System.ClientModel.ApiKeyCredential credential, OpenAI.OpenAIClientOptions options) { }
+        public OpenAI.Chat.ChatClient GetChatClient(string model) { throw null; }
+        public OpenAI.Embeddings.EmbeddingClient GetEmbeddingClient(string model) { throw null; }
+    }
+}
 namespace Azure.AI.OpenAI
 {
+    public static partial class AIServicesExtensions
+    {
+        public static Azure.AI.Models.ModelsClient GetModelsClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
+    }
     public static partial class AzureOpenAIExtensions
     {
         public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, OpenAI.Chat.ChatCompletion completion) { }
@@ -19,6 +36,11 @@ namespace Azure.Projects.OpenAI
     {
         Chat = 0,
         Embedding = 1,
+    }
+    public partial class AIServicesFeature : Azure.Projects.Core.AzureProjectFeature
+    {
+        public AIServicesFeature(string model, string modelVersion) { }
+        protected override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
     }
     public partial class ChatProcessor
     {

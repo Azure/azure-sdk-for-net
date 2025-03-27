@@ -74,7 +74,7 @@ resource aimodel 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-pr
   name: 'cm0c420d2f21084cd_chat'
   properties: {
     model: {
-      format: 'Microsoft'
+      format: 'DeepSeek'
       name: 'DeepSeek-V3'
       version: '1'
     }
@@ -82,8 +82,8 @@ resource aimodel 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-pr
     versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
   }
   sku: {
-    name: 'Standard'
-    capacity: 10
+    name: 'GlobalStandard'
+    capacity: 1
   }
   parent: aiservices
 }

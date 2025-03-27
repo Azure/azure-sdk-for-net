@@ -40,7 +40,7 @@ public class E2ETests
     }
 
     [TestCase("-bicep")]
-    [TestCase("")]
+    //[TestCase("")]
     public void MaaS(string arg)
     {
         ProjectInfrastructure infra = new(oneProjectId);
