@@ -146,6 +146,7 @@ jobs:
               -PackagePropertiesFolder $(Build.ArtifactStagingDirectory)/PackageInfo `
               -PRMatrixFile matrix.json `
               -PRMatrixSetting ${{ parameters.PRMatrixSetting }} `
+              -PRMatrixKey ${{ parameters.PRMatrixKey }} `
               -DisplayNameFilter '$(displayNameFilter)' `
               -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}' `
               -IndirectFilters '${{ join(''',''', parameters.PRMatrixIndirectFilters) }}' `
