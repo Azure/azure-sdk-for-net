@@ -94,6 +94,19 @@ public class BicepGenerationTests
     }
 
     [Test]
+    public void MaaS()
+    {
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new AIServicesFeature("DeepSeek-V3", "1"));
+
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("c:\\temp\\maas.bicep", actualBicep);
+
+        string expectedBicep = LoadTestFile("maas.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
     public void ServiceBus()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
