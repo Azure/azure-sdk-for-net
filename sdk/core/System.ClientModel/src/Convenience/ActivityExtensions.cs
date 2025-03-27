@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Primitives;
 
@@ -52,9 +53,9 @@ public static class ActivityExtensions
 
         Activity? activity = activitySource.StartActivity(name, kind, parentContext, tags);
 
-        if (activity?.IsAllDataRequested == true)
+        if (shouldSuppressNested)
         {
-            activity.SetCustomProperty(ScmScopeLabel, ScmScopeValue);
+            activity?.SetCustomProperty(ScmScopeLabel, ScmScopeValue);
         }
 
         return activity;
@@ -68,13 +69,8 @@ public static class ActivityExtensions
     /// to implement distributed tracing.</remarks>
     /// <param name="activity">The activity to mark as failed.</param>
     /// <param name="exception">The <see cref="Exception"/> encountered during the operation.</param>
-    public static void MarkFailed(this Activity activity, Exception? exception)
+    public static Activity MarkFailed(this Activity activity, Exception? exception)
     {
-        if (activity == null)
-        {
-            return;
-        }
-
         // See: https://opentelemetry.io/docs/specs/semconv/general/recording-errors/
 
         // SHOULD set the span status code to error
@@ -98,9 +94,16 @@ public static class ActivityExtensions
         // see https://opentelemetry.io/docs/specs/semconv/general/recording-errors/#recording-exceptions
         if (exception == null)
         {
-            return;
+            return activity;
         }
-        // TODO - we should use AddException added in .NET 9 when we can
+        // TODO - we should switch the the runtime AddException added in .NET 9 when we can
+
+        activity.AddException(exception);
+        return activity;
+    }
+
+    private static void AddException(this Activity activity, Exception exception)
+    {
         const string ExceptionEventName = "exception";
         const string ExceptionMessageTag = "exception.message";
         const string ExceptionStackTraceTag = "exception.stacktrace";
@@ -109,7 +112,7 @@ public static class ActivityExtensions
         ActivityTagsCollection keyValuePairs = new()
         {
             { ExceptionMessageTag, exception.Message },
-            { ExceptionStackTraceTag, exception.StackTrace },
+            { ExceptionStackTraceTag, exception.ToString() },
             { ExceptionTypeTag, exception.GetType().ToString() }
         };
 

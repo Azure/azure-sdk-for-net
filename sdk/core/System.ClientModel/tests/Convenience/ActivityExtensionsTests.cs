@@ -54,6 +54,20 @@ public class ActivityExtensionsTests
     }
 
     [Test]
+    public void DistributedTracingDisabledByDefault()
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new();
+
+        using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
+
+        Assert.IsNull(Activity.Current);
+        Assert.IsNull(activity);
+        Assert.AreEqual(0, listener.Activities.Count);
+    }
+
+    [Test]
     public void CanSetKind()
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
@@ -103,6 +117,42 @@ public class ActivityExtensionsTests
         Assert.AreEqual(2, activity!.Tags.Count());
         Assert.AreEqual("value1", activity.Tags.Single(t => t.Key == "tag1").Value);
         Assert.AreEqual("value2", activity.Tags.Single(t => t.Key == "tag2").Value);
+    }
+
+    [Test]
+    [TestCase(ActivityKind.Producer, ActivityKind.Internal)]
+    [TestCase(ActivityKind.Client, ActivityKind.Producer)]
+    [TestCase(ActivityKind.Producer, ActivityKind.Server)]
+    public void NestedSpansAreNotSuppressedWhenNotInternalOrClient(ActivityKind parentKind, ActivityKind childKind)
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
+
+        using Activity? parent = activitySource.StartClientActivity(options, "Client.Method", parentKind);
+        using Activity? child = activitySource.StartClientActivity(options, "Client.Method", childKind);
+
+        Assert.NotNull(parent);
+        Assert.NotNull(child);
+    }
+
+    [Test]
+    [TestCase(ActivityKind.Client, ActivityKind.Client)]
+    [TestCase(ActivityKind.Internal, ActivityKind.Internal)]
+    [TestCase(ActivityKind.Internal, ActivityKind.Client)]
+    [TestCase(ActivityKind.Client, ActivityKind.Internal)]
+    public void NestedSpansAreSuppressed(ActivityKind parentKind, ActivityKind childKind)
+    {
+        using TestClientActivityListener listener = new("SampleClients.Client");
+        ActivitySource activitySource = new("SampleClients.Client");
+        ClientPipelineOptions options = new() { EnableDistributedTracing = true };
+
+        using Activity? parent = activitySource.StartClientActivity(options, "Client.Method", parentKind);
+        using Activity? child = activitySource.StartClientActivity(options, "Client.Method", childKind);
+
+        Assert.NotNull(parent);
+        Assert.AreEqual(ScmScopeValue, parent!.GetCustomProperty(ScmScopeLabel));
+        Assert.Null(child);
     }
 
     [Test]
@@ -165,16 +215,53 @@ public class ActivityExtensionsTests
     }
 
     [Test]
-    public void NestedSpansAreSuppressed()
+    public void FailureAddsExceptionAsSpanEvent()
     {
         using TestClientActivityListener listener = new("SampleClients.Client");
         ActivitySource activitySource = new("SampleClients.Client");
         ClientPipelineOptions options = new() { EnableDistributedTracing = true };
 
-        using Activity? parent = activitySource.StartClientActivity(options, "Client.Method", ActivityKind.Client);
-        using Activity? child = activitySource.StartClientActivity(options, "Client.Method", ActivityKind.Internal);
+        using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
-        Assert.NotNull(parent);
-        Assert.Null(child);
+        Assert.NotNull(activity);
+
+        string message = "Client failed";
+        MockPipelineResponse response = new(500, "Internal Server error");
+        ClientResultException exception = new(message, response);
+
+        const string ExceptionEventName = "exception";
+        const string ExceptionMessageTag = "exception.message";
+        const string ExceptionStackTraceTag = "exception.stacktrace";
+        const string ExceptionTypeTag = "exception.type";
+
+        activity?.MarkFailed(exception);
+        List<ActivityEvent> events = activity!.Events.ToList();
+        Assert.AreEqual(1, events.Count);
+        Assert.AreEqual(ExceptionEventName, events[0].Name);
+        var expectedTags = new List<KeyValuePair<string, object>>
+        {
+            new(ExceptionMessageTag, exception.Message),
+            new(ExceptionStackTraceTag, exception.ToString()),
+            new(ExceptionTypeTag, exception.GetType().ToString())
+        };
+        var tags = events[0].Tags;
+        CollectionAssert.AreEquivalent(expectedTags, tags);
+
+        Exception ex;
+        try
+        { throw new InvalidOperationException("Some other message"); }
+        catch (Exception e) { ex = e; }
+        activity.MarkFailed(ex);
+        events = activity.Events.ToList();
+        Assert.AreEqual(2, events.Count);
+        Assert.AreEqual(ExceptionEventName, events[1].Name);
+        expectedTags = new List<KeyValuePair<string, object>>
+        {
+            new(ExceptionMessageTag, ex.Message),
+            new(ExceptionStackTraceTag, ex.ToString()),
+            new(ExceptionTypeTag, ex.GetType().ToString())
+        };
+        tags = events[1].Tags;
+        CollectionAssert.AreEquivalent(expectedTags, tags);
     }
 }
