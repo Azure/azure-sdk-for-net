@@ -163,7 +163,7 @@ internal static class ChannelProcessing
             {
                 while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
-                    if (item.Equals(default))
+                    if (IsItemEmpty(item))
                     {
                         item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
                     }
@@ -193,6 +193,11 @@ internal static class ChannelProcessing
                 // from successful completion or another failure that has been already invoked.
                 _processorTaskCompletionSource.TrySetResult(true);
             }
+        }
+
+        private static bool IsItemEmpty(TItem item)
+        {
+            return EqualityComparer<TItem>.Default.Equals(item, default);
         }
     }
 }
