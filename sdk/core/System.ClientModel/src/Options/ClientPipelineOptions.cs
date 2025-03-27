@@ -119,8 +119,8 @@ public class ClientPipelineOptions
     }
 
     /// <summary>
-    /// Whether distributed tracing should be enabled. If <c>null</c>, this
-    /// value will be treated as <c>true</c>.
+    /// Gets or sets whether distributed tracing should be enabled. If <c>null</c>, this
+    /// value will be treated as <c>true</c>. The default is <c>null</c>.
     /// </summary>
     public bool? EnableDistributedTracing
     {
