@@ -97,7 +97,7 @@ public static class ActivityExtensions
             return activity;
         }
         // TODO - we should switch to the runtime AddException added in .NET 9 when we can
-
+        // see https://github.com/Azure/azure-sdk-for-net/issues/49121
         activity.AddException(exception);
         return activity;
     }
