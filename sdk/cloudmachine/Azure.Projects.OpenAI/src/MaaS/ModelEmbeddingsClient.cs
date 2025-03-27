@@ -11,12 +11,12 @@ namespace Azure.AI.Models
     internal class ModelEmbeddingsClient : EmbeddingClient
     {
         public ModelEmbeddingsClient(string model, Uri endpoint, ApiKeyCredential key)
-            : base(model, key, Helpers.CreateOptions(endpoint))
+            : base(model, key, MaaSClientHelpers.CreateOptions(endpoint))
         {
         }
 
         public ModelEmbeddingsClient(string model, Uri endpoint, TokenCredential credential)
-            : base(Helpers.CreatePipeline(credential), model, Helpers.CreateOptions(endpoint))
+            : base(MaaSClientHelpers.CreatePipeline(credential), model, MaaSClientHelpers.CreateOptions(endpoint))
         {
         }
     }

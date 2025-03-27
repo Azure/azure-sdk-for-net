@@ -11,12 +11,12 @@ namespace Azure.AI.Models
     internal class ModelsChatClient : ChatClient
     {
         public ModelsChatClient(string model, Uri endpoint, ApiKeyCredential credential)
-            : base(model, credential, Helpers.CreateOptions(endpoint))
+            : base(model, credential, MaaSClientHelpers.CreateOptions(endpoint))
         {
         }
 
         public ModelsChatClient(string model, Uri endpoint, TokenCredential credential)
-            : base(Helpers.CreatePipeline(credential), model, Helpers.CreateOptions(endpoint))
+            : base(MaaSClientHelpers.CreatePipeline(credential), model, MaaSClientHelpers.CreateOptions(endpoint))
         {
         }
     }

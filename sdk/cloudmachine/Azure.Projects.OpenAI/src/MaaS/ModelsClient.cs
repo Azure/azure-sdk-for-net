@@ -26,7 +26,7 @@ namespace Azure.AI.Models
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
         public ModelsClient(Uri endpoint, TokenCredential credential)
-            : this(endpoint, credential, Helpers.CreateOptions(endpoint))
+            : this(endpoint, credential, MaaSClientHelpers.CreateOptions(endpoint))
         {}
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Azure.AI.Models
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
         public ModelsClient(Uri endpoint, ApiKeyCredential credential)
-            : this(endpoint, credential, Helpers.CreateOptions(endpoint))
+            : this(endpoint, credential, MaaSClientHelpers.CreateOptions(endpoint))
         { }
 
         /// <summary>

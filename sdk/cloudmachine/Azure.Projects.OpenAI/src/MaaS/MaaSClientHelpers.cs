@@ -9,9 +9,9 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.Models
 {
-    internal static class Helpers
+    internal static class MaaSClientHelpers
     {
-        private static readonly string[] _scopes = [ "https://ml.azure.com/.default" ];
+        private static readonly string[] _scopes = ["https://cognitiveservices.azure.com/.default"];
 
         internal static OpenAIClientOptions CreateOptions(Uri endpoint)
         {
