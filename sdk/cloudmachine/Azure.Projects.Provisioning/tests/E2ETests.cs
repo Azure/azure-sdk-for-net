@@ -25,7 +25,7 @@ namespace Azure.Projects.Tests;
 public class E2ETests
 {
     private static string allProjectId = "cm00000000000test";
-    private static string oneProjectId = "cm00000000001test";
+    private static string oneProjectId = "cm00000000002test";
 
     [TestCase("-bicep")]
     //[TestCase("")]
@@ -40,7 +40,7 @@ public class E2ETests
     }
 
     [TestCase("-bicep")]
-    //[TestCase("")]
+    [TestCase("")]
     public void MaaS(string arg)
     {
         ProjectInfrastructure infra = new(oneProjectId);
@@ -50,6 +50,8 @@ public class E2ETests
         ProjectClient project = new(oneProjectId, default);
         ModelsClient maas = project.GetModelsClient();
         ChatClient chat = maas.GetChatClient(oneProjectId + "_chat");
+        string text = chat.CompleteChat("list all noble gases").AsText();
+        Console.WriteLine(text);
     }
 
     [TestCase("-bicep")]
