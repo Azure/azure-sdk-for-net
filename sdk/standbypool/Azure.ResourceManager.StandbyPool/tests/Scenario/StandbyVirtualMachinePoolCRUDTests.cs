@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         public StandbyVirtualMachinePoolTestProperties standbyVirtualMachinePoolTestProperties;
 
         public StandbyVirtualMachinePoolCRUDTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
