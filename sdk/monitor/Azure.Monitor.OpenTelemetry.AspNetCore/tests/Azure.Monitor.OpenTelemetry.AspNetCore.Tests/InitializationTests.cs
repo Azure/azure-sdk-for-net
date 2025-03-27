@@ -77,29 +77,97 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Fact]
-        public async Task VerifyCannotAddMonitorTraceExporterAndUseAzureMonitor()
+        public async Task VerifyCanCallAddAzureMonitorMetricExporterTwice()
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddOpenTelemetry()
+                .WithMetrics(builder => builder
+                    .AddAzureMonitorMetricExporter(x => x.ConnectionString = TestConnectionString)
+                    .AddAzureMonitorMetricExporter(x => x.ConnectionString = TestConnectionString2));
+
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            await StartHostedServicesAsync(serviceProvider);
+        }
+
+        [Fact]
+        public async Task VerifyCanCallAddAzureMonitorLogExporterTwice()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddOpenTelemetry()
+                .WithLogging(builder => builder
+                    .AddAzureMonitorLogExporter(x => x.ConnectionString = TestConnectionString)
+                    .AddAzureMonitorLogExporter(x => x.ConnectionString = TestConnectionString2));
+
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            await StartHostedServicesAsync(serviceProvider);
+        }
+
+        [Fact]
+        public async Task VerifyCannotAddExportersAndUseAzureMonitor()
+        {
+            // Traces
+            var serviceCollection1 = new ServiceCollection();
+            serviceCollection1.AddOpenTelemetry()
                 .WithTracing(builder => builder
                     .AddAzureMonitorTraceExporter(x => x.ConnectionString = TestConnectionString))
                 .UseAzureMonitor(x => x.ConnectionString = TestConnectionString2);
 
-            using var serviceProvider = serviceCollection.BuildServiceProvider();
-            await Assert.ThrowsAsync<NotSupportedException>(async () => await StartHostedServicesAsync(serviceProvider));
+            using var serviceProvider1 = serviceCollection1.BuildServiceProvider();
+            await Assert.ThrowsAsync<NotSupportedException>(async () => await StartHostedServicesAsync(serviceProvider1));
+
+            // Metrics
+            var serviceCollection2 = new ServiceCollection();
+            serviceCollection2.AddOpenTelemetry()
+                .WithMetrics(builder => builder
+                    .AddAzureMonitorMetricExporter(x => x.ConnectionString = TestConnectionString))
+                .UseAzureMonitor(x => x.ConnectionString = TestConnectionString2);
+
+            using var serviceProvider2 = serviceCollection2.BuildServiceProvider();
+            await Assert.ThrowsAsync<NotSupportedException>(async () => await StartHostedServicesAsync(serviceProvider2));
+
+            // Logs
+            var serviceCollection3 = new ServiceCollection();
+            serviceCollection3.AddOpenTelemetry()
+                .WithLogging(builder => builder
+                    .AddAzureMonitorLogExporter(x => x.ConnectionString = TestConnectionString))
+                .UseAzureMonitor(x => x.ConnectionString = TestConnectionString2);
+
+            using var serviceProvider3 = serviceCollection3.BuildServiceProvider();
+            await Assert.ThrowsAsync<NotSupportedException>(async () => await StartHostedServicesAsync(serviceProvider3));
         }
 
         [Fact]
-        public async Task VerifyCannotAddMonitorTraceExporterAndUseAzureMonitorExporter()
+        public async Task VerifyCannotAddExporterAndUseAzureMonitorExporter()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddOpenTelemetry()
+            // Traces
+            var serviceCollection1 = new ServiceCollection();
+            serviceCollection1.AddOpenTelemetry()
                 .WithTracing(builder => builder
                     .AddAzureMonitorTraceExporter(x => x.ConnectionString = TestConnectionString))
                 .UseAzureMonitorExporter(x => x.ConnectionString = TestConnectionString2);
 
-            using var serviceProvider = serviceCollection.BuildServiceProvider();
-            await Assert.ThrowsAsync<NotSupportedException>(async () => await StartHostedServicesAsync(serviceProvider));
+            using var serviceProvider1 = serviceCollection1.BuildServiceProvider();
+            await Assert.ThrowsAsync<NotSupportedException>(async () => await StartHostedServicesAsync(serviceProvider1));
+
+            // Metrics
+            var serviceCollection2 = new ServiceCollection();
+            serviceCollection2.AddOpenTelemetry()
+                .WithMetrics(builder => builder
+                    .AddAzureMonitorMetricExporter(x => x.ConnectionString = TestConnectionString))
+                .UseAzureMonitorExporter(x => x.ConnectionString = TestConnectionString2);
+
+            using var serviceProvider2 = serviceCollection2.BuildServiceProvider();
+            await Assert.ThrowsAsync<NotSupportedException>(async () => await StartHostedServicesAsync(serviceProvider2));
+
+            // Logs
+            var serviceCollection3 = new ServiceCollection();
+            serviceCollection3.AddOpenTelemetry()
+                .WithLogging(builder => builder
+                    .AddAzureMonitorLogExporter(x => x.ConnectionString = TestConnectionString))
+                .UseAzureMonitorExporter(x => x.ConnectionString = TestConnectionString2);
+
+            using var serviceProvider3 = serviceCollection1.BuildServiceProvider();
+            await Assert.ThrowsAsync<NotSupportedException>(async () => await StartHostedServicesAsync(serviceProvider3));
         }
 
         [Theory]
@@ -124,6 +192,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 expectedLiveMetricsProcessor: enableLiveMetrics,
                 expectedProfilingSessionTraceProcessor: true,
                 expectedStandardMetricsExtractionProcessor: true);
+
+            // TODO: EVALUATE METRICS
+            // TODO: EVALUATE LOGS
         }
 
         [Theory]
@@ -148,6 +219,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 expectedLiveMetricsProcessor: enableLiveMetrics,
                 expectedProfilingSessionTraceProcessor: false,
                 expectedStandardMetricsExtractionProcessor: true);
+
+            // TODO: EVALUATE METRICS
+            // TODO: EVALUATE LOGS
         }
 
         private static async Task StartHostedServicesAsync(ServiceProvider serviceProvider)
@@ -191,6 +265,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 Assert.Equal(expectedStandardMetricsExtractionProcessor, variables.foundStandardMetricsExtractionProcessor);
                 Assert.Equal(expectedAzureMonitorTraceExporter, variables.foundAzureMonitorTraceExporter);
                 Assert.Equal(expectedProfilingSessionTraceProcessor, variables.foundProfilingSessionTraceProcessor);
+
+                // TODO: THIS NEEDS TO ALSO EVAULATE SAMPLER
             }
 
             private static void WalkCompositeProcessor(object compositeProcessor, Variables variables)
