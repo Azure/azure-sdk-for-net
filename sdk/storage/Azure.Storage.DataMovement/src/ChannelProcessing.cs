@@ -157,33 +157,22 @@ internal static class ChannelProcessing
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
             List<Task> itemRunners = new List<Task>(MaxConcurrentProcessing);
-            TItem item = default;
+            // while there is stuff to read, keep looping
+                // if itemRunners <= max
+                    // add item
+                // else
+                    //remove all completed
 
             try
             {
                 while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
-                    if (IsItemEmpty(item))
+                    if (itemRunners.Count < MaxConcurrentProcessing)
                     {
-                        item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                        await AddItemRunnerAsync(itemRunners).ConfigureAwait(false);
+                        continue;
                     }
-
-                    if (itemRunners.Count >= MaxConcurrentProcessing)
-                    {
-                        // Clear any completed blocks from the task list
-                        int removedRunners = itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
-                        // If no runners have finished..
-                        if (removedRunners == 0)
-                        {
-                            // Wait for at least one runner to finish
-                            await Task.WhenAny(itemRunners).ConfigureAwait(false);
-                            itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
-                        }
-                    }
-                    else
-                    {
-                        itemRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
-                    }
+                    await RemoveCompletedTasks(itemRunners).ConfigureAwait(false);
                 }
             }
             finally
@@ -193,6 +182,25 @@ internal static class ChannelProcessing
                 // from successful completion or another failure that has been already invoked.
                 _processorTaskCompletionSource.TrySetResult(true);
             }
+        }
+
+        private static async Task RemoveCompletedTasks(List<Task> itemRunners)
+        {
+            // Clear any completed blocks from the task list
+            int removedRunners = itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
+            // If no runners have finished..
+            if (removedRunners == 0)
+            {
+                // Wait for at least one runner to finish
+                await Task.WhenAny(itemRunners).ConfigureAwait(false);
+                itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
+            }
+        }
+
+        private async Task AddItemRunnerAsync(List<Task> itemRunners)
+        {
+            TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+            itemRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
         }
 
         private static bool IsItemEmpty(TItem item)
