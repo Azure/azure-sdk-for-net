@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public void ThroughputMonitor_ShouldAllowAsync()
+        public async Task ThroughputMonitor_ShouldAllowAsync()
         {
             // Arrange
             ThroughputMonitor tm = new ThroughputMonitor();
@@ -31,8 +31,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             for (int i = 0; i < 10; i++)
             {
-                tm.Add(i, cancellationToken).ConfigureAwait(false);
-                Thread.Sleep(100);
+                await tm.Add(i, cancellationToken).ConfigureAwait(false);
+                Thread.Sleep(1);
             }
 
             // Assert
