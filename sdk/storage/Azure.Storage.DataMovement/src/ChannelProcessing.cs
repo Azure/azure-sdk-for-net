@@ -17,6 +17,8 @@ internal interface IProcessor<TItem> : IAsyncDisposable
     ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default);
     bool TryComplete();
     ProcessAsync<TItem> Process { get; set; }
+
+    int MaxConcurrentProcessing { get; set; }
 }
 
 internal static class ChannelProcessing
@@ -79,6 +81,8 @@ internal static class ChannelProcessing
             }
         }
 
+        public int MaxConcurrentProcessing { get; set; }
+
         protected ChannelProcessor(Channel<TItem, TItem> channel)
         {
             Argument.AssertNotNull(channel, nameof(channel));
@@ -114,7 +118,9 @@ internal static class ChannelProcessing
     {
         public SequentialChannelProcessor(Channel<TItem, TItem> channel)
             : base(channel)
-        { }
+        {
+            MaxConcurrentProcessing = 1;
+        }
 
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
@@ -139,38 +145,45 @@ internal static class ChannelProcessing
 
     private class ParallelChannelProcessor<TItem> : ChannelProcessor<TItem>
     {
-        private readonly int _maxConcurrentProcessing;
-
         public ParallelChannelProcessor(
             Channel<TItem, TItem> channel,
             int maxConcurrentProcessing)
             : base(channel)
         {
             Argument.AssertInRange(maxConcurrentProcessing, 2, int.MaxValue, nameof(maxConcurrentProcessing));
-            _maxConcurrentProcessing = maxConcurrentProcessing;
+            MaxConcurrentProcessing = maxConcurrentProcessing;
         }
 
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
-            List<Task> chunkRunners = new List<Task>(_maxConcurrentProcessing);
+            List<Task> itemRunners = new List<Task>(MaxConcurrentProcessing);
+            TItem item = default;
+
             try
             {
                 while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
-                    TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                    if (chunkRunners.Count >= _maxConcurrentProcessing)
+                    if (item.Equals(default))
+                    {
+                        item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                    }
+
+                    if (itemRunners.Count >= MaxConcurrentProcessing)
                     {
                         // Clear any completed blocks from the task list
-                        int removedRunners = chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
+                        int removedRunners = itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
                         // If no runners have finished..
                         if (removedRunners == 0)
                         {
                             // Wait for at least one runner to finish
-                            await Task.WhenAny(chunkRunners).ConfigureAwait(false);
-                            chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
+                            await Task.WhenAny(itemRunners).ConfigureAwait(false);
+                            itemRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
                         }
                     }
-                    chunkRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
+                    else
+                    {
+                        itemRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
+                    }
                 }
             }
             finally
