@@ -22,6 +22,8 @@ namespace Azure.Storage.DataMovement.Tests
         /// <inheritdoc/>
         public ProcessAsync<T> Process { get; set; }
 
+        public int MaxConcurrentProcessing { get; set; }
+
         /// <inheritdoc/>
         public ValueTask QueueAsync(T item, CancellationToken cancellationToken = default)
         {
