@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2025-03-28)
 
 ## Features Added
 - Added possibility to take `ChatCompletionsClient` and `EmbeddingsClient` by connection name.
