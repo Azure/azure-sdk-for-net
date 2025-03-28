@@ -44,6 +44,9 @@ namespace Azure.Projects.AIFoundry
         {
         }
 
+        /// <summary>
+        /// Returns the connection string for the AI Project endpoint.
+        /// </summary>
         public List<ClientConnection> Connections { get; set; } = new List<ClientConnection>();
 
         private  void EmitConnections(ICollection<ClientConnection> connections, string cmId)
@@ -72,7 +75,7 @@ namespace Azure.Projects.AIFoundry
         /// Emit any necessary resources for provisioning (currently no-op).
         /// </summary>
         /// <param name="infrastructure">The ProjectInfrastructure context.</param>
-        protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
+        protected override void EmitConstructs(ProjectInfrastructure infrastructure)
         {
             var cmId = infrastructure.ProjectId;
             AIFoundryHubCdk hub = new($"ai_hub", $"{cmId}_hub");

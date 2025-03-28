@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Azure.Projects.OpenAI\src\Azure.Projects.OpenAI.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Projects.AI\src\Azure.Projects.AI.csproj" />
     <ProjectReference Include="..\..\src\Azure.Projects.csproj" />
     <ProjectReference Include="..\..\..\Azure.Projects.Provisioning\src\Azure.Projects.Provisioning.csproj" />
   </ItemGroup>

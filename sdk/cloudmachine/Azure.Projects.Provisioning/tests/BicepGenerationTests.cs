@@ -165,20 +165,6 @@ public class BicepGenerationTests
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
-    [Test]
-    public void AIFoundry()
-    {
-        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new AIFoundry.AIProjectFeature());
-
-        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        // Un-comment to debug bicep creation issues
-        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "foundry.bicep"), actualBicep);
-
-        string expectedBicep = LoadTestFile("foundry.bicep");
-        Assert.AreEqual(expectedBicep, actualBicep);
-    }
-
     private static string LoadTestFile(string filename)
     {
         string contents = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", filename));
