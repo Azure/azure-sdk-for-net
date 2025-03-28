@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudHsmClusterPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

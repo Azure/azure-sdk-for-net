@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedServicesRegistrationData(document.RootElement, options);
                     }
                 default:

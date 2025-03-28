@@ -19,6 +19,7 @@
     <PackageReference Include="Azure.Provisioning.ServiceBus" />
     <PackageReference Include="Azure.Provisioning.EventGrid" />
     <PackageReference Include="Azure.Provisioning.AppService" />
+    <PackageReference Include="Azure.Provisioning.AppConfiguration" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
   </ItemGroup>
 

@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeArmDeploymentScriptData(document.RootElement, options);
                     }
                 default:
