@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> The secrets related to a databox job. </summary>
-    public partial class DataboxJobSecrets : JobSecrets
+    public partial class DataBoxJobSecrets : JobSecrets
     {
-        /// <summary> Initializes a new instance of <see cref="DataboxJobSecrets"/>. </summary>
-        internal DataboxJobSecrets()
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobSecrets"/>. </summary>
+        internal DataBoxJobSecrets()
         {
             PodSecrets = new ChangeTrackingList<DataBoxSecret>();
             JobSecretsType = DataBoxOrderType.DataBox;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataboxJobSecrets"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobSecrets"/>. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="podSecrets"> Contains the list of secret objects for a job. </param>
-        internal DataboxJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DataBoxSecret> podSecrets) : base(jobSecretsType, dataCenterAccessSecurityCode, error, serializedAdditionalRawData)
+        internal DataBoxJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DataBoxSecret> podSecrets) : base(jobSecretsType, dataCenterAccessSecurityCode, error, serializedAdditionalRawData)
         {
             PodSecrets = podSecrets;
             JobSecretsType = jobSecretsType;

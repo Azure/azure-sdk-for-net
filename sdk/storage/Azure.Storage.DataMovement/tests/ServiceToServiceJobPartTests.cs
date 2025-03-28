@@ -208,6 +208,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.CompletedTask);
             mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(length - 1);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(chunkSize);
+            mockDestination.Setup(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
 
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);

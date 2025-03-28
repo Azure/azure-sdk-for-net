@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEdgeOrderAddressData(document.RootElement, options);
                     }
                 default:

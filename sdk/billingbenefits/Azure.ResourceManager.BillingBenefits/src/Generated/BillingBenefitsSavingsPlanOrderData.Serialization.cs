@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBillingBenefitsSavingsPlanOrderData(document.RootElement, options);
                     }
                 default:

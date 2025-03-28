@@ -11,14 +11,32 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientSessionConnected event. </summary>
-    public partial class EventGridMQTTClientSessionConnectedEventData : EventGridMQTTClientEventData
+    public partial class EventGridMqttClientSessionConnectedEventData : EventGridMqttClientEventData
     {
-        /// <summary> Initializes a new instance of <see cref="EventGridMQTTClientSessionConnectedEventData"/>. </summary>
-        internal EventGridMQTTClientSessionConnectedEventData()
+        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionConnectedEventData"/>. </summary>
+        /// <param name="clientAuthenticationName">
+        /// Unique identifier for the MQTT client that the client presents to the service
+        /// for authentication. This case-sensitive string can be up to 128 characters
+        /// long, and supports UTF-8 characters.
+        /// </param>
+        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
+        /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
+        /// <param name="clientSessionName">
+        /// Unique identifier for the MQTT client's session. This case-sensitive string can
+        /// be up to 128 characters long, and supports UTF-8 characters.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientAuthenticationName"/>, <paramref name="clientName"/>, <paramref name="namespaceName"/> or <paramref name="clientSessionName"/> is null. </exception>
+        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string clientName, string namespaceName, string clientSessionName) : base(clientAuthenticationName, clientName, namespaceName)
         {
+            Argument.AssertNotNull(clientAuthenticationName, nameof(clientAuthenticationName));
+            Argument.AssertNotNull(clientName, nameof(clientName));
+            Argument.AssertNotNull(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNull(clientSessionName, nameof(clientSessionName));
+
+            ClientSessionName = clientSessionName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGridMQTTClientSessionConnectedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionConnectedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -36,10 +54,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// disconnected events. Latest event will have a sequence number that is higher
         /// than the previous event.
         /// </param>
-        internal EventGridMQTTClientSessionConnectedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientSessionName, long? sequenceNumber) : base(clientAuthenticationName, clientName, namespaceName, serializedAdditionalRawData)
+        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientSessionName, long? sequenceNumber) : base(clientAuthenticationName, clientName, namespaceName, serializedAdditionalRawData)
         {
             ClientSessionName = clientSessionName;
             SequenceNumber = sequenceNumber;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionConnectedEventData"/> for deserialization. </summary>
+        internal EventGridMqttClientSessionConnectedEventData()
+        {
         }
 
         /// <summary>

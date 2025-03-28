@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class EventGridMQTTClientCreatedOrUpdatedEventData : IUtf8JsonSerializable, IJsonModel<EventGridMQTTClientCreatedOrUpdatedEventData>
+    public partial class EventGridMqttClientCreatedOrUpdatedEventData : IUtf8JsonSerializable, IJsonModel<EventGridMqttClientCreatedOrUpdatedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridMQTTClientCreatedOrUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridMqttClientCreatedOrUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EventGridMQTTClientCreatedOrUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventGridMqttClientCreatedOrUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,19 +28,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridMQTTClientCreatedOrUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridMQTTClientCreatedOrUpdatedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridMqttClientCreatedOrUpdatedEventData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("state"u8);
-            writer.WriteStringValue(State.ToString());
-            writer.WritePropertyName("createdOn"u8);
-            writer.WriteStringValue(CreatedOn, "O");
-            writer.WritePropertyName("updatedOn"u8);
-            writer.WriteStringValue(UpdatedOn, "O");
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdOn"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedOn"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
             writer.WritePropertyName("attributes"u8);
             writer.WriteStartObject();
             foreach (var item in Attributes)
@@ -51,19 +60,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteEndObject();
         }
 
-        EventGridMQTTClientCreatedOrUpdatedEventData IJsonModel<EventGridMQTTClientCreatedOrUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EventGridMqttClientCreatedOrUpdatedEventData IJsonModel<EventGridMqttClientCreatedOrUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridMQTTClientCreatedOrUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridMQTTClientCreatedOrUpdatedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridMqttClientCreatedOrUpdatedEventData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEventGridMQTTClientCreatedOrUpdatedEventData(document.RootElement, options);
+            return DeserializeEventGridMqttClientCreatedOrUpdatedEventData(document.RootElement, options);
         }
 
-        internal static EventGridMQTTClientCreatedOrUpdatedEventData DeserializeEventGridMQTTClientCreatedOrUpdatedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EventGridMqttClientCreatedOrUpdatedEventData DeserializeEventGridMqttClientCreatedOrUpdatedEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -71,9 +80,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            EventGridMQTTClientState state = default;
-            DateTimeOffset createdOn = default;
-            DateTimeOffset updatedOn = default;
+            EventGridMqttClientState? state = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             IReadOnlyDictionary<string, string> attributes = default;
             string clientAuthenticationName = default;
             string clientName = default;
@@ -84,16 +93,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("state"u8))
                 {
-                    state = new EventGridMQTTClientState(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new EventGridMqttClientState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdOn"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("updatedOn"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     updatedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -128,7 +149,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EventGridMQTTClientCreatedOrUpdatedEventData(
+            return new EventGridMqttClientCreatedOrUpdatedEventData(
                 clientAuthenticationName,
                 clientName,
                 namespaceName,
@@ -139,43 +160,43 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 attributes);
         }
 
-        BinaryData IPersistableModel<EventGridMQTTClientCreatedOrUpdatedEventData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridMQTTClientCreatedOrUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridMQTTClientCreatedOrUpdatedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridMqttClientCreatedOrUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EventGridMQTTClientCreatedOrUpdatedEventData IPersistableModel<EventGridMQTTClientCreatedOrUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EventGridMqttClientCreatedOrUpdatedEventData IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridMQTTClientCreatedOrUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEventGridMQTTClientCreatedOrUpdatedEventData(document.RootElement, options);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEventGridMqttClientCreatedOrUpdatedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridMQTTClientCreatedOrUpdatedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridMqttClientCreatedOrUpdatedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EventGridMQTTClientCreatedOrUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventGridMqttClientCreatedOrUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new EventGridMQTTClientCreatedOrUpdatedEventData FromResponse(Response response)
+        internal static new EventGridMqttClientCreatedOrUpdatedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEventGridMQTTClientCreatedOrUpdatedEventData(document.RootElement);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEventGridMqttClientCreatedOrUpdatedEventData(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

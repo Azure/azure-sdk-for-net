@@ -13,18 +13,12 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AIServicesAccountIdentity : CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of <see cref="AIServicesAccountIdentity"/>. </summary>
-        /// <param name="identity">
-        /// The user-assigned managed identity used for connections to AI Service. If not specified, the system-assigned managed identity is used. On updates to the skillset, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </param>
         /// <param name="subdomainUrl"> The subdomain url for the corresponding AI Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subdomainUrl"/> is null. </exception>
-        public AIServicesAccountIdentity(SearchIndexerDataIdentity identity, string subdomainUrl)
+        public AIServicesAccountIdentity(string subdomainUrl)
         {
             Argument.AssertNotNull(subdomainUrl, nameof(subdomainUrl));
 
-            Identity = identity;
             SubdomainUrl = subdomainUrl;
             ODataType = "#Microsoft.Azure.Search.AIServicesByIdentity";
         }

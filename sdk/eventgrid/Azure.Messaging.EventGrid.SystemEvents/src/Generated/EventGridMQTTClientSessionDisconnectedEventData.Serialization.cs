@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class EventGridMQTTClientSessionDisconnectedEventData : IUtf8JsonSerializable, IJsonModel<EventGridMQTTClientSessionDisconnectedEventData>
+    public partial class EventGridMqttClientSessionDisconnectedEventData : IUtf8JsonSerializable, IJsonModel<EventGridMqttClientSessionDisconnectedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridMQTTClientSessionDisconnectedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridMqttClientSessionDisconnectedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EventGridMQTTClientSessionDisconnectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventGridMqttClientSessionDisconnectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,40 +28,40 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridMQTTClientSessionDisconnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientSessionDisconnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridMQTTClientSessionDisconnectedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridMqttClientSessionDisconnectedEventData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ClientSessionName))
-            {
-                writer.WritePropertyName("clientSessionName"u8);
-                writer.WriteStringValue(ClientSessionName);
-            }
+            writer.WritePropertyName("clientSessionName"u8);
+            writer.WriteStringValue(ClientSessionName);
             if (Optional.IsDefined(SequenceNumber))
             {
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
             }
-            writer.WritePropertyName("disconnectionReason"u8);
-            writer.WriteStringValue(DisconnectionReason.ToString());
+            if (Optional.IsDefined(DisconnectionReason))
+            {
+                writer.WritePropertyName("disconnectionReason"u8);
+                writer.WriteStringValue(DisconnectionReason.Value.ToString());
+            }
         }
 
-        EventGridMQTTClientSessionDisconnectedEventData IJsonModel<EventGridMQTTClientSessionDisconnectedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EventGridMqttClientSessionDisconnectedEventData IJsonModel<EventGridMqttClientSessionDisconnectedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridMQTTClientSessionDisconnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientSessionDisconnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridMQTTClientSessionDisconnectedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridMqttClientSessionDisconnectedEventData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEventGridMQTTClientSessionDisconnectedEventData(document.RootElement, options);
+            return DeserializeEventGridMqttClientSessionDisconnectedEventData(document.RootElement, options);
         }
 
-        internal static EventGridMQTTClientSessionDisconnectedEventData DeserializeEventGridMQTTClientSessionDisconnectedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EventGridMqttClientSessionDisconnectedEventData DeserializeEventGridMqttClientSessionDisconnectedEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string clientSessionName = default;
             long? sequenceNumber = default;
-            EventGridMQTTClientDisconnectionReason disconnectionReason = default;
+            EventGridMqttClientDisconnectionReason? disconnectionReason = default;
             string clientAuthenticationName = default;
             string clientName = default;
             string namespaceName = default;
@@ -95,7 +95,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("disconnectionReason"u8))
                 {
-                    disconnectionReason = new EventGridMQTTClientDisconnectionReason(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    disconnectionReason = new EventGridMqttClientDisconnectionReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clientAuthenticationName"u8))
@@ -119,7 +123,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EventGridMQTTClientSessionDisconnectedEventData(
+            return new EventGridMqttClientSessionDisconnectedEventData(
                 clientAuthenticationName,
                 clientName,
                 namespaceName,
@@ -129,43 +133,43 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 disconnectionReason);
         }
 
-        BinaryData IPersistableModel<EventGridMQTTClientSessionDisconnectedEventData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EventGridMqttClientSessionDisconnectedEventData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridMQTTClientSessionDisconnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientSessionDisconnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridMQTTClientSessionDisconnectedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridMqttClientSessionDisconnectedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EventGridMQTTClientSessionDisconnectedEventData IPersistableModel<EventGridMQTTClientSessionDisconnectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EventGridMqttClientSessionDisconnectedEventData IPersistableModel<EventGridMqttClientSessionDisconnectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridMQTTClientSessionDisconnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientSessionDisconnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEventGridMQTTClientSessionDisconnectedEventData(document.RootElement, options);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEventGridMqttClientSessionDisconnectedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridMQTTClientSessionDisconnectedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridMqttClientSessionDisconnectedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EventGridMQTTClientSessionDisconnectedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventGridMqttClientSessionDisconnectedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new EventGridMQTTClientSessionDisconnectedEventData FromResponse(Response response)
+        internal static new EventGridMqttClientSessionDisconnectedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEventGridMQTTClientSessionDisconnectedEventData(document.RootElement);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEventGridMqttClientSessionDisconnectedEventData(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

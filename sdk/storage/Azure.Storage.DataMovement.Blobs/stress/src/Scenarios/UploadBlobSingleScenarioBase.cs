@@ -57,19 +57,19 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                     {
                         AppendBlobClient destinationBlob = destinationContainerClient.GetAppendBlobClient(blobName);
                         destinationBaseBlob = destinationBlob;
-                        destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
+                        destinationResource = BlobsStorageResourceProvider.FromClient(destinationBlob);
                     }
                     else if (blobType == BlobType.Page)
                     {
                         PageBlobClient destinationBlob = destinationContainerClient.GetPageBlobClient(blobName);
                         destinationBaseBlob = destinationBlob;
-                        destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
+                        destinationResource = BlobsStorageResourceProvider.FromClient(destinationBlob);
                     }
                     else
                     {
                         BlockBlobClient destinationBlob = destinationContainerClient.GetBlockBlobClient(blobName);
                         destinationBaseBlob = destinationBlob;
-                        destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
+                        destinationResource = BlobsStorageResourceProvider.FromClient(destinationBlob);
                     }
 
                     // Start Transfer

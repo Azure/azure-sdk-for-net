@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Interval);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Interval))
+                using (JsonDocument document = JsonDocument.Parse(Interval, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Automation
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutomationScheduleData(document.RootElement, options);
                     }
                 default:

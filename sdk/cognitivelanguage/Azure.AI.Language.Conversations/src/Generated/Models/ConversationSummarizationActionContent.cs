@@ -63,8 +63,9 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
         /// <param name="summaryAspects"> Array of Summary Aspects. </param>
+        /// <param name="instruction"> a text field to allow customers to use natural language to describe their needs for summarization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationSummarizationActionContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, IList<SummaryAspect> summaryAspects, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationSummarizationActionContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, IList<SummaryAspect> summaryAspects, string instruction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -72,6 +73,7 @@ namespace Azure.AI.Language.Conversations.Models
             StringIndexType = stringIndexType;
             SummaryLength = summaryLength;
             SummaryAspects = summaryAspects;
+            Instruction = instruction;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -92,5 +94,7 @@ namespace Azure.AI.Language.Conversations.Models
         public SummaryLengthBucket? SummaryLength { get; set; }
         /// <summary> Array of Summary Aspects. </summary>
         public IList<SummaryAspect> SummaryAspects { get; }
+        /// <summary> a text field to allow customers to use natural language to describe their needs for summarization. </summary>
+        public string Instruction { get; set; }
     }
 }

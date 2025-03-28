@@ -67,13 +67,14 @@ namespace Azure.Security.ConfidentialLedger
     }
     public partial class ConfidentialLedgerClientOptions : Azure.Core.ClientOptions
     {
-        public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2024_01_26_Preview) { }
+        public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2024_08_22_Preview) { }
         public System.Uri CertificateEndpoint { get { throw null; } set { } }
         public bool VerifyConnection { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2022_05_13 = 1,
             V2024_01_26_Preview = 2,
+            V2024_08_22_Preview = 3,
         }
     }
 }
@@ -90,11 +91,12 @@ namespace Azure.Security.ConfidentialLedger.Certificate
     }
     public partial class ConfidentialLedgerCertificateClientOptions : Azure.Core.ClientOptions
     {
-        public ConfidentialLedgerCertificateClientOptions(Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion.V2024_01_26_Preview) { }
+        public ConfidentialLedgerCertificateClientOptions(Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion.V2024_08_22_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_13 = 1,
             V2024_01_26_Preview = 2,
+            V2024_08_22_Preview = 3,
         }
     }
 }

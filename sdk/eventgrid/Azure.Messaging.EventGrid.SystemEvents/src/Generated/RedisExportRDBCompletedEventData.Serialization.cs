@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class RedisExportRDBCompletedEventData : IUtf8JsonSerializable, IJsonModel<RedisExportRDBCompletedEventData>
+    public partial class RedisExportRdbCompletedEventData : IUtf8JsonSerializable, IJsonModel<RedisExportRdbCompletedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisExportRDBCompletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisExportRdbCompletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RedisExportRDBCompletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisExportRdbCompletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,14 +28,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisExportRDBCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisExportRdbCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisExportRDBCompletedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisExportRdbCompletedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("timestamp"u8);
-            writer.WriteStringValue(Timestamp, "O");
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -54,7 +57,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,19 +66,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        RedisExportRDBCompletedEventData IJsonModel<RedisExportRDBCompletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisExportRdbCompletedEventData IJsonModel<RedisExportRdbCompletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisExportRDBCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisExportRdbCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisExportRDBCompletedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisExportRdbCompletedEventData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRedisExportRDBCompletedEventData(document.RootElement, options);
+            return DeserializeRedisExportRdbCompletedEventData(document.RootElement, options);
         }
 
-        internal static RedisExportRDBCompletedEventData DeserializeRedisExportRDBCompletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisExportRdbCompletedEventData DeserializeRedisExportRdbCompletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            DateTimeOffset timestamp = default;
+            DateTimeOffset? timestamp = default;
             string name = default;
             string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,6 +95,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("timestamp"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -111,46 +118,46 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RedisExportRDBCompletedEventData(timestamp, name, status, serializedAdditionalRawData);
+            return new RedisExportRdbCompletedEventData(timestamp, name, status, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RedisExportRDBCompletedEventData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisExportRdbCompletedEventData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisExportRDBCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisExportRdbCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisExportRDBCompletedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisExportRdbCompletedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RedisExportRDBCompletedEventData IPersistableModel<RedisExportRDBCompletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisExportRdbCompletedEventData IPersistableModel<RedisExportRdbCompletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisExportRDBCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisExportRdbCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRedisExportRDBCompletedEventData(document.RootElement, options);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeRedisExportRdbCompletedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisExportRDBCompletedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisExportRdbCompletedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RedisExportRDBCompletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisExportRdbCompletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RedisExportRDBCompletedEventData FromResponse(Response response)
+        internal static RedisExportRdbCompletedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRedisExportRDBCompletedEventData(document.RootElement);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRedisExportRdbCompletedEventData(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

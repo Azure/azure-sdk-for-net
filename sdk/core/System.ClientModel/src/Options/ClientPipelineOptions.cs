@@ -20,8 +20,10 @@ public class ClientPipelineOptions
     private bool _frozen;
 
     private PipelinePolicy? _retryPolicy;
+    private PipelinePolicy? _loggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
+    private ClientLoggingOptions? _loggingOptions;
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -41,6 +43,25 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _retryPolicy = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the <see cref="PipelinePolicy"/> to be used by the
+    /// <see cref="ClientPipeline"/> for logging.
+    /// </summary>
+    /// <remarks>
+    /// In most cases, this property will be set to an instance of
+    /// <see cref="MessageLoggingPolicy"/>.
+    /// </remarks>
+    public PipelinePolicy? MessageLoggingPolicy
+    {
+        get => _loggingPolicy;
+        set
+        {
+            AssertNotFrozen();
+
+            _loggingPolicy = value;
         }
     }
 
@@ -78,6 +99,21 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _timeout = value;
+        }
+    }
+
+    /// <summary>
+    /// The options to be used to configure logging within the
+    /// <see cref="ClientPipeline"/>.
+    /// </summary>
+    public ClientLoggingOptions? ClientLoggingOptions
+    {
+        get => _loggingOptions;
+        set
+        {
+            AssertNotFrozen();
+
+            _loggingOptions = value;
         }
     }
 
@@ -161,7 +197,11 @@ public class ClientPipelineOptions
     /// instance or call methods that would change its state will throw
     /// <see cref="InvalidOperationException"/>.
     /// </summary>
-    public virtual void Freeze() => _frozen = true;
+    public virtual void Freeze()
+    {
+        _frozen = true;
+        _loggingOptions?.Freeze();
+    }
 
     /// <summary>
     /// Assert that <see cref="Freeze"/> has not been called on this
@@ -177,4 +217,39 @@ public class ClientPipelineOptions
             throw new InvalidOperationException("Cannot change a ClientPipelineOptions instance after it has been used to create a ClientPipeline.");
         }
     }
+
+    #region Helpers
+
+    internal HttpClientPipelineTransport GetHttpClientPipelineTransport()
+    {
+        if (_loggingOptions == null || _loggingOptions.UseDefaultClientWideLogging)
+        {
+            return HttpClientPipelineTransport.Shared;
+        }
+        return new HttpClientPipelineTransport(null, _loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging, _loggingOptions.LoggerFactory);
+    }
+
+    internal ClientRetryPolicy GetClientRetryPolicy()
+    {
+        if (_loggingOptions == null || _loggingOptions.UseDefaultClientWideLogging)
+        {
+            return ClientRetryPolicy.Default;
+        }
+        return new ClientRetryPolicy(ClientRetryPolicy.DefaultMaxRetries,
+                                         _loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging,
+                                         _loggingOptions.LoggerFactory);
+    }
+
+    internal bool AddMessageLoggingPolicy => _loggingOptions?.AddMessageLoggingPolicy ?? true;
+
+    internal MessageLoggingPolicy GetMessageLoggingPolicy()
+    {
+        if (_loggingOptions == null || _loggingOptions.AddDefaultMessageLoggingPolicy)
+        {
+            return System.ClientModel.Primitives.MessageLoggingPolicy.Default;
+        }
+        return new MessageLoggingPolicy(_loggingOptions);
+    }
+
+    #endregion
 }
