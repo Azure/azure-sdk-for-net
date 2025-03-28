@@ -468,10 +468,6 @@ public class TransferManagerTests
             It.IsAny<CancellationToken>()));
         checkpointer.Verify(c => c.SetJobStatusAsync(transferId, It.IsAny<TransferStatus>(),
             It.IsAny<CancellationToken>()), Times.Exactly(3));
-        if (!isContainer)
-        {
-            checkpointer.Verify(c => c.GetCurrentJobPartCountAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
-        }
         Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(TransferState.InProgress));
         Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(TransferState.Stopping));
         Assert.That(capturedTransferStatuses[2].IsCompletedWithFailedItems);
@@ -781,6 +777,7 @@ internal static partial class MockExtensions
     {
         srcResource.VerifyGet(r => r.Uri);
         srcResource.VerifyGet(r => r.ResourceId);
+        srcResource.VerifyGet(r => r.IsContainer);
     }
 
     public static void VerifyDestinationResourceOnJobProcess(this Mock<StorageResourceItem> dstResource)

@@ -51,26 +51,20 @@ internal class JobBuilder
         bool resumeJob,
         CancellationToken cancellationToken)
     {
-        JobBuilder.ValidateTransferOptions(transferOptions);
+        ValidateTransferOptions(transferOptions);
 
         TransferOperation transferOperation = new(id: transferId);
         TransferJobInternal transferJobInternal;
 
-        // Single transfer
+        // For single transfers, wrap in single item container
         if (sourceResource is StorageResourceItem sourceItem &&
             destinationResource is StorageResourceItem destationItem)
         {
-            transferJobInternal = await BuildSingleTransferJob(
-                sourceItem,
-                destationItem,
-                transferOptions,
-                checkpointer,
-                transferOperation,
-                resumeJob,
-                cancellationToken).ConfigureAwait(false);
+            sourceResource = new SingleItemStorageResourceContainer(sourceItem);
+            destinationResource = new SingleItemStorageResourceContainer(destationItem);
         }
-        // Container transfer
-        else if (sourceResource is StorageResourceContainer sourceContainer &&
+
+        if (sourceResource is StorageResourceContainer sourceContainer &&
             destinationResource is StorageResourceContainer destinationContainer)
         {
             transferJobInternal = await BuildContainerTransferJob(

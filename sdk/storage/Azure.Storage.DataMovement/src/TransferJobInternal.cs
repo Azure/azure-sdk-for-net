@@ -432,14 +432,23 @@ namespace Azure.Storage.DataMovement
                 {
                     if (!existingSources.Contains(current.Uri))
                     {
-                        string containerUriPath = _sourceResourceContainer.Uri.GetPath();
-                        string sourceName = string.IsNullOrEmpty(containerUriPath)
-                            ? current.Uri.GetPath()
-                            : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
-
                         JobPartInternal part;
                         try
                         {
+                            string sourceName;
+                            // For single item transfers, the container Uri will equal the item Uri.
+                            // The source name does not matter, just set it to item path.
+                            if (_sourceResourceContainer.Uri == current.Uri)
+                            {
+                                sourceName = current.Uri.GetPath();
+                            }
+                            // Real container trasnfer
+                            else
+                            {
+                                string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                                sourceName = current.Uri.GetPath().Substring(containerUriPath.Length + 1);
+                            }
+
                             StorageResourceItem sourceItem = (StorageResourceItem)current;
                             part = await _createJobPartMultiAsync(
                                 this,
