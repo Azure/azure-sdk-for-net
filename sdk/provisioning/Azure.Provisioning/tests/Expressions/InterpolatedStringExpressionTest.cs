@@ -8,10 +8,11 @@ namespace Azure.Provisioning.Tests.Expressions
 {
     public class InterpolatedStringExpressionTest
     {
+        [Test]
         public void ValidateBicepFunctionInterpolate()
         {
             // test provisionable variable
-            Assert.AreEqual(
+            AssertExpression(
                 "'Var=${foo}'",
                 BicepFunction.Interpolate(
                     $"Var={new ProvisioningVariable("foo", typeof(string))}"
@@ -19,7 +20,7 @@ namespace Azure.Provisioning.Tests.Expressions
                 );
 
             // test index expression in interpolation
-            Assert.AreEqual(
+            AssertExpression(
                 "'Endpoint=${foo['bar']}'",
                 BicepFunction.Interpolate(
                     $"Endpoint={new IndexExpression(
@@ -27,6 +28,9 @@ namespace Azure.Provisioning.Tests.Expressions
                         new StringLiteralExpression("bar")
                     )}")
                 );
+
+            static void AssertExpression(string expected, BicepValue<string> expression)
+                => Assert.AreEqual(expected, expression.ToString());
         }
     }
 }
