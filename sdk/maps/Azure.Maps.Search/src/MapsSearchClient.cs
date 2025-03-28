@@ -78,7 +78,7 @@ namespace Azure.Maps.Search
             var endpoint = new Uri("https://atlas.microsoft.com");
             var options = new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://atlas.microsoft.com/.default" };
+            string[] scopes = ["https://atlas.microsoft.com/.default"];
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, null, clientId);
         }
@@ -95,8 +95,8 @@ namespace Azure.Maps.Search
             var endpoint = options.Endpoint;
             options ??= new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://atlas.microsoft.com/.default" };
-            string acceptLanguage = options.SearchLanguage == null ? null : options.SearchLanguage.ToString();
+            string[] scopes = ["https://atlas.microsoft.com/.default"];
+            string acceptLanguage = options.SearchLanguage?.ToString();
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, acceptLanguage, clientId);
         }
@@ -128,7 +128,7 @@ namespace Azure.Maps.Search
             var endpoint = options.Endpoint;
             options ??= new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string acceptLanguage = options.SearchLanguage == null ? null : options.SearchLanguage.ToString();
+            string acceptLanguage = options.SearchLanguage?.ToString();
             _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, acceptLanguage);
         }
@@ -136,7 +136,7 @@ namespace Azure.Maps.Search
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
-        /// <param name = "options" > additional options</param>
+        /// <param name="options"> additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GeocodingResponse>> GetGeocodingAsync(string query = null, GeocodingQuery options = null, CancellationToken cancellationToken = default)
         {
@@ -153,7 +153,7 @@ namespace Azure.Maps.Search
                 IEnumerable<double> boundingBox = null;
                 if (options?.BoundingBox != null)
                 {
-                    boundingBox = new[] { options.BoundingBox.North, options.BoundingBox.West, options.BoundingBox.South, options.BoundingBox.East };
+                    boundingBox = [options.BoundingBox.North, options.BoundingBox.West, options.BoundingBox.South, options.BoundingBox.East];
                 }
                 IEnumerable<double> coordinates = null;
                 if (options?.Coordinates != null)
@@ -178,7 +178,7 @@ namespace Azure.Maps.Search
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
-        /// <param name = "options" > additional options </param>
+        /// <param name="options"> additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GeocodingResponse> GetGeocoding(string query = null, GeocodingQuery options = null, CancellationToken cancellationToken = default)
         {
@@ -195,16 +195,16 @@ namespace Azure.Maps.Search
                 IEnumerable<double> boundingBox = null;
                 if (options?.BoundingBox != null)
                 {
-                    boundingBox = new[] { options.BoundingBox.North, options.BoundingBox.West, options.BoundingBox.South, options.BoundingBox.East };
+                    boundingBox = [options.BoundingBox.North, options.BoundingBox.West, options.BoundingBox.South, options.BoundingBox.East];
                 }
                 IEnumerable<double> coordinates = null;
                 if (options?.Coordinates != null)
                 {
-                    coordinates = coordinates = new[]
-                    {
+                    coordinates = coordinates =
+                    [
                         Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                         Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
-                    };
+                    ];
                 }
 
                 return RestClient.GetGeocoding(options?.Top, query, options?.AddressLine, options?.CountryRegion, boundingBox, localizedMapView, coordinates, options?.AdminDistrict, options?.AdminDistrict2, options?.AdminDistrict3, options?.Locality, options?.PostalCode, cancellationToken);
@@ -259,7 +259,7 @@ namespace Azure.Maps.Search
         /// <summary>
         /// Supplies polygon data of a geographical area outline such as a city or a country region.
         /// </summary>
-        /// <param name="options"> additional options </param>
+        /// <param name="options"> additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Boundary>> GetPolygonAsync(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
         {
@@ -297,11 +297,11 @@ namespace Azure.Maps.Search
         /// <summary>
         /// Supplies polygon data of a geographical area outline such as a city or a country region.
         /// </summary>
-        /// <param name="options"> additional options </param>
+        /// <param name="options"> additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Boundary> GetPolygon(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygon");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygon");
             scope.Start();
             try
             {
@@ -316,7 +316,7 @@ namespace Azure.Maps.Search
                 if (options.Coordinates != null)
 #pragma warning restore CS8073
                 {
-                    coordinates = new[] { (double)options.Coordinates.Longitude, (double)options.Coordinates.Latitude };
+                    coordinates = [(double)options.Coordinates.Longitude, (double)options.Coordinates.Latitude];
                 }
                 var boundaryInternal = RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
                 return Response.FromValue(new Boundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
@@ -332,12 +332,12 @@ namespace Azure.Maps.Search
         /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
         /// </summary>
         /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name="options"> additional options </param>
+        /// <param name="options"> additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public virtual async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(GeoPosition coordinates, ReverseGeocodingQuery options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
             scope.Start();
             try
             {
@@ -352,7 +352,7 @@ namespace Azure.Maps.Search
                 if (coordinates != null)
 #pragma warning restore CS8073
                 {
-                    coordinatesList = new[] { coordinates.Longitude, coordinates.Latitude };
+                    coordinatesList = [coordinates.Longitude, coordinates.Latitude];
                 }
 
                 return await RestClient.GetReverseGeocodingAsync(coordinatesList, options?.ResultTypes, localizedMapView, cancellationToken).ConfigureAwait(false);
@@ -368,12 +368,12 @@ namespace Azure.Maps.Search
         /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
         /// </summary>
         /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Here it is represented by GeoPosition. Example: &amp;coordinates=lon,lat. </param>
-        /// <param name="options"> additional options </param>
+        /// <param name="options"> additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public virtual Response<GeocodingResponse> GetReverseGeocoding(GeoPosition coordinates, ReverseGeocodingQuery options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocoding");
             scope.Start();
             try
             {
@@ -415,7 +415,7 @@ namespace Azure.Maps.Search
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is empty. </exception>
         public virtual async Task<Response<GeocodingBatchResponse>> GetReverseGeocodingBatchAsync(IEnumerable<ReverseGeocodingQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocodingBatch");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocodingBatch");
             scope.Start();
             try
             {
@@ -444,7 +444,7 @@ namespace Azure.Maps.Search
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is empty. </exception>
         public virtual Response<GeocodingBatchResponse> GetReverseGeocodingBatch(IEnumerable<ReverseGeocodingQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocodingBatch");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetReverseGeocodingBatch");
             scope.Start();
             try
             {

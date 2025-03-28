@@ -73,16 +73,5 @@ namespace Azure.Maps.Search.Models
         {
             get { return _properties; }
         }
-
-        /// <summary> Identifier for the feature. </summary>
-        public string Id
-        {
-            get { return _boundary.Id; }
-        }
-        /// <summary> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </summary>
-        public string FeatureType
-        {
-            get { return _boundary.FeatureType; }
-        }
     }
 }

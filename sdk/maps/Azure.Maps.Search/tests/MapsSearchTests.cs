@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Maps.Search.Tests
 {
-    public class MapsSearchTests: SearchClientLiveTestsBase
+    public class MapsSearchTests : SearchClientLiveTestsBase
     {
         public MapsSearchTests(bool isAsync) : base(isAsync)
         {
@@ -104,6 +104,9 @@ namespace Azure.Maps.Search.Tests
             GeoPosition coordinates = new GeoPosition(-122.34255, 47.0);
             var response = await client.GetReverseGeocodingAsync(coordinates);
             Assert.AreEqual("Graham", response.Value.Features[0].Properties.Address.Locality);
+            Assert.AreEqual("United States", response.Value.Features[0].Properties.Address.CountryRegion.Name);
+            Assert.AreEqual("68th Ave E", response.Value.Features[0].Properties.Address.StreetName);
+            Assert.AreEqual("28218", response.Value.Features[0].Properties.Address.StreetNumber);
             Assert.AreEqual("US", response.Value.Features[0].Properties.Address.CountryRegion.Iso);
         }
 
