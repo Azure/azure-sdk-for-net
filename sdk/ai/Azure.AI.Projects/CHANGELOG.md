@@ -9,6 +9,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+* Fixed getting `ChatCompletionsClient` and `EmbeddingsClient`. Now these clients ae using `Azure AI Services` as opposed to `Servrless` category used before [issue](https://github.com/Azure/azure-sdk-for-net/issues/49064).
 * Fixed Azure AI Search in streaming scenarios.
 
 ### Other Changes

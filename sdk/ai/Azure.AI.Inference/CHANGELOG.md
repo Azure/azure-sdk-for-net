@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.5 (Unreleased)
+
+## Features Added
+- Added possibility to take `ChatCompletionsClient` and `EmbeddingsClient` by connection name.
+- Added support of Entra ID as an authentication method for Azure AI Services used to take  `ChatCompletionsClient` and `EmbeddingsClient`.
+
 ## 1.0.0-beta.4 (2025-03-18)
 
 ### Features Added
