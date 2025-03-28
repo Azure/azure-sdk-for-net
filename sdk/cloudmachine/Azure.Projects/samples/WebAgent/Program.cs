@@ -6,8 +6,10 @@ using Azure.Projects.OpenAI;
 using Azure.Projects;
 using OpenAI.Chat;
 using Azure.AI.OpenAI;
+using Azure.Projects.Ofx;
 
 ProjectInfrastructure infrastructure = new();
+infrastructure.AddFeature(new OfxProjectFeature());
 infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 infrastructure.AddFeature(new AppServiceFeature());
