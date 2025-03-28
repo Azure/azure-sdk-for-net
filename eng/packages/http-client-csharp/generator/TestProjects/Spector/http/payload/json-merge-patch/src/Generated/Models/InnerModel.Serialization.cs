@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Payload.JsonMergePatch.Models
 {
@@ -30,7 +29,6 @@ namespace Payload.JsonMergePatch.Models
 
         string IPersistableModel<InnerModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="innerModel"> The <see cref="InnerModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(InnerModel innerModel) => throw null;
 
         public static explicit operator InnerModel(Response result) => throw null;

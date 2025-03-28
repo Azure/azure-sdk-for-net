@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Visibility.Models
 {
@@ -30,7 +29,6 @@ namespace _Type.Model.Visibility.Models
 
         string IPersistableModel<ReadOnlyModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="readOnlyModel"> The <see cref="ReadOnlyModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ReadOnlyModel readOnlyModel) => throw null;
 
         public static explicit operator ReadOnlyModel(Response result) => throw null;

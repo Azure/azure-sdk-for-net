@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Inheritance.Recursive.Models
 {
@@ -30,7 +29,6 @@ namespace _Type.Model.Inheritance.Recursive.Models
 
         string IPersistableModel<Element>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="element"> The <see cref="Element"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Element element) => throw null;
 
         public static explicit operator Element(Response result) => throw null;

@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
@@ -31,7 +30,6 @@ namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 
         string IPersistableModel<Bird>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="bird"> The <see cref="Bird"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Bird bird) => throw null;
 
         public static explicit operator Bird(Response result) => throw null;

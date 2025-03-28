@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Encode.Numeric.Models
 {
@@ -30,7 +29,6 @@ namespace Encode.Numeric.Models
 
         string IPersistableModel<SafeintAsStringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="safeintAsStringProperty"> The <see cref="SafeintAsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(SafeintAsStringProperty safeintAsStringProperty) => throw null;
 
         public static explicit operator SafeintAsStringProperty(Response result) => throw null;

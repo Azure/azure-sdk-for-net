@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Inheritance.NotDiscriminated.Models
 {
@@ -30,7 +29,6 @@ namespace _Type.Model.Inheritance.NotDiscriminated.Models
 
         string IPersistableModel<Cat>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="cat"> The <see cref="Cat"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Cat cat) => throw null;
 
         public static explicit operator Cat(Response result) => throw null;
