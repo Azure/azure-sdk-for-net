@@ -263,6 +263,18 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="JavaComponentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JavaComponentResource.CreateResourceIdentifier" /> to create a <see cref="JavaComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JavaComponentResource"/> object. </returns>
+        public virtual JavaComponentResource GetJavaComponentResource(ResourceIdentifier id)
+        {
+            JavaComponentResource.ValidateResourceId(id);
+            return new JavaComponentResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppJobExecutionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppJobExecutionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobExecutionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -296,6 +308,18 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppManagedEnvironmentStorageResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentStorageResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SessionPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SessionPoolResource.CreateResourceIdentifier" /> to create a <see cref="SessionPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SessionPoolResource"/> object. </returns>
+        public virtual SessionPoolResource GetSessionPoolResource(ResourceIdentifier id)
+        {
+            SessionPoolResource.ValidateResourceId(id);
+            return new SessionPoolResource(Client, id);
         }
 
         /// <summary>

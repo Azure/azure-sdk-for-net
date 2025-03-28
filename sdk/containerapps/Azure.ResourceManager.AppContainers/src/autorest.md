@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/07f22664203dc215a564e00329b81a8a94cc11ee/specification/app/resource-manager/readme.md
-#tag: package-2024-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/24b224b17e698746d3c34e32f84dab7de5e4f2a8/specification/app/resource-manager/readme.md
+tag: package-2025-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -88,6 +88,7 @@ rename-mapping:
   AzureActiveDirectoryValidation: ContainerAppAzureActiveDirectoryValidationConfiguration
   AzureCredentials: ContainerAppCredentials
   AzureFileProperties: ContainerAppAzureFileProperties
+  NfsAzureFileProperties: ContainerAppNfsAzureFileProperties
   BaseContainer: ContainerAppBaseContainer
   BillingMeter: ContainerAppBillingMeter
   BillingMeterProperties: ContainerAppBillingMeterProperties
@@ -236,6 +237,7 @@ rename-mapping:
   Usage: ContainerAppUsage
   UsageName: ContainerAppUsageName
   UsageUnit: ContainerAppUsageUnit
+  DaprSubscriptionBulkSubscribeOptions: DaprSubscriptionBulkSubscribeConfig
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate

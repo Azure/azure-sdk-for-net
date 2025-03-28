@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(RunningStatus))
+            {
+                writer.WritePropertyName("runningStatus"u8);
+                writer.WriteStringValue(RunningStatus.Value.ToString());
+            }
             if (Optional.IsDefined(ManagedEnvironmentId))
             {
                 writer.WritePropertyName("managedEnvironmentId"u8);
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             SystemData systemData = default;
             ContainerAppProvisioningState? provisioningState = default;
+            ContainerAppRunningStatus? runningStatus = default;
             ResourceIdentifier managedEnvironmentId = default;
             ResourceIdentifier environmentId = default;
             string workloadProfileName = default;
@@ -259,6 +265,15 @@ namespace Azure.ResourceManager.AppContainers
                                 continue;
                             }
                             provisioningState = new ContainerAppProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("runningStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runningStatus = new ContainerAppRunningStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managedEnvironmentId"u8))
@@ -372,6 +387,7 @@ namespace Azure.ResourceManager.AppContainers
                 identity,
                 managedBy,
                 provisioningState,
+                runningStatus,
                 managedEnvironmentId,
                 environmentId,
                 workloadProfileName,
@@ -566,6 +582,21 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     builder.Append("    provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunningStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    runningStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RunningStatus))
+                {
+                    builder.Append("    runningStatus: ");
+                    builder.AppendLine($"'{RunningStatus.Value.ToString()}'");
                 }
             }
 

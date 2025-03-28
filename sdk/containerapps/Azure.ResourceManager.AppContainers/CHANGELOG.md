@@ -1,14 +1,14 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2025-04-01)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add api version 2025-01-01
+- Support keda scaler auth using MSI
+- Support RunningStatus for ContainerApp
+- Support Java Components 
+- Support Azure Container Apps SessionPool
+- Support env msi and cert from key vault
 
 ## 1.3.0 (2024-09-09)
 

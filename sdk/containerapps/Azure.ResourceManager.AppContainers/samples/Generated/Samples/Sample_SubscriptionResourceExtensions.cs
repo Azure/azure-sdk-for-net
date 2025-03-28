@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableWorkloadProfiles_BillingMetersGet()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/AvailableWorkloadProfiles_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/AvailableWorkloadProfiles_Get.json
             // this example is just showing the usage of "AvailableWorkloadProfiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetBillingMeters_BillingMetersGet()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/BillingMeters_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/BillingMeters_Get.json
             // this example is just showing the usage of "BillingMeters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetContainerAppConnectedEnvironments_ListConnectedEnvironmentsBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ConnectedEnvironments_ListBySubscription.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ConnectedEnvironments_ListBySubscription.json
             // this example is just showing the usage of "ConnectedEnvironments_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetContainerApps_ListContainerAppsBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_ListBySubscription.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ContainerApps_ListBySubscription.json
             // this example is just showing the usage of "ContainerApps_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetContainerAppJobs_ListContainerAppsJobsBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Jobs_ListBySubscription.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Jobs_ListBySubscription.json
             // this example is just showing the usage of "Jobs_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCustomDomainVerificationId_ListAllOperations()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Subscriptions_GetCustomDomainVerificationId.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Subscriptions_GetCustomDomainVerificationId.json
             // this example is just showing the usage of "GetCustomDomainVerificationId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetContainerAppManagedEnvironments_ListEnvironmentsBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ManagedEnvironments_ListBySubscription.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ManagedEnvironments_ListBySubscription.json
             // this example is just showing the usage of "ManagedEnvironments_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -223,9 +223,40 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetSessionPools_ListSessionPoolsBySubscription()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/SessionPools_ListBySubscription.json
+            // this example is just showing the usage of "ContainerAppsSessionPools_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SessionPoolResource item in subscriptionResource.GetSessionPoolsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SessionPoolData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUsages_ListUsages()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Usages_List.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Usages_List.json
             // this example is just showing the usage of "Usages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
