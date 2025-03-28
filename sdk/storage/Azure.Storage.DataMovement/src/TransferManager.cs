@@ -48,6 +48,7 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
         private readonly Func<string> _generateTransferId;
+        //private readonly ThroughputMonitor _throughputMonitor;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -88,7 +89,6 @@ namespace Azure.Storage.DataMovement
                     DataMovementConstants.TransferManagerOptions.MaxCpuUsage
                 );
         }
-
         /// <summary>
         /// Dependency injection constructor.
         /// </summary>
@@ -110,17 +110,6 @@ namespace Azure.Storage.DataMovement
             _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
-
-            if (_concurrencyTunerEnabled)
-                _concurrencyTuner = new ConcurrencyTuner(
-                    new ResourceMonitor(),
-                    _chunksProcessor,
-                    DataMovementConstants.TransferManagerOptions.MonitoringInterval,
-                    DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
-                    DataMovementConstants.TransferManagerOptions.InitialConcurrency,
-                    DataMovementConstants.TransferManagerOptions.MaxConcurrency,
-                    DataMovementConstants.TransferManagerOptions.MaxCpuUsage
-                );
 
             ConfigureProcessorCallbacks();
         }
