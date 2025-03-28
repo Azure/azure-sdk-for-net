@@ -35,8 +35,103 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="BackupShortTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupShortTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BackupShortTermRetentionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetBackupShortTermRetentionPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BackupShortTermRetentionPolicyResource"/> object. </returns>
+        public static BackupShortTermRetentionPolicyResource GetBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetBackupShortTermRetentionPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlServerBlobAuditingPolicyResource"/> object. </returns>
+        public static SqlServerBlobAuditingPolicyResource GetSqlServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlServerBlobAuditingPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlDatabaseBlobAuditingPolicyResource"/> object. </returns>
+        public static SqlDatabaseBlobAuditingPolicyResource GetSqlDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlDatabaseBlobAuditingPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedDatabaseBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetExtendedDatabaseBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/> object. </returns>
+        public static ExtendedDatabaseBlobAuditingPolicyResource GetExtendedDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetExtendedDatabaseBlobAuditingPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtendedServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetExtendedServerBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicyResource"/> object. </returns>
+        public static ExtendedServerBlobAuditingPolicyResource GetExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetExtendedServerBlobAuditingPolicyResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="DataMaskingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataMaskingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataMaskingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DataMaskingPolicyResource.CreateResourceIdentifier(string, string, string, string, DataMaskingPolicyName)" /> to create a <see cref="DataMaskingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetDataMaskingPolicyResource(ResourceIdentifier)"/> instead.</description>
@@ -54,60 +149,41 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GeoBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GeoBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="GeoBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataWarehouseUserActivityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="DataWarehouseUserActivityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetGeoBackupPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetDataWarehouseUserActivityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GeoBackupPolicyResource"/> object. </returns>
-        public static GeoBackupPolicyResource GetGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataWarehouseUserActivityResource"/> object. </returns>
+        public static DataWarehouseUserActivityResource GetDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSqlArmClient(client).GetGeoBackupPolicyResource(id);
+            return GetMockableSqlArmClient(client).GetDataWarehouseUserActivityResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlServerCommunicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerCommunicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerCommunicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerCommunicationLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetDatabaseAdvancedThreatProtectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerCommunicationLinkResource"/> object. </returns>
-        public static SqlServerCommunicationLinkResource GetSqlServerCommunicationLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAdvancedThreatProtectionResource"/> object. </returns>
+        public static DatabaseAdvancedThreatProtectionResource GetDatabaseAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSqlArmClient(client).GetSqlServerCommunicationLinkResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceObjectiveResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceObjectiveResource.CreateResourceIdentifier" /> to create a <see cref="ServiceObjectiveResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetServiceObjectiveResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceObjectiveResource"/> object. </returns>
-        public static ServiceObjectiveResource GetServiceObjectiveResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetServiceObjectiveResource(id);
+            return GetMockableSqlArmClient(client).GetDatabaseAdvancedThreatProtectionResource(id);
         }
 
         /// <summary>
@@ -127,25 +203,6 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetSqlDatabaseAdvisorResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerAdvisorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerAdvisorResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerAdvisorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerAdvisorResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerAdvisorResource"/> object. </returns>
-        public static SqlServerAdvisorResource GetSqlServerAdvisorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerAdvisorResource(id);
         }
 
         /// <summary>
@@ -206,22 +263,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RecommendedActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecommendedActionResource.CreateResourceIdentifier" /> to create a <see cref="RecommendedActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RecommendedActionAutoGeneratedResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecommendedActionAutoGeneratedResource.CreateResourceIdentifier" /> to create a <see cref="RecommendedActionAutoGeneratedResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetRecommendedActionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetRecommendedActionAutoGeneratedResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RecommendedActionResource"/> object. </returns>
-        public static RecommendedActionResource GetRecommendedActionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecommendedActionAutoGeneratedResource"/> object. </returns>
+        public static RecommendedActionAutoGeneratedResource GetRecommendedActionAutoGeneratedResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSqlArmClient(client).GetRecommendedActionResource(id);
+            return GetMockableSqlArmClient(client).GetRecommendedActionAutoGeneratedResource(id);
         }
 
         /// <summary>
@@ -282,44 +339,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseTableResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseTableResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseTableResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseTableResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseTableResource"/> object. </returns>
-        public static SqlDatabaseTableResource GetSqlDatabaseTableResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDatabaseTableResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseTableResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseTableResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseTableResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseTableResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedDatabaseTableResource"/> object. </returns>
-        public static ManagedDatabaseTableResource GetManagedDatabaseTableResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedDatabaseTableResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -358,41 +377,231 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentResource"/> object. </returns>
-        public static SqlDatabaseVulnerabilityAssessmentResource GetSqlDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
+        public static SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSqlArmClient(client).GetSqlDatabaseVulnerabilityAssessmentResource(id);
+            return GetMockableSqlArmClient(client).GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentResource"/> object. </returns>
-        public static ManagedDatabaseVulnerabilityAssessmentResource GetManagedDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
+        public static SqlServerSqlVulnerabilityAssessmentBaselineRuleResource GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSqlArmClient(client).GetManagedDatabaseVulnerabilityAssessmentResource(id);
+            return GetMockableSqlArmClient(client).GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource"/> object. </returns>
+        public static SqlDatabaseSqlVulnerabilityAssessmentScanResultResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerSqlVulnerabilityAssessmentScanResultResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource"/> object. </returns>
+        public static SqlServerSqlVulnerabilityAssessmentScanResultResource GetSqlServerSqlVulnerabilityAssessmentScanResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlServerSqlVulnerabilityAssessmentScanResultResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource"/> object. </returns>
+        public static SqlDatabaseSqlVulnerabilityAssessmentScanResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerSqlVulnerabilityAssessmentScanResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource"/> object. </returns>
+        public static SqlServerSqlVulnerabilityAssessmentScanResource GetSqlServerSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlServerSqlVulnerabilityAssessmentScanResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSqlVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource"/> object. </returns>
+        public static SqlDatabaseSqlVulnerabilityAssessmentResource GetSqlDatabaseSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlDatabaseSqlVulnerabilityAssessmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerSqlVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentResource"/> object. </returns>
+        public static SqlServerSqlVulnerabilityAssessmentResource GetSqlServerSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlServerSqlVulnerabilityAssessmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseTableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseTableResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseTableResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlDatabaseTableResource"/> object. </returns>
+        public static SqlDatabaseTableResource GetSqlDatabaseTableResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlDatabaseTableResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseTableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseTableResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseTableResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedDatabaseTableResource"/> object. </returns>
+        public static ManagedDatabaseTableResource GetManagedDatabaseTableResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedDatabaseTableResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
+        public static SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
+        public static ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(id);
         }
 
         /// <summary>
@@ -434,22 +643,60 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataWarehouseUserActivityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="DataWarehouseUserActivityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlDatabaseVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetDataWarehouseUserActivityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataWarehouseUserActivityResource"/> object. </returns>
-        public static DataWarehouseUserActivityResource GetDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentResource"/> object. </returns>
+        public static SqlDatabaseVulnerabilityAssessmentResource GetSqlDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSqlArmClient(client).GetDataWarehouseUserActivityResource(id);
+            return GetMockableSqlArmClient(client).GetSqlDatabaseVulnerabilityAssessmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentResource"/> object. </returns>
+        public static ManagedDatabaseVulnerabilityAssessmentResource GetManagedDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedDatabaseVulnerabilityAssessmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlDatabaseResource"/> object. </returns>
+        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlDatabaseResource(id);
         }
 
         /// <summary>
@@ -472,6 +719,44 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SqlDistributedAvailabilityGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDistributedAvailabilityGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlDistributedAvailabilityGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDistributedAvailabilityGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlDistributedAvailabilityGroupResource"/> object. </returns>
+        public static SqlDistributedAvailabilityGroupResource GetSqlDistributedAvailabilityGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlDistributedAvailabilityGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticPoolResource.CreateResourceIdentifier" /> to create an <see cref="ElasticPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetElasticPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ElasticPoolResource"/> object. </returns>
+        public static ElasticPoolResource GetElasticPoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetElasticPoolResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="EncryptionProtectorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EncryptionProtectorResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionProtectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -491,6 +776,44 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="EndpointCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EndpointCertificateResource.CreateResourceIdentifier" /> to create an <see cref="EndpointCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetEndpointCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EndpointCertificateResource"/> object. </returns>
+        public static EndpointCertificateResource GetEndpointCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetEndpointCertificateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FailoverGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FailoverGroupResource.CreateResourceIdentifier" /> to create a <see cref="FailoverGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetFailoverGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FailoverGroupResource"/> object. </returns>
+        public static FailoverGroupResource GetFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetFailoverGroupResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SqlFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -507,6 +830,101 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetSqlFirewallRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GeoBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GeoBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="GeoBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetGeoBackupPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GeoBackupPolicyResource"/> object. </returns>
+        public static GeoBackupPolicyResource GetGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetGeoBackupPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="IPv6FirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPv6FirewallRuleResource.CreateResourceIdentifier" /> to create an <see cref="IPv6FirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetIPv6FirewallRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IPv6FirewallRuleResource"/> object. </returns>
+        public static IPv6FirewallRuleResource GetIPv6FirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetIPv6FirewallRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="InstanceFailoverGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstanceFailoverGroupResource.CreateResourceIdentifier" /> to create an <see cref="InstanceFailoverGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetInstanceFailoverGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="InstanceFailoverGroupResource"/> object. </returns>
+        public static InstanceFailoverGroupResource GetInstanceFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetInstanceFailoverGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="InstancePoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstancePoolResource.CreateResourceIdentifier" /> to create an <see cref="InstancePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetInstancePoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="InstancePoolResource"/> object. </returns>
+        public static InstancePoolResource GetInstancePoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetInstancePoolResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="InstancePoolOperationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstancePoolOperationResource.CreateResourceIdentifier" /> to create an <see cref="InstancePoolOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetInstancePoolOperationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="InstancePoolOperationResource"/> object. </returns>
+        public static InstancePoolOperationResource GetInstancePoolOperationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetInstancePoolOperationResource(id);
         }
 
         /// <summary>
@@ -605,25 +1023,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlServerJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerJobResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerJobResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerJobResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerJobResource"/> object. </returns>
-        public static SqlServerJobResource GetSqlServerJobResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerJobResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SqlServerJobStepResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlServerJobStepResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerJobStepResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -697,6 +1096,139 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetSqlServerJobVersionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerJobResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerJobResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlServerJobResource"/> object. </returns>
+        public static SqlServerJobResource GetSqlServerJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlServerJobResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LedgerDigestUploadResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LedgerDigestUploadResource.CreateResourceIdentifier" /> to create a <see cref="LedgerDigestUploadResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetLedgerDigestUploadResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LedgerDigestUploadResource"/> object. </returns>
+        public static LedgerDigestUploadResource GetLedgerDigestUploadResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetLedgerDigestUploadResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSubscriptionLongTermRetentionBackupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupResource"/> object. </returns>
+        public static SubscriptionLongTermRetentionBackupResource GetSubscriptionLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSubscriptionLongTermRetentionBackupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetResourceGroupLongTermRetentionBackupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupResource"/> object. </returns>
+        public static ResourceGroupLongTermRetentionBackupResource GetResourceGroupLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetResourceGroupLongTermRetentionBackupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSubscriptionLongTermRetentionManagedInstanceBackupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> object. </returns>
+        public static SubscriptionLongTermRetentionManagedInstanceBackupResource GetSubscriptionLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSubscriptionLongTermRetentionManagedInstanceBackupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetResourceGroupLongTermRetentionManagedInstanceBackupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/> object. </returns>
+        public static ResourceGroupLongTermRetentionManagedInstanceBackupResource GetResourceGroupLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetResourceGroupLongTermRetentionManagedInstanceBackupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LongTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LongTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="LongTermRetentionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetLongTermRetentionPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LongTermRetentionPolicyResource"/> object. </returns>
+        public static LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetLongTermRetentionPolicyResource(id);
         }
 
         /// <summary>
@@ -776,6 +1308,44 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseAdvancedThreatProtectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedDatabaseAdvancedThreatProtectionResource"/> object. </returns>
+        public static ManagedDatabaseAdvancedThreatProtectionResource GetManagedDatabaseAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedDatabaseAdvancedThreatProtectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseRestoreDetailResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseRestoreDetailResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseRestoreDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseRestoreDetailResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailResource"/> object. </returns>
+        public static ManagedDatabaseRestoreDetailResource GetManagedDatabaseRestoreDetailResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedDatabaseRestoreDetailResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ManagedDatabaseSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ManagedDatabaseSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -792,6 +1362,44 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetManagedDatabaseSecurityAlertPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseSensitivityLabelResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedDatabaseSensitivityLabelResource"/> object. </returns>
+        public static ManagedDatabaseSensitivityLabelResource GetManagedDatabaseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedDatabaseSensitivityLabelResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSensitivityLabelResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlDatabaseSensitivityLabelResource"/> object. </returns>
+        public static SqlDatabaseSensitivityLabelResource GetSqlDatabaseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlDatabaseSensitivityLabelResource(id);
         }
 
         /// <summary>
@@ -814,41 +1422,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
-        public static ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDatabaseResource"/> object. </returns>
+        public static ManagedDatabaseResource GetManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSqlArmClient(client).GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
-        public static SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(id);
+            return GetMockableSqlArmClient(client).GetManagedDatabaseResource(id);
         }
 
         /// <summary>
@@ -871,6 +1460,25 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceAdvancedThreatProtectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedInstanceAdvancedThreatProtectionResource"/> object. </returns>
+        public static ManagedInstanceAdvancedThreatProtectionResource GetManagedInstanceAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedInstanceAdvancedThreatProtectionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ManagedInstanceAzureADOnlyAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -887,6 +1495,25 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetManagedInstanceAzureADOnlyAuthenticationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDtcResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDtcResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDtcResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceDtcResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedInstanceDtcResource"/> object. </returns>
+        public static ManagedInstanceDtcResource GetManagedInstanceDtcResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedInstanceDtcResource(id);
         }
 
         /// <summary>
@@ -1023,6 +1650,63 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedInstanceResource"/> object. </returns>
+        public static ManagedInstanceResource GetManagedInstanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedInstanceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedLedgerDigestUploadResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedLedgerDigestUploadResource.CreateResourceIdentifier" /> to create a <see cref="ManagedLedgerDigestUploadResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedLedgerDigestUploadResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedLedgerDigestUploadResource"/> object. </returns>
+        public static ManagedLedgerDigestUploadResource GetManagedLedgerDigestUploadResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedLedgerDigestUploadResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServerDnsAliasResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServerDnsAliasResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServerDnsAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedServerDnsAliasResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedServerDnsAliasResource"/> object. </returns>
+        public static ManagedServerDnsAliasResource GetManagedServerDnsAliasResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedServerDnsAliasResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ManagedServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ManagedServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1039,6 +1723,44 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetManagedServerSecurityAlertPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public static NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetNetworkSecurityPerimeterConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OutboundFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OutboundFirewallRuleResource.CreateResourceIdentifier" /> to create an <see cref="OutboundFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetOutboundFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OutboundFirewallRuleResource"/> object. </returns>
+        public static OutboundFirewallRuleResource GetOutboundFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetOutboundFirewallRuleResource(id);
         }
 
         /// <summary>
@@ -1080,6 +1802,25 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="RecoverableDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoverableDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RecoverableDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetRecoverableDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecoverableDatabaseResource"/> object. </returns>
+        public static RecoverableDatabaseResource GetRecoverableDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetRecoverableDatabaseResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="RecoverableManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RecoverableManagedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RecoverableManagedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1099,6 +1840,63 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerDatabaseReplicationLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource"/> object. </returns>
+        public static SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlServerDatabaseReplicationLinkResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorableDroppedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorableDroppedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetRestorableDroppedDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RestorableDroppedDatabaseResource"/> object. </returns>
+        public static RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetRestorableDroppedDatabaseResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorableDroppedManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorableDroppedManagedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedManagedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetRestorableDroppedManagedDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RestorableDroppedManagedDatabaseResource"/> object. </returns>
+        public static RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetRestorableDroppedManagedDatabaseResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SqlServerDatabaseRestorePointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlServerDatabaseRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseRestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1115,6 +1913,44 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetSqlServerDatabaseRestorePointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="ServerAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetServerAdvancedThreatProtectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServerAdvancedThreatProtectionResource"/> object. </returns>
+        public static ServerAdvancedThreatProtectionResource GetServerAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetServerAdvancedThreatProtectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerAdvisorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerAdvisorResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerAdvisorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerAdvisorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlServerAdvisorResource"/> object. </returns>
+        public static SqlServerAdvisorResource GetSqlServerAdvisorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlServerAdvisorResource(id);
         }
 
         /// <summary>
@@ -1172,6 +2008,44 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetSqlServerAzureADOnlyAuthenticationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceServerConfigurationOptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceServerConfigurationOptionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceServerConfigurationOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceServerConfigurationOptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedInstanceServerConfigurationOptionResource"/> object. </returns>
+        public static ManagedInstanceServerConfigurationOptionResource GetManagedInstanceServerConfigurationOptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedInstanceServerConfigurationOptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerConnectionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerConnectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerConnectionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerConnectionPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlServerConnectionPolicyResource"/> object. </returns>
+        public static SqlServerConnectionPolicyResource GetSqlServerConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlServerConnectionPolicyResource(id);
         }
 
         /// <summary>
@@ -1251,6 +2125,25 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceServerTrustCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceServerTrustCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceServerTrustCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceServerTrustCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedInstanceServerTrustCertificateResource"/> object. </returns>
+        public static ManagedInstanceServerTrustCertificateResource GetManagedInstanceServerTrustCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedInstanceServerTrustCertificateResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SqlServerTrustGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlServerTrustGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerTrustGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1289,6 +2182,25 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SqlServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlServerResource"/> object. </returns>
+        public static SqlServerResource GetSqlServerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetSqlServerResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SqlAgentConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlAgentConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SqlAgentConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1305,6 +2217,25 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetSqlAgentConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceStartStopScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceStartStopScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceStartStopScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceStartStopScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedInstanceStartStopScheduleResource"/> object. </returns>
+        public static ManagedInstanceStartStopScheduleResource GetManagedInstanceStartStopScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetManagedInstanceStartStopScheduleResource(id);
         }
 
         /// <summary>
@@ -1403,6 +2334,44 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicalDatabaseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetLogicalDatabaseTransparentDataEncryptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> object. </returns>
+        public static LogicalDatabaseTransparentDataEncryptionResource GetLogicalDatabaseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetLogicalDatabaseTransparentDataEncryptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualClusterResource.CreateResourceIdentifier" /> to create a <see cref="VirtualClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetVirtualClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualClusterResource"/> object. </returns>
+        public static VirtualClusterResource GetVirtualClusterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSqlArmClient(client).GetVirtualClusterResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SqlServerVirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlServerVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1460,1267 +2429,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupShortTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupShortTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BackupShortTermRetentionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetBackupShortTermRetentionPolicyResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BackupShortTermRetentionPolicyResource"/> object. </returns>
-        public static BackupShortTermRetentionPolicyResource GetBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetBackupShortTermRetentionPolicyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LedgerDigestUploadResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LedgerDigestUploadResource.CreateResourceIdentifier" /> to create a <see cref="LedgerDigestUploadResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetLedgerDigestUploadResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LedgerDigestUploadResource"/> object. </returns>
-        public static LedgerDigestUploadResource GetLedgerDigestUploadResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetLedgerDigestUploadResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="OutboundFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OutboundFirewallRuleResource.CreateResourceIdentifier" /> to create an <see cref="OutboundFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetOutboundFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OutboundFirewallRuleResource"/> object. </returns>
-        public static OutboundFirewallRuleResource GetOutboundFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetOutboundFirewallRuleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSubscriptionLongTermRetentionManagedInstanceBackupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> object. </returns>
-        public static SubscriptionLongTermRetentionManagedInstanceBackupResource GetSubscriptionLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSubscriptionLongTermRetentionManagedInstanceBackupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetResourceGroupLongTermRetentionManagedInstanceBackupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/> object. </returns>
-        public static ResourceGroupLongTermRetentionManagedInstanceBackupResource GetResourceGroupLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetResourceGroupLongTermRetentionManagedInstanceBackupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RestorableDroppedManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RestorableDroppedManagedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedManagedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetRestorableDroppedManagedDatabaseResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RestorableDroppedManagedDatabaseResource"/> object. </returns>
-        public static RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetRestorableDroppedManagedDatabaseResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerConnectionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerConnectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerConnectionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerConnectionPolicyResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerConnectionPolicyResource"/> object. </returns>
-        public static SqlServerConnectionPolicyResource GetSqlServerConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerConnectionPolicyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDistributedAvailabilityGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDistributedAvailabilityGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlDistributedAvailabilityGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDistributedAvailabilityGroupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDistributedAvailabilityGroupResource"/> object. </returns>
-        public static SqlDistributedAvailabilityGroupResource GetSqlDistributedAvailabilityGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDistributedAvailabilityGroupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedInstanceServerTrustCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedInstanceServerTrustCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceServerTrustCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceServerTrustCertificateResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedInstanceServerTrustCertificateResource"/> object. </returns>
-        public static ManagedInstanceServerTrustCertificateResource GetManagedInstanceServerTrustCertificateResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedInstanceServerTrustCertificateResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EndpointCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointCertificateResource.CreateResourceIdentifier" /> to create an <see cref="EndpointCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetEndpointCertificateResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EndpointCertificateResource"/> object. </returns>
-        public static EndpointCertificateResource GetEndpointCertificateResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetEndpointCertificateResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseSensitivityLabelResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedDatabaseSensitivityLabelResource"/> object. </returns>
-        public static ManagedDatabaseSensitivityLabelResource GetManagedDatabaseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedDatabaseSensitivityLabelResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSensitivityLabelResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseSensitivityLabelResource"/> object. </returns>
-        public static SqlDatabaseSensitivityLabelResource GetSqlDatabaseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDatabaseSensitivityLabelResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerBlobAuditingPolicyResource"/> object. </returns>
-        public static SqlServerBlobAuditingPolicyResource GetSqlServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerBlobAuditingPolicyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseBlobAuditingPolicyResource"/> object. </returns>
-        public static SqlDatabaseBlobAuditingPolicyResource GetSqlDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDatabaseBlobAuditingPolicyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtendedDatabaseBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetExtendedDatabaseBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/> object. </returns>
-        public static ExtendedDatabaseBlobAuditingPolicyResource GetExtendedDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetExtendedDatabaseBlobAuditingPolicyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ExtendedServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtendedServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetExtendedServerBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicyResource"/> object. </returns>
-        public static ExtendedServerBlobAuditingPolicyResource GetExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetExtendedServerBlobAuditingPolicyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetDatabaseAdvancedThreatProtectionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DatabaseAdvancedThreatProtectionResource"/> object. </returns>
-        public static DatabaseAdvancedThreatProtectionResource GetDatabaseAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetDatabaseAdvancedThreatProtectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServerAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="ServerAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetServerAdvancedThreatProtectionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServerAdvancedThreatProtectionResource"/> object. </returns>
-        public static ServerAdvancedThreatProtectionResource GetServerAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetServerAdvancedThreatProtectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedServerDnsAliasResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServerDnsAliasResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServerDnsAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedServerDnsAliasResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedServerDnsAliasResource"/> object. </returns>
-        public static ManagedServerDnsAliasResource GetManagedServerDnsAliasResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedServerDnsAliasResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseAdvancedThreatProtectionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedDatabaseAdvancedThreatProtectionResource"/> object. </returns>
-        public static ManagedDatabaseAdvancedThreatProtectionResource GetManagedDatabaseAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedDatabaseAdvancedThreatProtectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedInstanceAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceAdvancedThreatProtectionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedInstanceAdvancedThreatProtectionResource"/> object. </returns>
-        public static ManagedInstanceAdvancedThreatProtectionResource GetManagedInstanceAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedInstanceAdvancedThreatProtectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedInstanceDtcResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedInstanceDtcResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDtcResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceDtcResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedInstanceDtcResource"/> object. </returns>
-        public static ManagedInstanceDtcResource GetManagedInstanceDtcResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedInstanceDtcResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualClusterResource.CreateResourceIdentifier" /> to create a <see cref="VirtualClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetVirtualClusterResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualClusterResource"/> object. </returns>
-        public static VirtualClusterResource GetVirtualClusterResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetVirtualClusterResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="InstanceFailoverGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstanceFailoverGroupResource.CreateResourceIdentifier" /> to create an <see cref="InstanceFailoverGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetInstanceFailoverGroupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InstanceFailoverGroupResource"/> object. </returns>
-        public static InstanceFailoverGroupResource GetInstanceFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetInstanceFailoverGroupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseRestoreDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseRestoreDetailResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseRestoreDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseRestoreDetailResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailResource"/> object. </returns>
-        public static ManagedDatabaseRestoreDetailResource GetManagedDatabaseRestoreDetailResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedDatabaseRestoreDetailResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseResource"/> object. </returns>
-        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDatabaseResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ElasticPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ElasticPoolResource.CreateResourceIdentifier" /> to create an <see cref="ElasticPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetElasticPoolResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ElasticPoolResource"/> object. </returns>
-        public static ElasticPoolResource GetElasticPoolResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetElasticPoolResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedDatabaseResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedDatabaseResource"/> object. </returns>
-        public static ManagedDatabaseResource GetManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedDatabaseResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedInstanceResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedInstanceResource"/> object. </returns>
-        public static ManagedInstanceResource GetManagedInstanceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedInstanceResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedLedgerDigestUploadResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedLedgerDigestUploadResource.CreateResourceIdentifier" /> to create a <see cref="ManagedLedgerDigestUploadResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedLedgerDigestUploadResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedLedgerDigestUploadResource"/> object. </returns>
-        public static ManagedLedgerDigestUploadResource GetManagedLedgerDigestUploadResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedLedgerDigestUploadResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RecoverableDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoverableDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RecoverableDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetRecoverableDatabaseResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RecoverableDatabaseResource"/> object. </returns>
-        public static RecoverableDatabaseResource GetRecoverableDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetRecoverableDatabaseResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RestorableDroppedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RestorableDroppedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetRestorableDroppedDatabaseResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RestorableDroppedDatabaseResource"/> object. </returns>
-        public static RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetRestorableDroppedDatabaseResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedInstanceServerConfigurationOptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedInstanceServerConfigurationOptionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceServerConfigurationOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceServerConfigurationOptionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedInstanceServerConfigurationOptionResource"/> object. </returns>
-        public static ManagedInstanceServerConfigurationOptionResource GetManagedInstanceServerConfigurationOptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedInstanceServerConfigurationOptionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedInstanceStartStopScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedInstanceStartStopScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceStartStopScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetManagedInstanceStartStopScheduleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedInstanceStartStopScheduleResource"/> object. </returns>
-        public static ManagedInstanceStartStopScheduleResource GetManagedInstanceStartStopScheduleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetManagedInstanceStartStopScheduleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicalDatabaseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetLogicalDatabaseTransparentDataEncryptionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> object. </returns>
-        public static LogicalDatabaseTransparentDataEncryptionResource GetLogicalDatabaseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetLogicalDatabaseTransparentDataEncryptionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="IPv6FirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPv6FirewallRuleResource.CreateResourceIdentifier" /> to create an <see cref="IPv6FirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetIPv6FirewallRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="IPv6FirewallRuleResource"/> object. </returns>
-        public static IPv6FirewallRuleResource GetIPv6FirewallRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetIPv6FirewallRuleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
-        public static SqlServerSqlVulnerabilityAssessmentBaselineRuleResource GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
-        public static SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerSqlVulnerabilityAssessmentScanResultResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource"/> object. </returns>
-        public static SqlServerSqlVulnerabilityAssessmentScanResultResource GetSqlServerSqlVulnerabilityAssessmentScanResultResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerSqlVulnerabilityAssessmentScanResultResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource"/> object. </returns>
-        public static SqlDatabaseSqlVulnerabilityAssessmentScanResultResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerSqlVulnerabilityAssessmentScanResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource"/> object. </returns>
-        public static SqlServerSqlVulnerabilityAssessmentScanResource GetSqlServerSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerSqlVulnerabilityAssessmentScanResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource"/> object. </returns>
-        public static SqlDatabaseSqlVulnerabilityAssessmentScanResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerSqlVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentResource"/> object. </returns>
-        public static SqlServerSqlVulnerabilityAssessmentResource GetSqlServerSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerSqlVulnerabilityAssessmentResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlDatabaseSqlVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource"/> object. </returns>
-        public static SqlDatabaseSqlVulnerabilityAssessmentResource GetSqlDatabaseSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlDatabaseSqlVulnerabilityAssessmentResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="FailoverGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FailoverGroupResource.CreateResourceIdentifier" /> to create a <see cref="FailoverGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetFailoverGroupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="FailoverGroupResource"/> object. </returns>
-        public static FailoverGroupResource GetFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetFailoverGroupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="InstancePoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstancePoolResource.CreateResourceIdentifier" /> to create an <see cref="InstancePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetInstancePoolResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InstancePoolResource"/> object. </returns>
-        public static InstancePoolResource GetInstancePoolResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetInstancePoolResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionBackupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSubscriptionLongTermRetentionBackupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupResource"/> object. </returns>
-        public static SubscriptionLongTermRetentionBackupResource GetSubscriptionLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSubscriptionLongTermRetentionBackupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionBackupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetResourceGroupLongTermRetentionBackupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupResource"/> object. </returns>
-        public static ResourceGroupLongTermRetentionBackupResource GetResourceGroupLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetResourceGroupLongTermRetentionBackupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LongTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LongTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="LongTermRetentionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetLongTermRetentionPolicyResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LongTermRetentionPolicyResource"/> object. </returns>
-        public static LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetLongTermRetentionPolicyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerResource"/> object. </returns>
-        public static SqlServerResource GetSqlServerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerDatabaseReplicationLinkResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource"/> object. </returns>
-        public static SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerDatabaseReplicationLinkResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of SqlServerTrustGroupResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetSqlServerTrustGroups(AzureLocation)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SqlServerTrustGroupResources and their operations over a SqlServerTrustGroupResource. </returns>
-        public static SqlServerTrustGroupCollection GetSqlServerTrustGroups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetSqlServerTrustGroups(locationName);
-        }
-
-        /// <summary>
-        /// Gets a server trust group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerTrustGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerTrustGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetSqlServerTrustGroupAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SqlServerTrustGroupResource>> GetSqlServerTrustGroupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableSqlResourceGroupResource(resourceGroupResource).GetSqlServerTrustGroupAsync(locationName, serverTrustGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a server trust group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerTrustGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerTrustGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetSqlServerTrustGroup(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SqlServerTrustGroupResource> GetSqlServerTrustGroup(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetSqlServerTrustGroup(locationName, serverTrustGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(AzureLocation,string,string)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the managed database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources and their operations over a ResourceGroupLongTermRetentionManagedInstanceBackupResource. </returns>
-        public static ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, string databaseName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
-        }
-
-        /// <summary>
-        /// Gets a long term retention backup for a managed database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the managed database. </param>
-        /// <param name="backupName"> The backup name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource>> GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableSqlResourceGroupResource(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(locationName, managedInstanceName, databaseName, backupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a long term retention backup for a managed database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackup(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the managed database. </param>
-        /// <param name="backupName"> The backup name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource> GetResourceGroupLongTermRetentionManagedInstanceBackup(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackup(locationName, managedInstanceName, databaseName, backupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of VirtualClusterResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetVirtualClusters()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
-        public static VirtualClusterCollection GetVirtualClusters(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetVirtualClusters();
-        }
-
-        /// <summary>
-        /// Gets a virtual cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualClusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetVirtualClusterAsync(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<VirtualClusterResource>> GetVirtualClusterAsync(this ResourceGroupResource resourceGroupResource, string virtualClusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableSqlResourceGroupResource(resourceGroupResource).GetVirtualClusterAsync(virtualClusterName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a virtual cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualClusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetVirtualCluster(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<VirtualClusterResource> GetVirtualCluster(this ResourceGroupResource resourceGroupResource, string virtualClusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetVirtualCluster(virtualClusterName, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a collection of InstanceFailoverGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -2751,7 +2459,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2790,7 +2498,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2814,101 +2522,6 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSqlResourceGroupResource(resourceGroupResource).GetInstanceFailoverGroup(locationName, failoverGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of ManagedInstanceResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetManagedInstances()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
-        public static ManagedInstanceCollection GetManagedInstances(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetManagedInstances();
-        }
-
-        /// <summary>
-        /// Gets a managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetManagedInstanceAsync(string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ManagedInstanceResource>> GetManagedInstanceAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableSqlResourceGroupResource(resourceGroupResource).GetManagedInstanceAsync(managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetManagedInstance(string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<ManagedInstanceResource> GetManagedInstance(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetManagedInstance(managedInstanceName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -2941,7 +2554,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2979,7 +2592,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3038,7 +2651,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3079,7 +2692,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3105,6 +2718,300 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSqlResourceGroupResource(resourceGroupResource).GetResourceGroupLongTermRetentionBackup(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(AzureLocation,string,string)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources and their operations over a ResourceGroupLongTermRetentionManagedInstanceBackupResource. </returns>
+        public static ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, string databaseName)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
+        }
+
+        /// <summary>
+        /// Gets a long term retention backup for a managed database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource>> GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableSqlResourceGroupResource(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(locationName, managedInstanceName, databaseName, backupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a long term retention backup for a managed database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackup(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource> GetResourceGroupLongTermRetentionManagedInstanceBackup(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackup(locationName, managedInstanceName, databaseName, backupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ManagedInstanceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetManagedInstances()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
+        public static ManagedInstanceCollection GetManagedInstances(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetManagedInstances();
+        }
+
+        /// <summary>
+        /// Gets a managed instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetManagedInstanceAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ManagedInstanceResource>> GetManagedInstanceAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableSqlResourceGroupResource(resourceGroupResource).GetManagedInstanceAsync(managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetManagedInstance(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<ManagedInstanceResource> GetManagedInstance(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetManagedInstance(managedInstanceName, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SqlServerTrustGroupResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetSqlServerTrustGroups(AzureLocation)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of SqlServerTrustGroupResources and their operations over a SqlServerTrustGroupResource. </returns>
+        public static SqlServerTrustGroupCollection GetSqlServerTrustGroups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetSqlServerTrustGroups(locationName);
+        }
+
+        /// <summary>
+        /// Gets a server trust group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerTrustGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerTrustGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetSqlServerTrustGroupAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SqlServerTrustGroupResource>> GetSqlServerTrustGroupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableSqlResourceGroupResource(resourceGroupResource).GetSqlServerTrustGroupAsync(locationName, serverTrustGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server trust group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerTrustGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerTrustGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetSqlServerTrustGroup(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SqlServerTrustGroupResource> GetSqlServerTrustGroup(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetSqlServerTrustGroup(locationName, serverTrustGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -3137,7 +3044,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3176,7 +3083,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3203,143 +3110,96 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Lists the long term retention backups for managed databases in a given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// </list>
+        /// Gets a collection of VirtualClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation(ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetVirtualClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
+        public static VirtualClusterCollection GetVirtualClusters(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(options, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetVirtualClusters();
         }
 
         /// <summary>
-        /// Lists the long term retention backups for managed databases in a given location.
+        /// Gets a virtual cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation</description>
+        /// <description>VirtualClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation(ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetVirtualClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<VirtualClusterResource>> GetVirtualClusterAsync(this ResourceGroupResource resourceGroupResource, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(options, cancellationToken);
+            return await GetMockableSqlResourceGroupResource(resourceGroupResource).GetVirtualClusterAsync(virtualClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Lists the long term retention backups for a given managed instance.
+        /// Gets a virtual cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance</description>
+        /// <description>VirtualClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation,string,bool?,SqlDatabaseState?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetVirtualCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<VirtualClusterResource> GetVirtualCluster(this ResourceGroupResource resourceGroupResource, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for a given managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation,string,bool?,SqlDatabaseState?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetVirtualCluster(virtualClusterName, cancellationToken);
         }
 
         /// <summary>
@@ -3355,7 +3215,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -3390,7 +3250,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -3425,7 +3285,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -3462,7 +3322,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -3484,6 +3344,146 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation(ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation(ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given managed instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation,string,bool?,SqlDatabaseState?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given managed instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation,string,bool?,SqlDatabaseState?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3517,7 +3517,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3556,7 +3556,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3580,6 +3580,212 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSqlSubscriptionResource(subscriptionResource).GetDeletedServer(locationName, deletedServerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionBackups(AzureLocation,string,string)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of SubscriptionLongTermRetentionBackupResources and their operations over a SubscriptionLongTermRetentionBackupResource. </returns>
+        public static SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
+        }
+
+        /// <summary>
+        /// Gets a long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionBackupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionBackupAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionLongTermRetentionBackupResource>> GetSubscriptionLongTermRetentionBackupAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionBackupAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionBackupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionBackup(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionLongTermRetentionBackupResource> GetSubscriptionLongTermRetentionBackup(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionBackup(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(AzureLocation,string,string)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackupResources and their operations over a SubscriptionLongTermRetentionManagedInstanceBackupResource. </returns>
+        public static SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, string databaseName)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
+        }
+
+        /// <summary>
+        /// Gets a long term retention backup for a managed database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionLongTermRetentionManagedInstanceBackupResource>> GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(locationName, managedInstanceName, databaseName, backupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a long term retention backup for a managed database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackup(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetSubscriptionLongTermRetentionManagedInstanceBackup(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackup(locationName, managedInstanceName, databaseName, backupName, cancellationToken);
         }
 
         /// <summary>
@@ -3613,7 +3819,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3652,7 +3858,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3709,7 +3915,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3748,7 +3954,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3775,212 +3981,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(AzureLocation,string,string)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the managed database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackupResources and their operations over a SubscriptionLongTermRetentionManagedInstanceBackupResource. </returns>
-        public static SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, string databaseName)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
-        }
-
-        /// <summary>
-        /// Gets a long term retention backup for a managed database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the managed database. </param>
-        /// <param name="backupName"> The backup name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionLongTermRetentionManagedInstanceBackupResource>> GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(locationName, managedInstanceName, databaseName, backupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a long term retention backup for a managed database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackup(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the managed database. </param>
-        /// <param name="backupName"> The backup name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetSubscriptionLongTermRetentionManagedInstanceBackup(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackup(locationName, managedInstanceName, databaseName, backupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionBackups(AzureLocation,string,string)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SubscriptionLongTermRetentionBackupResources and their operations over a SubscriptionLongTermRetentionBackupResource. </returns>
-        public static SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
-        }
-
-        /// <summary>
-        /// Gets a long term retention backup.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionBackups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionBackupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionBackupAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <param name="backupName"> The backup name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionLongTermRetentionBackupResource>> GetSubscriptionLongTermRetentionBackupAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionBackupAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a long term retention backup.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionBackups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionBackupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSubscriptionLongTermRetentionBackup(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <param name="backupName"> The backup name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionLongTermRetentionBackupResource> GetSubscriptionLongTermRetentionBackup(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSubscriptionLongTermRetentionBackup(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a list of all deleted servers in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -3993,7 +3993,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4029,7 +4029,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4053,432 +4053,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the subscription capabilities available for the specified location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capabilities_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetCapabilitiesByLocation(AzureLocation,SqlCapabilityGroup?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
-        /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<SqlLocationCapabilities>> GetCapabilitiesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableSqlSubscriptionResource(subscriptionResource).GetCapabilitiesByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the subscription capabilities available for the specified location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capabilities_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetCapabilitiesByLocation(AzureLocation,SqlCapabilityGroup?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
-        /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<SqlLocationCapabilities> GetCapabilitiesByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetCapabilitiesByLocation(locationName, include, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of sync database ids.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncGroups_ListSyncDatabaseIds</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of sync database ids.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncGroups_ListSyncDatabaseIds</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for managed databases in a given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for managed databases in a given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this SubscriptionResource subscriptionResource, SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for a given managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation,string,bool?,SqlDatabaseState?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for a given managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation,string,bool?,SqlDatabaseState?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtualClusters in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualClusters_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetVirtualClusters(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetVirtualClustersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtualClusters in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualClusters_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetVirtualClusters(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualClusterResource> GetVirtualClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetVirtualClusters(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all managed instances in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetManagedInstances(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ManagedInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetManagedInstancesAsync(expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all managed instances in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetManagedInstances(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceResource> GetManagedInstances(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetManagedInstances(expand, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a list of all instance pools in the subscription.
         /// <list type="bullet">
         /// <item>
@@ -4491,7 +4065,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4527,7 +4101,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4551,6 +4125,72 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets the subscription capabilities available for the specified location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capabilities_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetCapabilitiesByLocation(AzureLocation,SqlCapabilityGroup?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
+        /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<SqlLocationCapabilities>> GetCapabilitiesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSqlSubscriptionResource(subscriptionResource).GetCapabilitiesByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the subscription capabilities available for the specified location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capabilities_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetCapabilitiesByLocation(AzureLocation,SqlCapabilityGroup?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
+        /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<SqlLocationCapabilities> GetCapabilitiesByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetCapabilitiesByLocation(locationName, include, cancellationToken);
+        }
+
+        /// <summary>
         /// Lists the long term retention backups for a given location.
         /// <list type="bullet">
         /// <item>
@@ -4563,7 +4203,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4598,7 +4238,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4633,7 +4273,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4670,7 +4310,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4695,6 +4335,220 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this SubscriptionResource subscriptionResource, SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given managed instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation,string,bool?,SqlDatabaseState?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given managed instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation,string,bool?,SqlDatabaseState?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all managed instances in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstances_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetManagedInstances(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetManagedInstancesAsync(expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all managed instances in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstances_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetManagedInstances(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedInstanceResource> GetManagedInstances(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetManagedInstances(expand, cancellationToken);
+        }
+
+        /// <summary>
         /// Determines whether a resource can be created with the specified name.
         /// <list type="bullet">
         /// <item>
@@ -4707,7 +4561,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4743,7 +4597,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4779,7 +4633,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4816,7 +4670,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4838,6 +4692,152 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSqlSubscriptionResource(subscriptionResource).GetSqlServers(expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of sync database ids.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncGroups_ListSyncDatabaseIds</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SyncGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of sync database ids.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncGroups_ListSyncDatabaseIds</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SyncGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetVirtualClusters(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetVirtualClustersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetVirtualClusters(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualClusterResource> GetVirtualClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetVirtualClusters(cancellationToken);
         }
     }
 }

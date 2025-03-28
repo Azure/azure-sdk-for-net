@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _managedInstanceClientDiagnostics;
         private readonly ManagedInstancesRestOperations _managedInstanceRestClient;
+        private readonly ClientDiagnostics _managedDatabaseClientDiagnostics;
+        private readonly ManagedDatabasesRestOperations _managedDatabaseRestClient;
         private readonly ClientDiagnostics _managedInstanceTdeCertificatesClientDiagnostics;
         private readonly ManagedInstanceTdeCertificatesRestOperations _managedInstanceTdeCertificatesRestClient;
         private readonly ClientDiagnostics _sqlServerTrustGroupServerTrustGroupsClientDiagnostics;
         private readonly ServerTrustGroupsRestOperations _sqlServerTrustGroupServerTrustGroupsRestClient;
-        private readonly ClientDiagnostics _managedDatabaseClientDiagnostics;
-        private readonly ManagedDatabasesRestOperations _managedDatabaseRestClient;
         private readonly ManagedInstanceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.Sql
             _managedInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedInstanceApiVersion);
             _managedInstanceRestClient = new ManagedInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceApiVersion);
+            _managedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedDatabaseResource.ResourceType, out string managedDatabaseApiVersion);
+            _managedDatabaseRestClient = new ManagedDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseApiVersion);
             _managedInstanceTdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _sqlServerTrustGroupServerTrustGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerTrustGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlServerTrustGroupResource.ResourceType, out string sqlServerTrustGroupServerTrustGroupsApiVersion);
             _sqlServerTrustGroupServerTrustGroupsRestClient = new ServerTrustGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerTrustGroupServerTrustGroupsApiVersion);
-            _managedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedDatabaseResource.ResourceType, out string managedDatabaseApiVersion);
-            _managedDatabaseRestClient = new ManagedDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,6 +105,213 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SqlDistributedAvailabilityGroupResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of SqlDistributedAvailabilityGroupResources and their operations over a SqlDistributedAvailabilityGroupResource. </returns>
+        public virtual SqlDistributedAvailabilityGroupCollection GetSqlDistributedAvailabilityGroups()
+        {
+            return GetCachedClient(client => new SqlDistributedAvailabilityGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a distributed availability group info.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlDistributedAvailabilityGroupResource>> GetSqlDistributedAvailabilityGroupAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlDistributedAvailabilityGroups().GetAsync(distributedAvailabilityGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a distributed availability group info.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlDistributedAvailabilityGroupResource> GetSqlDistributedAvailabilityGroup(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlDistributedAvailabilityGroups().Get(distributedAvailabilityGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EndpointCertificateResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of EndpointCertificateResources and their operations over a EndpointCertificateResource. </returns>
+        public virtual EndpointCertificateCollection GetEndpointCertificates()
+        {
+            return GetCachedClient(client => new EndpointCertificateCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a certificate used on the endpoint with the given id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/endpointCertificates/{endpointType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EndpointCertificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EndpointCertificateResource>> GetEndpointCertificateAsync(string endpointType, CancellationToken cancellationToken = default)
+        {
+            return await GetEndpointCertificates().GetAsync(endpointType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a certificate used on the endpoint with the given id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/endpointCertificates/{endpointType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EndpointCertificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EndpointCertificateResource> GetEndpointCertificate(string endpointType, CancellationToken cancellationToken = default)
+        {
+            return GetEndpointCertificates().Get(endpointType, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedDatabaseResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedDatabaseResources and their operations over a ManagedDatabaseResource. </returns>
+        public virtual ManagedDatabaseCollection GetManagedDatabases()
+        {
+            return GetCachedClient(client => new ManagedDatabaseCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a managed database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedDatabaseResource>> GetManagedDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedDatabaseResource> GetManagedDatabase(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedDatabases().Get(databaseName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ManagedInstanceAdministratorResources in the ManagedInstance. </summary>
         /// <returns> An object representing collection of ManagedInstanceAdministratorResources and their operations over a ManagedInstanceAdministratorResource. </returns>
         public virtual ManagedInstanceAdministratorCollection GetManagedInstanceAdministrators()
@@ -125,7 +332,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -154,7 +361,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,6 +375,71 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<ManagedInstanceAdministratorResource> GetManagedInstanceAdministrator(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceAdministrators().Get(administratorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedInstanceAdvancedThreatProtectionResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedInstanceAdvancedThreatProtectionResources and their operations over a ManagedInstanceAdvancedThreatProtectionResource. </returns>
+        public virtual ManagedInstanceAdvancedThreatProtectionCollection GetManagedInstanceAdvancedThreatProtections()
+        {
+            return GetCachedClient(client => new ManagedInstanceAdvancedThreatProtectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a managed instance's Advanced Threat Protection state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceAdvancedThreatProtectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedInstanceAdvancedThreatProtectionResource>> GetManagedInstanceAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedInstanceAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a managed instance's Advanced Threat Protection state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceAdvancedThreatProtectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedInstanceAdvancedThreatProtectionResource> GetManagedInstanceAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedInstanceAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedInstanceAzureADOnlyAuthenticationResources in the ManagedInstance. </summary>
@@ -190,7 +462,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +491,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -233,6 +505,71 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<ManagedInstanceAzureADOnlyAuthenticationResource> GetManagedInstanceAzureADOnlyAuthentication(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceAzureADOnlyAuthentications().Get(authenticationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedInstanceDtcResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedInstanceDtcResources and their operations over a ManagedInstanceDtcResource. </returns>
+        public virtual ManagedInstanceDtcCollection GetManagedInstanceDtcs()
+        {
+            return GetCachedClient(client => new ManagedInstanceDtcCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets managed instance DTC settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceDtcs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dtcName"> The name of the managed instance DTC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedInstanceDtcResource>> GetManagedInstanceDtcAsync(DtcName dtcName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedInstanceDtcs().GetAsync(dtcName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets managed instance DTC settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceDtcs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dtcName"> The name of the managed instance DTC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedInstanceDtcResource> GetManagedInstanceDtc(DtcName dtcName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedInstanceDtcs().Get(dtcName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedInstanceEncryptionProtectorResources in the ManagedInstance. </summary>
@@ -255,7 +592,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,7 +621,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +657,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +688,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -389,7 +726,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -418,7 +755,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,7 +791,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -485,7 +822,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -523,7 +860,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -554,7 +891,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -592,7 +929,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -621,7 +958,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -635,6 +972,75 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<ManagedInstanceVulnerabilityAssessmentResource> GetManagedInstanceVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedServerDnsAliasResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedServerDnsAliasResources and their operations over a ManagedServerDnsAliasResource. </returns>
+        public virtual ManagedServerDnsAliasCollection GetManagedServerDnsAliases()
+        {
+            return GetCachedClient(client => new ManagedServerDnsAliasCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedServerDnsAliases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServerDnsAliasResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsAliasName"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedServerDnsAliasResource>> GetManagedServerDnsAliasAsync(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedServerDnsAliases().GetAsync(dnsAliasName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedServerDnsAliases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServerDnsAliasResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsAliasName"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedServerDnsAliasResource> GetManagedServerDnsAlias(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedServerDnsAliases().Get(dnsAliasName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedServerSecurityAlertPolicyResources in the ManagedInstance. </summary>
@@ -657,7 +1063,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -686,7 +1092,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -722,7 +1128,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -753,7 +1159,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -769,13 +1175,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<RecoverableManagedDatabaseResource> GetRecoverableManagedDatabase(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
             return GetRecoverableManagedDatabases().Get(recoverableDatabaseName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a SqlAgentConfigurationResource along with the instance operations that can be performed on it in the ManagedInstance. </summary>
-        /// <returns> Returns a <see cref="SqlAgentConfigurationResource"/> object. </returns>
-        public virtual SqlAgentConfigurationResource GetSqlAgentConfiguration()
-        {
-            return new SqlAgentConfigurationResource(Client, Id.AppendChildResource("sqlAgent", "current"));
         }
 
         /// <summary> Gets a collection of RestorableDroppedManagedDatabaseResources in the ManagedInstance. </summary>
@@ -798,7 +1197,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -829,7 +1228,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -847,73 +1246,69 @@ namespace Azure.ResourceManager.Sql
             return GetRestorableDroppedManagedDatabases().Get(restorableDroppedDatabaseId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlDistributedAvailabilityGroupResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of SqlDistributedAvailabilityGroupResources and their operations over a SqlDistributedAvailabilityGroupResource. </returns>
-        public virtual SqlDistributedAvailabilityGroupCollection GetSqlDistributedAvailabilityGroups()
+        /// <summary> Gets a collection of ManagedInstanceServerConfigurationOptionResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedInstanceServerConfigurationOptionResources and their operations over a ManagedInstanceServerConfigurationOptionResource. </returns>
+        public virtual ManagedInstanceServerConfigurationOptionCollection GetManagedInstanceServerConfigurationOptions()
         {
-            return GetCachedClient(client => new SqlDistributedAvailabilityGroupCollection(client, Id));
+            return GetCachedClient(client => new ManagedInstanceServerConfigurationOptionCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets a distributed availability group info.
+        /// Gets managed instance server configuration option.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// <description>ServerConfigurationOptions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
+        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlDistributedAvailabilityGroupResource>> GetSqlDistributedAvailabilityGroupAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceServerConfigurationOptionResource>> GetManagedInstanceServerConfigurationOptionAsync(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
         {
-            return await GetSqlDistributedAvailabilityGroups().GetAsync(distributedAvailabilityGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedInstanceServerConfigurationOptions().GetAsync(serverConfigurationOptionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a distributed availability group info.
+        /// Gets managed instance server configuration option.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// <description>ServerConfigurationOptions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SqlDistributedAvailabilityGroupResource"/></description>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
+        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlDistributedAvailabilityGroupResource> GetSqlDistributedAvailabilityGroup(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceServerConfigurationOptionResource> GetManagedInstanceServerConfigurationOption(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
         {
-            return GetSqlDistributedAvailabilityGroups().Get(distributedAvailabilityGroupName, cancellationToken);
+            return GetManagedInstanceServerConfigurationOptions().Get(serverConfigurationOptionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedInstanceServerTrustCertificateResources in the ManagedInstance. </summary>
@@ -936,7 +1331,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -967,7 +1362,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -985,406 +1380,11 @@ namespace Azure.ResourceManager.Sql
             return GetManagedInstanceServerTrustCertificates().Get(certificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EndpointCertificateResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of EndpointCertificateResources and their operations over a EndpointCertificateResource. </returns>
-        public virtual EndpointCertificateCollection GetEndpointCertificates()
+        /// <summary> Gets an object representing a SqlAgentConfigurationResource along with the instance operations that can be performed on it in the ManagedInstance. </summary>
+        /// <returns> Returns a <see cref="SqlAgentConfigurationResource"/> object. </returns>
+        public virtual SqlAgentConfigurationResource GetSqlAgentConfiguration()
         {
-            return GetCachedClient(client => new EndpointCertificateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a certificate used on the endpoint with the given id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/endpointCertificates/{endpointType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EndpointCertificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EndpointCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EndpointCertificateResource>> GetEndpointCertificateAsync(string endpointType, CancellationToken cancellationToken = default)
-        {
-            return await GetEndpointCertificates().GetAsync(endpointType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a certificate used on the endpoint with the given id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/endpointCertificates/{endpointType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EndpointCertificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EndpointCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EndpointCertificateResource> GetEndpointCertificate(string endpointType, CancellationToken cancellationToken = default)
-        {
-            return GetEndpointCertificates().Get(endpointType, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedServerDnsAliasResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ManagedServerDnsAliasResources and their operations over a ManagedServerDnsAliasResource. </returns>
-        public virtual ManagedServerDnsAliasCollection GetManagedServerDnsAliases()
-        {
-            return GetCachedClient(client => new ManagedServerDnsAliasCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a server DNS alias.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedServerDnsAliases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedServerDnsAliasResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dnsAliasName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedServerDnsAliasResource>> GetManagedServerDnsAliasAsync(string dnsAliasName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedServerDnsAliases().GetAsync(dnsAliasName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a server DNS alias.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedServerDnsAliases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedServerDnsAliasResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dnsAliasName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedServerDnsAliasResource> GetManagedServerDnsAlias(string dnsAliasName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedServerDnsAliases().Get(dnsAliasName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedInstanceAdvancedThreatProtectionResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ManagedInstanceAdvancedThreatProtectionResources and their operations over a ManagedInstanceAdvancedThreatProtectionResource. </returns>
-        public virtual ManagedInstanceAdvancedThreatProtectionCollection GetManagedInstanceAdvancedThreatProtections()
-        {
-            return GetCachedClient(client => new ManagedInstanceAdvancedThreatProtectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a managed instance's Advanced Threat Protection state.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceAdvancedThreatProtectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceAdvancedThreatProtectionResource>> GetManagedInstanceAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedInstanceAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a managed instance's Advanced Threat Protection state.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceAdvancedThreatProtectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceAdvancedThreatProtectionResource> GetManagedInstanceAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedInstanceAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedInstanceDtcResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ManagedInstanceDtcResources and their operations over a ManagedInstanceDtcResource. </returns>
-        public virtual ManagedInstanceDtcCollection GetManagedInstanceDtcs()
-        {
-            return GetCachedClient(client => new ManagedInstanceDtcCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets managed instance DTC settings.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dtcName"> The name of the managed instance DTC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceDtcResource>> GetManagedInstanceDtcAsync(DtcName dtcName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedInstanceDtcs().GetAsync(dtcName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets managed instance DTC settings.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dtcName"> The name of the managed instance DTC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceDtcResource> GetManagedInstanceDtc(DtcName dtcName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedInstanceDtcs().Get(dtcName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedDatabaseResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ManagedDatabaseResources and their operations over a ManagedDatabaseResource. </returns>
-        public virtual ManagedDatabaseCollection GetManagedDatabases()
-        {
-            return GetCachedClient(client => new ManagedDatabaseCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a managed database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedDatabaseResource>> GetManagedDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a managed database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedDatabaseResource> GetManagedDatabase(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedDatabases().Get(databaseName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedInstanceServerConfigurationOptionResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ManagedInstanceServerConfigurationOptionResources and their operations over a ManagedInstanceServerConfigurationOptionResource. </returns>
-        public virtual ManagedInstanceServerConfigurationOptionCollection GetManagedInstanceServerConfigurationOptions()
-        {
-            return GetCachedClient(client => new ManagedInstanceServerConfigurationOptionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets managed instance server configuration option.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerConfigurationOptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceServerConfigurationOptionResource>> GetManagedInstanceServerConfigurationOptionAsync(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedInstanceServerConfigurationOptions().GetAsync(serverConfigurationOptionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets managed instance server configuration option.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerConfigurationOptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceServerConfigurationOptionResource> GetManagedInstanceServerConfigurationOption(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedInstanceServerConfigurationOptions().Get(serverConfigurationOptionName, cancellationToken);
+            return new SqlAgentConfigurationResource(Client, Id.AppendChildResource("sqlAgent", "current"));
         }
 
         /// <summary> Gets a collection of ManagedInstanceStartStopScheduleResources in the ManagedInstance. </summary>
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1465,7 +1465,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1547,7 +1547,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1631,7 +1631,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1677,7 +1677,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1711,6 +1711,66 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets a list of inaccessible managed databases in a managed instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_ListInaccessibleByInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedDatabaseResource> GetInaccessibleManagedDatabasesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of inaccessible managed databases in a managed instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_ListInaccessibleByInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedDatabaseResource> GetInaccessibleManagedDatabases(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Creates a TDE certificate for a given server.
         /// <list type="bullet">
         /// <item>
@@ -1723,7 +1783,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1765,7 +1825,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1795,126 +1855,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a server trust groups by instance name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerTrustGroups_ListByInstance</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerTrustGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerTrustGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerTrustGroupResource> GetSqlServerTrustGroupsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a server trust groups by instance name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerTrustGroups_ListByInstance</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerTrustGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerTrustGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerTrustGroupResource> GetSqlServerTrustGroups(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of inaccessible managed databases in a managed instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabases_ListInaccessibleByInstance</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDatabaseResource> GetInaccessibleManagedDatabasesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of inaccessible managed databases in a managed instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/inaccessibleManagedDatabases</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabases_ListInaccessibleByInstance</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDatabaseResource> GetInaccessibleManagedDatabases(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Failovers a managed instance.
         /// <list type="bullet">
         /// <item>
@@ -1927,7 +1867,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1970,7 +1910,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2013,7 +1953,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2043,7 +1983,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2073,7 +2013,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2115,7 +2055,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2157,7 +2097,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2199,7 +2139,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2241,7 +2181,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2283,7 +2223,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2325,7 +2265,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2358,7 +2298,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2379,6 +2319,66 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets a server trust groups by instance name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerTrustGroups_ListByInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerTrustGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SqlServerTrustGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerTrustGroupResource> GetSqlServerTrustGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a server trust groups by instance name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerTrustGroups_ListByInstance</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerTrustGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlServerTrustGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerTrustGroupResource> GetSqlServerTrustGroups(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -2391,7 +2391,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2453,7 +2453,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2515,7 +2515,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2572,7 +2572,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2629,7 +2629,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2689,7 +2689,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

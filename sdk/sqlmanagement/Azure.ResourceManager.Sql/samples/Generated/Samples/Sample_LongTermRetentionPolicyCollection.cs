@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateTheLongTermRetentionPolicyForTheDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/LongTermRetentionPolicyCreateOrUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/LongTermRetentionPolicyCreateOrUpdate.json
             // this example is just showing the usage of "LongTermRetentionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionPolicyForTheDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/LongTermRetentionPolicyGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/LongTermRetentionPolicyGet.json
             // this example is just showing the usage of "LongTermRetentionPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetTheLongTermRetentionPolicyForTheDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/LongTermRetentionPolicyListByDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/LongTermRetentionPolicyListByDatabase.json
             // this example is just showing the usage of "LongTermRetentionPolicies_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTheLongTermRetentionPolicyForTheDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/LongTermRetentionPolicyGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/LongTermRetentionPolicyGet.json
             // this example is just showing the usage of "LongTermRetentionPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTheLongTermRetentionPolicyForTheDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/LongTermRetentionPolicyGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/LongTermRetentionPolicyGet.json
             // this example is just showing the usage of "LongTermRetentionPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
