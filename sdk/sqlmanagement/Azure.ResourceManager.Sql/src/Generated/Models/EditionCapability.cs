@@ -58,16 +58,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
         /// <param name="readScale"> The read scale capability for the edition. </param>
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
+        /// <param name="zonePinning"> Whether or not zone pinning is supported for the edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, bool? zonePinning, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SupportedServiceLevelObjectives = supportedServiceLevelObjectives;
             IsZoneRedundant = isZoneRedundant;
             ReadScale = readScale;
             SupportedStorageCapabilities = supportedStorageCapabilities;
+            ZonePinning = zonePinning;
             Status = status;
             Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -88,6 +90,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The list of supported storage capabilities for this edition. </summary>
         [WirePath("supportedStorageCapabilities")]
         public IReadOnlyList<StorageCapability> SupportedStorageCapabilities { get; }
+        /// <summary> Whether or not zone pinning is supported for the edition. </summary>
+        [WirePath("zonePinning")]
+        public bool? ZonePinning { get; }
         /// <summary> The status of the capability. </summary>
         [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }

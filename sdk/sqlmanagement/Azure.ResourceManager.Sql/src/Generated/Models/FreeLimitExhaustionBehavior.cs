@@ -10,13 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary>
-    /// Specifies the behavior when monthly free limits are exhausted for the free database.
-    ///
-    /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
-    ///
-    /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
-    /// </summary>
+    /// <summary> Free limit exhaustion behavior type. </summary>
     public readonly partial struct FreeLimitExhaustionBehavior : IEquatable<FreeLimitExhaustionBehavior>
     {
         private readonly string _value;

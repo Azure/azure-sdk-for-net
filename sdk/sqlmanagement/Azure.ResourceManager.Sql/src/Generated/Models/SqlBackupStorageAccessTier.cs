@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The BackupStorageAccessTier for the LTR backup. </summary>
+    /// <summary> The BackupStorageAccessTier for the LTR backups. </summary>
     public readonly partial struct SqlBackupStorageAccessTier : IEquatable<SqlBackupStorageAccessTier>
     {
         private readonly string _value;

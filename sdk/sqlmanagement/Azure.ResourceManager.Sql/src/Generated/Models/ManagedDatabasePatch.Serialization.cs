@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.Sql.Models
             ManagedDatabaseCreateMode? createMode = default;
             Uri storageContainerUri = default;
             ResourceIdentifier sourceDatabaseId = default;
-            ResourceIdentifier crossSubscriptionSourceDatabaseId = default;
+            string crossSubscriptionSourceDatabaseId = default;
             ResourceIdentifier restorableDroppedDatabaseId = default;
-            ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default;
+            string crossSubscriptionRestorableDroppedDatabaseId = default;
             string storageContainerIdentity = default;
             string storageContainerSasToken = default;
             ResourceIdentifier failoverGroupId = default;
@@ -333,11 +333,7 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("crossSubscriptionSourceDatabaseId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            crossSubscriptionSourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            crossSubscriptionSourceDatabaseId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("restorableDroppedDatabaseId"u8))
@@ -351,11 +347,7 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("crossSubscriptionRestorableDroppedDatabaseId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            crossSubscriptionRestorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            crossSubscriptionRestorableDroppedDatabaseId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("storageContainerIdentity"u8))

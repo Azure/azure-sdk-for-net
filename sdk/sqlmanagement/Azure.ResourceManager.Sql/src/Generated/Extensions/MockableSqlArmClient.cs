@@ -215,27 +215,27 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
-        public virtual SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource"/> object. </returns>
+        public virtual SqlDatabaseSqlVulnerabilityAssessmentBaselineResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineResource(ResourceIdentifier id)
         {
-            SqlDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
-            return new SqlDatabaseVulnerabilityAssessmentRuleBaselineResource(Client, id);
+            SqlDatabaseSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
+            return new SqlDatabaseSqlVulnerabilityAssessmentBaselineResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
-        public virtual ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource"/> object. </returns>
+        public virtual SqlServerSqlVulnerabilityAssessmentBaselineResource GetSqlServerSqlVulnerabilityAssessmentBaselineResource(ResourceIdentifier id)
         {
-            ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
-            return new ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(Client, id);
+            SqlServerSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
+            return new SqlServerSqlVulnerabilityAssessmentBaselineResource(Client, id);
         }
 
         /// <summary>
@@ -407,18 +407,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlServerJobVersionStepResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerJobVersionStepResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerJobVersionStepResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlServerJobVersionStepResource"/> object. </returns>
-        public virtual SqlServerJobVersionStepResource GetSqlServerJobVersionStepResource(ResourceIdentifier id)
-        {
-            SqlServerJobVersionStepResource.ValidateResourceId(id);
-            return new SqlServerJobVersionStepResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SqlServerJobStepResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlServerJobStepResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerJobStepResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -428,6 +416,18 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             SqlServerJobStepResource.ValidateResourceId(id);
             return new SqlServerJobStepResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerJobVersionStepResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerJobVersionStepResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerJobVersionStepResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlServerJobVersionStepResource"/> object. </returns>
+        public virtual SqlServerJobVersionStepResource GetSqlServerJobVersionStepResource(ResourceIdentifier id)
+        {
+            SqlServerJobVersionStepResource.ValidateResourceId(id);
+            return new SqlServerJobVersionStepResource(Client, id);
         }
 
         /// <summary>
@@ -524,6 +524,30 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             ManagedTransparentDataEncryptionResource.ValidateResourceId(id);
             return new ManagedTransparentDataEncryptionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
+        public virtual ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier id)
+        {
+            ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
+            return new ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
+        public virtual SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier id)
+        {
+            SqlDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
+            return new SqlDatabaseVulnerabilityAssessmentRuleBaselineResource(Client, id);
         }
 
         /// <summary>
@@ -995,15 +1019,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DistributedAvailabilityGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DistributedAvailabilityGroupResource.CreateResourceIdentifier" /> to create a <see cref="DistributedAvailabilityGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SqlDistributedAvailabilityGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDistributedAvailabilityGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlDistributedAvailabilityGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DistributedAvailabilityGroupResource"/> object. </returns>
-        public virtual DistributedAvailabilityGroupResource GetDistributedAvailabilityGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDistributedAvailabilityGroupResource"/> object. </returns>
+        public virtual SqlDistributedAvailabilityGroupResource GetSqlDistributedAvailabilityGroupResource(ResourceIdentifier id)
         {
-            DistributedAvailabilityGroupResource.ValidateResourceId(id);
-            return new DistributedAvailabilityGroupResource(Client, id);
+            SqlDistributedAvailabilityGroupResource.ValidateResourceId(id);
+            return new SqlDistributedAvailabilityGroupResource(Client, id);
         }
 
         /// <summary>
@@ -1340,30 +1364,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             IPv6FirewallRuleResource.ValidateResourceId(id);
             return new IPv6FirewallRuleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource"/> object. </returns>
-        public virtual SqlServerSqlVulnerabilityAssessmentBaselineResource GetSqlServerSqlVulnerabilityAssessmentBaselineResource(ResourceIdentifier id)
-        {
-            SqlServerSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
-            return new SqlServerSqlVulnerabilityAssessmentBaselineResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource"/> object. </returns>
-        public virtual SqlDatabaseSqlVulnerabilityAssessmentBaselineResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineResource(ResourceIdentifier id)
-        {
-            SqlDatabaseSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
-            return new SqlDatabaseSqlVulnerabilityAssessmentBaselineResource(Client, id);
         }
 
         /// <summary>

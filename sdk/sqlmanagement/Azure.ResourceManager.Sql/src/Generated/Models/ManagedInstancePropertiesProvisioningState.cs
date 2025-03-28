@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The ManagedInstancePropertiesProvisioningState. </summary>
+    /// <summary> Provisioning state of managed instance. </summary>
     public readonly partial struct ManagedInstancePropertiesProvisioningState : IEquatable<ManagedInstancePropertiesProvisioningState>
     {
         private readonly string _value;
@@ -22,22 +22,33 @@ namespace Azure.ResourceManager.Sql.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string CreatedValue = "Created";
+        private const string InProgressValue = "InProgress";
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
         private const string UnknownValue = "Unknown";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
         private const string AcceptedValue = "Accepted";
-        private const string CreatedValue = "Created";
         private const string DeletedValue = "Deleted";
         private const string UnrecognizedValue = "Unrecognized";
         private const string RunningValue = "Running";
-        private const string CanceledValue = "Canceled";
         private const string NotSpecifiedValue = "NotSpecified";
         private const string RegisteringValue = "Registering";
         private const string TimedOutValue = "TimedOut";
 
+        /// <summary> Created. </summary>
+        public static ManagedInstancePropertiesProvisioningState Created { get; } = new ManagedInstancePropertiesProvisioningState(CreatedValue);
+        /// <summary> InProgress. </summary>
+        public static ManagedInstancePropertiesProvisioningState InProgress { get; } = new ManagedInstancePropertiesProvisioningState(InProgressValue);
+        /// <summary> Succeeded. </summary>
+        public static ManagedInstancePropertiesProvisioningState Succeeded { get; } = new ManagedInstancePropertiesProvisioningState(SucceededValue);
+        /// <summary> Failed. </summary>
+        public static ManagedInstancePropertiesProvisioningState Failed { get; } = new ManagedInstancePropertiesProvisioningState(FailedValue);
+        /// <summary> Canceled. </summary>
+        public static ManagedInstancePropertiesProvisioningState Canceled { get; } = new ManagedInstancePropertiesProvisioningState(CanceledValue);
         /// <summary> Creating. </summary>
         public static ManagedInstancePropertiesProvisioningState Creating { get; } = new ManagedInstancePropertiesProvisioningState(CreatingValue);
         /// <summary> Deleting. </summary>
@@ -46,22 +57,14 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedInstancePropertiesProvisioningState Updating { get; } = new ManagedInstancePropertiesProvisioningState(UpdatingValue);
         /// <summary> Unknown. </summary>
         public static ManagedInstancePropertiesProvisioningState Unknown { get; } = new ManagedInstancePropertiesProvisioningState(UnknownValue);
-        /// <summary> Succeeded. </summary>
-        public static ManagedInstancePropertiesProvisioningState Succeeded { get; } = new ManagedInstancePropertiesProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
-        public static ManagedInstancePropertiesProvisioningState Failed { get; } = new ManagedInstancePropertiesProvisioningState(FailedValue);
         /// <summary> Accepted. </summary>
         public static ManagedInstancePropertiesProvisioningState Accepted { get; } = new ManagedInstancePropertiesProvisioningState(AcceptedValue);
-        /// <summary> Created. </summary>
-        public static ManagedInstancePropertiesProvisioningState Created { get; } = new ManagedInstancePropertiesProvisioningState(CreatedValue);
         /// <summary> Deleted. </summary>
         public static ManagedInstancePropertiesProvisioningState Deleted { get; } = new ManagedInstancePropertiesProvisioningState(DeletedValue);
         /// <summary> Unrecognized. </summary>
         public static ManagedInstancePropertiesProvisioningState Unrecognized { get; } = new ManagedInstancePropertiesProvisioningState(UnrecognizedValue);
         /// <summary> Running. </summary>
         public static ManagedInstancePropertiesProvisioningState Running { get; } = new ManagedInstancePropertiesProvisioningState(RunningValue);
-        /// <summary> Canceled. </summary>
-        public static ManagedInstancePropertiesProvisioningState Canceled { get; } = new ManagedInstancePropertiesProvisioningState(CanceledValue);
         /// <summary> NotSpecified. </summary>
         public static ManagedInstancePropertiesProvisioningState NotSpecified { get; } = new ManagedInstancePropertiesProvisioningState(NotSpecifiedValue);
         /// <summary> Registering. </summary>

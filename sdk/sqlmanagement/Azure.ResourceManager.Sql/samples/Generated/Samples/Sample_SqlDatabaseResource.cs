@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabaseConfiguredWithDefaultEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/GetVCoreDatabaseDefaultEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseDefaultEnclave.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabaseConfiguredWithVBSEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/GetVCoreDatabaseVBSEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseVBSEnclave.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabaseWithAvailabilityZoneSpecified()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/GetDatabaseWithAvailabilityZone.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetDatabaseWithAvailabilityZone.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabaseWithDatabaseLevelKeysExpanded()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/GetVCoreDatabaseWithExpandEqualsKeys.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseWithExpandEqualsKeys.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/GetVCoreDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabase.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/DeleteDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/DeleteDatabase.json
             // this example is just showing the usage of "Databases_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_AssignsMaintenanceWindowToADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/PatchVCoreDatabaseAssignMaintenanceConfiguration.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/PatchVCoreDatabaseAssignMaintenanceConfiguration.json
             // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -240,45 +240,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreatesADatabaseWithVBSEnclaveType()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/PatchDatabaseVBSEnclave.json
-            // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SqlDatabaseResource created on azure
-            // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "Default-SQL-SouthEastAsia";
-            string serverName = "testsvr";
-            string databaseName = "testdb";
-            ResourceIdentifier sqlDatabaseResourceId = SqlDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
-            SqlDatabaseResource sqlDatabase = client.GetSqlDatabaseResource(sqlDatabaseResourceId);
-
-            // invoke the operation
-            SqlDatabasePatch patch = new SqlDatabasePatch
-            {
-                PreferredEnclaveType = SqlAlwaysEncryptedEnclaveType.Vbs,
-            };
-            ArmOperation<SqlDatabaseResource> lro = await sqlDatabase.UpdateAsync(WaitUntil.Completed, patch);
-            SqlDatabaseResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SqlDatabaseData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchADatabaseWithDatabaseLevelCustomerManagedKeys()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/PatchVCoreDatabaseWithKeysAndEncryptionProtector.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/PatchVCoreDatabaseWithKeysAndEncryptionProtector.json
             // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -332,7 +296,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ResetsMaintenanceWindowOfADatabaseToDefault()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/PatchVCoreDatabaseResetMaintenanceConfiguration.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/PatchVCoreDatabaseResetMaintenanceConfiguration.json
             // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -369,7 +333,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesADatabaseWithDefaultEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/PatchDatabaseDefaultEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/PatchDatabaseDefaultEnclave.json
             // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -403,9 +367,45 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdatesADatabaseWithVBSEnclaveType()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/PatchDatabaseVBSEnclave.json
+            // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlDatabaseResource created on azure
+            // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default-SQL-SouthEastAsia";
+            string serverName = "testsvr";
+            string databaseName = "testdb";
+            ResourceIdentifier sqlDatabaseResourceId = SqlDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
+            SqlDatabaseResource sqlDatabase = client.GetSqlDatabaseResource(sqlDatabaseResourceId);
+
+            // invoke the operation
+            SqlDatabasePatch patch = new SqlDatabasePatch
+            {
+                PreferredEnclaveType = SqlAlwaysEncryptedEnclaveType.Vbs,
+            };
+            ArmOperation<SqlDatabaseResource> lro = await sqlDatabase.UpdateAsync(WaitUntil.Completed, patch);
+            SqlDatabaseResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SqlDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/PatchVCoreDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/PatchVCoreDatabase.json
             // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDatabaseColumns_FilterDatabaseColumns()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ColumnsListByDatabaseMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ColumnsListByDatabaseMax.json
             // this example is just showing the usage of "DatabaseColumns_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDatabaseColumns_ListDatabaseColumns()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ColumnsListByDatabaseMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ColumnsListByDatabaseMin.json
             // this example is just showing the usage of "DatabaseColumns_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateRestorePoint_CreatesDatawarehouseDatabaseRestorePoint()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseRestorePointsPost.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/DatabaseRestorePointsPost.json
             // this example is just showing the usage of "RestorePoints_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -607,9 +607,39 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetDatabaseExtensions_ListDatabaseExtensions()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ListDatabaseExtensions.json
+            // this example is just showing the usage of "DatabaseExtensions_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlDatabaseResource created on azure
+            // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
+            string subscriptionId = "7b2515fe-f230-4017-8cf0-695163acab85";
+            string resourceGroupName = "rg_4007c5a9-b3b0-41e1-bd46-9eef38768a4a";
+            string serverName = "srv_3b67ec2a-519b-43a7-8533-fb62dce3431e";
+            string databaseName = "719d8fa4-bf0f-48fc-8cd3-ef40fe6ba1fe";
+            ResourceIdentifier sqlDatabaseResourceId = SqlDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
+            SqlDatabaseResource sqlDatabase = client.GetSqlDatabaseResource(sqlDatabaseResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ImportExportExtensionsOperationResult item in sqlDatabase.GetDatabaseExtensionsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateDatabaseExtension_CreateOrUpdateDatabaseExtensions()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-02-01-preview/examples/CreateOrUpdateDatabaseExtensions.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateOrUpdateDatabaseExtensions.json
             // this example is just showing the usage of "DatabaseExtensions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -643,10 +673,10 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDatabaseExtensions_ListDatabaseExtensions()
+        public async Task CreateOrUpdateDatabaseExtension_ExportDatabaseUsingDatabaseExtension()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-02-01-preview/examples/ListDatabaseExtensions.json
-            // this example is just showing the usage of "DatabaseExtensions_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ExportDatabaseUsingDatabaseExtensions.json
+            // this example is just showing the usage of "DatabaseExtensions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -655,27 +685,75 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "7b2515fe-f230-4017-8cf0-695163acab85";
-            string resourceGroupName = "rg_4007c5a9-b3b0-41e1-bd46-9eef38768a4a";
-            string serverName = "srv_3b67ec2a-519b-43a7-8533-fb62dce3431e";
-            string databaseName = "719d8fa4-bf0f-48fc-8cd3-ef40fe6ba1fe";
+            string subscriptionId = "0ca8cd24-0b47-4ad5-bc7e-d70e35c44adf";
+            string resourceGroupName = "rg_d1ef9eae-044d-4710-ba59-b82e84ad3157";
+            string serverName = "srv_9243d320-ac4e-4f97-8e06-b1167dae5f4c";
+            string databaseName = "db_7fe424c8-23cf-4ac3-bdc3-e21f424bdb68";
             ResourceIdentifier sqlDatabaseResourceId = SqlDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
             SqlDatabaseResource sqlDatabase = client.GetSqlDatabaseResource(sqlDatabaseResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (ImportExportExtensionsOperationResult item in sqlDatabase.GetDatabaseExtensionsAsync())
+            // invoke the operation
+            string extensionName = "Export";
+            SqlDatabaseExtension sqlDatabaseExtension = new SqlDatabaseExtension
             {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+                OperationMode = DatabaseExtensionOperationMode.Export,
+                StorageKeyType = StorageKeyType.StorageAccessKey,
+                StorageKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                StorageUri = new Uri("https://teststorage.blob.core.windows.net/testcontainer/Manifest.xml"),
+                AdministratorLogin = "login",
+                AdministratorLoginPassword = "password",
+                AuthenticationType = "Sql",
+            };
+            ArmOperation<ImportExportExtensionsOperationResult> lro = await sqlDatabase.CreateOrUpdateDatabaseExtensionAsync(WaitUntil.Completed, extensionName, sqlDatabaseExtension);
+            ImportExportExtensionsOperationResult result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdateDatabaseExtension_ImportDatabaseUsingDatabaseExtension()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ImportDatabaseUsingDatabaseExtensions.json
+            // this example is just showing the usage of "DatabaseExtensions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlDatabaseResource created on azure
+            // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
+            string subscriptionId = "17ca4d13-bf7d-4c33-a60e-b87a2820a325";
+            string resourceGroupName = "rg_062866bf-c4f4-41f9-abf0-b59132ca7924";
+            string serverName = "srv_2d6be2d2-26c8-4930-8fb6-82a5e95e0e82";
+            string databaseName = "db_2a47e946-e414-4c00-94ac-ed886bb78302";
+            ResourceIdentifier sqlDatabaseResourceId = SqlDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
+            SqlDatabaseResource sqlDatabase = client.GetSqlDatabaseResource(sqlDatabaseResourceId);
+
+            // invoke the operation
+            string extensionName = "Import";
+            SqlDatabaseExtension sqlDatabaseExtension = new SqlDatabaseExtension
+            {
+                OperationMode = DatabaseExtensionOperationMode.Import,
+                StorageKeyType = StorageKeyType.StorageAccessKey,
+                StorageKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                StorageUri = new Uri("https://teststorage.blob.core.windows.net/testcontainer/Manifest.xml"),
+                AdministratorLogin = "login",
+                AdministratorLoginPassword = "password",
+                AuthenticationType = "Sql",
+            };
+            ArmOperation<ImportExportExtensionsOperationResult> lro = await sqlDatabase.CreateOrUpdateDatabaseExtensionAsync(WaitUntil.Completed, extensionName, sqlDatabaseExtension);
+            ImportExportExtensionsOperationResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task GetDatabaseUsages_GetsDatabaseUsages()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-02-01-preview/examples/GetDatabaseUsages.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetDatabaseUsages.json
             // this example is just showing the usage of "DatabaseUsages_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -705,7 +783,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCurrentSensitivityLabels_GetsTheCurrentSensitivityLabelsOfAGivenDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SensitivityLabelsListByDatabaseWithSourceCurrent.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/SensitivityLabelsListByDatabaseWithSourceCurrent.json
             // this example is just showing the usage of "SensitivityLabels_ListCurrentByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -739,7 +817,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateSensitivityLabel_UpdateSensitivityLabelsOfAGivenDatabaseUsingAnOperationsBatch()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SensitivityLabelsCurrentUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/SensitivityLabelsCurrentUpdate.json
             // this example is just showing the usage of "SensitivityLabels_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -804,7 +882,7 @@ Column = "Column3",
         [Ignore("Only validating compilation of examples")]
         public async Task GetRecommendedSensitivityLabels_GetsTheRecommendedSensitivityLabelsOfAGivenDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SensitivityLabelsListByDatabaseWithSourceRecommended.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/SensitivityLabelsListByDatabaseWithSourceRecommended.json
             // this example is just showing the usage of "SensitivityLabels_ListRecommendedByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -838,7 +916,7 @@ Column = "Column3",
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateRecommendedSensitivityLabel_UpdateRecommendedSensitivityLabelsOfAGivenDatabaseUsingAnOperationsBatch()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SensitivityLabelsRecommendedUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/SensitivityLabelsRecommendedUpdate.json
             // this example is just showing the usage of "SensitivityLabels_UpdateRecommended" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -885,9 +963,43 @@ Column = "column3",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetSensitivityLabels_GetsTheCurrentAndRecommendedSensitivityLabelsOfAGivenDatabase()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/SensitivityLabelsListByDatabase.json
+            // this example is just showing the usage of "SensitivityLabels_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlDatabaseResource created on azure
+            // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "myRG";
+            string serverName = "myServer";
+            string databaseName = "myDatabase";
+            ResourceIdentifier sqlDatabaseResourceId = SqlDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
+            SqlDatabaseResource sqlDatabase = client.GetSqlDatabaseResource(sqlDatabaseResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SqlDatabaseSensitivityLabelResource item in sqlDatabase.GetSensitivityLabelsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SensitivityLabelData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSynapseLinkWorkspaces_ListAllSynapselinkWorkspacesForTheGivenDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/SynapseLinkWorkspaceListByDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/SynapseLinkWorkspaceListByDatabase.json
             // this example is just showing the usage of "SynapseLinkWorkspaces_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -917,7 +1029,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task RevalidateDatabaseEncryptionProtector_RevalidatesTheEncryptionProtectorForAParticularDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/DatabaseEncryptionProtectorRevalidate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/DatabaseEncryptionProtectorRevalidate.json
             // this example is just showing the usage of "DatabaseEncryptionProtectors_Revalidate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -945,7 +1057,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task RevertDatabaseEncryptionProtector_RevertsTheEncryptionProtectorForAParticularDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/DatabaseEncryptionProtectorRevert.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/DatabaseEncryptionProtectorRevert.json
             // this example is just showing the usage of "DatabaseEncryptionProtectors_Revert" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -973,7 +1085,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task Export_ExportsADatabaseUsingPrivateLinkToCommunicateWithSQLServerAndStorageAccount()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/ExportDatabaseWithNetworkIsolation.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ExportDatabaseWithNetworkIsolation.json
             // this example is just showing the usage of "Databases_Export" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1010,7 +1122,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task Export_ExportsADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/ExportDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ExportDatabase.json
             // this example is just showing the usage of "Databases_Export" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1042,7 +1154,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task Failover_FailoverAnDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/FailoverDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/FailoverDatabase.json
             // this example is just showing the usage of "Databases_Failover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1070,7 +1182,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task Import_ImportsToAnExistingEmptyDatabaseUsingPrivateLinkToCommunicateWithSQLServerAndStorageAccount()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/ImportDatabaseWithNetworkIsolation.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ImportDatabaseWithNetworkIsolation.json
             // this example is just showing the usage of "Databases_Import" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1107,7 +1219,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task Import_ImportsToAnExistingEmptyDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/ImportDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ImportDatabase.json
             // this example is just showing the usage of "Databases_Import" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1139,7 +1251,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task Rename_RenamesADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/RenameDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/RenameDatabase.json
             // this example is just showing the usage of "Databases_Rename" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1167,7 +1279,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task Pause_PausesADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/PauseDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/PauseDatabase.json
             // this example is just showing the usage of "Databases_Pause" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1199,7 +1311,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task Resume_ResumesADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/ResumeDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ResumeDatabase.json
             // this example is just showing the usage of "Databases_Resume" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1231,7 +1343,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task UpgradeDataWarehouse_UpgradesADataWarehouse()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/UpgradeDataWarehouse.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/UpgradeDataWarehouse.json
             // this example is just showing the usage of "Databases_UpgradeDataWarehouse" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1258,7 +1370,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task GetDatabaseOperations_ListTheDatabaseManagementOperations()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/examples/ListDatabaseOperations.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ListDatabaseOperations.json
             // this example is just showing the usage of "DatabaseOperations_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1288,7 +1400,7 @@ Column = "column3",
         [Ignore("Only validating compilation of examples")]
         public async Task CancelDatabaseOperation_CancelTheDatabaseManagementOperation()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-11-01-preview/examples/CancelDatabaseOperation.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CancelDatabaseOperation.json
             // this example is just showing the usage of "DatabaseOperations_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
