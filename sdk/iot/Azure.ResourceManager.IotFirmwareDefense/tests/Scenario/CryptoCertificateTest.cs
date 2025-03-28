@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
             var results = testFirmware.GetCryptoCertificatesAsync();
-            await foreach ( CryptoCertificateResource result in results ) {
+            await foreach ( CryptoCertificate result in results ) {
                 Console.WriteLine($"Fetched: {result}");
             }
             Assert.NotNull(results);

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task TestGetCveSummary()
+        public async Task TestGetCommonVulnerabilitiesAndExposuresSummary()
         {
             var summaryType = FirmwareAnalysisSummaryType.CommonVulnerabilitiesAndExposures;
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);

@@ -19,7 +19,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-mgmt-debug:
+mgmt-debug: 
   show-serialized-names: true
 
 format-by-name-rules:
@@ -57,28 +57,34 @@ override-operation-name:
   BinaryHardening_ListByFirmware: GetBinaryHardeningResults
   Cves_ListByFirmware: GetCommonVulnerabilitiesAndExposures
 
-parameter-rename-mapping:
-  Workspaces_Create:
-    resource: WorkspaceResource
-
 rename-mapping:
+  GenerateUploadUrlRequest: FirmwareUploadUrlRequest
   Workspace: FirmwareAnalysisWorkspace
 
-  Firmware: IotFirmware
-  FirmwareListResult: IotFirmwareCollection
-  ProvisioningState: FirmwareProvisioningState
-  Status: FirmwareAnalysisStatus
+  CryptoCertificate: CryptoCertificateResult
+  CryptoKey: CryptoKeyResult
+  PasswordHash: PasswordHashResult
+  SbomComponent: SbomComponentResult
+  UsageMetricData: UsageMetricResult
 
-  SummaryType: FirmwareAnalysisSummaryType
-  SummaryResource: FirmwareAnalysisSummary
-  SummaryResourceProperties: FirmwareAnalysisSummaryProperties
-
-  GetFirmwareAnalysisSummaryResource: GetFirmwareAnalysisSummary
+  BinaryHardeningResource: BinaryHardeningResourceData
+  CryptoCertificateResource: CryptoCertificate
+  CryptoKeyResource: CryptoKey
+  CveResource: CveResourceData
+  PasswordHashResource: PasswordHash
+  SbomComponentResource: SbomComponent
+  UsageMetricResource: UsageMetric
 
   BinaryHardeningSummaryResource: BinaryHardeningSummary
+  SummaryType: FirmwareAnalysisSummaryType
   CryptoCertificateSummaryResource: CryptoCertificateSummary
   CryptoKeySummaryResource: CryptoKeySummary
-
+  Firmware: IotFirmware
+  ProvisioningState: FirmwareProvisioningState
+  SummaryResource: FirmwareAnalysisSummary
+  SummaryResourceProperties: FirmwareAnalysisSummaryProperties
+  Status: FirmwareAnalysisStatus
+  StatusMessage: FirmwareAnalysisStatusMessage
   PairedKey: CryptoPairedKey
   UrlToken: FirmwareUrlToken
 
