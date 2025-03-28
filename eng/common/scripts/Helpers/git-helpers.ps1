@@ -2,9 +2,36 @@
 # cSpell:ignore PULLREQUEST
 # cSpell:ignore TARGETBRANCH
 # cSpell:ignore SOURCECOMMITID
+
+function RequestGithubGraphQL {
+  param (
+    [string]$query,
+    [object]$variables = @{}
+  )
+
+  $payload = @{
+    query     = $query
+    variables = $variables
+  } | ConvertTo-Json -Depth 100
+
+  $response = $payload | gh api graphql --input -
+  $data = $response | ConvertFrom-Json
+
+  if ($LASTEXITCODE) {
+    LogWarning "Failed graphql operation:"
+    LogWarning ($payload -replace '\\n', "`n")
+    if ($data.errors) {
+      LogWarning ($data.errors.message -join "`n")
+    }
+    throw "graphql operation failed ($LASTEXITCODE)"
+  }
+
+  return $data
+}
+
 function Get-ChangedFiles {
   param (
-    [string]$SourceCommittish= "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
+    [string]$SourceCommittish = "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
     [string]$TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/"),
     [string]$DiffPath,
     [string]$DiffFilterType = "d"
@@ -21,18 +48,18 @@ function Get-ChangedFiles {
   # Git PR diff: https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-comparing-branches-in-pull-requests#three-dot-and-two-dot-git-diff-comparisons
   $command = "git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff `"$TargetCommittish...$SourceCommittish`" --name-only --diff-filter=$DiffFilterType"
   if ($DiffPath) {
-  $command = $command + " -- `'$DiffPath`'"
+    $command = $command + " -- `'$DiffPath`'"
   }
   Write-Host $command
   $changedFiles = Invoke-Expression -Command $command
-  if(!$changedFiles) {
+  if (!$changedFiles) {
     Write-Host "No changed files in git diff between $TargetCommittish and $SourceCommittish"
   }
   else {
-  Write-Host "Here are the diff files:"
-  foreach ($file in $changedFiles) {
+    Write-Host "Here are the diff files:"
+    foreach ($file in $changedFiles) {
       Write-Host "    $file"
-  }
+    }
   }
   return $changedFiles
 }
@@ -58,7 +85,7 @@ class ConflictedFile {
     $this.ParseContent($this.Content)
   }
 
-  [array] Left(){
+  [array] Left() {
     if ($this.IsConflicted) {
       # we are forced to get this line by line and reassemble via join because of how powershell is interacting with
       # git show --textconv commitsh:path
@@ -75,7 +102,7 @@ class ConflictedFile {
     }
   }
 
-  [array] Right(){
+  [array] Right() {
     if ($this.IsConflicted) {
       $toShow = "$($this.RightSource):$($this.Path)" -replace "\\", "/"
       Write-Host "git show $toShow"
@@ -92,7 +119,7 @@ class ConflictedFile {
     $l = @()
     $r = @()
 
-    foreach($line in $lines) {
+    foreach ($line in $lines) {
       if ($line -match "^<<<<<<<\s*(.+)") {
         $this.IsConflicted = $true
         $this.LeftSource = $matches[1]
@@ -247,4 +274,89 @@ function Write-RateLimit {
   Write-Host "    remaining=$($RateLimit.remaining)"
   Write-Host "    reset=$($RateLimit.reset)"
   Write-Host ""
+}
+
+function GetUnresolvedAIReviewThreads {
+  param(
+    [string]$repoOwner,
+    [string]$repoName,
+    [string]$prNumber,
+    [array]$reviewers
+  )
+
+  $reviewers ??= @('copilot-pull-request-reviewer')
+
+  $reviewThreadsQuery = @'
+query ReviewThreads($owner: String!, $name: String!, $number: Int!) {
+  repository(owner: $owner, name: $name) {
+    pullRequest(number: $number) {
+      reviewThreads(first: 100) {
+        nodes {
+          id
+          isResolved
+          comments(first: 100) {
+            nodes {
+              body
+              author {
+                login
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+'@
+
+  $variables = @{ owner = $repoOwner; name = $repoName; number = [int]$prNumber }
+  $response = RequestGithubGraphQL -query $reviewThreadsQuery -variables $variables
+  $reviews = $response.data.repository.pullRequest.reviewThreads.nodes
+
+  $threadIds = @()
+  # There should be only one threadId for copilot, but make it an array in case there
+  # are more, or if we want to resolve threads from multiple ai authors in the future.
+  # Don't mark threads from humans as resolved, as those may be real questions/blockers.
+  foreach ($thread in $reviews) {
+    if ($thread.comments.nodes | Where-Object { $_.author.login -in $reviewers }) {
+      if (!$thread.isResolved) {
+        $threadIds += $thread.id
+      }
+      continue
+    }
+  }
+
+  return $threadIds
+}
+
+function TryResolveAIReviewThreads {
+  param(
+    [string]$repoOwner,
+    [string]$repoName,
+    [string]$prNumber,
+    [array]$reviewers
+  )
+
+  $resolveThreadMutation = @'
+mutation ResolveThread($id: ID!) {
+  resolveReviewThread(input: { threadId: $id }) {
+    thread {
+      isResolved
+    }
+  }
+}
+'@
+
+  $threadIds = GetUnresolvedAIReviewThreads -repoOwner $repoOwner -repoName $repoName -prNumber $prNumber -reviewers $reviewers
+
+  if (!$threadIds) {
+    return $false
+  }
+
+  foreach ($threadId in $threadIds) {
+    LogInfo "Resolving review thread '$threadId' for '$repoName' PR '$prNumber'"
+    RequestGithubGraphQL -query $resolveThreadMutation -variables @{ id = $threadId }
+  }
+
+  return $true
 }
