@@ -82,7 +82,6 @@ namespace Azure.Storage.DataMovement
             {
                 _throughputMonitor = new ThroughputMonitor();
                 _concurrencyTuner = new ConcurrencyTuner(
-                    new ResourceMonitor(),
                     _throughputMonitor,
                     _chunksProcessor,
                     DataMovementConstants.TransferManagerOptions.MonitoringInterval,
