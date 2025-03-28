@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
@@ -29,6 +30,7 @@ namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 
         string IPersistableModel<Salmon>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="salmon"> The <see cref="Salmon"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Salmon salmon) => throw null;
 
         public static explicit operator Salmon(Response result) => throw null;

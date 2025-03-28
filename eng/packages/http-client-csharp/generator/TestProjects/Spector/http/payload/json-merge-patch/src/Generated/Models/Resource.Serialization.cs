@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Payload.JsonMergePatch.Models
 {
@@ -29,6 +30,7 @@ namespace Payload.JsonMergePatch.Models
 
         string IPersistableModel<Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="resource"> The <see cref="Resource"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Resource resource) => throw null;
 
         public static explicit operator Resource(Response result) => throw null;

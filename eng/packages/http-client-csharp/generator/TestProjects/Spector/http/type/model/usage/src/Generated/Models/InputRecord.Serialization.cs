@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace _Type.Model.Usage.Models
 {
@@ -29,6 +30,7 @@ namespace _Type.Model.Usage.Models
 
         string IPersistableModel<InputRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="inputRecord"> The <see cref="InputRecord"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(InputRecord inputRecord) => throw null;
 
         public static explicit operator InputRecord(Response result) => throw null;

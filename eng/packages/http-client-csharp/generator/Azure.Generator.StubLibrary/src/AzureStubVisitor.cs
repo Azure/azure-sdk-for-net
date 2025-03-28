@@ -79,11 +79,13 @@ namespace Azure.Generator.StubLibrary
                 return null;
 
             method.Signature.Update(modifiers: method.Signature.Modifiers & ~MethodSignatureModifiers.Async);
-
+            var docs = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Implicit)
+                ? method.XmlDocs
+                : _emptyDocs;
             method.Update(
                 bodyStatements: null,
                 bodyExpression: _throwNull,
-                xmlDocProvider: _emptyDocs);
+                xmlDocProvider: docs);
 
             return method;
         }

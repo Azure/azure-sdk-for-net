@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Encode.Numeric.Models
 {
@@ -29,6 +30,7 @@ namespace Encode.Numeric.Models
 
         string IPersistableModel<Uint8AsStringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="uint8AsStringProperty"> The <see cref="Uint8AsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Uint8AsStringProperty uint8AsStringProperty) => throw null;
 
         public static explicit operator Uint8AsStringProperty(Response result) => throw null;

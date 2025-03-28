@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace _Type.Property.Nullable.Models
 {
@@ -29,6 +30,7 @@ namespace _Type.Property.Nullable.Models
 
         string IPersistableModel<CollectionsByteProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="collectionsByteProperty"> The <see cref="CollectionsByteProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(CollectionsByteProperty collectionsByteProperty) => throw null;
 
         public static explicit operator CollectionsByteProperty(Response result) => throw null;

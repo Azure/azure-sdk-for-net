@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace _Type.Model.Visibility.Models
 {
@@ -29,6 +30,7 @@ namespace _Type.Model.Visibility.Models
 
         string IPersistableModel<VisibilityModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="visibilityModel"> The <see cref="VisibilityModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(VisibilityModel visibilityModel) => throw null;
 
         public static explicit operator VisibilityModel(Response result) => throw null;

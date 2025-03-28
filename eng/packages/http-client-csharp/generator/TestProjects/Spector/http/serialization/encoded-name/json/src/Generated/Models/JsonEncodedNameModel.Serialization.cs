@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Serialization.EncodedName.Json.Models
 {
@@ -29,6 +30,7 @@ namespace Serialization.EncodedName.Json.Models
 
         string IPersistableModel<JsonEncodedNameModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="jsonEncodedNameModel"> The <see cref="JsonEncodedNameModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(JsonEncodedNameModel jsonEncodedNameModel) => throw null;
 
         public static explicit operator JsonEncodedNameModel(Response result) => throw null;

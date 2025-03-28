@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace SpecialWords._Models
 {
@@ -29,6 +30,7 @@ namespace SpecialWords._Models
 
         string IPersistableModel<As>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="as"> The <see cref="As"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(As @as) => throw null;
 
         public static explicit operator As(Response result) => throw null;

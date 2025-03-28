@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace _Type.Model.Empty.Models
 {
@@ -29,6 +30,7 @@ namespace _Type.Model.Empty.Models
 
         string IPersistableModel<EmptyInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="emptyInput"> The <see cref="EmptyInput"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(EmptyInput emptyInput) => throw null;
 
         public static explicit operator EmptyInput(Response result) => throw null;

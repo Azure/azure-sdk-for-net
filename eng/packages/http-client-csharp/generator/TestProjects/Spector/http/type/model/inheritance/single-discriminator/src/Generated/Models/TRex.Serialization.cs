@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
@@ -29,6 +30,7 @@ namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 
         string IPersistableModel<TRex>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="tRex"> The <see cref="TRex"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(TRex tRex) => throw null;
 
         public static explicit operator TRex(Response result) => throw null;
