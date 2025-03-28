@@ -6,8 +6,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.AgFoo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.AgFoodPlatform.Tests", "tests\Azure.ResourceManager.AgFoodPlatform.Tests.csproj", "{660D73A2-AD9B-4FED-A5F1-B927BF2022B2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.AgFoodPlatform.Samples", "samples\Azure.ResourceManager.AgFoodPlatform.Samples.csproj", "{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,18 +40,6 @@ Global
 		{660D73A2-AD9B-4FED-A5F1-B927BF2022B2}.Release|x64.Build.0 = Release|Any CPU
 		{660D73A2-AD9B-4FED-A5F1-B927BF2022B2}.Release|x86.ActiveCfg = Release|Any CPU
 		{660D73A2-AD9B-4FED-A5F1-B927BF2022B2}.Release|x86.Build.0 = Release|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Debug|x64.Build.0 = Debug|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Debug|x86.Build.0 = Debug|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Release|x64.ActiveCfg = Release|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Release|x64.Build.0 = Release|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Release|x86.ActiveCfg = Release|Any CPU
-		{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
