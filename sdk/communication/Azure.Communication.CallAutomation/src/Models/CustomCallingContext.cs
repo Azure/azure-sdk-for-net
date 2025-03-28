@@ -20,10 +20,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CustomCallingContext.
         /// </summary>
-        internal CustomCallingContext(IDictionary<string, string> voipHeaders, IDictionary<string, string> sipHeaders)
+        internal CustomCallingContext(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
         {
-            SipHeaders = sipHeaders ?? new ChangeTrackingDictionary<string, string>();
-            VoipHeaders = voipHeaders ?? new ChangeTrackingDictionary<string, string>();
+            SipHeaders = sipHeaders;
+            VoipHeaders = voipHeaders;
         }
 
         /// <summary>

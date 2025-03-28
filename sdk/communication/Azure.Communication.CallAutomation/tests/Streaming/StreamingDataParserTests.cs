@@ -156,20 +156,6 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
         }
 
-        private static void ValidateTranscriptionDataWithWordsNull(TranscriptionData transcription)
-        {
-            Assert.IsNotNull(transcription);
-            Assert.AreEqual("store hours", transcription.Text);
-            Assert.AreEqual(TextFormat.Display, transcription.Format);
-            Assert.AreEqual(49876484, transcription.Offset.Ticks);
-            Assert.AreEqual(9200000, transcription.Duration.Ticks);
-
-            Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
-            Assert.AreEqual("abc12345", transcription.Participant.RawId);
-            Console.WriteLine(transcription.ResultState.ToString());
-            Assert.AreEqual(TranscriptionResultState.Intermediate, transcription.ResultState);
-        }
-
         private static void ValidateTranscriptionData(TranscriptionData transcription)
         {
             Assert.IsNotNull(transcription);
@@ -193,6 +179,20 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("abc12345", transcription.Participant.RawId);
             Console.WriteLine(transcription.ResultState.ToString());
             Assert.AreEqual(TranscriptionResultState.Final, transcription.ResultState);
+        }
+
+        private static void ValidateTranscriptionDataWithWordsNull(TranscriptionData transcription)
+        {
+            Assert.IsNotNull(transcription);
+            Assert.AreEqual("store hours", transcription.Text);
+            Assert.AreEqual(TextFormat.Display, transcription.Format);
+            Assert.AreEqual(49876484, transcription.Offset.Ticks);
+            Assert.AreEqual(9200000, transcription.Duration.Ticks);
+
+            Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
+            Assert.AreEqual("abc12345", transcription.Participant.RawId);
+            Console.WriteLine(transcription.ResultState.ToString());
+            Assert.AreEqual(TranscriptionResultState.Intermediate, transcription.ResultState);
         }
         #endregion
     }

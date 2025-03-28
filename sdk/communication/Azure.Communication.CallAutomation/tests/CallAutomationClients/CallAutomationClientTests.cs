@@ -136,7 +136,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.RedirectCallAsync(incomingCallContext, callInvite).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RedirectCallAsync(incomingCallContext, callInvite).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -185,7 +185,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
             rejectOption.CallRejectReason = reason;
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.RejectCallAsync(rejectOption).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RejectCallAsync(rejectOption).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -280,44 +280,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
-        public async Task CreateCallWithTeamsAppSourceAsync_201Created(CallInvite target, Uri callbackUri)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayloadWithTeamsAppSource);
-            CreateCallOptions options = new CreateCallOptions(
-                callInvite: target,
-                callbackUri: callbackUri)
-            {
-                TeamsAppSource = new MicrosoftTeamsAppIdentifier("teamsAppId")
-            };
-
-            var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
-            CreateCallResult result = (CreateCallResult)response;
-            Assert.NotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
-            verifyOPSCallConnectionProperties(result.CallConnectionProperties);
-            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
-        }
-
-        [TestCaseSource(nameof(TestData_CreateCall))]
-        public void CreateCallWithTeamsAppSource_201Created(CallInvite target, Uri callbackUri)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayloadWithTeamsAppSource);
-            CreateCallOptions options = new CreateCallOptions(
-                callInvite: target,
-                callbackUri: callbackUri)
-            {
-                TeamsAppSource = new MicrosoftTeamsAppIdentifier("teamsAppId")
-            };
-
-            var response = callAutomationClient.CreateCall(options);
-            CreateCallResult result = (CreateCallResult)response;
-            Assert.NotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
-            verifyOPSCallConnectionProperties(result.CallConnectionProperties);
-            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
-        }
-
-        [TestCaseSource(nameof(TestData_CreateCall))]
         public void CreateCallAsync_404NotFound(CallInvite target, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
@@ -368,7 +330,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, DummyConnectPayload);
 
-            var options = new ConnectCallOptions(callLocator, callbackUri);
+            var options = new  ConnectCallOptions(callLocator, callbackUri);
             var response = await callAutomationClient.ConnectCallAsync(options).ConfigureAwait(false);
             ConnectCallResult result = (ConnectCallResult)response;
             Assert.NotNull(result);
@@ -507,7 +469,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 new object?[]
                 {
-                    new CallInvite(new CommunicationUserIdentifier("12345")),
+                    new CallInvite(new CommunicationUserIdentifier("8:acs:12345")),
                     new Uri("https://bot.contoso.com/callback")
                 },
             };

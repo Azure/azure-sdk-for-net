@@ -23,10 +23,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
-        }
-
-        public bool SkipCallAutomationInteractionLiveTests
-           => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS") == "TRUE";
+    }
 
         /// <summary>
         /// Creates a <see cref="CallAutomationClientOptions" />
@@ -61,8 +58,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     TestEnvironment.LiveTestStaticConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
 
-        protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync()
-        {
+        protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync() {
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             return await communicationIdentityClient.CreateUserAsync().ConfigureAwait(false);
         }

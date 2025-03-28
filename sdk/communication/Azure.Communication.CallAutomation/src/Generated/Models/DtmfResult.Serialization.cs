@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DtmfResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeDtmfResult(document.RootElement);
         }
     }

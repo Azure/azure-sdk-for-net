@@ -138,7 +138,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -150,13 +150,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -210,7 +210,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -222,13 +222,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -282,7 +282,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -294,13 +294,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -354,7 +354,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -366,13 +366,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -426,7 +426,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -438,13 +438,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -497,7 +497,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -509,13 +509,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -568,7 +568,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -580,13 +580,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -639,7 +639,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -651,13 +651,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -711,7 +711,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -723,13 +723,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -782,7 +782,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -794,13 +794,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -854,7 +854,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -866,13 +866,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -920,7 +920,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -932,13 +932,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -987,7 +987,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -999,13 +999,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1054,7 +1054,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1066,13 +1066,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1119,7 +1119,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1131,13 +1131,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1185,7 +1185,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1197,13 +1197,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1251,7 +1251,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1263,13 +1263,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1318,7 +1318,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1330,13 +1330,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1385,7 +1385,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1397,13 +1397,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1450,7 +1450,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1462,13 +1462,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1516,7 +1516,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1528,13 +1528,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1582,7 +1582,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1594,13 +1594,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1649,7 +1649,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1661,13 +1661,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1716,7 +1716,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1728,13 +1728,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1781,7 +1781,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1793,13 +1793,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1847,7 +1847,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1859,13 +1859,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1913,7 +1913,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1925,13 +1925,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -1980,7 +1980,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -1992,13 +1992,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -2047,7 +2047,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -2059,13 +2059,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -2112,7 +2112,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -2124,13 +2124,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -2178,7 +2178,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -2190,13 +2190,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -2256,7 +2256,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -2275,14 +2275,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
 
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
@@ -2321,7 +2321,74 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task CreateCallWithMediaStreamingWithAudioFormatPcm24kMonoTest()
+        {
+            /* Tests: CreateCall, Media Streaming
+             * Test case: ACS to ACS call
+             * 1. create a CallAutomationClient.
+             * 2. Start Media Streaming with audio format Pcm24KMono and Stop Media Streaming
+             * 3. See Media Streaming started and stopped in call
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
+                        new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent.Audio,
+                        MediaStreamingAudioChannel.Mixed,
+                        MediaStreamingTransport.Websocket,
+                        false);
+                    mediaStreamingOptions.EnableBidirectional = true;
+                    mediaStreamingOptions.AudioFormat = AudioFormat.Pcm24KMono;
+
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          mediaStreamingOptions, transcriptionOptions: null);
+                    callConnectionId = result.CallerCallConnectionId;
+                    await VerifyMediaStreaming(client, result.CallerCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -2340,14 +2407,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
 
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
@@ -2386,7 +2453,74 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task AnswerCallWithMediaStreamingWithAudioFormatPcm24kMonoTest()
+        {
+            /* Tests: CreateCall, Media Streaming
+             * Test case: ACS to ACS call
+             * 1. create a CallAutomationClient.
+             * 2. Start Media Streaming with audio format Pcm24KMono and Stop Media Streaming
+             * 3. See Media Streaming started and stopped in call
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
+                        new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent.Audio,
+                        MediaStreamingAudioChannel.Mixed,
+                        MediaStreamingTransport.Websocket,
+                        false);
+                    mediaStreamingOptions.EnableBidirectional = true;
+                    mediaStreamingOptions.AudioFormat = AudioFormat.Pcm24KMono;
+
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
+                          mediaStreamingOptions, transcriptionOptions: null);
+                    callConnectionId = result.TargetCallConnectionId;
+                    await VerifyMediaStreaming(targetClient, result.TargetCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -2405,14 +2539,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
 
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
@@ -2451,7 +2585,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -2471,14 +2605,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
 
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
                     TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
@@ -2514,7 +2648,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -2534,14 +2668,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
 
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
                     TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
@@ -2577,246 +2711,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
-            }
-        }
-
-        [RecordedTest]
-        public async Task InterruptAudioAndAnnounceAsyncTest()
-        {
-            // create caller and receiver
-            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
-            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
-            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
-            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
-            try
-            {
-                try
-                {
-                    // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
-                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
-                    callConnectionId = result.CallerCallConnectionId;
-                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
-                    var callConnection = client.GetCallConnection(callConnectionId);
-
-                    // multiple File Source
-                    var playFileSources = new List<PlaySource>() {
-                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
-                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) )
-                    };
-
-                    InterruptAudioAndAnnounceOptions options = new InterruptAudioAndAnnounceOptions(playFileSources, target) { OperationContext = "context" };
-
-                    // Assert the participant hold
-                    await callConnection.GetCallMedia().HoldAsync(target, new FileSource(new Uri(TestEnvironment.FileSourceUrl))).ConfigureAwait(false);
-                    await Task.Delay(1000);
-                    var holdAudioStartedEvent = await WaitForEvent<HoldAudioStarted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(holdAudioStartedEvent);
-                    Assert.IsTrue(holdAudioStartedEvent is HoldAudioStarted);
-                    Assert.AreEqual(callConnectionId, ((HoldAudioStarted)holdAudioStartedEvent!).CallConnectionId);
-
-                    var participantResult = await callConnection.GetParticipantAsync(target).ConfigureAwait(false);
-                    Assert.IsNotNull(participantResult);
-                    Assert.IsTrue(participantResult.Value.IsOnHold);
-
-                    // Assert the Play with multiple File Sources
-                    await callConnection.GetCallMedia().InterruptAudioAndAnnounceAsync(options).ConfigureAwait(false);
-                    await Task.Delay(1000);
-                    var holdAudioPausedEvent = await WaitForEvent<HoldAudioPaused>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(holdAudioPausedEvent);
-                    Assert.IsTrue(holdAudioPausedEvent is HoldAudioPaused);
-                    Assert.AreEqual(callConnectionId, ((HoldAudioPaused)holdAudioPausedEvent!).CallConnectionId);
-
-                    var playStartedEvent = await WaitForEvent<PlayStarted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(playStartedEvent);
-                    Assert.IsTrue(playStartedEvent is PlayStarted);
-                    Assert.AreEqual(callConnectionId, ((PlayStarted)playStartedEvent!).CallConnectionId);
-
-                    var holdAudioResumedEvent = await WaitForEvent<HoldAudioResumed>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(holdAudioResumedEvent);
-                    Assert.IsTrue(holdAudioResumedEvent is HoldAudioResumed);
-                    Assert.AreEqual(callConnectionId, ((HoldAudioResumed)holdAudioResumedEvent!).CallConnectionId);
-
-                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(playCompletedEvent);
-                    Assert.IsTrue(playCompletedEvent is PlayCompleted);
-                    Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
-
-                    // Assert the participant unhold
-                    await callConnection.GetCallMedia().UnholdAsync(target).ConfigureAwait(false);
-                    await Task.Delay(1000);
-                    var holdAudioCompletedEvent = await WaitForEvent<HoldAudioCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(holdAudioCompletedEvent);
-                    Assert.IsTrue(holdAudioCompletedEvent is HoldAudioCompleted);
-                    Assert.AreEqual(callConnectionId, ((HoldAudioCompleted)holdAudioCompletedEvent!).CallConnectionId);
-
-                    participantResult = await callConnection.GetParticipantAsync(target).ConfigureAwait(false);
-                    Assert.IsNotNull(participantResult);
-                    Assert.IsFalse(participantResult.Value.IsOnHold);
-
-                    // try hangup
-                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
-                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
-
-                    try
-                    {
-                        // test get properties
-                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                    }
-                    catch (RequestFailedException ex)
-                    {
-                        if (ex.Status == 404)
-                        {
-                            callConnectionId = null;
-                            return;
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            finally
-            {
-                await CleanUpCall(client, callConnectionId, uniqueId);
-            }
-        }
-
-        [RecordedTest]
-        public async Task InterruptHoldAudioForPlayMediaAsyncTest()
-        {
-            // create caller and receiver
-            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
-            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
-            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
-            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
-            try
-            {
-                try
-                {
-                    // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
-                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
-                    callConnectionId = result.CallerCallConnectionId;
-                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
-                    var callConnection = client.GetCallConnection(callConnectionId);
-
-                    HoldOptions holdOptions = new HoldOptions(target) {
-                        OperationContext = "context",
-                        PlaySource = new FileSource(new Uri(TestEnvironment.FileSourceUrl))
-                    };
-                    // Assert the participant hold
-                    await callConnection.GetCallMedia().HoldAsync(holdOptions).ConfigureAwait(false);
-                    var holdAudioStartedEvent = await WaitForEvent<HoldAudioStarted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(holdAudioStartedEvent);
-                    Assert.IsTrue(holdAudioStartedEvent is HoldAudioStarted);
-                    Assert.AreEqual(callConnectionId, ((HoldAudioStarted)holdAudioStartedEvent!).CallConnectionId);
-
-                    await Task.Delay(1000);
-                    var participantResult = await callConnection.GetParticipantAsync(target).ConfigureAwait(false);
-                    Assert.IsNotNull(participantResult);
-                    Assert.IsTrue(participantResult.Value.IsOnHold);
-
-                    // multiple File Source
-                    var playFileSources = new List<PlaySource>() {
-                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
-                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
-                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) )
-                    };
-
-                    PlayOptions options = new PlayOptions(playFileSources, new List<CommunicationUserIdentifier>() { target })
-                    {
-                        OperationContext = "context",
-                        InterruptHoldAudio = true
-                    };
-
-                    // Assert the Play with multiple File Sources
-                    await callConnection.GetCallMedia().PlayAsync(options).ConfigureAwait(false);
-
-                    var holdAudioPausedEvent = await WaitForEvent<HoldAudioPaused>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(holdAudioPausedEvent);
-                    Assert.IsTrue(holdAudioPausedEvent is HoldAudioPaused);
-                    Assert.AreEqual(callConnectionId, ((HoldAudioPaused)holdAudioPausedEvent!).CallConnectionId);
-
-                    var playStartedEvent = await WaitForEvent<PlayStarted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(playStartedEvent);
-                    Assert.IsTrue(playStartedEvent is PlayStarted);
-                    Assert.AreEqual(callConnectionId, ((PlayStarted)playStartedEvent!).CallConnectionId);
-
-                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(playCompletedEvent);
-                    Assert.IsTrue(playCompletedEvent is PlayCompleted);
-                    Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
-
-                    var holdAudioResumedEvent = await WaitForEvent<HoldAudioResumed>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(holdAudioResumedEvent);
-                    Assert.IsTrue(holdAudioResumedEvent is HoldAudioResumed);
-                    Assert.AreEqual(callConnectionId, ((HoldAudioResumed)holdAudioResumedEvent!).CallConnectionId);
-
-                    // Assert the participant unhold
-                    await callConnection.GetCallMedia().UnholdAsync(target).ConfigureAwait(false);
-                    var holdAudioCompletedEvent = await WaitForEvent<HoldAudioCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(holdAudioCompletedEvent);
-                    Assert.IsTrue(holdAudioCompletedEvent is HoldAudioCompleted);
-                    Assert.AreEqual(callConnectionId, ((HoldAudioCompleted)holdAudioCompletedEvent!).CallConnectionId);
-
-                    await Task.Delay(1000);
-                    participantResult = await callConnection.GetParticipantAsync(target).ConfigureAwait(false);
-                    Assert.IsNotNull(participantResult);
-                    Assert.IsFalse(participantResult.Value.IsOnHold);
-
-                    // try hangup
-                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
-                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
-
-                    try
-                    {
-                        // test get properties
-                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                    }
-                    catch (RequestFailedException ex)
-                    {
-                        if (ex.Status == 404)
-                        {
-                            callConnectionId = null;
-                            return;
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            finally
-            {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
         public async Task<(string CallerCallConnectionId, string TargetCallConnectionId)> CreateAndAnswerCall(CallAutomationClient client,
-                    CallAutomationClient targetClient,
-                    CommunicationUserIdentifier target,
-                    string uniqueId,
-                    bool createCallWithCogService = false)
+            CallAutomationClient targetClient,
+            CommunicationUserIdentifier target,
+            string uniqueId,
+            bool createCallWithCogService = false)
         {
             try
             {

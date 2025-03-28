@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(locale, nameof(locale));
 
             TransportUrl = transportUri;
-            TranscriptionTransport = transcriptionTransport;
+            TranscriptionTransport = transcriptionTransport == default ? TranscriptionTransport.Websocket : transcriptionTransport;
             Locale = locale;
             StartTranscription = startTranscription;
         }

@@ -18,8 +18,8 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             string contentType = default;
-            MediaStreamingStatus? mediaStreamingStatus = default;
-            MediaStreamingStatusDetails? mediaStreamingStatusDetails = default;
+            MediaStreamingStatus mediaStreamingStatus = default;
+            MediaStreamingStatusDetails mediaStreamingStatusDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentType"u8))
@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static MediaStreamingUpdate FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeMediaStreamingUpdate(document.RootElement);
         }
     }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -55,23 +56,14 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
+                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    PauseOnStart = options.PauseOnStart
+                    PauseOnStart = options.PauseOnStart,
                 };
-
-                if (options.CallLocator != null)
-                {
-                    request.CallLocator = CallLocatorSerializer.Serialize(options.CallLocator);
-                }
-                else if (options.CallConnectionId != null)
-                {
-                    request.CallConnectionId = options.CallConnectionId;
-                }
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
@@ -126,23 +118,14 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
+                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    PauseOnStart = options.PauseOnStart
+                    PauseOnStart = options.PauseOnStart,
                 };
-
-                if (options.CallLocator != null)
-                {
-                    request.CallLocator = CallLocatorSerializer.Serialize(options.CallLocator);
-                }
-                else if (options.CallConnectionId != null)
-                {
-                    request.CallConnectionId = options.CallConnectionId;
-                }
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
@@ -359,50 +342,6 @@ namespace Azure.Communication.CallAutomation
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Get recording result. This includes the download URLs for the recording chunks. </summary>
-        /// <param name="recordingId"> The recording id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        public virtual Response<RecordingResult> GetRecording(string recordingId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecording)}");
-            scope.Start();
-            try
-            {
-                return _callRecordingRestClient.GetRecordingResult(
-                    recordingId: recordingId,
-                    cancellationToken: cancellationToken
-                    );
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Get recording result. This includes the download URLs for the recording chunks. </summary>
-        /// <param name="recordingId"> The recording id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        public virtual async Task<Response<RecordingResult>> GetRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecording)}");
-            scope.Start();
-            try
-            {
-                return await _callRecordingRestClient.GetRecordingResultAsync(
-                    recordingId: recordingId,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

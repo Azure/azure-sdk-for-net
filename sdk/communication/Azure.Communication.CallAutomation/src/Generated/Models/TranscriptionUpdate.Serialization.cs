@@ -17,8 +17,8 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            TranscriptionStatus? transcriptionStatus = default;
-            TranscriptionStatusDetails? transcriptionStatusDetails = default;
+            TranscriptionStatus transcriptionStatus = default;
+            TranscriptionStatusDetails transcriptionStatusDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transcriptionStatus"u8))
@@ -47,7 +47,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TranscriptionUpdate FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeTranscriptionUpdate(document.RootElement);
         }
     }
