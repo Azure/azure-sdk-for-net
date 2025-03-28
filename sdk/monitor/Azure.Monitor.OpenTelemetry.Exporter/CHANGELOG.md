@@ -1,13 +1,21 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.4.0-beta.3 (2025-03-28)
 
 ### Features Added
 
 * Added support for emitting Application Insights Custom Events.
   ([#48378](https://github.com/Azure/azure-sdk-for-net/pull/48378))
 
+* Added new api `UseAzureMonitorExporter` which enables all three signals.
+  ([#48402](https://github.com/Azure/azure-sdk-for-net/pull/48402))
+
+* Added support for LiveMetrics when using the `UseAzureMonitorExporter` api.
+  ([#48402](https://github.com/Azure/azure-sdk-for-net/pull/48402))
+
 ### Breaking Changes
+
+* This version breaks Trimming and AOT. This will be restored in a future version.
 
 ### Bugs Fixed
 
