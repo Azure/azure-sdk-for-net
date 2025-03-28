@@ -134,7 +134,6 @@ namespace Azure.Storage.DataMovement
         }
         private async Task ProcessPartAsync(JobPartInternal part, CancellationToken cancellationToken = default)
         {
-            part.SetThroughputMonitor(_throughputMonitor);
             part.SetQueueChunkDelegate(_chunksProcessor.QueueAsync);
             await part.ProcessPartToChunkAsync().ConfigureAwait(false);
         }
@@ -470,6 +469,7 @@ namespace Azure.Storage.DataMovement
                 _checkpointer,
                 transferId,
                 resumeJob,
+                _throughputMonitor,
                 cancellationToken)
                 .ConfigureAwait(false);
 

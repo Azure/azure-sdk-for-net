@@ -203,11 +203,6 @@ namespace Azure.Storage.DataMovement
             QueueChunk = chunkDelegate;
         }
 
-        public void SetThroughputMonitor(ThroughputMonitor throughputMonitor)
-        {
-            _progressTracker.SetThroughputMonitor(throughputMonitor);
-        }
-
         /// <summary>
         /// Queues the task to the main chunk channel and also appends the tracking
         /// completion source to the task. So we know the state of each chunk especially
