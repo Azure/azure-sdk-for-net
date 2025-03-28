@@ -398,11 +398,7 @@ namespace Azure.ResourceManager.Billing
                         }
                         if (property0.NameEquals("instanceFlexibility"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            instanceFlexibility = new InstanceFlexibility(property0.Value.GetString());
+                            DeserializeInstanceFlexibilityValue(property0, ref instanceFlexibility);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
