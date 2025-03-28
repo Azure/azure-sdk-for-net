@@ -15,6 +15,8 @@ if ($UseTypeSpecNext) {
     Write-Host "##vso[build.addbuildtag]typespec_next"
 }
 
+Invoke-LoggedCommand "npm install -g pnpm" # Pnpm manage-package-manager-versions will respect packageManager field
+
 Push-Location $RepoRoot
 try {
     if (Test-Path "./node_modules") {
