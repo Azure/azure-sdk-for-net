@@ -1,6 +1,7 @@
 options:
-  "@azure-tools/typespec-csharp":
+  "@azure-typespec/http-client-csharp-mgmt":
     flavor: "azure"
     namespace: "MgmtTypeSpec"
     clear-output-folder: true
     examples-dir: "{project-root}/examples"
+    license: { name: "MIT License", company: "Microsoft Corporation" }

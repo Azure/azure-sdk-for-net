@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary> this is a model with a projected name. </summary>
-    public partial class ProjectedModel
+    /// <summary> this is a model with a client name. </summary>
+    public partial class RenamedModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal ProjectedModel(string name)
+        internal RenamedModel(string name)
         {
             Name = name;
         }
 
-        internal ProjectedModel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RenamedModel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> name of the ModelWithProjectedName. </summary>
+        /// <summary> name of the ModelWithClientName. </summary>
         public string Name { get; }
     }
 }
