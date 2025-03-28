@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true");
+            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true"); // this tags bypasses C+AI internal policy to default to creating vm.identity
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true");
+            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true"); // this tags bypasses C+AI internal policy to default to creating vm.identity
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true");
+            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true"); // this tags bypasses C+AI internal policy to default to creating vm.identity
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             input.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
-            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true");
+            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true"); // this tags bypasses C+AI internal policy to default to creating vm.identity
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true");
+            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true"); // this tags bypasses C+AI internal policy to default to creating vm.identity
             input.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true");
+            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true"); // this tags bypasses C+AI internal policy to default to creating vm.identity
             input.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true");
+            input.Tags.Add("skip-cloudgov-VM_SI_Deploy_GuestConfig_Extension", "true"); // this tags bypasses C+AI internal policy to default to creating vm.identity
             input.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
