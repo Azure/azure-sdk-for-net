@@ -9,3 +9,5 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Naming", "AZC0030:Improper model name suffix", Justification = "Other 'Options' are used in this library, and this naming is consistent with the same feature across other SDK languages", Scope = "type", Target = "~T:Azure.Communication.PhoneNumbers.OperatorInformationOptions")]
+[assembly: SuppressMessage("Naming", "AZC0030:Improper model name suffix", Justification = "Models with 'Request' suffix are created by autorest and used internally; they are not part of the public API surface.", Scope = "type", Target = "~T:Azure.Communication.PhoneNumbers.PhoneNumberBrowseCapabilitiesRequest")]
+[assembly: SuppressMessage("Naming", "AZC0030:Improper model name suffix", Justification = "Models with 'Request' suffix are created by autorest and used internally; they are not part of the public API surface.", Scope = "type", Target = "~T:Azure.Communication.PhoneNumbers.PhoneNumbersBrowseRequest")]

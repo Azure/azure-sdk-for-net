@@ -811,7 +811,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <returns></returns>
         public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbersAsync)}");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbers)}");
             scope.Start();
             try
             {
@@ -924,7 +924,7 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListReservations", "phoneNumbersReservations", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListReservations", "reservations", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -963,7 +963,7 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListReservations", "phoneNumbersReservations", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListReservations", "reservations", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -975,7 +975,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <returns></returns>
         public virtual async Task<Response<PhoneNumbersReservation>> CreateOrUpdateReservationAsync(Guid id, IDictionary<string, AvailablePhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservationAsync)}");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservation)}");
             scope.Start();
             try
             {
@@ -1018,7 +1018,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <returns></returns>
         public virtual async Task<Response> DeleteReservationAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(DeleteReservationAsync)}");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(DeleteReservation)}");
             scope.Start();
             try
             {
@@ -1061,7 +1061,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <returns></returns>
         public virtual async Task<PurchaseReservationOperation> StartPurchaseReservationAsync(Guid id, bool agreeToNotResell = false, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchaseReservationAsync)}");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchaseReservation)}");
             scope.Start();
             try
             {
