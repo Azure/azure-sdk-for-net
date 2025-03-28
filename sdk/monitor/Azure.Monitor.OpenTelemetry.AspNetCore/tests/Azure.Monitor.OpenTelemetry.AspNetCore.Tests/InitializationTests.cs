@@ -282,12 +282,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
                 if (hasInstrumentations)
                 {
-                    Assert.Equal(3, instrumentations.Count());
-
                     var instrumentationTypes = instrumentations.Select(i => i.GetType().Name).ToList();
                     Assert.Contains("SqlClientInstrumentation", instrumentationTypes);
                     Assert.Contains("AspNetCoreInstrumentation", instrumentationTypes);
                     Assert.Contains("HttpClientInstrumentation", instrumentationTypes);
+
+                    Assert.Equal(3, instrumentations.Count());
                 }
                 else
                 {
