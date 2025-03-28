@@ -399,7 +399,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            Response<MetricDefinitionCollection> response = client.GetMetricDefinitions("12316678-1234-1234-1234-122451189012", "LoadTestRunMetrics");
+            Response<MetricDefinitions> response = client.GetMetricDefinitions("12316678-1234-1234-1234-122451189012", "LoadTestRunMetrics");
         }
 
         [Test]
@@ -410,7 +410,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            Response<MetricDefinitionCollection> response = await client.GetMetricDefinitionsAsync("12316678-1234-1234-1234-122451189012", "LoadTestRunMetrics");
+            Response<MetricDefinitions> response = await client.GetMetricDefinitionsAsync("12316678-1234-1234-1234-122451189012", "LoadTestRunMetrics");
         }
 
         [Test]
@@ -449,7 +449,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            Response<MetricNamespaceCollection> response = client.GetMetricNamespaces("12316678-1234-1234-1234-122451189012");
+            Response<MetricNamespaces> response = client.GetMetricNamespaces("12316678-1234-1234-1234-122451189012");
         }
 
         [Test]
@@ -460,7 +460,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            Response<MetricNamespaceCollection> response = await client.GetMetricNamespacesAsync("12316678-1234-1234-1234-122451189012");
+            Response<MetricNamespaces> response = await client.GetMetricNamespacesAsync("12316678-1234-1234-1234-122451189012");
         }
 
         [Test]

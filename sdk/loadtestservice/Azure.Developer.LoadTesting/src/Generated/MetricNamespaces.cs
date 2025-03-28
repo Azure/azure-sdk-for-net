@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> Represents collection of metric definitions. </summary>
-    public partial class MetricDefinitionCollection
+    /// <summary> Represents collection of metric namespaces. </summary>
+    public partial class MetricNamespaces
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,31 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/>. </summary>
-        /// <param name="value"> the values for the metric definitions. </param>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaces"/>. </summary>
+        /// <param name="value"> The values for the metric namespaces. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricDefinitionCollection(IEnumerable<MetricDefinition> value)
+        internal MetricNamespaces(IEnumerable<MetricNamespace> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/>. </summary>
-        /// <param name="value"> the values for the metric definitions. </param>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaces"/>. </summary>
+        /// <param name="value"> The values for the metric namespaces. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricDefinitionCollection(IReadOnlyList<MetricDefinition> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetricNamespaces(IReadOnlyList<MetricNamespace> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/> for deserialization. </summary>
-        internal MetricDefinitionCollection()
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaces"/> for deserialization. </summary>
+        internal MetricNamespaces()
         {
         }
 
-        /// <summary> the values for the metric definitions. </summary>
-        public IReadOnlyList<MetricDefinition> Value { get; }
+        /// <summary> The values for the metric namespaces. </summary>
+        public IReadOnlyList<MetricNamespace> Value { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class DeveloperLoadTestingModelFactory
+    public static partial class LoadTestingModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTest"/>. </summary>
         /// <param name="passFailCriteria"> Pass fail criteria for a test. </param>
@@ -584,14 +584,14 @@ namespace Azure.Developer.LoadTesting
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTesting.MetricDefinitionCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.MetricDefinitions"/>. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
-        /// <returns> A new <see cref="LoadTesting.MetricDefinitionCollection"/> instance for mocking. </returns>
-        public static MetricDefinitionCollection MetricDefinitionCollection(IEnumerable<MetricDefinition> value = null)
+        /// <returns> A new <see cref="LoadTesting.MetricDefinitions"/> instance for mocking. </returns>
+        public static MetricDefinitions MetricDefinitions(IEnumerable<MetricDefinition> value = null)
         {
             value ??= new List<MetricDefinition>();
 
-            return new MetricDefinitionCollection(value?.ToList(), serializedAdditionalRawData: null);
+            return new MetricDefinitions(value?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTesting.MetricDefinition"/>. </summary>
@@ -645,14 +645,14 @@ namespace Azure.Developer.LoadTesting
             return new MetricAvailability(timeGrain, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTesting.MetricNamespaceCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.MetricNamespaces"/>. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
-        /// <returns> A new <see cref="LoadTesting.MetricNamespaceCollection"/> instance for mocking. </returns>
-        public static MetricNamespaceCollection MetricNamespaceCollection(IEnumerable<MetricNamespace> value = null)
+        /// <returns> A new <see cref="LoadTesting.MetricNamespaces"/> instance for mocking. </returns>
+        public static MetricNamespaces MetricNamespaces(IEnumerable<MetricNamespace> value = null)
         {
             value ??= new List<MetricNamespace>();
 
-            return new MetricNamespaceCollection(value?.ToList(), serializedAdditionalRawData: null);
+            return new MetricNamespaces(value?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTesting.MetricNamespace"/>. </summary>

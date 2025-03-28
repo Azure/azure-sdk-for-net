@@ -868,14 +868,14 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitionsAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<MetricDefinitionCollection>> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricDefinitions>> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetMetricDefinitionsAsync(testRunId, metricNamespace, context).ConfigureAwait(false);
-            return Response.FromValue(MetricDefinitionCollection.FromResponse(response), response);
+            return Response.FromValue(MetricDefinitions.FromResponse(response), response);
         }
 
         /// <summary> List the metric definitions for a load test run. </summary>
@@ -888,14 +888,14 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitions(string,string,CancellationToken)']/*" />
-        public virtual Response<MetricDefinitionCollection> GetMetricDefinitions(string testRunId, string metricNamespace, CancellationToken cancellationToken = default)
+        public virtual Response<MetricDefinitions> GetMetricDefinitions(string testRunId, string metricNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetMetricDefinitions(testRunId, metricNamespace, context);
-            return Response.FromValue(MetricDefinitionCollection.FromResponse(response), response);
+            return Response.FromValue(MetricDefinitions.FromResponse(response), response);
         }
 
         /// <summary>
@@ -997,13 +997,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespacesAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<MetricNamespaceCollection>> GetMetricNamespacesAsync(string testRunId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricNamespaces>> GetMetricNamespacesAsync(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetMetricNamespacesAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(MetricNamespaceCollection.FromResponse(response), response);
+            return Response.FromValue(MetricNamespaces.FromResponse(response), response);
         }
 
         /// <summary> List the metric namespaces for a load test run. </summary>
@@ -1015,13 +1015,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespaces(string,CancellationToken)']/*" />
-        public virtual Response<MetricNamespaceCollection> GetMetricNamespaces(string testRunId, CancellationToken cancellationToken = default)
+        public virtual Response<MetricNamespaces> GetMetricNamespaces(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetMetricNamespaces(testRunId, context);
-            return Response.FromValue(MetricNamespaceCollection.FromResponse(response), response);
+            return Response.FromValue(MetricNamespaces.FromResponse(response), response);
         }
 
         /// <summary>

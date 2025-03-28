@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class MetricDefinitionCollection : IUtf8JsonSerializable, IJsonModel<MetricDefinitionCollection>
+    public partial class MetricDefinitions : IUtf8JsonSerializable, IJsonModel<MetricDefinitions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricDefinitionCollection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricDefinitions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MetricDefinitionCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MetricDefinitions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinitionCollection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinitions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricDefinitionCollection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricDefinitions)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -58,19 +58,19 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        MetricDefinitionCollection IJsonModel<MetricDefinitionCollection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MetricDefinitions IJsonModel<MetricDefinitions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinitionCollection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinitions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricDefinitionCollection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricDefinitions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetricDefinitionCollection(document.RootElement, options);
+            return DeserializeMetricDefinitions(document.RootElement, options);
         }
 
-        internal static MetricDefinitionCollection DeserializeMetricDefinitionCollection(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MetricDefinitions DeserializeMetricDefinitions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -99,46 +99,46 @@ namespace Azure.Developer.LoadTesting
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MetricDefinitionCollection(value, serializedAdditionalRawData);
+            return new MetricDefinitions(value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MetricDefinitionCollection>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MetricDefinitions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinitionCollection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinitions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricDefinitionCollection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricDefinitions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MetricDefinitionCollection IPersistableModel<MetricDefinitionCollection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MetricDefinitions IPersistableModel<MetricDefinitions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinitionCollection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinitions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMetricDefinitionCollection(document.RootElement, options);
+                        return DeserializeMetricDefinitions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricDefinitionCollection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricDefinitions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MetricDefinitionCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MetricDefinitions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MetricDefinitionCollection FromResponse(Response response)
+        internal static MetricDefinitions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMetricDefinitionCollection(document.RootElement);
+            return DeserializeMetricDefinitions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
