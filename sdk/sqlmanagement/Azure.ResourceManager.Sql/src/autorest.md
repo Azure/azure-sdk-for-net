@@ -11,7 +11,7 @@ namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - ManagedDatabaseSensitivityLabels_CreateOrUpdate
@@ -28,7 +28,7 @@ head-as-boolean: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 # this is temporary, to be removed when we find the owner of this feature
