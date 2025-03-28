@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         {
             BodyKeySanitizers.Add(new BodyKeySanitizer("properties.vmImageRepositoryCredentials.password") { Value = "fake-password123" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..containerUrl") { Value = "https://sanitized.blob.core.windows.net/container" });
+
             SanitizersToRemove.Add("AZSDK3402");
         }
 
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         {
             BodyKeySanitizers.Add(new BodyKeySanitizer("properties.vmImageRepositoryCredentials.password") { Value = "fake-password123" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..containerUrl") { Value = "https://sanitized.blob.core.windows.net/container" });
+
             SanitizersToRemove.Add("AZSDK3402");
         }
 
