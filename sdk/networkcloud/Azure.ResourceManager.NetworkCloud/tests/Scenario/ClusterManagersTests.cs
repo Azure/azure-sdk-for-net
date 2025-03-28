@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Create
             var createData = new NetworkCloudClusterManagerData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.SubnetId))
             {
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Tags = {
                     ["DisableFabricIntegration"] = "true"
                 }
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Update
             var newTags = new NetworkCloudClusterManagerPatch()
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Tags = {
                     ["DisableFabricIntegration"] = "true",
                     ["PatchTag"] = "patchTag",
