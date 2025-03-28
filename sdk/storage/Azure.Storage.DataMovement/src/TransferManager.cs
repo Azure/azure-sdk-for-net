@@ -48,7 +48,7 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
         private readonly Func<string> _generateTransferId;
-        //private readonly ThroughputMonitor _throughputMonitor;
+        private readonly ThroughputMonitor _throughputMonitor;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -79,8 +79,11 @@ namespace Azure.Storage.DataMovement
             _concurrencyTunerEnabled = options?.ConcurrencyTunerEnabled ?? true;
 
             if (_concurrencyTunerEnabled)
+            {
+                _throughputMonitor = new ThroughputMonitor();
                 _concurrencyTuner = new ConcurrencyTuner(
                     new ResourceMonitor(),
+                    _throughputMonitor,
                     _chunksProcessor,
                     DataMovementConstants.TransferManagerOptions.MonitoringInterval,
                     DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
@@ -88,6 +91,7 @@ namespace Azure.Storage.DataMovement
                     DataMovementConstants.TransferManagerOptions.MaxConcurrency,
                     DataMovementConstants.TransferManagerOptions.MaxCpuUsage
                 );
+            }
         }
         /// <summary>
         /// Dependency injection constructor.
@@ -131,6 +135,7 @@ namespace Azure.Storage.DataMovement
         }
         private async Task ProcessPartAsync(JobPartInternal part, CancellationToken cancellationToken = default)
         {
+            part.SetThroughputMonitor(_throughputMonitor);
             part.SetQueueChunkDelegate(_chunksProcessor.QueueAsync);
             await part.ProcessPartToChunkAsync().ConfigureAwait(false);
         }

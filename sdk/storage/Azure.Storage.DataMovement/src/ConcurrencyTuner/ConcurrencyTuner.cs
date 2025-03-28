@@ -42,6 +42,7 @@ namespace Azure.Storage.DataMovement
 
         internal ConcurrencyTuner(
             ResourceMonitor resourceMonitor,
+            ThroughputMonitor throughputMonitor,
             IProcessor<Func<Task>> _chunkProcessor,
             TimeSpan monitoringInterval,
             double maxMemoryUsage,
