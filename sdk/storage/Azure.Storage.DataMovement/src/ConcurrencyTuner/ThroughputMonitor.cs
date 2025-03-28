@@ -27,12 +27,24 @@ namespace Azure.Storage.DataMovement
             _bytesTransferredProcessor.Process = ProcessBytesTransferredAsync;
         }
 
+        /// <summary>
+        /// Processes the bytes transferred asynchronously.
+        /// </summary>
+        /// <param name="item">The number of bytes transferred.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
         private async Task ProcessBytesTransferredAsync(int item, CancellationToken cancellationToken)
         {
             await Task.Run(() => _totalBytesTransferred += item, cancellationToken).ConfigureAwait(false);
         }
 
-        public async ValueTask Add(int bytesTransferred, CancellationToken cancellationToken)
+        /// <summary>
+        /// Enqueues the number of bytes transferred to be processed asynchronously.
+        /// </summary>
+        /// <param name="bytesTransferred">The number of bytes transferred.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public async ValueTask QueueBytesTransferredAsync(int bytesTransferred, CancellationToken cancellationToken)
         {
             await _bytesTransferredProcessor.QueueAsync(bytesTransferred, cancellationToken).ConfigureAwait(false);
         }

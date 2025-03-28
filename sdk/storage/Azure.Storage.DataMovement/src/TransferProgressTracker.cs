@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement
 
         public async ValueTask IncrementBytesTransferredAsync(long bytesTransferred, CancellationToken cancellationToken)
         {
-            await _throughputMonitor.Add((int)bytesTransferred, cancellationToken).ConfigureAwait(false);
+            await _throughputMonitor.EnqueueBytesTransferredAsync((int)bytesTransferred, cancellationToken).ConfigureAwait(false);
 
             if (_options?.TrackBytesTransferred == true)
             {
