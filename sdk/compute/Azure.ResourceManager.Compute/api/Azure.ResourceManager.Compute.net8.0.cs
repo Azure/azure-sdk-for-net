@@ -6968,6 +6968,8 @@ namespace Azure.ResourceManager.Compute.Models
         public NetworkApiVersion(string value) { throw null; }
         public static Azure.ResourceManager.Compute.Models.NetworkApiVersion TwoThousandTwenty1101 { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.NetworkApiVersion TwoThousandTwentyTwo1101 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.NetworkApiVersion v2020_11_01 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.NetworkApiVersion v2022_11_01 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.NetworkApiVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
