@@ -11,7 +11,7 @@ public class BicepValueTests
     [TestCaseSource(nameof(LiteralBicepValueTestCases))]
     public string ValidateLiteralBicepValue(BicepValue bicepValue)
     {
-        return bicepValue.Compile().ToString();
+        return bicepValue.ToString();
     }
 
     private static IEnumerable<TestCaseData> LiteralBicepValueTestCases()
