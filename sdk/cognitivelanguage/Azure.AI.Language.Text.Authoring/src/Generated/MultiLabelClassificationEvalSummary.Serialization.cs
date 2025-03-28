@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring
 {
-    public partial class MultiLabelClassificationEvalSummary : IUtf8JsonSerializable, IJsonModel<MultiLabelClassificationEvalSummary>
+    public partial class MultiLabelClassEvalSummary : IUtf8JsonSerializable, IJsonModel<MultiLabelClassEvalSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiLabelClassificationEvalSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiLabelClassEvalSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MultiLabelClassificationEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MultiLabelClassEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,32 +28,26 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MultiLabelClassificationEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MultiLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiLabelClassificationEvalSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiLabelClassEvalSummary)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("classes"u8);
-            writer.WriteStartObject();
-            foreach (var item in Classes)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("microF1"u8);
-            writer.WriteNumberValue(MicroF1);
-            writer.WritePropertyName("microPrecision"u8);
-            writer.WriteNumberValue(MicroPrecision);
-            writer.WritePropertyName("microRecall"u8);
-            writer.WriteNumberValue(MicroRecall);
-            writer.WritePropertyName("macroF1"u8);
-            writer.WriteNumberValue(MacroF1);
-            writer.WritePropertyName("macroPrecision"u8);
-            writer.WriteNumberValue(MacroPrecision);
-            writer.WritePropertyName("macroRecall"u8);
-            writer.WriteNumberValue(MacroRecall);
+            writer.WritePropertyName("f1"u8);
+            writer.WriteNumberValue(F1);
+            writer.WritePropertyName("precision"u8);
+            writer.WriteNumberValue(Precision);
+            writer.WritePropertyName("recall"u8);
+            writer.WriteNumberValue(Recall);
+            writer.WritePropertyName("truePositiveCount"u8);
+            writer.WriteNumberValue(TruePositiveCount);
+            writer.WritePropertyName("trueNegativeCount"u8);
+            writer.WriteNumberValue(TrueNegativeCount);
+            writer.WritePropertyName("falsePositiveCount"u8);
+            writer.WriteNumberValue(FalsePositiveCount);
+            writer.WritePropertyName("falseNegativeCount"u8);
+            writer.WriteNumberValue(FalseNegativeCount);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,19 +65,19 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        MultiLabelClassificationEvalSummary IJsonModel<MultiLabelClassificationEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MultiLabelClassEvalSummary IJsonModel<MultiLabelClassEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MultiLabelClassificationEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MultiLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiLabelClassificationEvalSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiLabelClassEvalSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMultiLabelClassificationEvalSummary(document.RootElement, options);
+            return DeserializeMultiLabelClassEvalSummary(document.RootElement, options);
         }
 
-        internal static MultiLabelClassificationEvalSummary DeserializeMultiLabelClassificationEvalSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MultiLabelClassEvalSummary DeserializeMultiLabelClassEvalSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,55 +85,50 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 return null;
             }
-            IReadOnlyDictionary<string, MultiLabelClassEvalSummary> classes = default;
-            float microF1 = default;
-            float microPrecision = default;
-            float microRecall = default;
-            float macroF1 = default;
-            float macroPrecision = default;
-            float macroRecall = default;
+            double f1 = default;
+            double precision = default;
+            double recall = default;
+            int truePositiveCount = default;
+            int trueNegativeCount = default;
+            int falsePositiveCount = default;
+            int falseNegativeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("classes"u8))
+                if (property.NameEquals("f1"u8))
                 {
-                    Dictionary<string, MultiLabelClassEvalSummary> dictionary = new Dictionary<string, MultiLabelClassEvalSummary>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, MultiLabelClassEvalSummary.DeserializeMultiLabelClassEvalSummary(property0.Value, options));
-                    }
-                    classes = dictionary;
+                    f1 = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("microF1"u8))
+                if (property.NameEquals("precision"u8))
                 {
-                    microF1 = property.Value.GetSingle();
+                    precision = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("microPrecision"u8))
+                if (property.NameEquals("recall"u8))
                 {
-                    microPrecision = property.Value.GetSingle();
+                    recall = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("microRecall"u8))
+                if (property.NameEquals("truePositiveCount"u8))
                 {
-                    microRecall = property.Value.GetSingle();
+                    truePositiveCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("macroF1"u8))
+                if (property.NameEquals("trueNegativeCount"u8))
                 {
-                    macroF1 = property.Value.GetSingle();
+                    trueNegativeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("macroPrecision"u8))
+                if (property.NameEquals("falsePositiveCount"u8))
                 {
-                    macroPrecision = property.Value.GetSingle();
+                    falsePositiveCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("macroRecall"u8))
+                if (property.NameEquals("falseNegativeCount"u8))
                 {
-                    macroRecall = property.Value.GetSingle();
+                    falseNegativeCount = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,54 +137,54 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MultiLabelClassificationEvalSummary(
-                classes,
-                microF1,
-                microPrecision,
-                microRecall,
-                macroF1,
-                macroPrecision,
-                macroRecall,
+            return new MultiLabelClassEvalSummary(
+                f1,
+                precision,
+                recall,
+                truePositiveCount,
+                trueNegativeCount,
+                falsePositiveCount,
+                falseNegativeCount,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MultiLabelClassificationEvalSummary>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MultiLabelClassEvalSummary>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MultiLabelClassificationEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MultiLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultiLabelClassificationEvalSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiLabelClassEvalSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MultiLabelClassificationEvalSummary IPersistableModel<MultiLabelClassificationEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MultiLabelClassEvalSummary IPersistableModel<MultiLabelClassEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MultiLabelClassificationEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MultiLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMultiLabelClassificationEvalSummary(document.RootElement, options);
+                        return DeserializeMultiLabelClassEvalSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultiLabelClassificationEvalSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiLabelClassEvalSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MultiLabelClassificationEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MultiLabelClassEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MultiLabelClassificationEvalSummary FromResponse(Response response)
+        internal static MultiLabelClassEvalSummary FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMultiLabelClassificationEvalSummary(document.RootElement);
+            return DeserializeMultiLabelClassEvalSummary(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

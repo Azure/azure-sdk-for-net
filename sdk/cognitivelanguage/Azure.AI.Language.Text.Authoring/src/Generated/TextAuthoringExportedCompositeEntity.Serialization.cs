@@ -11,15 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-namespace Azure.AI.Language.Text.Authoring.Models
-{
-    public partial class DocumentEntityRegionEvaluationResult : IUtf8JsonSerializable, IJsonModel<DocumentEntityRegionEvaluationResult>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentEntityRegionEvaluationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<DocumentEntityRegionEvaluationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
 namespace Azure.AI.Language.Text.Authoring
 {
     public partial class TextAuthoringExportedCompositeEntity : IUtf8JsonSerializable, IJsonModel<TextAuthoringExportedCompositeEntity>
@@ -27,7 +18,6 @@ namespace Azure.AI.Language.Text.Authoring
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextAuthoringExportedCompositeEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TextAuthoringExportedCompositeEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -38,17 +28,6 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRegionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(DocumentEntityRegionEvaluationResult)} does not support writing '{format}' format.");
-            }
-
-            writer.WritePropertyName("expectedEntities"u8);
-            writer.WriteStartArray();
-            foreach (var item in ExpectedEntities)
-========
             var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -56,30 +35,15 @@ namespace Azure.AI.Language.Text.Authoring
             }
 
             if (Optional.IsDefined(CompositionSetting))
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
             {
                 writer.WritePropertyName("compositionSetting"u8);
                 writer.WriteStringValue(CompositionSetting.Value.ToString());
             }
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-            writer.WriteEndArray();
-            writer.WritePropertyName("predictedEntities"u8);
-            writer.WriteStartArray();
-            foreach (var item in PredictedEntities)
-========
             if (Optional.IsDefined(List))
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
             {
                 writer.WritePropertyName("list"u8);
                 writer.WriteObjectValue(List, options);
             }
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-            writer.WriteEndArray();
-            writer.WritePropertyName("regionOffset"u8);
-            writer.WriteNumberValue(RegionOffset);
-            writer.WritePropertyName("regionLength"u8);
-            writer.WriteNumberValue(RegionLength);
-========
             if (Optional.IsCollectionDefined(Prebuilts))
             {
                 writer.WritePropertyName("prebuilts"u8);
@@ -95,7 +59,6 @@ namespace Azure.AI.Language.Text.Authoring
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -113,21 +76,6 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-        DocumentEntityRegionEvaluationResult IJsonModel<DocumentEntityRegionEvaluationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRegionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(DocumentEntityRegionEvaluationResult)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentEntityRegionEvaluationResult(document.RootElement, options);
-        }
-
-        internal static DocumentEntityRegionEvaluationResult DeserializeDocumentEntityRegionEvaluationResult(JsonElement element, ModelReaderWriterOptions options = null)
-========
         TextAuthoringExportedCompositeEntity IJsonModel<TextAuthoringExportedCompositeEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,7 +89,6 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         internal static TextAuthoringExportedCompositeEntity DeserializeTextAuthoringExportedCompositeEntity(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -149,51 +96,14 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 return null;
             }
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-            IReadOnlyList<DocumentEntityLabelEvaluationResult> expectedEntities = default;
-            IReadOnlyList<DocumentEntityLabelEvaluationResult> predictedEntities = default;
-            int regionOffset = default;
-            int regionLength = default;
-========
             TextAuthoringCompositionMode? compositionSetting = default;
             TextAuthoringExportedEntityList list = default;
             IList<TextAuthoringExportedPrebuiltEntity> prebuilts = default;
             string category = default;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-                if (property.NameEquals("expectedEntities"u8))
-                {
-                    List<DocumentEntityLabelEvaluationResult> array = new List<DocumentEntityLabelEvaluationResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentEntityLabelEvaluationResult.DeserializeDocumentEntityLabelEvaluationResult(item, options));
-                    }
-                    expectedEntities = array;
-                    continue;
-                }
-                if (property.NameEquals("predictedEntities"u8))
-                {
-                    List<DocumentEntityLabelEvaluationResult> array = new List<DocumentEntityLabelEvaluationResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentEntityLabelEvaluationResult.DeserializeDocumentEntityLabelEvaluationResult(item, options));
-                    }
-                    predictedEntities = array;
-                    continue;
-                }
-                if (property.NameEquals("regionOffset"u8))
-                {
-                    regionOffset = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("regionLength"u8))
-                {
-                    regionLength = property.Value.GetInt32();
-========
                 if (property.NameEquals("compositionSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -229,7 +139,6 @@ namespace Azure.AI.Language.Text.Authoring
                 if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -238,36 +147,18 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-            return new DocumentEntityRegionEvaluationResult(expectedEntities, predictedEntities, regionOffset, regionLength, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<DocumentEntityRegionEvaluationResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRegionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
-========
             return new TextAuthoringExportedCompositeEntity(compositionSetting, list, prebuilts ?? new ChangeTrackingList<TextAuthoringExportedPrebuiltEntity>(), category, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TextAuthoringExportedCompositeEntity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-                    throw new FormatException($"The model {nameof(DocumentEntityRegionEvaluationResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DocumentEntityRegionEvaluationResult IPersistableModel<DocumentEntityRegionEvaluationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRegionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(TextAuthoringExportedCompositeEntity)} does not support writing '{options.Format}' format.");
             }
         }
@@ -275,30 +166,11 @@ namespace Azure.AI.Language.Text.Authoring
         TextAuthoringExportedCompositeEntity IPersistableModel<TextAuthoringExportedCompositeEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRegionEvaluationResult.Serialization.cs
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDocumentEntityRegionEvaluationResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DocumentEntityRegionEvaluationResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DocumentEntityRegionEvaluationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DocumentEntityRegionEvaluationResult FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDocumentEntityRegionEvaluationResult(document.RootElement);
-========
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTextAuthoringExportedCompositeEntity(document.RootElement, options);
                     }
@@ -315,7 +187,6 @@ namespace Azure.AI.Language.Text.Authoring
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTextAuthoringExportedCompositeEntity(document.RootElement);
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedCompositeEntity.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

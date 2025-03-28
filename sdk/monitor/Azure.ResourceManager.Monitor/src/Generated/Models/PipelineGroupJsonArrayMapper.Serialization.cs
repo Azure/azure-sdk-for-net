@@ -11,15 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-namespace Azure.AI.Language.Text.Authoring.Models
-{
-    public partial class ExportedDocumentEntityRegion : IUtf8JsonSerializable, IJsonModel<ExportedDocumentEntityRegion>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportedDocumentEntityRegion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ExportedDocumentEntityRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class PipelineGroupJsonArrayMapper : IUtf8JsonSerializable, IJsonModel<PipelineGroupJsonArrayMapper>
@@ -27,7 +18,6 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineGroupJsonArrayMapper>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PipelineGroupJsonArrayMapper>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -38,34 +28,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<ExportedDocumentEntityRegion>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ExportedDocumentEntityRegion)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(RegionOffset))
-            {
-                writer.WritePropertyName("regionOffset"u8);
-                writer.WriteNumberValue(RegionOffset.Value);
-            }
-            if (Optional.IsDefined(RegionLength))
-            {
-                writer.WritePropertyName("regionLength"u8);
-                writer.WriteNumberValue(RegionLength.Value);
-            }
-            if (Optional.IsCollectionDefined(Labels))
-            {
-                writer.WritePropertyName("labels"u8);
-                writer.WriteStartArray();
-                foreach (var item in Labels)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-========
             var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupJsonArrayMapper>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -89,7 +51,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -107,21 +68,6 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-        ExportedDocumentEntityRegion IJsonModel<ExportedDocumentEntityRegion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportedDocumentEntityRegion>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ExportedDocumentEntityRegion)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportedDocumentEntityRegion(document.RootElement, options);
-        }
-
-        internal static ExportedDocumentEntityRegion DeserializeExportedDocumentEntityRegion(JsonElement element, ModelReaderWriterOptions options = null)
-========
         PipelineGroupJsonArrayMapper IJsonModel<PipelineGroupJsonArrayMapper>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupJsonArrayMapper>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,7 +81,6 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         internal static PipelineGroupJsonArrayMapper DeserializePipelineGroupJsonArrayMapper(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -143,62 +88,28 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-            int? regionOffset = default;
-            int? regionLength = default;
-            IList<ExportedDocumentEntityLabel> labels = default;
-========
             PipelineGroupJsonMapperSourceField sourceField = default;
             PipelineGroupJsonMapperDestinationField destinationField = default;
             IList<string> keys = default;
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-                if (property.NameEquals("regionOffset"u8))
-========
                 if (property.NameEquals("sourceField"u8))
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-                    regionOffset = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("regionLength"u8))
-========
                     sourceField = PipelineGroupJsonMapperSourceField.DeserializePipelineGroupJsonMapperSourceField(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destinationField"u8))
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-                    regionLength = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("labels"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ExportedDocumentEntityLabel> array = new List<ExportedDocumentEntityLabel>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ExportedDocumentEntityLabel.DeserializeExportedDocumentEntityLabel(item, options));
-                    }
-                    labels = array;
-========
                     destinationField = PipelineGroupJsonMapperDestinationField.DeserializePipelineGroupJsonMapperDestinationField(property.Value, options);
                     continue;
                 }
@@ -210,7 +121,6 @@ namespace Azure.ResourceManager.Monitor.Models
                         array.Add(item.GetString());
                     }
                     keys = array;
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -219,36 +129,18 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-            return new ExportedDocumentEntityRegion(regionOffset, regionLength, labels ?? new ChangeTrackingList<ExportedDocumentEntityLabel>(), serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<ExportedDocumentEntityRegion>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportedDocumentEntityRegion>)this).GetFormatFromOptions(options) : options.Format;
-========
             return new PipelineGroupJsonArrayMapper(sourceField, destinationField, keys, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PipelineGroupJsonArrayMapper>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupJsonArrayMapper>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-                    throw new FormatException($"The model {nameof(ExportedDocumentEntityRegion)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExportedDocumentEntityRegion IPersistableModel<ExportedDocumentEntityRegion>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportedDocumentEntityRegion>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(PipelineGroupJsonArrayMapper)} does not support writing '{options.Format}' format.");
             }
         }
@@ -256,39 +148,11 @@ namespace Azure.ResourceManager.Monitor.Models
         PipelineGroupJsonArrayMapper IPersistableModel<PipelineGroupJsonArrayMapper>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupJsonArrayMapper>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ExportedDocumentEntityRegion.Serialization.cs
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExportedDocumentEntityRegion(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExportedDocumentEntityRegion)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExportedDocumentEntityRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ExportedDocumentEntityRegion FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeExportedDocumentEntityRegion(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-========
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePipelineGroupJsonArrayMapper(document.RootElement, options);
                     }
@@ -298,6 +162,5 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         string IPersistableModel<PipelineGroupJsonArrayMapper>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
->>>>>>>> main:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupJsonArrayMapper.Serialization.cs
     }
 }

@@ -11,15 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CustomHealthcareEvaluationSummary.Serialization.cs
-namespace Azure.AI.Language.Text.Authoring.Models
-{
-    public partial class CustomHealthcareEvaluationSummary : IUtf8JsonSerializable, IJsonModel<CustomHealthcareEvaluationSummary>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomHealthcareEvaluationSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<CustomHealthcareEvaluationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
 namespace Azure.AI.Language.Text.Authoring
 {
     public partial class CustomTextSentimentProjectAssets : IUtf8JsonSerializable, IJsonModel<CustomTextSentimentProjectAssets>
@@ -27,7 +18,6 @@ namespace Azure.AI.Language.Text.Authoring
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomTextSentimentProjectAssets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomTextSentimentProjectAssets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/CustomTextSentimentProjectAssets.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -38,32 +28,6 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CustomHealthcareEvaluationSummary.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<CustomHealthcareEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(CustomHealthcareEvaluationSummary)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("customHealthcareEvaluation"u8);
-            writer.WriteObjectValue(CustomHealthcareEvaluation, options);
-        }
-
-        CustomHealthcareEvaluationSummary IJsonModel<CustomHealthcareEvaluationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomHealthcareEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(CustomHealthcareEvaluationSummary)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomHealthcareEvaluationSummary(document.RootElement, options);
-        }
-
-        internal static CustomHealthcareEvaluationSummary DeserializeCustomHealthcareEvaluationSummary(JsonElement element, ModelReaderWriterOptions options = null)
-========
             var format = options.Format == "W" ? ((IPersistableModel<CustomTextSentimentProjectAssets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -96,7 +60,6 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         internal static CustomTextSentimentProjectAssets DeserializeCustomTextSentimentProjectAssets(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/CustomTextSentimentProjectAssets.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,23 +67,12 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 return null;
             }
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CustomHealthcareEvaluationSummary.Serialization.cs
-            EntityRecognitionEvaluationSummary customHealthcareEvaluation = default;
-            ProjectKind projectKind = default;
-            EvaluationDetails evaluationOptions = default;
-========
             IList<ExportedCustomTextSentimentDocument> documents = default;
             TextAuthoringProjectKind projectKind = default;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/CustomTextSentimentProjectAssets.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CustomHealthcareEvaluationSummary.Serialization.cs
-                if (property.NameEquals("customHealthcareEvaluation"u8))
-                {
-                    customHealthcareEvaluation = EntityRecognitionEvaluationSummary.DeserializeEntityRecognitionEvaluationSummary(property.Value, options);
-========
                 if (property.NameEquals("documents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -133,21 +85,11 @@ namespace Azure.AI.Language.Text.Authoring
                         array.Add(ExportedCustomTextSentimentDocument.DeserializeExportedCustomTextSentimentDocument(item, options));
                     }
                     documents = array;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/CustomTextSentimentProjectAssets.Serialization.cs
                     continue;
                 }
                 if (property.NameEquals("projectKind"u8))
                 {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CustomHealthcareEvaluationSummary.Serialization.cs
-                    projectKind = new ProjectKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("evaluationOptions"u8))
-                {
-                    evaluationOptions = EvaluationDetails.DeserializeEvaluationDetails(property.Value, options);
-========
                     projectKind = new TextAuthoringProjectKind(property.Value.GetString());
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/CustomTextSentimentProjectAssets.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,36 +98,18 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CustomHealthcareEvaluationSummary.Serialization.cs
-            return new CustomHealthcareEvaluationSummary(projectKind, evaluationOptions, serializedAdditionalRawData, customHealthcareEvaluation);
-        }
-
-        BinaryData IPersistableModel<CustomHealthcareEvaluationSummary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomHealthcareEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
-========
             return new CustomTextSentimentProjectAssets(projectKind, serializedAdditionalRawData, documents ?? new ChangeTrackingList<ExportedCustomTextSentimentDocument>());
         }
 
         BinaryData IPersistableModel<CustomTextSentimentProjectAssets>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomTextSentimentProjectAssets>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/CustomTextSentimentProjectAssets.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CustomHealthcareEvaluationSummary.Serialization.cs
-                    throw new FormatException($"The model {nameof(CustomHealthcareEvaluationSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CustomHealthcareEvaluationSummary IPersistableModel<CustomHealthcareEvaluationSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomHealthcareEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(CustomTextSentimentProjectAssets)} does not support writing '{options.Format}' format.");
             }
         }
@@ -193,30 +117,11 @@ namespace Azure.AI.Language.Text.Authoring
         CustomTextSentimentProjectAssets IPersistableModel<CustomTextSentimentProjectAssets>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomTextSentimentProjectAssets>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/CustomTextSentimentProjectAssets.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CustomHealthcareEvaluationSummary.Serialization.cs
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCustomHealthcareEvaluationSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomHealthcareEvaluationSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CustomHealthcareEvaluationSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new CustomHealthcareEvaluationSummary FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCustomHealthcareEvaluationSummary(document.RootElement);
-========
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomTextSentimentProjectAssets(document.RootElement, options);
                     }
@@ -233,7 +138,6 @@ namespace Azure.AI.Language.Text.Authoring
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCustomTextSentimentProjectAssets(document.RootElement);
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/CustomTextSentimentProjectAssets.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

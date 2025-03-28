@@ -11,11 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestrationDetails.Serialization.cs
-namespace Azure.AI.Language.Conversations.Authoring.Models
-========
 namespace Azure.AI.Language.Conversations.Authoring
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ExportedQuestionAnsweringOrchestrationDetails.Serialization.cs
 {
     public partial class ExportedQuestionAnsweringOrchestrationDetails : IUtf8JsonSerializable, IJsonModel<ExportedQuestionAnsweringOrchestrationDetails>
     {
@@ -109,11 +105,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 case "J":
                     {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestrationDetails.Serialization.cs
-                        using JsonDocument document = JsonDocument.Parse(data);
-========
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ExportedQuestionAnsweringOrchestrationDetails.Serialization.cs
                         return DeserializeExportedQuestionAnsweringOrchestrationDetails(document.RootElement, options);
                     }
                 default:
@@ -127,11 +119,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ExportedQuestionAnsweringOrchestrationDetails FromResponse(Response response)
         {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestrationDetails.Serialization.cs
-            using var document = JsonDocument.Parse(response.Content);
-========
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ExportedQuestionAnsweringOrchestrationDetails.Serialization.cs
             return DeserializeExportedQuestionAnsweringOrchestrationDetails(document.RootElement);
         }
 

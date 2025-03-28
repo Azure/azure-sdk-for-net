@@ -38,11 +38,7 @@ namespace Azure.Search.Documents.Models
         internal static DebugInfo FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-<<<<<<<< HEAD:sdk/search/Azure.Search.Documents/src/Generated/Models/DebugInfo.Serialization.cs
             return DeserializeDebugInfo(document.RootElement);
-========
-            return DeserializeUserConsent(document.RootElement);
->>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/UserConsent.Serialization.cs
         }
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Represents the metadata for assigned deployments for a project. </summary>
-    public partial class ConversationAuthoringAssignedProjectDeploymentsMetadata
+    /// <summary> Represents the metadata for an assigned deployment. </summary>
+    public partial class ConversationAuthoringAssignedProjectDeploymentMetadata
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,43 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
-        /// <param name="deploymentsMetadata"> Represents the resource region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentsMetadata"/> is null. </exception>
-        internal ConversationAuthoringAssignedProjectDeploymentsMetadata(IEnumerable<ConversationAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata)
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentMetadata"/>. </summary>
+        /// <param name="deploymentName"> Represents the deployment name. </param>
+        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
+        /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        internal ConversationAuthoringAssignedProjectDeploymentMetadata(string deploymentName, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiresOn)
         {
-            Argument.AssertNotNull(deploymentsMetadata, nameof(deploymentsMetadata));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
-            DeploymentsMetadata = deploymentsMetadata.ToList();
+            DeploymentName = deploymentName;
+            LastDeployedOn = lastDeployedOn;
+            DeploymentExpiresOn = deploymentExpiresOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
-        /// <param name="projectName"> Represents the project name. </param>
-        /// <param name="deploymentsMetadata"> Represents the resource region. </param>
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentMetadata"/>. </summary>
+        /// <param name="deploymentName"> Represents the deployment name. </param>
+        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
+        /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringAssignedProjectDeploymentsMetadata(string projectName, IReadOnlyList<ConversationAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationAuthoringAssignedProjectDeploymentMetadata(string deploymentName, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ProjectName = projectName;
-            DeploymentsMetadata = deploymentsMetadata;
+            DeploymentName = deploymentName;
+            LastDeployedOn = lastDeployedOn;
+            DeploymentExpiresOn = deploymentExpiresOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentsMetadata"/> for deserialization. </summary>
-        internal ConversationAuthoringAssignedProjectDeploymentsMetadata()
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentMetadata"/> for deserialization. </summary>
+        internal ConversationAuthoringAssignedProjectDeploymentMetadata()
         {
         }
 
-        /// <summary> Represents the project name. </summary>
-        public string ProjectName { get; }
-        /// <summary> Represents the resource region. </summary>
-        public IReadOnlyList<ConversationAuthoringAssignedProjectDeploymentMetadata> DeploymentsMetadata { get; }
+        /// <summary> Represents the deployment name. </summary>
+        public string DeploymentName { get; }
+        /// <summary> Represents deployment last deployed time. </summary>
+        public DateTimeOffset LastDeployedOn { get; }
+        /// <summary> Represents deployment expiration date in the runtime. </summary>
+        public DateTimeOffset DeploymentExpiresOn { get; }
     }
 }
