@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    [ClientTestFixture(true, "2024-03-01")]
+    [ClientTestFixture(true, "2024-03-01", "2024-11-01")]
     public class VirtualMachineAnyZoneCapabilityTest : VirtualMachineTestBase
     {
         public VirtualMachineAnyZoneCapabilityTest(bool async, string apiVersion)
