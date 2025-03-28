@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Net.Sockets;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -122,19 +123,14 @@ namespace Azure.Messaging.ServiceBus.Core
         {
             // There's an ambient transaction - should not retry
 
-            if (Transaction.Current != null)
+            exception = exception switch
             {
-                return false;
-            }
-
-            if ((exception is TaskCanceledException) || (exception is OperationCanceledException))
-            {
-                exception = exception?.InnerException;
-            }
-            else if (exception is AggregateException aggregateEx)
-            {
-                exception = aggregateEx?.Flatten().InnerException;
-            }
+                TaskCanceledException => exception?.InnerException,
+                OperationCanceledException => exception?.InnerException,
+                WebSocketException => exception?.InnerException ?? exception,
+                AggregateException aggregateEx => aggregateEx?.Flatten().InnerException,
+                _ => exception
+            };
 
             switch (exception)
             {
