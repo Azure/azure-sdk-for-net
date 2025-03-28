@@ -3,16 +3,6 @@
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.1.0 (2025-01-31)
-
-### Features Added
 - This SDK version supports 2024-10-01-preview API version.
 - Cluster resource supports SecretArchiveSettings.
 - Cluster create and update commands support new parameter AnalyticsOutputSettings for configuring Log Analytics Workspace
@@ -23,6 +13,16 @@
 - VirtualMachine is updated to display the extended location to use for creation of a VirtualMachine console resource.
 - VirtualMachine is updated to support persistent storage for OS disk.
 - VirtualMachine's property VmDeviceModel gets a new option 'T3'. When 'T3' is selected, SecureBoot and vTPM are automatically enabled. This is to support Windows users.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2025-01-31)
+
+### Features Added
 - Upgraded api-version tag from 'package-2023-07-01' to 'package-2024-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f999652ecea2a4bddc2b08a113617e23e98f10d4/specification/networkcloud/resource-manager/readme.md.
 
 ### Other Changes
