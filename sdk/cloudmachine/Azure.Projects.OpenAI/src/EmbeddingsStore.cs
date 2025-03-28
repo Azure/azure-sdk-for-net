@@ -23,7 +23,11 @@ public class EmbeddingsStore
     /// <param name="client"></param>
     /// <param name="store"></param>
     /// <param name="factChunkSize"></param>
+<<<<<<<< HEAD:sdk/cloudmachine/Azure.CloudMachine.OpenAI/src/EmbeddingsVectorbase.cs
+    public EmbeddingsVectorbase(EmbeddingClient client, VectorbaseStore? store = default, int factChunkSize = 1000)
+========
     public EmbeddingsStore(EmbeddingClient client, VectorbaseStore? store = default, int factChunkSize = 1000)
+>>>>>>>> main:sdk/cloudmachine/Azure.Projects.OpenAI/src/EmbeddingsStore.cs
     {
         _client = client;
         _store = store ?? new MemoryVectorbaseStore();

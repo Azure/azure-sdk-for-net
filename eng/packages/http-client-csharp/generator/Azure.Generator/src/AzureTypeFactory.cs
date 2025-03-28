@@ -1,18 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.InputTransformation;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Input;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
-using Microsoft.Generator.CSharp.Snippets;
-using Microsoft.Generator.CSharp.Statements;
+using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -47,6 +46,16 @@ namespace Azure.Generator
         /// <inheritdoc/>
         public override IHttpRequestOptionsApi HttpRequestOptionsApi => HttpRequestOptionsProvider.Instance;
 
+        /// <summary>
+        /// Get dependency packages for Azure.
+        /// </summary>
+        protected internal virtual IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
+            [
+                new("Azure.Core"),
+                new("System.ClientModel"),
+                new("System.Text.Json")
+            ];
+
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
@@ -78,7 +87,9 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
         public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             var expression = DeserializeJsonValueCore(valueType, element, format);
             return expression ?? base.DeserializeJsonValue(valueType, element, format);
@@ -109,39 +120,9 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        protected override ClientProvider? CreateClientCore(InputClient inputClient)
+        public override NewProjectScaffolding CreateNewProjectScaffolding()
         {
-            if (!AzureClientPlugin.Instance.IsAzureArm.Value)
-            {
-                return base.CreateClientCore(inputClient);
-            }
-
-            var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
-            return transformedClient is null ? null : base.CreateClientCore(transformedClient);
-        }
-
-        /// <inheritdoc/>
-        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
-        {
-            if (inputType is InputModelType inputModel
-                && typeProvider is ModelProvider modelProvider
-                && AzureClientPlugin.Instance.OutputLibrary.IsResource(inputType.Name)
-                && inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
-            {
-                return [new ResourceDataSerializationProvider(inputModel, modelProvider)];
-            }
-
-            return base.CreateSerializationsCore(inputType, typeProvider);
-        }
-
-        /// <inheritdoc/>
-        protected override ModelProvider? CreateModelCore(InputModelType model)
-        {
-            if (AzureClientPlugin.Instance.OutputLibrary.IsResource(model.Name))
-            {
-                return new ResourceDataProvider(model);
-            }
-            return base.CreateModelCore(model);
+            return new NewAzureProjectScaffolding();
         }
     }
 }

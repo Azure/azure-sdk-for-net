@@ -11,13 +11,21 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Health.Deidentification
+namespace Azure.AI.Language.Text.Authoring.Models
 {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ResourceMetadata.Serialization.cs
+    public partial class ResourceMetadata : IUtf8JsonSerializable, IJsonModel<ResourceMetadata>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ResourceMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+========
     public partial class DeidentificationDocumentLocation : IUtf8JsonSerializable, IJsonModel<DeidentificationDocumentLocation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeidentificationDocumentLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeidentificationDocumentLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+>>>>>>>> main:sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/DeidentificationDocumentLocation.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,6 +36,20 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ResourceMetadata.Serialization.cs
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceMetadata)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("azureResourceId"u8);
+            writer.WriteStringValue(AzureResourceId);
+            writer.WritePropertyName("customDomain"u8);
+            writer.WriteStringValue(CustomDomain);
+            writer.WritePropertyName("region"u8);
+            writer.WriteStringValue(Region);
+========
             var format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -41,6 +63,7 @@ namespace Azure.Health.Deidentification
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag.ToString());
             }
+>>>>>>>> main:sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/DeidentificationDocumentLocation.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,6 +81,21 @@ namespace Azure.Health.Deidentification
             }
         }
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ResourceMetadata.Serialization.cs
+        ResourceMetadata IJsonModel<ResourceMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceMetadata(document.RootElement, options);
+        }
+
+        internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+========
         DeidentificationDocumentLocation IJsonModel<DeidentificationDocumentLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
@@ -71,6 +109,7 @@ namespace Azure.Health.Deidentification
         }
 
         internal static DeidentificationDocumentLocation DeserializeDeidentificationDocumentLocation(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> main:sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/DeidentificationDocumentLocation.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,20 +117,37 @@ namespace Azure.Health.Deidentification
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ResourceMetadata.Serialization.cs
+            string azureResourceId = default;
+            string customDomain = default;
+            string region = default;
+========
             Uri location = default;
             ETag etag = default;
+>>>>>>>> main:sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/DeidentificationDocumentLocation.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ResourceMetadata.Serialization.cs
+                if (property.NameEquals("azureResourceId"u8))
+                {
+                    azureResourceId = property.Value.GetString();
+========
                 if (property.NameEquals("location"u8))
                 {
                     location = new Uri(property.Value.GetString());
+>>>>>>>> main:sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/DeidentificationDocumentLocation.Serialization.cs
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
+                if (property.NameEquals("customDomain"u8))
                 {
-                    etag = new ETag(property.Value.GetString());
+                    customDomain = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("region"u8))
+                {
+                    region = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,18 +156,36 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ResourceMetadata.Serialization.cs
+            return new ResourceMetadata(azureResourceId, customDomain, region, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ResourceMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
+========
             return new DeidentificationDocumentLocation(location, etag, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeidentificationDocumentLocation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/DeidentificationDocumentLocation.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ResourceMetadata.Serialization.cs
+                    throw new FormatException($"The model {nameof(ResourceMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceMetadata IPersistableModel<ResourceMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
+========
                     throw new FormatException($"The model {nameof(DeidentificationDocumentLocation)} does not support writing '{options.Format}' format.");
             }
         }
@@ -119,11 +193,30 @@ namespace Azure.Health.Deidentification
         DeidentificationDocumentLocation IPersistableModel<DeidentificationDocumentLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/DeidentificationDocumentLocation.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/ResourceMetadata.Serialization.cs
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceMetadata FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceMetadata(document.RootElement);
+========
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeidentificationDocumentLocation(document.RootElement, options);
                     }
@@ -140,6 +233,7 @@ namespace Azure.Health.Deidentification
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDeidentificationDocumentLocation(document.RootElement);
+>>>>>>>> main:sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/DeidentificationDocumentLocation.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

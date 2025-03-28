@@ -4,15 +4,12 @@
 import { EmitContext } from "@typespec/compiler";
 
 import {
-  $onEmit as $OnMGCEmit,
-  NetEmitterOptions,
-  setSDKContextOptions
+  $onEmit as $onMTGEmit,
+  CSharpEmitterOptions
 } from "@typespec/http-client-csharp";
-import { azureSDKContextOptions } from "./sdk-context-options.js";
 
-export async function $onEmit(context: EmitContext<NetEmitterOptions>) {
-  context.options["plugin-name"] = "AzureClientPlugin";
-  context.options["emitter-extension-path"] = import.meta.url;
-  setSDKContextOptions(azureSDKContextOptions);
-  await $OnMGCEmit(context);
+export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
+  context.options["generator-name"] ??= "AzureClientGenerator";
+  context.options["emitter-extension-path"] ??= import.meta.url;
+  await $onMTGEmit(context);
 }

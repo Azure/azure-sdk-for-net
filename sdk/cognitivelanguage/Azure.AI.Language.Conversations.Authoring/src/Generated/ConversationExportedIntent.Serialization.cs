@@ -11,7 +11,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ConversationExportedIntent.Serialization.cs
+namespace Azure.AI.Language.Conversations.Authoring.Models
+========
 namespace Azure.AI.Language.Conversations.Authoring
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationExportedIntent.Serialization.cs
 {
     public partial class ConversationExportedIntent : IUtf8JsonSerializable, IJsonModel<ConversationExportedIntent>
     {
@@ -113,7 +117,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 case "J":
                     {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ConversationExportedIntent.Serialization.cs
+                        using JsonDocument document = JsonDocument.Parse(data);
+========
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationExportedIntent.Serialization.cs
                         return DeserializeConversationExportedIntent(document.RootElement, options);
                     }
                 default:
@@ -127,7 +135,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ConversationExportedIntent FromResponse(Response response)
         {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ConversationExportedIntent.Serialization.cs
+            using var document = JsonDocument.Parse(response.Content);
+========
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationExportedIntent.Serialization.cs
             return DeserializeConversationExportedIntent(document.RootElement);
         }
 

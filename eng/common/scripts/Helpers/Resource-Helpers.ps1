@@ -223,8 +223,8 @@ function Remove-WormStorageAccounts() {
   # DO NOT REMOVE THIS
   # We call this script from live test pipelines as well, and a string mismatch/error could blow away
   # some static storage accounts we rely on
-  if (!$groupPrefix -or ($CI -and !$GroupPrefix.StartsWith('rg-'))) {
-    throw "The -GroupPrefix parameter must not be empty, or must start with 'rg-' in CI contexts"
+  if (!$groupPrefix -or ($CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_rg-')))) {
+    throw "The -GroupPrefix parameter must not be empty, or must start with 'rg-' or 'SSS3PT_rg-' in CI contexts"
   }
 
   $groups = Get-AzResourceGroup | Where-Object { $_.ResourceGroupName.StartsWith($GroupPrefix) } | Where-Object { $_.ProvisioningState -ne 'Deleting' }

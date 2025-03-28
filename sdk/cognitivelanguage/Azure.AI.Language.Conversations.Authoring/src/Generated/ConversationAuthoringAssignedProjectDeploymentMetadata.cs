@@ -8,10 +8,17 @@
 using System;
 using System.Collections.Generic;
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedConversationOrchestration.cs
+namespace Azure.AI.Language.Conversations.Authoring.Models
+{
+    /// <summary> Defines the orchestration details for a Conversational project target. </summary>
+    public partial class ExportedConversationOrchestration
+========
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the metadata for an assigned deployment. </summary>
     public partial class ConversationAuthoringAssignedProjectDeploymentMetadata
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringAssignedProjectDeploymentMetadata.cs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +52,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedConversationOrchestration.cs
+        /// <summary> Initializes a new instance of <see cref="ExportedConversationOrchestration"/>. </summary>
+        /// <param name="projectName"> The name of the targeted project. </param>
+        /// <param name="deploymentName"> The name of the targeted deployment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        public ExportedConversationOrchestration(string projectName, string deploymentName)
+========
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentMetadata"/>. </summary>
         /// <param name="deploymentName"> Represents the deployment name. </param>
         /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
         /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         internal ConversationAuthoringAssignedProjectDeploymentMetadata(string deploymentName, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiresOn)
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringAssignedProjectDeploymentMetadata.cs
         {
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
@@ -59,6 +74,28 @@ namespace Azure.AI.Language.Conversations.Authoring
             DeploymentExpiresOn = deploymentExpiresOn;
         }
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedConversationOrchestration.cs
+        /// <summary> Initializes a new instance of <see cref="ExportedConversationOrchestration"/>. </summary>
+        /// <param name="projectName"> The name of the targeted project. </param>
+        /// <param name="deploymentName"> The name of the targeted deployment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportedConversationOrchestration(string projectName, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ProjectName = projectName;
+            DeploymentName = deploymentName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportedConversationOrchestration"/> for deserialization. </summary>
+        internal ExportedConversationOrchestration()
+        {
+        }
+
+        /// <summary> The name of the targeted project. </summary>
+        public string ProjectName { get; }
+        /// <summary> The name of the targeted deployment. </summary>
+        public string DeploymentName { get; }
+========
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentMetadata"/>. </summary>
         /// <param name="deploymentName"> Represents the deployment name. </param>
         /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
@@ -83,5 +120,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public DateTimeOffset LastDeployedOn { get; }
         /// <summary> Represents deployment expiration date in the runtime. </summary>
         public DateTimeOffset DeploymentExpiresOn { get; }
+>>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringAssignedProjectDeploymentMetadata.cs
     }
 }

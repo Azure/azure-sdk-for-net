@@ -153,6 +153,7 @@ steps:
       parameters:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         AOTTestInputs: ${{ parameters.AOTTestInputs }}
+        PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: "Component Detection"
@@ -180,6 +181,8 @@ steps:
   - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
     parameters:
       Artifacts: ${{ parameters.Artifacts }}
+      ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        ArtifactName: 'packages_$(System.JobName)'
 
   - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
     parameters:

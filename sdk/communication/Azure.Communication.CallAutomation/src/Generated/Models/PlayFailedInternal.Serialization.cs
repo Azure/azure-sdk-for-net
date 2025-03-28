@@ -9,9 +9,15 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/PlayFailedInternal.Serialization.cs
     internal partial class PlayFailedInternal
     {
         internal static PlayFailedInternal DeserializePlayFailedInternal(JsonElement element)
+========
+    internal partial class RecognizeFailedInternal
+    {
+        internal static RecognizeFailedInternal DeserializeRecognizeFailedInternal(JsonElement element)
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/RecognizeFailedInternal.Serialization.cs
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -64,7 +70,11 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/PlayFailedInternal.Serialization.cs
             return new PlayFailedInternal(
+========
+            return new RecognizeFailedInternal(
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/RecognizeFailedInternal.Serialization.cs
                 callConnectionId,
                 serverCallId,
                 correlationId,
@@ -75,10 +85,17 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/PlayFailedInternal.Serialization.cs
         internal static PlayFailedInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializePlayFailedInternal(document.RootElement);
+========
+        internal static RecognizeFailedInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRecognizeFailedInternal(document.RootElement);
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/RecognizeFailedInternal.Serialization.cs
         }
     }
 }

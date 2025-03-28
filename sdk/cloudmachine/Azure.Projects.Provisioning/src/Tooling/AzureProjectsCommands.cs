@@ -3,6 +3,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+<<<<<<<< HEAD:sdk/cloudmachine/Azure.Provisioning.CloudMachine/src/Tooling/CloudMachineCommands.cs
+using System.ClientModel.TypeSpec;
+using System.Collections.Generic;
+using System.IO;
+========
+>>>>>>>> main:sdk/cloudmachine/Azure.Projects.Provisioning/src/Tooling/AzureProjectsCommands.cs
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Rest;
@@ -10,23 +16,53 @@ using Azure.Identity;
 
 namespace Azure.Projects;
 
+<<<<<<<< HEAD:sdk/cloudmachine/Azure.Provisioning.CloudMachine/src/Tooling/CloudMachineCommands.cs
+public static class CloudMachineCommands
+{
+    public static bool TryExecuteCommand(this CloudMachineInfrastructure cmi, string[] args)
+========
 public static class AzureProjectsCommands
 {
     public static bool TryExecuteCommand(this ProjectInfrastructure infrastructure, string[] args)
+>>>>>>>> main:sdk/cloudmachine/Azure.Projects.Provisioning/src/Tooling/AzureProjectsCommands.cs
     {
         if (args.Length < 1)
             return false;
 
-        string cmid = ProjectClient.ReadOrCreateProjectId();
+<<<<<<<< HEAD:sdk/cloudmachine/Azure.Provisioning.CloudMachine/src/Tooling/CloudMachineCommands.cs
+        string cmid = CloudMachineClient.ReadOrCreateCloudMachineId();
 
         if (args[0] == "-bicep")
         {
-            Azd.Init(infrastructure);
+            Azd.Init(cmi);
             return true;
         }
 
         if (args[0] == "-init")
         {
+            Azd.Init(cmi);
+
+            string? projName = default;
+            if (args.Length > 1)
+            {
+                projName = args[1];
+            }
+            Azd.InitDeployment(cmi, projName);
+========
+        string cmid = ProjectClient.ReadOrCreateProjectId();
+
+        if (args[0] == "-bicep")
+        {
+            Azd.Init(infrastructure);
+>>>>>>>> main:sdk/cloudmachine/Azure.Projects.Provisioning/src/Tooling/AzureProjectsCommands.cs
+            return true;
+        }
+
+        if (args[0] == "-init")
+        {
+<<<<<<<< HEAD:sdk/cloudmachine/Azure.Provisioning.CloudMachine/src/Tooling/CloudMachineCommands.cs
+            GenerateTsp(cmi.Endpoints);
+========
             Azd.Init(infrastructure);
 
             string? projName = default;
@@ -35,6 +71,7 @@ public static class AzureProjectsCommands
                 projName = args[1];
             }
             Azd.InitDeployment(infrastructure, projName);
+>>>>>>>> main:sdk/cloudmachine/Azure.Projects.Provisioning/src/Tooling/AzureProjectsCommands.cs
             return true;
         }
 
@@ -109,4 +146,24 @@ public static class AzureProjectsCommands
             }
         }
     }
+<<<<<<<< HEAD:sdk/cloudmachine/Azure.Provisioning.CloudMachine/src/Tooling/CloudMachineCommands.cs
+
+    private static void GenerateTsp(IEnumerable<Type> operationGroups)
+    {
+        foreach (Type operationGroup in operationGroups)
+        {
+            string name = operationGroup.Name;
+            if (name.StartsWith("I"))
+                name = name.Substring(1);
+            string directory = Path.Combine(".", "tsp");
+            string tspFile = Path.Combine(directory, $"{name}.tsp");
+            Directory.CreateDirectory(Path.GetDirectoryName(tspFile)!);
+            if (File.Exists(tspFile))
+                File.Delete(tspFile);
+            using FileStream stream = File.OpenWrite(tspFile);
+            TypeSpecWriter.WriteServer(stream, operationGroup);
+        }
+    }
+========
+>>>>>>>> main:sdk/cloudmachine/Azure.Projects.Provisioning/src/Tooling/AzureProjectsCommands.cs
 }

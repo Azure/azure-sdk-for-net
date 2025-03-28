@@ -12,6 +12,7 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary>
         /// Creates a new CallInvite object.
+        /// When the source of the call is a Teams App source, callerIdNumber is not supported and should be null.
         /// </summary>
         /// <param name="targetPhoneNumberIdentity"></param>
         /// <param name="callerIdNumber"></param>
