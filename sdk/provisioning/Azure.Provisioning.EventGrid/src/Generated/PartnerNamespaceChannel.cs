@@ -151,7 +151,7 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerNamespaceChannel.</param>
     public PartnerNamespaceChannel(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces/channels", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces/channels", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -178,6 +178,11 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>

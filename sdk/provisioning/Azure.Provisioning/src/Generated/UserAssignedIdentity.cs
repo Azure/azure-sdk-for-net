@@ -107,7 +107,7 @@ public partial class UserAssignedIdentity : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the UserAssignedIdentity.</param>
     public UserAssignedIdentity(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ManagedIdentity/userAssignedIdentities", resourceVersion ?? "2023-01-31")
+        : base(bicepIdentifier, "Microsoft.ManagedIdentity/userAssignedIdentities", resourceVersion ?? "2024-11-30")
     {
     }
 
@@ -131,6 +131,11 @@ public partial class UserAssignedIdentity : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-30.
+        /// </summary>
+        public static readonly string V2024_11_30 = "2024-11-30";
+
         /// <summary>
         /// 2023-07-31-PREVIEW.
         /// </summary>
