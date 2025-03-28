@@ -11,7 +11,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     public abstract class MrwCollectionTests<TCollection, TElement> : MrwTestBase<TCollection>
     {
         protected abstract void CompareModels(TElement model, TElement model2, string format);
-        protected virtual void Reverse(ref TCollection collection, ref IEnumerable enumerable) { }
 
         protected virtual string GetJsonCollectionType() => GetCollectionType();
 
@@ -19,6 +18,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             => CompareEnumerable(GetEnumerable(expected!), GetEnumerable(actual!), format, 0);
 
         protected virtual bool IsWriteOrderDeterministic => true;
+
         protected virtual bool IsRoundTripOrderDeterministic => true;
 
         protected override string GetJsonFolderName()

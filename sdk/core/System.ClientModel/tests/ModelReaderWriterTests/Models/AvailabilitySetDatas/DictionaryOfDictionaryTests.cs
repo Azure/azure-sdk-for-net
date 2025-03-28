@@ -4,8 +4,6 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
@@ -55,8 +53,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(Dictionary<string, Dictionary<string, AvailabilitySetData>>);
 
                 protected override Type ItemType => typeof(Dictionary<string, AvailabilitySetData>);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Dictionary<string, Dictionary<string, AvailabilitySetData>>();
 

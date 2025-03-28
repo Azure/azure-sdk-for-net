@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\System.ClientModel.csproj" />
     <ProjectReference Include="client\System.ClientModel.Tests.Client.csproj" />
+    <ProjectReference Include="..\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" PackAsAnalyzer="true" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +33,7 @@
     <Compile Remove="internal/**" />
     <Compile Remove="internal.perf/**" />
     <None Remove="internal.perf/**" />
+    <Compile Remove="gen*/**" /> 
   </ItemGroup>
 
 </Project>

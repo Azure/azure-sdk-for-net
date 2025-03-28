@@ -84,8 +84,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                 protected override Type? ItemType => typeof(PersistableModel_NullElement);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new List<PersistableModel_NullElement>();
 
                 protected override void AddItem(object collection, object? item) => throw new NotImplementedException();
@@ -103,8 +101,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 protected override Type BuilderType => typeof(List<PersistableModel_NonPersistableElement>);
 
                 protected override Type? ItemType => typeof(PersistableModel_NonPersistableElement);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<PersistableModel_NonPersistableElement>();
 

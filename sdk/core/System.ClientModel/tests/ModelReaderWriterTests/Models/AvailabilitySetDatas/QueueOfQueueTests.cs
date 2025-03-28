@@ -4,7 +4,6 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
@@ -58,8 +57,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(Queue<Queue<AvailabilitySetData>>);
 
                 protected override Type ItemType => typeof(Queue<AvailabilitySetData>);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Queue<Queue<AvailabilitySetData>>();
 

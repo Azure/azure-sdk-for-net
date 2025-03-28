@@ -64,8 +64,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
 
                 protected override Type ItemType => typeof(BaseModel);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new List<BaseModel>();
 
                 protected override void AddItem(object collection, object item)

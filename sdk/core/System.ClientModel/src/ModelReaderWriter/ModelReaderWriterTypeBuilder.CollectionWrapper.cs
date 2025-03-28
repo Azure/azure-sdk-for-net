@@ -15,11 +15,6 @@ public abstract partial class ModelReaderWriterTypeBuilder
         {
             _builder = builder;
             _context = context;
-
-            if (builder.ItemType is null)
-            {
-                throw new InvalidOperationException($"If {builder.GetType().Name} is a collection it must override ModelReaderWriterTypeBuilder.ItemType");
-            }
         }
 
         public object Builder => _instance ??= _builder.CreateInstance();

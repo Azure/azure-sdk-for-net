@@ -3,9 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
@@ -69,8 +67,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(ImmutableHashSet<AvailabilitySetData>.Builder);
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => ImmutableHashSet<AvailabilitySetData>.Empty.ToBuilder();
 

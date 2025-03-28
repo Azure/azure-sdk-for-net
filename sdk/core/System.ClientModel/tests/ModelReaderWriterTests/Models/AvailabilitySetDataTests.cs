@@ -7,6 +7,9 @@ using System.IO;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Primitives;
+#if SOURCE_GENERATOR
+using System.ClientModel.SourceGeneration.Tests;
+#endif
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -16,7 +19,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override string JsonPayload => WirePayload;
 
+#if SOURCE_GENERATOR
+        protected override ModelReaderWriterContext Context => BasicContext.Default;
+#else
         protected override ModelReaderWriterContext Context => new TestClientModelReaderWriterContext();
+#endif
 
         protected override string GetExpectedResult(string format)
         {
