@@ -53,13 +53,13 @@ namespace Azure.Compute.Batch
         /// <param name="peakMemoryGiB"> The peak memory usage in GiB across all Compute Nodes in the Pool. </param>
         /// <param name="avgDiskGiB"> The average used disk space in GiB across all Compute Nodes in the Pool. </param>
         /// <param name="peakDiskGiB"> The peak used disk space in GiB across all Compute Nodes in the Pool. </param>
-        /// <param name="diskReadIOps"> The total number of disk read operations across all Compute Nodes in the Pool. </param>
-        /// <param name="diskWriteIOps"> The total number of disk write operations across all Compute Nodes in the Pool. </param>
+        /// <param name="diskReadIops"> The total number of disk read operations across all Compute Nodes in the Pool. </param>
+        /// <param name="diskWriteIops"> The total number of disk write operations across all Compute Nodes in the Pool. </param>
         /// <param name="diskReadGiB"> The total amount of data in GiB of disk reads across all Compute Nodes in the Pool. </param>
         /// <param name="diskWriteGiB"> The total amount of data in GiB of disk writes across all Compute Nodes in the Pool. </param>
         /// <param name="networkReadGiB"> The total amount of data in GiB of network reads across all Compute Nodes in the Pool. </param>
         /// <param name="networkWriteGiB"> The total amount of data in GiB of network writes across all Compute Nodes in the Pool. </param>
-        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, long diskReadIOps, long diskWriteIOps, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB)
+        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, long diskReadIops, long diskWriteIops, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB)
         {
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
@@ -68,8 +68,8 @@ namespace Azure.Compute.Batch
             PeakMemoryGiB = peakMemoryGiB;
             AvgDiskGiB = avgDiskGiB;
             PeakDiskGiB = peakDiskGiB;
-            DiskReadIOps = diskReadIOps;
-            DiskWriteIOps = diskWriteIOps;
+            DiskReadIops = diskReadIops;
+            DiskWriteIops = diskWriteIops;
             DiskReadGiB = diskReadGiB;
             DiskWriteGiB = diskWriteGiB;
             NetworkReadGiB = networkReadGiB;
@@ -84,14 +84,14 @@ namespace Azure.Compute.Batch
         /// <param name="peakMemoryGiB"> The peak memory usage in GiB across all Compute Nodes in the Pool. </param>
         /// <param name="avgDiskGiB"> The average used disk space in GiB across all Compute Nodes in the Pool. </param>
         /// <param name="peakDiskGiB"> The peak used disk space in GiB across all Compute Nodes in the Pool. </param>
-        /// <param name="diskReadIOps"> The total number of disk read operations across all Compute Nodes in the Pool. </param>
-        /// <param name="diskWriteIOps"> The total number of disk write operations across all Compute Nodes in the Pool. </param>
+        /// <param name="diskReadIops"> The total number of disk read operations across all Compute Nodes in the Pool. </param>
+        /// <param name="diskWriteIops"> The total number of disk write operations across all Compute Nodes in the Pool. </param>
         /// <param name="diskReadGiB"> The total amount of data in GiB of disk reads across all Compute Nodes in the Pool. </param>
         /// <param name="diskWriteGiB"> The total amount of data in GiB of disk writes across all Compute Nodes in the Pool. </param>
         /// <param name="networkReadGiB"> The total amount of data in GiB of network reads across all Compute Nodes in the Pool. </param>
         /// <param name="networkWriteGiB"> The total amount of data in GiB of network writes across all Compute Nodes in the Pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, long diskReadIOps, long diskWriteIOps, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, long diskReadIops, long diskWriteIops, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
@@ -100,8 +100,8 @@ namespace Azure.Compute.Batch
             PeakMemoryGiB = peakMemoryGiB;
             AvgDiskGiB = avgDiskGiB;
             PeakDiskGiB = peakDiskGiB;
-            DiskReadIOps = diskReadIOps;
-            DiskWriteIOps = diskWriteIOps;
+            DiskReadIops = diskReadIops;
+            DiskWriteIops = diskWriteIops;
             DiskReadGiB = diskReadGiB;
             DiskWriteGiB = diskWriteGiB;
             NetworkReadGiB = networkReadGiB;
@@ -129,9 +129,9 @@ namespace Azure.Compute.Batch
         /// <summary> The peak used disk space in GiB across all Compute Nodes in the Pool. </summary>
         public float PeakDiskGiB { get; }
         /// <summary> The total number of disk read operations across all Compute Nodes in the Pool. </summary>
-        public long DiskReadIOps { get; }
+        public long DiskReadIops { get; }
         /// <summary> The total number of disk write operations across all Compute Nodes in the Pool. </summary>
-        public long DiskWriteIOps { get; }
+        public long DiskWriteIops { get; }
         /// <summary> The total amount of data in GiB of disk reads across all Compute Nodes in the Pool. </summary>
         public float DiskReadGiB { get; }
         /// <summary> The total amount of data in GiB of disk writes across all Compute Nodes in the Pool. </summary>

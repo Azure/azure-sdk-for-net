@@ -111,11 +111,11 @@ namespace Azure.Compute.Batch.Tests.Integration
                     new BatchTaskCreateContent(taskID, commandLine)
                 });
 
-                BatchTaskAddCollectionResult batchTaskAddCollectionResult = await client.CreateTaskCollectionAsync(jobID, taskCollection);
+                BatchCreateTaskCollectionResult batchTaskAddCollectionResult = await client.CreateTaskCollectionAsync(jobID, taskCollection);
 
                 Assert.IsNotNull(batchTaskAddCollectionResult);
-                BatchTaskAddResult batchTaskAddResult = null;
-                foreach (BatchTaskAddResult item in batchTaskAddCollectionResult.Value)
+                BatchTaskCreateResult batchTaskAddResult = null;
+                foreach (BatchTaskCreateResult item in batchTaskAddCollectionResult.Value)
                 {
                     batchTaskAddResult = item;
                 }
@@ -212,12 +212,12 @@ namespace Azure.Compute.Batch.Tests.Integration
                 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
                 {
                     MaxTimeBetweenCallsInSeconds = IsPlayBack() ? 0 : 30,
-                    ReturnBatchTaskAddResults = true,
+                    ReturnBatchTaskCreateResults = true,
                 };
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskAddResults.Count);
+                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
 
                 // verify sample set of tasks
                 BatchTask task1 = await client.GetTaskAsync(jobID, $"{taskID}_0");
@@ -335,7 +335,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     MaxDegreeOfParallelism = parallelCount,
                     MaxTimeBetweenCallsInSeconds = IsPlayBack() ? 0 : 30,
-                    ReturnBatchTaskAddResults = true,
+                    ReturnBatchTaskCreateResults = true,
                 };
                 // Measure memory usage before creating taskResult
                 long memoryBefore = GC.GetTotalMemory(true);
@@ -350,8 +350,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Console.WriteLine($"Size of taskResult in memory: {taskResultSize} bytes");
 
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskAddResults.Count);
-                var failedTaskResults = taskResult.BatchTaskAddResults
+                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
+                var failedTaskResults = taskResult.BatchTaskCreateResults
                     .Where(result => result.Status != BatchTaskAddStatus.Success)
                     .ToList();
                 Assert.AreEqual(0, failedTaskResults.Count);
@@ -410,16 +410,16 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     MaxDegreeOfParallelism = parallelCount,
                     MaxTimeBetweenCallsInSeconds = IsPlayBack() ? 0 : 30,
-                    ReturnBatchTaskAddResults = true,
+                    ReturnBatchTaskCreateResults = true,
                 };
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
 
                 // verify all the tasks got processed
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskAddResults.Count);
+                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
 
-                var failedTaskResults = taskResult.BatchTaskAddResults
+                var failedTaskResults = taskResult.BatchTaskCreateResults
                     .Where(result => result.Status != BatchTaskAddStatus.Success)
                     .ToList();
                 Assert.AreEqual(0, failedTaskResults.Count);

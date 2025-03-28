@@ -467,7 +467,7 @@ namespace Azure.Compute.Batch.Tests.Samples
                     new BatchTaskCreateContent("task2", "cmd / c echo Hello World")
                 });
 
-            BatchTaskAddCollectionResult batchTaskAddCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
+            BatchCreateTaskCollectionResult batchCreateTaskCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
             #endregion
         }
 

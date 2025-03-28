@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
         private const int HasNotRun = 0;
         private const int HasRun = 1;
         private bool _returnBatchTaskAddResults = false;
-        private readonly ConcurrentBag<BatchTaskAddResult> _taskAddResults;
+        private readonly ConcurrentBag<BatchTaskCreateResult> _taskAddResults;
         private readonly object _createTasksResultLock = new object();
         private CreateTasksResult _createTasksResult;
         private CancellationToken _cancellationToken;
@@ -88,11 +88,11 @@ namespace Azure.Compute.Batch
             _jobId = jobId;
             _cancellationToken = cancellationToken;
             _remainingTasksToAdd = new ConcurrentQueue<TrackedBatchTask>();
-            _taskAddResults = new ConcurrentBag<BatchTaskAddResult>();
-            _createTasksResult = new CreateTasksResult(new List<BatchTaskAddResult>());
+            _taskAddResults = new ConcurrentBag<BatchTaskCreateResult>();
+            _createTasksResult = new CreateTasksResult(new List<BatchTaskCreateResult>());
             _hasRun = HasNotRun;
             _maxTasks = 100;
-            _returnBatchTaskAddResults = createTasksOptions.ReturnBatchTaskAddResults;
+            _returnBatchTaskAddResults = createTasksOptions.ReturnBatchTaskCreateResults;
             _pendingAsyncOperations = new List<Task>();
             _parallelOptions = createTasksOptions;
             _timeBetweenCalls = TimeSpan.FromMilliseconds(100);
@@ -198,7 +198,7 @@ namespace Azure.Compute.Batch
             // Wait for all pending operations to complete
             await Task.WhenAll(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
 
-            _createTasksResult.BatchTaskAddResults.AddRange(_taskAddResults.ToList());
+            _createTasksResult.BatchTaskCreateResults.AddRange(_taskAddResults.ToList());
             return _createTasksResult;
         }
 
@@ -225,7 +225,7 @@ namespace Azure.Compute.Batch
                     taskCollection: taskGroup,
                     cancellationToken: _cancellationToken);
 
-                BatchTaskAddCollectionResult response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+                BatchCreateTaskCollectionResult response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
                 //
                 // Process the results of the add task collection request
                 //
@@ -276,10 +276,10 @@ namespace Azure.Compute.Batch
         /// <param name="addTaskResults"></param>
         /// <param name="taskMap">Dictionary of task name to task object instance for the specific protocol response.</param>
         internal void ProcessAddTaskResults(
-            BatchTaskAddCollectionResult addTaskResults,
+            BatchCreateTaskCollectionResult addTaskResults,
             IReadOnlyDictionary<string, TrackedBatchTask> taskMap)
         {
-            foreach (BatchTaskAddResult protoAddTaskResult in addTaskResults.Value)
+            foreach (BatchTaskCreateResult protoAddTaskResult in addTaskResults.Value)
             {
                 string taskId = protoAddTaskResult.TaskId;
                 TrackedBatchTask trackedTask = taskMap[taskId];

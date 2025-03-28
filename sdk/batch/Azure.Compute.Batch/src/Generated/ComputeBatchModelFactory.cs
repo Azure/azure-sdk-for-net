@@ -340,14 +340,14 @@ namespace Azure.Compute.Batch
         /// <param name="peakMemoryGiB"> The peak memory usage in GiB across all Compute Nodes in the Pool. </param>
         /// <param name="avgDiskGiB"> The average used disk space in GiB across all Compute Nodes in the Pool. </param>
         /// <param name="peakDiskGiB"> The peak used disk space in GiB across all Compute Nodes in the Pool. </param>
-        /// <param name="diskReadIOps"> The total number of disk read operations across all Compute Nodes in the Pool. </param>
-        /// <param name="diskWriteIOps"> The total number of disk write operations across all Compute Nodes in the Pool. </param>
+        /// <param name="diskReadIops"> The total number of disk read operations across all Compute Nodes in the Pool. </param>
+        /// <param name="diskWriteIops"> The total number of disk write operations across all Compute Nodes in the Pool. </param>
         /// <param name="diskReadGiB"> The total amount of data in GiB of disk reads across all Compute Nodes in the Pool. </param>
         /// <param name="diskWriteGiB"> The total amount of data in GiB of disk writes across all Compute Nodes in the Pool. </param>
         /// <param name="networkReadGiB"> The total amount of data in GiB of network reads across all Compute Nodes in the Pool. </param>
         /// <param name="networkWriteGiB"> The total amount of data in GiB of network writes across all Compute Nodes in the Pool. </param>
         /// <returns> A new <see cref="Batch.BatchPoolResourceStatistics"/> instance for mocking. </returns>
-        public static BatchPoolResourceStatistics BatchPoolResourceStatistics(DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, float avgCpuPercentage = default, float avgMemoryGiB = default, float peakMemoryGiB = default, float avgDiskGiB = default, float peakDiskGiB = default, long diskReadIOps = default, long diskWriteIOps = default, float diskReadGiB = default, float diskWriteGiB = default, float networkReadGiB = default, float networkWriteGiB = default)
+        public static BatchPoolResourceStatistics BatchPoolResourceStatistics(DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, float avgCpuPercentage = default, float avgMemoryGiB = default, float peakMemoryGiB = default, float avgDiskGiB = default, float peakDiskGiB = default, long diskReadIops = default, long diskWriteIops = default, float diskReadGiB = default, float diskWriteGiB = default, float networkReadGiB = default, float networkWriteGiB = default)
         {
             return new BatchPoolResourceStatistics(
                 startTime,
@@ -357,8 +357,8 @@ namespace Azure.Compute.Batch
                 peakMemoryGiB,
                 avgDiskGiB,
                 peakDiskGiB,
-                diskReadIOps,
-                diskWriteIOps,
+                diskReadIops,
+                diskWriteIops,
                 diskReadGiB,
                 diskWriteGiB,
                 networkReadGiB,
@@ -562,8 +562,8 @@ namespace Azure.Compute.Batch
         /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
         /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
         /// <param name="wallClockTime"> The total wall clock time of all Tasks in the Job.  The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
-        /// <param name="readIOps"> The total number of disk read operations made by all Tasks in the Job. </param>
-        /// <param name="writeIOps"> The total number of disk write operations made by all Tasks in the Job. </param>
+        /// <param name="readIops"> The total number of disk read operations made by all Tasks in the Job. </param>
+        /// <param name="writeIops"> The total number of disk write operations made by all Tasks in the Job. </param>
         /// <param name="readIOGiB"> The total amount of data in GiB read from disk by all Tasks in the Job. </param>
         /// <param name="writeIOGiB"> The total amount of data in GiB written to disk by all Tasks in the Job. </param>
         /// <param name="numSucceededTasks"> The total number of Tasks successfully completed in the Job during the given time range. A Task completes successfully if it returns exit code 0. </param>
@@ -571,7 +571,7 @@ namespace Azure.Compute.Batch
         /// <param name="numTaskRetries"> The total number of retries on all the Tasks in the Job during the given time range. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
         /// <returns> A new <see cref="Batch.BatchJobStatistics"/> instance for mocking. </returns>
-        public static BatchJobStatistics BatchJobStatistics(string url = null, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIOps = default, long writeIOps = default, float readIOGiB = default, float writeIOGiB = default, long numSucceededTasks = default, long numFailedTasks = default, long numTaskRetries = default, TimeSpan waitTime = default)
+        public static BatchJobStatistics BatchJobStatistics(string url = null, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = default, long writeIops = default, float readIOGiB = default, float writeIOGiB = default, long numSucceededTasks = default, long numFailedTasks = default, long numTaskRetries = default, TimeSpan waitTime = default)
         {
             return new BatchJobStatistics(
                 url,
@@ -580,8 +580,8 @@ namespace Azure.Compute.Batch
                 userCpuTime,
                 kernelCpuTime,
                 wallClockTime,
-                readIOps,
-                writeIOps,
+                readIops,
+                writeIops,
                 readIOGiB,
                 writeIOGiB,
                 numSucceededTasks,
@@ -886,8 +886,8 @@ namespace Azure.Compute.Batch
         /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="wallClockTime"> The total wall clock time of all the Tasks in all the Jobs created under the schedule. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
-        /// <param name="readIOps"> The total number of disk read operations made by all Tasks in all Jobs created under the schedule. </param>
-        /// <param name="writeIOps"> The total number of disk write operations made by all Tasks in all Jobs created under the schedule. </param>
+        /// <param name="readIops"> The total number of disk read operations made by all Tasks in all Jobs created under the schedule. </param>
+        /// <param name="writeIops"> The total number of disk write operations made by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="readIOGiB"> The total gibibytes read from disk by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="writeIOGiB"> The total gibibytes written to disk by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="numSucceededTasks"> The total number of Tasks successfully completed during the given time range in Jobs created under the schedule. A Task completes successfully if it returns exit code 0. </param>
@@ -895,7 +895,7 @@ namespace Azure.Compute.Batch
         /// <param name="numTaskRetries"> The total number of retries during the given time range on all Tasks in all Jobs created under the schedule. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in all Jobs created under the schedule. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
         /// <returns> A new <see cref="Batch.BatchJobScheduleStatistics"/> instance for mocking. </returns>
-        public static BatchJobScheduleStatistics BatchJobScheduleStatistics(string url = null, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIOps = default, long writeIOps = default, float readIOGiB = default, float writeIOGiB = default, long numSucceededTasks = default, long numFailedTasks = default, long numTaskRetries = default, TimeSpan waitTime = default)
+        public static BatchJobScheduleStatistics BatchJobScheduleStatistics(string url = null, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = default, long writeIops = default, float readIOGiB = default, float writeIOGiB = default, long numSucceededTasks = default, long numFailedTasks = default, long numTaskRetries = default, TimeSpan waitTime = default)
         {
             return new BatchJobScheduleStatistics(
                 url,
@@ -904,8 +904,8 @@ namespace Azure.Compute.Batch
                 userCpuTime,
                 kernelCpuTime,
                 wallClockTime,
-                readIOps,
-                writeIOps,
+                readIops,
+                writeIops,
                 readIOGiB,
                 writeIOGiB,
                 numSucceededTasks,
@@ -1102,13 +1102,13 @@ namespace Azure.Compute.Batch
         /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
         /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
         /// <param name="wallClockTime"> The total wall clock time of the Task. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If the Task was retried, this includes the wall clock time of all the Task retries. </param>
-        /// <param name="readIOps"> The total number of disk read operations made by the Task. </param>
-        /// <param name="writeIOps"> The total number of disk write operations made by the Task. </param>
+        /// <param name="readIops"> The total number of disk read operations made by the Task. </param>
+        /// <param name="writeIops"> The total number of disk write operations made by the Task. </param>
         /// <param name="readIOGiB"> The total gibibytes read from disk by the Task. </param>
         /// <param name="writeIOGiB"> The total gibibytes written to disk by the Task. </param>
         /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </param>
         /// <returns> A new <see cref="Batch.BatchTaskStatistics"/> instance for mocking. </returns>
-        public static BatchTaskStatistics BatchTaskStatistics(string url = null, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIOps = default, long writeIOps = default, float readIOGiB = default, float writeIOGiB = default, TimeSpan waitTime = default)
+        public static BatchTaskStatistics BatchTaskStatistics(string url = null, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = default, long writeIops = default, float readIOGiB = default, float writeIOGiB = default, TimeSpan waitTime = default)
         {
             return new BatchTaskStatistics(
                 url,
@@ -1117,35 +1117,35 @@ namespace Azure.Compute.Batch
                 userCpuTime,
                 kernelCpuTime,
                 wallClockTime,
-                readIOps,
-                writeIOps,
+                readIops,
+                writeIops,
                 readIOGiB,
                 writeIOGiB,
                 waitTime,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskAddCollectionResult"/>. </summary>
-        /// <param name="value"> The results of the add Task collection operation. </param>
-        /// <returns> A new <see cref="Batch.BatchTaskAddCollectionResult"/> instance for mocking. </returns>
-        public static BatchTaskAddCollectionResult BatchTaskAddCollectionResult(IEnumerable<BatchTaskAddResult> value = null)
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchCreateTaskCollectionResult"/>. </summary>
+        /// <param name="value"> The results of the create Task collection operation. </param>
+        /// <returns> A new <see cref="Batch.BatchCreateTaskCollectionResult"/> instance for mocking. </returns>
+        public static BatchCreateTaskCollectionResult BatchCreateTaskCollectionResult(IEnumerable<BatchTaskCreateResult> value = null)
         {
-            value ??= new List<BatchTaskAddResult>();
+            value ??= new List<BatchTaskCreateResult>();
 
-            return new BatchTaskAddCollectionResult(value?.ToList(), serializedAdditionalRawData: null);
+            return new BatchCreateTaskCollectionResult(value?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskAddResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskCreateResult"/>. </summary>
         /// <param name="status"> The status of the add Task request. </param>
         /// <param name="taskId"> The ID of the Task for which this is the result. </param>
         /// <param name="eTag"> The ETag of the Task, if the Task was successfully added. You can use this to detect whether the Task has changed between requests. In particular, you can be pass the ETag with an Update Task request to specify that your changes should take effect only if nobody else has modified the Job in the meantime. </param>
         /// <param name="lastModified"> The last modified time of the Task. </param>
         /// <param name="location"> The URL of the Task, if the Task was successfully added. </param>
         /// <param name="error"> The error encountered while attempting to add the Task. </param>
-        /// <returns> A new <see cref="Batch.BatchTaskAddResult"/> instance for mocking. </returns>
-        public static BatchTaskAddResult BatchTaskAddResult(BatchTaskAddStatus status = default, string taskId = null, string eTag = null, DateTimeOffset? lastModified = null, string location = null, BatchError error = null)
+        /// <returns> A new <see cref="Batch.BatchTaskCreateResult"/> instance for mocking. </returns>
+        public static BatchTaskCreateResult BatchTaskCreateResult(BatchTaskAddStatus status = default, string taskId = null, string eTag = null, DateTimeOffset? lastModified = null, string location = null, BatchError error = null)
         {
-            return new BatchTaskAddResult(
+            return new BatchTaskCreateResult(
                 status,
                 taskId,
                 eTag,
