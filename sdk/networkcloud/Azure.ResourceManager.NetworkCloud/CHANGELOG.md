@@ -4,13 +4,12 @@
 
 ### Features Added
 - This SDK version supports 2024-10-01-preview API version.
-- Cluster resource supports SecretArchiveSettings.
-- Cluster create and update commands support new parameter AnalyticsOutputSettings for configuring Log Analytics Workspace
 - ClusterManager commands are updated with custom parameters AssociatedIdentity to support managing identity.
 - Cluster commands are updated with custom parameters AssociatedIdentity to support managing identity.
-- This version introduces custom code to validate the CommandOutputSettings property of a cluster for both create and update operations.
-- Cluster includes VulnerabilityScanningContainerScan which determines how security vulnerability scanning is applied to the cluster.
-- VirtualMachine is updated to display the extended location to use for creation of a VirtualMachine console resource.
+- Cluster resource supports SecretArchiveSettings for configuring access to Key Vault.
+- Cluster create and update commands support new parameter AnalyticsOutputSettings for configuring access to Log Analytics Workspace.
+- Cluster create and update commands support new parameter VulnerabilityScanningContainerScan which determines how security vulnerability scanning is applied to the cluster.
+- VirtualMachine is updated to return the extended location to use for creation of a VirtualMachine console resource.
 - VirtualMachine is updated to support persistent storage for OS disk.
 - VirtualMachine's property VmDeviceModel gets a new option 'T3'. When 'T3' is selected, SecureBoot and vTPM are automatically enabled. This is to support Windows users.
 
