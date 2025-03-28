@@ -11,15 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityLabelEvaluationResult.Serialization.cs
-namespace Azure.AI.Language.Text.Authoring.Models
-{
-    public partial class DocumentEntityLabelEvaluationResult : IUtf8JsonSerializable, IJsonModel<DocumentEntityLabelEvaluationResult>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentEntityLabelEvaluationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<DocumentEntityLabelEvaluationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
 namespace Azure.AI.Language.Conversations.Authoring
 {
     public partial class UtteranceEntityEvaluationResult : IUtf8JsonSerializable, IJsonModel<UtteranceEntityEvaluationResult>
@@ -27,7 +18,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UtteranceEntityEvaluationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UtteranceEntityEvaluationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/UtteranceEntityEvaluationResult.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -38,17 +28,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityLabelEvaluationResult.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityLabelEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(DocumentEntityLabelEvaluationResult)} does not support writing '{format}' format.");
-========
             var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntityEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UtteranceEntityEvaluationResult)} does not support writing '{format}' format.");
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/UtteranceEntityEvaluationResult.Serialization.cs
             }
 
             writer.WritePropertyName("category"u8);
@@ -74,21 +57,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityLabelEvaluationResult.Serialization.cs
-        DocumentEntityLabelEvaluationResult IJsonModel<DocumentEntityLabelEvaluationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityLabelEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(DocumentEntityLabelEvaluationResult)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentEntityLabelEvaluationResult(document.RootElement, options);
-        }
-
-        internal static DocumentEntityLabelEvaluationResult DeserializeDocumentEntityLabelEvaluationResult(JsonElement element, ModelReaderWriterOptions options = null)
-========
         UtteranceEntityEvaluationResult IJsonModel<UtteranceEntityEvaluationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntityEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -102,7 +70,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         internal static UtteranceEntityEvaluationResult DeserializeUtteranceEntityEvaluationResult(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/UtteranceEntityEvaluationResult.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -138,36 +105,18 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityLabelEvaluationResult.Serialization.cs
-            return new DocumentEntityLabelEvaluationResult(category, offset, length, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<DocumentEntityLabelEvaluationResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityLabelEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
-========
             return new UtteranceEntityEvaluationResult(category, offset, length, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UtteranceEntityEvaluationResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntityEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/UtteranceEntityEvaluationResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityLabelEvaluationResult.Serialization.cs
-                    throw new FormatException($"The model {nameof(DocumentEntityLabelEvaluationResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DocumentEntityLabelEvaluationResult IPersistableModel<DocumentEntityLabelEvaluationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityLabelEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(UtteranceEntityEvaluationResult)} does not support writing '{options.Format}' format.");
             }
         }
@@ -175,30 +124,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         UtteranceEntityEvaluationResult IPersistableModel<UtteranceEntityEvaluationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntityEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/UtteranceEntityEvaluationResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityLabelEvaluationResult.Serialization.cs
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDocumentEntityLabelEvaluationResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DocumentEntityLabelEvaluationResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DocumentEntityLabelEvaluationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DocumentEntityLabelEvaluationResult FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDocumentEntityLabelEvaluationResult(document.RootElement);
-========
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeUtteranceEntityEvaluationResult(document.RootElement, options);
                     }
@@ -215,7 +145,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUtteranceEntityEvaluationResult(document.RootElement);
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/UtteranceEntityEvaluationResult.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

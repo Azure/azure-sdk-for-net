@@ -11,21 +11,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text.Authoring.Models
+namespace Azure.AI.Language.Text
 {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CreateProjectDetails.Serialization.cs
-    public partial class CreateProjectDetails : IUtf8JsonSerializable, IJsonModel<CreateProjectDetails>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateProjectDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<CreateProjectDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
     public partial class CustomEntitiesResult : IUtf8JsonSerializable, IJsonModel<CustomEntitiesResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomEntitiesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomEntitiesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -36,42 +28,35 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CreateProjectDetails.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(CreateProjectDetails)} does not support writing '{format}' format.");
-========
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomEntitiesResult)} does not support writing '{format}' format.");
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
             }
 
-            writer.WritePropertyName("projectKind"u8);
-            writer.WriteStringValue(ProjectKind.ToString());
-            writer.WritePropertyName("storageInputContainerName"u8);
-            writer.WriteStringValue(StorageInputContainerName);
-            if (Optional.IsDefined(Settings))
+            writer.WritePropertyName("errors"u8);
+            writer.WriteStartArray();
+            foreach (var item in Errors)
             {
-                writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings, options);
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue(Statistics, options);
             }
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
-            if (Optional.IsDefined(Multilingual))
+            writer.WritePropertyName("deploymentName"u8);
+            writer.WriteStringValue(DeploymentName);
+            writer.WritePropertyName("documents"u8);
+            writer.WriteStartArray();
+            foreach (var item in Documents)
             {
-                writer.WritePropertyName("multilingual"u8);
-                writer.WriteBooleanValue(Multilingual.Value);
+                writer.WriteObjectValue(item, options);
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            writer.WritePropertyName("language"u8);
-            writer.WriteStringValue(Language);
+            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,21 +74,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
             }
         }
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CreateProjectDetails.Serialization.cs
-        CreateProjectDetails IJsonModel<CreateProjectDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(CreateProjectDetails)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateProjectDetails(document.RootElement, options);
-        }
-
-        internal static CreateProjectDetails DeserializeCreateProjectDetails(JsonElement element, ModelReaderWriterOptions options = null)
-========
         CustomEntitiesResult IJsonModel<CustomEntitiesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -117,7 +87,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         internal static CustomEntitiesResult DeserializeCustomEntitiesResult(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -125,39 +94,32 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
-            ProjectKind projectKind = default;
-            string storageInputContainerName = default;
-            ProjectSettings settings = default;
+            IReadOnlyList<DocumentError> errors = default;
+            RequestStatistics statistics = default;
             string projectName = default;
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CreateProjectDetails.Serialization.cs
-            bool? multilingual = default;
-            string description = default;
-            string language = default;
-========
             string deploymentName = default;
             IReadOnlyList<CustomEntityActionResult> documents = default;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("projectKind"u8))
+                if (property.NameEquals("errors"u8))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    List<DocumentError> array = new List<DocumentError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentError.DeserializeDocumentError(item, options));
+                    }
+                    errors = array;
                     continue;
                 }
-                if (property.NameEquals("storageInputContainerName"u8))
-                {
-                    storageInputContainerName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("settings"u8))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    settings = ProjectSettings.DeserializeProjectSettings(property.Value, options);
+                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("projectName"u8))
@@ -165,32 +127,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
                     projectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multilingual"u8))
+                if (property.NameEquals("deploymentName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    multilingual = property.Value.GetBoolean();
+                    deploymentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (property.NameEquals("documents"u8))
                 {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CreateProjectDetails.Serialization.cs
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("language"u8))
-                {
-                    language = property.Value.GetString();
-========
                     List<CustomEntityActionResult> array = new List<CustomEntityActionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(CustomEntityActionResult.DeserializeCustomEntityActionResult(item, options));
                     }
                     documents = array;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -199,47 +148,24 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CreateProjectDetails.Serialization.cs
-            return new CreateProjectDetails(
-                projectKind,
-                storageInputContainerName,
-                settings,
-========
             return new CustomEntitiesResult(
                 errors,
                 statistics,
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
                 projectName,
-                multilingual,
-                description,
-                language,
+                deploymentName,
+                documents,
                 serializedAdditionalRawData);
         }
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CreateProjectDetails.Serialization.cs
-        BinaryData IPersistableModel<CreateProjectDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
-========
         BinaryData IPersistableModel<CustomEntitiesResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CreateProjectDetails.Serialization.cs
-                    throw new FormatException($"The model {nameof(CreateProjectDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CreateProjectDetails IPersistableModel<CreateProjectDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(CustomEntitiesResult)} does not support writing '{options.Format}' format.");
             }
         }
@@ -247,30 +173,11 @@ namespace Azure.AI.Language.Text.Authoring.Models
         CustomEntitiesResult IPersistableModel<CustomEntitiesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/CreateProjectDetails.Serialization.cs
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCreateProjectDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CreateProjectDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CreateProjectDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CreateProjectDetails FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCreateProjectDetails(document.RootElement);
-========
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomEntitiesResult(document.RootElement, options);
                     }
@@ -287,7 +194,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCustomEntitiesResult(document.RootElement);
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/CustomEntitiesResult.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

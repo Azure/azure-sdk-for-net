@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    public partial class UtteranceEntityEvaluationResult : IUtf8JsonSerializable, IJsonModel<UtteranceEntityEvaluationResult>
+    public partial class UtteranceEntitiesEvaluationResult : IUtf8JsonSerializable, IJsonModel<UtteranceEntitiesEvaluationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UtteranceEntityEvaluationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UtteranceEntitiesEvaluationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UtteranceEntityEvaluationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UtteranceEntitiesEvaluationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,18 +28,26 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntityEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntitiesEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UtteranceEntityEvaluationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UtteranceEntitiesEvaluationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("category"u8);
-            writer.WriteStringValue(Category);
-            writer.WritePropertyName("offset"u8);
-            writer.WriteNumberValue(Offset);
-            writer.WritePropertyName("length"u8);
-            writer.WriteNumberValue(Length);
+            writer.WritePropertyName("expectedEntities"u8);
+            writer.WriteStartArray();
+            foreach (var item in ExpectedEntities)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("predictedEntities"u8);
+            writer.WriteStartArray();
+            foreach (var item in PredictedEntities)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,19 +65,19 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        UtteranceEntityEvaluationResult IJsonModel<UtteranceEntityEvaluationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UtteranceEntitiesEvaluationResult IJsonModel<UtteranceEntitiesEvaluationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntityEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntitiesEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UtteranceEntityEvaluationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UtteranceEntitiesEvaluationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUtteranceEntityEvaluationResult(document.RootElement, options);
+            return DeserializeUtteranceEntitiesEvaluationResult(document.RootElement, options);
         }
 
-        internal static UtteranceEntityEvaluationResult DeserializeUtteranceEntityEvaluationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UtteranceEntitiesEvaluationResult DeserializeUtteranceEntitiesEvaluationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,26 +85,30 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            string category = default;
-            int offset = default;
-            int length = default;
+            IReadOnlyList<UtteranceEntityEvaluationResult> expectedEntities = default;
+            IReadOnlyList<UtteranceEntityEvaluationResult> predictedEntities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"u8))
+                if (property.NameEquals("expectedEntities"u8))
                 {
-                    category = property.Value.GetString();
+                    List<UtteranceEntityEvaluationResult> array = new List<UtteranceEntityEvaluationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UtteranceEntityEvaluationResult.DeserializeUtteranceEntityEvaluationResult(item, options));
+                    }
+                    expectedEntities = array;
                     continue;
                 }
-                if (property.NameEquals("offset"u8))
+                if (property.NameEquals("predictedEntities"u8))
                 {
-                    offset = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("length"u8))
-                {
-                    length = property.Value.GetInt32();
+                    List<UtteranceEntityEvaluationResult> array = new List<UtteranceEntityEvaluationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UtteranceEntityEvaluationResult.DeserializeUtteranceEntityEvaluationResult(item, options));
+                    }
+                    predictedEntities = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,46 +117,46 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UtteranceEntityEvaluationResult(category, offset, length, serializedAdditionalRawData);
+            return new UtteranceEntitiesEvaluationResult(expectedEntities, predictedEntities, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UtteranceEntityEvaluationResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UtteranceEntitiesEvaluationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntityEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntitiesEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UtteranceEntityEvaluationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UtteranceEntitiesEvaluationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UtteranceEntityEvaluationResult IPersistableModel<UtteranceEntityEvaluationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UtteranceEntitiesEvaluationResult IPersistableModel<UtteranceEntitiesEvaluationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntityEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UtteranceEntitiesEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUtteranceEntityEvaluationResult(document.RootElement, options);
+                        return DeserializeUtteranceEntitiesEvaluationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UtteranceEntityEvaluationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UtteranceEntitiesEvaluationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UtteranceEntityEvaluationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UtteranceEntitiesEvaluationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static UtteranceEntityEvaluationResult FromResponse(Response response)
+        internal static UtteranceEntitiesEvaluationResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeUtteranceEntityEvaluationResult(document.RootElement);
+            return DeserializeUtteranceEntitiesEvaluationResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
