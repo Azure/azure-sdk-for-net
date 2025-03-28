@@ -52,6 +52,7 @@ try {
         New-Item -ItemType Directory -Path "$lockFilesPath" | Out-Null
         Write-Host "Copying package.json to $lockFilesPath"
         Copy-Item "./package.json" "$lockFilesPath/package.json" -Force
+        Copy-Item "./pnpm-lock.yaml" "$lockFilesPath/pnpm-lock.yaml" -Force
     }
 }
 finally {
