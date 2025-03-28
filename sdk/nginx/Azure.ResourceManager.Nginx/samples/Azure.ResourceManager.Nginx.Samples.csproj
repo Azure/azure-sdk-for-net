@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk\">
-  <ItemGroup>
-    <PackageReference Include="Azure.Identity"/>
-    <PackageReference Include="NUnit" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.Nginx.csproj" />
-  </ItemGroup>
-</Project>

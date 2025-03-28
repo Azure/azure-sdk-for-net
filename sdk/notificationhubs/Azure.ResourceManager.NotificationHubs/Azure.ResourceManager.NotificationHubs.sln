@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Notif
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.NotificationHubs.Tests", "tests\Azure.ResourceManager.NotificationHubs.Tests.csproj", "{96D0C97C-34D1-432F-BBF0-D172FC81EBEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.NotificationHubs.Samples", "samples\Azure.ResourceManager.NotificationHubs.Samples.csproj", "{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{96D0C97C-34D1-432F-BBF0-D172FC81EBEC}.Release|x64.Build.0 = Release|Any CPU
 		{96D0C97C-34D1-432F-BBF0-D172FC81EBEC}.Release|x86.ActiveCfg = Release|Any CPU
 		{96D0C97C-34D1-432F-BBF0-D172FC81EBEC}.Release|x86.Build.0 = Release|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Debug|x64.Build.0 = Debug|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Debug|x86.Build.0 = Debug|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Release|x64.ActiveCfg = Release|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Release|x64.Build.0 = Release|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Release|x86.ActiveCfg = Release|Any CPU
-		{98639CEE-E971-41B3-B345-E0BF4AD2EFBE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
