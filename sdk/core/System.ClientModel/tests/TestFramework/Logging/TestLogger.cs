@@ -26,7 +26,6 @@ public class TestLogger : ILogger
 
     public string Name { get; set; }
 
-
     public IDisposable? BeginScope<TState>(TState state) where TState : notnull
     {
         throw new NotImplementedException();
