@@ -41,8 +41,7 @@ function Build-Emitter {
         }
 
         # build and pack the emitter
-        Invoke-LoggedCommand "npm install @types/node --save-dev" -GroupOutput
-        Invoke-LoggedCommand "npm run build" -GroupOutput
+        Invoke-LoggedCommand "pnpm run build" -GroupOutput
 
         if ($BuildNumber) {
             Write-Host "Updating version package.json to the new emitter version`n"
