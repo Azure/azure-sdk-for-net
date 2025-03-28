@@ -36,7 +36,7 @@ internal class McpClient
         return await _session.SendMethod("tools/list").ConfigureAwait(false);
     }
 
-     public async Task<BinaryData> CallToolAsync(string toolName, BinaryData parameters)
+    public async Task<BinaryData> CallToolAsync(string toolName, BinaryData parameters)
     {
         if (_session == null)
             throw new InvalidOperationException("Session is not initialized. Call StartAsync() first.");
