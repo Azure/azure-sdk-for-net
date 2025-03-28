@@ -55,7 +55,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     TestEnvironment.ConfidentialLedgerUrl,
                     credential: Credential,
                     clientCertificate: null,
-                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions(ServiceVersion.V2024_08_22_Preview)),
+                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions(ServiceVersion.V2024_12_09_Preview)),
                     identityServiceCert: serviceCert.Cert));
         }
 
