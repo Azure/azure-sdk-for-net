@@ -50,9 +50,8 @@ try {
     if ($artifactStagingDirectory -and !$BuildArtifactsPath) {
         $lockFilesPath = "$artifactStagingDirectory/lock-files"
         New-Item -ItemType Directory -Path "$lockFilesPath" | Out-Null
-        Write-Host "Copying package.json and pnpm-lock.json  to $lockFilesPath"
+        Write-Host "Copying package.json to $lockFilesPath"
         Copy-Item "./package.json" "$lockFilesPath/package.json" -Force
-        Copy-Item "./pnpm-lock.json" "$lockFilesPath/pnpm-lock.json" -Force
     }
 }
 finally {
