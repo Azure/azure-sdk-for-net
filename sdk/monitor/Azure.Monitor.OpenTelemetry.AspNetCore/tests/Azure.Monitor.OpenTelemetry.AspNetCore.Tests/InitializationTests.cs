@@ -13,6 +13,7 @@ using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Logs;
 using Xunit;
+using System.Linq;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
@@ -190,10 +191,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             EvaluationHelper.EvaluateTracerProvider(
                 serviceProvider: serviceProvider,
-                expectedAzureMonitorTraceExporter: true,
                 expectedLiveMetricsProcessor: enableLiveMetrics,
                 expectedProfilingSessionTraceProcessor: true,
-                expectedStandardMetricsExtractionProcessor: true);
+                hasInstrumentations: true);
 
             EvaluationHelper.EvaluateMeterProvider(serviceProvider);
 
@@ -217,10 +217,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             EvaluationHelper.EvaluateTracerProvider(
                 serviceProvider: serviceProvider,
-                expectedAzureMonitorTraceExporter: true,
                 expectedLiveMetricsProcessor: enableLiveMetrics,
                 expectedProfilingSessionTraceProcessor: false,
-                expectedStandardMetricsExtractionProcessor: true);
+                hasInstrumentations: false);
 
             EvaluationHelper.EvaluateMeterProvider(serviceProvider);
 
@@ -246,7 +245,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 public bool foundStandardMetricsExtractionProcessor;
             }
 
-            public static void EvaluateTracerProvider(IServiceProvider serviceProvider, bool expectedAzureMonitorTraceExporter, bool expectedLiveMetricsProcessor, bool expectedProfilingSessionTraceProcessor, bool expectedStandardMetricsExtractionProcessor)
+            public static void EvaluateTracerProvider(IServiceProvider serviceProvider, bool expectedLiveMetricsProcessor, bool expectedProfilingSessionTraceProcessor, bool hasInstrumentations)
             {
                 var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
                 Assert.NotNull(tracerProvider);
@@ -261,10 +260,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
                 // Start walking the CompositeProcessor
                 var variables = new TracerProviderVariables();
-                WalkCompositeProcessor(processor, variables);
+                WalkTracerCompositeProcessor(processor, variables);
                 Assert.Equal(expectedLiveMetricsProcessor, variables.foundLiveMetricsProcessor);
-                Assert.Equal(expectedStandardMetricsExtractionProcessor, variables.foundStandardMetricsExtractionProcessor);
-                Assert.Equal(expectedAzureMonitorTraceExporter, variables.foundAzureMonitorTraceExporter);
+                Assert.True(variables.foundStandardMetricsExtractionProcessor);
+                Assert.True(variables.foundAzureMonitorTraceExporter);
                 Assert.Equal(expectedProfilingSessionTraceProcessor, variables.foundProfilingSessionTraceProcessor);
 
                 // Validate Sampler
@@ -274,7 +273,26 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 Assert.NotNull(sampler);
                 Assert.Equal(nameof(Exporter.Internals.ApplicationInsightsSampler), sampler.GetType().Name);
 
-                // TODO: INSPECT INSTRUMENTATIONS
+                // Validate Instrumentations
+                var instrumentationsProperty = tracerProvider.GetType().GetProperty("Instrumentations", BindingFlags.NonPublic | BindingFlags.Instance);
+                Assert.NotNull(instrumentationsProperty);
+
+                var instrumentations = instrumentationsProperty.GetValue(tracerProvider) as IEnumerable<object>;
+                Assert.NotNull(instrumentations);
+
+                if (hasInstrumentations)
+                {
+                    Assert.Equal(3, instrumentations.Count());
+
+                    var instrumentationTypes = instrumentations.Select(i => i.GetType().Name).ToList();
+                    Assert.Contains("SqlClientInstrumentation", instrumentationTypes);
+                    Assert.Contains("AspNetCoreInstrumentation", instrumentationTypes);
+                    Assert.Contains("HttpClientInstrumentation", instrumentationTypes);
+                }
+                else
+                {
+                    Assert.Empty(instrumentations);
+                }
             }
 
             public static void EvaluateMeterProvider(IServiceProvider serviceProvider)
@@ -305,7 +323,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 var loggerProvider = serviceProvider.GetService<LoggerProvider>();
                 Assert.NotNull(loggerProvider);
 
-                // Get the 'Processor' property from LoggerProvider
                 var processorProperty = loggerProvider.GetType().GetProperty("Processor", BindingFlags.Public | BindingFlags.Instance);
                 Assert.NotNull(processorProperty);
 
@@ -317,70 +334,48 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                     // When LiveMetrics is enabled, processor should be a CompositeProcessor
                     Assert.Contains("CompositeProcessor", processor.GetType().Name);
 
-                    // Get the processors from the CompositeProcessor
+                    // Get the first processor (LiveMetricsLogProcessor)
                     var headField = processor.GetType().GetField("Head", BindingFlags.NonPublic | BindingFlags.Instance);
                     Assert.NotNull(headField);
+                    var firstNode = headField.GetValue(processor);
+                    Assert.NotNull(firstNode);
 
-                    var currentNode = headField.GetValue(processor);
-                    Assert.NotNull(currentNode);
+                    var valueField = firstNode.GetType().GetField("Value", BindingFlags.Public | BindingFlags.Instance);
+                    var firstProcessor = valueField!.GetValue(firstNode);
+                    Assert.NotNull(firstProcessor);
+                    Assert.Contains(nameof(LiveMetrics.LiveMetricsLogProcessor), firstProcessor.GetType().Name);
 
-                    var nodeType = currentNode.GetType();
-                    var valueField = nodeType.GetField("Value", BindingFlags.Public | BindingFlags.Instance);
-                    var nextProperty = nodeType.GetProperty("Next", BindingFlags.Public | BindingFlags.Instance);
+                    // Get the second processor (BatchLogRecordExportProcessor & AzureMonitorLogExporter)
+                    var nextProperty = firstNode.GetType().GetProperty("Next", BindingFlags.Public | BindingFlags.Instance);
+                    var secondNode = nextProperty!.GetValue(firstNode);
+                    Assert.NotNull(secondNode);
 
-                    // Find the BatchLogRecordExportProcessor in the CompositeProcessor
-                    bool foundBatchProcessor = false;
-                    bool foundLiveMetricsProcessor = false;
+                    var secondProcessor = valueField.GetValue(secondNode);
+                    Assert.NotNull(secondProcessor);
+                    Assert.Contains("BatchLogRecordExportProcessor", secondProcessor.GetType().Name);
 
-                    while (currentNode != null)
-                    {
-                        var processorValue = valueField!.GetValue(currentNode);
-                        if (processorValue != null)
-                        {
-                            var processorType = processorValue.GetType();
+                    var exporterProperty = secondProcessor.GetType().GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
+                    Assert.NotNull(exporterProperty);
 
-                            if (processorType.Name.Contains("BatchLogRecordExportProcessor"))
-                            {
-                                foundBatchProcessor = true;
-
-                                // Verify the exporter type
-                                var exporterProperty = processorType.GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
-                                Assert.NotNull(exporterProperty);
-
-                                var exporter = exporterProperty.GetValue(processorValue);
-                                Assert.NotNull(exporter);
-                                Assert.Contains("AzureMonitorLogExporter", exporter.GetType().Name);
-                            }
-                            else if (processorType.Name.Contains("LiveMetricsLogProcessor"))
-                            {
-                                foundLiveMetricsProcessor = true;
-                            }
-                        }
-
-                        currentNode = nextProperty!.GetValue(currentNode);
-                    }
-
-                    Assert.True(foundBatchProcessor, "BatchLogRecordExportProcessor not found in CompositeProcessor");
-                    Assert.True(foundLiveMetricsProcessor, "LiveMetricsLogProcessor not found in CompositeProcessor");
+                    var exporter = exporterProperty.GetValue(secondProcessor);
+                    Assert.NotNull(exporter);
+                    Assert.Contains(nameof(AzureMonitorLogExporter), exporter.GetType().Name);
                 }
                 else
                 {
                     // When LiveMetrics is disabled, processor should be a BatchLogRecordExportProcessor
                     Assert.Contains("BatchLogRecordExportProcessor", processor.GetType().Name);
 
-                    // Get the 'Exporter' property from the processor
                     var exporterProperty = processor.GetType().GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
                     Assert.NotNull(exporterProperty);
 
                     var exporter = exporterProperty.GetValue(processor);
                     Assert.NotNull(exporter);
-
-                    // Ensure it's an AzureMonitorLogExporter
-                    Assert.Contains("AzureMonitorLogExporter", exporter.GetType().Name);
+                    Assert.Contains(nameof(AzureMonitorLogExporter), exporter.GetType().Name);
                 }
             }
 
-            private static void WalkCompositeProcessor(object compositeProcessor, TracerProviderVariables variables)
+            private static void WalkTracerCompositeProcessor(object compositeProcessor, TracerProviderVariables variables)
             {
                 var compositeProcessorType = compositeProcessor.GetType();
 
@@ -429,7 +424,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                         else if (processorType.Name.Contains("CompositeProcessor"))
                         {
                             // Recursive step: walk inner CompositeProcessor
-                            WalkCompositeProcessor(processorValue, variables);
+                            WalkTracerCompositeProcessor(processorValue, variables);
                         }
                     }
 
