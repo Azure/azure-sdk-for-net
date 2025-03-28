@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
 {
     public partial class Sample_AppPlatformGatewayRouteConfigResource
     {
-        // GatewayRouteConfigs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GatewayRouteConfigsGet()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/GatewayRouteConfigs_Get.json
@@ -51,68 +48,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GatewayRouteConfigs_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_GatewayRouteConfigsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/GatewayRouteConfigs_CreateOrUpdate.json
-            // this example is just showing the usage of "GatewayRouteConfigs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AppPlatformGatewayRouteConfigResource created on azure
-            // for more information of creating AppPlatformGatewayRouteConfigResource, please refer to the document of AppPlatformGatewayRouteConfigResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string serviceName = "myservice";
-            string gatewayName = "default";
-            string routeConfigName = "myRouteConfig";
-            ResourceIdentifier appPlatformGatewayRouteConfigResourceId = AppPlatformGatewayRouteConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayName, routeConfigName);
-            AppPlatformGatewayRouteConfigResource appPlatformGatewayRouteConfig = client.GetAppPlatformGatewayRouteConfigResource(appPlatformGatewayRouteConfigResourceId);
-
-            // invoke the operation
-            AppPlatformGatewayRouteConfigData data = new AppPlatformGatewayRouteConfigData()
-            {
-                Properties = new AppPlatformGatewayRouteConfigProperties()
-                {
-                    AppResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myApp"),
-                    OpenApiUri = new Uri("https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.json"),
-                    Protocol = AppPlatformGatewayRouteConfigProtocol.Https,
-                    Routes =
-{
-new AppPlatformGatewayApiRoute()
-{
-Title = "myApp route config",
-IsSsoEnabled = true,
-Predicates =
-{
-"Path=/api5/customer/**"
-},
-Filters =
-{
-"StripPrefix=2","RateLimit=1,1s"
-},
-}
-},
-                },
-            };
-            ArmOperation<AppPlatformGatewayRouteConfigResource> lro = await appPlatformGatewayRouteConfig.UpdateAsync(WaitUntil.Completed, data);
-            AppPlatformGatewayRouteConfigResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AppPlatformGatewayRouteConfigData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GatewayRouteConfigs_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_GatewayRouteConfigsDelete()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/GatewayRouteConfigs_Delete.json
@@ -136,7 +73,56 @@ Filters =
             // invoke the operation
             await appPlatformGatewayRouteConfig.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_GatewayRouteConfigsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/GatewayRouteConfigs_CreateOrUpdate.json
+            // this example is just showing the usage of "GatewayRouteConfigs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AppPlatformGatewayRouteConfigResource created on azure
+            // for more information of creating AppPlatformGatewayRouteConfigResource, please refer to the document of AppPlatformGatewayRouteConfigResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string serviceName = "myservice";
+            string gatewayName = "default";
+            string routeConfigName = "myRouteConfig";
+            ResourceIdentifier appPlatformGatewayRouteConfigResourceId = AppPlatformGatewayRouteConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayName, routeConfigName);
+            AppPlatformGatewayRouteConfigResource appPlatformGatewayRouteConfig = client.GetAppPlatformGatewayRouteConfigResource(appPlatformGatewayRouteConfigResourceId);
+
+            // invoke the operation
+            AppPlatformGatewayRouteConfigData data = new AppPlatformGatewayRouteConfigData
+            {
+                Properties = new AppPlatformGatewayRouteConfigProperties
+                {
+                    AppResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myApp"),
+                    OpenApiUri = new Uri("https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.json"),
+                    Protocol = AppPlatformGatewayRouteConfigProtocol.Https,
+                    Routes = {new AppPlatformGatewayApiRoute
+{
+Title = "myApp route config",
+IsSsoEnabled = true,
+Predicates = {"Path=/api5/customer/**"},
+Filters = {"StripPrefix=2", "RateLimit=1,1s"},
+}},
+                },
+            };
+            ArmOperation<AppPlatformGatewayRouteConfigResource> lro = await appPlatformGatewayRouteConfig.UpdateAsync(WaitUntil.Completed, data);
+            AppPlatformGatewayRouteConfigResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AppPlatformGatewayRouteConfigData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
