@@ -36,13 +36,12 @@ function Build-Emitter {
                 $errors += "Lint failed"
             }
 
-            Invoke-LoggedCommand "pnpm run build:emitter" -GroupOutput
+            Invoke-LoggedCommand "pnpm run build" -GroupOutput
             Invoke-LoggedCommand "pnpm run test:emitter" -GroupOutput -ErrorAction Continue
             if ($LastExitCode) {
                 $errors += "Emitter tests failed"
             }
 
-            Invoke-LoggedCommand "pnpm run build:generator" -GroupOutput
             Invoke-LoggedCommand "pnpm run test:generator" -GroupOutput -ErrorAction Continue
             if ($LastExitCode) {
                 $errors += "Generator tests failed"

@@ -43,6 +43,7 @@
     "@typespec/library-linter": "0.67.1",
     "@typespec/openapi": "0.67.1",
     "@typespec/rest": "0.67.1",
+    "@typespec/spector": "0.1.0-alpha.10",
     "@typespec/versioning": "0.67.1",
     "@typespec/xml": "0.67.1",
     "@vitest/coverage-v8": "^3.0.5",

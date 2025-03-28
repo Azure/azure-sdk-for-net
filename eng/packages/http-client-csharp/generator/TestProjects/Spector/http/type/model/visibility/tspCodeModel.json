@@ -259,6 +259,7 @@
  "clients": [
   {
    "$id": "38",
+   "kind": "client",
    "name": "VisibilityClient",
    "namespace": "Type.Model.Visibility",
    "doc": "Illustrates models with visibility properties.",
@@ -881,7 +882,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Visibility"
+   "crossLanguageDefinitionId": "Type.Model.Visibility",
+   "apiVersions": []
   }
  ]
 }

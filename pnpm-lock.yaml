@@ -66,6 +66,9 @@ importers:
       '@typespec/rest':
         specifier: 0.67.1
         version: 0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/http@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/streams@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))))
+      '@typespec/spector':
+        specifier: 0.1.0-alpha.10
+        version: 0.1.0-alpha.10(@types/node@22.7.9)(@typespec/streams@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9)))
       '@typespec/versioning':
         specifier: 0.67.1
         version: 0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))
