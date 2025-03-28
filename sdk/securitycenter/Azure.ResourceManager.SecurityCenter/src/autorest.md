@@ -13,7 +13,7 @@ tag: package-dotnet-sdk
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - InformationProtectionPolicies_CreateOrUpdate
