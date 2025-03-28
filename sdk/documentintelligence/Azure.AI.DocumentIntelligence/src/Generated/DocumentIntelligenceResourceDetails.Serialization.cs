@@ -11,21 +11,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Authoring.Models
+namespace Azure.AI.DocumentIntelligence
 {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ProjectSettings.Serialization.cs
-    public partial class ProjectSettings : IUtf8JsonSerializable, IJsonModel<ProjectSettings>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProjectSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ProjectSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
     public partial class DocumentIntelligenceResourceDetails : IUtf8JsonSerializable, IJsonModel<DocumentIntelligenceResourceDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentIntelligenceResourceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentIntelligenceResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> main:sdk/documentintelligence/Azure.AI.DocumentIntelligence/src/Generated/DocumentIntelligenceResourceDetails.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -36,21 +28,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ProjectSettings.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<ProjectSettings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ProjectSettings)} does not support writing '{format}' format.");
-========
             var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentIntelligenceResourceDetails)} does not support writing '{format}' format.");
->>>>>>>> main:sdk/documentintelligence/Azure.AI.DocumentIntelligence/src/Generated/DocumentIntelligenceResourceDetails.Serialization.cs
             }
 
-            writer.WritePropertyName("confidenceThreshold"u8);
-            writer.WriteNumberValue(ConfidenceThreshold);
+            writer.WritePropertyName("customDocumentModels"u8);
+            writer.WriteObjectValue(CustomDocumentModels, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,21 +53,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
         }
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ProjectSettings.Serialization.cs
-        ProjectSettings IJsonModel<ProjectSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProjectSettings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ProjectSettings)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectSettings(document.RootElement, options);
-        }
-
-        internal static ProjectSettings DeserializeProjectSettings(JsonElement element, ModelReaderWriterOptions options = null)
-========
         DocumentIntelligenceResourceDetails IJsonModel<DocumentIntelligenceResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -96,7 +66,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         internal static DocumentIntelligenceResourceDetails DeserializeDocumentIntelligenceResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> main:sdk/documentintelligence/Azure.AI.DocumentIntelligence/src/Generated/DocumentIntelligenceResourceDetails.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,14 +73,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            float confidenceThreshold = default;
+            CustomDocumentModelsDetails customDocumentModels = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("confidenceThreshold"u8))
+                if (property.NameEquals("customDocumentModels"u8))
                 {
-                    confidenceThreshold = property.Value.GetSingle();
+                    customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,36 +89,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ProjectSettings.Serialization.cs
-            return new ProjectSettings(confidenceThreshold, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<ProjectSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProjectSettings>)this).GetFormatFromOptions(options) : options.Format;
-========
             return new DocumentIntelligenceResourceDetails(customDocumentModels, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentIntelligenceResourceDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/documentintelligence/Azure.AI.DocumentIntelligence/src/Generated/DocumentIntelligenceResourceDetails.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ProjectSettings.Serialization.cs
-                    throw new FormatException($"The model {nameof(ProjectSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ProjectSettings IPersistableModel<ProjectSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProjectSettings>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(DocumentIntelligenceResourceDetails)} does not support writing '{options.Format}' format.");
             }
         }
@@ -157,30 +108,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         DocumentIntelligenceResourceDetails IPersistableModel<DocumentIntelligenceResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/documentintelligence/Azure.AI.DocumentIntelligence/src/Generated/DocumentIntelligenceResourceDetails.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ProjectSettings.Serialization.cs
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProjectSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProjectSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ProjectSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ProjectSettings FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeProjectSettings(document.RootElement);
-========
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentIntelligenceResourceDetails(document.RootElement, options);
                     }
@@ -197,7 +129,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentIntelligenceResourceDetails(document.RootElement);
->>>>>>>> main:sdk/documentintelligence/Azure.AI.DocumentIntelligence/src/Generated/DocumentIntelligenceResourceDetails.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
