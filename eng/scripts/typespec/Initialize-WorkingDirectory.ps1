@@ -46,8 +46,6 @@ try {
         Invoke-LoggedCommand "pnpm install"
     }
 
-    Invoke-LoggedCommand "npm ls -a" -GroupOutput
-
     $artifactStagingDirectory = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
     if ($artifactStagingDirectory -and !$BuildArtifactsPath) {
         $lockFilesPath = "$artifactStagingDirectory/lock-files"
