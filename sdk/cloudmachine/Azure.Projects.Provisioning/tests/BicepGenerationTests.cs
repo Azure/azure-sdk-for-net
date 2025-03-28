@@ -26,6 +26,7 @@ public class BicepGenerationTests
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "minimal.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("minimal.bicep");
@@ -39,6 +40,7 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new KeyVaultFeature());
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "kv.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("kv.bicep");
@@ -52,6 +54,7 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new BlobContainerFeature("testcontainer", isObservable: false));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "blobs.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("blobs.bicep");
@@ -66,6 +69,7 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new BlobContainerFeature("container2", isObservable: false));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "blobs2Containers.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("blobs2Containers.bicep");
@@ -79,6 +83,7 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new BlobContainerFeature("default", isObservable: true));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "blobsObservable.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("blobsObservable.bicep");
@@ -93,6 +98,7 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "openai.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("openai.bicep");
@@ -107,7 +113,8 @@ public class BicepGenerationTests
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         string path = Path.Combine(Path.GetTempPath(), "maas.bicep");
-        File.WriteAllText(path, actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(path, actualBicep);
 
         string expectedBicep = LoadTestFile("maas.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
@@ -120,6 +127,7 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new ServiceBusNamespaceFeature(infrastructure.ProjectId));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "sb.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("sb.bicep");
@@ -133,6 +141,7 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new OfxProjectFeature());
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "cm.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("cm.bicep");
@@ -149,6 +158,7 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new AppServiceFeature());
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "app.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("app.bicep");
@@ -162,6 +172,7 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new AIFoundry.AIProjectFeature());
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "foundry.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("foundry.bicep");

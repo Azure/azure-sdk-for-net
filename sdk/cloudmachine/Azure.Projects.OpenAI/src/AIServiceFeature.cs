@@ -40,7 +40,7 @@ public class AIServicesFeature : AzureProjectFeature
             {
                 PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled,
                 CustomSubDomainName = infrastructure.ProjectId,
-                //DisableLocalAuth = true,
+                DisableLocalAuth = true,
                 NetworkAcls = new CognitiveServicesNetworkRuleSet()
                 {
                     DefaultAction = CognitiveServicesNetworkRuleAction.Allow

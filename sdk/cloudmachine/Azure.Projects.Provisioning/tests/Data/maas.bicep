@@ -47,6 +47,7 @@ resource aiservices 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
+    disableLocalAuth: true
   }
   sku: {
     name: 'S0'
