@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using Azure.Provisioning.Expressions;
 using NUnit.Framework;
 
@@ -9,34 +8,44 @@ namespace Azure.Provisioning.Tests.Expressions
 {
     public class ArrayExpressionTests
     {
-        [TestCaseSource(nameof(ValidateArrayExpressionTestData))]
-        public string ValidateArrayExpressions(ArrayExpression expression)
+        [Test]
+        public void ValidateArrayExpressions()
         {
-            return expression.ToString();
-        }
-
-        private static IEnumerable<TestCaseData> ValidateArrayExpressionTestData()
-        {
-            // NOTE: our AST always produces multi-line arrays with indents
+            // NOTE: our AST always produces multi-line arrays with indents, except for empty array, it produces []
             // empty array
-            yield return new TestCaseData(new ArrayExpression())
-                .Returns($"[]");
+            AssertExpression(
+                "[]",
+                new ArrayExpression()
+                );
+
             // array of literals
-            yield return new TestCaseData(new ArrayExpression(new IntLiteralExpression(314), new BoolLiteralExpression(false), new StringLiteralExpression("foo")))
-                .Returns(@"[
-  314
-  false
-  'foo'
-]");
+            AssertExpression(
+                """
+                [
+                  314
+                  false
+                  'foo'
+                ]
+                """,
+                new ArrayExpression(new IntLiteralExpression(314), new BoolLiteralExpression(false), new StringLiteralExpression("foo"))
+                );
+
             // array of objects
             var obj = new ObjectExpression(
                 new PropertyExpression("p1", new StringLiteralExpression("p1 value")));
-            yield return new TestCaseData(new ArrayExpression(obj))
-                .Returns(@"[
-  {
-    p1: 'p1 value'
-  }
-]");
+            AssertExpression(
+                """
+                [
+                  {
+                    p1: 'p1 value'
+                  }
+                ]
+                """,
+                new ArrayExpression(obj)
+                );
+
+            static void AssertExpression(string expected, ArrayExpression expression)
+                => Assert.AreEqual(expected, expression.ToString());
         }
     }
 }

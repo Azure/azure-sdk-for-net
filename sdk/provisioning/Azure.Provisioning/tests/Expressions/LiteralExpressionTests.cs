@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using Azure.Provisioning.Expressions;
 using NUnit.Framework;
 
@@ -9,24 +8,47 @@ namespace Azure.Provisioning.Tests.Expressions
 {
     public class LiteralExpressionTests
     {
-        [TestCaseSource(nameof(ValidateLiteralExpressionTestData))]
-        public string? ValidateLiteralExpression(LiteralExpression literal)
+        [Test]
+        public void ValidateLiteralExpression()
         {
-            return literal.ToString();
-        }
+            // null literal
+            AssertExpression(
+                "null",
+                new NullLiteralExpression()
+                );
 
-        private static IEnumerable<TestCaseData> ValidateLiteralExpressionTestData()
-        {
-            yield return new TestCaseData(new NullLiteralExpression()).Returns("null");
+            // bool literal
+            AssertExpression(
+                "true",
+                new BoolLiteralExpression(true)
+                );
+            AssertExpression(
+                "false",
+                new BoolLiteralExpression(false)
+                );
 
-            yield return new TestCaseData(new BoolLiteralExpression(true)).Returns("true");
-            yield return new TestCaseData(new BoolLiteralExpression(false)).Returns("false");
+            // int literal
+            AssertExpression(
+                "3141592",
+                new IntLiteralExpression(3141592)
+                );
+            AssertExpression(
+                "-271828",
+                new IntLiteralExpression(-271828)
+                );
 
-            yield return new TestCaseData(new IntLiteralExpression(3141592)).Returns("3141592");
-            yield return new TestCaseData(new IntLiteralExpression(-271828)).Returns("-271828");
+            // string literal
+            AssertExpression(
+                "'ordinary string'",
+                new StringLiteralExpression("ordinary string")
+                );
+            AssertExpression(
+                @"'string with \'single quote\''",
+                new StringLiteralExpression("string with 'single quote'")
+                );
 
-            yield return new TestCaseData(new StringLiteralExpression("ordinary string")).Returns("'ordinary string'");
-            yield return new TestCaseData(new StringLiteralExpression("string with 'single quote'")).Returns("'string with \\'single quote\\''");
+            static void AssertExpression(string expected, LiteralExpression expression)
+                => Assert.AreEqual(expected, expression.ToString());
         }
     }
 }
