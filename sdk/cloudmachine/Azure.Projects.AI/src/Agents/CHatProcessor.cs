@@ -94,7 +94,7 @@ namespace Azure.Projects.OpenAI
         protected virtual void OnGround(List<ChatMessage> conversation, string prompt)
         {
             if (VectorDb == null) return;
-            var related = VectorDb.Find(prompt);
+            var related = VectorDb.FindRelated(prompt);
             conversation.Add(related);
         }
 

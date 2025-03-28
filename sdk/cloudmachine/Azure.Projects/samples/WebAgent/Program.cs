@@ -22,8 +22,8 @@ builder.Services.AddHttpClient();
 
 // add oppinionated framework client to the DI container
 OfxProjectClient client = builder.AddOfxClient();
-EmbeddingsStore vectorDb = new(client.GetOpenAIEmbeddingClient());
-client.Storage.WhenUploaded(vectorDb.Add); // update vector db when a new file is uploaded
+EmbeddingsStore embeddings = new(client.GetOpenAIEmbeddingClient());
+client.Storage.WhenUploaded(embeddings.Add); // update vector db when a new file is uploaded
 
 var app = builder.Build();
 app.MapRazorPages();
@@ -32,10 +32,9 @@ app.UseStaticFiles();
 List<ChatMessage> conversationThread = [];
 app.MapPost("/chat", async (HttpRequest request) =>
 {
-    try
-    {
+    try {
         var message = await new StreamReader(request.Body).ReadToEndAsync();
-        IEnumerable<VectorbaseEntry> related = vectorDb.Find(message);
+        IEnumerable<VectorbaseEntry> related = embeddings.FindRelated(message);
         conversationThread.Add(related);
         conversationThread.Add(ChatMessage.CreateUserMessage(message));
 
@@ -45,8 +44,7 @@ app.MapPost("/chat", async (HttpRequest request) =>
         {
             case ChatFinishReason.Stop:
                 conversationThread.Add(completion);
-                string response = completion.Content[0].Text;
-                return response;
+                return completion.AsText();
             #region NotImplemented
             //case ChatFinishReason.Length:
             //case ChatFinishReason.ToolCalls:
@@ -57,8 +55,7 @@ app.MapPost("/chat", async (HttpRequest request) =>
                 #endregion
         }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
         return e.Message;
     }
 });

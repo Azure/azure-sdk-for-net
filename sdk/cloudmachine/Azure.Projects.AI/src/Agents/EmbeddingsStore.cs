@@ -59,7 +59,7 @@ public class EmbeddingsStore
     /// <param name="text"></param>
     /// <param name="options"></param>
     /// <returns></returns>
-    public IEnumerable<VectorbaseEntry> Find(string text, FindOptions? options = default)
+    public IEnumerable<VectorbaseEntry> FindRelated(string text, FindOptions? options = default)
     {
         options ??= new FindOptions();
         if (_todo.Count > 0)

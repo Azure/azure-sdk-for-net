@@ -34,7 +34,7 @@ while (true)
         continue;
     }
 
-    var related = embeddings.Find(prompt);
+    var related = embeddings.FindRelated(prompt);
     conversation.Add(related);
 
     conversation.Add(ChatMessage.CreateUserMessage(prompt));
