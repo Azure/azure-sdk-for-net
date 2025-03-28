@@ -9,8 +9,6 @@ namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
     internal partial class UnknownFish : Fish
     {
-        internal UnknownFish(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind ?? "unknown", age, additionalBinaryDataProperties)
-        {
-        }
+        internal UnknownFish(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind ?? "unknown", age, additionalBinaryDataProperties) => throw null;
     }
 }

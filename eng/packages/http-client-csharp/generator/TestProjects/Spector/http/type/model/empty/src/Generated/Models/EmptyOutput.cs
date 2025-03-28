@@ -2,24 +2,9 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Model.Empty.Models
 {
-    /// <summary> Empty model used in operation return type. </summary>
     public partial class EmptyOutput
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        internal EmptyOutput()
-        {
-        }
-
-        internal EmptyOutput(IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
     }
 }

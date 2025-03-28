@@ -6,93 +6,26 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Server.Endpoint.NotDefined
 {
-    /// <summary> Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in. </summary>
     public partial class NotDefinedClient
     {
-        private readonly Uri _endpoint;
+        protected NotDefinedClient() => throw null;
 
-        /// <summary> Initializes a new instance of NotDefinedClient for mocking. </summary>
-        protected NotDefinedClient()
-        {
-        }
+        public NotDefinedClient(Uri endpoint) : this(endpoint, new NotDefinedClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of NotDefinedClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public NotDefinedClient(Uri endpoint) : this(endpoint, new NotDefinedClientOptions())
-        {
-        }
+        public NotDefinedClient(Uri endpoint, NotDefinedClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of NotDefinedClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public NotDefinedClient(Uri endpoint, NotDefinedClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public HttpPipeline Pipeline => throw null;
 
-            options ??= new NotDefinedClientOptions();
+        public virtual Response Valid(RequestContext context) => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-        }
+        public virtual Task<Response> ValidAsync(RequestContext context) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public HttpPipeline Pipeline { get; }
+        public virtual Response Valid(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] valid
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Valid(RequestContext context)
-        {
-            using HttpMessage message = CreateValidRequest(context);
-            return Pipeline.ProcessMessage(message, context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] valid
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ValidAsync(RequestContext context)
-        {
-            using HttpMessage message = CreateValidRequest(context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-        }
-
-        /// <summary> valid. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Valid(CancellationToken cancellationToken = default)
-        {
-            return Valid(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> valid. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ValidAsync(CancellationToken cancellationToken = default)
-        {
-            return await ValidAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Task<Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

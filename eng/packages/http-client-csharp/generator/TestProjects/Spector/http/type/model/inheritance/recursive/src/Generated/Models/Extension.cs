@@ -7,22 +7,16 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.Recursive.Models
 {
-    /// <summary> extension. </summary>
     public partial class Extension : Element
     {
-        /// <summary> Initializes a new instance of <see cref="Extension"/>. </summary>
-        /// <param name="level"></param>
-        public Extension(sbyte level)
-        {
-            Level = level;
-        }
+        public Extension(sbyte level) => throw null;
 
-        internal Extension(IList<Extension> extension, IDictionary<string, BinaryData> additionalBinaryDataProperties, sbyte level) : base(extension, additionalBinaryDataProperties)
-        {
-            Level = level;
-        }
+        internal Extension(IList<Extension> extension, IDictionary<string, BinaryData> additionalBinaryDataProperties, sbyte level) : base(extension, additionalBinaryDataProperties) => throw null;
 
-        /// <summary> Gets or sets the Level. </summary>
-        public sbyte Level { get; set; }
+        public sbyte Level
+        {
+            get => throw null;
+            set => throw null;
+        }
     }
 }

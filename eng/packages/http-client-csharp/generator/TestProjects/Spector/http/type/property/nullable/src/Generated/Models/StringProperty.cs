@@ -2,41 +2,22 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using _Type.Property.Nullable;
-
 namespace _Type.Property.Nullable.Models
 {
-    /// <summary> Template type for testing models with nullable property. Pass in the type of the property you are looking for. </summary>
     public partial class StringProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public StringProperty(string requiredProperty, string nullableProperty) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="StringProperty"/>. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
-        public StringProperty(string requiredProperty, string nullableProperty)
+        public string RequiredProperty
         {
-            Argument.AssertNotNull(requiredProperty, nameof(requiredProperty));
-
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty;
+            get => throw null;
+            set => throw null;
         }
 
-        internal StringProperty(string requiredProperty, string nullableProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public string NullableProperty
         {
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Required property. </summary>
-        public string RequiredProperty { get; set; }
-
-        /// <summary> Property. </summary>
-        public string NullableProperty { get; set; }
     }
 }

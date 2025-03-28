@@ -4,35 +4,23 @@
 
 using System;
 using System.Collections.Generic;
-using _Type.Model.Inheritance.NestedDiscriminator;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
-    /// <summary> The second level model in polymorphic multiple levels inheritance which contains references to other polymorphic instances. </summary>
     public partial class Salmon : Fish
     {
-        /// <summary> Initializes a new instance of <see cref="Salmon"/>. </summary>
-        /// <param name="age"></param>
-        public Salmon(int age) : base("salmon", age)
+        public Salmon(int age) : base("salmon", age) => throw null;
+
+        internal Salmon(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Fish> friends, IDictionary<string, Fish> hate, Fish partner) : base(kind, age, additionalBinaryDataProperties) => throw null;
+
+        public IList<Fish> Friends => throw null;
+
+        public IDictionary<string, Fish> Hate => throw null;
+
+        public Fish Partner
         {
-            Friends = new ChangeTrackingList<Fish>();
-            Hate = new ChangeTrackingDictionary<string, Fish>();
+            get => throw null;
+            set => throw null;
         }
-
-        internal Salmon(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Fish> friends, IDictionary<string, Fish> hate, Fish partner) : base(kind, age, additionalBinaryDataProperties)
-        {
-            Friends = friends;
-            Hate = hate;
-            Partner = partner;
-        }
-
-        /// <summary> Gets the Friends. </summary>
-        public IList<Fish> Friends { get; }
-
-        /// <summary> Gets the Hate. </summary>
-        public IDictionary<string, Fish> Hate { get; }
-
-        /// <summary> Gets or sets the Partner. </summary>
-        public Fish Partner { get; set; }
     }
 }

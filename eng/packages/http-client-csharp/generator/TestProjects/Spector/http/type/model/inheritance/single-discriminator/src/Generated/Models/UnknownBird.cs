@@ -9,8 +9,6 @@ namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
     internal partial class UnknownBird : Bird
     {
-        internal UnknownBird(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind ?? "unknown", wingspan, additionalBinaryDataProperties)
-        {
-        }
+        internal UnknownBird(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind ?? "unknown", wingspan, additionalBinaryDataProperties) => throw null;
     }
 }

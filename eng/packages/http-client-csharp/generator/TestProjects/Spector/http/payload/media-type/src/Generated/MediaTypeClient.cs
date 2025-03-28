@@ -3,43 +3,18 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Payload.MediaType
 {
-    /// <summary> Test the payload with different media types and different types of the payload itself. </summary>
     public partial class MediaTypeClient
     {
-        private readonly Uri _endpoint;
-        private StringBody _cachedStringBody;
+        public MediaTypeClient() : this(new Uri("http://localhost:3000"), new MediaTypeClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of MediaTypeClient. </summary>
-        public MediaTypeClient() : this(new Uri("http://localhost:3000"), new MediaTypeClientOptions())
-        {
-        }
+        public MediaTypeClient(Uri endpoint, MediaTypeClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of MediaTypeClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public MediaTypeClient(Uri endpoint, MediaTypeClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public HttpPipeline Pipeline => throw null;
 
-            options ??= new MediaTypeClientOptions();
-
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-        }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public HttpPipeline Pipeline { get; }
-
-        /// <summary> Initializes a new instance of StringBody. </summary>
-        public virtual StringBody GetStringBodyClient()
-        {
-            return Volatile.Read(ref _cachedStringBody) ?? Interlocked.CompareExchange(ref _cachedStringBody, new StringBody(Pipeline, _endpoint), null) ?? _cachedStringBody;
-        }
+        public virtual StringBody GetStringBodyClient() => throw null;
     }
 }

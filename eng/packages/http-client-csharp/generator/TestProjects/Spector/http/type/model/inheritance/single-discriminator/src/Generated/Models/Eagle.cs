@@ -4,35 +4,23 @@
 
 using System;
 using System.Collections.Generic;
-using _Type.Model.Inheritance.SingleDiscriminator;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
-    /// <summary> The second level model in polymorphic single levels inheritance which contains references to other polymorphic instances. </summary>
     public partial class Eagle : Bird
     {
-        /// <summary> Initializes a new instance of <see cref="Eagle"/>. </summary>
-        /// <param name="wingspan"></param>
-        public Eagle(int wingspan) : base("eagle", wingspan)
+        public Eagle(int wingspan) : base("eagle", wingspan) => throw null;
+
+        internal Eagle(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Bird> friends, IDictionary<string, Bird> hate, Bird partner) : base(kind, wingspan, additionalBinaryDataProperties) => throw null;
+
+        public IList<Bird> Friends => throw null;
+
+        public IDictionary<string, Bird> Hate => throw null;
+
+        public Bird Partner
         {
-            Friends = new ChangeTrackingList<Bird>();
-            Hate = new ChangeTrackingDictionary<string, Bird>();
+            get => throw null;
+            set => throw null;
         }
-
-        internal Eagle(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Bird> friends, IDictionary<string, Bird> hate, Bird partner) : base(kind, wingspan, additionalBinaryDataProperties)
-        {
-            Friends = friends;
-            Hate = hate;
-            Partner = partner;
-        }
-
-        /// <summary> Gets the Friends. </summary>
-        public IList<Bird> Friends { get; }
-
-        /// <summary> Gets the Hate. </summary>
-        public IDictionary<string, Bird> Hate { get; }
-
-        /// <summary> Gets or sets the Partner. </summary>
-        public Bird Partner { get; set; }
     }
 }

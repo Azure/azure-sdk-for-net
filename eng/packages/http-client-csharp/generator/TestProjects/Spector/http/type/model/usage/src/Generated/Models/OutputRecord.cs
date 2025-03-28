@@ -2,29 +2,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Model.Usage.Models
 {
-    /// <summary> Record used in operation return type. </summary>
     public partial class OutputRecord
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        internal OutputRecord(string requiredProp)
-        {
-            RequiredProp = requiredProp;
-        }
-
-        internal OutputRecord(string requiredProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            RequiredProp = requiredProp;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the RequiredProp. </summary>
-        public string RequiredProp { get; }
+        public string RequiredProp => throw null;
     }
 }

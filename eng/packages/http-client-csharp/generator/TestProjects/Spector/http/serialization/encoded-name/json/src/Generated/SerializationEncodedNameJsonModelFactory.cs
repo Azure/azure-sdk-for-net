@@ -4,16 +4,8 @@
 
 namespace Serialization.EncodedName.Json.Models
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class SerializationEncodedNameJsonModelFactory
     {
-        /// <summary> The JsonEncodedNameModel. </summary>
-        /// <param name="defaultName"> Pass in true. </param>
-        /// <returns> A new <see cref="Models.JsonEncodedNameModel"/> instance for mocking. </returns>
-        public static JsonEncodedNameModel JsonEncodedNameModel(bool defaultName = default)
-        {
-
-            return new JsonEncodedNameModel(defaultName, additionalBinaryDataProperties: null);
-        }
+        public static JsonEncodedNameModel JsonEncodedNameModel(bool defaultName = default) => throw null;
     }
 }

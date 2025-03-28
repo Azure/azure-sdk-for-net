@@ -2,25 +2,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Model.Empty.Models
 {
-    /// <summary> Empty model used in operation parameters. </summary>
     public partial class EmptyInput
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="EmptyInput"/>. </summary>
-        public EmptyInput()
-        {
-        }
-
-        internal EmptyInput(IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
+        public EmptyInput() => throw null;
     }
 }

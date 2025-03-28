@@ -2,36 +2,16 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using _Type.Model.Visibility;
 
 namespace _Type.Model.Visibility.Models
 {
-    /// <summary> RoundTrip model with readonly optional properties. </summary>
     public partial class ReadOnlyModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public ReadOnlyModel() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="ReadOnlyModel"/>. </summary>
-        public ReadOnlyModel()
-        {
-            OptionalNullableIntList = new ChangeTrackingList<int>();
-            OptionalStringRecord = new ChangeTrackingDictionary<string, string>();
-        }
+        public IReadOnlyList<int> OptionalNullableIntList => throw null;
 
-        internal ReadOnlyModel(IReadOnlyList<int> optionalNullableIntList, IReadOnlyDictionary<string, string> optionalStringRecord, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            OptionalNullableIntList = optionalNullableIntList;
-            OptionalStringRecord = optionalStringRecord;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Optional readonly nullable int list. </summary>
-        public IReadOnlyList<int> OptionalNullableIntList { get; }
-
-        /// <summary> Optional readonly string dictionary. </summary>
-        public IReadOnlyDictionary<string, string> OptionalStringRecord { get; }
+        public IReadOnlyDictionary<string, string> OptionalStringRecord => throw null;
     }
 }

@@ -7,17 +7,10 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
-    /// <summary> The second level model in polymorphic single level inheritance. </summary>
     public partial class SeaGull : Bird
     {
-        /// <summary> Initializes a new instance of <see cref="SeaGull"/>. </summary>
-        /// <param name="wingspan"></param>
-        public SeaGull(int wingspan) : base("seagull", wingspan)
-        {
-        }
+        public SeaGull(int wingspan) : base("seagull", wingspan) => throw null;
 
-        internal SeaGull(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, wingspan, additionalBinaryDataProperties)
-        {
-        }
+        internal SeaGull(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, wingspan, additionalBinaryDataProperties) => throw null;
     }
 }

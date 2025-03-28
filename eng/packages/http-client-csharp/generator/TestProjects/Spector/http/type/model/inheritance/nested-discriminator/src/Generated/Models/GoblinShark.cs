@@ -7,17 +7,10 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
-    /// <summary> The third level model GoblinShark in polymorphic multiple levels inheritance. </summary>
     public partial class GoblinShark : Shark
     {
-        /// <summary> Initializes a new instance of <see cref="GoblinShark"/>. </summary>
-        /// <param name="age"></param>
-        public GoblinShark(int age) : base(age, "goblin")
-        {
-        }
+        public GoblinShark(int age) : base(age, "goblin") => throw null;
 
-        internal GoblinShark(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind, age, additionalBinaryDataProperties, sharktype)
-        {
-        }
+        internal GoblinShark(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind, age, additionalBinaryDataProperties, sharktype) => throw null;
     }
 }

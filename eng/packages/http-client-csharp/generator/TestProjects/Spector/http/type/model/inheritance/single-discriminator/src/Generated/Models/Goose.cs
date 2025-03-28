@@ -7,17 +7,10 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
-    /// <summary> The second level model in polymorphic single level inheritance. </summary>
     public partial class Goose : Bird
     {
-        /// <summary> Initializes a new instance of <see cref="Goose"/>. </summary>
-        /// <param name="wingspan"></param>
-        public Goose(int wingspan) : base("goose", wingspan)
-        {
-        }
+        public Goose(int wingspan) : base("goose", wingspan) => throw null;
 
-        internal Goose(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, wingspan, additionalBinaryDataProperties)
-        {
-        }
+        internal Goose(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, wingspan, additionalBinaryDataProperties) => throw null;
     }
 }

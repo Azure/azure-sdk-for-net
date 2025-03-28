@@ -6,16 +6,8 @@ using System;
 
 namespace Payload.ContentNegotiation.Models
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class PayloadContentNegotiationModelFactory
     {
-        /// <summary> The PngImageAsJson. </summary>
-        /// <param name="content"></param>
-        /// <returns> A new <see cref="Models.PngImageAsJson"/> instance for mocking. </returns>
-        public static PngImageAsJson PngImageAsJson(BinaryData content = default)
-        {
-
-            return new PngImageAsJson(content, additionalBinaryDataProperties: null);
-        }
+        public static PngImageAsJson PngImageAsJson(BinaryData content = default) => throw null;
     }
 }

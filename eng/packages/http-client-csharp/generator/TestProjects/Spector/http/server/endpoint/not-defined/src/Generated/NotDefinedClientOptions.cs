@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Server.Endpoint.NotDefined
 {
-    /// <summary> Client options for <see cref="NotDefinedClient"/>. </summary>
     public partial class NotDefinedClientOptions : ClientOptions
     {
     }

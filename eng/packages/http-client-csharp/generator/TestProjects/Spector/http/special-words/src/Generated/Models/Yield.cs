@@ -2,35 +2,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using SpecialWords;
-
 namespace SpecialWords._Models
 {
-    /// <summary> The Yield. </summary>
     public partial class Yield
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Yield(string name) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Yield"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Yield(string name)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-        }
-
-        internal Yield(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the Name. </summary>
-        public string Name { get; }
+        public string Name => throw null;
     }
 }

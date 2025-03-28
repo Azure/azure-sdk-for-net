@@ -2,42 +2,24 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using _Type.Property.Nullable;
 
 namespace _Type.Property.Nullable.Models
 {
-    /// <summary> Model with collection models properties. </summary>
     public partial class CollectionsModelProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public CollectionsModelProperty(string requiredProperty, IEnumerable<InnerModel> nullableProperty) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="CollectionsModelProperty"/>. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
-        public CollectionsModelProperty(string requiredProperty, IEnumerable<InnerModel> nullableProperty)
+        public string RequiredProperty
         {
-            Argument.AssertNotNull(requiredProperty, nameof(requiredProperty));
-
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty?.ToList();
+            get => throw null;
+            set => throw null;
         }
 
-        internal CollectionsModelProperty(string requiredProperty, IList<InnerModel> nullableProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public IList<InnerModel> NullableProperty
         {
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Required property. </summary>
-        public string RequiredProperty { get; set; }
-
-        /// <summary> Property. </summary>
-        public IList<InnerModel> NullableProperty { get; set; }
     }
 }

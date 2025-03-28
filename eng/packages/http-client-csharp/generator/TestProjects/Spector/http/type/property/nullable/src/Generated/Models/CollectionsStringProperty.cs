@@ -2,42 +2,24 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using _Type.Property.Nullable;
 
 namespace _Type.Property.Nullable.Models
 {
-    /// <summary> Model with collection string properties. </summary>
     public partial class CollectionsStringProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public CollectionsStringProperty(string requiredProperty, IEnumerable<string> nullableProperty) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="CollectionsStringProperty"/>. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
-        public CollectionsStringProperty(string requiredProperty, IEnumerable<string> nullableProperty)
+        public string RequiredProperty
         {
-            Argument.AssertNotNull(requiredProperty, nameof(requiredProperty));
-
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty?.ToList();
+            get => throw null;
+            set => throw null;
         }
 
-        internal CollectionsStringProperty(string requiredProperty, IList<string> nullableProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public IList<string> NullableProperty
         {
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Required property. </summary>
-        public string RequiredProperty { get; set; }
-
-        /// <summary> Property. </summary>
-        public IList<string> NullableProperty { get; set; }
     }
 }

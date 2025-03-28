@@ -4,29 +4,15 @@
 
 using System;
 using System.Collections.Generic;
-using _Type.Model.Inheritance.Recursive;
 
 namespace _Type.Model.Inheritance.Recursive.Models
 {
-    /// <summary> element. </summary>
     public partial class Element
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Element() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Element"/>. </summary>
-        public Element()
-        {
-            Extension = new ChangeTrackingList<Extension>();
-        }
+        internal Element(IList<Extension> extension, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
 
-        internal Element(IList<Extension> extension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Extension = extension;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the Extension. </summary>
-        public IList<Extension> Extension { get; }
+        public IList<Extension> Extension => throw null;
     }
 }

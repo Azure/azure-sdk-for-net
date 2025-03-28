@@ -2,35 +2,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using _Type.Model.Usage;
-
 namespace _Type.Model.Usage.Models
 {
-    /// <summary> Record used in operation parameters. </summary>
     public partial class InputRecord
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public InputRecord(string requiredProp) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="InputRecord"/>. </summary>
-        /// <param name="requiredProp"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProp"/> is null. </exception>
-        public InputRecord(string requiredProp)
-        {
-            Argument.AssertNotNull(requiredProp, nameof(requiredProp));
-
-            RequiredProp = requiredProp;
-        }
-
-        internal InputRecord(string requiredProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            RequiredProp = requiredProp;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the RequiredProp. </summary>
-        public string RequiredProp { get; }
+        public string RequiredProp => throw null;
     }
 }

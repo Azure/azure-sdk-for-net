@@ -4,31 +4,12 @@
 
 namespace _Type.Model.Empty.Models
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelEmptyModelFactory
     {
-        /// <summary> Empty model used in operation parameters. </summary>
-        /// <returns> A new <see cref="Models.EmptyInput"/> instance for mocking. </returns>
-        public static EmptyInput EmptyInput()
-        {
+        public static EmptyInput EmptyInput() => throw null;
 
-            return new EmptyInput(additionalBinaryDataProperties: null);
-        }
+        public static EmptyOutput EmptyOutput() => throw null;
 
-        /// <summary> Empty model used in operation return type. </summary>
-        /// <returns> A new <see cref="Models.EmptyOutput"/> instance for mocking. </returns>
-        public static EmptyOutput EmptyOutput()
-        {
-
-            return new EmptyOutput(additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Empty model used in both parameter and return type. </summary>
-        /// <returns> A new <see cref="Models.EmptyInputOutput"/> instance for mocking. </returns>
-        public static EmptyInputOutput EmptyInputOutput()
-        {
-
-            return new EmptyInputOutput(additionalBinaryDataProperties: null);
-        }
+        public static EmptyInputOutput EmptyInputOutput() => throw null;
     }
 }

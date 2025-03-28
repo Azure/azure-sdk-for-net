@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Authentication.Union
 {
-    /// <summary> Client options for <see cref="UnionClient"/>. </summary>
     public partial class UnionClientOptions : ClientOptions
     {
     }
