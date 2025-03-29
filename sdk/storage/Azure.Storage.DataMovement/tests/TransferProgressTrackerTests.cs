@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             Mock<IProcessor<Args>> progressProcessor = new();
 
-            await using (TransferProgressTracker progressTracker = new(progressProcessor.Object, default))
+            await using (TransferProgressTracker progressTracker = new(new ThroughputMonitor(), progressProcessor.Object, default))
             {
                 progressProcessor.VerifySet(p => p.Process = It.IsNotNull<ProcessAsync<Args>>(), Times.Once());
 
@@ -127,7 +127,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ProgressFlow_NoOptions()
         {
             IProcessor<Args> progressProcessor = new PassthroughProcessor();
-            await using (TransferProgressTracker progressTracker = new(progressProcessor, default))
+            await using (TransferProgressTracker progressTracker = new(new ThroughputMonitor(), progressProcessor, default))
             {
                 await RunSampleUpdates(progressTracker);
             }
@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement.Tests
             IProcessor<Args> progressProcessor = new PassthroughProcessor();
             TestProgressHandler progressHandler = new();
 
-            await using (TransferProgressTracker progressTracker = new(progressProcessor, new TransferProgressHandlerOptions()
+            await using (TransferProgressTracker progressTracker = new(new ThroughputMonitor(), progressProcessor, new TransferProgressHandlerOptions()
             {
                 ProgressHandler = progressHandler,
                 TrackBytesTransferred = false
@@ -176,7 +176,7 @@ namespace Azure.Storage.DataMovement.Tests
             IProcessor<Args> progressProcessor = new PassthroughProcessor();
             TestProgressHandler progressHandler = new();
 
-            await using (TransferProgressTracker progressTracker = new(progressProcessor, new TransferProgressHandlerOptions()
+            await using (TransferProgressTracker progressTracker = new(new ThroughputMonitor(), progressProcessor, new TransferProgressHandlerOptions()
             {
                 ProgressHandler = progressHandler,
                 TrackBytesTransferred = true
