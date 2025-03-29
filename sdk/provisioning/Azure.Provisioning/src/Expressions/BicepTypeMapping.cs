@@ -60,6 +60,8 @@ internal static class BicepTypeMapping
             bool b => b.ToString(),
             int i => i.ToString(),
             long i => i.ToString(),
+            float f => f.ToString(),
+            double d => d.ToString(),
             string s => s,
             Uri u => u.AbsoluteUri,
             DateTimeOffset d => d.ToString("o"),
@@ -96,6 +98,11 @@ internal static class BicepTypeMapping
             // in bicep source and you need to use a parameter file for larger
             // values
             long i => BicepSyntax.Value((int)i),
+            // Note: bicep does not offically support floating numbers
+            // therefore for floating numbers we are taking a workaround from
+            // https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+            float f => FromDouble(f),
+            double d => FromDouble(d),
             string s => BicepSyntax.Value(s),
             Uri u => BicepSyntax.Value(ToLiteralString(u, format)),
             DateTimeOffset d => BicepSyntax.Value(ToLiteralString(d, format)),
@@ -120,6 +127,18 @@ internal static class BicepTypeMapping
             IBicepValue v when (v.Kind == BicepValueKind.Unset) => BicepSyntax.Null(),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };
+
+        BicepExpression FromDouble(double d)
+        {
+            // see if the value is a whole number
+            var s = d.ToString();
+            if (int.TryParse(s, out int i))
+            {
+                return BicepSyntax.Value(i);
+            }
+            // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+            return BicepFunction.ParseJson(BicepSyntax.Value(s)).Compile();
+        }
 
         ArrayExpression ToArray(IEnumerable<object> seq) =>
             BicepSyntax.Array([.. seq.Select(v => ToBicep(v, v is BicepValue b ? b.Format : null))]);
