@@ -1,8 +1,6 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-#nullable enable
-
 // Note: For some targets this file will contain more than one type/namespace.
 #pragma warning disable IDE0161 // Convert to file-scoped namespace
 
@@ -59,7 +57,7 @@ namespace OpenTelemetry.Internal
         /// <param name="paramName">The parameter name to use in the thrown exception.</param>
         [DebuggerHidden]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ThrowIfNull([NotNull] object? value, [CallerArgumentExpression("value")] string? paramName = null)
+        public static void ThrowIfNull([NotNull] object? value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
         {
             if (value is null)
             {
@@ -74,7 +72,7 @@ namespace OpenTelemetry.Internal
         /// <param name="paramName">The parameter name to use in the thrown exception.</param>
         [DebuggerHidden]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ThrowIfNullOrEmpty([NotNull] string? value, [CallerArgumentExpression("value")] string? paramName = null)
+        public static void ThrowIfNullOrEmpty([NotNull] string? value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
 #pragma warning disable CS8777 // Parameter must have a non-null value when exiting.
         {
             if (string.IsNullOrEmpty(value))
@@ -91,7 +89,7 @@ namespace OpenTelemetry.Internal
         /// <param name="paramName">The parameter name to use in the thrown exception.</param>
         [DebuggerHidden]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ThrowIfNullOrWhitespace([NotNull] string? value, [CallerArgumentExpression("value")] string? paramName = null)
+        public static void ThrowIfNullOrWhitespace([NotNull] string? value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
 #pragma warning disable CS8777 // Parameter must have a non-null value when exiting.
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -109,7 +107,7 @@ namespace OpenTelemetry.Internal
         /// <param name="paramName">The parameter name to use in the thrown exception.</param>
         [DebuggerHidden]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ThrowIfZero(int value, string message = "Must not be zero", [CallerArgumentExpression("value")] string? paramName = null)
+        public static void ThrowIfZero(int value, string message = "Must not be zero", [CallerArgumentExpression(nameof(value))] string? paramName = null)
         {
             if (value == 0)
             {
@@ -124,7 +122,7 @@ namespace OpenTelemetry.Internal
         /// <param name="paramName">The parameter name to use in the thrown exception.</param>
         [DebuggerHidden]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ThrowIfInvalidTimeout(int value, [CallerArgumentExpression("value")] string? paramName = null)
+        public static void ThrowIfInvalidTimeout(int value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
         {
             ThrowIfOutOfRange(value, paramName, min: Timeout.Infinite, message: $"Must be non-negative or '{nameof(Timeout)}.{nameof(Timeout.Infinite)}'");
         }
@@ -141,7 +139,7 @@ namespace OpenTelemetry.Internal
         /// <param name="message">An optional custom message to use in the thrown exception.</param>
         [DebuggerHidden]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ThrowIfOutOfRange(int value, [CallerArgumentExpression("value")] string? paramName = null, int min = int.MinValue, int max = int.MaxValue, string? minName = null, string? maxName = null, string? message = null)
+        public static void ThrowIfOutOfRange(int value, [CallerArgumentExpression(nameof(value))] string? paramName = null, int min = int.MinValue, int max = int.MaxValue, string? minName = null, string? maxName = null, string? message = null)
         {
             Range(value, paramName, min, max, minName, maxName, message);
         }
@@ -158,7 +156,7 @@ namespace OpenTelemetry.Internal
         /// <param name="message">An optional custom message to use in the thrown exception.</param>
         [DebuggerHidden]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ThrowIfOutOfRange(double value, [CallerArgumentExpression("value")] string? paramName = null, double min = double.MinValue, double max = double.MaxValue, string? minName = null, string? maxName = null, string? message = null)
+        public static void ThrowIfOutOfRange(double value, [CallerArgumentExpression(nameof(value))] string? paramName = null, double min = double.MinValue, double max = double.MaxValue, string? minName = null, string? maxName = null, string? message = null)
         {
             Range(value, paramName, min, max, minName, maxName, message);
         }
@@ -172,14 +170,11 @@ namespace OpenTelemetry.Internal
         /// <returns>The value casted to the specified type.</returns>
         [DebuggerHidden]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T ThrowIfNotOfType<T>([NotNull] object? value, [CallerArgumentExpression("value")] string? paramName = null)
+        public static T ThrowIfNotOfType<T>([NotNull] object? value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
         {
-            if (value is not T result)
-            {
-                throw new InvalidCastException($"Cannot cast '{paramName}' from '{value?.GetType().ToString() ?? "null"}' to '{typeof(T)}'");
-            }
-
-            return result;
+            return value is not T result
+                ? throw new InvalidCastException($"Cannot cast '{paramName}' from '{value?.GetType().ToString() ?? "null"}' to '{typeof(T)}'")
+                : result;
         }
 
         [DebuggerHidden]
