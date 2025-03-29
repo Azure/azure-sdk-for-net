@@ -2,28 +2,16 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The answer failed event.
+    /// The Connect Failed event.
     /// </summary>
+    [CodeGenModel("AnswerFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class AnswerFailed : CallAutomationEventBase
     {
-        /// <summary> Initializes a new instance of AnswerFailed. </summary>
-        internal AnswerFailed()
-        {
-        }
-
-        internal AnswerFailed(AnswerFailedInternal internalEvent)
-        {
-            OperationContext = internalEvent.OperationContext;
-            ResultInformation = internalEvent.ResultInformation;
-            CallConnectionId = internalEvent.CallConnectionId;
-            ServerCallId = internalEvent.ServerCallId;
-            CorrelationId = internalEvent.CorrelationId;
-        }
-
         /// <summary>
         /// Deserialize <see cref="AnswerFailed"/> event.
         /// </summary>
@@ -33,8 +21,8 @@ namespace Azure.Communication.CallAutomation
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
-            var internalEvent = AnswerFailedInternal.DeserializeAnswerFailedInternal(element);
-            return new AnswerFailed(internalEvent);
+
+            return DeserializeAnswerFailed(element);
         }
     }
 }

@@ -30,8 +30,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="operationContext"> Used by customers to correlate the request to the response event. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="mediaStreamingOptions"> Media Streaming Options. </param>
-        /// <param name="transcriptionOptions"> Transcription Options. </param>
+        /// <param name="mediaStreamingOptions"> Media Streaming Configuration. </param>
+        /// <param name="transcriptionOptions"> Live Transcription Configuration. </param>
         internal ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
         {
             CallLocator = callLocator;
@@ -50,9 +50,9 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary> Media Streaming Options. </summary>
+        /// <summary> Media Streaming Configuration. </summary>
         public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
-        /// <summary> Transcription Options. </summary>
+        /// <summary> Live Transcription Configuration. </summary>
         public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
     }
 }

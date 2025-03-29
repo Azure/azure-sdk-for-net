@@ -16,12 +16,13 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The latest version of the CallAutomation service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2024_09_01_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2024_11_15_Preview;
 
         internal string ApiVersion { get; }
 
         /// <summary>
         /// The caller source of the call automation client.
+        /// Mutual exclusive with <see cref="Source"/>.
         /// </summary>
         public CommunicationUserIdentifier Source { get; set; }
 
@@ -33,10 +34,10 @@ namespace Azure.Communication.CallAutomation
             ApiVersion = version switch
             {
                 ServiceVersion.V2023_03_06 => "2023-03-06",
-                ServiceVersion.V2023_06_15_Preview => "2023-06-15-preview",
                 ServiceVersion.V2023_10_15 => "2023-10-15",
-                ServiceVersion.V2023_10_03_Preview => "2023-10-03-preview",
-                ServiceVersion.V2024_09_01_Preview => "2024-09-01-preview",
+                ServiceVersion.V2024_04_15 => "2024-04-15",
+                ServiceVersion.V2024_09_15 => "2024-09-15",
+                ServiceVersion.V2024_11_15_Preview => "2024-11-15-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -53,24 +54,24 @@ namespace Azure.Communication.CallAutomation
             V2023_03_06 = 1,
 
             /// <summary>
-            /// The BETA2 (1.1.0-beta) of the CallAutomation service.
-            /// </summary>
-            V2023_06_15_Preview = 2,
-
-            /// <summary>
             /// The GA2 (1.1.0) of the CallAutomation service.
             /// </summary>
-            V2023_10_15 = 3,
+            V2023_10_15 = 2,
 
             /// <summary>
-            /// Latest ALPHA3 (1.2.0-alpha) preview of the CallAutomation service.
+            /// Latest GA3 (1.2.0) of the CallAutomation service.
             /// </summary>
-            V2023_10_03_Preview = 4,
+            V2024_04_15 = 3,
 
             /// <summary>
-            /// Latest ALPHA4 (1.4.0-alpha) preview of the CallAutomation service.
+            /// Latest GA4 (1.3.0) of the CallAutomation service.
             /// </summary>
-            V2024_09_01_Preview = 5
+            V2024_09_15 = 4,
+
+            /// <summary>
+            /// Latest BETA5 (1.4.0-beta.1) preview of the CallAutomation service.
+            /// </summary>
+            V2024_11_15_Preview = 5
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

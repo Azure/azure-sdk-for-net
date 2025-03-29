@@ -19,16 +19,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="locale"> Defines Locale for the transcription e,g en-US. </param>
         /// <param name="speechRecognitionModelEndpointId"> Endpoint where the custom model was deployed. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        /// <param name="operationCallbackUri">
-        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
-        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
-        /// </param>
-        internal StartTranscriptionRequestInternal(string locale, string speechRecognitionModelEndpointId, string operationContext, string operationCallbackUri)
+        internal StartTranscriptionRequestInternal(string locale, string speechRecognitionModelEndpointId, string operationContext)
         {
             Locale = locale;
             SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId;
             OperationContext = operationContext;
-            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> Defines Locale for the transcription e,g en-US. </summary>
@@ -37,10 +32,5 @@ namespace Azure.Communication.CallAutomation
         public string SpeechRecognitionModelEndpointId { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
-        /// <summary>
-        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
-        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
-        /// </summary>
-        public string OperationCallbackUri { get; set; }
     }
 }

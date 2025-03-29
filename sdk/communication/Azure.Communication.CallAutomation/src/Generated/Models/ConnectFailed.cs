@@ -7,21 +7,34 @@
 
 namespace Azure.Communication.CallAutomation
 {
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/ConnectFailed.cs
     /// <summary> The ConnectFailed event. </summary>
     public partial class ConnectFailed
+========
+    /// <summary> The create call failed event. </summary>
+    internal partial class CreateCallFailedInternal
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/CreateCallFailedInternal.cs
     {
         /// <summary> Initializes a new instance of <see cref="ConnectFailed"/>. </summary>
         internal ConnectFailed()
         {
         }
 
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/ConnectFailed.cs
         /// <summary> Initializes a new instance of <see cref="ConnectFailed"/>. </summary>
+========
+        /// <summary> Initializes a new instance of <see cref="CreateCallFailedInternal"/>. </summary>
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/CreateCallFailedInternal.cs
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/ConnectFailed.cs
         internal ConnectFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+========
+        internal CreateCallFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/CreateCallFailedInternal.cs
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -29,5 +42,19 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             ResultInformation = resultInformation;
         }
+<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/ConnectFailed.cs
+========
+
+        /// <summary> Call connection ID. </summary>
+        public string CallConnectionId { get; }
+        /// <summary> Server call ID. </summary>
+        public string ServerCallId { get; }
+        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
+        public string CorrelationId { get; }
+        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        public string OperationContext { get; }
+        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
+        public ResultInformation ResultInformation { get; }
+>>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/CreateCallFailedInternal.cs
     }
 }
