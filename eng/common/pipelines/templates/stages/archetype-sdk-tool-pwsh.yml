@@ -10,6 +10,9 @@ parameters:
   - name: TargetTags
     type: string
     default: ''
+  - name: PreTestSteps
+    type: object
+    default: []
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
@@ -36,6 +39,8 @@ stages:
           vmImage: $(Image)
 
         steps:
+          - ${{ parameters.PreTestSteps }}
+
           - template: /eng/common/pipelines/templates/steps/run-pester-tests.yml
             parameters:
               TargetDirectory: ${{ parameters.TargetDirectory }}
