@@ -144,11 +144,6 @@
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/Spector/http/type/property/nullable -g AzureClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
-    },
-    "Mgmt-TypeSpec": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/Local/Mgmt-TypeSpec -g AzureClientGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
     }
   }
 }

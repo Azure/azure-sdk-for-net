@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 using Azure.Core;
 using Azure.Identity;
 
-namespace Azure.Projects
+namespace Azure.Projects.Foundry
 {
     /// <summary>
     /// The AI Foundry client.

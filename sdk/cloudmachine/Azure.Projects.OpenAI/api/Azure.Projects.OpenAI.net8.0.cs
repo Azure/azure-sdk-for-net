@@ -1,5 +1,22 @@
+namespace Azure.AI.Models
+{
+    public partial class ModelsClient
+    {
+        protected ModelsClient() { }
+        public ModelsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ModelsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, OpenAI.OpenAIClientOptions options) { }
+        public ModelsClient(System.Uri endpoint, System.ClientModel.ApiKeyCredential credential) { }
+        public ModelsClient(System.Uri endpoint, System.ClientModel.ApiKeyCredential credential, OpenAI.OpenAIClientOptions options) { }
+        public OpenAI.Chat.ChatClient GetChatClient(string model) { throw null; }
+        public OpenAI.Embeddings.EmbeddingClient GetEmbeddingClient(string model) { throw null; }
+    }
+}
 namespace Azure.AI.OpenAI
 {
+    public static partial class AIServicesExtensions
+    {
+        public static Azure.AI.Models.ModelsClient GetModelsClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
+    }
     public static partial class AzureOpenAIExtensions
     {
         public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, OpenAI.Chat.ChatCompletion completion) { }
@@ -20,6 +37,11 @@ namespace Azure.Projects.OpenAI
         Chat = 0,
         Embedding = 1,
     }
+    public partial class AIServicesFeature : Azure.Projects.Core.AzureProjectFeature
+    {
+        public AIServicesFeature(string model, string modelVersion) { }
+        protected override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
+    }
     public partial class ChatProcessor
     {
         public ChatProcessor(OpenAI.Chat.ChatClient chat) { }
@@ -30,9 +52,9 @@ namespace Azure.Projects.OpenAI
         protected virtual void OnGround(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, string prompt) { }
         protected virtual void OnLength(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, OpenAI.Chat.ChatCompletion completion) { }
         protected virtual void OnStop(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, OpenAI.Chat.ChatCompletion completion) { }
-        protected virtual void OnToolCalls(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, OpenAI.Chat.ChatCompletion completion) { }
+        protected virtual System.Threading.Tasks.Task OnToolCalls(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, OpenAI.Chat.ChatCompletion completion) { throw null; }
         protected virtual void OnToolError(System.Collections.Generic.List<string> failed, System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, OpenAI.Chat.ChatCompletion completion) { }
-        public OpenAI.Chat.ChatCompletion TakeTurn(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, string prompt) { throw null; }
+        public System.Threading.Tasks.Task<OpenAI.Chat.ChatCompletion> TakeTurnAsync(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, string prompt) { throw null; }
     }
     public partial class ChatTools
     {
@@ -40,10 +62,11 @@ namespace Azure.Projects.OpenAI
         public System.Collections.Generic.IList<OpenAI.Chat.ChatTool> Definitions { get { throw null; } }
         public void Add(System.Reflection.MethodInfo function) { }
         public void Add(System.Type functions) { }
+        public System.Threading.Tasks.Task AddMcpServerAsync(System.Uri serverEndpoint) { throw null; }
         public string Call(OpenAI.Chat.ChatToolCall call) { throw null; }
         public string Call(string name, object[] arguments) { throw null; }
         public System.Collections.Generic.IEnumerable<OpenAI.Chat.ToolChatMessage> CallAll(System.Collections.Generic.IEnumerable<OpenAI.Chat.ChatToolCall> toolCalls) { throw null; }
-        public System.Collections.Generic.IEnumerable<OpenAI.Chat.ToolChatMessage> CallAll(System.Collections.Generic.IEnumerable<OpenAI.Chat.ChatToolCall> toolCalls, out System.Collections.Generic.List<string>? failed) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Projects.OpenAI.ToolCallResult> CallAllWithErrors(System.Collections.Generic.IEnumerable<OpenAI.Chat.ChatToolCall> toolCalls) { throw null; }
         public static implicit operator OpenAI.Chat.ChatCompletionOptions (Azure.Projects.OpenAI.ChatTools tools) { throw null; }
         public OpenAI.Chat.ChatCompletionOptions ToOptions() { throw null; }
     }
@@ -76,6 +99,15 @@ namespace Azure.Projects.OpenAI
         public System.ClientModel.Primitives.ClientConnection CreateConnection(string cmId) { throw null; }
         protected override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
         protected override void EmitFeatures(Azure.Projects.ProjectInfrastructure infrastructure) { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct ToolCallResult
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public ToolCallResult(System.Collections.Generic.IEnumerable<OpenAI.Chat.ToolChatMessage> messages, System.Collections.Generic.List<string>? failed = null) { throw null; }
+        public System.Collections.Generic.List<string>? Failed { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<OpenAI.Chat.ToolChatMessage> Messages { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VectorbaseEntry
