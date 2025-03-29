@@ -54,9 +54,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\http-client-csharp\generator\Azure.Generator\test\Azure.Generator.Tests.csproj" />
     <ProjectReference Include="..\..\..\..\..\http-client-csharp\generator\Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj" />
     <ProjectReference Include="..\..\src\Azure.Generator.Mgmt.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestHelpers\Configuration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

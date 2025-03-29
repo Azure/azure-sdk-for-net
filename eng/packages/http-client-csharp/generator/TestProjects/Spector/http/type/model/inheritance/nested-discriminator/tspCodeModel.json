@@ -400,6 +400,7 @@
  "clients": [
   {
    "$id": "53",
+   "kind": "client",
    "name": "NestedDiscriminatorClient",
    "namespace": "Type.Model.Inheritance.NestedDiscriminator",
    "doc": "Illustrates multiple level inheritance with multiple discriminators.",
@@ -822,7 +823,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator"
+   "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator",
+   "apiVersions": []
   }
  ]
 }

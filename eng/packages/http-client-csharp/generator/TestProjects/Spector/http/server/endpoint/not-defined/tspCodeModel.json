@@ -7,6 +7,7 @@
  "clients": [
   {
    "$id": "2",
+   "kind": "client",
    "name": "NotDefinedClient",
    "namespace": "Server.Endpoint.NotDefined",
    "doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
@@ -60,7 +61,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Server.Endpoint.NotDefined"
+   "crossLanguageDefinitionId": "Server.Endpoint.NotDefined",
+   "apiVersions": []
   }
  ]
 }

@@ -124,7 +124,8 @@ export async function createCSharpSdkContext(
       crossLanguageDefinitionIds: new Map(),
       types: new Map(),
       models: new Map(),
-      enums: new Map()
+      enums: new Map(),
+      clients: new Map()
     }
   };
 }

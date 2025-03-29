@@ -336,6 +336,7 @@ namespace Azure.Generator.Tests.Common
                 ["application/json"]);
         }
 
+        private static readonly Dictionary<InputClient, IList<InputClient>> _childClientsCache = new();
         /// <summary>
         /// Construct input client
         /// </summary>
@@ -348,8 +349,10 @@ namespace Azure.Generator.Tests.Common
         /// <param name="decorators"></param>
         /// <param name="crossLanguageDefinitionId"></param>
         /// <returns></returns>
-        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
         {
+            // when this client has parent, we add the constructed client into the `children` list of the parent
+            var clientChildren = new List<InputClient>();
             var client = new InputClient(
                 name,
                 clientNamespace,
@@ -358,7 +361,16 @@ namespace Azure.Generator.Tests.Common
                 doc ?? $"{name} description",
                 operations is null ? [] : [.. operations],
                 parameters is null ? [] : [.. parameters],
-                parent);
+                parent,
+                clientChildren
+                );
+            _childClientsCache[client] = clientChildren;
+            // when we have a parent, we need to find the children list of this parent client and update accordingly.
+            if (parent != null && _childClientsCache.TryGetValue(parent, out var children))
+            {
+                children.Add(client);
+            }
+
             if (decorators is not null)
             {
                 var decoratorProperty = typeof(InputClient).GetProperty(nameof(InputClient.Decorators));

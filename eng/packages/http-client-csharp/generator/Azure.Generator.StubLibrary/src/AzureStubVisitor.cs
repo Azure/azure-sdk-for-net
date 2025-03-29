@@ -23,9 +23,7 @@ namespace Azure.Generator.StubLibrary
             if (!type.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) &&
                 !type.Name.StartsWith("Unknown", StringComparison.Ordinal) &&
                 !type.Name.Equals("MultiPartFormDataBinaryContent", StringComparison.Ordinal))
-            {
                 return null;
-            }
 
             type.Update(xmlDocs: _emptyDocs);
             return type;
@@ -50,9 +48,7 @@ namespace Azure.Generator.StubLibrary
             if (!IsCallingBaseCtor(constructor) &&
                 !IsEffectivelyPublic(constructor.Signature.Modifiers) &&
                 (constructor.EnclosingType is not ModelProvider model || model.DerivedModels.Count == 0))
-            {
                 return null;
-            }
 
             constructor.Update(
                 bodyStatements: null,
@@ -80,16 +76,12 @@ namespace Azure.Generator.StubLibrary
         protected override MethodProvider? VisitMethod(MethodProvider method)
         {
             if (method.Signature.ExplicitInterface is null && !IsEffectivelyPublic(method.Signature.Modifiers))
-            {
                 return null;
-            }
 
             method.Signature.Update(modifiers: method.Signature.Modifiers & ~MethodSignatureModifiers.Async);
-
             var docs = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Implicit)
                 ? method.XmlDocs
                 : _emptyDocs;
-
             method.Update(
                 bodyStatements: null,
                 bodyExpression: _throwNull,
@@ -101,9 +93,7 @@ namespace Azure.Generator.StubLibrary
         protected override PropertyProvider? VisitProperty(PropertyProvider property)
         {
             if (!property.IsDiscriminator && !IsEffectivelyPublic(property.Modifiers))
-            {
                 return null;
-            }
 
             var propertyBody = new ExpressionPropertyBody(_throwNull, property.Body.HasSetter ? _throwNull : null);
 
@@ -117,14 +107,10 @@ namespace Azure.Generator.StubLibrary
         private bool IsEffectivelyPublic(MethodSignatureModifiers modifiers)
         {
             if (modifiers.HasFlag(MethodSignatureModifiers.Public))
-            {
                 return true;
-            }
 
             if (modifiers.HasFlag(MethodSignatureModifiers.Protected) && !modifiers.HasFlag(MethodSignatureModifiers.Private))
-            {
                 return true;
-            }
 
             return false;
         }

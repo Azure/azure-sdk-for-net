@@ -893,31 +893,31 @@ namespace BasicTypeSpec
         }
 
         /// <summary> Model can have its projected name. </summary>
-        /// <param name="name"> name of the ModelWithProjectedName. </param>
+        /// <param name="name"> name of the ModelWithClientName. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ProjectedModel> ProjectedNameModel(string name, CancellationToken cancellationToken = default)
+        public virtual Response<RenamedModel> ProjectedNameModel(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ProjectedModel spreadModel = new ProjectedModel(name, null);
+            RenamedModel spreadModel = new RenamedModel(name, null);
             Response result = ProjectedNameModel(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((ProjectedModel)result, result);
+            return Response.FromValue((RenamedModel)result, result);
         }
 
         /// <summary> Model can have its projected name. </summary>
-        /// <param name="name"> name of the ModelWithProjectedName. </param>
+        /// <param name="name"> name of the ModelWithClientName. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ProjectedModel>> ProjectedNameModelAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RenamedModel>> ProjectedNameModelAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ProjectedModel spreadModel = new ProjectedModel(name, null);
+            RenamedModel spreadModel = new RenamedModel(name, null);
             Response result = await ProjectedNameModelAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((ProjectedModel)result, result);
+            return Response.FromValue((RenamedModel)result, result);
         }
 
         /// <summary>
@@ -1024,7 +1024,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNull(accept, nameof(accept));
 
             Response result = GetUnknownValue(accept, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue(result.Content.ToObjectFromJson<string>(), result);
+            return Response.FromValue(result.Content.ToString(), result);
         }
 
         /// <summary> get extensible enum. </summary>
@@ -1037,7 +1037,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNull(accept, nameof(accept));
 
             Response result = await GetUnknownValueAsync(accept, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue(result.Content.ToObjectFromJson<string>(), result);
+            return Response.FromValue(result.Content.ToString(), result);
         }
 
         /// <summary>

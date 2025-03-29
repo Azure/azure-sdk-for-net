@@ -489,6 +489,7 @@
  "clients": [
   {
    "$id": "64",
+   "kind": "client",
    "name": "SingleDiscriminatorClient",
    "namespace": "Type.Model.Inheritance.SingleDiscriminator",
    "doc": "Illustrates inheritance with single discriminator.",
@@ -970,7 +971,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator"
+   "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator",
+   "apiVersions": []
   }
  ]
 }

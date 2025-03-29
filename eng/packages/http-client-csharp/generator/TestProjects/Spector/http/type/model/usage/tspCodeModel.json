@@ -122,6 +122,7 @@
  "clients": [
   {
    "$id": "17",
+   "kind": "client",
    "name": "UsageClient",
    "namespace": "Type.Model.Usage",
    "doc": "Illustrates usage of Record in different places(Operation parameters, return type or both).",
@@ -400,7 +401,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Usage"
+   "crossLanguageDefinitionId": "Type.Model.Usage",
+   "apiVersions": []
   }
  ]
 }
