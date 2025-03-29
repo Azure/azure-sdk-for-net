@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("runAsAccountId"u8);
             writer.WriteStringValue(RunAsAccountId);
-            writer.WritePropertyName("sourceDraName"u8);
-            writer.WriteStringValue(SourceDraName);
-            writer.WritePropertyName("targetDraName"u8);
-            writer.WriteStringValue(TargetDraName);
+            writer.WritePropertyName("sourceFabricAgentName"u8);
+            writer.WriteStringValue(SourceFabricAgentName);
+            writer.WritePropertyName("targetFabricAgentName"u8);
+            writer.WriteStringValue(TargetFabricAgentName);
             if (options.Format != "W" && Optional.IsDefined(SourceApplianceName))
             {
                 writer.WritePropertyName("sourceApplianceName"u8);
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("failoverRecoveryPointId"u8);
                 writer.WriteStringValue(FailoverRecoveryPointId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceivedOn))
             {
                 writer.WritePropertyName("lastRecoveryPointReceived"u8);
-                writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
+                writer.WriteStringValue(LastRecoveryPointReceivedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointId))
             {
@@ -300,8 +300,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             int? sourceCpuCores = default;
             double? sourceMemoryInMegaBytes = default;
             string runAsAccountId = default;
-            string sourceDraName = default;
-            string targetDraName = default;
+            string sourceFabricAgentName = default;
+            string targetFabricAgentName = default;
             string sourceApplianceName = default;
             string targetApplianceName = default;
             string failoverRecoveryPointId = default;
@@ -523,14 +523,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     runAsAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceDraName"u8))
+                if (property.NameEquals("sourceFabricAgentName"u8))
                 {
-                    sourceDraName = property.Value.GetString();
+                    sourceFabricAgentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDraName"u8))
+                if (property.NameEquals("targetFabricAgentName"u8))
                 {
-                    targetDraName = property.Value.GetString();
+                    targetFabricAgentName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceApplianceName"u8))
@@ -695,8 +695,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 sourceCpuCores,
                 sourceMemoryInMegaBytes,
                 runAsAccountId,
-                sourceDraName,
-                targetDraName,
+                sourceFabricAgentName,
+                targetFabricAgentName,
                 sourceApplianceName,
                 targetApplianceName,
                 failoverRecoveryPointId,

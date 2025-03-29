@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string CancelledValue = "Cancelled";
         private const string SkippedValue = "Skipped";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Task has not been started. </summary>
         public static DataReplicationTaskState Pending { get; } = new DataReplicationTaskState(PendingValue);
-        /// <summary> Started. </summary>
+        /// <summary> Task is in progress. </summary>
         public static DataReplicationTaskState Started { get; } = new DataReplicationTaskState(StartedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Task has completed successfully. </summary>
         public static DataReplicationTaskState Succeeded { get; } = new DataReplicationTaskState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Task failed. </summary>
         public static DataReplicationTaskState Failed { get; } = new DataReplicationTaskState(FailedValue);
-        /// <summary> Cancelled. </summary>
+        /// <summary> Task has been cancelled. </summary>
         public static DataReplicationTaskState Cancelled { get; } = new DataReplicationTaskState(CancelledValue);
-        /// <summary> Skipped. </summary>
+        /// <summary> Task has been skipped. </summary>
         public static DataReplicationTaskState Skipped { get; } = new DataReplicationTaskState(SkippedValue);
         /// <summary> Determines if two <see cref="DataReplicationTaskState"/> values are the same. </summary>
         public static bool operator ==(DataReplicationTaskState left, DataReplicationTaskState right) => left.Equals(right);

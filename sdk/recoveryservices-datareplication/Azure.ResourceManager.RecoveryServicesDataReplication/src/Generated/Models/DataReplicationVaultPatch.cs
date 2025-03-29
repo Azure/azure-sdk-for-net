@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> Vault model for update. </summary>
+    /// <summary> Vault model update. </summary>
     public partial class DataReplicationVaultPatch : ResourceData
     {
         /// <summary>
@@ -60,11 +60,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <param name="properties"> Vault properties. </param>
+        /// <param name="identity"> Vault identity. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, DataReplicationVaultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataReplicationVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, DataReplicationVaultProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             Properties = properties;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,5 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> Vault properties. </summary>
         public DataReplicationVaultProperties Properties { get; set; }
+        /// <summary> Vault identity. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

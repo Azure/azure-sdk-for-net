@@ -57,12 +57,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="sendToOwners"> Gets or sets a value indicating whether to send email to subscription administrator. </param>
         /// <param name="customEmailAddresses"> Gets or sets the custom email address for sending emails. </param>
         /// <param name="locale"> Gets or sets the locale for the email notification. </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the email configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationEmailConfigurationProperties(bool sendToOwners, IList<string> customEmailAddresses, string locale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationEmailConfigurationProperties(bool sendToOwners, IList<string> customEmailAddresses, string locale, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SendToOwners = sendToOwners;
             CustomEmailAddresses = customEmailAddresses;
             Locale = locale;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public IList<string> CustomEmailAddresses { get; }
         /// <summary> Gets or sets the locale for the email notification. </summary>
         public string Locale { get; set; }
+        /// <summary> Gets or sets the provisioning state of the email configuration. </summary>
+        public DataReplicationProvisioningState? ProvisioningState { get; }
     }
 }

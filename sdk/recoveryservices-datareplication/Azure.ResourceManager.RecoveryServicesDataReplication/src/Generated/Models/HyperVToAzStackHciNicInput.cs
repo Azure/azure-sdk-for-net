@@ -47,19 +47,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciNicInput"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
-        /// <param name="targetNetworkId"> Gets or sets the target network Id within AzStackHCI Cluster. </param>
-        /// <param name="testNetworkId"> Gets or sets the target test network Id within AzStackHCI Cluster. </param>
         /// <param name="selectionTypeForFailover"> Gets or sets the selection type of the NIC. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nicId"/>, <paramref name="targetNetworkId"/> or <paramref name="testNetworkId"/> is null. </exception>
-        public HyperVToAzStackHciNicInput(string nicId, string targetNetworkId, string testNetworkId, VmNicSelection selectionTypeForFailover)
+        /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> is null. </exception>
+        public HyperVToAzStackHciNicInput(string nicId, VmNicSelection selectionTypeForFailover)
         {
             Argument.AssertNotNull(nicId, nameof(nicId));
-            Argument.AssertNotNull(targetNetworkId, nameof(targetNetworkId));
-            Argument.AssertNotNull(testNetworkId, nameof(testNetworkId));
 
             NicId = nicId;
-            TargetNetworkId = targetNetworkId;
-            TestNetworkId = testNetworkId;
             SelectionTypeForFailover = selectionTypeForFailover;
         }
 
@@ -69,14 +63,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="targetNetworkId"> Gets or sets the target network Id within AzStackHCI Cluster. </param>
         /// <param name="testNetworkId"> Gets or sets the target test network Id within AzStackHCI Cluster. </param>
         /// <param name="selectionTypeForFailover"> Gets or sets the selection type of the NIC. </param>
+        /// <param name="isStaticIPMigrationEnabled"> Gets or sets a value indicating whether static ip migration is enabled. </param>
+        /// <param name="isMacMigrationEnabled"> Gets or sets a value indicating whether mac address migration is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HyperVToAzStackHciNicInput(string nicId, string networkName, string targetNetworkId, string testNetworkId, VmNicSelection selectionTypeForFailover, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HyperVToAzStackHciNicInput(string nicId, string networkName, string targetNetworkId, string testNetworkId, VmNicSelection selectionTypeForFailover, bool? isStaticIPMigrationEnabled, bool? isMacMigrationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NicId = nicId;
             NetworkName = networkName;
             TargetNetworkId = targetNetworkId;
             TestNetworkId = testNetworkId;
             SelectionTypeForFailover = selectionTypeForFailover;
+            IsStaticIPMigrationEnabled = isStaticIPMigrationEnabled;
+            IsMacMigrationEnabled = isMacMigrationEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -95,5 +93,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public string TestNetworkId { get; set; }
         /// <summary> Gets or sets the selection type of the NIC. </summary>
         public VmNicSelection SelectionTypeForFailover { get; set; }
+        /// <summary> Gets or sets a value indicating whether static ip migration is enabled. </summary>
+        public bool? IsStaticIPMigrationEnabled { get; set; }
+        /// <summary> Gets or sets a value indicating whether mac address migration is enabled. </summary>
+        public bool? IsMacMigrationEnabled { get; set; }
     }
 }
