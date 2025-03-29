@@ -9,7 +9,5 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 {
     public class MigrationAssessmentManagementTestEnvironment : TestEnvironment
     {
-        public override TokenCredential Credential =>
-            new ChainedTokenCredential(new AzureCliCredential(), new VisualStudioCodeCredential());
     }
 }
