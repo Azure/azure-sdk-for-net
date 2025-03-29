@@ -9,19 +9,22 @@ namespace Azure.Storage.DataMovement
 {
     internal class ThroughputMonitor : IAsyncDisposable
     {
-        private int _totalBytesTransferred;
+        private long _totalBytesTransferred;
 
-        private IProcessor<int> _bytesTransferredProcessor;
+        private IProcessor<long> _bytesTransferredProcessor;
 
-        public int BytesTransferred {  get; set; }
-        public int TotalBytesTransferred { get => _totalBytesTransferred; }
+        public long BytesTransferred {  get; set; }
+        public long TotalBytesTransferred { get => _totalBytesTransferred; }
+
+        // Creating for Mocking
+        internal ThroughputMonitor() { }
 
         public ThroughputMonitor(ThroughputMonitorOptions options = default) : this
             (
-                ChannelProcessing.NewProcessor<int>(readers: 1)
+                ChannelProcessing.NewProcessor<long>(readers: 1)
             ){ }
 
-        internal ThroughputMonitor(IProcessor<int> bytesTransferredProcessor)
+        internal ThroughputMonitor(IProcessor<long> bytesTransferredProcessor)
         {
             _bytesTransferredProcessor = bytesTransferredProcessor;
             _bytesTransferredProcessor.Process = ProcessBytesTransferredAsync;
@@ -33,7 +36,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="item">The number of bytes transferred.</param>
         /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        private async Task ProcessBytesTransferredAsync(int item, CancellationToken cancellationToken)
+        private async Task ProcessBytesTransferredAsync(long item, CancellationToken cancellationToken)
         {
             await Task.Run(() => _totalBytesTransferred += item, cancellationToken).ConfigureAwait(false);
         }
@@ -44,7 +47,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
         /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public async ValueTask QueueBytesTransferredAsync(int bytesTransferred, CancellationToken cancellationToken)
+        public async ValueTask QueueBytesTransferredAsync(long bytesTransferred, CancellationToken cancellationToken)
         {
             await _bytesTransferredProcessor.QueueAsync(bytesTransferred, cancellationToken).ConfigureAwait(false);
         }
