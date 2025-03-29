@@ -31,7 +31,7 @@ dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 Nightly builds are available from this repo's [dev feed](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#nuget-package-dev-feed).
 These are provided without support and are not intended for production workloads.
 
-### Add the Exporter
+### Add the Exporter (per signal)
 
 The following examples demonstrate how to add the `AzureMonitorExporter` to your OpenTelemetry configuration.
 
@@ -67,6 +67,33 @@ It's important to keep the `TracerProvider`, `MeterProvider`, and `LoggerFactory
     ```
 
   For a complete example see [LogDemo.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/Logs/LogDemo.cs).
+
+### Add the Exporter (single api for all signals)
+
+The following example demonstrates how to add the `AzureMonitorExporter` for all signals with a single api.
+To use this api, you need to add OpenTelemetry to a `ServiceCollection`.
+If you're doing this manually you must also start the `HostedServices`.
+If you're doing this in an application with dependency injection (ie: ASP.NET Core), this should be handled automatically.
+
+This approach will also enable LiveMetrics. LiveMetrics can be disabled by setting `options.EnableLiveMetrics = false`.
+
+```csharp
+var serviceCollection = new ServiceCollection();
+serviceCollection.AddOpenTelemetry()
+    .UseAzureMonitorExporter(options => {
+        options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+    });
+
+using var serviceProvider = serviceCollection.BuildServiceProvider();
+
+// If you're building a ServiceCollection manually, you must also start the HostedServices.
+var hostedServices = serviceProvider.GetServices<IHostedService>();
+foreach (var hostedService in hostedServices)
+{
+    await hostedService.StartAsync(CancellationToken.None);
+}
+```
+
 
 ### Authenticate the client
 
