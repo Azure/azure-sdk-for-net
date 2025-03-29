@@ -16,10 +16,7 @@ namespace Azure.Storage.DataMovement
         public long BytesTransferred {  get; set; }
         public long TotalBytesTransferred { get => _totalBytesTransferred; }
 
-        // Creating for Mocking
-        internal ThroughputMonitor() { }
-
-        public ThroughputMonitor(ThroughputMonitorOptions options = default) : this
+        public ThroughputMonitor() : this
             (
                 ChannelProcessing.NewProcessor<long>(readers: 1)
             ){ }
