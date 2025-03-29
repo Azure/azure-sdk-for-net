@@ -1,4 +1,4 @@
-# Sample enterprise file search on agent with message attachment and code interpreter in Azure.AI.Projects.
+# Sample file search on agent with message attachment and code interpreter in Azure.AI.Projects.
 
 In this example we demonstrate, how to use file search with `MessageAttachment`.
 
