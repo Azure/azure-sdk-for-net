@@ -414,11 +414,6 @@ namespace Azure.Storage.DataMovement
 
                 DataMovementEventSource.Singleton.TransferQueued(transferId, sourceResource, destinationResource);
 
-                if (_concurrencyTunerEnabled)
-                    StartConcurrencyTuner();
-                //TODO: If we need to shut off the concurrency tuner in the future after perf testing, then we can
-                //StopConcurrencyTunerWhenTransfersComplete();
-
                 return transferOperation;
             }
             catch (Exception ex)
@@ -446,11 +441,6 @@ namespace Azure.Storage.DataMovement
             Task.WhenAll(_transfers.Values
                 .Select(transfer => transfer.WaitForCompletionAsync(_cancellationToken)))
                 .ContinueWith((_) => _cancellationTokenSource.Cancel());
-        }
-
-        private void StartConcurrencyTuner()
-        {
-            _concurrencyTuner.Start(_cancellationToken);
         }
 
         private async Task<TransferOperation> BuildAndAddTransferJobAsync(
