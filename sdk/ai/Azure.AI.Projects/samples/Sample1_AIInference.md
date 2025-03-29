@@ -14,7 +14,7 @@ Synchronous sample:
 ```C# Snippet:ExtensionsChatClientSync
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIProjectClient client = new AIProjectClient(connectionString);
+AIProjectClient client = new(connectionString);
 ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
 
 var requestOptions = new ChatCompletionsOptions()
@@ -62,7 +62,7 @@ Synchronous sample:
 ```C# Snippet:ExtensionsEmbeddingSync
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
-AIProjectClient client = new AIProjectClient(connectionString);
+AIProjectClient client = new(connectionString);
 EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
 var input = new List<string> { "first phrase", "second phrase", "third phrase" };
