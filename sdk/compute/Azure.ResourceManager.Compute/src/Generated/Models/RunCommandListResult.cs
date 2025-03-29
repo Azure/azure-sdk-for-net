@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> The list of virtual machine run commands. </param>
         /// <param name="nextLink"> The uri to fetch the next page of run commands. Call ListNext() with this to fetch the next page of run commands. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RunCommandListResult(IReadOnlyList<RunCommandDocumentBase> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunCommandListResult(IReadOnlyList<RunCommandDocumentBase> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The list of virtual machine run commands. </summary>
         public IReadOnlyList<RunCommandDocumentBase> Value { get; }
         /// <summary> The uri to fetch the next page of run commands. Call ListNext() with this to fetch the next page of run commands. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }
