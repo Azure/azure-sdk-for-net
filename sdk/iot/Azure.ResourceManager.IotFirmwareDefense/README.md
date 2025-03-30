@@ -1,4 +1,4 @@
-# Firmware analysis library for .NET
+# Azure firmware analysis client library for .NET
 
 Firmware analysis is a tool that analyzes firmware images and provides an understanding of security vulnerabilities in the firmware images. The analysis results include SBOM (Software Bill of Materials), CVE (Common Vulnerabilities and Exposures), binary hardening, password hashes, and weak or expired certificates.
 
