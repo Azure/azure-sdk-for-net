@@ -613,6 +613,49 @@ public class TransferManagerTests
             statuses.Add(status.DeepCopy());
             return true;
         });
+
+    [Test]
+    public async Task TransferManager_ThroughputMonitorTest()
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer,
+            default);
+
+        // Set Throughput monitor
+        var throughputMonitorField = typeof(TransferManager).GetField("_throughputMonitor", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        throughputMonitorField.SetValue(transferManager, new ThroughputMonitor());
+
+        int numFiles = 3;
+        Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
+        Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
+        (srcResource, dstResource).BasicSetup(srcUri, dstUri, numFiles);
+
+        // Don't pass options to test default options
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
+
+        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(1), "Failed to step through jobs queue.");
+        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numFiles), "Failed to step through parts queue.");
+        await ProcessChunksAssert(chunksProcessor, 1, numFiles, numFiles);
+
+        Assert.That(transfer.Status.HasCompletedSuccessfully);
+
+        // Use reflection to access the private _throughputMonitor field
+        var throughputMonitor = (ThroughputMonitor)throughputMonitorField.GetValue(transferManager);
+
+        // Assert the throughput monitor values
+        Assert.That(throughputMonitor.TotalBytesTransferred, Is.EqualTo(3072));
+    }
 }
 
 internal static partial class MockExtensions

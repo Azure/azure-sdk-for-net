@@ -395,6 +395,14 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new TransferOptions();
 
+            if (_throughputMonitor != null)
+            {
+                transferOptions.ProgressHandlerOptions = new TransferProgressHandlerOptions()
+                {
+                    TrackBytesTransferred = true
+                };
+            }
+
             string transferId = _generateTransferId();
             try
             {
