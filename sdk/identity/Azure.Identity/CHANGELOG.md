@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- `DefaultAzureCredential` no longer sends a probe request on each call to `GetToken`. It now only happens on the first call.
 
 ### Other Changes
 
