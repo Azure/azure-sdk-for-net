@@ -15,8 +15,8 @@ importers:
   eng/packages/http-client-csharp:
     dependencies:
       '@typespec/http-client-csharp':
-        specifier: https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvNDY5ODkwNC9hcnRpZmFjdE5hbWUvYnVpbGRfYXJ0aWZhY3RzX2NzaGFycA2/content?format=file&subPath=%2Fpackages%2Ftypespec-http-client-csharp-1.0.0-alpha.20250327.86.tgz
-        version: https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvNDY5ODkwNC9hcnRpZmFjdE5hbWUvYnVpbGRfYXJ0aWZhY3RzX2NzaGFycA2/content?format=file&subPath=%2Fpackages%2Ftypespec-http-client-csharp-1.0.0-alpha.20250327.86.tgz(30385653edb8d1035ded7eb8a3302450)
+        specifier: 1.0.0-alpha.20250330.1
+        version: 1.0.0-alpha.20250330.1(30385653edb8d1035ded7eb8a3302450)
     devDependencies:
       '@azure-tools/azure-http-specs':
         specifier: 0.1.0-alpha.10
@@ -143,8 +143,8 @@ importers:
         specifier: 0.67.1
         version: 0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/streams@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9)))
       '@typespec/http-client-csharp':
-        specifier: https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvNDY5ODkwNC9hcnRpZmFjdE5hbWUvYnVpbGRfYXJ0aWZhY3RzX2NzaGFycA2/content?format=file&subPath=%2Fpackages%2Ftypespec-http-client-csharp-1.0.0-alpha.20250327.86.tgz
-        version: https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvNDY5ODkwNC9hcnRpZmFjdE5hbWUvYnVpbGRfYXJ0aWZhY3RzX2NzaGFycA2/content?format=file&subPath=%2Fpackages%2Ftypespec-http-client-csharp-1.0.0-alpha.20250327.86.tgz(30385653edb8d1035ded7eb8a3302450)
+        specifier: 1.0.0-alpha.20250330.1
+        version: 1.0.0-alpha.20250330.1(30385653edb8d1035ded7eb8a3302450)
       '@typespec/http-specs':
         specifier: 0.1.0-alpha.15
         version: 0.1.0-alpha.15(@types/node@22.7.9)(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/http@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/streams@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))))(@typespec/rest@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/http@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/streams@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9)))))(@typespec/streams@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9)))(@typespec/versioning@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9)))(@typespec/xml@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9)))
@@ -920,9 +920,8 @@ packages:
     peerDependencies:
       '@typespec/compiler': ^0.67.1
 
-  '@typespec/http-client-csharp@https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvNDY5ODkwNC9hcnRpZmFjdE5hbWUvYnVpbGRfYXJ0aWZhY3RzX2NzaGFycA2/content?format=file&subPath=%2Fpackages%2Ftypespec-http-client-csharp-1.0.0-alpha.20250327.86.tgz':
-    resolution: {tarball: https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvNDY5ODkwNC9hcnRpZmFjdE5hbWUvYnVpbGRfYXJ0aWZhY3RzX2NzaGFycA2/content?format=file&subPath=%2Fpackages%2Ftypespec-http-client-csharp-1.0.0-alpha.20250327.86.tgz}
-    version: 1.0.0-alpha.20250327.86
+  '@typespec/http-client-csharp@1.0.0-alpha.20250330.1':
+    resolution: {integrity: sha512-ixlB19dSuurPgIHTDT2G/UD8Y5OGIvl7/utFqN56ndOdKCFMeK+MyZOABq4sAR71w8ExJyV1M7YFijl9yNG8XA==}
     peerDependencies:
       '@azure-tools/typespec-azure-core': '>=0.53.0 <1.0.0 || ~0.54.0-0'
       '@azure-tools/typespec-client-generator-core': '>=0.53.0 <1.0.0 || ~0.54.0-0'
@@ -3394,7 +3393,7 @@ snapshots:
     dependencies:
       '@typespec/compiler': 0.67.1(@types/node@22.7.9)
 
-  '@typespec/http-client-csharp@https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvNDY5ODkwNC9hcnRpZmFjdE5hbWUvYnVpbGRfYXJ0aWZhY3RzX2NzaGFycA2/content?format=file&subPath=%2Fpackages%2Ftypespec-http-client-csharp-1.0.0-alpha.20250327.86.tgz(30385653edb8d1035ded7eb8a3302450)':
+  '@typespec/http-client-csharp@1.0.0-alpha.20250330.1(30385653edb8d1035ded7eb8a3302450)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.53.0(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/http@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/streams@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))))(@typespec/rest@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/http@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9))(@typespec/streams@0.67.1(@typespec/compiler@0.67.1(@types/node@22.7.9)))))
       '@azure-tools/typespec-client-generator-core': 0.53.1(61de9ee5133b1a03691e0391401c697b)
