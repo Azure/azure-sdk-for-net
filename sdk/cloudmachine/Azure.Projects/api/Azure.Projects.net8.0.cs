@@ -54,10 +54,10 @@ namespace Azure.Projects
         public System.Threading.Tasks.Task SendJsonAsync(object serializable) { throw null; }
         public void WhenMessageReceived(System.Action<string> received) { }
     }
-    public partial class OfxProjectClient : Azure.Projects.ProjectClient
+    public partial class OfxClient : Azure.Projects.ProjectClient
     {
-        public OfxProjectClient() { }
-        public OfxProjectClient(string projectId, System.ClientModel.Primitives.ConnectionProvider connections) { }
+        public OfxClient() { }
+        public OfxClient(string projectId, System.ClientModel.Primitives.ConnectionProvider connections) { }
         public Azure.Projects.MessagingServices Messaging { get { throw null; } }
         public Azure.Projects.StorageServices Storage { get { throw null; } }
     }

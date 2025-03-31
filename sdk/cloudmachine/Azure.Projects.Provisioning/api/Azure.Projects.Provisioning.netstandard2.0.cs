@@ -45,16 +45,6 @@ namespace Azure.Projects
         public override string ToString() { throw null; }
     }
 }
-namespace Azure.Projects.AIFoundry
-{
-    public partial class AIProjectFeature : Azure.Projects.Core.AzureProjectFeature
-    {
-        public AIProjectFeature() { }
-        public AIProjectFeature(string connectionString) { }
-        public System.Collections.Generic.List<System.ClientModel.Primitives.ClientConnection> Connections { get { throw null; } set { } }
-        protected internal override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
-    }
-}
 namespace Azure.Projects.AppConfiguration
 {
     public partial class AppConfigurationFeature : Azure.Projects.Core.AzureProjectFeature
@@ -120,9 +110,9 @@ namespace Azure.Projects.KeyVault
 }
 namespace Azure.Projects.Ofx
 {
-    public partial class OfxProjectFeature : Azure.Projects.Core.AzureProjectFeature
+    public partial class OfxFeatures : Azure.Projects.Core.AzureProjectFeature
     {
-        public OfxProjectFeature() { }
+        public OfxFeatures() { }
         protected internal override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
         protected internal override void EmitFeatures(Azure.Projects.ProjectInfrastructure infrastructure) { }
     }
