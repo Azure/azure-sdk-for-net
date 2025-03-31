@@ -249,5 +249,26 @@ namespace Azure.Security.ConfidentialLedger
             var span = new ReadOnlySpan<char>(eccPem.ToCharArray());
             return PemReader.LoadCertificate(span, null, PemReader.KeyType.Auto, true);
         }
+
+        // overloads to keep backward compatibility
+
+        /// <summary>
+        /// [Protocol Method] Writes a ledger entry.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateLedgerEntry(RequestContent content, string collectionId, RequestContext context)
+            => CreateLedgerEntry(content, collectionId: collectionId, tags: null, context: context);
     }
 }

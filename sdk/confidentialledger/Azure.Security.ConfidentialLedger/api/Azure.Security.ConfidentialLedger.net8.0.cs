@@ -8,7 +8,8 @@ namespace Azure.Security.ConfidentialLedger
         public ConfidentialLedgerClient(System.Uri ledgerEndpoint, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate) { }
         public ConfidentialLedgerClient(System.Uri ledgerEndpoint, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateLedgerEntry(Azure.Core.RequestContent content, string collectionId, string tags, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateLedgerEntry(Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateLedgerEntry(Azure.Core.RequestContent content, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateLedgerEntryAsync(Azure.Core.RequestContent content, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateLedgerUser(string userId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateLedgerUserAsync(string userId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
