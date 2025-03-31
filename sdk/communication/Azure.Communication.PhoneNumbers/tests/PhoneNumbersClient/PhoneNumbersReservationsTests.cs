@@ -30,9 +30,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
         }
 
-        [OneTimeSetUp]
-        // Ensures that at least one active reservation exists before running the tests.
-        public async Task PrepareReservationAsync()
+        [TestCase]
+        [Order(0)] // This is run first to ensure that at least one active reservation exists before running the tests.
+        public async Task CreateReservationAsync()
         {
             PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
             Guid reservationId = Guid.NewGuid();
@@ -43,6 +43,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
             phoneNumbers["00000000"] = null;
 
             var reservationResponse = await client.CreateOrUpdateReservationAsync(reservationId, phoneNumbers).ConfigureAwait(false);
+
+            Assert.IsNotNull(reservationResponse.Value);
+            Assert.AreEqual(reservationId, reservationResponse.Value.Id);
+            Assert.AreEqual(ReservationStatus.Active, reservationResponse.Value.Status);
+            Assert.Greater(reservationResponse.Value.ExpiresAt, DateTimeOffset.UtcNow);
+            Assert.IsEmpty(reservationResponse.Value.PhoneNumbers);
 
             _initialReservationState = reservationResponse.Value;
         }
@@ -83,7 +89,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPhoneNumbersReservationsAsyncWithAzureKeyCredential")]
         [TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumbersReservationsAsyncWithTokenCredential")]
         [AsyncOnly]
-        [Order(0)] // This test is executed before any other test that could alter the initial reservation state.
+        [Order(1)] // This test is executed before any other test that could alter the initial reservation state.
         public async Task GetPhoneNumbersReservationsAsync(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
@@ -100,7 +106,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPhoneNumbersReservationsWithAzureKeyCredential")]
         [TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumbersReservationsWithTokenCredential")]
         [SyncOnly]
-        [Order(0)] // This test is executed before any other test that could alter the initial reservation state.
+        [Order(1)] // This test is executed before any other test that could alter the initial reservation state.
         public void GetPhoneNumbersReservations(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
@@ -116,7 +122,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [TestCase(AuthMethod.KeyCredential, TestName = "GetReservationAsyncUsingAzureKeyCredential")]
         [TestCase(AuthMethod.TokenCredential, TestName = "GetReservationAsyncUsingTokenCredential")]
         [AsyncOnly]
-        [Order(0)] // This test is executed before any other test that could alter the initial reservation state.
+        [Order(1)] // This test is executed before any other test that could alter the initial reservation state.
         public async Task GetReservationAsync(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
@@ -132,9 +138,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetReservationUsingConnectionString")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GetReservationUsingAzureKeyCredential")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GetReservationUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GetReservationUsingTokenCredential")]
         [SyncOnly]
-        [Order(0)] // This test is executed before any other test that could alter the initial reservation state.
+        [Order(1)] // This test is executed before any other test that could alter the initial reservation state.
         public void GetReservation(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
@@ -152,7 +158,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [TestCase(AuthMethod.KeyCredential, TestName = "CreateOrUpdateReservationAsyncUsingAzureKeyCredential")]
         [TestCase(AuthMethod.TokenCredential, TestName = "CreateOrUpdateReservationAsyncUsingTokenCredential")]
         [AsyncOnly]
-        [Order(1)] // This test is executed after tests that depend on the initial reservation state.
+        [Order(2)] // This test is executed after tests that depend on the initial reservation state.
         public async Task CreateOrUpdateReservationAsync(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
@@ -197,7 +203,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [TestCase(AuthMethod.KeyCredential, TestName = "CreateOrUpdateReservationUsingAzureKeyCredential")]
         [TestCase(AuthMethod.TokenCredential, TestName = "CreateOrUpdateReservationUsingTokenCredential")]
         [SyncOnly]
-        [Order(1)] // This test is executed after tests that depend on the initial reservation state.
+        [Order(2)] // This test is executed after tests that depend on the initial reservation state.
         public void CreateOrUpdateReservation(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
@@ -238,7 +244,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsFalse(phoneNumbersToReserve.Keys.Any(reservationAfterAdd.PhoneNumbers.ContainsKey));
         }
 
-        [OneTimeTearDown]
+        [TestCase]
+        [Order(3)] // This test is executed after tests that depend on the initial reservation state.
         public async Task DeleteReservationAsync()
         {
             PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
