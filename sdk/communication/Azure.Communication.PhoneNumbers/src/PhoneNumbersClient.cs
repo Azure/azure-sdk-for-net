@@ -969,17 +969,16 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// Create or update a phone numbers reservation.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="phoneNumbers"></param>
+        /// <param name="reservation"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<PhoneNumbersReservation>> CreateOrUpdateReservationAsync(Guid id, IDictionary<string, AvailablePhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PhoneNumbersReservation>> CreateOrUpdateReservationAsync(PhoneNumbersReservation reservation, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservation)}");
             scope.Start();
             try
             {
-                return await InternalClient.CreateOrUpdateReservationAsync(id, phoneNumbers, cancellationToken).ConfigureAwait(false);
+                return await InternalClient.CreateOrUpdateReservationAsync(reservation.Id, reservation.PhoneNumbers, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -991,17 +990,16 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// Create or update a phone numbers reservation.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="phoneNumbers"></param>
+        /// <param name="reservation"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<PhoneNumbersReservation> CreateOrUpdateReservation(Guid id, IDictionary<string, AvailablePhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
+        public virtual Response<PhoneNumbersReservation> CreateOrUpdateReservation(PhoneNumbersReservation reservation, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservation)}");
             scope.Start();
             try
             {
-                return InternalClient.CreateOrUpdateReservation(id, phoneNumbers, cancellationToken);
+                return InternalClient.CreateOrUpdateReservation(reservation.Id, reservation.PhoneNumbers, cancellationToken);
             }
             catch (Exception e)
             {

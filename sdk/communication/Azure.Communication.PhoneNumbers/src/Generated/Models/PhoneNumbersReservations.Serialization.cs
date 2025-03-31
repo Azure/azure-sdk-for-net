@@ -12,41 +12,5 @@ namespace Azure.Communication.PhoneNumbers
 {
     internal partial class PhoneNumbersReservations
     {
-        internal static PhoneNumbersReservations DeserializePhoneNumbersReservations(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            IReadOnlyList<PhoneNumbersReservation> reservations = default;
-            string nextLink = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("reservations"u8))
-                {
-                    List<PhoneNumbersReservation> array = new List<PhoneNumbersReservation>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PhoneNumbersReservation.DeserializePhoneNumbersReservation(item));
-                    }
-                    reservations = array;
-                    continue;
-                }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new PhoneNumbersReservations(reservations, nextLink);
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PhoneNumbersReservations FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePhoneNumbersReservations(document.RootElement);
-        }
     }
 }

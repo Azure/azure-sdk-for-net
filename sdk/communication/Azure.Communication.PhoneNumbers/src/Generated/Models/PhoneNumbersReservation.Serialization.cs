@@ -37,7 +37,7 @@ namespace Azure.Communication.PhoneNumbers
             {
                 return null;
             }
-            Guid? id = default;
+            Guid id = default;
             DateTimeOffset? expiresAt = default;
             IDictionary<string, AvailablePhoneNumber> phoneNumbers = default;
             ReservationStatus? status = default;

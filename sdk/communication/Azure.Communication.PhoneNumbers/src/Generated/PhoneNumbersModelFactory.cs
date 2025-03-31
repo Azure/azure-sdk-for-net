@@ -164,7 +164,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumbers"> A dictionary containing the reservation phone numbers. The key is the ID of the phone number (digits only) and values are AvailablePhoneNumber objects. Not populated when retrieving PhoneNumbersReservation collections. </param>
         /// <param name="status"> Represents the status of the reservation. Possible values include: 'active', 'submitted', 'completed', 'expired'. </param>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumbersReservation"/> instance for mocking. </returns>
-        public static PhoneNumbersReservation PhoneNumbersReservation(Guid? id = null, DateTimeOffset? expiresAt = null, IDictionary<string, AvailablePhoneNumber> phoneNumbers = null, ReservationStatus? status = null)
+        public static PhoneNumbersReservation PhoneNumbersReservation(Guid id = default, DateTimeOffset? expiresAt = null, IDictionary<string, AvailablePhoneNumber> phoneNumbers = null, ReservationStatus? status = null)
         {
             phoneNumbers ??= new Dictionary<string, AvailablePhoneNumber>();
 

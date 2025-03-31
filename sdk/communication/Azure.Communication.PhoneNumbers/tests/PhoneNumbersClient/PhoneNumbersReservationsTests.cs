@@ -31,19 +31,40 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [TestCase]
+        [AsyncOnly]
         [Order(0)] // This is run first to ensure that at least one active reservation exists before running the tests.
         public async Task CreateReservationAsync()
         {
             PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
-            Guid reservationId = Guid.NewGuid();
+            var reservationId = Guid.NewGuid();
+            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
 
-            var phoneNumbers = new Dictionary<string, AvailablePhoneNumber?>();
-            // The JSON serializer ignores empty dictionaries but the API requires PhoneNumbers to be present,
-            // so we need to add a dummy entry to ensure the dictionary is serialized.
-            phoneNumbers["00000000"] = null;
+            var reservationResponse = await client.CreateOrUpdateReservationAsync(reservation).ConfigureAwait(false);
 
-            var reservationResponse = await client.CreateOrUpdateReservationAsync(reservationId, phoneNumbers).ConfigureAwait(false);
+            // The response should be a 201 Created.
+            Assert.AreEqual(201, reservationResponse.GetRawResponse().Status);
+            Assert.IsNotNull(reservationResponse.Value);
+            Assert.AreEqual(reservationId, reservationResponse.Value.Id);
+            Assert.AreEqual(ReservationStatus.Active, reservationResponse.Value.Status);
+            Assert.Greater(reservationResponse.Value.ExpiresAt, DateTimeOffset.UtcNow);
+            Assert.IsEmpty(reservationResponse.Value.PhoneNumbers);
 
+            _initialReservationState = reservationResponse.Value;
+        }
+
+        [TestCase]
+        [SyncOnly]
+        [Order(0)] // This is run first to ensure that at least one active reservation exists before running the tests.
+        public void CreateReservation()
+        {
+            PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
+            var reservationId = Guid.NewGuid();
+            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+
+            var reservationResponse = client.CreateOrUpdateReservation(reservation);
+
+            // The response should be a 201 Created.
+            Assert.AreEqual(201, reservationResponse.GetRawResponse().Status);
             Assert.IsNotNull(reservationResponse.Value);
             Assert.AreEqual(reservationId, reservationResponse.Value.Id);
             Assert.AreEqual(ReservationStatus.Active, reservationResponse.Value.Status);
@@ -169,9 +190,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // Reserve the first two available phone numbers.
             var phoneNumbersToReserve = availablePhoneNumbers
                 .Take(2)
-                .ToDictionary(phoneNumber => phoneNumber.Id, phoneNumber => phoneNumber);
+                .ToList();
 
-            var reservationResponse = await client.CreateOrUpdateReservationAsync((Guid)_initialReservationState!.Id!, phoneNumbersToReserve).ConfigureAwait(false);
+            var reservationBeforeAdd = CreateReservationFrom(_initialReservationState!);
+            phoneNumbersToReserve
+                .ForEach(number => reservationBeforeAdd.PhoneNumbers.Add(number.Id, number));
+
+            var reservationResponse = await client.CreateOrUpdateReservationAsync(reservationBeforeAdd).ConfigureAwait(false);
             var reservationAfterAdd = reservationResponse.Value;
 
             Assert.IsNotNull(reservationAfterAdd);
@@ -180,15 +205,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.Greater(reservationAfterAdd.ExpiresAt, _initialReservationState.ExpiresAt);
             Assert.IsTrue(reservationAfterAdd.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
             // All numbers in the request should be in the reservation.
-            Assert.IsTrue(phoneNumbersToReserve.Keys.All(reservationAfterAdd.PhoneNumbers.ContainsKey));
+            Assert.IsTrue(phoneNumbersToReserve.Select(n => n.Id).All(reservationAfterAdd.PhoneNumbers.ContainsKey));
 
             // Now remove the reserved numbers
-            foreach (var numberToRemove in phoneNumbersToReserve.Keys)
-            {
-                reservationAfterAdd.PhoneNumbers[numberToRemove] = null;
-            }
+            var phoneNumbersToRemove = phoneNumbersToReserve
+                .Select(number => number.Id)
+                .ToList();
+            var reservationBeforeRemove = CreateReservationFrom(reservationAfterAdd);
+            phoneNumbersToRemove
+                .ForEach(number => reservationBeforeRemove.PhoneNumbers.Remove(number));
 
-            reservationResponse = await client.CreateOrUpdateReservationAsync((Guid)_initialReservationState!.Id!, reservationAfterAdd.PhoneNumbers).ConfigureAwait(false);
+            reservationResponse = await client.CreateOrUpdateReservationAsync(reservationBeforeRemove).ConfigureAwait(false);
             var reservationAfterRemove = reservationResponse.Value;
             Assert.IsNotNull(reservationAfterRemove);
             Assert.AreEqual(_initialReservationState!.Id, reservationAfterRemove.Id);
@@ -196,7 +223,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.Greater(reservationAfterRemove.ExpiresAt, reservationAfterAdd.ExpiresAt);
             Assert.IsTrue(reservationAfterRemove.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
             // None of the numbers that were removed should be in the reservation.
-            Assert.IsFalse(phoneNumbersToReserve.Keys.Any(reservationAfterAdd.PhoneNumbers.ContainsKey));
+            Assert.IsFalse(phoneNumbersToRemove.Any(reservationAfterRemove.PhoneNumbers.ContainsKey));
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "CreateOrUpdateReservationUsingConnectionString")]
@@ -214,9 +241,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // Reserve the first two available phone numbers.
             var phoneNumbersToReserve = availablePhoneNumbers
                 .Take(2)
-                .ToDictionary(phoneNumber => phoneNumber.Id, phoneNumber => phoneNumber);
+                .ToList();
 
-            var reservationResponse = client.CreateOrUpdateReservation((Guid)_initialReservationState!.Id!, phoneNumbersToReserve);
+            var reservationBeforeAdd = CreateReservationFrom(_initialReservationState!);
+            phoneNumbersToReserve
+                .ForEach(number => reservationBeforeAdd.PhoneNumbers.Add(number.Id, number));
+
+            var reservationResponse = client.CreateOrUpdateReservation(reservationBeforeAdd);
             var reservationAfterAdd = reservationResponse.Value;
 
             Assert.IsNotNull(reservationAfterAdd);
@@ -225,14 +256,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.Greater(reservationAfterAdd.ExpiresAt, _initialReservationState.ExpiresAt);
             Assert.IsTrue(reservationAfterAdd.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
             // All numbers in the request should be in the reservation.
-            Assert.IsTrue(phoneNumbersToReserve.Keys.All(reservationAfterAdd.PhoneNumbers.ContainsKey));
+            Assert.IsTrue(phoneNumbersToReserve.Select(n => n.Id).All(reservationAfterAdd.PhoneNumbers.ContainsKey));
 
             // Now remove the reserved numbers
-            foreach (var numberToRemove in phoneNumbersToReserve.Keys)
-            {
-                reservationAfterAdd.PhoneNumbers[numberToRemove] = null;
-            }
-            reservationResponse = client.CreateOrUpdateReservation((Guid)_initialReservationState!.Id!, reservationAfterAdd.PhoneNumbers);
+            var phoneNumbersToRemove = phoneNumbersToReserve
+                .Select(number => number.Id)
+                .ToList();
+            var reservationBeforeRemove = CreateReservationFrom(reservationAfterAdd);
+            phoneNumbersToRemove
+                .ForEach(number => reservationBeforeRemove.PhoneNumbers.Remove(number));
+
+            reservationResponse = client.CreateOrUpdateReservation(reservationBeforeRemove);
             var reservationAfterRemove = reservationResponse.Value;
 
             Assert.IsNotNull(reservationAfterRemove);
@@ -241,19 +275,45 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.Greater(reservationAfterRemove.ExpiresAt, reservationAfterAdd.ExpiresAt);
             Assert.IsTrue(reservationAfterRemove.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
             // None of the numbers that were removed should be in the reservation.
-            Assert.IsFalse(phoneNumbersToReserve.Keys.Any(reservationAfterAdd.PhoneNumbers.ContainsKey));
+            Assert.IsFalse(phoneNumbersToRemove.Any(reservationAfterRemove.PhoneNumbers.ContainsKey));
         }
 
         [TestCase]
+        [AsyncOnly]
         [Order(3)] // This test is executed after tests that depend on the initial reservation state.
         public async Task DeleteReservationAsync()
         {
             PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
 
-            await client.DeleteReservationAsync((Guid)_initialReservationState!.Id!);
+            await client.DeleteReservationAsync(_initialReservationState!.Id);
 
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetReservationAsync((Guid)(_initialReservationState!.Id)!));
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetReservationAsync(_initialReservationState!.Id));
             Assert.AreEqual(404, exception!.Status);
+        }
+
+        [TestCase]
+        [SyncOnly]
+        [Order(3)] // This test is executed after tests that depend on the initial reservation state.
+        public void DeleteReservation()
+        {
+            PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
+
+            client.DeleteReservation(_initialReservationState!.Id);
+
+            var exception = Assert.Throws<RequestFailedException>(() => client.GetReservation(_initialReservationState!.Id));
+            Assert.AreEqual(404, exception!.Status);
+        }
+
+        // This is used to make it easier to track in the reservation state.
+        // It allows us to add and remove numbers from the reservation without affecting the initial state.
+        private PhoneNumbersReservation CreateReservationFrom(PhoneNumbersReservation reservation)
+        {
+            var newReservation = new PhoneNumbersReservation(reservation.Id, new Dictionary<string, AvailablePhoneNumber>());
+            foreach (var number in reservation.PhoneNumbers)
+            {
+                newReservation.PhoneNumbers.Add(number.Key, number.Value);
+            }
+            return newReservation;
         }
     }
 }
