@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task ThroughputMonitor_ShouldAllowAsync()
+        public async Task ThroughputMonitor_ShouldCountBytesTransferred()
         {
             // Arrange
             ThroughputMonitor tm = new ThroughputMonitor();
@@ -38,6 +39,27 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.AreEqual(45, tm.TotalBytesTransferred);
+        }
+
+        [Test]
+        public async Task ThroughputMonitor_ShouldTrackThroughput()
+        {
+            // Arrange
+            ThroughputMonitor tm = new ThroughputMonitor();
+            CancellationToken cancellationToken = new CancellationToken();
+
+            // Act
+            for (int i = 0; i < 10; i++)
+            {
+                await tm.QueueBytesTransferredAsync(i, cancellationToken);
+            }
+            // Wait for things to propegate into channel
+            await Task.Delay(1);
+
+            // Assert
+            var stopwatchField = typeof(ThroughputMonitor).GetField("_stopwatch", System.Reflection.BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.Greater(stopwatchField.Elap, 0, "Time elapsed not greater than 0");
+            Assert.Greater(tm.Throughput, 0.0m, "Throughput not greater than 0");
         }
     }
 }
