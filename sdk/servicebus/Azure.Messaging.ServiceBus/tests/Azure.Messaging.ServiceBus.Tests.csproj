@@ -19,8 +19,6 @@
     <PackageReference Include="Microsoft.Azure.Management.ServiceBus" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="NUnit" />
@@ -28,7 +26,6 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 

@@ -45,9 +45,14 @@ parameters:
 - name: EnablePRGeneration
   type: boolean
   default: false
+# name of the variable that will be added when creating batches for the PR Job Matrix
 - name: PRMatrixSetting
   type: string
   default: 'ArtifactPackageNames'
+# name of the key in PackageInfo that will be used to get the identifier when generating matrix batches
+- name: PRMatrixKey
+  type: string
+  default: 'ArtifactName'
 - name: PRJobBatchSize
   type: number
   default: 10
@@ -141,6 +146,7 @@ jobs:
               -PackagePropertiesFolder $(Build.ArtifactStagingDirectory)/PackageInfo `
               -PRMatrixFile matrix.json `
               -PRMatrixSetting ${{ parameters.PRMatrixSetting }} `
+              -PRMatrixKey ${{ parameters.PRMatrixKey }} `
               -DisplayNameFilter '$(displayNameFilter)' `
               -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}' `
               -IndirectFilters '${{ join(''',''', parameters.PRMatrixIndirectFilters) }}' `

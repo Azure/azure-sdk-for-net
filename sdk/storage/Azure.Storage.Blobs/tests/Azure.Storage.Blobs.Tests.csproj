@@ -18,6 +18,7 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs.Batch\src\Azure.Storage.Blobs.Batch.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.ResourceManager.Storage\src\Azure.ResourceManager.Storage.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
