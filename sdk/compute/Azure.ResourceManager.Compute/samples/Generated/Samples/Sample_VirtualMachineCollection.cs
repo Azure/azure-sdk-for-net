@@ -1224,7 +1224,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 },
                 NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
+                    NetworkApiVersion = NetworkApiVersion.v2020_11_01,
                     NetworkInterfaceConfigurations = {new VirtualMachineNetworkInterfaceConfiguration("{nic-config-name}")
 {
 Primary = true,
@@ -1313,7 +1313,7 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
                 },
                 NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
+                    NetworkApiVersion = NetworkApiVersion.v2020_11_01,
                     NetworkInterfaceConfigurations = {new VirtualMachineNetworkInterfaceConfiguration("{nic-config-name}")
 {
 Primary = true,

@@ -377,7 +377,7 @@ Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myRe
 EnableIPForwarding = true,
 DeleteOption = ComputeDeleteOption.Delete,
 }},
-                            NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
+                            NetworkApiVersion = NetworkApiVersion.v2020_11_01,
                         },
                         SecurityProfile = new SecurityProfile
                         {

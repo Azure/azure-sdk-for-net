@@ -314,7 +314,7 @@ Primary = true,
 DeleteOption = ComputeDeleteOption.Delete,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{vmss-name}/virtualMachines/0/networkInterfaces/vmsstestnetconfig5415"),
 }},
-                    NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
+                    NetworkApiVersion = NetworkApiVersion.v2020_11_01,
                     NetworkInterfaceConfigurations = {new VirtualMachineNetworkInterfaceConfiguration("aaaaaaaaaaa")
 {
 Primary = true,
