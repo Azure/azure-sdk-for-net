@@ -16,7 +16,7 @@ namespace Azure.Projects.AIFoundry
     /// </summary>
     public class AIProjectFeature : AzureProjectFeature
     {
-        private string? _connectionString;
+        private string _connectionString;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AIProjectFeature"/> class.

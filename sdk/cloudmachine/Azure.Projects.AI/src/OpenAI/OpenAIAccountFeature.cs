@@ -4,7 +4,7 @@
 using Azure.Projects.Core;
 using Azure.Provisioning.CognitiveServices;
 
-namespace Azure.Projects.AI;
+namespace Azure.Projects;
 
 internal class OpenAIAccountFeature : AzureProjectFeature
 {

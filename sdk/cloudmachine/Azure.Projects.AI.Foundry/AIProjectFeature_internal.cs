@@ -66,7 +66,7 @@ internal class AIFoundryHubCdk : NamedProvisionableConstruct
 
     public string FriendlyName { get; set; }
 
-    public UserAssignedIdentity? Identity { get; set; }
+    public UserAssignedIdentity Identity { get; set; }
 
     protected override IEnumerable<BicepStatement> Compile()
     {

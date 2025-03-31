@@ -9,10 +9,8 @@ using Azure.AI.Models;
 using Azure.AI.OpenAI;
 using Azure.Data.AppConfiguration;
 using Azure.Messaging.ServiceBus;
-using Azure.Projects.KeyVault;
-using Azure.Projects.Ofx;
 using Azure.Projects.AI;
-using Azure.Projects.Storage;
+using Azure.Projects.Ofx;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -44,7 +42,7 @@ public class E2ETests
     public void MaaS(string arg)
     {
         ProjectInfrastructure infra = new(oneProjectId);
-        infra.AddFeature(new AIServicesFeature("DeepSeek-V3", "1"));
+        infra.AddFeature(new AIModelsFeature("DeepSeek-V3", "1"));
         if (infra.TryExecuteCommand([arg])) return;
 
         ProjectClient project = new(oneProjectId, default);

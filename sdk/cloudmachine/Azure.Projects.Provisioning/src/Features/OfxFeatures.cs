@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Projects.AppService;
 using Azure.Projects.Core;
-using Azure.Projects.Storage;
 
 namespace Azure.Projects.Ofx;
 

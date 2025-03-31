@@ -4,12 +4,12 @@
 using Azure.Projects.Core;
 using Azure.Provisioning.CognitiveServices;
 
-namespace Azure.Projects.AI;
+namespace Azure.Projects;
 
 /// <summary>
 /// AIServices feature.
 /// </summary>
-public class AIServicesFeature : AzureProjectFeature
+public class AIModelsFeature : AzureProjectFeature
 {
     private string _model;
     private string _modelVersion;
@@ -19,7 +19,7 @@ public class AIServicesFeature : AzureProjectFeature
     /// </summary>
     /// <param name="model"></param>
     /// <param name="modelVersion"></param>
-    public AIServicesFeature(string model, string modelVersion)
+    public AIModelsFeature(string model, string modelVersion)
     {
         _model = model;
         _modelVersion = modelVersion;

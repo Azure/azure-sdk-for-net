@@ -1,5 +1,9 @@
 namespace Azure.AI.Models
 {
+    public static partial class AIModelsExtensions
+    {
+        public static Azure.AI.Models.ModelsClient GetModelsClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
+    }
     public partial class ModelsClient
     {
         protected ModelsClient() { }
@@ -13,10 +17,6 @@ namespace Azure.AI.Models
 }
 namespace Azure.AI.OpenAI
 {
-    public static partial class AIServicesExtensions
-    {
-        public static Azure.AI.Models.ModelsClient GetModelsClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
-    }
     public static partial class AzureOpenAIExtensions
     {
         public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, OpenAI.Chat.ChatCompletion completion) { }
@@ -30,18 +30,38 @@ namespace Azure.AI.OpenAI
         public static void Trim(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages) { }
     }
 }
-namespace Azure.Projects.AI
+namespace Azure.Projects
 {
     public enum AIModelKind
     {
         Chat = 0,
         Embedding = 1,
     }
-    public partial class AIServicesFeature : Azure.Projects.Core.AzureProjectFeature
+    public partial class AIModelsFeature : Azure.Projects.Core.AzureProjectFeature
     {
-        public AIServicesFeature(string model, string modelVersion) { }
+        public AIModelsFeature(string model, string modelVersion) { }
         protected override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
     }
+    public partial class OpenAIChatFeature : Azure.Projects.OpenAIModelFeature
+    {
+        public OpenAIChatFeature(string model, string modelVersion) : base (default(string), default(string), default(Azure.Projects.AIModelKind)) { }
+    }
+    public partial class OpenAIEmbeddingFeature : Azure.Projects.OpenAIModelFeature
+    {
+        public OpenAIEmbeddingFeature(string model, string modelVersion) : base (default(string), default(string), default(Azure.Projects.AIModelKind)) { }
+    }
+    public partial class OpenAIModelFeature : Azure.Projects.Core.AzureProjectFeature
+    {
+        public OpenAIModelFeature(string model, string modelVersion, Azure.Projects.AIModelKind kind = Azure.Projects.AIModelKind.Chat) { }
+        public string Model { get { throw null; } }
+        public string ModelVersion { get { throw null; } }
+        public System.ClientModel.Primitives.ClientConnection CreateConnection(string cmId) { throw null; }
+        protected override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
+        protected override void EmitFeatures(Azure.Projects.ProjectInfrastructure infrastructure) { }
+    }
+}
+namespace Azure.Projects.AI
+{
     public partial class ChatRunner
     {
         public ChatRunner(OpenAI.Chat.ChatClient chat) { }
@@ -93,23 +113,6 @@ namespace Azure.Projects.AI
         public FindOptions() { }
         public int MaxEntries { get { throw null; } set { } }
         public float Threshold { get { throw null; } set { } }
-    }
-    public partial class OpenAIChatFeature : Azure.Projects.AI.OpenAIModelFeature
-    {
-        public OpenAIChatFeature(string model, string modelVersion) : base (default(string), default(string), default(Azure.Projects.AI.AIModelKind)) { }
-    }
-    public partial class OpenAIEmbeddingFeature : Azure.Projects.AI.OpenAIModelFeature
-    {
-        public OpenAIEmbeddingFeature(string model, string modelVersion) : base (default(string), default(string), default(Azure.Projects.AI.AIModelKind)) { }
-    }
-    public partial class OpenAIModelFeature : Azure.Projects.Core.AzureProjectFeature
-    {
-        public OpenAIModelFeature(string model, string modelVersion, Azure.Projects.AI.AIModelKind kind = Azure.Projects.AI.AIModelKind.Chat) { }
-        public string Model { get { throw null; } }
-        public string ModelVersion { get { throw null; } }
-        public System.ClientModel.Primitives.ClientConnection CreateConnection(string cmId) { throw null; }
-        protected override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
-        protected override void EmitFeatures(Azure.Projects.ProjectInfrastructure infrastructure) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ToolCallResult

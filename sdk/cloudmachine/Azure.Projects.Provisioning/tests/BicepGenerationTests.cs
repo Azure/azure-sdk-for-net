@@ -6,12 +6,8 @@
 using System;
 using System.IO;
 using System.Linq;
-using Azure.Projects.AppService;
-using Azure.Projects.KeyVault;
 using Azure.Projects.Ofx;
 using Azure.Projects.AI;
-using Azure.Projects.ServiceBus;
-using Azure.Projects.Storage;
 using NUnit.Framework;
 
 [assembly: NonParallelizable]
@@ -109,7 +105,7 @@ public class BicepGenerationTests
     public void MaaS()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new AIServicesFeature("DeepSeek-V3", "1"));
+        infrastructure.AddFeature(new AIModelsFeature("DeepSeek-V3", "1"));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         string path = Path.Combine(Path.GetTempPath(), "maas.bicep");

@@ -6,15 +6,14 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using Azure.AI.Models;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI;
+namespace Azure.AI.Models;
 
 /// <summary>
 /// The Azure OpenAI extensions.
 /// </summary>
-public static partial class AIServicesExtensions
+public static partial class AIModelsExtensions
 {
     /// <summary>
     /// Gets the OpenAI embedding client.

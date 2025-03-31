@@ -46,7 +46,7 @@ namespace Azure.Projects.AIFoundry
             ConnectionType connectionType = GetConnectionTypeFromId(connectionId);
 
             // 2) Check cache
-            ConnectionResponse? response;
+            ConnectionResponse response;
             _cacheLock.EnterReadLock();
             try
             {

@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
-using Azure.AI.OpenAI;
-using Azure.Core;
 using Azure.Projects.AI;
 using OpenAI.Chat;
-using OpenAI.Embeddings;
 
 namespace Azure.AI.OpenAI;
 
