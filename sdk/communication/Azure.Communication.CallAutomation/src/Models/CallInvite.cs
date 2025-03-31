@@ -44,16 +44,6 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Creates a new CallInvite object.
-        /// </summary>
-        /// <param name="targetIdentity"></param>
-        public CallInvite(MicrosoftTeamsAppIdentifier targetIdentity)
-        {
-            Target = targetIdentity;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
-        }
-
-        /// <summary>
         /// The target callee.
         /// </summary>
         /// <value></value>
@@ -63,7 +53,7 @@ namespace Azure.Communication.CallAutomation
         /// The caller ID number to appear on target PSTN callee.
         /// </summary>
         /// <value></value>
-        public PhoneNumberIdentifier SourceCallerIdNumber { get; set;  }
+        public PhoneNumberIdentifier SourceCallerIdNumber { get; set; }
 
         /// <summary>
         /// The display name to appear on target callee.

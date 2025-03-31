@@ -1,29 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using System.Text.Json;
-
+using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// The create call failed event.
     /// </summary>
+    [CodeGenModel("CreateCallFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class CreateCallFailed : CallAutomationEventBase
     {
-        /// <summary> Initializes a new instance of CreateCallFailed. </summary>
-        internal CreateCallFailed()
-        {
-        }
-
-        internal CreateCallFailed(CreateCallFailedInternal internalEvent)
-        {
-            OperationContext = internalEvent.OperationContext;
-            ResultInformation = internalEvent.ResultInformation;
-            CallConnectionId = internalEvent.CallConnectionId;
-            ServerCallId = internalEvent.ServerCallId;
-            CorrelationId = internalEvent.CorrelationId;
-        }
-
         /// <summary>
         /// Deserialize <see cref="CreateCallFailed"/> event.
         /// </summary>
@@ -33,8 +19,7 @@ namespace Azure.Communication.CallAutomation
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
-            var internalEvent = CreateCallFailedInternal.DeserializeCreateCallFailedInternal(element);
-            return new CreateCallFailed(internalEvent);
+            return DeserializeCreateCallFailed(element);
         }
     }
 }
