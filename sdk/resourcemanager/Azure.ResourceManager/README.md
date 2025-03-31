@@ -12,7 +12,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
@@ -151,7 +151,7 @@ await foreach (VirtualMachineResource virtualMachine in virtualMachines)
 ## Structured Resource Identifier
 Resource IDs contain useful information about the resource itself, but they're plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object that will do the parsing for you: `new ResourceIdentifier("myid");`.
 
-### Example: Parsing an ID using a ResourceIdentifier object 
+### Example: Parsing an ID using a ResourceIdentifier object
 ```C# Snippet:Readme_CastToSpecificType
 ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet");
 Console.WriteLine($"Subscription: {id.SubscriptionId}");
@@ -161,9 +161,9 @@ Console.WriteLine($"Subnet: {id.Name}");
 ```
 
 ## Managing Existing Resources by Resource Identifier
-Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario, you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning, and working within the scope of a given parent, it isn't the most efficient when it comes to this specific scenario.  
+Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario, you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning, and working within the scope of a given parent, it isn't the most efficient when it comes to this specific scenario.
 
-Here's an example how you can access an `AvailabilitySet` object and manage it directly with its ID: 
+Here's an example how you can access an `AvailabilitySet` object and manage it directly with its ID:
 ```C# Snippet:Readme_ManageAvailabilitySetOld
 ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet");
 // We construct a new client to work with
@@ -270,6 +270,8 @@ else
 ```
 
 ## Examples
+
+For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
 
 ### Create a resource group
 ```C# Snippet:Managing_Resource_Groups_CreateAResourceGroup
@@ -464,8 +466,6 @@ var rawResponse = rehydratedOrgOperation.GetRawResponse();
 await rehydratedOrgOperation.WaitForCompletionAsync();
 ```
 
-For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
-
 ## Azure Resource Manager Tests
 
 To run test: ```dotnet test```
@@ -476,7 +476,7 @@ Coverage report will be placed in your path relative to azure-proto-core-test in
 
 Reports can also be viewed VS or VsCode with the proper viewer plugin
 
-A terse report will also be displayed on the command line when running. 
+A terse report will also be displayed on the command line when running.
 
 
 ### run test with single file or test
