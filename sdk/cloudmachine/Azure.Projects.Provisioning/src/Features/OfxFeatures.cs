@@ -13,7 +13,6 @@ public class OfxFeatures : AzureProjectFeature
     public OfxFeatures()
     {
         _blobContainer = new BlobContainerFeature("default", isObservable: true);
-
     }
 
     protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)
