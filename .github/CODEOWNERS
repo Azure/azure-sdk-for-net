@@ -1064,7 +1064,7 @@
 # ServiceOwners:                                                   @Daya-Patil
 
 # PRLabel: %Secret Store Extension
-#/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @v
+#/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @locomotiveviaduct
 
 # ServiceLabel: %Secret Store Extension %Mgmt
 # ServiceOwners:                                                   @cjoprey @locomotiveviaduct
