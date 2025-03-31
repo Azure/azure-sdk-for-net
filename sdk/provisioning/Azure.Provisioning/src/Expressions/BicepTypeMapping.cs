@@ -131,13 +131,12 @@ internal static class BicepTypeMapping
         BicepExpression FromDouble(double d)
         {
             // see if the value is a whole number
-            var s = d.ToString();
-            if (int.TryParse(s, out int i))
+            if (d <= int.MaxValue && d == Math.Floor(d))
             {
-                return BicepSyntax.Value(i);
+                return BicepSyntax.Value((int)d);
             }
             // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
-            return BicepFunction.ParseJson(BicepSyntax.Value(s)).Compile();
+            return BicepFunction.ParseJson(BicepSyntax.Value(d.ToString())).Compile();
         }
 
         ArrayExpression ToArray(IEnumerable<object> seq) =>
