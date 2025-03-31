@@ -203,7 +203,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var cancellationSource = new CancellationTokenSource();
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default, default)
             {
                 CallBase = true,
             };
@@ -211,13 +211,14 @@ namespace Azure.Messaging.ServiceBus.Tests
             mockScope
                 .Protected()
                 .Setup<Task<AmqpConnection>>("CreateAndOpenConnectionAsync",
-                ItExpr.IsAny<Version>(),
-                ItExpr.IsAny<Uri>(),
-                ItExpr.IsAny<Uri>(),
-                ItExpr.IsAny<ServiceBusTransportType>(),
-                ItExpr.IsAny<IWebProxy>(),
-                ItExpr.IsAny<string>(),
-                ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<Version>(),
+                    ItExpr.IsAny<Uri>(),
+                    ItExpr.IsAny<Uri>(),
+                    ItExpr.IsAny<ServiceBusTransportType>(),
+                    ItExpr.IsAny<IWebProxy>(),
+                    ItExpr.IsAny<RemoteCertificateValidationCallback>(),
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.FromResult(mockConnection))
                 .Verifiable();
 
@@ -271,7 +272,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var cancellationSource = new CancellationTokenSource();
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default, default)
             {
                 CallBase = true,
             };
@@ -284,6 +285,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ItExpr.IsAny<Uri>(),
                 ItExpr.IsAny<ServiceBusTransportType>(),
                 ItExpr.IsAny<IWebProxy>(),
+                ItExpr.IsAny<RemoteCertificateValidationCallback>(),
                 ItExpr.IsAny<string>(),
                 ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.FromResult(mockConnection))
@@ -438,13 +440,13 @@ namespace Azure.Messaging.ServiceBus.Tests
                 DateTime currentTimeUtc) => base.CalculateLinkAuthorizationRefreshInterval(expirationTimeUtc, currentTimeUtc);
 
             protected override Task<AmqpConnection> CreateAndOpenConnectionAsync(Version amqpVersion,
-                                                                                Uri serviceEndpoint,
-                                                                                Uri connectionEndpoint,
-                                                                                ServiceBusTransportType transportType,
-                                                                                IWebProxy proxy,
-                                                                                RemoteCertificateValidationCallback certificateValidationCallback,
-                                                                                string scopeIdentifier,
-                                                                                TimeSpan timeout)
+                                                                                 Uri serviceEndpoint,
+                                                                                 Uri connectionEndpoint,
+                                                                                 ServiceBusTransportType transportType,
+                                                                                 IWebProxy proxy,
+                                                                                 RemoteCertificateValidationCallback certificateValidationCallback,
+                                                                                 string scopeIdentifier,
+                                                                                 TimeSpan timeout)
             {
                 return Task.FromResult(MockConnection.Object);
             }
