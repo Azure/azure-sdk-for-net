@@ -134,6 +134,8 @@ internal class McpSession : IDisposable
                     throw new IOException("SSE stream closed unexpectedly");
                 }
 
+                DebugPrint($"Received line: '{line}'");
+
                 if (line.StartsWith("event:", StringComparison.OrdinalIgnoreCase))
                 {
                     eventName = line.AsSpan(6).Trim().ToString();
@@ -181,6 +183,7 @@ internal class McpSession : IDisposable
                 break;
 
             case "message":
+            case "": // Handle empty event name as a message
                 DebugPrint($"Received message: {sseEvent.Data}");
                 await _messageRouter.RouteMessageAsync(sseEvent).ConfigureAwait(false);
                 break;
@@ -429,7 +432,7 @@ internal class McpSession : IDisposable
         // Route a message to its registered handler
         public async Task RouteMessageAsync(SseEvent sseEvent)
         {
-            if (sseEvent.Event != "message" || string.IsNullOrEmpty(sseEvent.Data))
+            if (string.IsNullOrEmpty(sseEvent.Data))
             {
                 return;
             }
