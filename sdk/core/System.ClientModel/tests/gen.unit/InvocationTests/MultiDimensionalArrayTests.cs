@@ -14,7 +14,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string InitializeObject => "new {0} {{ }}";
 
-        private void AssertMultiDimensionalArray(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeGenerationSpec> dict)
+        private void AssertMultiDimensionalArray(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.ContainsKey($"{type}[,]"));
             var arrayJsonModel = dict[$"{type}[,]"];
@@ -28,7 +28,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", arrayJsonModel.Type.Namespace);
             }
             Assert.AreEqual(1, arrayJsonModel.Type.GenericArguments.Count);
-            Assert.AreEqual(ModelInfoKind.MultiDimensionalArray, arrayJsonModel.Kind);
+            Assert.AreEqual(TypeBuilderKind.MultiDimensionalArray, arrayJsonModel.Kind);
 
             var genericArgument = arrayJsonModel.Type.GenericArguments[0];
             modelValidator(genericArgument);

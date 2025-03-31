@@ -34,7 +34,7 @@ namespace TestProject
             Assert.AreEqual("TestProject", result.ContextFile.Type.Namespace);
             Assert.AreEqual(0, result.Diagnostics.Length);
             Assert.AreEqual(modifier, result.ContextFile!.Modifier);
-            Assert.AreEqual(0, result.ContextFile.Types.Count);
+            Assert.AreEqual(0, result.ContextFile.TypeBuilders.Count);
             Assert.AreEqual(0, result.ContextFile.ReferencedContexts.Count);
         }
 
@@ -65,7 +65,7 @@ namespace TestProject
             Assert.AreEqual(result.ContextFile.Type.Namespace, "TestProject");
             Assert.AreEqual(0, result.Diagnostics.Length);
             Assert.AreEqual(modifier, result.ContextFile!.Modifier);
-            Assert.AreEqual(0, result.ContextFile.Types.Count);
+            Assert.AreEqual(0, result.ContextFile.TypeBuilders.Count);
             Assert.AreEqual(1, result.ContextFile.ReferencedContexts.Count);
             Assert.AreEqual("TestClientModelReaderWriterContext", result.ContextFile.ReferencedContexts[0].Name);
             Assert.AreEqual("System.ClientModel.Tests.ModelReaderWriterTests", result.ContextFile.ReferencedContexts[0].Namespace);
@@ -90,7 +90,7 @@ namespace TestProject
 
             Assert.IsNull(result.ContextFile);
             Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ContextGenerator.DiagnosticDescriptors.MultipleContextsNotSupported.Id, result.Diagnostics[0].Id);
+            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.MultipleContextsNotSupported.Id, result.Diagnostics[0].Id);
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace TestProject
 
             Assert.IsNull(result.ContextFile);
             Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ContextGenerator.DiagnosticDescriptors.ContextMustBePartial.Id, result.Diagnostics[0].Id);
+            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.ContextMustBePartial.Id, result.Diagnostics[0].Id);
         }
 
         [Test]
@@ -135,9 +135,9 @@ namespace TestProject
             Assert.AreEqual("TestAssemblyContext", result.ContextFile!.Type.Name);
             Assert.AreEqual("TestAssembly", result.ContextFile.Type.Namespace);
             Assert.AreEqual(0, result.ContextFile.ReferencedContexts.Count);
-            Assert.AreEqual(0, result.ContextFile.Types.Count);
+            Assert.AreEqual(0, result.ContextFile.TypeBuilders.Count);
             Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
+            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
         }
 
         [Test]
@@ -184,9 +184,9 @@ namespace TestProject
             Assert.AreEqual("GoodContext", result.ContextFile!.Type.Name);
             Assert.AreEqual("TestProject", result.ContextFile.Type.Namespace);
             Assert.AreEqual(0, result.ContextFile.ReferencedContexts.Count);
-            Assert.AreEqual(2, result.ContextFile.Types.Count);
+            Assert.AreEqual(2, result.ContextFile.TypeBuilders.Count);
 
-            var dict = result.ContextFile.Types.ToDictionary(t => t.Type.Name, t => t);
+            var dict = result.ContextFile.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
             ListTests.AssertList(InvocationTestBase.JsonModel, InvocationTestBase.AssertJsonModel, dict);
 
             Assert.IsTrue(dict.ContainsKey(InvocationTestBase.JsonModel));
@@ -194,7 +194,7 @@ namespace TestProject
             InvocationTestBase.AssertJsonModel(item.Type);
 
             Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
+            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
         }
     }
 }

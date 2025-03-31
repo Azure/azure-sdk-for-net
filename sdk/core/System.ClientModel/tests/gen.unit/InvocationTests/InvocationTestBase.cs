@@ -17,7 +17,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
     {
         internal const string JsonModel = "JsonModel";
         internal const string AvailabilitySetData = "AvailabilitySetData";
-        internal delegate void TypeValidation(string type, Action<TypeRef> modelValidation, Dictionary<string, TypeGenerationSpec> dict);
+        internal delegate void TypeValidation(string type, Action<TypeRef> modelValidation, Dictionary<string, TypeBuilderSpec> dict);
 
         protected abstract List<TypeValidation> TypeValidations { get; }
         protected virtual string InitializeObject => "new {0}()";
@@ -221,8 +221,8 @@ $$"""
 
             Assert.AreEqual(0, result.Diagnostics.Length);
 
-            Assert.AreEqual(validations.Count + 1, result.ContextFile!.Types.Count);
-            var dict = result.ContextFile.Types.ToDictionary(t => t.Type.Name, t => t);
+            Assert.AreEqual(validations.Count + 1, result.ContextFile!.TypeBuilders.Count);
+            var dict = result.ContextFile.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
 
             Assert.IsTrue(dict.ContainsKey(type));
             var item = dict[type];

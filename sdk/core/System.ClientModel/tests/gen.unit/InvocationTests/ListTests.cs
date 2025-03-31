@@ -12,14 +12,14 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string TypeStringFormat => "List<{0}>";
 
-        internal static void AssertList(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeGenerationSpec> dict)
+        internal static void AssertList(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.ContainsKey($"List<{type}>"));
             var listJsonModel = dict[$"List<{type}>"];
             Assert.AreEqual($"List<{type}>", listJsonModel.Type.Name);
             Assert.AreEqual("System.Collections.Generic", listJsonModel.Type.Namespace);
             Assert.AreEqual(1, listJsonModel.Type.GenericArguments.Count);
-            Assert.AreEqual(ModelInfoKind.IEnumerable, listJsonModel.Kind);
+            Assert.AreEqual(TypeBuilderKind.IList, listJsonModel.Kind);
 
             var genericArgument = listJsonModel.Type.GenericArguments[0];
             modelValidator(genericArgument);

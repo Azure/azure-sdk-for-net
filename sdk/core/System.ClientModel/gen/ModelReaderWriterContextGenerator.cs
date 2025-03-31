@@ -15,7 +15,7 @@ namespace System.ClientModel.SourceGeneration
     /// SourceGenerator to create ModelReaderWriterContext.
     /// </summary>
     [Generator]
-    internal sealed partial class ContextGenerator : IIncrementalGenerator
+    internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGenerator
     {
         private static readonly SymbolDisplayFormat s_FullyQualifiedNoGlobal = new SymbolDisplayFormat(
             typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
@@ -150,7 +150,7 @@ namespace System.ClientModel.SourceGeneration
             }
 
             var typeGenerationSpecs = data.ModelInfos
-                .Select(x => new TypeGenerationSpec()
+                .Select(x => new TypeBuilderSpec()
                 {
                     Modifier = x!.DeclaredAccessibility.ToString().ToLowerInvariant(),
                     Type = TypeRef.FromINamedTypeSymbol(x),
@@ -158,14 +158,14 @@ namespace System.ClientModel.SourceGeneration
                 })
                 .Distinct();
             var referencedContexts = data.ReferencedContexts.Select(x => new TypeRef(x.Name, x.ContainingNamespace.ToDisplayString(), x.ContainingAssembly.ToDisplayString()));
-            ContextGenerationSpec contextGenerationSpec;
+            ModelReaderWriterContextGenerationSpec contextGenerationSpec;
             if (data.Contexts.Length == 0 || data.Contexts[0] is null)
             {
                 contextGenerationSpec = new()
                 {
                     Type = new TypeRef($"{data.AssemblyName.RemovePeriods()}Context", data.AssemblyName, data.AssemblyName),
                     Modifier = "internal",
-                    Types = new ImmutableEquatableArray<TypeGenerationSpec>(typeGenerationSpecs),
+                    TypeBuilders = new ImmutableEquatableArray<TypeBuilderSpec>(typeGenerationSpecs),
                     ReferencedContexts = new ImmutableEquatableArray<TypeRef>(referencedContexts),
                 };
             }
@@ -183,7 +183,7 @@ namespace System.ClientModel.SourceGeneration
                 {
                     Type = new TypeRef(contentSymbol.Name, contentSymbol.ContainingNamespace.ToDisplayString(), contentSymbol.ContainingAssembly.ToDisplayString()),
                     Modifier = contentSymbol.DeclaredAccessibility.ToString().ToLowerInvariant(),
-                    Types = new ImmutableEquatableArray<TypeGenerationSpec>(typeGenerationSpecs),
+                    TypeBuilders = new ImmutableEquatableArray<TypeBuilderSpec>(typeGenerationSpecs),
                     ReferencedContexts = new ImmutableEquatableArray<TypeRef>(referencedContexts),
                 };
             }
@@ -196,7 +196,7 @@ namespace System.ClientModel.SourceGeneration
         /// <summary>
         /// Instrumentation helper for unit tests.
         /// </summary>
-        internal Action<ContextGenerationSpec>? OnSourceEmitting { get; init; }
+        internal Action<ModelReaderWriterContextGenerationSpec>? OnSourceEmitting { get; init; }
 
         private AttributeInfo GetAttributeInfo(AttributeSyntax? attribute, SemanticModel semanticModel)
         {

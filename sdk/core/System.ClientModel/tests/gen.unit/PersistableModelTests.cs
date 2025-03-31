@@ -42,9 +42,9 @@ namespace TestProject
             Assert.AreEqual("TestProject", result.ContextFile!.Type.Namespace);
             Assert.AreEqual(0, result.Diagnostics.Length);
 
-            Assert.AreEqual(1, result.ContextFile.Types.Count);
-            Assert.AreEqual("PersistableModel", result.ContextFile.Types[0].Type.Name);
-            Assert.AreEqual(modifier, result.ContextFile.Types[0].Modifier);
+            Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
+            Assert.AreEqual("PersistableModel", result.ContextFile.TypeBuilders[0].Type.Name);
+            Assert.AreEqual(modifier, result.ContextFile.TypeBuilders[0].Modifier);
         }
 
         [TestCase("public")]
@@ -88,9 +88,9 @@ namespace TestProject
             Assert.AreEqual("TestProject", result.ContextFile!.Type.Namespace);
             Assert.AreEqual(0, result.Diagnostics.Length);
 
-            Assert.AreEqual(1, result.ContextFile.Types.Count);
-            Assert.AreEqual("JsonModel", result.ContextFile.Types[0].Type.Name);
-            Assert.AreEqual(modifier, result.ContextFile.Types[0].Modifier);
+            Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
+            Assert.AreEqual("JsonModel", result.ContextFile.TypeBuilders[0].Type.Name);
+            Assert.AreEqual(modifier, result.ContextFile.TypeBuilders[0].Modifier);
         }
 
         [TestCase("public")]
@@ -129,9 +129,9 @@ namespace TestProject
             Assert.AreEqual("TestAssemblyContext", result.ContextFile!.Type.Name);
             Assert.AreEqual("TestAssembly", result.ContextFile!.Type.Namespace);
 
-            Assert.AreEqual(1, result.ContextFile.Types.Count);
-            Assert.AreEqual("JsonModel", result.ContextFile.Types[0].Type.Name);
-            Assert.AreEqual(modifier, result.ContextFile.Types[0].Modifier);
+            Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
+            Assert.AreEqual("JsonModel", result.ContextFile.TypeBuilders[0].Type.Name);
+            Assert.AreEqual(modifier, result.ContextFile.TypeBuilders[0].Modifier);
         }
 
         [TestCase("public")]
@@ -163,9 +163,9 @@ namespace TestProject
             Assert.AreEqual("TestAssemblyContext", result.ContextFile!.Type.Name);
             Assert.AreEqual("TestAssembly", result.ContextFile!.Type.Namespace);
 
-            Assert.AreEqual(1, result.ContextFile.Types.Count);
-            Assert.AreEqual("PersistableModel", result.ContextFile.Types[0].Type.Name);
-            Assert.AreEqual(modifier, result.ContextFile.Types[0].Modifier);
+            Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
+            Assert.AreEqual("PersistableModel", result.ContextFile.TypeBuilders[0].Type.Name);
+            Assert.AreEqual(modifier, result.ContextFile.TypeBuilders[0].Modifier);
         }
     }
 }

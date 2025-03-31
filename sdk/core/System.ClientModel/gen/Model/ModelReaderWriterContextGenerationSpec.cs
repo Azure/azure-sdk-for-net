@@ -3,11 +3,11 @@
 
 namespace System.ClientModel.SourceGeneration
 {
-    internal sealed record ContextGenerationSpec
+    internal sealed record ModelReaderWriterContextGenerationSpec
     {
         required public TypeRef Type { get; init; }
         required public string Modifier { get; init; }
-        required public ImmutableEquatableArray<TypeGenerationSpec> Types { get; init; }
+        required public ImmutableEquatableArray<TypeBuilderSpec> TypeBuilders { get; init; }
         required public ImmutableEquatableArray<TypeRef> ReferencedContexts { get; init; }
     }
 }

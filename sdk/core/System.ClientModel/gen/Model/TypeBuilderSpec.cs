@@ -3,10 +3,10 @@
 
 namespace System.ClientModel.SourceGeneration
 {
-    internal sealed record TypeGenerationSpec
+    internal sealed record TypeBuilderSpec
     {
         required public TypeRef Type { get; init; }
         required public string Modifier { get; init; }
-        required public ModelInfoKind Kind { get; init; }
+        required public TypeBuilderKind Kind { get; init; }
     }
 }

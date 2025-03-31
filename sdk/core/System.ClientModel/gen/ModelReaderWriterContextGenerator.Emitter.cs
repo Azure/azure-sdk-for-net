@@ -8,11 +8,11 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace System.ClientModel.SourceGeneration
 {
-    internal sealed partial class ContextGenerator
+    internal sealed partial class ModelReaderWriterContextGenerator
     {
         private sealed partial class Emitter
         {
-            internal void Emit(ContextGenerationSpec contextGenerationSpec)
+            internal void Emit(ModelReaderWriterContextGenerationSpec contextGenerationSpec)
             {
                 Dictionary<string, TypeRef> referenceContextLookup = contextGenerationSpec.ReferencedContexts.ToDictionary(x => x.Assembly, x => x);
                 Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup = contextGenerationSpec.ReferencedContexts.ToDictionary(
@@ -22,7 +22,7 @@ namespace System.ClientModel.SourceGeneration
                         var id = x.Name.ToIdentifier(false);
                         return (id, id.ToCamelCase());
                     });
-                foreach (var modelInfo in contextGenerationSpec.Types)
+                foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
                 {
                     var id = modelInfo.Type.Name.ToIdentifier(false);
                     identifierLookup.Add(modelInfo.Type, (id, id.ToCamelCase()));
@@ -45,7 +45,7 @@ namespace System.ClientModel.SourceGeneration
                 builder.AppendLine(indent, $"namespace {contextGenerationSpec.Type.Namespace};");
                 builder.AppendLine();
 
-                builder.AppendLine(indent, $"public partial class {contextName} : ModelReaderWriterContext");
+                builder.AppendLine(indent, $"{contextGenerationSpec.Modifier} partial class {contextName} : ModelReaderWriterContext");
                 builder.AppendLine(indent, "{");
                 indent++;
 
@@ -61,9 +61,9 @@ namespace System.ClientModel.SourceGeneration
                     builder.AppendLine();
                 }
 
-                if (contextGenerationSpec.Types.Count > 0)
+                if (contextGenerationSpec.TypeBuilders.Count > 0)
                 {
-                    foreach (var modelInfo in contextGenerationSpec.Types)
+                    foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
                     {
                         builder.Append(indent, "private ");
                         if (ShouldGenerateAsLocal(contextGenerationSpec, referenceContextLookup, modelInfo))
@@ -85,7 +85,7 @@ namespace System.ClientModel.SourceGeneration
                     builder.AppendLine(indent, $"private {contextName}()");
                     builder.AppendLine(indent, "{");
                     indent++;
-                    foreach (var modelInfo in contextGenerationSpec.Types)
+                    foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
                     {
                         builder.Append(indent, $"_typeBuilderFactories.Add(typeof({modelInfo!.Type.Name}), () => _{identifierLookup[modelInfo.Type].CamelCase}Builder ??=");
                         if (ShouldGenerateAsLocal(contextGenerationSpec, referenceContextLookup, modelInfo))
@@ -143,7 +143,7 @@ namespace System.ClientModel.SourceGeneration
                 builder.AppendLine(indent, $"partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories);");
                 builder.AppendLine();
 
-                foreach (var modelInfo in contextGenerationSpec.Types)
+                foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
                 {
                     EmitModelInfo(indent, builder, modelInfo, contextGenerationSpec.Type, referenceContextLookup, identifierLookup);
                     builder.AppendLine();
@@ -156,10 +156,10 @@ namespace System.ClientModel.SourceGeneration
                 AddSource($"{contextName}.g.cs", SourceText.From(builder.ToString(), Encoding.UTF8));
             }
 
-            private static bool ShouldGenerateAsLocal(ContextGenerationSpec contextGenerationSpec, Dictionary<string, TypeRef> referenceContextLookup, TypeGenerationSpec modelInfo)
+            private static bool ShouldGenerateAsLocal(ModelReaderWriterContextGenerationSpec contextGenerationSpec, Dictionary<string, TypeRef> referenceContextLookup, TypeBuilderSpec modelInfo)
             {
-                return modelInfo.Kind == ModelInfoKind.Array ||
-                    modelInfo.Kind == ModelInfoKind.MultiDimensionalArray ||
+                return modelInfo.Kind == TypeBuilderKind.Array ||
+                    modelInfo.Kind == TypeBuilderKind.MultiDimensionalArray ||
                     !referenceContextLookup.ContainsKey(modelInfo.Type.Assembly) ||
                     IsSameAssembly(contextGenerationSpec.Type, modelInfo.Type);
             }
@@ -167,29 +167,29 @@ namespace System.ClientModel.SourceGeneration
             private static void EmitModelInfo(
                 int indent,
                 StringBuilder builder,
-                TypeGenerationSpec modelInfo,
+                TypeBuilderSpec modelInfo,
                 TypeRef context,
                 Dictionary<string, TypeRef> referenceContextLookup,
                 Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
             {
                 switch (modelInfo.Kind)
                 {
-                    case ModelInfoKind.IPersistableModel:
+                    case TypeBuilderKind.IPersistableModel:
                         EmitPersistableModelInfo(indent, builder, modelInfo, context, identifierLookup);
                         break;
-                    case ModelInfoKind.IEnumerable:
+                    case TypeBuilderKind.IList:
                         EmitEnumerableModelInfo(indent, builder, modelInfo, context, referenceContextLookup, identifierLookup);
                         break;
-                    case ModelInfoKind.IDictionary:
+                    case TypeBuilderKind.IDictionary:
                         EmitDictionaryModelInfo(indent, builder, modelInfo, context, referenceContextLookup, identifierLookup);
                         break;
-                    case ModelInfoKind.Array:
+                    case TypeBuilderKind.Array:
                         EmitArrayModelInfo(indent, builder, modelInfo, context, referenceContextLookup, identifierLookup);
                         break;
-                    case ModelInfoKind.MultiDimensionalArray:
+                    case TypeBuilderKind.MultiDimensionalArray:
                         EmitMultiDimensionalArrayModelInfo(indent, builder, modelInfo, context, referenceContextLookup, identifierLookup);
                         break;
-                    case ModelInfoKind.ReadOnlyMemory:
+                    case TypeBuilderKind.ReadOnlyMemory:
                         EmitReadOnlyMemoryModelInfo(indent, builder, modelInfo, context, referenceContextLookup, identifierLookup);
                         break;
                     default:
@@ -201,7 +201,7 @@ namespace System.ClientModel.SourceGeneration
             private static void EmitReadOnlyMemoryModelInfo(
                 int indent,
                 StringBuilder builder,
-                TypeGenerationSpec modelInfo,
+                TypeBuilderSpec modelInfo,
                 TypeRef context,
                 Dictionary<string, TypeRef> referenceContextLookup,
                 Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
@@ -257,7 +257,7 @@ namespace System.ClientModel.SourceGeneration
             private static void EmitMultiDimensionalArrayModelInfo(
                 int indent,
                 StringBuilder builder,
-                TypeGenerationSpec modelInfo,
+                TypeBuilderSpec modelInfo,
                 TypeRef context,
                 Dictionary<string, TypeRef> referenceContextLookup,
                 Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
@@ -324,7 +324,7 @@ namespace System.ClientModel.SourceGeneration
             private static void EmitArrayModelInfo(
                 int indent,
                 StringBuilder builder,
-                TypeGenerationSpec modelInfo,
+                TypeBuilderSpec modelInfo,
                 TypeRef context,
                 Dictionary<string, TypeRef> referenceContextLookup,
                 Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
@@ -361,7 +361,7 @@ namespace System.ClientModel.SourceGeneration
             private static void EmitDictionaryModelInfo(
                 int indent,
                 StringBuilder builder,
-                TypeGenerationSpec modelInfo,
+                TypeBuilderSpec modelInfo,
                 TypeRef context,
                 Dictionary<string, TypeRef> referenceContextLookup,
                 Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
@@ -407,7 +407,7 @@ namespace System.ClientModel.SourceGeneration
             private static void EmitEnumerableModelInfo(
                 int indent,
                 StringBuilder builder,
-                TypeGenerationSpec modelInfo,
+                TypeBuilderSpec modelInfo,
                 TypeRef context,
                 Dictionary<string, TypeRef> referenceContextLookup,
                 Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
@@ -438,7 +438,7 @@ namespace System.ClientModel.SourceGeneration
             private static void EmitPersistableModelInfo(
                 int indent,
                 StringBuilder builder,
-                TypeGenerationSpec modelInfo,
+                TypeBuilderSpec modelInfo,
                 TypeRef context,
                 Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
             {
@@ -458,7 +458,7 @@ namespace System.ClientModel.SourceGeneration
                 }
             }
 
-            private HashSet<string> GetNameSpaces(ContextGenerationSpec contextGenerationSpec)
+            private HashSet<string> GetNameSpaces(ModelReaderWriterContextGenerationSpec contextGenerationSpec)
             {
                 HashSet<string> namespaces =
                 [
@@ -476,7 +476,7 @@ namespace System.ClientModel.SourceGeneration
                     AddNamespaces(namespaces, referencedContext, visited);
                 }
 
-                foreach (var type in contextGenerationSpec.Types)
+                foreach (var type in contextGenerationSpec.TypeBuilders)
                 {
                     AddNamespaces(namespaces, type.Type, visited);
                 }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace System.ClientModel.SourceGeneration.Tests
 {
     [ModelReaderWriterBuildable(typeof(ReadOnlyMemory<JsonModel>))]
-    public partial class BasicContext : ModelReaderWriterContext
+    internal partial class BasicContext : ModelReaderWriterContext
     {
         partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
         {

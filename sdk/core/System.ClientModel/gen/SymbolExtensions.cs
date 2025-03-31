@@ -20,31 +20,31 @@ namespace System.ClientModel.SourceGeneration
             return false;
         }
 
-        public static ModelInfoKind GetModelInfoKind(this ISymbol symbol)
+        public static TypeBuilderKind GetModelInfoKind(this ISymbol symbol)
         {
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
                 if (namedTypeSymbol.IsList())
                 {
-                    return ModelInfoKind.IEnumerable;
+                    return TypeBuilderKind.IList;
                 }
 
                 if (namedTypeSymbol.IsDictionary())
                 {
-                    return ModelInfoKind.IDictionary;
+                    return TypeBuilderKind.IDictionary;
                 }
 
                 if (namedTypeSymbol.IsReadOnlyMemory())
                 {
-                    return ModelInfoKind.ReadOnlyMemory;
+                    return TypeBuilderKind.ReadOnlyMemory;
                 }
             }
             else if (symbol is IArrayTypeSymbol arraySymbol)
             {
-                return arraySymbol.Rank == 1 ? ModelInfoKind.Array : ModelInfoKind.MultiDimensionalArray;
+                return arraySymbol.Rank == 1 ? TypeBuilderKind.Array : TypeBuilderKind.MultiDimensionalArray;
             }
 
-            return ModelInfoKind.IPersistableModel;
+            return TypeBuilderKind.IPersistableModel;
         }
 
         internal static bool IsReadOnlyMemory(this INamedTypeSymbol namedSymbol)

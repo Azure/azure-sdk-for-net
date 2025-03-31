@@ -19,7 +19,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
 
         public record GeneratorResult
         {
-            internal ContextGenerationSpec? ContextFile { get; set; }
+            internal ModelReaderWriterContextGenerationSpec? ContextFile { get; set; }
             public ImmutableArray<Diagnostic> Diagnostics { get; set; }
         }
 
@@ -91,8 +91,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
 
         public static GeneratorResult RunSourceGenerator(Compilation compilation, bool disableDiagnosticValidation = false)
         {
-            ContextGenerationSpec? generatedSpecs = null;
-            var generator = new ContextGenerator
+            ModelReaderWriterContextGenerationSpec? generatedSpecs = null;
+            var generator = new ModelReaderWriterContextGenerator
             {
                 OnSourceEmitting = specs => generatedSpecs = specs
             };
@@ -107,7 +107,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             };
         }
 
-        public static CSharpGeneratorDriver CreateJsonSourceGeneratorDriver(Compilation compilation, ContextGenerator? generator = null)
+        public static CSharpGeneratorDriver CreateJsonSourceGeneratorDriver(Compilation compilation, ModelReaderWriterContextGenerator? generator = null)
         {
             generator ??= new();
             CSharpParseOptions parseOptions = compilation.SyntaxTrees

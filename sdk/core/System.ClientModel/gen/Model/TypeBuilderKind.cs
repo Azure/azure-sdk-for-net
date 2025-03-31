@@ -3,10 +3,10 @@
 
 namespace System.ClientModel.SourceGeneration
 {
-    internal enum ModelInfoKind
+    internal enum TypeBuilderKind
     {
         IPersistableModel,
-        IEnumerable,
+        IList,
         IDictionary,
         Array,
         MultiDimensionalArray,
