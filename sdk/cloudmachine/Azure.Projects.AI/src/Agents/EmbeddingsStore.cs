@@ -4,9 +4,8 @@
 using System.Collections.Generic;
 using System;
 using OpenAI.Embeddings;
-using Azure.Provisioning.AppService;
 
-namespace Azure.Projects.OpenAI;
+namespace Azure.Projects.AI;
 
 /// <summary>
 /// The vectorbase for storing embeddings.

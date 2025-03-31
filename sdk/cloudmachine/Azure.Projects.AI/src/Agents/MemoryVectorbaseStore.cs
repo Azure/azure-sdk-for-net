@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 using OpenAI.Embeddings;
 
-namespace Azure.Projects.OpenAI;
+namespace Azure.Projects.AI;
 
 internal class MemoryVectorbaseStore : EmbeddingsStore
 {

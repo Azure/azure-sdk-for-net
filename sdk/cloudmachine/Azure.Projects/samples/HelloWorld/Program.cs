@@ -3,7 +3,7 @@
 
 using Azure.AI.OpenAI;
 using Azure.Projects;
-using Azure.Projects.OpenAI;
+using Azure.Projects.AI;
 using OpenAI.Chat;
 
 ProjectInfrastructure infrastructure = new();

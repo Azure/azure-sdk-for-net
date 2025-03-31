@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using OpenAI.Chat;
 
-namespace Azure.Projects.OpenAI;
+namespace Azure.Projects.AI;
 
 /// <summary>
 /// Represents the result of executing tool calls, including success and failure messages.

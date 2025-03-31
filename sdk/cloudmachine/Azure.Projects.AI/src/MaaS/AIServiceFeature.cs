@@ -4,7 +4,7 @@
 using Azure.Projects.Core;
 using Azure.Provisioning.CognitiveServices;
 
-namespace Azure.Projects.OpenAI;
+namespace Azure.Projects.AI;
 
 /// <summary>
 /// AIServices feature.

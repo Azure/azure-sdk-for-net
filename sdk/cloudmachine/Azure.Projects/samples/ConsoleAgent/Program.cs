@@ -3,7 +3,7 @@
 
 using Azure.AI.OpenAI;
 using Azure.Projects;
-using Azure.Projects.OpenAI;
+using Azure.Projects.AI;
 using OpenAI.Chat;
 
 ProjectInfrastructure infrastructure = new();
@@ -15,22 +15,21 @@ if (infrastructure.TryExecuteCommand(args)) return;
 
 ProjectClient project = new();
 
-List<ChatMessage> conversation = [];
-
 ChatRunner runner = new(
     project.GetOpenAIChatClient(),
     project.GetOpenAIEmbeddingClient()
 );
-runner.Tools.AddLocalTools(typeof(Tools));  
+runner.Tools.AddLocalTools(typeof(Tools));
+
+ChatThread conversation = new();
 
 while (true)
 {
     Console.Write("> ");
     string prompt = Console.ReadLine();
-    if (string.IsNullOrEmpty(prompt))
-        continue;
-    if (string.Equals(prompt, "bye", StringComparison.OrdinalIgnoreCase))
-        break;
+
+    if (string.IsNullOrEmpty(prompt)) continue;
+    if (string.Equals(prompt, "bye", StringComparison.OrdinalIgnoreCase)) break;
     if (prompt.StartsWith("fact:", StringComparison.OrdinalIgnoreCase))
     {
         string fact = prompt[5..].Trim();

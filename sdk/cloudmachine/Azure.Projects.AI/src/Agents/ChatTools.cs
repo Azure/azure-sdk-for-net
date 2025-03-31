@@ -11,7 +11,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using OpenAI.Chat;
 
-namespace Azure.Projects.OpenAI;
+namespace Azure.Projects.AI;
 
 /// <summary> The service client for the OpenAI Chat Completions endpoint. </summary>
 public class ChatTools

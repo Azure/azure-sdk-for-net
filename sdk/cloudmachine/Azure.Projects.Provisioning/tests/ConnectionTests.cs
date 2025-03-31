@@ -16,7 +16,7 @@ using Azure.Projects.AppConfiguration;
 using Azure.Projects.AppService;
 using Azure.Projects.KeyVault;
 using Azure.Projects.Ofx;
-using Azure.Projects.OpenAI;
+using Azure.Projects.AI;
 using Azure.Projects.ServiceBus;
 using Azure.Projects.Storage;
 using Azure.Security.KeyVault.Secrets;
@@ -62,7 +62,7 @@ public class ConnectionTests
         TestConnectionStore store = new();
         ProjectInfrastructure infrastructure = new(store, projectId);
         infrastructure.AddFeature(new AppConfigurationFeature());
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
         infrastructure.Build();
 
         ProjectClient project = new(projectId, store.Provider);

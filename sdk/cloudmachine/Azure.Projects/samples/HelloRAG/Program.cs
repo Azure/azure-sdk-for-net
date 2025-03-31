@@ -3,7 +3,7 @@
 
 using Azure.AI.OpenAI;
 using Azure.Projects;
-using Azure.Projects.OpenAI;
+using Azure.Projects.AI;
 using OpenAI.Chat;
 
 ProjectInfrastructure infrastructure = new();
@@ -16,7 +16,7 @@ if (infrastructure.TryExecuteCommand(args)) return;
 ProjectClient project = new();
 ChatClient chat = project.GetOpenAIChatClient();
 EmbeddingsStore embeddings = EmbeddingsStore.Create(project.GetOpenAIEmbeddingClient());
-List<ChatMessage> conversation = [];
+ChatThread conversation = [];
 ChatTools tools = new ChatTools(typeof(Tools));
 
 while (true)
@@ -49,7 +49,7 @@ complete:
             Console.WriteLine(completion.AsText());
             break;
         case ChatFinishReason.Length:
-            conversation = new(conversation.Slice(conversation.Count / 2, conversation.Count / 2));
+            conversation.Trim();
             goto complete;
         case ChatFinishReason.ToolCalls:
 

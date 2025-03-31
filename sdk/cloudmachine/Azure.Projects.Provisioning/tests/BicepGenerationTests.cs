@@ -9,7 +9,7 @@ using System.Linq;
 using Azure.Projects.AppService;
 using Azure.Projects.KeyVault;
 using Azure.Projects.Ofx;
-using Azure.Projects.OpenAI;
+using Azure.Projects.AI;
 using Azure.Projects.ServiceBus;
 using Azure.Projects.Storage;
 using NUnit.Framework;
@@ -138,7 +138,7 @@ public class BicepGenerationTests
     public void Ofx()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         // Un-comment to debug bicep creation issues

@@ -8,7 +8,7 @@ using Azure.AI.OpenAI;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 
-namespace Azure.Projects.OpenAI
+namespace Azure.Projects.AI
 {
     /// <summary>
     /// The chat processor for the OpenAI Chat Completions endpoint.

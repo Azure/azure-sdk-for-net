@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using Azure.Projects.Core;
 using Azure.Provisioning.CognitiveServices;
 
-namespace Azure.Projects.OpenAI;
+namespace Azure.Projects.AI;
 
 /// <summary>
 /// Projects feature for OpenAI models.

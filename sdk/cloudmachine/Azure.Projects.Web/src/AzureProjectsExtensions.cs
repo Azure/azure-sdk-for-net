@@ -29,9 +29,9 @@ public static class AzureProjectsExtensions
     /// Adds the project client to the DI container.
     /// </summary>
     /// <param name="builder"></param>
-    public static OfxProjectClient AddOfxClient(this WebApplicationBuilder builder)
+    public static OfxClient AddOfxClient(this WebApplicationBuilder builder)
     {
-        OfxProjectClient client = new();
+        OfxClient client = new();
         builder.Services.AddSingleton(client);
         return client;
     }

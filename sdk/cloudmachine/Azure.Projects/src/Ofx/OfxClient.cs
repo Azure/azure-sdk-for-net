@@ -8,12 +8,12 @@ namespace Azure.Projects;
 /// <summary>
 /// The project client.
 /// </summary>
-public partial class OfxProjectClient : ProjectClient
+public partial class OfxClient : ProjectClient
 {
     /// <summary>
     /// Oppinionated API client
     /// </summary>
-    public OfxProjectClient() {
+    public OfxClient() {
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
     }
@@ -23,7 +23,7 @@ public partial class OfxProjectClient : ProjectClient
     /// </summary>
     /// <param name="projectId"></param>
     /// <param name="connections"></param>
-    public OfxProjectClient(string projectId, ConnectionProvider connections):
+    public OfxClient(string projectId, ConnectionProvider connections):
         base(projectId, connections)
     {
         Messaging = new MessagingServices(this);

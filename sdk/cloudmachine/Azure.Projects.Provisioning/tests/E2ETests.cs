@@ -11,7 +11,7 @@ using Azure.Data.AppConfiguration;
 using Azure.Messaging.ServiceBus;
 using Azure.Projects.KeyVault;
 using Azure.Projects.Ofx;
-using Azure.Projects.OpenAI;
+using Azure.Projects.AI;
 using Azure.Projects.Storage;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
@@ -105,12 +105,12 @@ public class E2ETests
     public void Ofx(string arg)
     {
         ProjectInfrastructure infrastructure = new(allProjectId);
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
 
         if (infrastructure.TryExecuteCommand([arg]))
             return;
 
-        OfxProjectClient project = new(allProjectId, default);
+        OfxClient project = new(allProjectId, default);
         string? uploadedPath = null;
         long done = 0;
         try
@@ -135,7 +135,7 @@ public class E2ETests
 
     internal void AddAllFeratures(ProjectInfrastructure infrastructure)
     {
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
         infrastructure.AddFeature(new KeyVaultFeature());
         infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
         infrastructure.AddFeature(new OpenAIEmbeddingFeature("text-embedding-ada-002", "2"));

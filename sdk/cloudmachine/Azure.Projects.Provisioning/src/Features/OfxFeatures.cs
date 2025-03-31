@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Projects.AppService;
 using Azure.Projects.Core;
 using Azure.Projects.Storage;
 
 namespace Azure.Projects.Ofx;
 
-public class OfxProjectFeature : AzureProjectFeature
+public class OfxFeatures : AzureProjectFeature
 {
     private readonly BlobContainerFeature _blobContainer;
-
-    public OfxProjectFeature()
+    public OfxFeatures()
     {
         _blobContainer = new BlobContainerFeature("default", isObservable: true);
+
     }
 
     protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)

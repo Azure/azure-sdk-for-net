@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.AI.OpenAI;
 using Azure.Core;
-using Azure.Projects.OpenAI;
+using Azure.Projects.AI;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 

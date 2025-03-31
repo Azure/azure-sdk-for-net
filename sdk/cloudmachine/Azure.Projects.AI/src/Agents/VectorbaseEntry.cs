@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Projects.OpenAI;
+namespace Azure.Projects.AI;
 
 /// <summary>
 /// A vectorbase entry.

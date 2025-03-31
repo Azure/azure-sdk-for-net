@@ -2,17 +2,18 @@
 // Licensed under the MIT License.
 
 using Azure.Projects.AppService;
-using Azure.Projects.OpenAI;
+using Azure.Projects.AI;
 using Azure.Projects;
 using OpenAI.Chat;
 using Azure.AI.OpenAI;
 using Azure.Projects.Ofx;
 
 ProjectInfrastructure infrastructure = new();
-infrastructure.AddFeature(new OfxProjectFeature()); // add opinionated infrastructure
+infrastructure.AddFeature(new OfxFeatures()); // add opinionated infrastructure
 infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 infrastructure.AddFeature(new AppServiceFeature());
+
 // the app can be called with -bicep switch to generate bicep and prepare for azd deployment.
 if (infrastructure.TryExecuteCommand(args)) return;
 
@@ -21,7 +22,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 
 // add opinionated framework client to the DI container
-OfxProjectClient client = builder.AddOfxClient();
+OfxClient client = builder.AddOfxClient();
 EmbeddingsStore embeddings = EmbeddingsStore.Create(client.GetOpenAIEmbeddingClient());
 client.Storage.WhenUploaded(embeddings.Add); // update vector db when a new file is uploaded
 
@@ -29,7 +30,7 @@ var app = builder.Build();
 app.MapRazorPages();
 app.UseStaticFiles();
 
-List<ChatMessage> conversationThread = [];
+ChatThread conversationThread = new();
 app.MapPost("/chat", async (HttpRequest request) =>
 {
     try {
@@ -60,7 +61,7 @@ app.MapPost("/chat", async (HttpRequest request) =>
     }
 });
 
-app.MapPost("/upload", async (HttpRequest request, OfxProjectClient client)
+app.MapPost("/upload", async (HttpRequest request, OfxClient client)
     => await client.Storage.UploadFormAsync(request));
 
 app.Run();
