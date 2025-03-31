@@ -4,9 +4,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-tag: package-composite-v5-take-2021-stable
-require: https://github.com/Azure/azure-rest-api-specs/blob/6e7a6fc075a6b7053e21fc6a1bca9582ef12cbd5/specification/sql/resource-manager/readme.md
-#package-composite-v5-take-2021-stable
+tag: package-composite-v5-take-2023-08-01-stable
+require: https://github.com/Azure/azure-rest-api-specs/blob/c337a5599a9046b772a3f6d6a2a51667e36e5f7e/specification/sql/resource-manager/readme.md
+#package-composite-v5-take-2023-08-01-stable
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
