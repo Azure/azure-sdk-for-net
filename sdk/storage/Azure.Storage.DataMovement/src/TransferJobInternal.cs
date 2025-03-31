@@ -201,7 +201,8 @@ namespace Azure.Storage.DataMovement
             ITransferCheckpointer checkpointer,
             TransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
-            ClientDiagnostics clientDiagnostics)
+            ClientDiagnostics clientDiagnostics,
+            ThroughputMonitor throughputMonitor)
             : this(transferOperation,
                   createJobPartSingleAsync,
                   createJobPartMultiAsync,
@@ -220,7 +221,7 @@ namespace Azure.Storage.DataMovement
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _isSingleResource = true;
-            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
+            _progressTracker = new TransferProgressTracker(throughputMonitor, transferOptions?.ProgressHandlerOptions);
         }
 
         /// <summary>
@@ -236,7 +237,8 @@ namespace Azure.Storage.DataMovement
             ITransferCheckpointer checkpointer,
             TransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
-            ClientDiagnostics clientDiagnostics)
+            ClientDiagnostics clientDiagnostics,
+            ThroughputMonitor throughputMonitor)
             : this(transferOperation,
                   createJobPartSingleAsync,
                   createJobPartMultiAsync,
@@ -255,7 +257,7 @@ namespace Azure.Storage.DataMovement
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
-            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
+            _progressTracker = new TransferProgressTracker(throughputMonitor, transferOptions?.ProgressHandlerOptions);
         }
 
         public async ValueTask DisposeAsync()

@@ -48,6 +48,7 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
         private readonly Func<string> _generateTransferId;
+        private readonly ThroughputMonitor _throughputMonitor;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -78,8 +79,10 @@ namespace Azure.Storage.DataMovement
             _concurrencyTunerEnabled = options?.ConcurrencyTunerEnabled ?? true;
 
             if (_concurrencyTunerEnabled)
+            {
+                _throughputMonitor = new ThroughputMonitor();
                 _concurrencyTuner = new ConcurrencyTuner(
-                    new ResourceMonitor(),
+                    _throughputMonitor,
                     _chunksProcessor,
                     DataMovementConstants.TransferManagerOptions.MonitoringInterval,
                     DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
@@ -87,8 +90,8 @@ namespace Azure.Storage.DataMovement
                     DataMovementConstants.TransferManagerOptions.MaxConcurrency,
                     DataMovementConstants.TransferManagerOptions.MaxCpuUsage
                 );
+            }
         }
-
         /// <summary>
         /// Dependency injection constructor.
         /// </summary>
@@ -411,11 +414,6 @@ namespace Azure.Storage.DataMovement
 
                 DataMovementEventSource.Singleton.TransferQueued(transferId, sourceResource, destinationResource);
 
-                if (_concurrencyTunerEnabled)
-                    StartConcurrencyTuner();
-                //TODO: If we need to shut off the concurrency tuner in the future after perf testing, then we can
-                //StopConcurrencyTunerWhenTransfersComplete();
-
                 return transferOperation;
             }
             catch (Exception ex)
@@ -445,11 +443,6 @@ namespace Azure.Storage.DataMovement
                 .ContinueWith((_) => _cancellationTokenSource.Cancel());
         }
 
-        private void StartConcurrencyTuner()
-        {
-            _concurrencyTuner.Start(_cancellationToken);
-        }
-
         private async Task<TransferOperation> BuildAndAddTransferJobAsync(
             StorageResource sourceResource,
             StorageResource destinationResource,
@@ -466,6 +459,7 @@ namespace Azure.Storage.DataMovement
                 _checkpointer,
                 transferId,
                 resumeJob,
+                _throughputMonitor,
                 cancellationToken)
                 .ConfigureAwait(false);
 
