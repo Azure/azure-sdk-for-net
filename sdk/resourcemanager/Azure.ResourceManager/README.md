@@ -271,7 +271,7 @@ else
 
 ## Examples
 
-For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
+We are only listing samples for key features below. For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
 
 ### Create a resource group
 ```C# Snippet:Managing_Resource_Groups_CreateAResourceGroup
