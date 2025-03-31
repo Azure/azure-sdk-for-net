@@ -3,12 +3,18 @@
 
 using System.Collections.Generic;
 using System;
+using OpenAI.Embeddings;
 
 namespace Azure.Projects.OpenAI;
 
-internal class MemoryVectorbaseStore : VectorbaseStore
+internal class MemoryVectorbaseStore : EmbeddingsStore
 {
     private readonly List<VectorbaseEntry> _entries = [];
+
+    internal MemoryVectorbaseStore(EmbeddingClient client)
+        : base(client)
+    {
+    }
 
     public override IEnumerable<VectorbaseEntry> Find(ReadOnlyMemory<float> vector, FindOptions options)
     {

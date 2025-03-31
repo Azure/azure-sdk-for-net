@@ -15,7 +15,7 @@ if (infrastructure.TryExecuteCommand(args)) return;
 
 ProjectClient project = new();
 ChatClient chat = project.GetOpenAIChatClient();
-EmbeddingsStore embeddings = new(project.GetOpenAIEmbeddingClient());
+EmbeddingsStore embeddings = EmbeddingsStore.Create(project.GetOpenAIEmbeddingClient());
 List<ChatMessage> conversation = [];
 ChatTools tools = new ChatTools(typeof(Tools));
 

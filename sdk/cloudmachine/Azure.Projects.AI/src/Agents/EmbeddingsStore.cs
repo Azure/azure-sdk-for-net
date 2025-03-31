@@ -4,29 +4,34 @@
 using System.Collections.Generic;
 using System;
 using OpenAI.Embeddings;
+using Azure.Provisioning.AppService;
 
 namespace Azure.Projects.OpenAI;
 
 /// <summary>
 /// The vectorbase for storing embeddings.
 /// </summary>
-public class EmbeddingsStore
+public abstract class EmbeddingsStore
 {
     private readonly EmbeddingClient _client;
-    private readonly VectorbaseStore _store;
     private readonly List<string> _todo = [];
     private readonly int _chuckSize;
+
+    /// <summary>
+    /// Creates in-memory store.
+    /// </summary>
+    /// <param name="client"></param>
+    /// <returns></returns>
+    public static EmbeddingsStore Create(EmbeddingClient client) => new MemoryVectorbaseStore(client);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmbeddingsStore"/> class.
     /// </summary>
     /// <param name="client"></param>
-    /// <param name="store"></param>
     /// <param name="factChunkSize"></param>
-    public EmbeddingsStore(EmbeddingClient client, VectorbaseStore? store = default, int factChunkSize = 1000)
+    protected EmbeddingsStore(EmbeddingClient client, int factChunkSize = 1000)
     {
         _client = client;
-        _store = store ?? new MemoryVectorbaseStore();
         _chuckSize = factChunkSize;
     }
 
@@ -65,7 +70,7 @@ public class EmbeddingsStore
         if (_todo.Count > 0)
             ProcessToDo();
         ReadOnlyMemory<float> textVector = GetEmbedding(text);
-        IEnumerable<VectorbaseEntry> nearest = _store.Find(textVector, options);
+        IEnumerable<VectorbaseEntry> nearest = Find(textVector, options);
         return nearest;
     }
 
@@ -79,7 +84,7 @@ public class EmbeddingsStore
             {
                 ReadOnlyMemory<float> vector = embedding.ToFloats();
                 string item = _todo[(int)embedding.Index];
-                _store.Add(new VectorbaseEntry(vector, BinaryData.FromString(item)));
+                Add(new VectorbaseEntry(vector, BinaryData.FromString(item)));
             }
             _todo.Clear();
         }
@@ -130,6 +135,47 @@ public class EmbeddingsStore
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Finds entries in the vectorbase.
+    /// </summary>
+    /// <param name="vector"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    public abstract IEnumerable<VectorbaseEntry> Find(ReadOnlyMemory<float> vector, FindOptions options);
+
+    /// <summary>
+    /// Adds an entry to the vectorbase.
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <returns></returns>
+    public abstract int Add(VectorbaseEntry entry);
+
+    /// <summary>
+    /// Adds a list of entries to the vectorbase.
+    /// </summary>
+    /// <param name="entry"></param>
+    public abstract void Add(IReadOnlyList<VectorbaseEntry> entry);
+
+    /// <summary>
+    /// Calculates the cosine similarity between two vectors.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    public static float CosineSimilarity(ReadOnlySpan<float> x, ReadOnlySpan<float> y)
+    {
+        float dot = 0, xSumSquared = 0, ySumSquared = 0;
+
+        for (int i = 0; i < x.Length; i++)
+        {
+            dot += x[i] * y[i];
+            xSumSquared += x[i] * x[i];
+            ySumSquared += y[i] * y[i];
+        }
+
+        return dot / (MathF.Sqrt(xSumSquared) * MathF.Sqrt(ySumSquared));
     }
 }
 

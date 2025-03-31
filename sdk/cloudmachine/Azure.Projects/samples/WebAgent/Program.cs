@@ -22,7 +22,7 @@ builder.Services.AddHttpClient();
 
 // add opinionated framework client to the DI container
 OfxProjectClient client = builder.AddOfxClient();
-EmbeddingsStore embeddings = new(client.GetOpenAIEmbeddingClient());
+EmbeddingsStore embeddings = EmbeddingsStore.Create(client.GetOpenAIEmbeddingClient());
 client.Storage.WhenUploaded(embeddings.Add); // update vector db when a new file is uploaded
 
 var app = builder.Build();

@@ -46,7 +46,7 @@ namespace Azure.Projects.OpenAI
             _chat = chat;
             if (embeddings != null)
             {
-                VectorDb = new(embeddings);
+                VectorDb = new MemoryVectorbaseStore(embeddings);
             }
         }
 
