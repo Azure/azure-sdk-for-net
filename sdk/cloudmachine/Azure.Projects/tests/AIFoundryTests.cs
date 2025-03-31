@@ -17,6 +17,7 @@ using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 using Azure.AI.OpenAI;
+using Azure.Projects.Foundry;
 
 namespace Azure.Projects.Tests;
 

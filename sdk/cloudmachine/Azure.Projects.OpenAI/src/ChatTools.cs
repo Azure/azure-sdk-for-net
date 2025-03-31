@@ -24,6 +24,7 @@ public class ChatTools
 
     private List<McpClient> _mcpClients = [];
     private Dictionary<string, McpClient> _mcpClientsByEndpoint = [];
+    private const string _mcpToolSeparator = "_._";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatTools"/> class.
@@ -85,13 +86,18 @@ public class ChatTools
 
         var tools = toolsElement.EnumerateArray();
         // the replacement is to deal with OpenAI's tool name regex validation.
-        var serverKey = client.ServerEndpoint.AbsoluteUri.Replace('/', '_').Replace(':', '_');
+        var serverKey = client.ServerEndpoint.Host + client.ServerEndpoint.Port.ToString();
 
         foreach (var tool in tools)
         {
-            var name = $"{serverKey}__.__{tool.GetProperty("name").GetString()!}";
+            var name = $"{serverKey}{_mcpToolSeparator}{tool.GetProperty("name").GetString()!}";
             var description = tool.GetProperty("description").GetString()!;
-            var inputSchema = tool.GetProperty("inputSchema").GetRawText();
+            var inputSchema = JsonSerializer.Serialize(
+                JsonSerializer.Deserialize<JsonElement>(tool.GetProperty("inputSchema").GetRawText()),
+                new JsonSerializerOptions
+                {
+                    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                });
 
             var chatTool = ChatTool.CreateFunctionTool(
                 name,
@@ -188,11 +194,10 @@ public class ChatTools
         if (_mcpMethods.TryGetValue(call.FunctionName, out Func<string, BinaryData, Task<BinaryData>>? method))
         {
             #if !NETSTANDARD2_0
-                        var actualFunctionName = call.FunctionName.Split("__.__", 2)[1];
+                        var actualFunctionName = call.FunctionName.Split(_mcpToolSeparator, 2)[1];
             #else
-                        var separator = "__.__";
-                        var index = call.FunctionName.IndexOf(separator);
-                        var actualFunctionName = call.FunctionName.Substring(index + separator.Length);
+                        var index = call.FunctionName.IndexOf(_mcpToolSeparator);
+                        var actualFunctionName = call.FunctionName.Substring(index + _mcpToolSeparator.Length);
             #endif
             var result = await method(actualFunctionName, call.FunctionArguments).ConfigureAwait(false);
             return result.ToString();
