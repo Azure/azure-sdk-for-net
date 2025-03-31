@@ -1,17 +1,26 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.6 (2025-03-28)
 
 ### Features Added
 * Added `QueryType` parameter to `AISearchIndexResource` to allow different search types performed by an agent [issue](https://github.com/Azure/azure-sdk-for-net/issues/49069).
 * Added sample for Azure AI Search in streaming scenarios [issue](https://github.com/Azure/azure-sdk-for-net/issues/49069).
 
 ### Breaking Changes
+* `MicrosoftFabricToolDefinition` constructor parameter was renamed from `fabricAiskill` to `fabricDataagent`, the corresponding parameter was renamed from `FabricAiskill` to `FabricDataagent`.
 
 ### Bugs Fixed
 * Fixed Azure AI Search in streaming scenarios.
-
-### Other Changes
 
 ### Sample updates
 * Added documentation for each sample.
