@@ -154,9 +154,6 @@ namespace Azure.Storage.DataMovement.Tests
             mockSource.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(readStreamResult));
 
-            // Setup mock throughput monitor
-            Mock<ThroughputMonitor> mockThroughput = new Mock<ThroughputMonitor>();
-
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);
             await checkpointer.AddNewJobAsync(
@@ -174,8 +171,7 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointer,
                 TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
-                new ClientDiagnostics(ClientOptions.Default),
-                mockThroughput.Object);
+                new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job,
                 1) as StreamToUriJobPart;
@@ -271,9 +267,6 @@ namespace Azure.Storage.DataMovement.Tests
                 source: mockSource.Object,
                 destination: mockDestination.Object);
 
-            // Setup mock throughput monitor
-            Mock<ThroughputMonitor> mockThroughput = new Mock<ThroughputMonitor>();
-
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = MockQueueInternalTasks.GetPartQueueChunkTask();
 
             TransferJobInternal job = new(
@@ -286,8 +279,7 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointer,
                 TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
-                new ClientDiagnostics(ClientOptions.Default),
-                mockThroughput.Object);
+                new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job,
                 1) as StreamToUriJobPart;

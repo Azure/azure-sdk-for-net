@@ -157,6 +157,11 @@ internal static class ChannelProcessing
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
             List<Task> itemRunners = new List<Task>(MaxConcurrentProcessing);
+            // while there is stuff to read, keep looping
+                // if itemRunners <= max
+                    // add item
+                // else
+                    //remove all completed
 
             try
             {

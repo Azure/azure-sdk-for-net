@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement
         }
 
         internal ConcurrencyTuner(
-            ThroughputMonitor throughputMonitor,
+            ResourceMonitor resourceMonitor,
             IProcessor<Func<Task>> _chunkProcessor,
             TimeSpan monitoringInterval,
             double maxMemoryUsage,
@@ -54,6 +54,7 @@ namespace Azure.Storage.DataMovement
             _maxConcurrency = maxConcurrency;
             _maxMemoryUsage = maxMemoryUsage;
             _maxCpuUsage = maxCpuUsage;
+            _resourceMonitor = resourceMonitor;
             _finalReason = (int)ConcurrencyTunerState.ConcurrencyReasonNone;
             _finalConcurrency = _initialConcurrency;
             _observations = Channel.CreateUnbounded<ConcurrencyObservation>();
