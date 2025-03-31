@@ -123,6 +123,11 @@ namespace Azure.Messaging.ServiceBus.Core
         {
             // There's an ambient transaction - should not retry
 
+            if (Transaction.Current != null)
+            {
+                return false;
+            }
+
             exception = exception switch
             {
                 TaskCanceledException => exception?.InnerException,
