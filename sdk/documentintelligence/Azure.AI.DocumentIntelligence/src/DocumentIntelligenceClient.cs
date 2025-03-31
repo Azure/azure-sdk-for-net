@@ -90,7 +90,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await AnalyzeBatchDocumentsAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeBatchResultFromAnalyzeBatchOperationDetails, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
+            return ProtocolOperationHelpers.Convert(respons, FetchAnalyzeBatchResultFromAnalyzeBatchOperationDetails, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
         }
 
         /// <summary> Analyzes batch documents with document model. </summary>
