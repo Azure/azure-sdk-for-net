@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateThreadAsync(IEnumerable{ChatMessage},CancellationToken)">
+      <example>
+This sample shows how to call CreateThreadAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<Thread> response = await client.CreateThreadAsync(new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+]]></code>
+This sample shows how to call CreateThreadAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<Thread> response = await client.CreateThreadAsync(new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+});
+]]></code></example>
+    </member>
+    <member name="CreateThread(IEnumerable{ChatMessage},CancellationToken)">
+      <example>
+This sample shows how to call CreateThread.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<Thread> response = client.CreateThread(new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+]]></code>
+This sample shows how to call CreateThread with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<Thread> response = client.CreateThread(new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+});
+]]></code></example>
+    </member>
+    <member name="CreateThreadAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateThreadAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    messages = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
+    },
+});
+Response response = await client.CreateThreadAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+]]></code>
+This sample shows how to call CreateThreadAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    messages = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                    annotations = new object[]
+                    {
+                        new
+                        {
+                            type = "<type>",
+                            ToolCallId = "<ToolCallId>",
+                            jsonPath = "<jsonPath>",
+                            url = "<url>",
+                            start = 1234,
+                            end = 1234,
+                        }
+                    },
+                }
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+});
+Response response = await client.CreateThreadAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("completedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateThread(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateThread and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    messages = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
+    },
+});
+Response response = client.CreateThread(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+]]></code>
+This sample shows how to call CreateThread with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    messages = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                    annotations = new object[]
+                    {
+                        new
+                        {
+                            type = "<type>",
+                            ToolCallId = "<ToolCallId>",
+                            jsonPath = "<jsonPath>",
+                            url = "<url>",
+                            start = 1234,
+                            end = 1234,
+                        }
+                    },
+                }
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+});
+Response response = client.CreateThread(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("completedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="GetThreadAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetThreadAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<Thread> response = await client.GetThreadAsync("<threadId>");
+]]></code>
+This sample shows how to call GetThreadAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<Thread> response = await client.GetThreadAsync("<threadId>");
+]]></code></example>
+    </member>
+    <member name="GetThread(string,CancellationToken)">
+      <example>
+This sample shows how to call GetThread.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<Thread> response = client.GetThread("<threadId>");
+]]></code>
+This sample shows how to call GetThread with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<Thread> response = client.GetThread("<threadId>");
+]]></code></example>
+    </member>
+    <member name="GetThreadAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetThreadAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetThreadAsync("<threadId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+]]></code>
+This sample shows how to call GetThreadAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetThreadAsync("<threadId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("completedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="GetThread(string,RequestContext)">
+      <example>
+This sample shows how to call GetThread and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetThread("<threadId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+]]></code>
+This sample shows how to call GetThread with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetThread("<threadId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("completedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateThreadAsync(string,Thread,CancellationToken)">
+      <example>
+This sample shows how to call UpdateThreadAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Thread body = new Thread(new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+Response<Thread> response = await client.UpdateThreadAsync("<threadId>", body);
+]]></code>
+This sample shows how to call UpdateThreadAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Thread body = new Thread(new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+});
+Response<Thread> response = await client.UpdateThreadAsync("<threadId>", body);
+]]></code></example>
+    </member>
+    <member name="UpdateThread(string,Thread,CancellationToken)">
+      <example>
+This sample shows how to call UpdateThread.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Thread body = new Thread(new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+Response<Thread> response = client.UpdateThread("<threadId>", body);
+]]></code>
+This sample shows how to call UpdateThread with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Thread body = new Thread(new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+});
+Response<Thread> response = client.UpdateThread("<threadId>", body);
+]]></code></example>
+    </member>
+    <member name="UpdateThreadAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateThreadAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    messages = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
+    },
+});
+Response response = await client.UpdateThreadAsync("<threadId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+]]></code>
+This sample shows how to call UpdateThreadAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    messages = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                    annotations = new object[]
+                    {
+                        new
+                        {
+                            type = "<type>",
+                            ToolCallId = "<ToolCallId>",
+                            jsonPath = "<jsonPath>",
+                            url = "<url>",
+                            start = 1234,
+                            end = 1234,
+                        }
+                    },
+                }
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+});
+Response response = await client.UpdateThreadAsync("<threadId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("completedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateThread(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateThread and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    messages = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
+    },
+});
+Response response = client.UpdateThread("<threadId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+]]></code>
+This sample shows how to call UpdateThread with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    messages = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                    annotations = new object[]
+                    {
+                        new
+                        {
+                            type = "<type>",
+                            ToolCallId = "<ToolCallId>",
+                            jsonPath = "<jsonPath>",
+                            url = "<url>",
+                            start = 1234,
+                            end = 1234,
+                        }
+                    },
+                }
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+});
+Response response = client.UpdateThread("<threadId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("messages")[0].GetProperty("completedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteThreadAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteThreadAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.DeleteThreadAsync("<threadId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteThreadAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.DeleteThreadAsync("<threadId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteThread(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteThread.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.DeleteThread("<threadId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteThread with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.DeleteThread("<threadId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetThreadsAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetThreadsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<IReadOnlyList<Thread>> response = await client.GetThreadsAsync();
+]]></code>
+This sample shows how to call GetThreadsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<IReadOnlyList<Thread>> response = await client.GetThreadsAsync();
+]]></code></example>
+    </member>
+    <member name="GetThreads(CancellationToken)">
+      <example>
+This sample shows how to call GetThreads.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<IReadOnlyList<Thread>> response = client.GetThreads();
+]]></code>
+This sample shows how to call GetThreads with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response<IReadOnlyList<Thread>> response = client.GetThreads();
+]]></code></example>
+    </member>
+    <member name="GetThreadsAsync(RequestContext)">
+      <example>
+This sample shows how to call GetThreadsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetThreadsAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("threadId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+]]></code>
+This sample shows how to call GetThreadsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetThreadsAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("threadId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("completedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="GetThreads(RequestContext)">
+      <example>
+This sample shows how to call GetThreads and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetThreads(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("threadId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+]]></code>
+This sample shows how to call GetThreads with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Threads client = new AIProjectClient(endpoint, credential).GetThreadsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetThreads(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("threadId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result[0].GetProperty("messages")[0].GetProperty("completedAt").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,2787 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateRunAsync(Agent,IEnumerable{ChatMessage},string,IReadOnlyDictionary{string,string},RunOptions,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Agent agent = new Agent(new OpenAIAgentModel("<id>", new JSONAny()));
+Response<Run> response = await client.CreateRunAsync(agent, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+]]></code>
+This sample shows how to call CreateRunAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Agent agent = new Agent(new OpenAIAgentModel("<id>", new JSONAny())
+{
+    Endpoint = "<endpoint>",
+})
+{
+    Description = "<description>",
+    Metadata =
+    {
+        ["key"] = "<metadata>"
+    },
+    Name = "<name>",
+    Instructions = {new DeveloperMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }},
+    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    {
+        Options = new FunctionToolOptions("<name>")
+        {
+            Description = "<description>",
+            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
+            {
+                ["key"] = default
+            })
+            {
+                Required = {"<required>"},
+            },
+            Strict = true,
+        },
+        Override = new AgentToolDefinitionOverride
+        {
+            Name = "<name>",
+            Description = "<description>",
+            Parameters = default,
+        },
+    }},
+    ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
+};
+RunOptions options = new RunOptions
+{
+    TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+    {
+        LastMessages = 1234,
+    },
+};
+Response<Run> response = await client.CreateRunAsync(agent, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        default
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+}, threadId: "<threadId>", metadata: new Dictionary<string, string>
+{
+    ["key"] = "<metadata>"
+}, options: options, userId: "<userId>");
+]]></code></example>
+    </member>
+    <member name="CreateRun(Agent,IEnumerable{ChatMessage},string,IReadOnlyDictionary{string,string},RunOptions,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Agent agent = new Agent(new OpenAIAgentModel("<id>", new JSONAny()));
+Response<Run> response = client.CreateRun(agent, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+]]></code>
+This sample shows how to call CreateRun with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Agent agent = new Agent(new OpenAIAgentModel("<id>", new JSONAny())
+{
+    Endpoint = "<endpoint>",
+})
+{
+    Description = "<description>",
+    Metadata =
+    {
+        ["key"] = "<metadata>"
+    },
+    Name = "<name>",
+    Instructions = {new DeveloperMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }},
+    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    {
+        Options = new FunctionToolOptions("<name>")
+        {
+            Description = "<description>",
+            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
+            {
+                ["key"] = default
+            })
+            {
+                Required = {"<required>"},
+            },
+            Strict = true,
+        },
+        Override = new AgentToolDefinitionOverride
+        {
+            Name = "<name>",
+            Description = "<description>",
+            Parameters = default,
+        },
+    }},
+    ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
+};
+RunOptions options = new RunOptions
+{
+    TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+    {
+        LastMessages = 1234,
+    },
+};
+Response<Run> response = client.CreateRun(agent, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        default
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+}, threadId: "<threadId>", metadata: new Dictionary<string, string>
+{
+    ["key"] = "<metadata>"
+}, options: options, userId: "<userId>");
+]]></code></example>
+    </member>
+    <member name="CreateRunAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agent = new
+    {
+        agentModel = new
+        {
+            provider = "openai",
+            options = new object(),
+            id = "<id>",
+        },
+    },
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
+    },
+});
+Response response = await client.CreateRunAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+]]></code>
+This sample shows how to call CreateRunAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agent = new
+    {
+        description = "<description>",
+        metadata = new
+        {
+            key = "<metadata>",
+        },
+        name = "<name>",
+        agentModel = new
+        {
+            provider = "openai",
+            options = new
+            {
+                temperature = 123.45F,
+                topP = 123.45F,
+            },
+            id = "<id>",
+            endpoint = "<endpoint>",
+        },
+        instructions = new object[]
+        {
+            new
+            {
+                role = "developer",
+                content = new object[]
+                {
+                    new
+                    {
+                        type = "text",
+                        text = "<text>",
+                        annotations = new object[]
+                        {
+                            new
+                            {
+                                type = "<type>",
+                                ToolCallId = "<ToolCallId>",
+                                jsonPath = "<jsonPath>",
+                                url = "<url>",
+                                start = 1234,
+                                end = 1234,
+                            }
+                        },
+                    }
+                },
+                userId = "<userId>",
+                agentId = "<agentId>",
+                agentRunId = "<agentRunId>",
+                authorName = "<authorName>",
+                createdAt = 1234L,
+                completedAt = 1234L,
+            }
+        },
+        tools = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["type"] = "Microsoft.BingGrounding",
+                ["connectionName"] = "<connectionName>",
+                ["options"] = new
+                {
+                    type = "Function",
+                    name = "<name>",
+                    description = "<description>",
+                    parameters = new
+                    {
+                        type = "<type>",
+                        properties = new {},
+                        required = new object[]
+                        {
+                            "<required>"
+                        },
+                    },
+                    strict = true,
+                },
+                ["override"] = new
+                {
+                    name = "<name>",
+                    description = "<description>",
+                }
+            }
+        },
+        toolChoice = new
+        {
+            type = "auto",
+            toolNames = new object[]
+            {
+                "<toolNames>"
+            },
+        },
+    },
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                null
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+    threadId = "<threadId>",
+    metadata = new
+    {
+        key = "<metadata>",
+    },
+    options = new
+    {
+        truncationStrategy = new
+        {
+            type = "auto",
+            lastMessages = 1234,
+        },
+    },
+    userId = "<userId>",
+});
+Response response = await client.CreateRunAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("ToolCallId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("jsonPath").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("store").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateRun(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agent = new
+    {
+        agentModel = new
+        {
+            provider = "openai",
+            options = new object(),
+            id = "<id>",
+        },
+    },
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
+    },
+});
+Response response = client.CreateRun(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+]]></code>
+This sample shows how to call CreateRun with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agent = new
+    {
+        description = "<description>",
+        metadata = new
+        {
+            key = "<metadata>",
+        },
+        name = "<name>",
+        agentModel = new
+        {
+            provider = "openai",
+            options = new
+            {
+                temperature = 123.45F,
+                topP = 123.45F,
+            },
+            id = "<id>",
+            endpoint = "<endpoint>",
+        },
+        instructions = new object[]
+        {
+            new
+            {
+                role = "developer",
+                content = new object[]
+                {
+                    new
+                    {
+                        type = "text",
+                        text = "<text>",
+                        annotations = new object[]
+                        {
+                            new
+                            {
+                                type = "<type>",
+                                ToolCallId = "<ToolCallId>",
+                                jsonPath = "<jsonPath>",
+                                url = "<url>",
+                                start = 1234,
+                                end = 1234,
+                            }
+                        },
+                    }
+                },
+                userId = "<userId>",
+                agentId = "<agentId>",
+                agentRunId = "<agentRunId>",
+                authorName = "<authorName>",
+                createdAt = 1234L,
+                completedAt = 1234L,
+            }
+        },
+        tools = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["type"] = "Microsoft.BingGrounding",
+                ["connectionName"] = "<connectionName>",
+                ["options"] = new
+                {
+                    type = "Function",
+                    name = "<name>",
+                    description = "<description>",
+                    parameters = new
+                    {
+                        type = "<type>",
+                        properties = new {},
+                        required = new object[]
+                        {
+                            "<required>"
+                        },
+                    },
+                    strict = true,
+                },
+                ["override"] = new
+                {
+                    name = "<name>",
+                    description = "<description>",
+                }
+            }
+        },
+        toolChoice = new
+        {
+            type = "auto",
+            toolNames = new object[]
+            {
+                "<toolNames>"
+            },
+        },
+    },
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                null
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+    threadId = "<threadId>",
+    metadata = new
+    {
+        key = "<metadata>",
+    },
+    options = new
+    {
+        truncationStrategy = new
+        {
+            type = "auto",
+            lastMessages = 1234,
+        },
+    },
+    userId = "<userId>",
+});
+Response response = client.CreateRun(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("ToolCallId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("jsonPath").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("store").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRunAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Response<Run> response = await client.GetRunAsync("<runId>");
+]]></code>
+This sample shows how to call GetRunAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Response<Run> response = await client.GetRunAsync("<runId>");
+]]></code></example>
+    </member>
+    <member name="GetRun(string,CancellationToken)">
+      <example>
+This sample shows how to call GetRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Response<Run> response = client.GetRun("<runId>");
+]]></code>
+This sample shows how to call GetRun with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Response<Run> response = client.GetRun("<runId>");
+]]></code></example>
+    </member>
+    <member name="GetRunAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetRunAsync("<runId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+]]></code>
+This sample shows how to call GetRunAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetRunAsync("<runId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("ToolCallId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("jsonPath").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("store").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRun(string,RequestContext)">
+      <example>
+This sample shows how to call GetRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetRun("<runId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+]]></code>
+This sample shows how to call GetRun with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetRun("<runId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("ToolCallId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("jsonPath").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("store").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateAndExecuteRunAsync(Agent,IEnumerable{ChatMessage},string,IReadOnlyDictionary{string,string},RunOptions,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateAndExecuteRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Agent agent = new Agent(new OpenAIAgentModel("<id>", new JSONAny()));
+Response<Run> response = await client.CreateAndExecuteRunAsync(agent, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+]]></code>
+This sample shows how to call CreateAndExecuteRunAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Agent agent = new Agent(new OpenAIAgentModel("<id>", new JSONAny())
+{
+    Endpoint = "<endpoint>",
+})
+{
+    Description = "<description>",
+    Metadata =
+    {
+        ["key"] = "<metadata>"
+    },
+    Name = "<name>",
+    Instructions = {new DeveloperMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }},
+    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    {
+        Options = new FunctionToolOptions("<name>")
+        {
+            Description = "<description>",
+            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
+            {
+                ["key"] = default
+            })
+            {
+                Required = {"<required>"},
+            },
+            Strict = true,
+        },
+        Override = new AgentToolDefinitionOverride
+        {
+            Name = "<name>",
+            Description = "<description>",
+            Parameters = default,
+        },
+    }},
+    ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
+};
+RunOptions options = new RunOptions
+{
+    TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+    {
+        LastMessages = 1234,
+    },
+};
+Response<Run> response = await client.CreateAndExecuteRunAsync(agent, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        default
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+}, threadId: "<threadId>", metadata: new Dictionary<string, string>
+{
+    ["key"] = "<metadata>"
+}, options: options, userId: "<userId>");
+]]></code></example>
+    </member>
+    <member name="CreateAndExecuteRun(Agent,IEnumerable{ChatMessage},string,IReadOnlyDictionary{string,string},RunOptions,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateAndExecuteRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Agent agent = new Agent(new OpenAIAgentModel("<id>", new JSONAny()));
+Response<Run> response = client.CreateAndExecuteRun(agent, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+]]></code>
+This sample shows how to call CreateAndExecuteRun with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+Agent agent = new Agent(new OpenAIAgentModel("<id>", new JSONAny())
+{
+    Endpoint = "<endpoint>",
+})
+{
+    Description = "<description>",
+    Metadata =
+    {
+        ["key"] = "<metadata>"
+    },
+    Name = "<name>",
+    Instructions = {new DeveloperMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }},
+    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    {
+        Options = new FunctionToolOptions("<name>")
+        {
+            Description = "<description>",
+            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
+            {
+                ["key"] = default
+            })
+            {
+                Required = {"<required>"},
+            },
+            Strict = true,
+        },
+        Override = new AgentToolDefinitionOverride
+        {
+            Name = "<name>",
+            Description = "<description>",
+            Parameters = default,
+        },
+    }},
+    ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
+};
+RunOptions options = new RunOptions
+{
+    TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+    {
+        LastMessages = 1234,
+    },
+};
+Response<Run> response = client.CreateAndExecuteRun(agent, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        default
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+}, threadId: "<threadId>", metadata: new Dictionary<string, string>
+{
+    ["key"] = "<metadata>"
+}, options: options, userId: "<userId>");
+]]></code></example>
+    </member>
+    <member name="CreateAndExecuteRunAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAndExecuteRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agent = new
+    {
+        agentModel = new
+        {
+            provider = "openai",
+            options = new object(),
+            id = "<id>",
+        },
+    },
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
+    },
+});
+Response response = await client.CreateAndExecuteRunAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+]]></code>
+This sample shows how to call CreateAndExecuteRunAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agent = new
+    {
+        description = "<description>",
+        metadata = new
+        {
+            key = "<metadata>",
+        },
+        name = "<name>",
+        agentModel = new
+        {
+            provider = "openai",
+            options = new
+            {
+                temperature = 123.45F,
+                topP = 123.45F,
+            },
+            id = "<id>",
+            endpoint = "<endpoint>",
+        },
+        instructions = new object[]
+        {
+            new
+            {
+                role = "developer",
+                content = new object[]
+                {
+                    new
+                    {
+                        type = "text",
+                        text = "<text>",
+                        annotations = new object[]
+                        {
+                            new
+                            {
+                                type = "<type>",
+                                ToolCallId = "<ToolCallId>",
+                                jsonPath = "<jsonPath>",
+                                url = "<url>",
+                                start = 1234,
+                                end = 1234,
+                            }
+                        },
+                    }
+                },
+                userId = "<userId>",
+                agentId = "<agentId>",
+                agentRunId = "<agentRunId>",
+                authorName = "<authorName>",
+                createdAt = 1234L,
+                completedAt = 1234L,
+            }
+        },
+        tools = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["type"] = "Microsoft.BingGrounding",
+                ["connectionName"] = "<connectionName>",
+                ["options"] = new
+                {
+                    type = "Function",
+                    name = "<name>",
+                    description = "<description>",
+                    parameters = new
+                    {
+                        type = "<type>",
+                        properties = new {},
+                        required = new object[]
+                        {
+                            "<required>"
+                        },
+                    },
+                    strict = true,
+                },
+                ["override"] = new
+                {
+                    name = "<name>",
+                    description = "<description>",
+                }
+            }
+        },
+        toolChoice = new
+        {
+            type = "auto",
+            toolNames = new object[]
+            {
+                "<toolNames>"
+            },
+        },
+    },
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                null
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+    threadId = "<threadId>",
+    metadata = new
+    {
+        key = "<metadata>",
+    },
+    options = new
+    {
+        truncationStrategy = new
+        {
+            type = "auto",
+            lastMessages = 1234,
+        },
+    },
+    userId = "<userId>",
+});
+Response response = await client.CreateAndExecuteRunAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("ToolCallId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("jsonPath").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("store").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateAndExecuteRun(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAndExecuteRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agent = new
+    {
+        agentModel = new
+        {
+            provider = "openai",
+            options = new object(),
+            id = "<id>",
+        },
+    },
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
+    },
+});
+Response response = client.CreateAndExecuteRun(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+]]></code>
+This sample shows how to call CreateAndExecuteRun with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agent = new
+    {
+        description = "<description>",
+        metadata = new
+        {
+            key = "<metadata>",
+        },
+        name = "<name>",
+        agentModel = new
+        {
+            provider = "openai",
+            options = new
+            {
+                temperature = 123.45F,
+                topP = 123.45F,
+            },
+            id = "<id>",
+            endpoint = "<endpoint>",
+        },
+        instructions = new object[]
+        {
+            new
+            {
+                role = "developer",
+                content = new object[]
+                {
+                    new
+                    {
+                        type = "text",
+                        text = "<text>",
+                        annotations = new object[]
+                        {
+                            new
+                            {
+                                type = "<type>",
+                                ToolCallId = "<ToolCallId>",
+                                jsonPath = "<jsonPath>",
+                                url = "<url>",
+                                start = 1234,
+                                end = 1234,
+                            }
+                        },
+                    }
+                },
+                userId = "<userId>",
+                agentId = "<agentId>",
+                agentRunId = "<agentRunId>",
+                authorName = "<authorName>",
+                createdAt = 1234L,
+                completedAt = 1234L,
+            }
+        },
+        tools = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["type"] = "Microsoft.BingGrounding",
+                ["connectionName"] = "<connectionName>",
+                ["options"] = new
+                {
+                    type = "Function",
+                    name = "<name>",
+                    description = "<description>",
+                    parameters = new
+                    {
+                        type = "<type>",
+                        properties = new {},
+                        required = new object[]
+                        {
+                            "<required>"
+                        },
+                    },
+                    strict = true,
+                },
+                ["override"] = new
+                {
+                    name = "<name>",
+                    description = "<description>",
+                }
+            }
+        },
+        toolChoice = new
+        {
+            type = "auto",
+            toolNames = new object[]
+            {
+                "<toolNames>"
+            },
+        },
+    },
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                null
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+    threadId = "<threadId>",
+    metadata = new
+    {
+        key = "<metadata>",
+    },
+    options = new
+    {
+        truncationStrategy = new
+        {
+            type = "auto",
+            lastMessages = 1234,
+        },
+    },
+    userId = "<userId>",
+});
+Response response = client.CreateAndExecuteRun(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runId").ToString());
+Console.WriteLine(result.GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("ToolCallId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("jsonPath").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("store").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateAndStreamRunAsync(string,long,long,RunInputs,RunOutputs,RunOptions,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call CreateAndStreamRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+RunInputs runInputs = new RunInputs(new Agent(new OpenAIAgentModel("<id>", new JSONAny())), new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+RunOutputs runOutputs = new RunOutputs(RunOutputsStatus.InProgress, new ChatMessage[]
+{
+    default
+}, new CompletionUsage(1234L, 1234L, 1234L));
+Response response = await client.CreateAndStreamRunAsync("<agentId>", 1234L, 1234L, runInputs, runOutputs);
+]]></code>
+This sample shows how to call CreateAndStreamRunAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+RunInputs runInputs = new RunInputs(new Agent(new OpenAIAgentModel("<id>", new JSONAny())
+{
+    Endpoint = "<endpoint>",
+})
+{
+    Description = "<description>",
+    Metadata =
+    {
+        ["key"] = "<metadata>"
+    },
+    Name = "<name>",
+    Instructions = {new DeveloperMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }},
+    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    {
+        Options = new FunctionToolOptions("<name>")
+        {
+            Description = "<description>",
+            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
+            {
+                ["key"] = default
+            })
+            {
+                Required = {"<required>"},
+            },
+            Strict = true,
+        },
+        Override = new AgentToolDefinitionOverride
+        {
+            Name = "<name>",
+            Description = "<description>",
+            Parameters = default,
+        },
+    }},
+    ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
+}, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        default
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+})
+{
+    ThreadId = "<threadId>",
+    Metadata =
+    {
+        ["key"] = "<metadata>"
+    },
+    Options = new RunOptions
+    {
+        TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+        {
+            LastMessages = 1234,
+        },
+    },
+    UserId = "<userId>",
+};
+RunOutputs runOutputs = new RunOutputs(RunOutputsStatus.InProgress, new ChatMessage[]
+{
+    default
+}, new CompletionUsage(1234L, 1234L, 1234L)
+{
+    InputTokenDetails = new CompletionUsageInputTokenDetails
+    {
+        CachedTokens = 1234,
+    },
+    OutputTokenDetails = new CompletionUsageOutputTokenDetails
+    {
+        ReasoningTokens = 1234,
+    },
+})
+{
+    IncompleteDetails = new RunOutputsIncompleteDetails("<reason>"),
+};
+RunOptions options = default;
+Response response = await client.CreateAndStreamRunAsync("<agentId>", 1234L, 1234L, runInputs, runOutputs, options: options, userId: "<userId>", store: true);
+]]></code></example>
+    </member>
+    <member name="CreateAndStreamRun(string,long,long,RunInputs,RunOutputs,RunOptions,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call CreateAndStreamRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+RunInputs runInputs = new RunInputs(new Agent(new OpenAIAgentModel("<id>", new JSONAny())), new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+    })
+});
+RunOutputs runOutputs = new RunOutputs(RunOutputsStatus.InProgress, new ChatMessage[]
+{
+    default
+}, new CompletionUsage(1234L, 1234L, 1234L));
+Response response = client.CreateAndStreamRun("<agentId>", 1234L, 1234L, runInputs, runOutputs);
+]]></code>
+This sample shows how to call CreateAndStreamRun with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+RunInputs runInputs = new RunInputs(new Agent(new OpenAIAgentModel("<id>", new JSONAny())
+{
+    Endpoint = "<endpoint>",
+})
+{
+    Description = "<description>",
+    Metadata =
+    {
+        ["key"] = "<metadata>"
+    },
+    Name = "<name>",
+    Instructions = {new DeveloperMessage(new AIContent[]
+    {
+        new TextContent("<text>")
+        {
+            Annotations = {new Annotations("<type>")
+            {
+                ToolCallId = "<ToolCallId>",
+                JsonPath = "<jsonPath>",
+                Url = "<url>",
+                Start = 1234,
+                End = 1234,
+            }},
+        }
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }},
+    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    {
+        Options = new FunctionToolOptions("<name>")
+        {
+            Description = "<description>",
+            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
+            {
+                ["key"] = default
+            })
+            {
+                Required = {"<required>"},
+            },
+            Strict = true,
+        },
+        Override = new AgentToolDefinitionOverride
+        {
+            Name = "<name>",
+            Description = "<description>",
+            Parameters = default,
+        },
+    }},
+    ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
+}, new ChatMessage[]
+{
+    new UserMessage(new AIContent[]
+    {
+        default
+    })
+    {
+        UserId = "<userId>",
+        AgentId = "<agentId>",
+        AgentRunId = "<agentRunId>",
+        AuthorName = "<authorName>",
+        CreatedAt = 1234L,
+        CompletedAt = 1234L,
+    }
+})
+{
+    ThreadId = "<threadId>",
+    Metadata =
+    {
+        ["key"] = "<metadata>"
+    },
+    Options = new RunOptions
+    {
+        TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+        {
+            LastMessages = 1234,
+        },
+    },
+    UserId = "<userId>",
+};
+RunOutputs runOutputs = new RunOutputs(RunOutputsStatus.InProgress, new ChatMessage[]
+{
+    default
+}, new CompletionUsage(1234L, 1234L, 1234L)
+{
+    InputTokenDetails = new CompletionUsageInputTokenDetails
+    {
+        CachedTokens = 1234,
+    },
+    OutputTokenDetails = new CompletionUsageOutputTokenDetails
+    {
+        ReasoningTokens = 1234,
+    },
+})
+{
+    IncompleteDetails = new RunOutputsIncompleteDetails("<reason>"),
+};
+RunOptions options = default;
+Response response = client.CreateAndStreamRun("<agentId>", 1234L, 1234L, runInputs, runOutputs, options: options, userId: "<userId>", store: true);
+]]></code></example>
+    </member>
+    <member name="CreateAndStreamRunAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAndStreamRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agentId = "<agentId>",
+    createdAt = 1234L,
+    completedAt = 1234L,
+    runInputs = new
+    {
+        agent = new
+        {
+            agentModel = new
+            {
+                provider = "openai",
+                options = new object(),
+                id = "<id>",
+            },
+        },
+        input = new object[]
+        {
+            new
+            {
+                role = "user",
+                content = new object[]
+                {
+                    new
+                    {
+                        type = "text",
+                        text = "<text>",
+                    }
+                },
+            }
+        },
+    },
+    runOutputs = new
+    {
+        status = "inProgress",
+        messages = new object[]
+        {
+            null
+        },
+        usage = new
+        {
+            outputTokens = 1234L,
+            inputTokens = 1234L,
+            totalTokens = 1234L,
+        },
+    },
+});
+Response response = await client.CreateAndStreamRunAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateAndStreamRunAsync with all request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agentId = "<agentId>",
+    createdAt = 1234L,
+    completedAt = 1234L,
+    runInputs = new
+    {
+        agent = new
+        {
+            description = "<description>",
+            metadata = new
+            {
+                key = "<metadata>",
+            },
+            name = "<name>",
+            agentModel = new
+            {
+                provider = "openai",
+                options = new
+                {
+                    temperature = 123.45F,
+                    topP = 123.45F,
+                },
+                id = "<id>",
+                endpoint = "<endpoint>",
+            },
+            instructions = new object[]
+            {
+                new
+                {
+                    role = "developer",
+                    content = new object[]
+                    {
+                        new
+                        {
+                            type = "text",
+                            text = "<text>",
+                            annotations = new object[]
+                            {
+                                new
+                                {
+                                    type = "<type>",
+                                    ToolCallId = "<ToolCallId>",
+                                    jsonPath = "<jsonPath>",
+                                    url = "<url>",
+                                    start = 1234,
+                                    end = 1234,
+                                }
+                            },
+                        }
+                    },
+                    userId = "<userId>",
+                    agentId = "<agentId>",
+                    agentRunId = "<agentRunId>",
+                    authorName = "<authorName>",
+                    createdAt = 1234L,
+                    completedAt = 1234L,
+                }
+            },
+            tools = new object[]
+            {
+                new Dictionary<string, object>
+                {
+                    ["type"] = "Microsoft.BingGrounding",
+                    ["connectionName"] = "<connectionName>",
+                    ["options"] = new
+                    {
+                        type = "Function",
+                        name = "<name>",
+                        description = "<description>",
+                        parameters = new
+                        {
+                            type = "<type>",
+                            properties = new {},
+                            required = new object[]
+                            {
+                                "<required>"
+                            },
+                        },
+                        strict = true,
+                    },
+                    ["override"] = new
+                    {
+                        name = "<name>",
+                        description = "<description>",
+                    }
+                }
+            },
+            toolChoice = new
+            {
+                type = "auto",
+                toolNames = new object[]
+                {
+                    "<toolNames>"
+                },
+            },
+        },
+        input = new object[]
+        {
+            new
+            {
+                role = "user",
+                content = new object[]
+                {
+                    null
+                },
+                userId = "<userId>",
+                agentId = "<agentId>",
+                agentRunId = "<agentRunId>",
+                authorName = "<authorName>",
+                createdAt = 1234L,
+                completedAt = 1234L,
+            }
+        },
+        threadId = "<threadId>",
+        metadata = new
+        {
+            key = "<metadata>",
+        },
+        options = new
+        {
+            truncationStrategy = new
+            {
+                type = "auto",
+                lastMessages = 1234,
+            },
+        },
+        userId = "<userId>",
+    },
+    runOutputs = new
+    {
+        status = "inProgress",
+        messages = new object[]
+        {
+            null
+        },
+        usage = new
+        {
+            outputTokens = 1234L,
+            inputTokens = 1234L,
+            totalTokens = 1234L,
+            inputTokenDetails = new
+            {
+                cachedTokens = 1234,
+            },
+            outputTokenDetails = new
+            {
+                reasoningTokens = 1234,
+            },
+        },
+        incompleteDetails = new
+        {
+            reason = "<reason>",
+        },
+    },
+    userId = "<userId>",
+    store = true,
+});
+Response response = await client.CreateAndStreamRunAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CreateAndStreamRun(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAndStreamRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agentId = "<agentId>",
+    createdAt = 1234L,
+    completedAt = 1234L,
+    runInputs = new
+    {
+        agent = new
+        {
+            agentModel = new
+            {
+                provider = "openai",
+                options = new object(),
+                id = "<id>",
+            },
+        },
+        input = new object[]
+        {
+            new
+            {
+                role = "user",
+                content = new object[]
+                {
+                    new
+                    {
+                        type = "text",
+                        text = "<text>",
+                    }
+                },
+            }
+        },
+    },
+    runOutputs = new
+    {
+        status = "inProgress",
+        messages = new object[]
+        {
+            null
+        },
+        usage = new
+        {
+            outputTokens = 1234L,
+            inputTokens = 1234L,
+            totalTokens = 1234L,
+        },
+    },
+});
+Response response = client.CreateAndStreamRun(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateAndStreamRun with all request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    agentId = "<agentId>",
+    createdAt = 1234L,
+    completedAt = 1234L,
+    runInputs = new
+    {
+        agent = new
+        {
+            description = "<description>",
+            metadata = new
+            {
+                key = "<metadata>",
+            },
+            name = "<name>",
+            agentModel = new
+            {
+                provider = "openai",
+                options = new
+                {
+                    temperature = 123.45F,
+                    topP = 123.45F,
+                },
+                id = "<id>",
+                endpoint = "<endpoint>",
+            },
+            instructions = new object[]
+            {
+                new
+                {
+                    role = "developer",
+                    content = new object[]
+                    {
+                        new
+                        {
+                            type = "text",
+                            text = "<text>",
+                            annotations = new object[]
+                            {
+                                new
+                                {
+                                    type = "<type>",
+                                    ToolCallId = "<ToolCallId>",
+                                    jsonPath = "<jsonPath>",
+                                    url = "<url>",
+                                    start = 1234,
+                                    end = 1234,
+                                }
+                            },
+                        }
+                    },
+                    userId = "<userId>",
+                    agentId = "<agentId>",
+                    agentRunId = "<agentRunId>",
+                    authorName = "<authorName>",
+                    createdAt = 1234L,
+                    completedAt = 1234L,
+                }
+            },
+            tools = new object[]
+            {
+                new Dictionary<string, object>
+                {
+                    ["type"] = "Microsoft.BingGrounding",
+                    ["connectionName"] = "<connectionName>",
+                    ["options"] = new
+                    {
+                        type = "Function",
+                        name = "<name>",
+                        description = "<description>",
+                        parameters = new
+                        {
+                            type = "<type>",
+                            properties = new {},
+                            required = new object[]
+                            {
+                                "<required>"
+                            },
+                        },
+                        strict = true,
+                    },
+                    ["override"] = new
+                    {
+                        name = "<name>",
+                        description = "<description>",
+                    }
+                }
+            },
+            toolChoice = new
+            {
+                type = "auto",
+                toolNames = new object[]
+                {
+                    "<toolNames>"
+                },
+            },
+        },
+        input = new object[]
+        {
+            new
+            {
+                role = "user",
+                content = new object[]
+                {
+                    null
+                },
+                userId = "<userId>",
+                agentId = "<agentId>",
+                agentRunId = "<agentRunId>",
+                authorName = "<authorName>",
+                createdAt = 1234L,
+                completedAt = 1234L,
+            }
+        },
+        threadId = "<threadId>",
+        metadata = new
+        {
+            key = "<metadata>",
+        },
+        options = new
+        {
+            truncationStrategy = new
+            {
+                type = "auto",
+                lastMessages = 1234,
+            },
+        },
+        userId = "<userId>",
+    },
+    runOutputs = new
+    {
+        status = "inProgress",
+        messages = new object[]
+        {
+            null
+        },
+        usage = new
+        {
+            outputTokens = 1234L,
+            inputTokens = 1234L,
+            totalTokens = 1234L,
+            inputTokenDetails = new
+            {
+                cachedTokens = 1234,
+            },
+            outputTokenDetails = new
+            {
+                reasoningTokens = 1234,
+            },
+        },
+        incompleteDetails = new
+        {
+            reason = "<reason>",
+        },
+    },
+    userId = "<userId>",
+    store = true,
+});
+Response response = client.CreateAndStreamRun(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetRunsAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetRunsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (Run item in client.GetRunsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetRunsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (Run item in client.GetRunsAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetRuns(CancellationToken)">
+      <example>
+This sample shows how to call GetRuns.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+foreach (Run item in client.GetRuns())
+{
+}
+]]></code>
+This sample shows how to call GetRuns with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+foreach (Run item in client.GetRuns())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetRunsAsync(RequestContext)">
+      <example>
+This sample shows how to call GetRunsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetRunsAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runId").ToString());
+    Console.WriteLine(result.GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+}
+]]></code>
+This sample shows how to call GetRunsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetRunsAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runId").ToString());
+    Console.WriteLine(result.GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("metadata").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("provider").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("endpoint").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("text").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("ToolCallId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("jsonPath").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("start").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("end").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentRunId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("authorName").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("toolChoice").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+    Console.WriteLine(result.GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("store").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetRuns(RequestContext)">
+      <example>
+This sample shows how to call GetRuns and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetRuns(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runId").ToString());
+    Console.WriteLine(result.GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+}
+]]></code>
+This sample shows how to call GetRuns with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Runs client = new AIProjectClient(endpoint, credential).GetRunsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetRuns(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runId").ToString());
+    Console.WriteLine(result.GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("metadata").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("provider").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("endpoint").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("text").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("ToolCallId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("jsonPath").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("start").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("annotations")[0].GetProperty("end").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("agentRunId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("authorName").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("instructions")[0].GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agent").GetProperty("toolChoice").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
+    Console.WriteLine(result.GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("store").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>
