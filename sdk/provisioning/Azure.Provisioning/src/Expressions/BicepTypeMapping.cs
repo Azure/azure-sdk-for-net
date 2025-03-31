@@ -94,10 +94,7 @@ internal static class BicepTypeMapping
             null => BicepSyntax.Null(),
             bool b => BicepSyntax.Value(b),
             int i => BicepSyntax.Value(i),
-            // Note: below cast is valid because bicep limits to int.Min/MaxValue
-            // in bicep source and you need to use a parameter file for larger
-            // values
-            long i => BicepSyntax.Value((int)i),
+            long l => FromLong(l),
             // Note: bicep does not offically support floating numbers
             // therefore for floating numbers we are taking a workaround from
             // https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
@@ -128,10 +125,21 @@ internal static class BicepTypeMapping
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };
 
+        BicepExpression FromLong(long l)
+        {
+            // see if the value falls into the int range
+            if (l >= int.MinValue && l <= int.MaxValue)
+            {
+                return BicepSyntax.Value((int)l);
+            }
+            // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+            return BicepFunction.ParseJson(BicepSyntax.Value(l.ToString())).Compile();
+        }
+
         BicepExpression FromDouble(double d)
         {
             // see if the value is a whole number
-            if (d <= int.MaxValue && d == Math.Floor(d))
+            if (d >= int.MinValue && d <= int.MaxValue && d == Math.Floor(d))
             {
                 return BicepSyntax.Value((int)d);
             }
