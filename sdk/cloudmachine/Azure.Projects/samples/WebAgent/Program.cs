@@ -9,7 +9,7 @@ using Azure.AI.OpenAI;
 using Azure.Projects.Ofx;
 
 ProjectInfrastructure infrastructure = new();
-infrastructure.AddFeature(new OfxProjectFeature());
+infrastructure.AddFeature(new OfxProjectFeature()); // add opinionated infrastructure
 infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 infrastructure.AddFeature(new AppServiceFeature());
@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 
-// add oppinionated framework client to the DI container
+// add opinionated framework client to the DI container
 OfxProjectClient client = builder.AddOfxClient();
 EmbeddingsStore embeddings = new(client.GetOpenAIEmbeddingClient());
 client.Storage.WhenUploaded(embeddings.Add); // update vector db when a new file is uploaded

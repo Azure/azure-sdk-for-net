@@ -29,8 +29,22 @@ public class ChatTools
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatTools"/> class.
     /// </summary>
+    public ChatTools()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ChatTools"/> class.
+    /// </summary>
     /// <param name="tools"></param>
     public ChatTools(params Type[] tools)
+        => AddLocalTools(tools);
+
+    /// <summary>
+    /// Adds a new MCP Server connection to be used for function calls.
+    /// </summary>
+    /// <param name="tools"></param>
+    public void AddLocalTools(params Type[] tools)
     {
         foreach (Type functionHolder in tools)
             Add(functionHolder);

@@ -13,7 +13,7 @@ namespace Azure.Projects.OpenAI
     /// <summary>
     /// The chat processor for the OpenAI Chat Completions endpoint.
     /// </summary>
-    public class ChatProcessor
+    public class ChatRunner
     {
         /// <summary>
         /// Vector db.
@@ -23,28 +23,26 @@ namespace Azure.Projects.OpenAI
         /// <summary>
         /// Tools to call.
         /// </summary>
-        public ChatTools? Tools { get; set; }
+        public ChatTools Tools { get; protected set; } = new();
 
         private readonly ChatClient _chat;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatProcessor"/> class.
+        /// Initializes a new instance of the <see cref="ChatRunner"/> class.
         /// </summary>
         /// <param name="chat"></param>
-        public ChatProcessor(ChatClient chat)
+        public ChatRunner(ChatClient chat)
         {
             _chat = chat;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatProcessor"/> class.
+        /// Initializes a new instance of the <see cref="ChatRunner"/> class.
         /// </summary>
         /// <param name="chat"></param>
         /// <param name="embeddings"></param>
-        /// <param name="tools"></param>
-        public ChatProcessor(ChatClient chat, EmbeddingClient? embeddings, ChatTools? tools = default)
+        public ChatRunner(ChatClient chat, EmbeddingClient? embeddings)
         {
-            Tools = tools;
             _chat = chat;
             if (embeddings != null)
             {
