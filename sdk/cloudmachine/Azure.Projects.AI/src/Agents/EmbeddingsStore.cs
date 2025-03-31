@@ -21,7 +21,7 @@ public abstract class EmbeddingsStore
     /// </summary>
     /// <param name="client"></param>
     /// <returns></returns>
-    public static EmbeddingsStore Create(EmbeddingClient client) => new MemoryVectorbaseStore(client);
+    public static EmbeddingsStore Create(EmbeddingClient client) => new MemoryEmbeddingsStore(client);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmbeddingsStore"/> class.

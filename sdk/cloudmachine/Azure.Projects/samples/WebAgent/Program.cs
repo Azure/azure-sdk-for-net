@@ -25,12 +25,15 @@ builder.Services.AddHttpClient();
 OfxClient client = builder.AddOfxClient();
 EmbeddingsStore embeddings = EmbeddingsStore.Create(client.GetOpenAIEmbeddingClient());
 client.Storage.WhenUploaded(embeddings.Add); // update vector db when a new file is uploaded
+ChatThread conversationThread = new();
 
 var app = builder.Build();
 app.MapRazorPages();
 app.UseStaticFiles();
 
-ChatThread conversationThread = new();
+app.MapPost("/upload", async (HttpRequest request, OfxClient client)
+    => await client.Storage.UploadFormAsync(request));
+
 app.MapPost("/chat", async (HttpRequest request) =>
 {
     try {
@@ -60,8 +63,5 @@ app.MapPost("/chat", async (HttpRequest request) =>
         return e.Message;
     }
 });
-
-app.MapPost("/upload", async (HttpRequest request, OfxClient client)
-    => await client.Storage.UploadFormAsync(request));
 
 app.Run();

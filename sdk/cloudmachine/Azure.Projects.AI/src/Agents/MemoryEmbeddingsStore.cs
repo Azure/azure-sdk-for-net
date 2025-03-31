@@ -7,11 +7,11 @@ using OpenAI.Embeddings;
 
 namespace Azure.Projects.AI;
 
-internal class MemoryVectorbaseStore : EmbeddingsStore
+internal class MemoryEmbeddingsStore : EmbeddingsStore
 {
     private readonly List<VectorbaseEntry> _entries = [];
 
-    internal MemoryVectorbaseStore(EmbeddingClient client)
+    internal MemoryEmbeddingsStore(EmbeddingClient client)
         : base(client)
     {
     }
