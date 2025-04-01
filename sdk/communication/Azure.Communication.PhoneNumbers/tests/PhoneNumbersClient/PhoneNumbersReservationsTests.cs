@@ -35,7 +35,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Order(0)] // This is run first to ensure that at least one active reservation exists before running the tests.
         public async Task CreateReservationAsync()
         {
-            PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
+            PhoneNumbersClient client = CreateClient();
             var reservationId = Guid.NewGuid();
             var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
 
@@ -57,7 +57,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Order(0)] // This is run first to ensure that at least one active reservation exists before running the tests.
         public void CreateReservation()
         {
-            PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
+            PhoneNumbersClient client = CreateClient();
             var reservationId = Guid.NewGuid();
             var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
 
@@ -192,7 +192,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 .Take(2)
                 .ToList();
 
-            var reservationBeforeAdd = CreateReservationFrom(_initialReservationState!);
+            var reservationBeforeAdd = CopyReservation(_initialReservationState!);
             phoneNumbersToReserve
                 .ForEach(number => reservationBeforeAdd.PhoneNumbers.Add(number.Id, number));
 
@@ -211,7 +211,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var phoneNumbersToRemove = phoneNumbersToReserve
                 .Select(number => number.Id)
                 .ToList();
-            var reservationBeforeRemove = CreateReservationFrom(reservationAfterAdd);
+            var reservationBeforeRemove = CopyReservation(reservationAfterAdd);
             phoneNumbersToRemove
                 .ForEach(number => reservationBeforeRemove.PhoneNumbers.Remove(number));
 
@@ -243,7 +243,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 .Take(2)
                 .ToList();
 
-            var reservationBeforeAdd = CreateReservationFrom(_initialReservationState!);
+            var reservationBeforeAdd = CopyReservation(_initialReservationState!);
             phoneNumbersToReserve
                 .ForEach(number => reservationBeforeAdd.PhoneNumbers.Add(number.Id, number));
 
@@ -251,9 +251,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var reservationAfterAdd = reservationResponse.Value;
 
             Assert.IsNotNull(reservationAfterAdd);
-            Assert.AreEqual(_initialReservationState!.Id, reservationAfterAdd.Id);
+            Assert.AreEqual(reservationBeforeAdd.Id, reservationAfterAdd.Id);
             Assert.AreEqual(ReservationStatus.Active, reservationAfterAdd.Status);
-            Assert.Greater(reservationAfterAdd.ExpiresAt, _initialReservationState.ExpiresAt);
+            Assert.Greater(reservationAfterAdd.ExpiresAt, reservationBeforeAdd.ExpiresAt);
             Assert.IsTrue(reservationAfterAdd.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
             // All numbers in the request should be in the reservation.
             Assert.IsTrue(phoneNumbersToReserve.Select(n => n.Id).All(reservationAfterAdd.PhoneNumbers.ContainsKey));
@@ -262,7 +262,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var phoneNumbersToRemove = phoneNumbersToReserve
                 .Select(number => number.Id)
                 .ToList();
-            var reservationBeforeRemove = CreateReservationFrom(reservationAfterAdd);
+            var reservationBeforeRemove = CopyReservation(reservationAfterAdd);
             phoneNumbersToRemove
                 .ForEach(number => reservationBeforeRemove.PhoneNumbers.Remove(number));
 
@@ -270,9 +270,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var reservationAfterRemove = reservationResponse.Value;
 
             Assert.IsNotNull(reservationAfterRemove);
-            Assert.AreEqual(_initialReservationState!.Id, reservationAfterRemove.Id);
+            Assert.AreEqual(reservationBeforeRemove.Id, reservationAfterRemove.Id);
             Assert.AreEqual(ReservationStatus.Active, reservationAfterRemove.Status);
-            Assert.Greater(reservationAfterRemove.ExpiresAt, reservationAfterAdd.ExpiresAt);
+            Assert.Greater(reservationAfterRemove.ExpiresAt, reservationBeforeRemove.ExpiresAt);
             Assert.IsTrue(reservationAfterRemove.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
             // None of the numbers that were removed should be in the reservation.
             Assert.IsFalse(phoneNumbersToRemove.Any(reservationAfterRemove.PhoneNumbers.ContainsKey));
@@ -283,7 +283,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Order(3)] // This test is executed after tests that depend on the initial reservation state.
         public async Task DeleteReservationAsync()
         {
-            PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
+            PhoneNumbersClient client = CreateClient();
 
             await client.DeleteReservationAsync(_initialReservationState!.Id);
 
@@ -296,7 +296,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Order(3)] // This test is executed after tests that depend on the initial reservation state.
         public void DeleteReservation()
         {
-            PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString);
+            PhoneNumbersClient client = CreateClient();
 
             client.DeleteReservation(_initialReservationState!.Id);
 
@@ -304,11 +304,174 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(404, exception!.Status);
         }
 
+        [TestCase]
+        [AsyncOnly]
+        public async Task ReservationPurchaseWithoutAgreementToNotResellAsync()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            PhoneNumbersClient client = CreateClient();
+
+            // Italy doesn't allow reselling phone numbers.
+            // https://learn.microsoft.com/en-us/azure/communication-services/concepts/numbers/phone-number-management-for-italy#number-types-and-capabilities-availability
+            var browseRequest = new PhoneNumbersBrowseRequest(PhoneNumberType.TollFree);
+            var response = await client.BrowseAvailableNumbersAsync("IT", browseRequest);
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
+
+            // Reserve the first available phone number.
+            var phoneNumberToReserve = availablePhoneNumbers.First();
+
+            // The phone number should require an agreement to not resell.
+            Assert.IsTrue(phoneNumberToReserve.IsAgreementToNotResellRequired);
+
+            var reservationId = Guid.NewGuid();
+            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            reservation.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+
+            var reservationResponse = await client.CreateOrUpdateReservationAsync(reservation).ConfigureAwait(false);
+
+            // The phone number was successfully reserved.
+            Assert.IsTrue(reservationResponse.Value.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
+            Assert.AreNotEqual(AvailablePhoneNumberStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
+
+            // The phone number should not be purchasable without agreeing to not resell.
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartPurchaseReservationAsync(reservationId, agreeToNotResell: false));
+            Assert.AreEqual(400, exception!.Status);
+
+            // Clean up the reservation.
+            await client.DeleteReservationAsync(reservationId);
+        }
+
+        [TestCase]
+        [SyncOnly]
+        public void ReservationPurchaseWithoutAgreementToNotResell()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            PhoneNumbersClient client = CreateClient();
+
+            // Italy doesn't allow reselling phone numbers.
+            // https://learn.microsoft.com/en-us/azure/communication-services/concepts/numbers/phone-number-management-for-italy#number-types-and-capabilities-availability
+            var browseRequest = new PhoneNumbersBrowseRequest(PhoneNumberType.TollFree);
+            var response = client.BrowseAvailableNumbers("IT", browseRequest);
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
+
+            // Reserve the first available phone number.
+            var phoneNumberToReserve = availablePhoneNumbers.First();
+
+            // The phone number should require an agreement to not resell.
+            Assert.IsTrue(phoneNumberToReserve.IsAgreementToNotResellRequired);
+
+            var reservationId = Guid.NewGuid();
+            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            reservation.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+
+            var reservationResponse = client.CreateOrUpdateReservation(reservation);
+
+            // The phone number was successfully reserved.
+            Assert.IsTrue(reservationResponse.Value.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
+            Assert.AreNotEqual(AvailablePhoneNumberStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
+
+            // The phone number should not be purchasable without agreeing to not resell.
+            var exception = Assert.Throws<RequestFailedException>(() => client.StartPurchaseReservation(reservationId, agreeToNotResell: false));
+            Assert.AreEqual(400, exception!.Status);
+
+            // Clean up the reservation.
+            client.DeleteReservation(reservationId);
+        }
+
+        [TestCase]
+        [AsyncOnly]
+        public async Task StartPurchaseReservationAsync()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            PhoneNumbersClient client = CreateClient();
+            var browseRequest = new PhoneNumbersBrowseRequest(PhoneNumberType.TollFree);
+            var response = await client.BrowseAvailableNumbersAsync("US", browseRequest);
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
+
+            // Reserve the first available phone number.
+            var phoneNumberToReserve = availablePhoneNumbers.First();
+
+            var reservationId = Guid.NewGuid();
+            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            reservation.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+
+            var reservationResponse = await client.CreateOrUpdateReservationAsync(reservation).ConfigureAwait(false);
+
+            // The phone number was successfully reserved.
+            Assert.IsTrue(reservationResponse.Value.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
+            Assert.AreNotEqual(AvailablePhoneNumberStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
+
+            // Purchase the reservation.
+            var purchaseReservationOperation = await client.StartPurchaseReservationAsync(reservationId, agreeToNotResell: true);
+            await purchaseReservationOperation.WaitForCompletionResponseAsync();
+
+            // The phone number should now be purchased.
+            var purchasedPhoneNumbers = await client.GetPurchasedPhoneNumbersAsync().ToEnumerableAsync();
+            Assert.IsTrue(purchasedPhoneNumbers.Any(purchasedNumber => purchasedNumber.Id == phoneNumberToReserve.Id));
+
+            // Release the number to prevent additional costs.
+            var releaseOperation = await client.StartReleasePhoneNumberAsync(phoneNumberToReserve.Id);
+            await releaseOperation.WaitForCompletionResponseAsync();
+        }
+
+        [TestCase]
+        [SyncOnly]
+        public void StartPurchaseReservation()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            PhoneNumbersClient client = CreateClient();
+
+            var browseRequest = new PhoneNumbersBrowseRequest(PhoneNumberType.TollFree);
+            var response = client.BrowseAvailableNumbers("US", browseRequest);
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
+
+            // Reserve the first available phone number.
+            var phoneNumberToReserve = availablePhoneNumbers.First();
+            var reservationId = Guid.NewGuid();
+            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            reservation.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+
+            var reservationResponse = client.CreateOrUpdateReservation(reservation);
+
+            // The phone number was successfully reserved.
+            Assert.IsTrue(reservationResponse.Value.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
+            Assert.AreNotEqual(AvailablePhoneNumberStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
+
+            // Purchase the reservation.
+            var purchaseReservationOperation = client.StartPurchaseReservation(reservationId, agreeToNotResell: true);
+            purchaseReservationOperation.WaitForCompletionResponse();
+
+            // The phone number should now be purchased.
+            var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbers().ToList();
+            Assert.IsTrue(purchasedPhoneNumbers.Any(purchasedNumber => purchasedNumber.Id == phoneNumberToReserve.Id));
+
+            // Release the number to prevent additional costs.
+            var releaseOperation = client.StartReleasePhoneNumber(phoneNumberToReserve.Id);
+            releaseOperation.WaitForCompletionResponse();
+        }
+
         // This is used to make it easier to track in the reservation state.
         // It allows us to add and remove numbers from the reservation without affecting the initial state.
-        private PhoneNumbersReservation CreateReservationFrom(PhoneNumbersReservation reservation)
+        private PhoneNumbersReservation CopyReservation(PhoneNumbersReservation reservation)
         {
-            var newReservation = new PhoneNumbersReservation(reservation.Id, new Dictionary<string, AvailablePhoneNumber>());
+            var newReservation = PhoneNumbersModelFactory.PhoneNumbersReservation(id: reservation.Id, expiresAt: reservation.ExpiresAt, status: reservation.Status);
+            new PhoneNumbersReservation(reservation.Id, new Dictionary<string, AvailablePhoneNumber>());
             foreach (var number in reservation.PhoneNumbers)
             {
                 newReservation.PhoneNumbers.Add(number.Key, number.Value);
