@@ -20,7 +20,7 @@ public abstract class ModelReaderWriterContext
     {
         if (!TryGetTypeBuilder(type, out ModelReaderWriterTypeBuilder? builder))
         {
-            throw new InvalidOperationException($"No {nameof(ModelReaderWriterTypeBuilder)} found for {type.ToFriendlyName()}.  See '' for more info.");
+            throw new InvalidOperationException($"No {nameof(ModelReaderWriterTypeBuilder)} found for {type.ToFriendlyName()}.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.");
         }
         return builder!;
     }

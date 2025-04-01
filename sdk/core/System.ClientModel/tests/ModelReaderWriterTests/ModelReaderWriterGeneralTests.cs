@@ -181,7 +181,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var data = BinaryData.FromString(File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataList.json")).TrimEnd());
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<SortedDictionary<string, AvailabilitySetData>>(data, ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for SortedDictionary<String, AvailabilitySetData>.  See '' for more info.", ex!.Message);
+            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for SortedDictionary<String, AvailabilitySetData>.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
         }
 
         [Test]
@@ -398,7 +398,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "{}";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<NoActivator>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for NoActivator.  See '' for more info.", ex!.Message);
+            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for NoActivator.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
         }
 
         [Test]
@@ -407,7 +407,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[{}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<NoActivator>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for List<NoActivator>.  See '' for more info.", ex!.Message);
+            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for List<NoActivator>.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
         }
 
         [Test]
@@ -416,7 +416,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[[{}]]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<NoActivator>>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for List<List<NoActivator>>.  See '' for more info.", ex!.Message);
+            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for List<List<NoActivator>>.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
         }
 
         [Test]
@@ -572,7 +572,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[{},{}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<object>), new ModelReaderWriterOptions("J"), s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for List<Object>.  See '' for more info.", ex!.Message);
+            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for List<Object>.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
         }
 
         private class ReadReturnsNull : IPersistableModel<ReadReturnsNull>
