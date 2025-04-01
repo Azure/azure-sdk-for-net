@@ -179,12 +179,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             A128CbcValue => AesCbc.Aes128Cbc,
             A192CbcValue => AesCbc.Aes192Cbc,
             A256CbcValue => AesCbc.Aes256Cbc,
-            CkmAesKeyWrapValue => AesCbc.CKM_AES_KEY_WRAP,
+            CkmAesKeyWrapValue => AesCbc.CkmAesKeyWrap,
 
             A128CbcPadValue => AesCbc.Aes128CbcPad,
             A192CbcPadValue => AesCbc.Aes192CbcPad,
             A256CbcPadValue => AesCbc.Aes256CbcPad,
-            CkmAesKeyWrapPadValue => AesCbc.CKM_AES_KEY_WRAP_PAD,
+            CkmAesKeyWrapPadValue => AesCbc.CkmAesKeyWrapPad,
 
             _ => null,
         };
