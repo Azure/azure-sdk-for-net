@@ -169,7 +169,8 @@ namespace Azure.Messaging.ServiceBus
                 EnableCrossEntityTransactions = EnableCrossEntityTransactions,
                 CustomEndpointAddress = CustomEndpointAddress,
                 ConnectionIdleTimeout = ConnectionIdleTimeout,
-                Identifier = Identifier
+                Identifier = Identifier,
+                CertificateValidationCallback = CertificateValidationCallback
             };
     }
 }

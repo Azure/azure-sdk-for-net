@@ -175,6 +175,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                         try
                         {
                             receiver = client.CreateReceiver(scope.QueueName);
+                            await receiver.PeekMessageAsync().ConfigureAwait(false);
                         }
                         finally
                         {
@@ -209,6 +210,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                         try
                         {
                             receiver = client.CreateReceiver(scope.QueueName);
+                            await receiver.PeekMessageAsync().ConfigureAwait(false);
                         }
                         finally
                         {
