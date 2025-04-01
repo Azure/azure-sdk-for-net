@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StandbyPool.Models
 {
     /// <summary> Displays StandbyPool status. </summary>
-    public partial class PoolStatus
+    public partial class StandbyPoolStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <item>
         /// <term>BinaryData.FromString("\"foo\"")</term>
         /// <description>Creates a payload of "foo".</description>
-        /// </item>
+        /// </item>     
         /// <item>
         /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
         /// <description>Creates a payload of { "key": "value" }.</description>
@@ -45,31 +45,31 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PoolStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyPoolStatus"/>. </summary>
         /// <param name="code"> Displays the healthy state of the StandbyPool. </param>
-        internal PoolStatus(HealthStateCode code)
+        internal StandbyPoolStatus(StanbyPoolHealthStateCode code)
         {
             Code = code;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PoolStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyPoolStatus"/>. </summary>
         /// <param name="code"> Displays the healthy state of the StandbyPool. </param>
         /// <param name="message"> Displays the StandbyPool health state details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PoolStatus(HealthStateCode code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyPoolStatus(StanbyPoolHealthStateCode code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PoolStatus"/> for deserialization. </summary>
-        internal PoolStatus()
+        /// <summary> Initializes a new instance of <see cref="StandbyPoolStatus"/> for deserialization. </summary>
+        internal StandbyPoolStatus()
         {
         }
 
         /// <summary> Displays the healthy state of the StandbyPool. </summary>
-        public HealthStateCode Code { get; }
+        public StanbyPoolHealthStateCode Code { get; }
         /// <summary> Displays the StandbyPool health state details. </summary>
         public string Message { get; }
     }

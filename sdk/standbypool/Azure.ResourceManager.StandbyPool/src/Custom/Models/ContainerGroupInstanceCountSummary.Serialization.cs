@@ -12,13 +12,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    [CodeGenSerialization(nameof(InstanceCountsByStateUpdated), SerializationValueHook = nameof(InstanceCountsByStateSerial))]
+    [CodeGenSerialization(nameof(StandbyContainerGroupInstanceCountsByState), SerializationValueHook = nameof(InstanceCountsByStateSerial))]
     public partial class ContainerGroupInstanceCountSummary
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void InstanceCountsByStateSerial(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            if (InstanceCountsByStateUpdated == null)
+            if (StandbyContainerGroupInstanceCountsByState == null)
             {
                 writer.WriteStartArray();
                 foreach (var item in InstanceCountsByState)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             else
             {
                 writer.WriteStartArray();
-                foreach (var item in InstanceCountsByStateUpdated)
+                foreach (var item in StandbyContainerGroupInstanceCountsByState)
                 {
                     writer.WriteObjectValue(item, options);
                 }

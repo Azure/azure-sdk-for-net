@@ -47,23 +47,23 @@ namespace Azure.ResourceManager.StandbyPool.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineInstanceCountSummary"/>. </summary>
-        /// <param name="instanceCountsByStateUpdated"> The count of pooled virtual machines in each state for the given zone. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceCountsByStateUpdated"/> is null. </exception>
-        internal StandbyVirtualMachineInstanceCountSummary(IEnumerable<PoolVirtualMachineStateCount> instanceCountsByStateUpdated)
+        /// <param name="standbyVirtualMachineInstanceCountsByState"> The count of pooled virtual machines in each state for the given zone. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachineInstanceCountsByState"/> is null. </exception>
+        internal StandbyVirtualMachineInstanceCountSummary(IEnumerable<PoolVirtualMachineStateCount> standbyVirtualMachineInstanceCountsByState)
         {
-            Argument.AssertNotNull(instanceCountsByStateUpdated, nameof(instanceCountsByStateUpdated));
+            Argument.AssertNotNull(standbyVirtualMachineInstanceCountsByState, nameof(standbyVirtualMachineInstanceCountsByState));
 
-            InstanceCountsByStateUpdated = instanceCountsByStateUpdated.ToList();
+            StandbyVirtualMachineInstanceCountsByState = standbyVirtualMachineInstanceCountsByState.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineInstanceCountSummary"/>. </summary>
         /// <param name="zone"> The zone that the provided counts are in. It will not have a value if zones are not enabled on the attached VMSS. </param>
-        /// <param name="instanceCountsByStateUpdated"> The count of pooled virtual machines in each state for the given zone. </param>
+        /// <param name="standbyVirtualMachineInstanceCountsByState"> The count of pooled virtual machines in each state for the given zone. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachineInstanceCountSummary(long? zone, IReadOnlyList<PoolVirtualMachineStateCount> instanceCountsByStateUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachineInstanceCountSummary(long? zone, IReadOnlyList<PoolVirtualMachineStateCount> standbyVirtualMachineInstanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zone = zone;
-            InstanceCountsByStateUpdated = instanceCountsByStateUpdated;
+            StandbyVirtualMachineInstanceCountsByState = standbyVirtualMachineInstanceCountsByState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> The zone that the provided counts are in. It will not have a value if zones are not enabled on the attached VMSS. </summary>
         public long? Zone { get; }
         /// <summary> The count of pooled virtual machines in each state for the given zone. </summary>
-        public IReadOnlyList<PoolVirtualMachineStateCount> InstanceCountsByStateUpdated { get; }
+        public IReadOnlyList<PoolVirtualMachineStateCount> StandbyVirtualMachineInstanceCountsByState { get; }
     }
 }

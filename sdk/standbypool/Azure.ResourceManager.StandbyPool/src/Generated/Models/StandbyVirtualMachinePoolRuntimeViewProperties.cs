@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
         /// <param name="prediction"> Displays prediction information of the standby pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolRuntimeViewProperties(IReadOnlyList<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, PoolStatus status, StandbyProvisioningState? provisioningState, StandbyVirtualMachinePoolPrediction prediction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolRuntimeViewProperties(IReadOnlyList<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, StandbyPoolStatus status, StandbyProvisioningState? provisioningState, StandbyVirtualMachinePoolPrediction prediction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCountSummary = instanceCountSummary;
             Status = status;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider. If zones are not enabled on the attached VMSS, the list will contain a single entry without zone values. Note: any resources in the Running state may still be installing extensions / not fully provisioned. </summary>
         public IReadOnlyList<StandbyVirtualMachineInstanceCountSummary> InstanceCountSummary { get; }
         /// <summary> Display status of the standby pool. </summary>
-        public PoolStatus Status { get; }
+        public StandbyPoolStatus Status { get; }
         /// <summary> Displays the provisioning state of the standby pool. </summary>
         public StandbyProvisioningState? ProvisioningState { get; }
         /// <summary> Displays prediction information of the standby pool. </summary>

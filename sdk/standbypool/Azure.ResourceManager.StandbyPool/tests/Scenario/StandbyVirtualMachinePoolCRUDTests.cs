@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         public StandbyVirtualMachinePoolTestProperties standbyVirtualMachinePoolTestProperties;
 
         public StandbyVirtualMachinePoolCRUDTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Playback)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
             Assert.AreEqual(runtimeViewName, standbyVirtualMachinePool_RUNTIMEVIEW.Data.Name);
             Assert.IsTrue(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary.Count > 0);
-            Assert.IsTrue(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary[0].InstanceCountsByStateUpdated.Count > 0);
+            Assert.IsTrue(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary[0].StandbyVirtualMachineInstanceCountsByState.Count > 0);
             Assert.IsNotNull(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.Status);
 
             // Prediction is not available in the response. This field is only populated for StandbyPools that record scale out activity over a period of time.

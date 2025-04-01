@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             IReadOnlyList<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary = default;
-            PoolStatus status = default;
+            StandbyPoolStatus status = default;
             StandbyProvisioningState? provisioningState = default;
             StandbyVirtualMachinePoolPrediction prediction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    status = PoolStatus.DeserializePoolStatus(property.Value, options);
+                    status = StandbyPoolStatus.DeserializePoolStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

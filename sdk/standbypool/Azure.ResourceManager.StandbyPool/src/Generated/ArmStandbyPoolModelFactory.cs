@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
         /// <param name="prediction"> Displays prediction information of the standby pool. </param>
         /// <returns> A new <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/> instance for mocking. </returns>
-        public static StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary = null, PoolStatus status = null, StandbyProvisioningState? provisioningState = null, StandbyContainerGroupPoolPrediction prediction = null)
+        public static StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary = null, StandbyPoolStatus status = null, StandbyProvisioningState? provisioningState = null, StandbyContainerGroupPoolPrediction prediction = null)
         {
             instanceCountSummary ??= new List<ContainerGroupInstanceCountSummary>();
 
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.StandbyPool.Models
             return new PoolContainerGroupStateCount(state, count, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PoolStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyPoolStatus"/>. </summary>
         /// <param name="code"> Displays the healthy state of the StandbyPool. </param>
         /// <param name="message"> Displays the StandbyPool health state details. </param>
-        /// <returns> A new <see cref="Models.PoolStatus"/> instance for mocking. </returns>
-        public static PoolStatus PoolStatus(HealthStateCode code = default, string message = null)
+        /// <returns> A new <see cref="Models.StandbyPoolStatus"/> instance for mocking. </returns>
+        public static StandbyPoolStatus PoolStatus(StanbyPoolHealthStateCode code = default, string message = null)
         {
-            return new PoolStatus(code, message, serializedAdditionalRawData: null);
+            return new StandbyPoolStatus(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolPrediction"/>. </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
         /// <param name="prediction"> Displays prediction information of the standby pool. </param>
         /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolRuntimeViewProperties"/> instance for mocking. </returns>
-        public static StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(IEnumerable<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary = null, PoolStatus status = null, StandbyProvisioningState? provisioningState = null, StandbyVirtualMachinePoolPrediction prediction = null)
+        public static StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(IEnumerable<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary = null, StandbyPoolStatus status = null, StandbyProvisioningState? provisioningState = null, StandbyVirtualMachinePoolPrediction prediction = null)
         {
             instanceCountSummary ??= new List<StandbyVirtualMachineInstanceCountSummary>();
 

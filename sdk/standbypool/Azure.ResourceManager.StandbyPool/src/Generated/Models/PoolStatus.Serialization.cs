@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    public partial class PoolStatus : IUtf8JsonSerializable, IJsonModel<PoolStatus>
+    public partial class StandbyPoolStatus : IUtf8JsonSerializable, IJsonModel<StandbyPoolStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PoolStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyPoolStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PoolStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StandbyPoolStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyPoolStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyPoolStatus)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W")
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
         }
 
-        PoolStatus IJsonModel<PoolStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StandbyPoolStatus IJsonModel<StandbyPoolStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyPoolStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyPoolStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePoolStatus(document.RootElement, options);
         }
 
-        internal static PoolStatus DeserializePoolStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StandbyPoolStatus DeserializePoolStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            HealthStateCode code = default;
+            StanbyPoolHealthStateCode code = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = new HealthStateCode(property.Value.GetString());
+                    code = new StanbyPoolHealthStateCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -103,25 +103,25 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PoolStatus(code, message, serializedAdditionalRawData);
+            return new StandbyPoolStatus(code, message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PoolStatus>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StandbyPoolStatus>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyPoolStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PoolStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyPoolStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PoolStatus IPersistableModel<PoolStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StandbyPoolStatus IPersistableModel<StandbyPoolStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyPoolStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
                         return DeserializePoolStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PoolStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyPoolStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PoolStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StandbyPoolStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
