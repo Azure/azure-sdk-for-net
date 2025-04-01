@@ -102,7 +102,7 @@ namespace Azure.Security.ConfidentialLedger
         ///   contents: string, # Required. Contents of the ledger entry.
         ///   collectionId: string, # Required.
         ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        ///   tags: string, # Required.
+        ///   tags: string, # Optional.
         /// }
         /// </code>
         /// </remarks>
