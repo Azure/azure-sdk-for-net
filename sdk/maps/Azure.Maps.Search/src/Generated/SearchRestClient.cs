@@ -50,7 +50,7 @@ namespace Azure.Maps.Search
             _clientId = clientId;
         }
 
-        internal HttpMessage CreateGetGeocodingRequest(int? top, string query, string addressLine, string countryRegion, IEnumerable<double> boundingBox, string view, IEnumerable<double> coordinates, string adminDistrict, string adminDistrict2, string adminDistrict3, string locality, string postalCode)
+        internal HttpMessage CreateGetGeocodingRequest(int? top, string query, string addressLine, string countryRegion, IEnumerable<double> boundingBox, string view, IEnumerable<double> coordinates, string adminDistrict, string adminDistrict2, string adminDistrict3, string locality, string postalCode, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -108,10 +108,13 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("postalCode", postalCode, true);
             }
             request.Uri = uri;
-            if (_acceptLanguage != null)
+
+            acceptLanguage ??= _acceptLanguage;
+            if (acceptLanguage != null)
             {
-                request.Headers.Add("Accept-Language", _acceptLanguage);
+                request.Headers.Add("Accept-Language", acceptLanguage);
             }
+
             if (_clientId != null)
             {
                 request.Headers.Add("x-ms-client-id", _clientId);
@@ -175,10 +178,14 @@ namespace Azure.Maps.Search
         ///
         /// **If query is given, should not use this parameter.**
         /// </param>
+        /// <param name="acceptLanguage">
+        /// Language in which search results should be returned.
+        /// Please refer to [Supported Languages](/azure/azure-maps/supported-languages) for details.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GeocodingResponse>> GetGeocodingAsync(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GeocodingResponse>> GetGeocodingAsync(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode);
+            using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode, acceptLanguage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -249,10 +256,14 @@ namespace Azure.Maps.Search
         ///
         /// **If query is given, should not use this parameter.**
         /// </param>
+        /// <param name="acceptLanguage">
+        /// Language in which search results should be returned.
+        /// Please refer to [Supported Languages](/azure/azure-maps/supported-languages) for details.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GeocodingResponse> GetGeocoding(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, CancellationToken cancellationToken = default)
+        public Response<GeocodingResponse> GetGeocoding(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode);
+            using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode, acceptLanguage);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -450,7 +461,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateGetPolygonRequest(IEnumerable<double> coordinates, string view, BoundaryResultTypeEnum? resultType, ResolutionEnum? resolution)
+        internal HttpMessage CreateGetPolygonRequest(IEnumerable<double> coordinates, string view, BoundaryResultTypeEnum? resultType, ResolutionEnum? resolution, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -480,9 +491,10 @@ namespace Azure.Maps.Search
             {
                 request.Headers.Add("x-ms-client-id", _clientId);
             }
-            if (_acceptLanguage != null)
+            acceptLanguage ??= _acceptLanguage;
+            if (acceptLanguage != null)
             {
-                request.Headers.Add("Accept-Language", _acceptLanguage);
+                request.Headers.Add("Accept-Language", acceptLanguage);
             }
             request.Headers.Add("Accept", "application/geo+json, application/json");
             return message;
@@ -504,15 +516,19 @@ namespace Azure.Maps.Search
         /// <param name="resultType"> The geopolitical concept to return a boundary for. </param>
         /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="acceptLanguage">
+        /// Language in which search results should be returned.
+        /// Please refer to [Supported Languages](/azure/azure-maps/supported-languages) for details.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public async Task<Response<BoundaryInternal>> GetPolygonAsync(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BoundaryInternal>> GetPolygonAsync(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
             {
                 throw new ArgumentNullException(nameof(coordinates));
             }
 
-            using var message = CreateGetPolygonRequest(coordinates, view, resultType, resolution);
+            using var message = CreateGetPolygonRequest(coordinates, view, resultType, resolution, acceptLanguage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -543,16 +559,20 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="resultType"> The geopolitical concept to return a boundary for. </param>
         /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
+        /// <param name="acceptLanguage">
+        /// Language in which search results should be returned.
+        /// Please refer to [Supported Languages](/azure/azure-maps/supported-languages) for details.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public Response<BoundaryInternal> GetPolygon(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
+        public Response<BoundaryInternal> GetPolygon(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
             {
                 throw new ArgumentNullException(nameof(coordinates));
             }
 
-            using var message = CreateGetPolygonRequest(coordinates, view, resultType, resolution);
+            using var message = CreateGetPolygonRequest(coordinates, view, resultType, resolution, acceptLanguage);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -568,7 +588,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateGetReverseGeocodingRequest(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes, string view)
+        internal HttpMessage CreateGetReverseGeocodingRequest(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes, string view, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -594,9 +614,11 @@ namespace Azure.Maps.Search
             {
                 request.Headers.Add("x-ms-client-id", _clientId);
             }
-            if (_acceptLanguage != null)
+
+            acceptLanguage ??= _acceptLanguage;
+            if (acceptLanguage != null)
             {
-                request.Headers.Add("Accept-Language", _acceptLanguage);
+                request.Headers.Add("Accept-Language", acceptLanguage);
             }
             request.Headers.Add("Accept", "application/geo+json, application/json");
             return message;
@@ -631,15 +653,19 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="acceptLanguage">
+        /// Language in which search results should be returned.
+        /// Please refer to [Supported Languages](/azure/azure-maps/supported-languages) for details.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
             {
                 throw new ArgumentNullException(nameof(coordinates));
             }
 
-            using var message = CreateGetReverseGeocodingRequest(coordinates, resultTypes, view);
+            using var message = CreateGetReverseGeocodingRequest(coordinates, resultTypes, view, acceptLanguage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -684,15 +710,19 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="acceptLanguage">
+        /// Language in which search results should be returned.
+        /// Please refer to [Supported Languages](/azure/azure-maps/supported-languages) for details.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public Response<GeocodingResponse> GetReverseGeocoding(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, CancellationToken cancellationToken = default)
+        public Response<GeocodingResponse> GetReverseGeocoding(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
             {
                 throw new ArgumentNullException(nameof(coordinates));
             }
 
-            using var message = CreateGetReverseGeocodingRequest(coordinates, resultTypes, view);
+            using var message = CreateGetReverseGeocodingRequest(coordinates, resultTypes, view, acceptLanguage);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
