@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Packet Data Network Type
-    /// Serialized Name: PdnType
-    /// </summary>
+    /// <summary> Packet Data Network Type. </summary>
     public readonly partial struct PdnType : IEquatable<PdnType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         private const string IPV4Value = "IPV4";
 
-        /// <summary>
-        /// IPV4
-        /// Serialized Name: PdnType.IPV4
-        /// </summary>
+        /// <summary> IPV4. </summary>
         public static PdnType IPV4 { get; } = new PdnType(IPV4Value);
         /// <summary> Determines if two <see cref="PdnType"/> values are the same. </summary>
         public static bool operator ==(PdnType left, PdnType right) => left.Equals(right);

@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> The SelectiveKeyRestoreOperationParameters. </summary>
+    /// <summary> The authentication method and location for the selective key restore operation. </summary>
     internal partial class SelectiveKeyRestoreOperationParameters
     {
         /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperationParameters"/>. </summary>
-        /// <param name="sasTokenParameters"></param>
+        /// <param name="sasTokenParameters"> A user-provided SAS token to an Azure blob storage container. </param>
         /// <param name="folder"> The Folder name of the blob where the previous successful full backup was stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folder"/> is null. </exception>
         public SelectiveKeyRestoreOperationParameters(SASTokenParameter sasTokenParameters, string folder)
@@ -25,7 +25,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             Folder = folder;
         }
 
-        /// <summary> Gets the sas token parameters. </summary>
+        /// <summary> A user-provided SAS token to an Azure blob storage container. </summary>
         public SASTokenParameter SasTokenParameters { get; }
         /// <summary> The Folder name of the blob where the previous successful full backup was stored. </summary>
         public string Folder { get; }

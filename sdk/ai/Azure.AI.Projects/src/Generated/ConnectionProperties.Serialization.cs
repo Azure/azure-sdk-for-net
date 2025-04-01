@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToSerialString());
             writer.WritePropertyName("category"u8);
-            writer.WriteStringValue(Category.ToSerialString());
+            writer.WriteStringValue(Category.ToString());
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -83,6 +83,7 @@ namespace Azure.AI.Projects
                 {
                     case "AAD": return InternalConnectionPropertiesAADAuth.DeserializeInternalConnectionPropertiesAADAuth(element, options);
                     case "ApiKey": return ConnectionPropertiesApiKeyAuth.DeserializeConnectionPropertiesApiKeyAuth(element, options);
+                    case "CustomKeys": return InternalConnectionPropertiesCustomAuth.DeserializeInternalConnectionPropertiesCustomAuth(element, options);
                     case "None": return InternalConnectionPropertiesNoAuth.DeserializeInternalConnectionPropertiesNoAuth(element, options);
                     case "SAS": return InternalConnectionPropertiesSASAuth.DeserializeInternalConnectionPropertiesSASAuth(element, options);
                 }

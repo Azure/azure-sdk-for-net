@@ -1,10 +1,17 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.4.0-beta.3 (2025-04-01)
 
 ### Features Added
 
-### Breaking Changes
+* Added support for emitting Application Insights Custom Events.
+  ([#48378](https://github.com/Azure/azure-sdk-for-net/pull/48378))
+
+* Added new api `UseAzureMonitorExporter` which automatically enables logging, tracing, and metrics.
+  Additional calls to `WithLogging`, `WithMetrics`, and `WithTracing` are NOT required.
+  However, you may still need to enable specific tracing/metric sources/meters separately.
+  ([#48402](https://github.com/Azure/azure-sdk-for-net/pull/48402))
+  - Added support for LiveMetrics when using the `UseAzureMonitorExporter` api.
 
 ### Bugs Fixed
 
