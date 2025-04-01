@@ -11,7 +11,8 @@ namespace Azure.ResourceManager.TestFramework
             {
                 "Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions",
                 "Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions",
-                "Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesOptions"
+                "Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesOptions",
+                "Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions"
             };
         }
     }

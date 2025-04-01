@@ -54,11 +54,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ScaleInPolicy"/>. </summary>
         /// <param name="rules"> The rules to be followed when scaling-in a virtual machine scale set. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Default** When a virtual machine scale set is scaled in, the scale set will first be balanced across zones if it is a zonal scale set. Then, it will be balanced across Fault Domains as far as possible. Within each Fault Domain, the virtual machines chosen for removal will be the newest ones that are not protected from scale-in. &lt;br&gt;&lt;br&gt; **OldestVM** When a virtual machine scale set is being scaled-in, the oldest virtual machines that are not protected from scale-in will be chosen for removal. For zonal virtual machine scale sets, the scale set will first be balanced across zones. Within each zone, the oldest virtual machines that are not protected will be chosen for removal. &lt;br&gt;&lt;br&gt; **NewestVM** When a virtual machine scale set is being scaled-in, the newest virtual machines that are not protected from scale-in will be chosen for removal. For zonal virtual machine scale sets, the scale set will first be balanced across zones. Within each zone, the newest virtual machines that are not protected will be chosen for removal. &lt;br&gt;&lt;br&gt;. </param>
         /// <param name="forceDeletion"> This property allows you to specify if virtual machines chosen for removal have to be force deleted when a virtual machine scale set is being scaled-in.(Feature in Preview). </param>
+        /// <param name="prioritizeUnhealthyVms"> This property allows you to prioritize the deletion of unhealthy and inactive VMs when a virtual machine scale set is being scaled-in.(Feature in Preview). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScaleInPolicy(IList<VirtualMachineScaleSetScaleInRule> rules, bool? forceDeletion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScaleInPolicy(IList<VirtualMachineScaleSetScaleInRule> rules, bool? forceDeletion, bool? prioritizeUnhealthyVms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rules = rules;
             ForceDeletion = forceDeletion;
+            PrioritizeUnhealthyVms = prioritizeUnhealthyVms;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -66,5 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<VirtualMachineScaleSetScaleInRule> Rules { get; }
         /// <summary> This property allows you to specify if virtual machines chosen for removal have to be force deleted when a virtual machine scale set is being scaled-in.(Feature in Preview). </summary>
         public bool? ForceDeletion { get; set; }
+        /// <summary> This property allows you to prioritize the deletion of unhealthy and inactive VMs when a virtual machine scale set is being scaled-in.(Feature in Preview). </summary>
+        public bool? PrioritizeUnhealthyVms { get; set; }
     }
 }
