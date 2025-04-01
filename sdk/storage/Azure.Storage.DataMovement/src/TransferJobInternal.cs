@@ -355,10 +355,10 @@ namespace Azure.Storage.DataMovement
                         {
                             string sourceName;
                             // For single item transfers, the container Uri will equal the item Uri.
-                            // The source name does not matter, just set it to item path.
+                            // Set the source name to the full Uri.
                             if (_sourceResourceContainer.Uri == current.Uri)
                             {
-                                sourceName = current.Uri.GetPath();
+                                sourceName = current.Uri.AbsoluteUri;
                             }
                             // Real container trasnfer
                             else

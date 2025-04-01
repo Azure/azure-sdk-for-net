@@ -47,7 +47,6 @@ namespace Azure.Storage.DataMovement
 
         protected internal override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
-            // TODO: Assert path/resourceId matches
             return _resourceItem;
         }
 
