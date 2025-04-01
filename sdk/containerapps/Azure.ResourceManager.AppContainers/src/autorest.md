@@ -238,6 +238,13 @@ rename-mapping:
   UsageName: ContainerAppUsageName
   UsageUnit: ContainerAppUsageUnit
   DaprSubscriptionBulkSubscribeOptions: DaprSubscriptionBulkSubscribeConfig
+  ScaleConfiguration: SessionPoolScaleConfiguration
+  ManagedIdentitySetting: SessionPoolManagedIdentitySetting
+  LifecycleType: SessionPoolLifecycleType
+  LifecycleConfiguration: SessionPoolLifecycleConfiguration
+  IdentitySettingsLifeCycle: ContainerAppIdentitySettingsLifeCycle 
+  IdentitySettings: ContainerAppIdentitySettings
+  CertificateKeyVaultProperties: ContainerAppCertificateKeyVaultProperties
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate

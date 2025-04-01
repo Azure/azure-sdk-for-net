@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string customDomainVerificationId = default;
             string dnsSuffix = default;
-            CertificateKeyVaultProperties certificateKeyVaultProperties = default;
+            ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default;
             byte[] certificateValue = default;
             string certificatePassword = default;
             DateTimeOffset? expirationDate = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    certificateKeyVaultProperties = CertificateKeyVaultProperties.DeserializeCertificateKeyVaultProperties(property.Value, options);
+                    certificateKeyVaultProperties = ContainerAppCertificateKeyVaultProperties.DeserializeContainerAppCertificateKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateValue"u8))

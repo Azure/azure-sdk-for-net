@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, CertificateKeyVaultProperties certificateKeyVaultProperties, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CertificateKeyVaultProperties = certificateKeyVaultProperties;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public ContainerAppCertificateProvisioningState? ProvisioningState { get; }
         /// <summary> Properties for a certificate stored in a Key Vault. </summary>
         [WirePath("certificateKeyVaultProperties")]
-        public CertificateKeyVaultProperties CertificateKeyVaultProperties { get; set; }
+        public ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties { get; set; }
         /// <summary> Certificate password. </summary>
         [WirePath("password")]
         public string Password { get; set; }

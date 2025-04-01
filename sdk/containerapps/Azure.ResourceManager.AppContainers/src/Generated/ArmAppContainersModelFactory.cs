@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <returns> A new <see cref="Models.ContainerAppCustomDomainConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppCustomDomainConfiguration ContainerAppCustomDomainConfiguration(string customDomainVerificationId = null, string dnsSuffix = null, CertificateKeyVaultProperties certificateKeyVaultProperties = null, byte[] certificateValue = null, string certificatePassword = null, DateTimeOffset? expireOn = null, string thumbprint = null, string subjectName = null)
+        public static ContainerAppCustomDomainConfiguration ContainerAppCustomDomainConfiguration(string customDomainVerificationId = null, string dnsSuffix = null, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = null, byte[] certificateValue = null, string certificatePassword = null, DateTimeOffset? expireOn = null, string thumbprint = null, string subjectName = null)
         {
             return new ContainerAppCustomDomainConfiguration(
                 customDomainVerificationId,
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
         /// <returns> A new <see cref="Models.ContainerAppCertificateProperties"/> instance for mocking. </returns>
-        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = null, CertificateKeyVaultProperties certificateKeyVaultProperties = null, string password = null, string subjectName = null, IEnumerable<string> subjectAlternativeNames = null, byte[] value = null, string issuer = null, DateTimeOffset? issueOn = null, DateTimeOffset? expireOn = null, string thumbprint = null, bool? isValid = null, string publicKeyHash = null)
+        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = null, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = null, string password = null, string subjectName = null, IEnumerable<string> subjectAlternativeNames = null, byte[] value = null, string issuer = null, DateTimeOffset? issueOn = null, DateTimeOffset? expireOn = null, string thumbprint = null, bool? isValid = null, string publicKeyHash = null)
         {
             subjectAlternativeNames ??= new List<string>();
 
@@ -949,11 +949,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="provisioningState"> Provisioning state of the session pool. </param>
         /// <param name="managedIdentitySettings"> Optional settings for a Managed Identity that is assigned to the Session pool. </param>
         /// <returns> A new <see cref="AppContainers.SessionPoolData"/> instance for mocking. </returns>
-        public static SessionPoolData SessionPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ResourceIdentifier environmentId = null, ContainerType? containerType = null, PoolManagementType? poolManagementType = null, int? nodeCount = null, ScaleConfiguration scaleConfiguration = null, IEnumerable<SessionPoolSecret> secrets = null, LifecycleConfiguration dynamicPoolLifecycleConfiguration = null, CustomContainerTemplate customContainerTemplate = null, SessionNetworkStatus? sessionNetworkStatus = null, Uri poolManagementEndpoint = null, SessionPoolProvisioningState? provisioningState = null, IEnumerable<ManagedIdentitySetting> managedIdentitySettings = null)
+        public static SessionPoolData SessionPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ResourceIdentifier environmentId = null, ContainerType? containerType = null, PoolManagementType? poolManagementType = null, int? nodeCount = null, SessionPoolScaleConfiguration scaleConfiguration = null, IEnumerable<SessionPoolSecret> secrets = null, SessionPoolLifecycleConfiguration dynamicPoolLifecycleConfiguration = null, CustomContainerTemplate customContainerTemplate = null, SessionNetworkStatus? sessionNetworkStatus = null, Uri poolManagementEndpoint = null, SessionPoolProvisioningState? provisioningState = null, IEnumerable<SessionPoolManagedIdentitySetting> managedIdentitySettings = null)
         {
             tags ??= new Dictionary<string, string>();
             secrets ??= new List<SessionPoolSecret>();
-            managedIdentitySettings ??= new List<ManagedIdentitySetting>();
+            managedIdentitySettings ??= new List<SessionPoolManagedIdentitySetting>();
 
             return new SessionPoolData(
                 id,

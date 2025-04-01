@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="DynamicPoolConfiguration"/>. </summary>
         /// <param name="lifecycleConfiguration"> The lifecycle configuration of a session in the dynamic session pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynamicPoolConfiguration(LifecycleConfiguration lifecycleConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynamicPoolConfiguration(SessionPoolLifecycleConfiguration lifecycleConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LifecycleConfiguration = lifecycleConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The lifecycle configuration of a session in the dynamic session pool. </summary>
         [WirePath("lifecycleConfiguration")]
-        public LifecycleConfiguration LifecycleConfiguration { get; set; }
+        public SessionPoolLifecycleConfiguration LifecycleConfiguration { get; set; }
     }
 }

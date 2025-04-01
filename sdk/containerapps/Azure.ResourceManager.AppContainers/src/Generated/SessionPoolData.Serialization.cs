@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.AppContainers
             ContainerType? containerType = default;
             PoolManagementType? poolManagementType = default;
             int? nodeCount = default;
-            ScaleConfiguration scaleConfiguration = default;
+            SessionPoolScaleConfiguration scaleConfiguration = default;
             IList<SessionPoolSecret> secrets = default;
             DynamicPoolConfiguration dynamicPoolConfiguration = default;
             CustomContainerTemplate customContainerTemplate = default;
             SessionNetworkConfiguration sessionNetworkConfiguration = default;
             Uri poolManagementEndpoint = default;
             SessionPoolProvisioningState? provisioningState = default;
-            IList<ManagedIdentitySetting> managedIdentitySettings = default;
+            IList<SessionPoolManagedIdentitySetting> managedIdentitySettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            scaleConfiguration = ScaleConfiguration.DeserializeScaleConfiguration(property0.Value, options);
+                            scaleConfiguration = SessionPoolScaleConfiguration.DeserializeSessionPoolScaleConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secrets"u8))
@@ -335,10 +335,10 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            List<ManagedIdentitySetting> array = new List<ManagedIdentitySetting>();
+                            List<SessionPoolManagedIdentitySetting> array = new List<SessionPoolManagedIdentitySetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedIdentitySetting.DeserializeManagedIdentitySetting(item, options));
+                                array.Add(SessionPoolManagedIdentitySetting.DeserializeSessionPoolManagedIdentitySetting(item, options));
                             }
                             managedIdentitySettings = array;
                             continue;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.AppContainers
                 sessionNetworkConfiguration,
                 poolManagementEndpoint,
                 provisioningState,
-                managedIdentitySettings ?? new ChangeTrackingList<ManagedIdentitySetting>(),
+                managedIdentitySettings ?? new ChangeTrackingList<SessionPoolManagedIdentitySetting>(),
                 serializedAdditionalRawData);
         }
 

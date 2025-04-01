@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
     public class SessionPoolTests : AppContainersManagementTestBase
     {
         public SessionPoolTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

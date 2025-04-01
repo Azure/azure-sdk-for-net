@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            LifecycleConfiguration lifecycleConfiguration = default;
+            SessionPoolLifecycleConfiguration lifecycleConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    lifecycleConfiguration = LifecycleConfiguration.DeserializeLifecycleConfiguration(property.Value, options);
+                    lifecycleConfiguration = SessionPoolLifecycleConfiguration.DeserializeSessionPoolLifecycleConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ScaleConfiguration : IUtf8JsonSerializable, IJsonModel<ScaleConfiguration>
+    public partial class SessionPoolScaleConfiguration : IUtf8JsonSerializable, IJsonModel<SessionPoolScaleConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScaleConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionPoolScaleConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ScaleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SessionPoolScaleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionPoolScaleConfiguration)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(MaxConcurrentSessions))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        ScaleConfiguration IJsonModel<ScaleConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SessionPoolScaleConfiguration IJsonModel<SessionPoolScaleConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionPoolScaleConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScaleConfiguration(document.RootElement, options);
+            return DeserializeSessionPoolScaleConfiguration(document.RootElement, options);
         }
 
-        internal static ScaleConfiguration DeserializeScaleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SessionPoolScaleConfiguration DeserializeSessionPoolScaleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScaleConfiguration(maxConcurrentSessions, readySessionInstances, serializedAdditionalRawData);
+            return new SessionPoolScaleConfiguration(maxConcurrentSessions, readySessionInstances, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ScaleConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SessionPoolScaleConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -171,26 +171,26 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ScaleConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionPoolScaleConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ScaleConfiguration IPersistableModel<ScaleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SessionPoolScaleConfiguration IPersistableModel<SessionPoolScaleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScaleConfiguration(document.RootElement, options);
+                        return DeserializeSessionPoolScaleConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScaleConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionPoolScaleConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ScaleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SessionPoolScaleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

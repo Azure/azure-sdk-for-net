@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
-            ScaleConfiguration scaleConfiguration = default;
+            SessionPoolScaleConfiguration scaleConfiguration = default;
             IList<SessionPoolSecret> secrets = default;
             DynamicPoolConfiguration dynamicPoolConfiguration = default;
             CustomContainerTemplate customContainerTemplate = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                             {
                                 continue;
                             }
-                            scaleConfiguration = ScaleConfiguration.DeserializeScaleConfiguration(property0.Value, options);
+                            scaleConfiguration = SessionPoolScaleConfiguration.DeserializeSessionPoolScaleConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secrets"u8))

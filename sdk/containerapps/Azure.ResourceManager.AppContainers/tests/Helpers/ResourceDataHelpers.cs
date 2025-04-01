@@ -485,13 +485,13 @@ Name = "testcontainerappsjob-1102",
                 EnvironmentId = envId,
                 PoolManagementType = PoolManagementType.Dynamic,
                 ContainerType = ContainerType.CustomContainer,
-                ScaleConfiguration = new ScaleConfiguration() { MaxConcurrentSessions = 10, ReadySessionInstances = 10 },
+                ScaleConfiguration = new SessionPoolScaleConfiguration() { MaxConcurrentSessions = 10, ReadySessionInstances = 10 },
                 DynamicPoolConfiguration = new DynamicPoolConfiguration()
                 {
-                    LifecycleConfiguration = new LifecycleConfiguration()
+                    LifecycleConfiguration = new SessionPoolLifecycleConfiguration()
                     {
                         CooldownPeriodInSeconds = 1000,
-                        LifecycleType = LifecycleType.Timed,
+                        LifecycleType = SessionPoolLifecycleType.Timed,
                     }
                 },
                 CustomContainerTemplate = new CustomContainerTemplate(

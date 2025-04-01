@@ -109,12 +109,12 @@ ExposedPort = 3456,
                     EnableMetrics = true,
                     MaxInactiveRevisions = 10,
                     ServiceType = "redis",
-                    IdentitySettings = {new IdentitySettings("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myidentity")
+                    IdentitySettings = {new ContainerAppIdentitySettings("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myidentity")
 {
-Lifecycle = IdentitySettingsLifeCycle.All,
-}, new IdentitySettings("system")
+Lifecycle = ContainerAppIdentitySettingsLifeCycle.All,
+}, new ContainerAppIdentitySettings("system")
 {
-Lifecycle = IdentitySettingsLifeCycle.Init,
+Lifecycle = ContainerAppIdentitySettingsLifeCycle.Init,
 }},
                 },
                 Template = new ContainerAppTemplate

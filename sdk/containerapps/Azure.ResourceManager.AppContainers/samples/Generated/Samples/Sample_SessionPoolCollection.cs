@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppContainers.Samples
                 EnvironmentId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube"),
                 ContainerType = ContainerType.CustomContainer,
                 PoolManagementType = PoolManagementType.Dynamic,
-                ScaleConfiguration = new ScaleConfiguration
+                ScaleConfiguration = new SessionPoolScaleConfiguration
                 {
                     MaxConcurrentSessions = 500,
                     ReadySessionInstances = 100,
                 },
-                DynamicPoolLifecycleConfiguration = new LifecycleConfiguration
+                DynamicPoolLifecycleConfiguration = new SessionPoolLifecycleConfiguration
                 {
-                    LifecycleType = LifecycleType.OnContainerExit,
+                    LifecycleType = SessionPoolLifecycleType.OnContainerExit,
                     MaxAlivePeriodInSeconds = 86400,
                 },
                 CustomContainerTemplate = new CustomContainerTemplate
@@ -80,9 +80,9 @@ Memory = "0.5Gi",
                     IngressTargetPort = 80,
                 },
                 SessionNetworkStatus = SessionNetworkStatus.EgressEnabled,
-                ManagedIdentitySettings = {new ManagedIdentitySetting("system")
+                ManagedIdentitySettings = {new SessionPoolManagedIdentitySetting("system")
 {
-Lifecycle = IdentitySettingsLifeCycle.Main,
+Lifecycle = ContainerAppIdentitySettingsLifeCycle.Main,
 }},
             };
             ArmOperation<SessionPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sessionPoolName, data);
@@ -125,14 +125,14 @@ Lifecycle = IdentitySettingsLifeCycle.Main,
                 EnvironmentId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube"),
                 ContainerType = ContainerType.CustomContainer,
                 PoolManagementType = PoolManagementType.Dynamic,
-                ScaleConfiguration = new ScaleConfiguration
+                ScaleConfiguration = new SessionPoolScaleConfiguration
                 {
                     MaxConcurrentSessions = 500,
                     ReadySessionInstances = 100,
                 },
-                DynamicPoolLifecycleConfiguration = new LifecycleConfiguration
+                DynamicPoolLifecycleConfiguration = new SessionPoolLifecycleConfiguration
                 {
-                    LifecycleType = LifecycleType.OnContainerExit,
+                    LifecycleType = SessionPoolLifecycleType.OnContainerExit,
                     MaxAlivePeriodInSeconds = 86400,
                 },
                 CustomContainerTemplate = new CustomContainerTemplate
@@ -157,9 +157,9 @@ Memory = "0.5Gi",
                     IngressTargetPort = 80,
                 },
                 SessionNetworkStatus = SessionNetworkStatus.EgressEnabled,
-                ManagedIdentitySettings = {new ManagedIdentitySetting("system")
+                ManagedIdentitySettings = {new SessionPoolManagedIdentitySetting("system")
 {
-Lifecycle = IdentitySettingsLifeCycle.Main,
+Lifecycle = ContainerAppIdentitySettingsLifeCycle.Main,
 }},
             };
             ArmOperation<SessionPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sessionPoolName, data);

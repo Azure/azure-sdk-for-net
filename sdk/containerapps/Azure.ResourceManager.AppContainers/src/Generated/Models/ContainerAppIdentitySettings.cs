@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Optional settings for a Managed Identity that is assigned to the Container App. </summary>
-    public partial class IdentitySettings
+    public partial class ContainerAppIdentitySettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IdentitySettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIdentitySettings"/>. </summary>
         /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> is null. </exception>
-        public IdentitySettings(string identity)
+        public ContainerAppIdentitySettings(string identity)
         {
             Argument.AssertNotNull(identity, nameof(identity));
 
             Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentitySettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIdentitySettings"/>. </summary>
         /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
         /// <param name="lifecycle"> Use to select the lifecycle stages of a Container App during which the Managed Identity should be available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IdentitySettings(string identity, IdentitySettingsLifeCycle? lifecycle, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppIdentitySettings(string identity, ContainerAppIdentitySettingsLifeCycle? lifecycle, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Lifecycle = lifecycle;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentitySettings"/> for deserialization. </summary>
-        internal IdentitySettings()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIdentitySettings"/> for deserialization. </summary>
+        internal ContainerAppIdentitySettings()
         {
         }
 
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string Identity { get; set; }
         /// <summary> Use to select the lifecycle stages of a Container App during which the Managed Identity should be available. </summary>
         [WirePath("lifecycle")]
-        public IdentitySettingsLifeCycle? Lifecycle { get; set; }
+        public ContainerAppIdentitySettingsLifeCycle? Lifecycle { get; set; }
     }
 }

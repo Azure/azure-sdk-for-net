@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers
         public SessionPoolData(AzureLocation location) : base(location)
         {
             Secrets = new ChangeTrackingList<SessionPoolSecret>();
-            ManagedIdentitySettings = new ChangeTrackingList<ManagedIdentitySetting>();
+            ManagedIdentitySettings = new ChangeTrackingList<SessionPoolManagedIdentitySetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionPoolData"/>. </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="provisioningState"> Provisioning state of the session pool. </param>
         /// <param name="managedIdentitySettings"> Optional settings for a Managed Identity that is assigned to the Session pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier environmentId, ContainerType? containerType, PoolManagementType? poolManagementType, int? nodeCount, ScaleConfiguration scaleConfiguration, IList<SessionPoolSecret> secrets, DynamicPoolConfiguration dynamicPoolConfiguration, CustomContainerTemplate customContainerTemplate, SessionNetworkConfiguration sessionNetworkConfiguration, Uri poolManagementEndpoint, SessionPoolProvisioningState? provisioningState, IList<ManagedIdentitySetting> managedIdentitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier environmentId, ContainerType? containerType, PoolManagementType? poolManagementType, int? nodeCount, SessionPoolScaleConfiguration scaleConfiguration, IList<SessionPoolSecret> secrets, DynamicPoolConfiguration dynamicPoolConfiguration, CustomContainerTemplate customContainerTemplate, SessionNetworkConfiguration sessionNetworkConfiguration, Uri poolManagementEndpoint, SessionPoolProvisioningState? provisioningState, IList<SessionPoolManagedIdentitySetting> managedIdentitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             EnvironmentId = environmentId;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers
         public int? NodeCount { get; }
         /// <summary> The scale configuration of the session pool. </summary>
         [WirePath("properties.scaleConfiguration")]
-        public ScaleConfiguration ScaleConfiguration { get; set; }
+        public SessionPoolScaleConfiguration ScaleConfiguration { get; set; }
         /// <summary> The secrets of the session pool. </summary>
         [WirePath("properties.secrets")]
         public IList<SessionPoolSecret> Secrets { get; }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers
         internal DynamicPoolConfiguration DynamicPoolConfiguration { get; set; }
         /// <summary> The lifecycle configuration of a session in the dynamic session pool. </summary>
         [WirePath("properties.dynamicPoolConfiguration.lifecycleConfiguration")]
-        public LifecycleConfiguration DynamicPoolLifecycleConfiguration
+        public SessionPoolLifecycleConfiguration DynamicPoolLifecycleConfiguration
         {
             get => DynamicPoolConfiguration is null ? default : DynamicPoolConfiguration.LifecycleConfiguration;
             set
@@ -165,6 +165,6 @@ namespace Azure.ResourceManager.AppContainers
         public SessionPoolProvisioningState? ProvisioningState { get; }
         /// <summary> Optional settings for a Managed Identity that is assigned to the Session pool. </summary>
         [WirePath("properties.managedIdentitySettings")]
-        public IList<ManagedIdentitySetting> ManagedIdentitySettings { get; }
+        public IList<SessionPoolManagedIdentitySetting> ManagedIdentitySettings { get; }
     }
 }

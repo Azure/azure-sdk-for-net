@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="customContainerTemplate"> The custom container configuration if the containerType is CustomContainer. </param>
         /// <param name="sessionNetworkConfiguration"> The network configuration of the sessions in the session pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SessionPoolPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ScaleConfiguration scaleConfiguration, IList<SessionPoolSecret> secrets, DynamicPoolConfiguration dynamicPoolConfiguration, CustomContainerTemplate customContainerTemplate, SessionNetworkConfiguration sessionNetworkConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SessionPoolPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, SessionPoolScaleConfiguration scaleConfiguration, IList<SessionPoolSecret> secrets, DynamicPoolConfiguration dynamicPoolConfiguration, CustomContainerTemplate customContainerTemplate, SessionNetworkConfiguration sessionNetworkConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The scale configuration of the session pool. </summary>
         [WirePath("properties.scaleConfiguration")]
-        public ScaleConfiguration ScaleConfiguration { get; set; }
+        public SessionPoolScaleConfiguration ScaleConfiguration { get; set; }
         /// <summary> The secrets of the session pool. </summary>
         [WirePath("properties.secrets")]
         public IList<SessionPoolSecret> Secrets { get; }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal DynamicPoolConfiguration DynamicPoolConfiguration { get; set; }
         /// <summary> The lifecycle configuration of a session in the dynamic session pool. </summary>
         [WirePath("properties.dynamicPoolConfiguration.lifecycleConfiguration")]
-        public LifecycleConfiguration DynamicPoolLifecycleConfiguration
+        public SessionPoolLifecycleConfiguration DynamicPoolLifecycleConfiguration
         {
             get => DynamicPoolConfiguration is null ? default : DynamicPoolConfiguration.LifecycleConfiguration;
             set

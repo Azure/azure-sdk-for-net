@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class IdentitySettings : IUtf8JsonSerializable, IJsonModel<IdentitySettings>
+    public partial class ContainerAppIdentitySettings : IUtf8JsonSerializable, IJsonModel<ContainerAppIdentitySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentitySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppIdentitySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IdentitySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppIdentitySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentitySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentitySettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIdentitySettings)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("identity"u8);
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        IdentitySettings IJsonModel<IdentitySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppIdentitySettings IJsonModel<ContainerAppIdentitySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentitySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentitySettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIdentitySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIdentitySettings(document.RootElement, options);
+            return DeserializeContainerAppIdentitySettings(document.RootElement, options);
         }
 
-        internal static IdentitySettings DeserializeIdentitySettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppIdentitySettings DeserializeContainerAppIdentitySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string identity = default;
-            IdentitySettingsLifeCycle? lifecycle = default;
+            ContainerAppIdentitySettingsLifeCycle? lifecycle = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    lifecycle = new IdentitySettingsLifeCycle(property.Value.GetString());
+                    lifecycle = new ContainerAppIdentitySettingsLifeCycle(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IdentitySettings(identity, lifecycle, serializedAdditionalRawData);
+            return new ContainerAppIdentitySettings(identity, lifecycle, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<IdentitySettings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppIdentitySettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentitySettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -172,26 +172,26 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(IdentitySettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIdentitySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IdentitySettings IPersistableModel<IdentitySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppIdentitySettings IPersistableModel<ContainerAppIdentitySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentitySettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIdentitySettings(document.RootElement, options);
+                        return DeserializeContainerAppIdentitySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentitySettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIdentitySettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IdentitySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppIdentitySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

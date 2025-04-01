@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             JobConfigurationScheduleTriggerConfig scheduleTriggerConfig = default;
             EventTriggerConfiguration eventTriggerConfig = default;
             IList<ContainerAppRegistryCredentials> registries = default;
-            IList<IdentitySettings> identitySettings = default;
+            IList<ContainerAppIdentitySettings> identitySettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<IdentitySettings> array = new List<IdentitySettings>();
+                    List<ContainerAppIdentitySettings> array = new List<ContainerAppIdentitySettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.IdentitySettings.DeserializeIdentitySettings(item, options));
+                        array.Add(ContainerAppIdentitySettings.DeserializeContainerAppIdentitySettings(item, options));
                     }
                     identitySettings = array;
                     continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 scheduleTriggerConfig,
                 eventTriggerConfig,
                 registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
-                identitySettings ?? new ChangeTrackingList<IdentitySettings>(),
+                identitySettings ?? new ChangeTrackingList<ContainerAppIdentitySettings>(),
                 serializedAdditionalRawData);
         }
 

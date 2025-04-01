@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
             Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
-            IdentitySettings = new ChangeTrackingList<IdentitySettings>();
+            IdentitySettings = new ChangeTrackingList<ContainerAppIdentitySettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="service"> Container App to be a dev Container App Service. </param>
         /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, Service service, IList<IdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
@@ -129,6 +129,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </summary>
         [WirePath("identitySettings")]
-        public IList<IdentitySettings> IdentitySettings { get; }
+        public IList<ContainerAppIdentitySettings> IdentitySettings { get; }
     }
 }

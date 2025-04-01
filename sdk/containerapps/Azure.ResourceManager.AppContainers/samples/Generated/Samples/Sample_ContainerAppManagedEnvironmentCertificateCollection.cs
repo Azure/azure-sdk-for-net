@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             {
                 Properties = new ContainerAppCertificateProperties
                 {
-                    CertificateKeyVaultProperties = new CertificateKeyVaultProperties
+                    CertificateKeyVaultProperties = new ContainerAppCertificateKeyVaultProperties
                     {
                         Identity = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/microsoft.managedidentity/userassignedidentities/test-user-mi",
                         KeyVaultUri = new Uri("https://xxxxxxxx.vault.azure.net/certificates/certName"),

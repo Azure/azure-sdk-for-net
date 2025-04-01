@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             ContainerAppCertificateProvisioningState? provisioningState = default;
-            CertificateKeyVaultProperties certificateKeyVaultProperties = default;
+            ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default;
             string password = default;
             string subjectName = default;
             IReadOnlyList<string> subjectAlternativeNames = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    certificateKeyVaultProperties = CertificateKeyVaultProperties.DeserializeCertificateKeyVaultProperties(property.Value, options);
+                    certificateKeyVaultProperties = ContainerAppCertificateKeyVaultProperties.DeserializeContainerAppCertificateKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("password"u8))

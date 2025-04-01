@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             TriggerType = triggerType;
             ReplicaTimeout = replicaTimeout;
             Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
-            IdentitySettings = new ChangeTrackingList<IdentitySettings>();
+            IdentitySettings = new ChangeTrackingList<ContainerAppIdentitySettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppJobConfiguration"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="registries"> Collection of private container registry credentials used by a Container apps job. </param>
         /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App Job. If a Managed Identity is not specified here, default settings will be used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppJobTriggerType triggerType, int replicaTimeout, int? replicaRetryLimit, JobConfigurationManualTriggerConfig manualTriggerConfig, JobConfigurationScheduleTriggerConfig scheduleTriggerConfig, EventTriggerConfiguration eventTriggerConfig, IList<ContainerAppRegistryCredentials> registries, IList<IdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppJobConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppJobTriggerType triggerType, int replicaTimeout, int? replicaRetryLimit, JobConfigurationManualTriggerConfig manualTriggerConfig, JobConfigurationScheduleTriggerConfig scheduleTriggerConfig, EventTriggerConfiguration eventTriggerConfig, IList<ContainerAppRegistryCredentials> registries, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
             TriggerType = triggerType;
@@ -113,6 +113,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public IList<ContainerAppRegistryCredentials> Registries { get; }
         /// <summary> Optional settings for Managed Identities that are assigned to the Container App Job. If a Managed Identity is not specified here, default settings will be used. </summary>
         [WirePath("identitySettings")]
-        public IList<IdentitySettings> IdentitySettings { get; }
+        public IList<ContainerAppIdentitySettings> IdentitySettings { get; }
     }
 }

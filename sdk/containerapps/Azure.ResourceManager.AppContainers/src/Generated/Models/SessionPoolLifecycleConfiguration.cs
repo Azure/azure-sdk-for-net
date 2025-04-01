@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Scale configuration. </summary>
-    public partial class ScaleConfiguration
+    /// <summary> The lifecycle configuration properties of a session in the dynamic session pool. </summary>
+    public partial class SessionPoolLifecycleConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,32 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScaleConfiguration"/>. </summary>
-        public ScaleConfiguration()
+        /// <summary> Initializes a new instance of <see cref="SessionPoolLifecycleConfiguration"/>. </summary>
+        public SessionPoolLifecycleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScaleConfiguration"/>. </summary>
-        /// <param name="maxConcurrentSessions"> The maximum count of sessions at the same time. </param>
-        /// <param name="readySessionInstances"> The minimum count of ready session instances. </param>
+        /// <summary> Initializes a new instance of <see cref="SessionPoolLifecycleConfiguration"/>. </summary>
+        /// <param name="lifecycleType"> The lifecycle type of the session pool. </param>
+        /// <param name="cooldownPeriodInSeconds"> The cooldown period of a session in seconds when the lifecycle type is 'Timed'. </param>
+        /// <param name="maxAlivePeriodInSeconds"> The maximum alive period of a session in seconds when the lifecycle type is 'OnContainerExit'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScaleConfiguration(int? maxConcurrentSessions, int? readySessionInstances, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SessionPoolLifecycleConfiguration(SessionPoolLifecycleType? lifecycleType, int? cooldownPeriodInSeconds, int? maxAlivePeriodInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxConcurrentSessions = maxConcurrentSessions;
-            ReadySessionInstances = readySessionInstances;
+            LifecycleType = lifecycleType;
+            CooldownPeriodInSeconds = cooldownPeriodInSeconds;
+            MaxAlivePeriodInSeconds = maxAlivePeriodInSeconds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The maximum count of sessions at the same time. </summary>
-        [WirePath("maxConcurrentSessions")]
-        public int? MaxConcurrentSessions { get; set; }
-        /// <summary> The minimum count of ready session instances. </summary>
-        [WirePath("readySessionInstances")]
-        public int? ReadySessionInstances { get; set; }
+        /// <summary> The lifecycle type of the session pool. </summary>
+        [WirePath("lifecycleType")]
+        public SessionPoolLifecycleType? LifecycleType { get; set; }
+        /// <summary> The cooldown period of a session in seconds when the lifecycle type is 'Timed'. </summary>
+        [WirePath("cooldownPeriodInSeconds")]
+        public int? CooldownPeriodInSeconds { get; set; }
+        /// <summary> The maximum alive period of a session in seconds when the lifecycle type is 'OnContainerExit'. </summary>
+        [WirePath("maxAlivePeriodInSeconds")]
+        public int? MaxAlivePeriodInSeconds { get; set; }
     }
 }

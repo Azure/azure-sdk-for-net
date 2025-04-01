@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppCustomDomainConfiguration(string customDomainVerificationId, string dnsSuffix, CertificateKeyVaultProperties certificateKeyVaultProperties, byte[] certificateValue, string certificatePassword, DateTimeOffset? expireOn, string thumbprint, string subjectName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppCustomDomainConfiguration(string customDomainVerificationId, string dnsSuffix, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, byte[] certificateValue, string certificatePassword, DateTimeOffset? expireOn, string thumbprint, string subjectName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomDomainVerificationId = customDomainVerificationId;
             DnsSuffix = dnsSuffix;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string DnsSuffix { get; set; }
         /// <summary> Certificate stored in Azure Key Vault. </summary>
         [WirePath("certificateKeyVaultProperties")]
-        public CertificateKeyVaultProperties CertificateKeyVaultProperties { get; set; }
+        public ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties { get; set; }
         /// <summary> PFX or PEM blob. </summary>
         [WirePath("certificateValue")]
         public byte[] CertificateValue { get; set; }

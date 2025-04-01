@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Properties for a certificate stored in a Key Vault. </summary>
-    public partial class CertificateKeyVaultProperties
+    public partial class ContainerAppCertificateKeyVaultProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CertificateKeyVaultProperties"/>. </summary>
-        public CertificateKeyVaultProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificateKeyVaultProperties"/>. </summary>
+        public ContainerAppCertificateKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertificateKeyVaultProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificateKeyVaultProperties"/>. </summary>
         /// <param name="identity"> Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity. </param>
         /// <param name="keyVaultUri"> URL pointing to the Azure Key Vault secret that holds the certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateKeyVaultProperties(string identity, Uri keyVaultUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppCertificateKeyVaultProperties(string identity, Uri keyVaultUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             KeyVaultUri = keyVaultUri;

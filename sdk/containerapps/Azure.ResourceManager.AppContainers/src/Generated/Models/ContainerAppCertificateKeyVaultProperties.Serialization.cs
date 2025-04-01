@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ManagedIdentitySetting : IUtf8JsonSerializable, IJsonModel<ManagedIdentitySetting>
+    public partial class ContainerAppCertificateKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppCertificateKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIdentitySetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCertificateKeyVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ManagedIdentitySetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppCertificateKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,18 +29,21 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentitySetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCertificateKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIdentitySetting)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCertificateKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("identity"u8);
-            writer.WriteStringValue(Identity);
-            if (Optional.IsDefined(Lifecycle))
+            if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("lifecycle"u8);
-                writer.WriteStringValue(Lifecycle.Value.ToString());
+                writer.WritePropertyName("identity"u8);
+                writer.WriteStringValue(Identity);
+            }
+            if (Optional.IsDefined(KeyVaultUri))
+            {
+                writer.WritePropertyName("keyVaultUrl"u8);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,19 +62,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        ManagedIdentitySetting IJsonModel<ManagedIdentitySetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppCertificateKeyVaultProperties IJsonModel<ContainerAppCertificateKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentitySetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCertificateKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIdentitySetting)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCertificateKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedIdentitySetting(document.RootElement, options);
+            return DeserializeContainerAppCertificateKeyVaultProperties(document.RootElement, options);
         }
 
-        internal static ManagedIdentitySetting DeserializeManagedIdentitySetting(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppCertificateKeyVaultProperties DeserializeContainerAppCertificateKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string identity = default;
-            IdentitySettingsLifeCycle? lifecycle = default;
+            Uri keyVaultUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +93,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                     identity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lifecycle"u8))
+                if (property.NameEquals("keyVaultUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lifecycle = new IdentitySettingsLifeCycle(property.Value.GetString());
+                    keyVaultUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedIdentitySetting(identity, lifecycle, serializedAdditionalRawData);
+            return new ContainerAppCertificateKeyVaultProperties(identity, keyVaultUrl, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -142,18 +145,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Lifecycle), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultUri), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  lifecycle: ");
+                builder.Append("  keyVaultUrl: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Lifecycle))
+                if (Optional.IsDefined(KeyVaultUri))
                 {
-                    builder.Append("  lifecycle: ");
-                    builder.AppendLine($"'{Lifecycle.Value.ToString()}'");
+                    builder.Append("  keyVaultUrl: ");
+                    builder.AppendLine($"'{KeyVaultUri.AbsoluteUri}'");
                 }
             }
 
@@ -161,9 +164,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ManagedIdentitySetting>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppCertificateKeyVaultProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentitySetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCertificateKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -172,26 +175,26 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIdentitySetting)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCertificateKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ManagedIdentitySetting IPersistableModel<ManagedIdentitySetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppCertificateKeyVaultProperties IPersistableModel<ContainerAppCertificateKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentitySetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCertificateKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedIdentitySetting(document.RootElement, options);
+                        return DeserializeContainerAppCertificateKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIdentitySetting)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCertificateKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ManagedIdentitySetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppCertificateKeyVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

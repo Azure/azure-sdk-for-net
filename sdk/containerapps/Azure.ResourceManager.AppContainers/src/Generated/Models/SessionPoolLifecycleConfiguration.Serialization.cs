@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class LifecycleConfiguration : IUtf8JsonSerializable, IJsonModel<LifecycleConfiguration>
+    public partial class SessionPoolLifecycleConfiguration : IUtf8JsonSerializable, IJsonModel<SessionPoolLifecycleConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LifecycleConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionPoolLifecycleConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LifecycleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SessionPoolLifecycleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LifecycleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolLifecycleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LifecycleConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionPoolLifecycleConfiguration)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(LifecycleType))
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        LifecycleConfiguration IJsonModel<LifecycleConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SessionPoolLifecycleConfiguration IJsonModel<SessionPoolLifecycleConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LifecycleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolLifecycleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LifecycleConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionPoolLifecycleConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLifecycleConfiguration(document.RootElement, options);
+            return DeserializeSessionPoolLifecycleConfiguration(document.RootElement, options);
         }
 
-        internal static LifecycleConfiguration DeserializeLifecycleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SessionPoolLifecycleConfiguration DeserializeSessionPoolLifecycleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            LifecycleType? lifecycleType = default;
+            SessionPoolLifecycleType? lifecycleType = default;
             int? cooldownPeriodInSeconds = default;
             int? maxAlivePeriodInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    lifecycleType = new LifecycleType(property.Value.GetString());
+                    lifecycleType = new SessionPoolLifecycleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cooldownPeriodInSeconds"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LifecycleConfiguration(lifecycleType, cooldownPeriodInSeconds, maxAlivePeriodInSeconds, serializedAdditionalRawData);
+            return new SessionPoolLifecycleConfiguration(lifecycleType, cooldownPeriodInSeconds, maxAlivePeriodInSeconds, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<LifecycleConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SessionPoolLifecycleConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LifecycleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolLifecycleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -201,26 +201,26 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(LifecycleConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionPoolLifecycleConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LifecycleConfiguration IPersistableModel<LifecycleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SessionPoolLifecycleConfiguration IPersistableModel<SessionPoolLifecycleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LifecycleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolLifecycleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLifecycleConfiguration(document.RootElement, options);
+                        return DeserializeSessionPoolLifecycleConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LifecycleConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionPoolLifecycleConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LifecycleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SessionPoolLifecycleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

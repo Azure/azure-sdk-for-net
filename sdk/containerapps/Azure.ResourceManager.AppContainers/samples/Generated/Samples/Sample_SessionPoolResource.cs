@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // invoke the operation
             SessionPoolPatch patch = new SessionPoolPatch
             {
-                ScaleConfiguration = new ScaleConfiguration
+                ScaleConfiguration = new SessionPoolScaleConfiguration
                 {
                     MaxConcurrentSessions = 500,
                     ReadySessionInstances = 100,
