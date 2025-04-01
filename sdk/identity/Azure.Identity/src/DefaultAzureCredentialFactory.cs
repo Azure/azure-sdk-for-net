@@ -3,7 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using Azure.Core;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -89,12 +93,22 @@ namespace Azure.Identity
                 chain.Add(CreateInteractiveBrowserCredential());
             }
 
+            if (!Options.ExcludeBrokerAuthentication && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
+            {
+                chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
+            }
+
             if (chain.Count == 0)
             {
                 throw new ArgumentException("At least one credential type must be included in the authentication flow.", "options");
             }
 
             return chain.ToArray();
+        }
+
+        private TokenCredential CreateBrokerAuthenticationCredential()
+        {
+            throw new NotImplementedException();
         }
 
         public virtual TokenCredential CreateEnvironmentCredential()
@@ -182,6 +196,22 @@ namespace Azure.Identity
                 Pipeline);
         }
 
+        public TokenCredential CreateBrokerAuthenticationCredential(InteractiveBrowserCredentialOptions brokerOptions)
+        {
+            var options = Options.Clone<DevelopmentBrokerOptions>();
+            ((IMsalSettablePublicClientInitializerOptions)options).BeforeBuildClient = ((IMsalSettablePublicClientInitializerOptions)brokerOptions).BeforeBuildClient;
+
+            options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
+
+            options.TenantId = Options.InteractiveBrowserTenantId;
+
+            return new InteractiveBrowserCredential(
+                Options.InteractiveBrowserTenantId,
+                Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId,
+                options,
+                Pipeline);
+        }
+
         public virtual TokenCredential CreateAzureDeveloperCliCredential()
         {
             var options = Options.Clone<AzureDeveloperCliCredentialOptions>();
@@ -231,6 +261,34 @@ namespace Azure.Identity
             options.IsChainedCredential = true;
 
             return new AzurePowerShellCredential(options, Pipeline, default);
+        }
+
+        internal static bool TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options)
+        {
+            options = null;
+            try
+            {
+                // Check if the Azure.Identity.Broker assembly is loaded
+                Assembly brokerAssembly;
+                brokerAssembly = Assembly.Load("Azure.Identity.Broker");
+
+                if (brokerAssembly != null)
+                {
+                    // Get the DevelopmentBrokerOptions type
+                    var optionsType = brokerAssembly.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions");
+                    if (optionsType != null)
+                    {
+                        // Create an instance using the parameterless constructor
+                        options = (InteractiveBrowserCredentialOptions)Activator.CreateInstance(optionsType);
+                    }
+                }
+
+                return options != null;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
