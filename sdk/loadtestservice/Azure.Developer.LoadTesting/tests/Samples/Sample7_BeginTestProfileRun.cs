@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.Core;
 using System;
-using System.Collections.Generic;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests.Samples
 {
@@ -13,9 +12,10 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
     {
         [Test]
         [SyncOnly]
-        public void BeginTestRun()
+        public void BeginTestProfileRun()
         {
             #region Snippet:Azure_Developer_LoadTesting_CreateTestRunClient
+
 #if SNIPPET
             // The data-plane endpoint is obtained from Control Plane APIs with "https://"
             // To obtain endpoint please follow: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting#data-plane-endpoint
@@ -27,34 +27,30 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             TokenCredential credential = TestEnvironment.Credential;
 #endif
 
-            // creating LoadTesting TestRun Client
+            // creating LoadTesting Administration Client
             LoadTestRunClient loadTestRunClient = new LoadTestRunClient(endpointUrl, credential);
             #endregion
 
-            #region Snippet:Azure_Developer_LoadTesting_BeginTestRun
+            #region Snippet:Azure_Developer_LoadTesting_BeginTestProfileRun
+            string testProfileRunId = "my-test-profile-run-id";
+            string testProfileId = "my-test-profile-id"; // This test profile is already created
 
-            string testId = "my-loadtest";
-            string resourceId = TestEnvironment.ResourceId;
-            string testRunId = "my-loadtest-run";
-
-            // all other data to be sent to testRun
             var data = new
             {
-                testid = testId,
-                displayName = "My display name"
+                description = "This is created using SDK",
+                displayName = "SDK's Test Profile Run",
+                testProfileId = testProfileId,
             };
 
             try
             {
-                TestRunResultOperation operation = loadTestRunClient.BeginTestRun(
-                        WaitUntil.Started, testRunId, RequestContent.Create(data)
-                   );
+                TestProfileRunResultOperation operation = loadTestRunClient.BeginTestProfileRun(WaitUntil.Started, testProfileRunId, RequestContent.Create(data));
 
                 // get initial response
                 Response initialResponse = operation.GetRawResponse();
                 Console.WriteLine(initialResponse.Content.ToString());
 
-                // waiting for test run to get completed
+                // waiting for test profile run to get completed
                 operation.WaitForCompletion();
 
                 // final response
