@@ -49,8 +49,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
-        internal SubscriptionDeletedEventData()
+        /// <param name="eventSubscriptionId"> The Azure resource ID of the deleted event subscription. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionId"/> is null. </exception>
+        internal SubscriptionDeletedEventData(string eventSubscriptionId)
         {
+            Argument.AssertNotNull(eventSubscriptionId, nameof(eventSubscriptionId));
+
+            EventSubscriptionId = eventSubscriptionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
@@ -60,6 +65,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             EventSubscriptionId = eventSubscriptionId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/> for deserialization. </summary>
+        internal SubscriptionDeletedEventData()
+        {
         }
 
         /// <summary> The Azure resource ID of the deleted event subscription. </summary>

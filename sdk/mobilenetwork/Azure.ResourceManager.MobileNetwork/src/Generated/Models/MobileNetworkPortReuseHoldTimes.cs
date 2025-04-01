@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The minimum time (in seconds) that will pass before a port that was used by a closed pinhole can be recycled for use by another pinhole. All hold times must be minimum 1 second.
-    /// Serialized Name: PortReuseHoldTimes
-    /// </summary>
+    /// <summary> The minimum time (in seconds) that will pass before a port that was used by a closed pinhole can be recycled for use by another pinhole. All hold times must be minimum 1 second. </summary>
     public partial class MobileNetworkPortReuseHoldTimes
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPortReuseHoldTimes"/>. </summary>
-        /// <param name="tcp">
-        /// Minimum time in seconds that will pass before a TCP port that was used by a closed pinhole can be reused. Default for TCP is 2 minutes.
-        /// Serialized Name: PortReuseHoldTimes.tcp
-        /// </param>
-        /// <param name="udp">
-        /// Minimum time in seconds that will pass before a UDP port that was used by a closed pinhole can be reused. Default for UDP is 1 minute.
-        /// Serialized Name: PortReuseHoldTimes.udp
-        /// </param>
+        /// <param name="tcp"> Minimum time in seconds that will pass before a TCP port that was used by a closed pinhole can be reused. Default for TCP is 2 minutes. </param>
+        /// <param name="udp"> Minimum time in seconds that will pass before a UDP port that was used by a closed pinhole can be reused. Default for UDP is 1 minute. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkPortReuseHoldTimes(int? tcp, int? udp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Minimum time in seconds that will pass before a TCP port that was used by a closed pinhole can be reused. Default for TCP is 2 minutes.
-        /// Serialized Name: PortReuseHoldTimes.tcp
-        /// </summary>
+        /// <summary> Minimum time in seconds that will pass before a TCP port that was used by a closed pinhole can be reused. Default for TCP is 2 minutes. </summary>
         [WirePath("tcp")]
         public int? Tcp { get; set; }
-        /// <summary>
-        /// Minimum time in seconds that will pass before a UDP port that was used by a closed pinhole can be reused. Default for UDP is 1 minute.
-        /// Serialized Name: PortReuseHoldTimes.udp
-        /// </summary>
+        /// <summary> Minimum time in seconds that will pass before a UDP port that was used by a closed pinhole can be reused. Default for UDP is 1 minute. </summary>
         [WirePath("udp")]
         public int? Udp { get; set; }
     }

@@ -86,7 +86,10 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveButtonReplyContent AcsMessageInteractiveButtonReplyContent(string buttonId = null, string title = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent AcsMessageInteractiveContent(Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind? replyKind = default(Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind?), Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveButtonReplyContent buttonReply = null, Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveListReplyContent listReply = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveListReplyContent AcsMessageInteractiveListReplyContent(string listItemId = null, string title = null, string description = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent AcsMessageMediaContent(string mimeType, string mediaId, string fileName, string caption) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null, bool? animated = default(bool?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent AcsMessageReactionContent(string messageId = null, string emoji = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsMicrosoftTeamsAppIdentifier AcsMicrosoftTeamsAppIdentifier(string appId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel? cloud = default(Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation) { throw null; }
@@ -1152,10 +1155,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageMediaContent
     {
         internal AcsMessageMediaContent() { }
+        public bool? Animated { get { throw null; } }
         public string Caption { get { throw null; } }
         public string FileName { get { throw null; } }
         public string MediaId { get { throw null; } }
         public string MimeType { get { throw null; } }
+    }
+    public partial class AcsMessageReactionContent
+    {
+        internal AcsMessageReactionContent() { }
+        public string Emoji { get { throw null; } }
+        public string MessageId { get { throw null; } }
     }
     public partial class AcsMessageReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsMessageEventData
     {
@@ -1166,6 +1176,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageContext Context { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent InteractiveContent { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent MediaContent { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string MessageType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent Reaction { get { throw null; } }
     }
     public partial class AcsMicrosoftTeamsAppIdentifier
     {

@@ -46,8 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeviceConnectionStateEventInfo"/>. </summary>
-        internal DeviceConnectionStateEventInfo()
+        /// <param name="sequenceNumber"> Sequence number is string representation of a hexadecimal number. string compare can be used to identify the larger number because both in ASCII and HEX numbers come after alphabets. If you are converting the string to hex, then the number is a 256 bit number. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sequenceNumber"/> is null. </exception>
+        internal DeviceConnectionStateEventInfo(string sequenceNumber)
         {
+            Argument.AssertNotNull(sequenceNumber, nameof(sequenceNumber));
+
+            SequenceNumber = sequenceNumber;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceConnectionStateEventInfo"/>. </summary>
@@ -57,6 +62,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             SequenceNumber = sequenceNumber;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceConnectionStateEventInfo"/> for deserialization. </summary>
+        internal DeviceConnectionStateEventInfo()
+        {
         }
 
         /// <summary> Sequence number is string representation of a hexadecimal number. string compare can be used to identify the larger number because both in ASCII and HEX numbers come after alphabets. If you are converting the string to hex, then the number is a 256 bit number. </summary>

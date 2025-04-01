@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SubscriptionQuotaAllocationListForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/SubscriptionQuotaAllocation/SubscriptionQuotaAllocation_List-Compute.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/SubscriptionQuotaAllocation/SubscriptionQuotaAllocation_List-Compute.json
             // this example is just showing the usage of "GroupQuotaSubscriptionAllocation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SubscriptionQuotaAllocationListForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/SubscriptionQuotaAllocation/SubscriptionQuotaAllocation_List-Compute.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/SubscriptionQuotaAllocation/SubscriptionQuotaAllocation_List-Compute.json
             // this example is just showing the usage of "GroupQuotaSubscriptionAllocation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SubscriptionQuotaAllocationListForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/SubscriptionQuotaAllocation/SubscriptionQuotaAllocation_List-Compute.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/SubscriptionQuotaAllocation/SubscriptionQuotaAllocation_List-Compute.json
             // this example is just showing the usage of "GroupQuotaSubscriptionAllocation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

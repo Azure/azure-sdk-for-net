@@ -1436,22 +1436,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        internal void CloseLink(AmqpLink link)
+        internal void CloseLink(AmqpLink link, string identifier = default)
         {
+            ServiceBusEventSource.Log.CloseLinkStart(identifier);
             if (!_useSingleSession)
             {
                 link.Session?.SafeClose();
             }
             link.SafeClose();
+            ServiceBusEventSource.Log.CloseLinkComplete(identifier);
         }
 
-        internal void CloseLink(RequestResponseAmqpLink link)
+        internal void CloseLink(RequestResponseAmqpLink link, string identifier = default)
         {
+            ServiceBusEventSource.Log.CloseLinkStart(identifier);
             if (!_useSingleSession)
             {
                 link.Session?.SafeClose();
             }
             link.SafeClose();
+            ServiceBusEventSource.Log.CloseLinkComplete(identifier);
         }
     }
 }

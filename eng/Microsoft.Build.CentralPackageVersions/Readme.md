@@ -7,5 +7,3 @@ file from the package and put them under a folder matching the version of the pa
 the places we are importing those files to include the updated version number. Currently only
 the CentralPackageVersionPackagePath property in Directory.Build.Data.targets. Be sure to clean up
 the old version as well.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Feng%2FMicrosoft.Build.CentralPackageVersions%2FReadme.png)

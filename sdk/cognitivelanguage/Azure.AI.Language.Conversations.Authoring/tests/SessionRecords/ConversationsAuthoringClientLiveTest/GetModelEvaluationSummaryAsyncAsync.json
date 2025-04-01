@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20241119.1 (.NET 8.0.10; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250228.1 (.NET 8.0.13; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -14,14 +14,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "a0a4b06d-c5e0-4e58-8d85-0d908430c201",
+        "apim-request-id": "ed6b909b-60f5-4213-b826-97008cc2c537",
         "Content-Length": "7102",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 20 Nov 2024 05:05:07 GMT",
-        "request-id": "a0a4b06d-c5e0-4e58-8d85-0d908430c201",
+        "Date": "Sat, 01 Mar 2025 07:44:14 GMT",
+        "request-id": "ed6b909b-60f5-4213-b826-97008cc2c537",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "74",
+        "x-envoy-upstream-service-time": "58",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
@@ -486,8 +486,8 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "1960375238"
+    "RandomSeed": "244220051"
   }
 }

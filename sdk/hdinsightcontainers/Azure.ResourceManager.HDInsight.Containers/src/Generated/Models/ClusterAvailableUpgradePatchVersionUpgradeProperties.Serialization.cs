@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeClusterAvailableUpgradePatchVersionUpgradeProperties(document.RootElement, options);
                     }
                 default:

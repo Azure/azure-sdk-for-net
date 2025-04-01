@@ -7,7 +7,7 @@ Ready to get started? Jump into our [quickstart guide]<!--(https://github.com/Az
 ## Useful links
 - [Quickstart: Run end-to-end tests at scale](https://aka.ms/mpt/quickstart)
 - [View Microsoft Playwright Testing service demo](https://youtu.be/GenC1jAeTZE)
-- [Documentation](https://aka.ms/mpt/docs) 
+- [Documentation](https://aka.ms/mpt/docs)
 - [Pricing](https://aka.ms/mpt/pricing)
 - [Share feedback](https://aka.ms/mpt/feedback)
 
@@ -115,5 +115,3 @@ details, visit [cla.microsoft.com][cla].
 This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [opencode@microsoft.com][coc_contact] with any additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/README.png)

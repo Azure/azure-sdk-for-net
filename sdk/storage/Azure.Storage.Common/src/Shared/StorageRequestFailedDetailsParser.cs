@@ -27,10 +27,12 @@ namespace Azure.Core.Pipeline
                     if (response.Headers.ContentType.Contains(Constants.ContentTypeApplicationXml))
                     {
                         XDocument xml = XDocument.Load(contentStream);
-                        var errorCode = xml.Root!.Element(Constants.ErrorCode)!.Value;
-                        var message = xml.Root.Element(Constants.ErrorMessage)!.Value;
-                        data = new Dictionary<string, string>();
+                        var errorCode = xml.Root!.Element(Constants.ErrorCode)?.Value ??
+                            xml.Root.Element(Constants.ErrorCodeLower)?.Value;
+                        var message = xml.Root.Element(Constants.ErrorMessage)?.Value ??
+                            xml.Root.Element(Constants.ErrorMessageLower)?.Value;
 
+                        data = new Dictionary<string, string>();
                         foreach (XElement element in xml.Root.Elements())
                         {
                             switch (element.Name.LocalName)

@@ -2,26 +2,28 @@
 
 This sample demonstrates how to retrieve and display model evaluation results asynchronously using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Retrieve Model Evaluation Results Asynchronously
 
-To retrieve model evaluation results for a project asynchronously, call GetModelEvaluationResultsAsync on the AnalyzeConversationAuthoring client.
+To retrieve model evaluation results for a project asynchronously, call GetModelEvaluationResultsAsync on the `ConversationAuthoringTrainedModel` client. This returns an AsyncPageable<UtteranceEvaluationResult> that allows you to iterate through and analyze the results.
 
 ```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
-AsyncPageable<UtteranceEvaluationResult> results = authoringClient.GetModelEvaluationResultsAsync(
-    projectName: projectName,
-    trainedModelLabel: trainedModelLabel,
+string projectName = "SampleProject";
+string trainedModelLabel = "SampleModel";
+ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
+
+AsyncPageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResultsAsync(
     stringIndexType: stringIndexType
 );
 
@@ -36,13 +38,13 @@ await foreach (UtteranceEvaluationResult result in results)
 
     // Print entities result
     Console.WriteLine("Expected Entities:");
-    foreach (var entity in result.EntitiesResult.ExpectedEntities)
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
     {
         Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
     }
 
     Console.WriteLine("Predicted Entities:");
-    foreach (var entity in result.EntitiesResult.PredictedEntities)
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
     {
         Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
     }
@@ -50,5 +52,3 @@ await foreach (UtteranceEvaluationResult result in results)
     Console.WriteLine();
 }
 ```
-
-To retrieve model evaluation results, call GetModelEvaluationResultsAsync on the AnalyzeConversationAuthoring client. This returns an AsyncPageable<UtteranceEvaluationResult> that allows you to iterate through and analyze the results.

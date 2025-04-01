@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         StorageTestEnvironment>
     {
         private readonly AccessTier _defaultAccessTier = AccessTier.Cold;
-        private const string _defaultContentType = "application/octet-stream";
+        private const string _defaultContentType = "image/jpeg";
         private const string _defaultContentLanguage = "en-US";
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
@@ -233,6 +233,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.IsNull(destinationProperties.ContentDisposition);
                 Assert.IsNull(destinationProperties.ContentLanguage);
                 Assert.IsNull(destinationProperties.CacheControl);
+                Assert.That(destinationProperties.ContentType, Is.Not.EqualTo(_defaultContentType));
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync(cancellationToken: cancellationToken);
                 Assert.IsEmpty(destinationTags.Tags);

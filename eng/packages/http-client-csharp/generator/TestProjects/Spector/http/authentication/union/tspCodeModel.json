@@ -1,0 +1,117 @@
+{
+ "$id": "1",
+ "name": "Authentication.Union",
+ "apiVersions": [],
+ "enums": [],
+ "models": [],
+ "clients": [
+  {
+   "$id": "2",
+   "name": "UnionClient",
+   "namespace": "Authentication.Union",
+   "doc": "Illustrates clients generated with ApiKey and OAuth2 authentication.",
+   "operations": [
+    {
+     "$id": "3",
+     "name": "validKey",
+     "resourceName": "Union",
+     "doc": "Check whether client is authenticated",
+     "accessibility": "public",
+     "parameters": [],
+     "responses": [
+      {
+       "$id": "4",
+       "statusCodes": [
+        204
+       ],
+       "headers": [],
+       "isErrorResponse": false
+      }
+     ],
+     "httpMethod": "GET",
+     "uri": "{endpoint}",
+     "path": "/authentication/union/validkey",
+     "bufferResponse": true,
+     "generateProtocolMethod": true,
+     "generateConvenienceMethod": true,
+     "crossLanguageDefinitionId": "Authentication.Union.validKey",
+     "decorators": []
+    },
+    {
+     "$id": "5",
+     "name": "validToken",
+     "resourceName": "Union",
+     "doc": "Check whether client is authenticated",
+     "accessibility": "public",
+     "parameters": [],
+     "responses": [
+      {
+       "$id": "6",
+       "statusCodes": [
+        204
+       ],
+       "headers": [],
+       "isErrorResponse": false
+      }
+     ],
+     "httpMethod": "GET",
+     "uri": "{endpoint}",
+     "path": "/authentication/union/validtoken",
+     "bufferResponse": true,
+     "generateProtocolMethod": true,
+     "generateConvenienceMethod": true,
+     "crossLanguageDefinitionId": "Authentication.Union.validToken",
+     "decorators": []
+    }
+   ],
+   "parameters": [
+    {
+     "$id": "7",
+     "name": "endpoint",
+     "nameInRequest": "endpoint",
+     "doc": "Service host",
+     "type": {
+      "$id": "8",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "location": "Uri",
+     "isApiVersion": false,
+     "isContentType": false,
+     "isRequired": true,
+     "isEndpoint": true,
+     "skipUrlEncoding": false,
+     "explode": false,
+     "kind": "Client",
+     "defaultValue": {
+      "$id": "9",
+      "type": {
+       "$id": "10",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "value": "http://localhost:3000"
+     }
+    }
+   ],
+   "decorators": [],
+   "crossLanguageDefinitionId": "Authentication.Union"
+  }
+ ],
+ "auth": {
+  "$id": "11",
+  "apiKey": {
+   "$id": "12",
+   "name": "x-ms-api-key",
+   "in": "header"
+  },
+  "oAuth2": {
+   "$id": "13",
+   "scopes": [
+    "https://security.microsoft.com/.default"
+   ]
+  }
+ }
+}

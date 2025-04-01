@@ -232,5 +232,3 @@ additional questions or comments.
 [credentials]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme#credentials
 [style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fquantum%2FAzure.Quantum.Jobs%2FREADME.png)

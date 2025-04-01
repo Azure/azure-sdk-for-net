@@ -36,19 +36,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             writer.WritePropertyName("recordingStorageInfo"u8);
             writer.WriteObjectValue(RecordingStorageInfo, options);
-            writer.WritePropertyName("recordingStartTime"u8);
-            writer.WriteStringValue(RecordingStartTime, "O");
+            if (Optional.IsDefined(RecordingStartTime))
+            {
+                writer.WritePropertyName("recordingStartTime"u8);
+                writer.WriteStringValue(RecordingStartTime.Value, "O");
+            }
             if (Optional.IsDefined(RecordingDurationMs))
             {
                 writer.WritePropertyName("recordingDurationMs"u8);
                 writer.WriteNumberValue(RecordingDurationMs.Value);
             }
-            writer.WritePropertyName("recordingContentType"u8);
-            writer.WriteStringValue(RecordingContentType.ToString());
-            writer.WritePropertyName("recordingChannelType"u8);
-            writer.WriteStringValue(RecordingChannelKind.ToString());
-            writer.WritePropertyName("recordingFormatType"u8);
-            writer.WriteStringValue(RecordingFormatType.ToString());
+            if (Optional.IsDefined(RecordingContentType))
+            {
+                writer.WritePropertyName("recordingContentType"u8);
+                writer.WriteStringValue(RecordingContentType.Value.ToString());
+            }
+            if (Optional.IsDefined(RecordingChannelKind))
+            {
+                writer.WritePropertyName("recordingChannelType"u8);
+                writer.WriteStringValue(RecordingChannelKind.Value.ToString());
+            }
+            if (Optional.IsDefined(RecordingFormatType))
+            {
+                writer.WritePropertyName("recordingFormatType"u8);
+                writer.WriteStringValue(RecordingFormatType.Value.ToString());
+            }
             if (Optional.IsDefined(SessionEndReason))
             {
                 writer.WritePropertyName("sessionEndReason"u8);
@@ -62,7 +74,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -92,11 +104,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             AcsRecordingStorageInfoProperties recordingStorageInfo = default;
-            DateTimeOffset recordingStartTime = default;
+            DateTimeOffset? recordingStartTime = default;
             long? recordingDurationMs = default;
-            RecordingContentType recordingContentType = default;
-            RecordingChannelType recordingChannelType = default;
-            RecordingFormatType recordingFormatType = default;
+            RecordingContentType? recordingContentType = default;
+            RecordingChannelType? recordingChannelType = default;
+            RecordingFormatType? recordingFormatType = default;
             string sessionEndReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -109,6 +121,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("recordingStartTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     recordingStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -123,16 +139,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("recordingContentType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     recordingContentType = new RecordingContentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recordingChannelType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     recordingChannelType = new RecordingChannelType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recordingFormatType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     recordingFormatType = new RecordingFormatType(property.Value.GetString());
                     continue;
                 }
@@ -179,7 +207,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement, options);
                     }
                 default:
@@ -193,7 +221,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcsRecordingFileStatusUpdatedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement);
         }
 
