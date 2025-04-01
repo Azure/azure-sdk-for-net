@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -53,13 +51,44 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 await tm.QueueBytesTransferredAsync(i, cancellationToken);
             }
-            // Wait for things to propegate into channel
-            await Task.Delay(1);
+            // Wait 1 second for all tasks to complete
+            await Task.Delay(2000);
 
             // Assert
-            var stopwatchField = typeof(ThroughputMonitor).GetField("_stopwatch", System.Reflection.BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.Greater(stopwatchField.Elap, 0, "Time elapsed not greater than 0");
+            var stopwatchField = typeof(ThroughputMonitor).GetField("_stopwatch", BindingFlags.NonPublic | BindingFlags.Instance);
+            var stopwatchInstance = (Stopwatch)stopwatchField.GetValue(tm);
+            Assert.Greater(stopwatchInstance.Elapsed.TotalSeconds, 0.0, "Time elapsed not greater than 0");
+            Assert.Greater(tm.TotalBytesTransferred, 0, "Bytes transferred not greater than 0");
             Assert.Greater(tm.Throughput, 0.0m, "Throughput not greater than 0");
         }
+
+        //[Test]
+        //public async Task ThroughputMonitor_CancellationTokenShouldStopMonitor()
+        //{
+        //    // Arrange
+        //    ThroughputMonitor tm = new ThroughputMonitor();
+        //    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        //    CancellationToken cancellationToken = cancellationTokenSource.Token;
+
+        //    // Reflecting for stopwatch
+        //    var stopwatchField = typeof(ThroughputMonitor).GetField("_stopwatch", BindingFlags.NonPublic | BindingFlags.Instance);
+        //    var stopwatchInstance = (Stopwatch)stopwatchField.GetValue(tm);
+
+        //    // Act
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        await tm.QueueBytesTransferredAsync(i, cancellationToken);
+        //        if (i == 5)
+        //        {
+        //            cancellationTokenSource.Cancel();
+        //        }
+        //    }
+
+        //    // Assert
+        //    Assert.IsTrue(cancellationToken.IsCancellationRequested);
+        //    Assert.IsFalse(stopwatchInstance.IsRunning);
+        //    Assert.Greater(tm.Throughput, 0.0m, "Throughput not greater than 0");
+        //    Assert.Greater(tm.TotalBytesTransferred, 0);
+        //}
     }
 }

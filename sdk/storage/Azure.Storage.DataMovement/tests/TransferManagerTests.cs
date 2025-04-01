@@ -654,7 +654,8 @@ public class TransferManagerTests
         var throughputMonitor = (ThroughputMonitor)throughputMonitorField.GetValue(transferManager);
 
         // Assert the throughput monitor values
-        Assert.That(throughputMonitor.TotalBytesTransferred, Is.EqualTo(3072));
+        Assert.AreEqual(throughputMonitor.TotalBytesTransferred, 3072, "Throughput not equal to 2048");
+        Assert.Greater(throughputMonitor.Throughput, 0, "Thoughput not greater than 0");
     }
 }
 
