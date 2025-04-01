@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task UpdateManagedIdentity()
         {
-            ResourceIdentifier resourceIdentifier = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/yuchen-devrp/providers/microsoft.managedidentity/userassignedidentities/hdiwasbmsi");
-            ResourceIdentifier resourceIdentifier2 = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/yuchen-ps-test/providers/microsoft.managedidentity/userassignedidentities/hdi-msi");
+            ResourceIdentifier resourceIdentifier = new ResourceIdentifier("/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/yuchen-devrp/providers/microsoft.managedidentity/userassignedidentities/hdiwasbmsi");
+            ResourceIdentifier resourceIdentifier2 = new ResourceIdentifier("/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/yuchen-ps-test/providers/microsoft.managedidentity/userassignedidentities/hdi-msi");
 
             var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
 
