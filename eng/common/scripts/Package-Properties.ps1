@@ -119,7 +119,7 @@ class PackageProps {
         $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
 
         $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
-        $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
+        $ciFiles = @(Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File)
         $ciArtifactResult = $null
         $soleCIYml = ($ciFiles.Count -eq 1)
 
