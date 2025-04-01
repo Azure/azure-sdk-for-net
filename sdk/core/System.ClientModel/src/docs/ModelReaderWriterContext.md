@@ -2,8 +2,8 @@
 
 ## Overview
 
-The [ModelReaderWriterContext](../../src/ModelReaderWriter/ModelReaderWriterContext.cs) class
- provides type information necessary for [ModelReaderWriter]((../../src/ModelReaderWriter/ModelReaderWriter.cs))
+The [ModelReaderWriterContext](https://github.com/Azure/azure-sdk-for-net/blob/b8704d0e58f17fd02da61b561b55778f80372105/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriterContext.cs) class
+ provides type information necessary for [ModelReaderWriter]((https://github.com/Azure/azure-sdk-for-net/blob/b8704d0e58f17fd02da61b561b55778f80372105/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriter.cs))
  to work with [AOT (Ahead of Time)](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) compilation.
 It also provides a performance boost vs using ModelReaderWriter without the context class.  It is considered
 an advanced scenario and is not necessary to work with ModelReaderWriter. However, if you are using AOT compilation or need to optimize
@@ -21,8 +21,8 @@ ModelReaderWriter.Write<MyPersistableModel>(myObject, ModelReaderWriterOptions.J
 ## SourceGeneration
 
 System.ClientModel provides a source generator that will automatically create a ModelReaderWriterContext for your assembly.
-It will also create all necessary [ModelReaderWriterTypeBuilder](../../src/ModelReaderWriter/ModelReaderWriterTypeBuilder.cs) classes for any types in your assembly that
-implement [```IPersistableModel<T>```](../../src/ModelReaderWriter/IPersistableModel.cs) as well as any type used in direct calls to `ModelReaderWriter.Read` and `ModelReaderWriter.Write`.
+It will also create all necessary [ModelReaderWriterTypeBuilder](https://github.com/Azure/azure-sdk-for-net/blob/b8704d0e58f17fd02da61b561b55778f80372105/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriterTypeBuilder.cs) classes for any types in your assembly that
+implement [```IPersistableModel<T>```](https://github.com/Azure/azure-sdk-for-net/blob/b8704d0e58f17fd02da61b561b55778f80372105/sdk/core/System.ClientModel/src/ModelReaderWriter/IPersistableModel.cs) as well as any type used in direct calls to `ModelReaderWriter.Read` and `ModelReaderWriter.Write`.
 
 ### Context class
 
@@ -110,5 +110,5 @@ a package reference to System.ClientModel will do this but you can verify in you
 
 ## Additional Examples
 
-You can find examples of type builder implementations for many collection types in [this folder](../../tests/ModelReaderWriterTests/Models/AvailabilitySetDatas).
+You can find examples of type builder implementations for many collection types in [this folder](https://github.com/Azure/azure-sdk-for-net/blob/b8704d0e58f17fd02da61b561b55778f80372105/sdk/core/System.ClientModel/tests/ModelReaderWriterTests/Models/AvailabilitySetDatas).
 These examples cover a wide range of collection types and can serve as templates for your own implementations.
