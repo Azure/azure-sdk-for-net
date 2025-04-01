@@ -2774,7 +2774,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         ///
-        /// During the disposal of the write stream, an exception may be thrown.
+        /// During the disposal of the returned write stream, an exception may be thrown.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenWrite(
@@ -2812,7 +2812,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         ///
-        /// During the disposal of the write stream, an exception may be thrown.
+        /// During the disposal of the returned write stream, an exception may be thrown.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenWriteAsync(
@@ -2853,7 +2853,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         ///
-        /// During the disposal of the write stream, an exception may be thrown.
+        /// During the disposal of the returned write stream, an exception may be thrown.
         /// </remarks>
         internal async Task<Stream> OpenWriteInternal(
             bool overwrite,
