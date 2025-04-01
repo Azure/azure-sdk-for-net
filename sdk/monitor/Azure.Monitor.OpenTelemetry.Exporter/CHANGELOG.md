@@ -13,10 +13,7 @@
   ([#48402](https://github.com/Azure/azure-sdk-for-net/pull/48402))
   - Added support for LiveMetrics when using the `UseAzureMonitorExporter` api.
   
-
 ### Breaking Changes
-
-* This version breaks Trimming and AOT. This will be restored in a future version.
 
 ### Bugs Fixed
 

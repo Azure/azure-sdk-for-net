@@ -80,9 +80,6 @@ The following example demonstrates how to add the `AzureMonitorExporter` for all
 To use this api, you need to add OpenTelemetry to a `ServiceCollection`.
 This approach will also enable LiveMetrics. LiveMetrics can be disabled by setting `options.EnableLiveMetrics = false`.
 
-Be aware that if you're doing this with a manually created `ServiceCollection` you must also start the `HostedServices` to ensure that the exporter is started. 
-If you're doing this in an application with dependency injection (ie: ASP.NET Core), this should be handled automatically.
-
 ```csharp
 appBuilder.Services.AddOpenTelemetry()
     .UseAzureMonitorExporter(options => {
