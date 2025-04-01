@@ -78,19 +78,6 @@ public class LoggingSamples
     #endregion
 
     [Test]
-    public void EnableDistributedTracing()
-    {
-        #region Snippet:EnableDistributedTracing
-        SampleClientOptions sampleClientOptions = new()
-        {
-            EnableDistributedTracing = true
-        };
-
-        // Create and use client as usual
-        #endregion
-    }
-
-    [Test]
     public void UseILoggerFactoryToCaptureLogs()
     {
         #region Snippet:UseILoggerFactoryToCaptureLogs

@@ -4,17 +4,17 @@ Instrumentation is an essential part of developing client libraries. System.Clie
 
 ## Distributed tracing
 
-### Enable distributed tracing in a client
+### Enable distributed tracing in a client (experimental)
 
-Here is an example for how distributed tracing can be enabled in a client built on System.ClientModel:
+Clients built on System.ClientModel will most likely be instrumented for distributed tracing using OpenTelemetry. They will produce activities in each client method call. In .NET, OpenTelemetry relies on `ActivitySource` to collect distributed information. See the [OpenTelemetry guide](https://opentelemetry.io/docs/languages/dotnet/getting-started/#instrumentation) for more information about collection and exporting pipelines.
 
-```C# Snippet:EnableDistributedTracing
-SampleClientOptions sampleClientOptions = new()
-{
-    EnableDistributedTracing = true
-};
+You can enabled experimental distributed traces for a library by doing the following:
 
-// Create and use client as usual
+```csharp
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracerProviderBuilder => tracerProviderBuilder
+        .AddSource("Experimental.{root library namespace}.{client name}.*")
+        .AddOtlpExporter())
 ```
 
 ### Adding distributed tracing instrumentation to service clients
