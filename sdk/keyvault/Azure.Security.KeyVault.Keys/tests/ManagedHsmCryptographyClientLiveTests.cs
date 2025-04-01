@@ -12,6 +12,7 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V7_6_Preview_2,
         KeyClientOptions.ServiceVersion.V7_5,
         KeyClientOptions.ServiceVersion.V7_4,
         KeyClientOptions.ServiceVersion.V7_3,
@@ -46,11 +47,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             nameof(EncryptionAlgorithm.A128Cbc),
             nameof(EncryptionAlgorithm.A192Cbc),
             nameof(EncryptionAlgorithm.A256Cbc),
-            nameof(EncryptionAlgorithm.CkmAesKeyWrap),
             nameof(EncryptionAlgorithm.A128CbcPad),
             nameof(EncryptionAlgorithm.A192CbcPad),
-            nameof(EncryptionAlgorithm.A256CbcPad),
-            nameof(EncryptionAlgorithm.CkmAesKeyWrapPad)
+            nameof(EncryptionAlgorithm.A256CbcPad)
             )] EncryptionAlgorithm algorithm)
         {
             int keySizeInBytes = algorithm.GetAesCbcEncryptionAlgorithm().KeySizeInBytes;
@@ -83,6 +82,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 EncryptionAlgorithm.A192CbcPadValue => EncryptParameters.A192CbcPadParameters(plaintext, iv),
                 EncryptionAlgorithm.A256CbcPadValue => EncryptParameters.A256CbcPadParameters(plaintext, iv),
 
+                EncryptionAlgorithm.CkmAesKeyWrapValue => EncryptParameters.CkmAesKeyWrapParameters(plaintext, iv),
+                EncryptionAlgorithm.CkmAesKeyWrapPadValue => EncryptParameters.CkmAesKeyWrapPadParameters(plaintext, iv),
+
                 _ => throw new NotSupportedException($"{algorithm} is not supported"),
             };
 
@@ -98,6 +100,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 EncryptionAlgorithm.A128CbcPadValue => DecryptParameters.A128CbcPadParameters(encrypted.Ciphertext, encrypted.Iv),
                 EncryptionAlgorithm.A192CbcPadValue => DecryptParameters.A192CbcPadParameters(encrypted.Ciphertext, encrypted.Iv),
                 EncryptionAlgorithm.A256CbcPadValue => DecryptParameters.A256CbcPadParameters(encrypted.Ciphertext, encrypted.Iv),
+
+                EncryptionAlgorithm.CkmAesKeyWrapValue => DecryptParameters.CkmAesKeyWrapParameters(encrypted.Ciphertext, encrypted.Iv),
+                EncryptionAlgorithm.CkmAesKeyWrapPadValue => DecryptParameters.CkmAesKeyWrapPadParameters(encrypted.Ciphertext, encrypted.Iv),
 
                 _ => throw new NotSupportedException($"{algorithm} is not supported"),
             };
@@ -215,6 +220,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case EncryptionAlgorithm.A128CbcValue:
                 case EncryptionAlgorithm.A128CbcPadValue:
                 case EncryptionAlgorithm.A128GcmValue:
+                case EncryptionAlgorithm.CkmAesKeyWrapValue:
                     return await Client.CreateOctKeyAsync(
                         new CreateOctKeyOptions(keyName)
                         {

@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         private readonly KeyClientOptions.ServiceVersion _serviceVersion;
 
         public CryptographyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
-            : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : this(isAsync, serviceVersion, RecordedTestMode.Playback /* to re-record */)
         {
         }
 
@@ -85,6 +85,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [RecordedTest]
         public async Task SignVerifyDataRoundTrip([EnumValues] SignatureAlgorithm algorithm)
         {
+            if ((algorithm == SignatureAlgorithm.HS256 ||
+                 algorithm == SignatureAlgorithm.HS384 ||
+                 algorithm == SignatureAlgorithm.HS512) && !IsManagedHSM)
+            {
+                Assert.Ignore("HMAC signature algorithms are only supported in Managed HSM");
+            }
+
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
@@ -127,6 +134,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [RecordedTest]
         public async Task SignVerifyDataStreamRoundTrip([EnumValues] SignatureAlgorithm algorithm)
         {
+            if ((algorithm == SignatureAlgorithm.HS256 ||
+                 algorithm == SignatureAlgorithm.HS384 ||
+                 algorithm == SignatureAlgorithm.HS512) && !IsManagedHSM)
+            {
+                Assert.Ignore("HMAC signature algorithms are only supported in Managed HSM");
+            }
+
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
@@ -190,6 +204,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 Assert.Ignore("RSA-PSS signature padding is not supported on .NET Framework.");
             }
 #endif
+
+            if ((algorithm == SignatureAlgorithm.HS256 ||
+                 algorithm == SignatureAlgorithm.HS384 ||
+                 algorithm == SignatureAlgorithm.HS512) && !IsManagedHSM)
+            {
+                Assert.Ignore("HMAC signature algorithms are only supported in Managed HSM");
+            }
 
             KeyVaultKey key = await CreateTestKeyWithKeyMaterial(algorithm);
             RegisterForCleanup(key.Name);
@@ -267,6 +288,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 Assert.Ignore("RSA-PSS signature padding is not supported on .NET Framework.");
             }
 #endif
+
+            if ((algorithm == SignatureAlgorithm.HS256 ||
+                 algorithm == SignatureAlgorithm.HS384 ||
+                 algorithm == SignatureAlgorithm.HS512) && !IsManagedHSM)
+            {
+                Assert.Ignore("HMAC signature algorithms are only supported in Managed HSM");
+            }
 
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -458,6 +486,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case EncryptionAlgorithm.RsaOaepValue:
                 case EncryptionAlgorithm.RsaOaep256Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
+                case EncryptionAlgorithm.CkmAesKeyWrapValue:
+                case EncryptionAlgorithm.CkmAesKeyWrapPadValue:
+                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 256 });
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
@@ -543,7 +574,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case SignatureAlgorithm.HS256Value:
                     return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 256 });
                 case SignatureAlgorithm.HS384Value:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 384 });
+                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 512});
                 case SignatureAlgorithm.HS512Value:
                     return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 512 });
                 default:
