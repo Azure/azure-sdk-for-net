@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using OpenAI.Chat;
+using OpenAI.Embeddings;
 
 namespace Azure.Projects.AI;
 
@@ -21,6 +22,7 @@ public class ChatTools
     private readonly Dictionary<string, MethodInfo> _methods = [];
     private readonly Dictionary<string, Func<string, BinaryData, Task<BinaryData>>> _mcpMethods = [];
     private readonly List<ChatTool> _definitions = [];
+    private readonly EmbeddingClient? _client;
 
     private List<McpClient> _mcpClients = [];
     private Dictionary<string, McpClient> _mcpClientsByEndpoint = [];
@@ -29,8 +31,9 @@ public class ChatTools
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatTools"/> class.
     /// </summary>
-    public ChatTools()
+    public ChatTools(EmbeddingClient? embeddingClient = null)
     {
+        _client = embeddingClient;
     }
 
     /// <summary>
