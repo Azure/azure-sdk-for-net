@@ -12,12 +12,9 @@ namespace Azure.Storage.DataMovement
     {
         private long _totalBytesTransferred;
         private Stopwatch _stopwatch = new Stopwatch();
-        private decimal _throughput = 0.0m;
         private int _isStopwatchRunning = 0;
 
         private IProcessor<long> _bytesTransferredProcessor;
-
-        public long BytesTransferred {  get; set; }
         public long TotalBytesTransferred { get => _totalBytesTransferred; }
 
         /// <summary>
@@ -25,7 +22,17 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public decimal Throughput
         {
-            get => _throughput;
+            get
+            {
+                if (_totalBytesTransferred == 0 || _stopwatch.Elapsed.TotalMilliseconds == 0)
+                {
+                    return 0.0M;
+                }
+                else
+                {
+                    return (decimal)(_totalBytesTransferred / (_stopwatch.Elapsed.TotalMilliseconds / 1000));
+                }
+            }
         }
 
         public long TimeElapsedInMilliseconds {
@@ -48,19 +55,10 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
         /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        private async Task ProcessBytesTransferredAsync(long bytesTransferred, CancellationToken cancellationToken)
+        private Task ProcessBytesTransferredAsync(long bytesTransferred, CancellationToken cancellationToken)
         {
-            await Task.Run(() =>
+            try
             {
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    if (_isStopwatchRunning == 1) _stopwatch.Stop();
-
-                    Interlocked.Exchange(ref _isStopwatchRunning, 0);
-                    return;
-                }
-
                 int prev = Interlocked.Exchange(ref _isStopwatchRunning, 1);
                 if (prev == 0)
                 {
@@ -68,8 +66,19 @@ namespace Azure.Storage.DataMovement
                 }
 
                 _totalBytesTransferred += bytesTransferred;
-                CalculateThroughput();
-            }, cancellationToken).ConfigureAwait(false);
+
+                return Task.CompletedTask;
+            }
+            finally
+            {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    if (_isStopwatchRunning == 1)
+                        _stopwatch.Stop();
+
+                    Interlocked.Exchange(ref _isStopwatchRunning, 0);
+                }
+            }
         }
 
         /// <summary>
@@ -86,18 +95,6 @@ namespace Azure.Storage.DataMovement
         public ValueTask DisposeAsync()
         {
             throw new NotImplementedException();
-        }
-
-        private void CalculateThroughput()
-        {
-            if (_totalBytesTransferred == 0 || _stopwatch.ElapsedMilliseconds == 0)
-            {
-                _throughput = 0;
-            }
-            else
-            {
-                _throughput = _totalBytesTransferred / (_stopwatch.ElapsedMilliseconds / 1000);
-            }
         }
     }
 }
