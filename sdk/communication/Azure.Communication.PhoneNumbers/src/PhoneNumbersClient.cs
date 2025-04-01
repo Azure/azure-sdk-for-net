@@ -2,15 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
