@@ -120,7 +120,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = CreateOrUpdateTestProfileRun(testProfileRunId, content, context);
-                TestProfileRunResultOperation operation = new(testProfileRunId, this, Response.FromValue(TestProfileRun.FromResponse(initialResponse), initialResponse));
+                TestProfileRunResultOperation operation = new(testProfileRunId, this, initialResponse);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion((TimeSpan)timeSpan, cancellationToken: default);
@@ -160,7 +160,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = await CreateOrUpdateTestProfileRunAsync(testProfileRunId, content, context).ConfigureAwait(false);
-                TestProfileRunResultOperation operation = new(testProfileRunId, this, Response.FromValue(TestProfileRun.FromResponse(initialResponse), initialResponse));
+                TestProfileRunResultOperation operation = new(testProfileRunId, this, initialResponse);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion((TimeSpan)timeSpan, cancellationToken: default);
