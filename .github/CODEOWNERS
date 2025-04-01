@@ -1063,7 +1063,7 @@
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
-# PRLabel: %Secret Store Extension
+# (Remove this when uncommenting path) PRLabel: %Secret Store Extension
 #/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @locomotiveviaduct
 
 # ServiceLabel: %Secret Store Extension %Mgmt
