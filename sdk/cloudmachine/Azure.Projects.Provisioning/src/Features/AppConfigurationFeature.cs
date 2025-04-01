@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Projects.Core;
 using Azure.Provisioning.AppConfiguration;
 
-namespace Azure.Projects.AppConfiguration;
+namespace Azure.Projects;
 
 public class AppConfigurationFeature : AzureProjectFeature
 {
