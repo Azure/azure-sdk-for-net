@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
+
 namespace System.ClientModel.Primitives;
 
 public abstract partial class ModelReaderWriterTypeBuilder
@@ -55,7 +57,7 @@ public abstract partial class ModelReaderWriterTypeBuilder
             var itemType = item.GetType();
             if (!itemType.Equals(type) && !type.IsAssignableFrom(itemType))
             {
-                throw new InvalidOperationException($"Item is of type {item.GetType().Name}, expected {type}");
+                throw new InvalidOperationException($"Item is of type {item.GetType().ToFriendlyName()}, expected {type}");
             }
 
             return item;

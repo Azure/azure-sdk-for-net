@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     {
         protected abstract void CompareModels(TElement model, TElement model2, string format);
 
+        protected abstract string CollectionTypeName { get; }
+
         protected virtual string GetJsonCollectionType() => GetCollectionType();
 
         protected virtual void CompareCollections(TCollection expected, TCollection actual, string format)
@@ -38,7 +40,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(JsonPayload), typeof(TCollection)));
             Assert.IsNotNull(ex);
-            Assert.AreEqual($"{typeof(TCollection).Name} does not implement IPersistableModel", ex!.Message);
+            Assert.AreEqual($"{CollectionTypeName} does not implement IPersistableModel", ex!.Message);
         }
 
         [Test]
@@ -46,7 +48,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(Instance!));
             Assert.IsNotNull(ex);
-            Assert.AreEqual($"{typeof(TCollection).Name} does not implement IPersistableModel", ex!.Message);
+            Assert.AreEqual($"{CollectionTypeName} does not implement IPersistableModel", ex!.Message);
         }
 
         [Test]
@@ -54,7 +56,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(Instance!, ModelReaderWriterOptions.Xml));
             Assert.IsNotNull(ex);
-            Assert.AreEqual($"{typeof(TCollection).Name} does not implement IPersistableModel", ex!.Message);
+            Assert.AreEqual($"{CollectionTypeName} does not implement IPersistableModel", ex!.Message);
         }
 
         protected override void RoundTripTest(string format, RoundTripStrategy<TCollection> strategy)

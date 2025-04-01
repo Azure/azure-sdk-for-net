@@ -15,6 +15,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override string GetJsonCollectionType() => "List";
 
+        protected override string CollectionTypeName => "CustomCollection<AvailabilitySetData>";
+
         public class CustomCollection<T> : List<T> { }
 
 #if SOURCE_GENERATOR

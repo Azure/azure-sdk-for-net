@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override string GetJsonCollectionType() => "Dictionary";
 
+        protected override string CollectionTypeName => "ReadOnlyDictionary<String, AvailabilitySetData>";
+
         protected override ModelReaderWriterContext Context => new LocalContext();
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)

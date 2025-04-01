@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override string GetJsonCollectionType() => "List";
 
+        protected override string CollectionTypeName => "ImmutableStack<AvailabilitySetData>";
+
         protected override ModelReaderWriterContext Context => new LocalContext();
 
         protected override bool IsRoundTripOrderDeterministic => false;

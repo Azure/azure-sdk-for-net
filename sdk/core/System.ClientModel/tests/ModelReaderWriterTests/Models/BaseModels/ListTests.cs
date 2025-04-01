@@ -4,7 +4,6 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
@@ -12,6 +11,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
     public class ListTests : MrwCollectionTests<List<BaseModel>, BaseModel>
     {
         protected override ModelReaderWriterContext Context => new LocalContext();
+
+        protected override string CollectionTypeName => "List<BaseModel>";
 
         protected override List<BaseModel> GetModelInstance()
         {

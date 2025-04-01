@@ -13,6 +13,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override string GetJsonCollectionType() => "ListOfList";
 
+        protected override string CollectionTypeName => "AvailabilitySetData[][]";
+
 #if SOURCE_GENERATOR
         protected override ModelReaderWriterContext Context => BasicContext.Default;
 #else

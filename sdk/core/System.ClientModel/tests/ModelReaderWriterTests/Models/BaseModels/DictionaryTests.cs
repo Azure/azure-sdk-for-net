@@ -13,6 +13,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
     {
         protected override ModelReaderWriterContext Context => new LocalContext();
 
+        protected override string CollectionTypeName => "Dictionary<String, BaseModel>";
+
         protected override Dictionary<string, BaseModel> GetModelInstance()
         {
             return new()

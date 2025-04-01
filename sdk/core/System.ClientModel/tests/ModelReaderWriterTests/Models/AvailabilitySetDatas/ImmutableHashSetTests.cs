@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override string GetJsonCollectionType() => "List";
 
+        protected override string CollectionTypeName => "ImmutableHashSet<AvailabilitySetData>";
+
         protected override bool IsWriteOrderDeterministic => false;
 
         protected override bool IsRoundTripOrderDeterministic => false;

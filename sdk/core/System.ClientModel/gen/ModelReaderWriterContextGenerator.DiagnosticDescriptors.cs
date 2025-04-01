@@ -14,22 +14,25 @@ namespace System.ClientModel.SourceGeneration
                 title: "Multiple contexts are not supported",
                 messageFormat: "Multiple contexts are not supported",
                 category: "ContextGenerator",
+                helpLinkUri: "",
                 defaultSeverity: DiagnosticSeverity.Error,
                 isEnabledByDefault: true);
 
             public static readonly DiagnosticDescriptor ContextMustBePartial = new(
                 id: "SCM0002",
-                title: "Classes that inherit from ModelReaderWriterContext must have the partial modifier",
+                title: "Requires partial modifier",
                 messageFormat: "Classes that inherit from ModelReaderWriterContext must have the partial modifier",
                 category: "ContextGenerator",
+                helpLinkUri: "",
                 defaultSeverity: DiagnosticSeverity.Error,
                 isEnabledByDefault: true);
 
             public static readonly DiagnosticDescriptor BuildableAttributeRequiresContext = new(
                 id: "SCM0003",
-                title: "ModelReaderWriterBuildableAttribute requires a class that inherits from ModelReaderWriterContext",
+                title: "Only applicable to subclasses of ModelReaderWriterContext",
                 messageFormat: "ModelReaderWriterBuildableAttribute can only be applied to classes that inherit from ModelReaderWriterContext",
                 category: "ContextGenerator",
+                helpLinkUri: "",
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true);
         }

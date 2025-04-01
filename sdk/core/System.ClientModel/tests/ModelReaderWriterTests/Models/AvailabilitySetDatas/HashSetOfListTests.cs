@@ -11,6 +11,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override string GetJsonCollectionType() => "ListOfList";
 
+        protected override string CollectionTypeName => "HashSet<List<AvailabilitySetData>>";
+
         protected override ModelReaderWriterContext Context => new LocalContext();
 
         protected override HashSet<List<AvailabilitySetData>> GetModelInstance()

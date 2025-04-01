@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 {
     public partial class DictionaryTests : MrwCollectionTests<Dictionary<string, AvailabilitySetData>, AvailabilitySetData>
     {
+        protected override string CollectionTypeName => "Dictionary<String, AvailabilitySetData>";
+
 #if SOURCE_GENERATOR
         protected override ModelReaderWriterContext Context => BasicContext.Default;
 #else

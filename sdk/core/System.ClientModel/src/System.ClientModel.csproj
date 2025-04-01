@@ -20,10 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" PackAsAnalyzer="true" />
-    <None Include="$(OutputPath)\..\..\System.ClientModel.SourceGeneration\$(Configuration)\netstandard2.0\System.ClientModel.SourceGeneration.dll"
-          Pack="true"
-          PackagePath="analyzers/dotnet/cs"
-          Visible="false" />
+    <None Include="$(OutputPath)\..\..\System.ClientModel.SourceGeneration\$(Configuration)\netstandard2.0\System.ClientModel.SourceGeneration.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
 </Project>
