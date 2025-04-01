@@ -70,7 +70,7 @@ namespace Azure.Compute.Batch
         /// BatchTaskAddResult from the CreateTasks and CreateTasksAsync methods.
         /// Default is false.
         /// </summary>
-        public bool ReturnBatchTaskAddResults
+        public bool ReturnBatchTaskCreateResults
         {
             get { return this._returnBatchTaskAddResults; }
             set { this._returnBatchTaskAddResults = value; }
@@ -94,7 +94,7 @@ namespace Azure.Compute.Batch
             {
                 this.CreateTaskResultHandler = new DefaultCreateTaskResultHandler();
             }
-            this.ReturnBatchTaskAddResults = returnBatchTaskAddResults;
+            this.ReturnBatchTaskCreateResults = returnBatchTaskAddResults;
         }
     }
 }

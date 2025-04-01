@@ -5024,7 +5024,7 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
     new BatchTaskCreateContent("simple1", "cmd /c dir /s"),
     new BatchTaskCreateContent("simple2", "cmd /c dir /s")
 });
-Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
+Response<BatchCreateTaskCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
 ]]></code>
 This sample shows how to call CreateTaskCollectionAsync.
 <code><![CDATA[
@@ -5068,7 +5068,7 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
     },
     new BatchTaskCreateContent("simple3", "cmd /c dir /s")
 });
-Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
+Response<BatchCreateTaskCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
 ]]></code></example>
     </member>
     <member name="CreateTaskCollection(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)">
@@ -5084,7 +5084,7 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
     new BatchTaskCreateContent("simple1", "cmd /c dir /s"),
     new BatchTaskCreateContent("simple2", "cmd /c dir /s")
 });
-Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
+Response<BatchCreateTaskCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
 ]]></code>
 This sample shows how to call CreateTaskCollection.
 <code><![CDATA[
@@ -5128,7 +5128,7 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
     },
     new BatchTaskCreateContent("simple3", "cmd /c dir /s")
 });
-Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
+Response<BatchCreateTaskCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
 ]]></code></example>
     </member>
     <member name="CreateTaskCollectionAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)">

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> The result of adding a collection of Tasks to a Job. </summary>
-    public partial class BatchTaskAddCollectionResult
+    /// <summary> An HTTP header name-value pair. </summary>
+    public partial class OutputFileUploadHeader
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,35 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskAddCollectionResult"/>. </summary>
-        internal BatchTaskAddCollectionResult()
+        /// <summary> Initializes a new instance of <see cref="OutputFileUploadHeader"/>. </summary>
+        /// <param name="name"> The case-insensitive name of the header to be used while uploading output files. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public OutputFileUploadHeader(string name)
         {
-            Value = new ChangeTrackingList<BatchTaskAddResult>();
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskAddCollectionResult"/>. </summary>
-        /// <param name="value"> The results of the add Task collection operation. </param>
+        /// <summary> Initializes a new instance of <see cref="OutputFileUploadHeader"/>. </summary>
+        /// <param name="name"> The case-insensitive name of the header to be used while uploading output files. </param>
+        /// <param name="value"> The value of the header to be used while uploading output files. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskAddCollectionResult(IReadOnlyList<BatchTaskAddResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OutputFileUploadHeader(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Name = name;
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The results of the add Task collection operation. </summary>
-        public IReadOnlyList<BatchTaskAddResult> Value { get; }
+        /// <summary> Initializes a new instance of <see cref="OutputFileUploadHeader"/> for deserialization. </summary>
+        internal OutputFileUploadHeader()
+        {
+        }
+
+        /// <summary> The case-insensitive name of the header to be used while uploading output files. </summary>
+        public string Name { get; set; }
+        /// <summary> The value of the header to be used while uploading output files. </summary>
+        public string Value { get; set; }
     }
 }

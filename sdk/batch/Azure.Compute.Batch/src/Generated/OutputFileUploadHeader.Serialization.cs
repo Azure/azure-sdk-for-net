@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class HttpHeader : IUtf8JsonSerializable, IJsonModel<HttpHeader>
+    public partial class OutputFileUploadHeader : IUtf8JsonSerializable, IJsonModel<OutputFileUploadHeader>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpHeader>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutputFileUploadHeader>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HttpHeader>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OutputFileUploadHeader>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HttpHeader>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OutputFileUploadHeader>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HttpHeader)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OutputFileUploadHeader)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("name"u8);
@@ -58,19 +58,19 @@ namespace Azure.Compute.Batch
             }
         }
 
-        HttpHeader IJsonModel<HttpHeader>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OutputFileUploadHeader IJsonModel<OutputFileUploadHeader>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HttpHeader>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OutputFileUploadHeader>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HttpHeader)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OutputFileUploadHeader)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHttpHeader(document.RootElement, options);
+            return DeserializeOutputFileUploadHeader(document.RootElement, options);
         }
 
-        internal static HttpHeader DeserializeHttpHeader(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static OutputFileUploadHeader DeserializeOutputFileUploadHeader(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,46 +100,46 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HttpHeader(name, value, serializedAdditionalRawData);
+            return new OutputFileUploadHeader(name, value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HttpHeader>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<OutputFileUploadHeader>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HttpHeader>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OutputFileUploadHeader>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HttpHeader)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutputFileUploadHeader)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HttpHeader IPersistableModel<HttpHeader>.Create(BinaryData data, ModelReaderWriterOptions options)
+        OutputFileUploadHeader IPersistableModel<OutputFileUploadHeader>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HttpHeader>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OutputFileUploadHeader>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHttpHeader(document.RootElement, options);
+                        return DeserializeOutputFileUploadHeader(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HttpHeader)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutputFileUploadHeader)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HttpHeader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OutputFileUploadHeader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static HttpHeader FromResponse(Response response)
+        internal static OutputFileUploadHeader FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHttpHeader(document.RootElement);
+            return DeserializeOutputFileUploadHeader(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

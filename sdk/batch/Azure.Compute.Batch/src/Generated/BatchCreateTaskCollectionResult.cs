@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> An HTTP header name-value pair. </summary>
-    public partial class HttpHeader
+    /// <summary> The result of creating a collection of Tasks to a Job. </summary>
+    public partial class BatchCreateTaskCollectionResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,22 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HttpHeader"/>. </summary>
-        /// <param name="name"> The case-insensitive name of the header to be used while uploading output files. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public HttpHeader(string name)
+        /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
+        internal BatchCreateTaskCollectionResult()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
+            Value = new ChangeTrackingList<BatchTaskCreateResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HttpHeader"/>. </summary>
-        /// <param name="name"> The case-insensitive name of the header to be used while uploading output files. </param>
-        /// <param name="value"> The value of the header to be used while uploading output files. </param>
+        /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
+        /// <param name="value"> The results of the create Task collection operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HttpHeader(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchCreateTaskCollectionResult(IReadOnlyList<BatchTaskCreateResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HttpHeader"/> for deserialization. </summary>
-        internal HttpHeader()
-        {
-        }
-
-        /// <summary> The case-insensitive name of the header to be used while uploading output files. </summary>
-        public string Name { get; set; }
-        /// <summary> The value of the header to be used while uploading output files. </summary>
-        public string Value { get; set; }
+        /// <summary> The results of the create Task collection operation. </summary>
+        public IReadOnlyList<BatchTaskCreateResult> Value { get; }
     }
 }

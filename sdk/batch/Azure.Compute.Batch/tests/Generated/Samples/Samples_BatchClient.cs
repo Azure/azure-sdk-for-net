@@ -5341,7 +5341,7 @@ commandLine = "cmd /c dir /s",
 new BatchTaskCreateContent("simple1", "cmd /c dir /s"),
 new BatchTaskCreateContent("simple2", "cmd /c dir /s")
             });
-            Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
+            Response<BatchCreateTaskCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
         }
 
         [Test]
@@ -5357,7 +5357,7 @@ new BatchTaskCreateContent("simple2", "cmd /c dir /s")
 new BatchTaskCreateContent("simple1", "cmd /c dir /s"),
 new BatchTaskCreateContent("simple2", "cmd /c dir /s")
             });
-            Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
+            Response<BatchCreateTaskCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
         }
 
         [Test]
@@ -5554,7 +5554,7 @@ FilePath = "common.exe",
 },
 new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             });
-            Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
+            Response<BatchCreateTaskCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
         }
 
         [Test]
@@ -5601,7 +5601,7 @@ FilePath = "common.exe",
 },
 new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             });
-            Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
+            Response<BatchCreateTaskCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
         }
 
         [Test]

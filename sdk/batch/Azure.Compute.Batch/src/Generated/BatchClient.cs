@@ -4349,7 +4349,7 @@ namespace Azure.Compute.Batch
         /// service and left in whatever state it was in at that time.
         /// </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollectionAsync(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response<BatchTaskAddCollectionResult>> CreateTaskCollectionAsync(string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchCreateTaskCollectionResult>> CreateTaskCollectionAsync(string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(taskCollection, nameof(taskCollection));
@@ -4357,7 +4357,7 @@ namespace Azure.Compute.Batch
             using RequestContent content = taskCollection.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateTaskCollectionAsync(jobId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
-            return Response.FromValue(BatchTaskAddCollectionResult.FromResponse(response), response);
+            return Response.FromValue(BatchCreateTaskCollectionResult.FromResponse(response), response);
         }
 
         /// <summary> Adds a collection of Tasks to the specified Job. </summary>
@@ -4389,7 +4389,7 @@ namespace Azure.Compute.Batch
         /// service and left in whatever state it was in at that time.
         /// </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateTaskCollection(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response<BatchTaskAddCollectionResult> CreateTaskCollection(string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        public virtual Response<BatchCreateTaskCollectionResult> CreateTaskCollection(string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(taskCollection, nameof(taskCollection));
@@ -4397,7 +4397,7 @@ namespace Azure.Compute.Batch
             using RequestContent content = taskCollection.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateTaskCollection(jobId, content, timeOutInSeconds, ocpdate, context);
-            return Response.FromValue(BatchTaskAddCollectionResult.FromResponse(response), response);
+            return Response.FromValue(BatchCreateTaskCollectionResult.FromResponse(response), response);
         }
 
         /// <summary>

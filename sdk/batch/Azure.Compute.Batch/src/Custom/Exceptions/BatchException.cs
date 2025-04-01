@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Azure.Compute.Batch.Custom
+namespace Azure.Compute.Batch
 {
     /// <summary>
     /// Represents an exception for the Windows Azure Batch service.
