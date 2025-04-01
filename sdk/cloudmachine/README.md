@@ -4,12 +4,14 @@ Write Azure apps in 5 minutes
 
 ## Getting started
 
-### Install the package
+### Install the packages
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Projects.All --prerelease
+dotnet add package Azure.Projects --prerelease
+dotnet add package Azure.Projects.Provisioning --prerelease
+dotnet add package Azure.Projects.AI --prerelease
 ```
 
 ### Authenticate the Client
@@ -40,9 +42,10 @@ cd server
 dotnet new web
 ```
 
-Add `Azure.Projects.All` package
+Add `Azure.Projects.*` packages
 ```dotnetcli
-dotnet add package Azure.Projects.All --prerelease
+dotnet add package Azure.Projects.Provisioning --prerelease
+dotnet add package Azure.Projects.AI --prerelease
 ```
 #### Use Azure Developer CLI to provision Projects
 
@@ -56,7 +59,7 @@ if (infrastructure.TryExecuteCommand(args)) return;
 
 The `TryExecuteCommand` call allows running the app with a `-init` switch, which will generate bicep files required to provision project resources in Azure. Let's generate these bicep files now.
 ```dotnetcli
-dotnet run -init
+dotnet run -bicep
 ```
 As you can see, a folder called `infra` was created with several bicep files in it. Let's now initialize the project.
 
@@ -84,7 +87,7 @@ infrastructure.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
 ```
 Now regenerate the bicep files and re-provision
 ```dotnetcli
-dotnet run -init
+dotnet run -bicep
 azd provision
 ```
 

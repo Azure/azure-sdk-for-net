@@ -19,17 +19,15 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample12_TextAuthoring_DeleteDeployment
             string projectName = "LoanAgreements";
             string deploymentName = "DeploymentA";
+            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
-            Operation operation = authoringClient.DeleteDeployment(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                deploymentName: deploymentName
+            Operation operation = deploymentClient.DeleteDeployment(
+                waitUntil: WaitUntil.Completed
             );
 
             Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");

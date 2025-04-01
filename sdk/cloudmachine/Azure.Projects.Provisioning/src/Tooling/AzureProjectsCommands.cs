@@ -3,19 +3,17 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.ClientModel.TypeSpec;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Rest;
 using Azure.Identity;
+using Azure.Projects.Tooling;
 
 namespace Azure.Projects;
 
 public static class AzureProjectsCommands
 {
-    public static bool TryExecuteCommand(this ProjectInfrastructure cmi, string[] args)
+    public static bool TryExecuteCommand(this ProjectInfrastructure infrastructure, string[] args)
     {
         if (args.Length < 1)
             return false;
@@ -24,28 +22,22 @@ public static class AzureProjectsCommands
 
         if (args[0] == "-bicep")
         {
-            Azd.Init(cmi);
+            Azd.Init(infrastructure);
             return true;
         }
 
         if (args[0] == "-init")
         {
-            Azd.Init(cmi);
+            Azd.Init(infrastructure);
 
             string? projName = default;
             if (args.Length > 1)
             {
                 projName = args[1];
             }
-            Azd.InitDeployment(cmi, projName);
+            Azd.InitDeployment(infrastructure, projName);
             return true;
         }
-
-        //if (args[0] == "-tsp")
-        //{
-        //    GenerateTsp(cmi.Endpoints);
-        //    return true;
-        //}
 
         if (args[0] == "-ai")
         {
@@ -116,23 +108,6 @@ public static class AzureProjectsCommands
                         Console.WriteLine($"{deprecatedAt} | {modelId}");
                 }
             }
-        }
-    }
-
-    private static void GenerateTsp(IEnumerable<Type> operationGroups)
-    {
-        foreach (Type operationGroup in operationGroups)
-        {
-            string name = operationGroup.Name;
-            if (name.StartsWith("I"))
-                name = name.Substring(1);
-            string directory = Path.Combine(".", "tsp");
-            string tspFile = Path.Combine(directory, $"{name}.tsp");
-            Directory.CreateDirectory(Path.GetDirectoryName(tspFile)!);
-            if (File.Exists(tspFile))
-                File.Delete(tspFile);
-            using FileStream stream = File.OpenWrite(tspFile);
-            TypeSpecWriter.WriteServer(stream, operationGroup);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.Communication
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static PhoneNumberIdentifierModel FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePhoneNumberIdentifierModel(document.RootElement);
         }
 

@@ -1,11 +1,3 @@
-namespace Azure.Core
-{
-    public static partial class ProjectClientConfiguration
-    {
-        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddAzureProjectConnections(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, System.ClientModel.Primitives.ConnectionCollection connections) { throw null; }
-        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddProjectId(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, string id) { throw null; }
-    }
-}
 namespace Azure.Core.Rest
 {
     public partial class RestCallFailedException : System.Exception
@@ -31,30 +23,17 @@ namespace Azure.Core.Rest
 }
 namespace Azure.Projects
 {
-    public partial class AIFoundryClient : System.ClientModel.Primitives.ConnectionProvider
+    public static partial class AppConfigurationExtensions
     {
-        protected AIFoundryClient() { }
-        public AIFoundryClient(string connectionString, Azure.Core.TokenCredential credential = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public System.ClientModel.Primitives.ConnectionCollection Connections { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationClient GetConfigurationClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
     }
-    public static partial class AzureAIProjectsExensions
+    public static partial class BlobExtensions
     {
-        public static Azure.AI.Projects.AgentsClient GetAgentsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.AI.Projects.EvaluationsClient GetEvaluationsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.Search.Documents.SearchClient GetSearchClient(this System.ClientModel.Primitives.ConnectionProvider workspace, string indexName) { throw null; }
-        public static Azure.Search.Documents.Indexes.SearchIndexClient GetSearchIndexClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.Search.Documents.Indexes.SearchIndexerClient GetSearchIndexerClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
+        public static Azure.Storage.Blobs.BlobContainerClient GetBlobContainerClient(this System.ClientModel.Primitives.ConnectionProvider provider, string containerName = "default") { throw null; }
+    }
+    public static partial class KeyVaultExtensions
+    {
+        public static Azure.Security.KeyVault.Secrets.SecretClient GetSecretClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessagingServices
@@ -65,17 +44,20 @@ namespace Azure.Projects
         public System.Threading.Tasks.Task SendJsonAsync(object serializable) { throw null; }
         public void WhenMessageReceived(System.Action<string> received) { }
     }
-    public partial class ProjectClient : System.ClientModel.Primitives.ConnectionProvider
+    public partial class OfxClient : Azure.Projects.ProjectClient
     {
-        protected ProjectClient() { }
-        public ProjectClient(Microsoft.Extensions.Configuration.IConfiguration configuration, Azure.Core.TokenCredential credential = null) { }
-        public ProjectClient(System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> connections = null, Azure.Core.TokenCredential credential = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public System.ClientModel.Primitives.ConnectionCollection Connections { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public string Id { get { throw null; } }
+        public OfxClient() { }
+        public OfxClient(string projectId, System.ClientModel.Primitives.ConnectionProvider connections) { }
         public Azure.Projects.MessagingServices Messaging { get { throw null; } }
         public Azure.Projects.StorageServices Storage { get { throw null; } }
+    }
+    public partial class ProjectClient : System.ClientModel.Primitives.ConnectionProvider
+    {
+        public ProjectClient() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public ProjectClient(string projectId, System.ClientModel.Primitives.ConnectionProvider connections) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string ProjectId { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -88,6 +70,12 @@ namespace Azure.Projects
         public static string ReadOrCreateProjectId() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public static partial class ServiceBusExtensions
+    {
+        public static Azure.Messaging.ServiceBus.ServiceBusClient GetServiceBusClient(this System.ClientModel.Primitives.ConnectionProvider provider, string namespaceName = null) { throw null; }
+        public static Azure.Messaging.ServiceBus.ServiceBusProcessor GetServiceBusProcessor(this System.ClientModel.Primitives.ConnectionProvider project, string namespaceName, string subscriptionName) { throw null; }
+        public static Azure.Messaging.ServiceBus.ServiceBusSender GetServiceBusSender(this System.ClientModel.Primitives.ConnectionProvider project, string namespaceName, string topicName) { throw null; }
     }
     public partial class StorageFile
     {
@@ -126,12 +114,5 @@ namespace Azure.Projects
         public System.Threading.Tasks.Task<string> UploadJsonAsync(object serializable, string name = null, bool overwrite = false) { throw null; }
         public void WhenUploaded(System.Action<Azure.Projects.StorageFile> function) { }
         public void WhenUploaded(System.Action<System.BinaryData> function) { }
-    }
-}
-namespace Azure.Projects.KeyVault
-{
-    public static partial class KeyVaultExtensions
-    {
-        public static Azure.Security.KeyVault.Secrets.SecretClient GetKeyVaultSecretsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
     }
 }

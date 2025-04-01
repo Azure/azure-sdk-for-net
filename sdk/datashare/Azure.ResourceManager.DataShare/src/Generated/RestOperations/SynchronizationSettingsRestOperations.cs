@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareSynchronizationSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareSynchronizationSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataShare
                 case 201:
                     {
                         DataShareSynchronizationSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataShare
                 case 201:
                     {
                         DataShareSynchronizationSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         SynchronizationSettingList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynchronizationSettingList.DeserializeSynchronizationSettingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         SynchronizationSettingList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynchronizationSettingList.DeserializeSynchronizationSettingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         SynchronizationSettingList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynchronizationSettingList.DeserializeSynchronizationSettingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         SynchronizationSettingList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynchronizationSettingList.DeserializeSynchronizationSettingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
