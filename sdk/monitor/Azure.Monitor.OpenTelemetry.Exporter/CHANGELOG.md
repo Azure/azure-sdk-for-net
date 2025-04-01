@@ -12,8 +12,6 @@
   However, you may still need to enable specific tracing/metric sources/meters separately.
   ([#48402](https://github.com/Azure/azure-sdk-for-net/pull/48402))
   - Added support for LiveMetrics when using the `UseAzureMonitorExporter` api.
-  
-### Breaking Changes
 
 ### Bugs Fixed
 
