@@ -68,32 +68,27 @@ It's important to keep the `TracerProvider`, `MeterProvider`, and `LoggerFactory
 
   For a complete example see [LogDemo.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/Logs/LogDemo.cs).
 
-### Add the Exporter (single api for all signals)
+### Add the Exporter for all signals
+
+Starting with the `1.4.0-beta.3` version you can use the cross-cutting `UseAzureMonitorExporter` extension to simplify registration of the OTLP exporter for all signals (traces, metrics, and logs).
+
+> [!NOTE]
+> The cross cutting extension is currently only available when using the `AddOpenTelemetry` extension in the
+  [OpenTelemetry.Extensions.Hosting](../OpenTelemetry.Extensions.Hosting/README.md) package.
 
 The following example demonstrates how to add the `AzureMonitorExporter` for all signals with a single api.
 To use this api, you need to add OpenTelemetry to a `ServiceCollection`.
-If you're doing this manually you must also start the `HostedServices`.
-If you're doing this in an application with dependency injection (ie: ASP.NET Core), this should be handled automatically.
-
 This approach will also enable LiveMetrics. LiveMetrics can be disabled by setting `options.EnableLiveMetrics = false`.
 
+Be aware that if you're doing this with a manually created `ServiceCollection` you must also start the `HostedServices` to ensure that the exporter is started. 
+If you're doing this in an application with dependency injection (ie: ASP.NET Core), this should be handled automatically.
+
 ```csharp
-var serviceCollection = new ServiceCollection();
-serviceCollection.AddOpenTelemetry()
+appBuilder.Services.AddOpenTelemetry()
     .UseAzureMonitorExporter(options => {
         options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
     });
-
-using var serviceProvider = serviceCollection.BuildServiceProvider();
-
-// If you're building a ServiceCollection manually, you must also start the HostedServices.
-var hostedServices = serviceProvider.GetServices<IHostedService>();
-foreach (var hostedService in hostedServices)
-{
-    await hostedService.StartAsync(CancellationToken.None);
-}
 ```
-
 
 ### Authenticate the client
 
