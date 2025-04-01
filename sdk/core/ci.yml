@@ -62,6 +62,7 @@ extends:
       safeName: SystemClientModel
     - name: Azure.Core.TestFramework
       safeName: AzureCoreTestFramework
+      skipReleaseStage: true
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
