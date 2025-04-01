@@ -4,6 +4,19 @@ Instrumentation is an essential part of developing client libraries. System.Clie
 
 ## Distributed tracing
 
+### Enable distributed tracing in a client
+
+Here is an example for how distributed tracing can be enabled in a client built on System.ClientModel:
+
+```C# Snippet:EnableDistributedTracing
+SampleClientOptions sampleClientOptions = new()
+{
+    EnableDistributedTracing = true
+};
+
+// Create and use client as usual
+```
+
 ### Adding distributed tracing instrumentation to service clients
 
 System.ClientModel provides extension methods on System.Diagnostics.Activity and System.Diagnostics.ActivitySource for library authors to use to create distributed tracing spans in each public method call. See [Add distributed tracing instrumentation](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs) for more information about Activity and ActivitySource and how to further customize telemetry using them.

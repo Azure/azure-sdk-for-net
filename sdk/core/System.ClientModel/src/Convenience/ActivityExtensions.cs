@@ -90,32 +90,6 @@ public static class ActivityExtensions
 
         activity.SetTag("error.type", errorCode);
 
-        // If there is an exception, SHOULD record this exception as a span event
-        // see https://opentelemetry.io/docs/specs/semconv/general/recording-errors/#recording-exceptions
-        if (exception == null)
-        {
-            return activity;
-        }
-        // TODO - we should switch to the runtime AddException added in .NET 9 when we can
-        // see https://github.com/Azure/azure-sdk-for-net/issues/49121
-        activity.AddException(exception);
         return activity;
-    }
-
-    private static void AddException(this Activity activity, Exception exception)
-    {
-        const string ExceptionEventName = "exception";
-        const string ExceptionMessageTag = "exception.message";
-        const string ExceptionStackTraceTag = "exception.stacktrace";
-        const string ExceptionTypeTag = "exception.type";
-
-        ActivityTagsCollection keyValuePairs = new()
-        {
-            { ExceptionMessageTag, exception.Message },
-            { ExceptionStackTraceTag, exception.ToString() },
-            { ExceptionTypeTag, exception.GetType().ToString() }
-        };
-
-        activity.AddEvent(new ActivityEvent(ExceptionEventName, default, keyValuePairs));
     }
 }
