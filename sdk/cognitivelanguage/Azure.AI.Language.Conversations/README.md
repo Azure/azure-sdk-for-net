@@ -482,6 +482,225 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 }
 ```
 
+### Extract PII from a conversation With Character Mask Policy
+
+To detect and redact PII in a conversation using Character Mask Policy, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` and utilize `CharacterMaskPolicyType` to define the RedactionCharacter (e.g., an asterisk *) to replace sensitive information. The method returns a `Response<AnalyzeConversationOperationState>`::
+
+```C# Snippet:AnalyzeConversation_ConversationPiiWithCharacterMaskPolicy
+var redactionPolicy = new CharacterMaskPolicyType
+{
+    RedactionCharacter = RedactionCharacter.Asterisk
+};
+
+// Simulate input conversation
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>
+        {
+            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide your name?"),
+            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+            new TextConversationItem(id: "3", participantId: "Agent_1", text: "Thank you John, that has been updated in our system.")
+        })
+    });
+
+// Add action with CharacterMaskPolicyType
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+{
+    new PiiOperationAction
+    {
+        ActionContent = new ConversationPiiActionContent
+        {
+            RedactionPolicy = redactionPolicy
+        },
+        Name = "Conversation PII with Character Mask Policy"
+    }
+};
+
+// Create input for analysis
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+
+// Act: Perform the PII analysis
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
+AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+// Assert: Validate the results
+foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
+{
+    Console.WriteLine($"Operation action name: {operationResult.Name}");
+
+    if (operationResult is ConversationPiiOperationResult piiOperationResult)
+    {
+        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
+        {
+            Console.WriteLine($"Conversation: #{conversation.Id}");
+            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+            {
+                string redactedText = item.RedactedContent?.Text ?? string.Empty;
+                Console.WriteLine($"Redacted Text: {redactedText}");
+
+                // Only verify redaction if the original sentence had PII
+                if (item.Entities.Any())
+                {
+                    foreach (var entity in item.Entities)
+                    {
+                        Assert.That(redactedText, Does.Not.Contain(entity.Text),
+                            $"Expected entity '{entity.Text}' to be redacted but found in: {redactedText}");
+
+                        Assert.That(redactedText, Does.Contain("*"),
+                            $"Expected redacted text to contain '*' but got: {redactedText}");
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+### Extract PII from a conversation With Entity Mask Policy
+
+To detect and redact PII in a conversation using Character Mask Policy, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` and utilize `EntityMaskTypePolicyType` as Mask Policy to replace sensitive information. The method returns a `Response<AnalyzeConversationOperationState>`::
+
+```C# Snippet:AnalyzeConversation_ConversationPiiWithEntityMaskPolicy
+var redactionPolicy = new EntityMaskTypePolicyType();
+
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>
+        {
+            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide your name?"),
+            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+            new TextConversationItem(id: "3", participantId: "Agent_1", text: "Thank you John, that has been updated in our system.")
+        })
+    });
+
+// Add action with EntityMaskTypePolicyType
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+{
+    new PiiOperationAction
+    {
+        ActionContent = new ConversationPiiActionContent
+        {
+            RedactionPolicy = redactionPolicy
+        },
+        Name = "Conversation PII with Entity Mask Policy"
+    }
+};
+
+// Create input for analysis
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+
+// Act: Perform the PII analysis
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
+AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+
+// Assert: Validate the results
+foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
+{
+    Console.WriteLine($"Operation action name: {operationResult.Name}");
+
+    if (operationResult is ConversationPiiOperationResult piiOperationResult)
+    {
+        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
+        {
+            Console.WriteLine($"Conversation: #{conversation.Id}");
+            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+            {
+                string redactedText = item.RedactedContent?.Text ?? string.Empty;
+                Console.WriteLine($"Redacted Text: {redactedText}");
+
+                // Only verify redaction if the original sentence had PII
+                if (item.Entities.Any())
+                {
+                    foreach (var entity in item.Entities)
+                    {
+                        Assert.That(redactedText, Does.Not.Contain(entity.Text),
+                        $"Expected entity '{entity.Text}' to be redacted but found in: {redactedText}");
+
+                        // Case-insensitive pattern to match entity mask variations
+                        string expectedMaskPattern = $@"\[{entity.Category}-?\d*\]";
+
+                        // Perform case-insensitive regex match
+                        StringAssert.IsMatch("(?i)" + expectedMaskPattern, redactedText,
+                        $"Expected redacted text to contain an entity mask similar to '[{entity.Category}]' but got: {redactedText}");
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+### Extract PII from a conversation With Character Mask Policy
+
+To detect and redact PII in a conversation using No Mask Policy, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` and utilize `NoMaskPolicyType` as Mask Policy. The method returns a `Response<AnalyzeConversationOperationState>`::
+
+```C# Snippet:AnalyzeConversation_ConversationPiiWithNoMaskPolicy
+var redactionPolicy = new NoMaskPolicyType();
+
+// Simulate input conversation
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>
+        {
+            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide your name?"),
+            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+            new TextConversationItem(id: "3", participantId: "Agent_1", text: "Thank you John, that has been updated in our system.")
+        })
+    });
+
+// Add action with NoMaskPolicyType
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+{
+    new PiiOperationAction
+    {
+        ActionContent = new ConversationPiiActionContent
+        {
+            RedactionPolicy = redactionPolicy
+        },
+        Name = "Conversation PII with No Mask Policy"
+    }
+};
+
+// Create input for analysis
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+
+// Act: Perform the PII analysis
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
+AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+
+// Assert: Validate the results
+foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
+{
+    Console.WriteLine($"Operation action name: {operationResult.Name}");
+
+    if (operationResult is ConversationPiiOperationResult piiOperationResult)
+    {
+        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
+        {
+            Console.WriteLine($"Conversation: #{conversation.Id}");
+            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+            {
+                string originalText = item.RedactedContent?.Text ?? string.Empty;
+                Console.WriteLine($"Original Text: {originalText}");
+
+                // Ensure PII is detected
+                if (item.Entities.Any())
+                {
+                    foreach (var entity in item.Entities)
+                    {
+                        detectedEntities.Add(entity.Text);
+                        Assert.That(originalText, Does.Contain(entity.Text),
+                            $"Expected entity '{entity.Text}' to be present but was not found in: {originalText}");
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
 ### Additional samples
 
 Browse our [samples][conversationanalysis_samples] for more examples of how to analyze conversations.

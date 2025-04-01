@@ -37,7 +37,7 @@ dotnet add package Azure.AI.Language.Text.Authoring --prerelease
 
 ### Authenticate the client
 
-In order to interact with the Text Authoring service, you'll need to create an instance of the [`TextAnalysisAuthoring`][textAnalysisAuthoring_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Text Authoring service, you'll need to create an instance of the [`TextAnalysisAuthoringClient`][TextAnalysisAuthoringClient_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get an API key
 
@@ -49,26 +49,26 @@ Alternatively, use the [Azure CLI][azure_cli] snippet below to get the API key f
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
 
-#### Create a TextAnalysisAuthoring Client
+#### Create a TextAnalysisAuthoringClient
 
-To use the TextAnalysisAuthoring client, include the following namespace in your project:
+To use the TextAnalysisAuthoringClient, include the following namespace in your project:
 
 ```C#
 using Azure.AI.Language.Text.Authoring;
 ```
 
-With your endpoint and API key, you can instantiate an AuthoringClient and create a TextAnalysisAuthoring client using specific service options:
+With your endpoint and API key, you can instantiate a TextAnalysisAuthoringClient using specific service options:
 
-```C#
+```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
-AuthoringClient client = new AuthoringClient(endpoint, credential);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+AzureKeyCredential credential = new("your apikey");
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 #### Create a client using Azure Active Directory authentication
 
-You can also create a `TextAnalysisAuthoring` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+You can also create a `TextAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
 Using the [DefaultAzureCredential], you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more, all without changing code.
 
 Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
@@ -80,6 +80,7 @@ Make sure you use the right namespace for DefaultAzureCredential at the top of y
 ```C# Snippet:TextAuthoring_Identity_Namespace
 using Azure.Identity;
 using Azure.Core;
+using Microsoft.Extensions.Options;
 ```
 
 Then you can create an instance of DefaultAzureCredential and pass it to a new instance of your client:
@@ -87,8 +88,7 @@ Then you can create an instance of DefaultAzureCredential and pass it to a new i
 ```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-AuthoringClient client = new AuthoringClient(endpoint, credential);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 ```
 
 Note that regional endpoints do not support AAD authentication. Instead, create a [custom domain][custom_domain] name for your resource to use AAD authentication.
@@ -103,12 +103,11 @@ You have the flexibility to explicitly select a supported service API version wh
 
 For example:
 
-```C#
+```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
@@ -119,9 +118,9 @@ If you do not select an API version, we will default to the latest version avail
 
 ## Key concepts
 
-### TextAnalysisAuthoring
+### TextAuthoringClientlet
 
-The [TextAnalysisAuthoring][TextAnalysisAuthoring_class] is the primary interface for developers using the Azure AI Text Authoring client library. It provides both synchronous and asynchronous operations to access a specific use of text authoring, such as creating and managing text analysis projects.
+The [TextAuthoringProject][TextAuthoringProject_class], [TextAuthoringDeployment][TextAuthoringDeployment_class], [TextAuthoringExportedModel][TextAuthoringExportedModel_class] and [TextAuthoringTrainedModel][TextAuthoringTrainedModel_class] are the clientlets for developers using the Azure AI Text Authoring client library. It provides both synchronous and asynchronous operations to access a specific use of text authoring, such as creating and managing text analysis projects.
 
 ### Thread safety
 
@@ -179,17 +178,17 @@ For example, if you attempt to create a project with an invalid configuration, a
 try
 {
     string invalidProjectName = "InvalidProject";
-
-    var projectData = new
+    TextAuthoringProject projectClient = client.GetProject(invalidProjectName);
+    var projectData = new TextAuthoringCreateProjectDetails(
+        projectKind: "Text",
+        storageInputContainerName: "e2e0test0data",
+        language: "invalid-lang" // Invalid language code
+    )
     {
-        projectName = invalidProjectName,
-        language = "invalid-lang", // Invalid language code
-        projectKind = "Text",
-        description = "This is a test for invalid configuration."
+        Description = "This is a test for invalid configuration."
     };
 
-    using RequestContent content = RequestContent.Create(projectData);
-    Response response = authoringClient.CreateProject(invalidProjectName, content);
+    Response response = projectClient.CreateProject(projectData);
 }
 catch (RequestFailedException ex)
 {
@@ -267,9 +266,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [text_refdocs]: https://learn.microsoft.com/dotnet/
 [text_docs]: https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/overview
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
-[textAnalysisAuthoring_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAnalysisAuthoring.cs
+[TextAnalysisAuthoringClient_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAnalysisAuthoringClient.cs
+[TextAuthoringProject_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringProject.cs
+[TextAuthoringDeployment_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringDeployment.cs
+[TextAuthoringExportedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringExportedModel.cs
+[TextAuthoringTrainedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/TextAuthoringTrainedModel.cs
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_portal]: https://portal.azure.com
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/README.png)

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabData.DeserializeDevTestLabData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabData.DeserializeDevTestLabData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabData.DeserializeDevTestLabData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabData.DeserializeDevTestLabData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabGenerateUploadUriResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabGenerateUploadUriResult.DeserializeDevTestLabGenerateUploadUriResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabGenerateUploadUriResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabGenerateUploadUriResult.DeserializeDevTestLabGenerateUploadUriResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabVhdList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabVhdList.DeserializeLabVhdList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1219,7 +1219,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabVhdList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabVhdList.DeserializeLabVhdList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1303,7 +1303,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabVhdList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabVhdList.DeserializeLabVhdList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         LabVhdList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabVhdList.DeserializeLabVhdList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string resourceId = default;
             TimeSpan? timeout = default;
             string region = default;
-            AIStudioModelCatalogName? modelName = default;
+            AIFoundryModelCatalogName? modelName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -151,7 +151,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    modelName = new AIStudioModelCatalogName(property.Value.GetString());
+                    modelName = new AIFoundryModelCatalogName(property.Value.GetString());
                     continue;
                 }
             }
@@ -168,7 +168,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AzureMachineLearningParameters FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAzureMachineLearningParameters(document.RootElement);
         }
 

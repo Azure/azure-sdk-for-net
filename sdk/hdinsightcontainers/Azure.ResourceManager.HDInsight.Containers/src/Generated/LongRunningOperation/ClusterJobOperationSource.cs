@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.HDInsight.Containers
     {
         ClusterJob IOperationSource<ClusterJob>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ClusterJob.DeserializeClusterJob(document.RootElement);
         }
 
         async ValueTask<ClusterJob> IOperationSource<ClusterJob>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ClusterJob.DeserializeClusterJob(document.RootElement);
         }
     }

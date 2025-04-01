@@ -32,11 +32,13 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
-        internal DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences) : base(validationType, serializedAdditionalRawData)
+        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
+        internal DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences, DeviceModelName? model) : base(validationType, serializedAdditionalRawData)
         {
             ShippingAddress = shippingAddress;
             DeviceType = deviceType;
             TransportPreferences = transportPreferences;
+            Model = model;
             ValidationType = validationType;
         }
 
@@ -51,5 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxSkuName DeviceType { get; }
         /// <summary> Preferences related to the shipment logistics of the sku. </summary>
         public TransportPreferences TransportPreferences { get; set; }
+        /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
+        public DeviceModelName? Model { get; set; }
     }
 }

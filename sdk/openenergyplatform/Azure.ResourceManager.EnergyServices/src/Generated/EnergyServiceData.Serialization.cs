@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EnergyServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEnergyServiceData(document.RootElement, options);
                     }
                 default:

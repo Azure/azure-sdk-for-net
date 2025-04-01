@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -49,11 +50,11 @@ namespace Azure.ResourceManager.AppPlatform.Samples
                     IsPublic = true,
                     AddonConfigs =
 {
-["ApplicationConfigurationService"] =
+["ApplicationConfigurationService"] = new Dictionary<string, BinaryData>
 {
 ["resourceId"] = BinaryData.FromObjectAsJson("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configurationServices/myacs")
 },
-["ServiceRegistry"] =
+["ServiceRegistry"] = new Dictionary<string, BinaryData>
 {
 ["resourceId"] = BinaryData.FromObjectAsJson("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/serviceRegistries/myServiceRegistry")
 }
@@ -137,11 +138,11 @@ LoadTrustStore = true,
                     IsPublic = true,
                     AddonConfigs =
 {
-["ApplicationConfigurationService"] =
+["ApplicationConfigurationService"] = new Dictionary<string, BinaryData>
 {
 ["resourceId"] = BinaryData.FromObjectAsJson("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configurationServices/myacs")
 },
-["ServiceRegistry"] =
+["ServiceRegistry"] = new Dictionary<string, BinaryData>
 {
 ["resourceId"] = BinaryData.FromObjectAsJson("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/serviceRegistries/myServiceRegistry")
 }

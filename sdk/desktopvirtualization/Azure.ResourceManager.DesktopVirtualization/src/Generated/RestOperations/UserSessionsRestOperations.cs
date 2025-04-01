@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserSessionList.DeserializeUserSessionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserSessionList.DeserializeUserSessionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserSessionData.DeserializeUserSessionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserSessionData.DeserializeUserSessionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserSessionList.DeserializeUserSessionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserSessionList.DeserializeUserSessionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserSessionList.DeserializeUserSessionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserSessionList.DeserializeUserSessionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserSessionList.DeserializeUserSessionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         UserSessionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserSessionList.DeserializeUserSessionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

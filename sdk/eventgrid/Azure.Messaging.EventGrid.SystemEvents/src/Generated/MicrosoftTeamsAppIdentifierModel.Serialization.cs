@@ -36,8 +36,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
-            writer.WritePropertyName("cloud"u8);
-            writer.WriteStringValue(Cloud.ToString());
+            if (Optional.IsDefined(Cloud))
+            {
+                writer.WritePropertyName("cloud"u8);
+                writer.WriteStringValue(Cloud.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -46,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,7 +79,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string appId = default;
-            CommunicationCloudEnvironmentModel cloud = default;
+            CommunicationCloudEnvironmentModel? cloud = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,6 +91,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("cloud"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     cloud = new CommunicationCloudEnvironmentModel(property.Value.GetString());
                     continue;
                 }
@@ -121,7 +128,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMicrosoftTeamsAppIdentifierModel(document.RootElement, options);
                     }
                 default:
@@ -135,7 +142,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static MicrosoftTeamsAppIdentifierModel FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMicrosoftTeamsAppIdentifierModel(document.RootElement);
         }
 

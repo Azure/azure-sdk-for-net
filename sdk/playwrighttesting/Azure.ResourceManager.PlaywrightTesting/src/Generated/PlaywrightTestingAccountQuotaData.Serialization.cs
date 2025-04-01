@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePlaywrightTestingAccountQuotaData(document.RootElement, options);
                     }
                 default:

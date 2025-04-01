@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroups value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdaptiveApplicationControlGroups.DeserializeAdaptiveApplicationControlGroups(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroups value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdaptiveApplicationControlGroups.DeserializeAdaptiveApplicationControlGroups(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

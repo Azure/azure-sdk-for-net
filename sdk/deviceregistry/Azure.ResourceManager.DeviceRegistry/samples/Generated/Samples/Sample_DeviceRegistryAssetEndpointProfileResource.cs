@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetAnAssetEndpointProfile()
+        public async Task Get_GetAssetEndpointProfile()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_AssetEndpointProfile.json
-            // this example is just showing the usage of "AssetEndpointProfiles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Get_AssetEndpointProfile.json
+            // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,10 +48,40 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteAnAssetEndpointProfile()
+        public async Task Get_GetAssetEndpointProfileWithSyncStatus()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Delete_AssetEndpointProfile.json
-            // this example is just showing the usage of "AssetEndpointProfiles_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Get_AssetEndpointProfile_With_SyncStatus.json
+            // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DeviceRegistryAssetEndpointProfileResource created on azure
+            // for more information of creating DeviceRegistryAssetEndpointProfileResource, please refer to the document of DeviceRegistryAssetEndpointProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string assetEndpointProfileName = "my-assetendpointprofile";
+            ResourceIdentifier deviceRegistryAssetEndpointProfileResourceId = DeviceRegistryAssetEndpointProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetEndpointProfileName);
+            DeviceRegistryAssetEndpointProfileResource deviceRegistryAssetEndpointProfile = client.GetDeviceRegistryAssetEndpointProfileResource(deviceRegistryAssetEndpointProfileResourceId);
+
+            // invoke the operation
+            DeviceRegistryAssetEndpointProfileResource result = await deviceRegistryAssetEndpointProfile.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeviceRegistryAssetEndpointProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAssetEndpointProfile()
+        {
+            // Generated from example definition: 2024-11-01/Delete_AssetEndpointProfile.json
+            // this example is just showing the usage of "AssetEndpointProfile_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,10 +104,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_PatchAnAssetEndpointProfile()
+        public async Task Update_UpdateAssetEndpointProfile()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Update_AssetEndpointProfile.json
-            // this example is just showing the usage of "AssetEndpointProfiles_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Update_AssetEndpointProfile.json
+            // this example is just showing the usage of "AssetEndpointProfile_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,7 +125,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // invoke the operation
             DeviceRegistryAssetEndpointProfilePatch patch = new DeviceRegistryAssetEndpointProfilePatch
             {
-                TargetAddress = new Uri("https://www.example.com/myTargetAddress"),
+                Properties = new AssetEndpointProfileUpdateProperties
+                {
+                    TargetAddress = new Uri("https://www.example.com/myTargetAddress"),
+                },
             };
             ArmOperation<DeviceRegistryAssetEndpointProfileResource> lro = await deviceRegistryAssetEndpointProfile.UpdateAsync(WaitUntil.Completed, patch);
             DeviceRegistryAssetEndpointProfileResource result = lro.Value;

@@ -70,6 +70,7 @@ jobs:
           SDKType: ${{ parameters.SDKType }}
           CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
           AOTTestInputs: ${{ parameters.AOTTestInputs }}
+          BuildSnippets: ${{ parameters.BuildSnippets }}
         PreGenerationSteps:
           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
             parameters:

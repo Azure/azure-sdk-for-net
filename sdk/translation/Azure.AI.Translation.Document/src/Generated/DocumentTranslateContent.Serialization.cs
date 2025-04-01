@@ -74,7 +74,7 @@ namespace Azure.AI.Translation.Document
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentTranslateContent(document.RootElement, options);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentTranslateContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentTranslateContent(document.RootElement);
         }
 

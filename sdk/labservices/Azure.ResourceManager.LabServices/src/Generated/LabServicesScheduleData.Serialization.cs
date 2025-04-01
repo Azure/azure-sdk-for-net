@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.LabServices
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Notes);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Notes))
+                using (JsonDocument document = JsonDocument.Parse(Notes, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.LabServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLabServicesScheduleData(document.RootElement, options);
                     }
                 default:

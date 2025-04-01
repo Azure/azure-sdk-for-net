@@ -118,6 +118,35 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
         }
 
+        public static FileSmbProperties GetFileSmbProperties(
+            this ShareFileStorageResourceOptions options,
+            StorageResourceItemProperties properties)
+        {
+            return new()
+            {
+                FileAttributes = (options?._isFileAttributesSet ?? false)
+                    ? options?.FileAttributes
+                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
+                        ? (NtfsFileAttributes?)fileAttributes
+                        : default,
+                FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
+                    ? options?.FileCreatedOn
+                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
+                        ? (DateTimeOffset?)fileCreatedOn
+                        : default,
+                FileLastWrittenOn = (options?._isFileLastWrittenOnSet ?? false)
+                    ? options?.FileLastWrittenOn
+                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
+                        ? (DateTimeOffset?)fileLastWrittenOn
+                        : default,
+                FileChangedOn = (options?._isFileChangedOnSet ?? false)
+                    ? options?.FileChangedOn
+                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
+                        ? (DateTimeOffset?)fileChangedOn
+                        : default,
+            };
+        }
+
         internal static ShareFileUploadRangeOptions ToShareFileUploadRangeOptions(
             this ShareFileStorageResourceOptions options)
             => new()

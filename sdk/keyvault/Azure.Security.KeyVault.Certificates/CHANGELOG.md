@@ -4,13 +4,20 @@
 
 ### Features Added
 
+- New `preserveCertificateOrder` option when creating and importing certificates. It can be set as an optional paremeter in `StartCreateCertificate`, as an option in `ImportCertificateOptions`, and it can be retrieved from certificates of type `KeyVaultCertificateWithPolicy`
+
 ### Breaking Changes
 
 ### Bugs Fixed
 - Corrected a typo in the documentation for `CertificatePolicy.KeySize`, changing the RSA key length from "4092" to "4096".
 - Removed an extra `/` when building the request Uri for `CertificateClient.ImportCertificate` and `CertificateClient.ImportCertificateAsync`.
 
+- Corrected a typo in the documentation for `CertificatePolicy.KeySize`, changing the RSA key length from "4092" to "4096".
+- Removed an extra `/` when building the request Uri for `CertificateClient.ImportCertificate` and `CertificateClient.ImportCertificateAsync`.
+
 ### Other Changes
+
+- The default service version is now "7.6-preview.2".
 
 ## 4.7.0 (2024-10-14)
 

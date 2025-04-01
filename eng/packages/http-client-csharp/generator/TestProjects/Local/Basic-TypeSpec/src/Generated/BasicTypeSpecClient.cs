@@ -17,7 +17,7 @@ using BasicTypeSpec.Models;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> This is a sample typespec project. </summary>
     public partial class BasicTypeSpecClient
     {
         private readonly Uri _endpoint;
@@ -141,13 +141,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> SayHi(string headParameter, string queryParameter, string optionalQuery = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> SayHi(string headParameter, string queryParameter, string optionalQuery = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
             Response result = SayHi(headParameter, queryParameter, optionalQuery, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary> Return hi. </summary>
@@ -157,13 +157,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Thing>> SayHiAsync(string headParameter, string queryParameter, string optionalQuery = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> SayHiAsync(string headParameter, string queryParameter, string optionalQuery = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
             Response result = await SayHiAsync(headParameter, queryParameter, optionalQuery, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary>
@@ -337,19 +337,19 @@ namespace BasicTypeSpec
         /// <summary> Return hi in demo2. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> HelloDemo2(CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> HelloDemo2(CancellationToken cancellationToken = default)
         {
             Response result = HelloDemo2(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary> Return hi in demo2. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Thing>> HelloDemo2Async(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> HelloDemo2Async(CancellationToken cancellationToken = default)
         {
             Response result = await HelloDemo2Async(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary>
@@ -399,12 +399,12 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> CreateLiteral(Thing body, CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> CreateLiteral(ThingModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = CreateLiteral(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary> Create with literal value. </summary>
@@ -412,12 +412,12 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Thing>> CreateLiteralAsync(Thing body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> CreateLiteralAsync(ThingModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await CreateLiteralAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary>
@@ -457,19 +457,19 @@ namespace BasicTypeSpec
         /// <summary> Send literal parameters. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> HelloLiteral(CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> HelloLiteral(CancellationToken cancellationToken = default)
         {
             Response result = HelloLiteral(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary> Send literal parameters. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Thing>> HelloLiteralAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> HelloLiteralAsync(CancellationToken cancellationToken = default)
         {
             Response result = await HelloLiteralAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary>
@@ -512,20 +512,20 @@ namespace BasicTypeSpec
         /// <param name="action"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> TopAction(DateTimeOffset action, CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> TopAction(DateTimeOffset action, CancellationToken cancellationToken = default)
         {
             Response result = TopAction(action, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary> top level method. </summary>
         /// <param name="action"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Thing>> TopActionAsync(DateTimeOffset action, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> TopActionAsync(DateTimeOffset action, CancellationToken cancellationToken = default)
         {
             Response result = await TopActionAsync(action, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary>
@@ -647,7 +647,7 @@ namespace BasicTypeSpec
         }
 
         /// <summary> body parameter without body decorator. </summary>
-        /// <param name="name"> name of the Thing. </param>
+        /// <param name="name"> name of the ThingModel. </param>
         /// <param name="requiredUnion"> required Union. </param>
         /// <param name="requiredLiteralString"> required literal string. </param>
         /// <param name="requiredLiteralInt"> required literal int. </param>
@@ -663,13 +663,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> AnonymousBody(string name, BinaryData requiredUnion, ThingRequiredLiteralString requiredLiteralString, ThingRequiredLiteralInt requiredLiteralInt, ThingRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> AnonymousBody(string name, BinaryData requiredUnion, ThingModelRequiredLiteralString requiredLiteralString, ThingModelRequiredLiteralInt requiredLiteralInt, ThingModelRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
             Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
 
-            Thing spreadModel = new Thing(
+            ThingModel spreadModel = new ThingModel(
                 name,
                 requiredUnion,
                 requiredLiteralString,
@@ -685,11 +685,11 @@ namespace BasicTypeSpec
                 requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 null);
             Response result = AnonymousBody(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary> body parameter without body decorator. </summary>
-        /// <param name="name"> name of the Thing. </param>
+        /// <param name="name"> name of the ThingModel. </param>
         /// <param name="requiredUnion"> required Union. </param>
         /// <param name="requiredLiteralString"> required literal string. </param>
         /// <param name="requiredLiteralInt"> required literal int. </param>
@@ -705,13 +705,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Thing>> AnonymousBodyAsync(string name, BinaryData requiredUnion, ThingRequiredLiteralString requiredLiteralString, ThingRequiredLiteralInt requiredLiteralInt, ThingRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> AnonymousBodyAsync(string name, BinaryData requiredUnion, ThingModelRequiredLiteralString requiredLiteralString, ThingModelRequiredLiteralInt requiredLiteralInt, ThingModelRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
             Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
 
-            Thing spreadModel = new Thing(
+            ThingModel spreadModel = new ThingModel(
                 name,
                 requiredUnion,
                 requiredLiteralString,
@@ -727,7 +727,7 @@ namespace BasicTypeSpec
                 requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 null);
             Response result = await AnonymousBodyAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary>
@@ -777,13 +777,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Friend> FriendlyModel(string name, CancellationToken cancellationToken = default)
+        public virtual Response<FriendModel> FriendlyModel(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Friend spreadModel = new Friend(name, null);
+            FriendModel spreadModel = new FriendModel(name, null);
             Response result = FriendlyModel(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Friend)result, result);
+            return Response.FromValue((FriendModel)result, result);
         }
 
         /// <summary> Model can have its friendly name. </summary>
@@ -791,13 +791,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Friend>> FriendlyModelAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FriendModel>> FriendlyModelAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Friend spreadModel = new Friend(name, null);
+            FriendModel spreadModel = new FriendModel(name, null);
             Response result = await FriendlyModelAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Friend)result, result);
+            return Response.FromValue((FriendModel)result, result);
         }
 
         /// <summary>
@@ -1087,12 +1087,12 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> InternalProtocol(Thing body, CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> InternalProtocol(ThingModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = InternalProtocol(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary> When set protocol false and convenient true, then the protocol method should be internal. </summary>
@@ -1100,12 +1100,12 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Thing>> InternalProtocolAsync(Thing body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> InternalProtocolAsync(ThingModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await InternalProtocolAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Thing)result, result);
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary>

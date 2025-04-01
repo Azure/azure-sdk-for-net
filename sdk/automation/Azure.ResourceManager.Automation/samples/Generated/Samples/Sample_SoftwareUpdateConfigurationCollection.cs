@@ -63,8 +63,8 @@ TagSettings = new QueryTagSettingsProperties
 {
 Tags =
 {
-["tag1"] = {"tag1Value1", "tag1Value2", "tag1Value3"},
-["tag2"] = {"tag2Value1", "tag2Value2", "tag2Value3"}
+["tag1"] = new string[]{"tag1Value1", "tag1Value2", "tag1Value3"},
+["tag2"] = new string[]{"tag2Value1", "tag2Value2", "tag2Value3"}
 },
 FilterOperator = QueryTagOperator.All,
 },

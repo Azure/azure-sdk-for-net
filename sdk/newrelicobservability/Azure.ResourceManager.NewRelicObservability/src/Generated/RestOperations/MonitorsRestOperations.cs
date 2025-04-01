@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicMonitorResourceListResult.DeserializeNewRelicMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicMonitorResourceListResult.DeserializeNewRelicMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicMonitorResourceListResult.DeserializeNewRelicMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicMonitorResourceListResult.DeserializeNewRelicMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityMetricRules value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicObservabilityMetricRules.DeserializeNewRelicObservabilityMetricRules(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityMetricRules value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicObservabilityMetricRules.DeserializeNewRelicObservabilityMetricRules(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMetricsStatusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicMetricsStatusResult.DeserializeNewRelicMetricsStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMetricsStatusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicMetricsStatusResult.DeserializeNewRelicMetricsStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicAppServicesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicAppServicesListResult.DeserializeNewRelicAppServicesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicAppServicesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicAppServicesListResult.DeserializeNewRelicAppServicesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1048,7 +1048,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityVmHostsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicObservabilityVmHostsListResponse.DeserializeNewRelicObservabilityVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityVmHostsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicObservabilityVmHostsListResponse.DeserializeNewRelicObservabilityVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitoredResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicMonitoredResourceListResult.DeserializeNewRelicMonitoredResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitoredResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicMonitoredResourceListResult.DeserializeNewRelicMonitoredResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         LinkedResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         LinkedResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1332,7 +1332,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityVmExtensionPayload value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicObservabilityVmExtensionPayload.DeserializeNewRelicObservabilityVmExtensionPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1361,7 +1361,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityVmExtensionPayload value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicObservabilityVmExtensionPayload.DeserializeNewRelicObservabilityVmExtensionPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1410,7 +1410,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicMonitorResourceListResult.DeserializeNewRelicMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicMonitorResourceListResult.DeserializeNewRelicMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1488,7 +1488,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicMonitorResourceListResult.DeserializeNewRelicMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1517,7 +1517,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitorResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicMonitorResourceListResult.DeserializeNewRelicMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1572,7 +1572,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicAppServicesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicAppServicesListResult.DeserializeNewRelicAppServicesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1605,7 +1605,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicAppServicesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicAppServicesListResult.DeserializeNewRelicAppServicesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1660,7 +1660,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityVmHostsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicObservabilityVmHostsListResponse.DeserializeNewRelicObservabilityVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityVmHostsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicObservabilityVmHostsListResponse.DeserializeNewRelicObservabilityVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1746,7 +1746,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitoredResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicMonitoredResourceListResult.DeserializeNewRelicMonitoredResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1777,7 +1777,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicMonitoredResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicMonitoredResourceListResult.DeserializeNewRelicMonitoredResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1830,7 +1830,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         LinkedResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1861,7 +1861,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         LinkedResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

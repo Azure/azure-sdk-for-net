@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxJobListResult.DeserializeDataBoxJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxJobListResult.DeserializeDataBoxJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxJobListResult.DeserializeDataBoxJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxJobListResult.DeserializeDataBoxJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxJobData.DeserializeDataBoxJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxJobData.DeserializeDataBoxJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxShipmentPickUpResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxShipmentPickUpResult.DeserializeDataBoxShipmentPickUpResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxShipmentPickUpResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxShipmentPickUpResult.DeserializeDataBoxShipmentPickUpResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         UnencryptedCredentialsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UnencryptedCredentialsList.DeserializeUnencryptedCredentialsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -973,7 +973,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         UnencryptedCredentialsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UnencryptedCredentialsList.DeserializeUnencryptedCredentialsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxJobListResult.DeserializeDataBoxJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxJobListResult.DeserializeDataBoxJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxJobListResult.DeserializeDataBoxJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.DataBox
                 case 200:
                     {
                         DataBoxJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxJobListResult.DeserializeDataBoxJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

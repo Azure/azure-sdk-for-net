@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceBusAuthorizationRuleData(document.RootElement, options);
                     }
                 default:

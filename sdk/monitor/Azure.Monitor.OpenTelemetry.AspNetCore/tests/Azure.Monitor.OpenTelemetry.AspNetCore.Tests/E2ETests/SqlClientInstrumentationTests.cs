@@ -4,17 +4,20 @@
 // The following tests were originally copied from OpenTelemetry and modified for Azure Monitor.
 // https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/Instrumentation.SqlClient-1.9.0-beta.1/test/OpenTelemetry.Instrumentation.SqlClient.Tests/SqlClientTests.cs
 
-#if !NETFRAMEWORK
+#if NET
 
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Instrumentation.SqlClient;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -51,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         [InlineData(SqlMicrosoftBeforeExecuteCommand, SqlMicrosoftWriteCommandError)]
         [InlineData(SqlMicrosoftBeforeExecuteCommand, SqlMicrosoftWriteCommandError, false)]
         [InlineData(SqlMicrosoftBeforeExecuteCommand, SqlMicrosoftWriteCommandError, false, true)]
-        public void SqlClientErrorsAreCollectedSuccessfully(
+        public async Task SqlClientErrorsAreCollectedSuccessfully(
             string beforeCommand,
             string errorCommand,
             bool shouldEnrich = true,
@@ -82,6 +85,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 }
             });
             using var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            await StartHostedServicesAsync(serviceProvider);
 
             // We must resolve the TracerProvider here to ensure that it is initialized.
             // In a normal app, the OpenTelemetry.Extensions.Hosting package would handle this.
@@ -146,7 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         [InlineData(SqlMicrosoftBeforeExecuteCommand, SqlMicrosoftAfterExecuteCommand, CommandType.StoredProcedure, "SP_GetOrders", false, true, false)]
         [InlineData(SqlMicrosoftBeforeExecuteCommand, SqlMicrosoftAfterExecuteCommand, CommandType.Text, "select * from sys.databases", false, true)]
         [InlineData(SqlMicrosoftBeforeExecuteCommand, SqlMicrosoftAfterExecuteCommand, CommandType.Text, "select * from sys.databases", false, true, false)]
-        public void SqlClientCallsAreCollectedSuccessfully(
+        public async Task SqlClientCallsAreCollectedSuccessfully(
             string beforeCommand,
             string afterCommand,
             CommandType commandType,
@@ -181,6 +186,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 }
             });
             using var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            await StartHostedServicesAsync(serviceProvider);
 
             // We must resolve the TracerProvider here to ensure that it is initialized.
             // In a normal app, the OpenTelemetry.Extensions.Hosting package would handle this.
@@ -295,6 +302,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             if (shouldEnrich)
             {
                 Assert.Contains(remoteDependencyData.Properties, kvp => kvp.Key == "enriched" && kvp.Value == "yes");
+            }
+        }
+
+        private static async Task StartHostedServicesAsync(ServiceProvider serviceProvider)
+        {
+            var hostedServices = serviceProvider.GetServices<IHostedService>();
+            foreach (var hostedService in hostedServices)
+            {
+                await hostedService.StartAsync(CancellationToken.None);
             }
         }
 

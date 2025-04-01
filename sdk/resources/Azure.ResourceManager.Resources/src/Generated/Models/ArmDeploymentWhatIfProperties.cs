@@ -28,9 +28,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="debugSetting"> The debug setting of the deployment. </param>
         /// <param name="errorDeployment"> The deployment on error behavior. </param>
         /// <param name="expressionEvaluation"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
+        /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="whatIfSettings"> Optional What-If operation settings. </param>
-        internal ArmDeploymentWhatIfProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment errorDeployment, ExpressionEvaluationOptions expressionEvaluation, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmDeploymentWhatIfSettings whatIfSettings) : base(template, templateLink, parameters, parametersLink, mode, debugSetting, errorDeployment, expressionEvaluation, serializedAdditionalRawData)
+        internal ArmDeploymentWhatIfProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment errorDeployment, ExpressionEvaluationOptions expressionEvaluation, ValidationLevel? validationLevel, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmDeploymentWhatIfSettings whatIfSettings) : base(template, templateLink, parameters, parametersLink, mode, debugSetting, errorDeployment, expressionEvaluation, validationLevel, serializedAdditionalRawData)
         {
             WhatIfSettings = whatIfSettings;
         }

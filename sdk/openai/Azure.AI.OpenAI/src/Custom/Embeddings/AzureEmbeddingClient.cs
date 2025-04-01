@@ -28,7 +28,7 @@ internal partial class AzureEmbeddingClient : EmbeddingClient
 
         _deploymentName = deploymentName;
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureEmbeddingClient()

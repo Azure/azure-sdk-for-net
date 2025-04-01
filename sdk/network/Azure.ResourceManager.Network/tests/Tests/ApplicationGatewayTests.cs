@@ -52,7 +52,11 @@ namespace Azure.ResourceManager.Network.Tests
         private List<ApplicationGatewaySslCertificate> CreateSslCertificate(string sslCertName, string password)
         {
             string certPath = System.IO.Path.Combine("Tests", "Data", "rsa2048.pfx");
+#if NET9_0_OR_GREATER
+            X509Certificate2 cert = X509CertificateLoader.LoadPkcs12FromFile(certPath, password, X509KeyStorageFlags.Exportable);
+#else
             X509Certificate2 cert = new X509Certificate2(certPath, password, X509KeyStorageFlags.Exportable);
+#endif
 
             List<ApplicationGatewaySslCertificate> sslCertList = new List<ApplicationGatewaySslCertificate>{
                 new ApplicationGatewaySslCertificate()
@@ -68,7 +72,11 @@ namespace Azure.ResourceManager.Network.Tests
         private ApplicationGatewayAuthenticationCertificate CreateAuthCertificate(string authCertName)
         {
             string certPath = System.IO.Path.Combine("Tests", "Data", "ApplicationGatewayAuthCert.cer");
+#if NET9_0_OR_GREATER
+            X509Certificate2 cert = X509CertificateLoader.LoadCertificateFromFile(certPath);
+#else
             X509Certificate2 cert = new X509Certificate2(certPath);
+#endif
 
             return
                 new ApplicationGatewayAuthenticationCertificate()

@@ -1,6 +1,19 @@
 # Release History
 
-## 5.12.0-beta.2 (Unreleased)
+## 5.12.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- UpdateCheckpointAsync in the 'EventProcessorClient` was not awaiting the Checkpoint Stores 'UpdateCheckpointAsync' method.
+By not awaiting we were starting the OTel span and closing it almost immediately. The catch would've been ignored as well.
+
+### Other Changes
+
+## 5.12.0-beta.2 (2025-02-11)
 
 ### Acknowledgments
 
@@ -10,10 +23,23 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Features Added
 
-### Breaking Changes
+- Support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
 
-### Bugs Fixed
+  As part of this feature, the type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API. To preserve backwards compatibility, the existing offset-related members have not been changed, and new members with names similar to `OffsetString` and string-based parameters for method overloads have been introduced.   
+  
+  The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
+  
+  Obsoleted properties:
+  - `EventData.Offset`
+  - `LastEnqueuedEventProperties.Offset`
+  - `PartitionProperties.LastEnqueuedOffset`
 
+  Obsoleted method overloads:
+  - EventPosition.FromOffset
+  - EventHubsModelFactory.EventData
+  - BlobCheckpointStore.UpdateCheckpointAsync
+  - EventProcessorClient.UpdateCheckpointAsync
+  
 ### Other Changes
 
 - Added annotations to make the package compatible with trimming and native AOT compilation.
@@ -21,6 +47,12 @@ Thank you to our developer community members who helped to make the Event Hubs c
 - Added Event Hub name to processor load balancing logs for additional context.  _(A community contribution, courtesy of [tovyhnal](https://github.com/tovyhnal))_
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 5.11.6 (2025-02-11)
+
+### Other Changes
+
+- Bump `Azure.Messaging.EventHubs` dependency to 5.11.6, which includes bumps to several transitive dependencies.
 
 ## 5.11.5 (2024-08-14)
 

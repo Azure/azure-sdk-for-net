@@ -3,12 +3,12 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
-
 namespace Azure.ResourceManager.EventGrid.Tests
 {
     public class EventGridManagementTestBase : ManagementRecordedTestBase<EventGridManagementTestEnvironment>
@@ -21,11 +21,23 @@ namespace Azure.ResourceManager.EventGrid.Tests
         protected EventGridManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+           // Sanitize the endpointUrl with code parameter
+           BodyKeySanitizers.Add(new BodyKeySanitizer("..endpointUrl") { Value = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY"
+           });
+           // Sanitize Endpoint property with sig and sv parameters
+           BodyKeySanitizers.Add(new BodyKeySanitizer("..Endpoint") { Value = "https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
+           });
         }
 
         protected EventGridManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+           // Sanitize the endpointUrl with code parameter
+           BodyKeySanitizers.Add(new BodyKeySanitizer("..endpointUrl") { Value = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY"
+           });
+           // Sanitize Endpoint property with sig and sv parameters
+           BodyKeySanitizers.Add(new BodyKeySanitizer("..Endpoint") { Value = "https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
+           });
         }
 
         [SetUp]

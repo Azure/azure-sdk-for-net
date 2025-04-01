@@ -1,16 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IdentityModel.Selectors;
+using System.ServiceModel.Description;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Storage;
 using Azure.Storage.Queues.Models;
-using Microsoft.WCF.Azure.StorageQueues;
-using System;
-using System.IdentityModel.Selectors;
-using System.ServiceModel.Description;
-using System.ServiceModel.Security;
 
 namespace Microsoft.WCF.Azure
 {

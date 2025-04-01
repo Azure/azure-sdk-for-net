@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         CollectionsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CollectionsList.DeserializeCollectionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         CollectionsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CollectionsList.DeserializeCollectionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreCollectionInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreCollectionInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreCollectionInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreCollectionInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         TransferOffersResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TransferOffersResult.DeserializeTransferOffersResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         TransferOffersResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TransferOffersResult.DeserializeTransferOffersResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreCollectionInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreCollectionInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreCollectionInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreCollectionInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

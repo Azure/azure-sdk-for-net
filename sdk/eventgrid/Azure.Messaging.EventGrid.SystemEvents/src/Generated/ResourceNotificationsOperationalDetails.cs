@@ -46,27 +46,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsOperationalDetails"/>. </summary>
-        /// <param name="resourceEventTime"> Date and Time when resource was updated. </param>
-        internal ResourceNotificationsOperationalDetails(DateTimeOffset resourceEventTime)
+        internal ResourceNotificationsOperationalDetails()
         {
-            ResourceEventTime = resourceEventTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsOperationalDetails"/>. </summary>
         /// <param name="resourceEventTime"> Date and Time when resource was updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsOperationalDetails(DateTimeOffset resourceEventTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceNotificationsOperationalDetails(DateTimeOffset? resourceEventTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceEventTime = resourceEventTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsOperationalDetails"/> for deserialization. </summary>
-        internal ResourceNotificationsOperationalDetails()
-        {
-        }
-
         /// <summary> Date and Time when resource was updated. </summary>
-        public DateTimeOffset ResourceEventTime { get; }
+        public DateTimeOffset? ResourceEventTime { get; }
     }
 }

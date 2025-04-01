@@ -29,6 +29,9 @@ namespace Azure.Messaging.ServiceBus
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
         private readonly MessagingClientDiagnostics _clientDiagnostics;
 
+        private static int s_randomSeed = Environment.TickCount;
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero ||
                                         ProcessorOptions.MaxAutoLockRenewalDuration == Timeout.InfiniteTimeSpan;
 
@@ -397,17 +400,15 @@ namespace Azure.Messaging.ServiceBus
 
         protected static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntil)
         {
+            var shortJitter = TimeSpan.FromMilliseconds(RandomNumberGenerator.Value.Next(0, 50));
+            var longJitter = TimeSpan.FromMilliseconds(RandomNumberGenerator.Value.Next(0, 200));
+
             var remainingTime = lockedUntil - DateTimeOffset.UtcNow;
 
-            if (remainingTime < TimeSpan.FromMilliseconds(400))
-            {
-                return TimeSpan.Zero;
-            }
-
             var buffer = TimeSpan.FromTicks(Math.Min(remainingTime.Ticks / 2, Constants.MaximumRenewBufferDuration.Ticks));
-            var renewAfter = remainingTime - buffer;
+            var renewAfter = remainingTime - buffer - longJitter;
 
-            return renewAfter;
+            return renewAfter < TimeSpan.FromMilliseconds(400) ? shortJitter : renewAfter;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("AzureChatMessageContextAllRetrievedDocuments")]
+[CodeGenType("AzureChatMessageContextAllRetrievedDocuments")]
 [Experimental("AOAI001")]
 public partial class ChatRetrievedDocument
 {

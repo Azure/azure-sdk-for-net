@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The reason or list of reasons why a packet core has not been installed or requires a reinstall.
-    /// Serialized Name: InstallationReason
-    /// </summary>
+    /// <summary> The reason or list of reasons why a packet core has not been installed or requires a reinstall. </summary>
     public readonly partial struct MobileNetworkInstallationReason : IEquatable<MobileNetworkInstallationReason>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string ControlPlaneAccessVirtualIPv4AddressesHasChangedValue = "ControlPlaneAccessVirtualIpv4AddressesHasChanged";
         private const string UserPlaneAccessVirtualIPv4AddressesHasChangedValue = "UserPlaneAccessVirtualIpv4AddressesHasChanged";
 
-        /// <summary>
-        /// The packet core has not been installed as the mobile network does not have any applicable configured slices.
-        /// Serialized Name: InstallationReason.NoSlices
-        /// </summary>
+        /// <summary> The packet core has not been installed as the mobile network does not have any applicable configured slices. </summary>
         public static MobileNetworkInstallationReason NoSlices { get; } = new MobileNetworkInstallationReason(NoSlicesValue);
-        /// <summary>
-        /// The packet core has not been installed as there is no configured data plane for this packet core.
-        /// Serialized Name: InstallationReason.NoPacketCoreDataPlane
-        /// </summary>
+        /// <summary> The packet core has not been installed as there is no configured data plane for this packet core. </summary>
         public static MobileNetworkInstallationReason NoPacketCoreDataPlane { get; } = new MobileNetworkInstallationReason(NoPacketCoreDataPlaneValue);
-        /// <summary>
-        /// The packet core has not been installed as the packet core has no attached data networks.
-        /// Serialized Name: InstallationReason.NoAttachedDataNetworks
-        /// </summary>
+        /// <summary> The packet core has not been installed as the packet core has no attached data networks. </summary>
         public static MobileNetworkInstallationReason NoAttachedDataNetworks { get; } = new MobileNetworkInstallationReason(NoAttachedDataNetworksValue);
-        /// <summary>
-        /// A reinstall is required as the packet core is running with out-of-date PLMN ID.
-        /// Serialized Name: InstallationReason.PublicLandMobileNetworkIdentifierHasChanged
-        /// </summary>
+        /// <summary> A reinstall is required as the packet core is running with out-of-date PLMN ID. </summary>
         public static MobileNetworkInstallationReason PublicLandMobileNetworkIdentifierHasChanged { get; } = new MobileNetworkInstallationReason(PublicLandMobileNetworkIdentifierHasChangedValue);
-        /// <summary>
-        /// A reinstall is required as the packet core is running with out-of-date control plane access interface information.
-        /// Serialized Name: InstallationReason.ControlPlaneAccessInterfaceHasChanged
-        /// </summary>
+        /// <summary> A reinstall is required as the packet core is running with out-of-date control plane access interface information. </summary>
         public static MobileNetworkInstallationReason ControlPlaneAccessInterfaceHasChanged { get; } = new MobileNetworkInstallationReason(ControlPlaneAccessInterfaceHasChangedValue);
-        /// <summary>
-        /// A reinstall is required as the packet core is running with out-of-date user plane core interface.
-        /// Serialized Name: InstallationReason.UserPlaneAccessInterfaceHasChanged
-        /// </summary>
+        /// <summary> A reinstall is required as the packet core is running with out-of-date user plane core interface. </summary>
         public static MobileNetworkInstallationReason UserPlaneAccessInterfaceHasChanged { get; } = new MobileNetworkInstallationReason(UserPlaneAccessInterfaceHasChangedValue);
-        /// <summary>
-        /// A reinstall is required as the packet core is running with out-of-date user plane access interface.
-        /// Serialized Name: InstallationReason.UserPlaneDataInterfaceHasChanged
-        /// </summary>
+        /// <summary> A reinstall is required as the packet core is running with out-of-date user plane access interface. </summary>
         public static MobileNetworkInstallationReason UserPlaneDataInterfaceHasChanged { get; } = new MobileNetworkInstallationReason(UserPlaneDataInterfaceHasChangedValue);
-        /// <summary>
-        /// A reinstall is required as the packet core is running with out-of-date control plane access network virtual IP address.
-        /// Serialized Name: InstallationReason.ControlPlaneAccessVirtualIpv4AddressesHasChanged
-        /// </summary>
+        /// <summary> A reinstall is required as the packet core is running with out-of-date control plane access network virtual IP address. </summary>
         public static MobileNetworkInstallationReason ControlPlaneAccessVirtualIPv4AddressesHasChanged { get; } = new MobileNetworkInstallationReason(ControlPlaneAccessVirtualIPv4AddressesHasChangedValue);
-        /// <summary>
-        /// A reinstall is required as the packet core is running with out-of-date user plane access network virtual IP address.
-        /// Serialized Name: InstallationReason.UserPlaneAccessVirtualIpv4AddressesHasChanged
-        /// </summary>
+        /// <summary> A reinstall is required as the packet core is running with out-of-date user plane access network virtual IP address. </summary>
         public static MobileNetworkInstallationReason UserPlaneAccessVirtualIPv4AddressesHasChanged { get; } = new MobileNetworkInstallationReason(UserPlaneAccessVirtualIPv4AddressesHasChangedValue);
         /// <summary> Determines if two <see cref="MobileNetworkInstallationReason"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkInstallationReason left, MobileNetworkInstallationReason right) => left.Equals(right);

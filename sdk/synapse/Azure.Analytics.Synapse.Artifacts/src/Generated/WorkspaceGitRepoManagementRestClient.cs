@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         GitHubAccessTokenResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GitHubAccessTokenResponse.DeserializeGitHubAccessTokenResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         GitHubAccessTokenResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GitHubAccessTokenResponse.DeserializeGitHubAccessTokenResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

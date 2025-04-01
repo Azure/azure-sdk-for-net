@@ -1,10 +1,9 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Azure.Messaging.EventHubs;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 
@@ -83,11 +82,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             return new Dictionary<string, string>()
             {
-                { "PartionId", context.PartitionId },
+                { "PartitionId", context.PartitionId },
                 { "Offset", offset },
                 { "EnqueueTimeUtc", enqueueTimeUtc },
                 { "SequenceNumber", sequenceNumber },
-                { "Count", Events.Length.ToString(CultureInfo.InvariantCulture)}
+                { "Count", Events.Length.ToString(CultureInfo.InvariantCulture)},
+
+                // Preserve a misspelling that existed in the original code, as
+                // there may be applications relying on this.
+                { "PartionId", context.PartitionId }
             };
         }
     }

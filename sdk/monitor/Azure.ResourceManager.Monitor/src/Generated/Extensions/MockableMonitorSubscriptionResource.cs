@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// **Lists the metric data for a subscription**.
+        /// **Lists the metric data for a subscription**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// **Lists the metric data for a subscription**.
+        /// **Lists the metric data for a subscription**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body.
+        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body.
+        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

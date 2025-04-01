@@ -69,23 +69,13 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extended location. </param>
-        /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
-        /// <param name="targetAddress"> The local valid URI specifying the network address/DNS name of a southbound device. The scheme part of the targetAddress URI specifies the type of the device. The additionalConfiguration field holds further connector type specific configuration. </param>
-        /// <param name="userAuthentication"> Defines the client authentication mechanism to the server. </param>
-        /// <param name="transportAuthentication"> Defines the authentication mechanism for the southbound connector connecting to the shop floor/OT device. </param>
-        /// <param name="additionalConfiguration"> Contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DeviceRegistryExtendedLocation extendedLocation, string uuid, Uri targetAddress, UserAuthentication userAuthentication, TransportAuthentication transportAuthentication, string additionalConfiguration, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DeviceRegistryAssetEndpointProfileProperties properties, DeviceRegistryExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            Uuid = uuid;
-            TargetAddress = targetAddress;
-            UserAuthentication = userAuthentication;
-            TransportAuthentication = transportAuthentication;
-            AdditionalConfiguration = additionalConfiguration;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,26 +84,9 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public DeviceRegistryAssetEndpointProfileProperties Properties { get; set; }
         /// <summary> The extended location. </summary>
         public DeviceRegistryExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> Globally unique, immutable, non-reusable id. </summary>
-        public string Uuid { get; }
-        /// <summary> The local valid URI specifying the network address/DNS name of a southbound device. The scheme part of the targetAddress URI specifies the type of the device. The additionalConfiguration field holds further connector type specific configuration. </summary>
-        public Uri TargetAddress { get; set; }
-        /// <summary> Defines the client authentication mechanism to the server. </summary>
-        public UserAuthentication UserAuthentication { get; set; }
-        /// <summary> Defines the authentication mechanism for the southbound connector connecting to the shop floor/OT device. </summary>
-        internal TransportAuthentication TransportAuthentication { get; set; }
-        /// <summary> Defines a reference to a secret which contains all certificates and private keys that can be used by the southbound connector connecting to the shop floor/OT device. The accepted extensions are .der for certificates and .pfx/.pem for private keys. </summary>
-        public IList<OwnCertificate> TransportAuthenticationOwnCertificates
-        {
-            get => TransportAuthentication is null ? default : TransportAuthentication.OwnCertificates;
-            set => TransportAuthentication = new TransportAuthentication(value);
-        }
-
-        /// <summary> Contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </summary>
-        public string AdditionalConfiguration { get; set; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public DeviceRegistryProvisioningState? ProvisioningState { get; }
     }
 }

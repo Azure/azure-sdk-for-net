@@ -1,39 +1,79 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.OpenAI.Chat;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
 namespace Azure.AI.OpenAI.Internal;
 
+#pragma warning disable AOAI001
 internal static class AdditionalPropertyHelpers
 {
     private static string SARD_EMPTY_SENTINEL = "__EMPTY__";
 
-    internal static T GetAdditionalProperty<T>(IDictionary<string, BinaryData> additionalProperties, string key)
-        where T : class, IJsonModel<T>
+    private static T GetAdditionalProperty<T>(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey, Func<JsonElement, ModelReaderWriterOptions, T> deserializeFunction) where T : class, IJsonModel<T>
     {
-        if (additionalProperties?.TryGetValue(key, out BinaryData binaryProperty) != true)
+        if (additionalProperties?.TryGetValue(additionalPropertyKey, out BinaryData additionalPropertyValue) != true)
         {
             return null;
         }
-        return (T)ModelReaderWriter.Read(binaryProperty, typeof(T));
+
+        using JsonDocument document = JsonDocument.Parse(additionalPropertyValue);
+        return deserializeFunction(document.RootElement, ModelSerializationExtensions.WireOptions);
     }
 
-    internal static IList<T> GetAdditionalListProperty<T>(IDictionary<string, BinaryData> additionalProperties, string key)
-        where T : class, IJsonModel<T>
+    private static IList<T> GetAdditionalPropertyAsList<T>(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey, Func<JsonElement, ModelReaderWriterOptions, T> deserializeFunction) where T : class, IJsonModel<T>
     {
-        if (additionalProperties?.TryGetValue(key, out BinaryData binaryProperty) != true)
+        if (additionalProperties?.TryGetValue(additionalPropertyKey, out BinaryData additionalPropertyValue) != true)
         {
             return null;
         }
+
         List<T> items = [];
-        using JsonDocument document = JsonDocument.Parse(binaryProperty);
+        using JsonDocument document = JsonDocument.Parse(additionalPropertyValue);
+
         foreach (JsonElement element in document.RootElement.EnumerateArray())
         {
-            items.Add((T)ModelReaderWriter.Read(BinaryData.FromObjectAsJson(element), typeof(T)));
+            items.Add(deserializeFunction(element, ModelSerializationExtensions.WireOptions));
         }
+
         return items;
+    }
+
+    internal static ResponseContentFilterResult GetAdditionalPropertyAsResponseContentFilterResult(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey)
+    {
+        return GetAdditionalProperty(additionalProperties, additionalPropertyKey, ResponseContentFilterResult.DeserializeResponseContentFilterResult);
+    }
+
+    internal static ChatMessageContext GetAdditionalPropertyAsChatMessageContext(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey)
+    {
+        return GetAdditionalProperty(additionalProperties, additionalPropertyKey, ChatMessageContext.DeserializeChatMessageContext);
+    }
+
+    internal static RequestImageContentFilterResult GetAdditionalPropertyAsRequestImageContentFilterResult(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey)
+    {
+        return GetAdditionalProperty(additionalProperties, additionalPropertyKey, RequestImageContentFilterResult.DeserializeRequestImageContentFilterResult);
+    }
+
+    internal static ResponseImageContentFilterResult GetAdditionalPropertyAsResponseImageContentFilterResult(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey)
+    {
+        return GetAdditionalProperty(additionalProperties, additionalPropertyKey, ResponseImageContentFilterResult.DeserializeResponseImageContentFilterResult);
+    }
+
+    internal static IList<ChatDataSource> GetAdditionalPropertyAsListOfChatDataSource(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey)
+    {
+        return GetAdditionalPropertyAsList(additionalProperties, additionalPropertyKey, ChatDataSource.DeserializeChatDataSource);
+    }
+
+    internal static IList<RequestContentFilterResult> GetAdditionalPropertyAsListOfRequestContentFilterResult(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey)
+    {
+        return GetAdditionalPropertyAsList(additionalProperties, additionalPropertyKey, RequestContentFilterResult.DeserializeRequestContentFilterResult);
+    }
+
+    internal static UserSecurityContext GetAdditionalPropertyAsUserSecurityContext(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey)
+    {
+        return GetAdditionalProperty(additionalProperties, additionalPropertyKey, UserSecurityContext.DeserializeUserSecurityContext);
     }
 
     internal static void SetAdditionalProperty<T>(IDictionary<string, BinaryData> additionalProperties, string key, T value)
@@ -51,7 +91,14 @@ internal static class AdditionalPropertyHelpers
     internal static void SetEmptySentinelValue(IDictionary<string, BinaryData> additionalProperties, string key)
     {
         Argument.AssertNotNull(additionalProperties, nameof(additionalProperties));
-        additionalProperties[key] = BinaryData.FromObjectAsJson(SARD_EMPTY_SENTINEL);
+
+        using MemoryStream stream = new();
+        using Utf8JsonWriter writer = new(stream);
+
+        writer.WriteStringValue(SARD_EMPTY_SENTINEL);
+        writer.Flush();
+
+        additionalProperties[key] = BinaryData.FromBytes(stream.ToArray());
     }
 
     internal static bool GetIsEmptySentinelValue(IDictionary<string, BinaryData> additionalProperties, string key)
@@ -61,3 +108,4 @@ internal static class AdditionalPropertyHelpers
             && StringComparer.OrdinalIgnoreCase.Equals(existingValue.ToString(), $@"""{SARD_EMPTY_SENTINEL}""");
     }
 }
+#pragma warning restore AOAI001

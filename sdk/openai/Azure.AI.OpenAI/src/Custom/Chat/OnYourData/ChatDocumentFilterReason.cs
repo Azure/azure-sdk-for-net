@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("AzureChatMessageContextAllRetrievedDocumentsFilterReason")]
+[CodeGenType("AzureChatMessageContextAllRetrievedDocumentsFilterReason")]
 [Experimental("AOAI001")]
 public readonly partial struct ChatDocumentFilterReason
 {

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsNameResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsNameResult.DeserializeDigitalTwinsNameResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsNameResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsNameResult.DeserializeDigitalTwinsNameResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

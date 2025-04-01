@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetUpdateRunListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceFleetUpdateRunListResult.DeserializeContainerServiceFleetUpdateRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetUpdateRunListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceFleetUpdateRunListResult.DeserializeContainerServiceFleetUpdateRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetUpdateRunData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceFleetUpdateRunData.DeserializeContainerServiceFleetUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetUpdateRunData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceFleetUpdateRunData.DeserializeContainerServiceFleetUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetUpdateRunListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceFleetUpdateRunListResult.DeserializeContainerServiceFleetUpdateRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetUpdateRunListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceFleetUpdateRunListResult.DeserializeContainerServiceFleetUpdateRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

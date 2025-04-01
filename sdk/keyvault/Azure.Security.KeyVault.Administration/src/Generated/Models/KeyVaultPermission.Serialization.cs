@@ -135,7 +135,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static KeyVaultPermission FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeKeyVaultPermission(document.RootElement);
         }
 

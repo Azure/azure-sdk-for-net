@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
-        /// Trhown if <paramref name="transferId"/> is empty or null.
+        /// Thrown if <paramref name="transferId"/> is empty or null.
         /// Thrown if <paramref name="sourceResource"/> is empty or null.
         /// Thrown if <paramref name="destinationResource"/> is empty or null.
         /// </exception>

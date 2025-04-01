@@ -15,7 +15,7 @@ namespace Azure.Communication.Email
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static EmailSendResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEmailSendResult(document.RootElement);
         }
     }

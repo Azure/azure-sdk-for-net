@@ -24,6 +24,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("expression"u8);
                 writer.WriteObjectValue(Expression);
             }
+            if (Optional.IsDefined(PageSize))
+            {
+                writer.WritePropertyName("pageSize"u8);
+                writer.WriteObjectValue<object>(PageSize);
+            }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
@@ -66,6 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             ExpressionV2 expression = default;
+            object pageSize = default;
             object queryTimeout = default;
             object additionalColumns = default;
             string type = default;
@@ -83,6 +89,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     expression = ExpressionV2.DeserializeExpressionV2(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("pageSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pageSize = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -146,14 +161,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties,
                 queryTimeout,
                 additionalColumns,
-                expression);
+                expression,
+                pageSize);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ServiceNowV2Source FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeServiceNowV2Source(document.RootElement);
         }
 

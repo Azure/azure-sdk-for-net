@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.BotService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBotData(document.RootElement, options);
                     }
                 default:

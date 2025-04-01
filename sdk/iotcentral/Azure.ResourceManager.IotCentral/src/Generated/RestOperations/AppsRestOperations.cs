@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotCentralAppData.DeserializeIotCentralAppData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotCentralAppData.DeserializeIotCentralAppData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppNameAvailabilityResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotCentralAppNameAvailabilityResponse.DeserializeIotCentralAppNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppNameAvailabilityResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotCentralAppNameAvailabilityResponse.DeserializeIotCentralAppNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppNameAvailabilityResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotCentralAppNameAvailabilityResponse.DeserializeIotCentralAppNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppNameAvailabilityResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotCentralAppNameAvailabilityResponse.DeserializeIotCentralAppNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppTemplatesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotCentralAppTemplatesResult.DeserializeIotCentralAppTemplatesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppTemplatesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotCentralAppTemplatesResult.DeserializeIotCentralAppTemplatesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotCentralAppListResult.DeserializeIotCentralAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppTemplatesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotCentralAppTemplatesResult.DeserializeIotCentralAppTemplatesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.IotCentral
                 case 200:
                     {
                         IotCentralAppTemplatesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotCentralAppTemplatesResult.DeserializeIotCentralAppTemplatesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

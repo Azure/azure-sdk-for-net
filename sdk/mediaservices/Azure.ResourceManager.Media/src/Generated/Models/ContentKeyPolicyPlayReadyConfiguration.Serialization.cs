@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ResponseCustomData);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ResponseCustomData))
+                using (JsonDocument document = JsonDocument.Parse(ResponseCustomData, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContentKeyPolicyPlayReadyConfiguration(document.RootElement, options);
                     }
                 default:

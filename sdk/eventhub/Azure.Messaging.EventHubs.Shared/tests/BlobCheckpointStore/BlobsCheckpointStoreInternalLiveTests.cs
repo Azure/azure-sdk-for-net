@@ -573,9 +573,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     Version = firstOwnership.Version
                 };
 
-                Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new[] { secondOwnership }, default), Throws.InstanceOf<RequestFailedException>());
+                await checkpointStore.ClaimOwnershipAsync(new[] { secondOwnership }, default);
                 var storedOwnershipList = await checkpointStore.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1", default);
 
+                Assert.That(firstOwnership.Version, Is.Not.EqualTo(secondOwnership.Version));
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
                 Assert.That(storedOwnershipList.Single().IsEquivalentTo(firstOwnership), Is.True);
@@ -619,9 +620,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     Version = firstOwnership.Version
                 };
 
-                Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new[] { secondOwnership }, default), Throws.InstanceOf<RequestFailedException>());
+                await checkpointStore.ClaimOwnershipAsync(new[] { secondOwnership }, default);
                 var storedOwnershipList = await checkpointStore.ListOwnershipAsync("namespace", "eventHubName1", "consumerGroup", default);
 
+                Assert.That(firstOwnership.Version, Is.Not.EqualTo(secondOwnership.Version));
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
                 Assert.That(storedOwnershipList.Single().IsEquivalentTo(firstOwnership), Is.True);
@@ -665,9 +667,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     Version = firstOwnership.Version
                 };
 
-                Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new[] { secondOwnership }, default), Throws.InstanceOf<RequestFailedException>());
+                await checkpointStore.ClaimOwnershipAsync(new[] { secondOwnership }, default);
                 var storedOwnershipList = await checkpointStore.ListOwnershipAsync("namespace1", "eventHubName", "consumerGroup", default);
 
+                Assert.That(firstOwnership.Version, Is.Not.EqualTo(secondOwnership.Version));
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
                 Assert.That(storedOwnershipList.Single().IsEquivalentTo(firstOwnership), Is.True);

@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new OnvifDeviceDiscoverRequest FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeOnvifDeviceDiscoverRequest(document.RootElement);
         }
 

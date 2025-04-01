@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// Range of port numbers to use as translated ports on each translated address.
     /// If not specified and NAPT is enabled, this range defaults to 1,024 - 49,999.
     /// (Ports under 1,024 should not be used because these are special purpose ports reserved by IANA. Ports 50,000 and above are reserved for non-NAPT use.)
-    /// Serialized Name: PortRange
     /// </summary>
     public partial class MobileNetworkPortRange
     {
@@ -56,14 +55,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPortRange"/>. </summary>
-        /// <param name="minPort">
-        /// The minimum port number
-        /// Serialized Name: PortRange.minPort
-        /// </param>
-        /// <param name="maxPort">
-        /// The maximum port number
-        /// Serialized Name: PortRange.maxPort
-        /// </param>
+        /// <param name="minPort"> The minimum port number. </param>
+        /// <param name="maxPort"> The maximum port number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkPortRange(int? minPort, int? maxPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,16 +65,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The minimum port number
-        /// Serialized Name: PortRange.minPort
-        /// </summary>
+        /// <summary> The minimum port number. </summary>
         [WirePath("minPort")]
         public int? MinPort { get; set; }
-        /// <summary>
-        /// The maximum port number
-        /// Serialized Name: PortRange.maxPort
-        /// </summary>
+        /// <summary> The maximum port number. </summary>
         [WirePath("maxPort")]
         public int? MaxPort { get; set; }
     }

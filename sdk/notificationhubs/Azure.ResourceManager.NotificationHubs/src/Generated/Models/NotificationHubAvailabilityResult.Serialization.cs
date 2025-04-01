@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNotificationHubAvailabilityResult(document.RootElement, options);
                     }
                 default:

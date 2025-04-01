@@ -24,7 +24,7 @@ Depending on the type of change you want to make, the work required varies. If y
     * You might want to do this to add an `[Obsolete]` attribute or to add some helper factory methods.
 6. If any APIs have changed, or if new APIs have been added, you must update the following places:
     * The `src\IProtocolLayer.cs` interface.
-    * The `src\ProtocolLayer.cs` class.  
+    * The `src\ProtocolLayer.cs` class.
     * The corresponding operations class, for example `PoolOperations.cs`.
     * The corresponding entity which the operation is performed on, for example `CloudPool.cs`.
 7. Add tests for your new models and APIs into the correct test projects.
@@ -75,5 +75,3 @@ If running the tests against a test tenant, you also must set:
 
 13. `MABOM_BatchTRPExtraHeaders` to x-ms-version=2015-12-01;x-ms-client-tenant-id=microsoft.onmicrosoft.com
 14. `MABOM_BatchTRPCertificateThumbprint`: The thumbprint used to authenticate with the Batch Resource Provider.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fbatch%2FMicrosoft.Azure.Batch%2FREADME.png)

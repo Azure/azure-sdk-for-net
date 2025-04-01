@@ -1,0 +1,160 @@
+{
+ "$id": "1",
+ "name": "Server.Versions.NotVersioned",
+ "apiVersions": [],
+ "enums": [],
+ "models": [],
+ "clients": [
+  {
+   "$id": "2",
+   "name": "NotVersionedClient",
+   "namespace": "Server.Versions.NotVersioned",
+   "doc": "Illustrates not-versioned server.",
+   "operations": [
+    {
+     "$id": "3",
+     "name": "withoutApiVersion",
+     "resourceName": "NotVersioned",
+     "accessibility": "public",
+     "parameters": [],
+     "responses": [
+      {
+       "$id": "4",
+       "statusCodes": [
+        200
+       ],
+       "headers": [],
+       "isErrorResponse": false
+      }
+     ],
+     "httpMethod": "HEAD",
+     "uri": "{endpoint}",
+     "path": "/server/versions/not-versioned/without-api-version",
+     "bufferResponse": true,
+     "generateProtocolMethod": true,
+     "generateConvenienceMethod": true,
+     "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withoutApiVersion",
+     "decorators": []
+    },
+    {
+     "$id": "5",
+     "name": "withQueryApiVersion",
+     "resourceName": "NotVersioned",
+     "accessibility": "public",
+     "parameters": [
+      {
+       "$id": "6",
+       "name": "apiVersion",
+       "nameInRequest": "api-version",
+       "type": {
+        "$id": "7",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Query",
+       "isApiVersion": true,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "responses": [
+      {
+       "$id": "8",
+       "statusCodes": [
+        200
+       ],
+       "headers": [],
+       "isErrorResponse": false
+      }
+     ],
+     "httpMethod": "HEAD",
+     "uri": "{endpoint}",
+     "path": "/server/versions/not-versioned/with-query-api-version",
+     "bufferResponse": true,
+     "generateProtocolMethod": true,
+     "generateConvenienceMethod": true,
+     "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withQueryApiVersion",
+     "decorators": []
+    },
+    {
+     "$id": "9",
+     "name": "withPathApiVersion",
+     "resourceName": "NotVersioned",
+     "accessibility": "public",
+     "parameters": [
+      {
+       "$id": "10",
+       "name": "apiVersion",
+       "nameInRequest": "apiVersion",
+       "type": {
+        "$id": "11",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": true,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "responses": [
+      {
+       "$id": "12",
+       "statusCodes": [
+        200
+       ],
+       "headers": [],
+       "isErrorResponse": false
+      }
+     ],
+     "httpMethod": "HEAD",
+     "uri": "{endpoint}",
+     "path": "/server/versions/not-versioned/with-path-api-version/{apiVersion}",
+     "bufferResponse": true,
+     "generateProtocolMethod": true,
+     "generateConvenienceMethod": true,
+     "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withPathApiVersion",
+     "decorators": []
+    }
+   ],
+   "parameters": [
+    {
+     "$id": "13",
+     "name": "endpoint",
+     "nameInRequest": "endpoint",
+     "doc": "Need to be set as 'http://localhost:3000' in client.",
+     "type": {
+      "$id": "14",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "location": "Uri",
+     "isApiVersion": false,
+     "isContentType": false,
+     "isRequired": true,
+     "isEndpoint": true,
+     "skipUrlEncoding": false,
+     "explode": false,
+     "kind": "Client"
+    }
+   ],
+   "decorators": [],
+   "crossLanguageDefinitionId": "Server.Versions.NotVersioned"
+  }
+ ]
+}

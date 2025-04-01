@@ -54,8 +54,8 @@ steps:
 
   - task: NodeTool@0
     inputs:
-      versionSpec: 18.x
-    displayName: 'Use Node 18.x'
+      versionSpec: 20.x
+    displayName: 'Use Node 20.x'
 
   - task: DotNetCoreCLI@2
     displayName: 'Install Snippet Generator Tool'
@@ -96,33 +96,18 @@ steps:
     parameters:
       LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
 
-  - pwsh: |
-      $failed = $false
-      if ("$(ProjectNames)") {
-        $services = "$(ChangedServices)" -split ","
-
-        foreach ($service in $services) {
-          Write-Host "building $service"
-          dotnet build eng/service.proj -warnaserror `
-            /t:rebuild `
-            /p:DebugType=none `
-            /p:SDKType=${{ parameters.SDKType }} `
-            /p:ServiceDirectory=$service `
-            /p:IncludePerf=false `
-            /p:IncludeStress=false `
-            /p:PublicSign=false `
-            /p:Configuration=$(BuildConfiguration) `
-            /p:EnableSourceLink=false `
-            /p:ProjectListOverrideFile="" `
-            /p:BuildSnippets=true `
-            $(DiagnosticArguments)
-        }
-      }
-      else {
-        Write-Host "No services were directly changed. Skipping snippet build."
-      }
+  - task: Powershell@2
     displayName: Build snippets
     condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/scripts/Build-Snippets.ps1
+      arguments: >
+        -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo"
+        -SdkType "${{ parameters.SDKType }}"
+        -ProjectNames "$(ProjectNames)"
+        -DiagnosticArguments "$(DiagnosticArguments)"
+        -BuildConfiguration "$(BuildConfiguration)"
+      pwsh: true
 
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
     - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml

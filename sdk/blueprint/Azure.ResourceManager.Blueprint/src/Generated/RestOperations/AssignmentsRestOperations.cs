@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 201:
                     {
                         AssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 201:
                     {
                         AssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 202:
                     {
                         AssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 202:
                     {
                         AssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         WhoIsBlueprintContract value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WhoIsBlueprintContract.DeserializeWhoIsBlueprintContract(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         WhoIsBlueprintContract value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WhoIsBlueprintContract.DeserializeWhoIsBlueprintContract(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentList.DeserializeAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentList.DeserializeAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentList.DeserializeAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentList.DeserializeAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

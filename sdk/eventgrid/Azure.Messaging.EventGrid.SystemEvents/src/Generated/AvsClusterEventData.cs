@@ -46,8 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvsClusterEventData"/>. </summary>
-        internal AvsClusterEventData()
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        internal AvsClusterEventData(string operationId)
         {
+            Argument.AssertNotNull(operationId, nameof(operationId));
+
+            OperationId = operationId;
             AddedHostNames = new ChangeTrackingList<string>();
             RemovedHostNames = new ChangeTrackingList<string>();
             InMaintenanceHostNames = new ChangeTrackingList<string>();
@@ -66,6 +71,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             RemovedHostNames = removedHostNames;
             InMaintenanceHostNames = inMaintenanceHostNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsClusterEventData"/> for deserialization. </summary>
+        internal AvsClusterEventData()
+        {
         }
 
         /// <summary> Id of the operation that caused this event. </summary>

@@ -12,27 +12,36 @@ namespace Azure.AI.Projects.Tests
     public class Sample_Agent_Streaming : SamplesBase<AIProjectsTestEnvironment>
     {
         [Test]
-        public async Task Streaming()
+        [AsyncOnly]
+        public async Task StreamingAsync()
         {
+            #region Snippet:StreamingAsync_CreateClient
+#if SNIPPET
+            var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+            var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+#else
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-            AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
-
-            Response<Agent> agentResponse = await client.CreateAgentAsync(
-                model: "gpt-4-1106-preview",
+            var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+#endif
+            AgentsClient client = new(connectionString, new DefaultAzureCredential());
+            #endregion
+            #region Snippet:StreamingAsync_CreateAgent
+            Agent agent = await client.CreateAgentAsync(
+                model: modelDeploymentName,
                 name: "My Friendly Test Assistant",
                 instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
-                tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });
-            Agent agent = agentResponse.Value;
+                tools: [ new CodeInterpreterToolDefinition() ]
+            );
+            #endregion
+            # region Snippet:StreamingAsync_CreateThread
+            AgentThread thread = await client.CreateThreadAsync();
 
-            Response<AgentThread> threadResponse = await client.CreateThreadAsync();
-            AgentThread thread = threadResponse.Value;
-
-            Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+            ThreadMessage message = await client.CreateMessageAsync(
                 thread.Id,
                 MessageRole.User,
                 "Hi, Assistant! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
-            ThreadMessage message = messageResponse.Value;
-
+            #endregion
+            #region Snippet:StreamingAsync_StreamLoop
             await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -48,6 +57,62 @@ namespace Azure.AI.Projects.Tests
                     }
                 }
             }
+            #endregion
+            #region Snippet::StreamingAsync_Cleanup
+            await client.DeleteThreadAsync(thread.Id);
+            await client.DeleteAgentAsync(agent.Id);
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
+        public void Streaming()
+        {
+#if SNIPPET
+            var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+            var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+#else
+            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+#endif
+            AgentsClient client = new(connectionString, new DefaultAzureCredential());
+            #region Snippet:Streaming_CreateAgent
+            Agent agent = client.CreateAgent(
+                model: modelDeploymentName,
+                name: "My Friendly Test Assistant",
+                instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
+                tools: [new CodeInterpreterToolDefinition()]
+            );
+            #endregion
+            #region Snippet:Streaming_CreateThread
+            AgentThread thread = client.CreateThread();
+
+            ThreadMessage message = client.CreateMessage(
+                thread.Id,
+                MessageRole.User,
+                "Hi, Assistant! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
+            #endregion
+            #region Snippet:Streaming_StreamLoop
+            foreach (StreamingUpdate streamingUpdate in client.CreateRunStreaming(thread.Id, agent.Id))
+            {
+                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+                {
+                    Console.WriteLine($"--- Run started! ---");
+                }
+                else if (streamingUpdate is MessageContentUpdate contentUpdate)
+                {
+                    Console.Write(contentUpdate.Text);
+                    if (contentUpdate.ImageFileId is not null)
+                    {
+                        Console.WriteLine($"[Image content file ID: {contentUpdate.ImageFileId}");
+                    }
+                }
+            }
+            #endregion
+            #region Snippet::Streaming_Cleanup
+            client.DeleteThread(thread.Id);
+            client.DeleteAgent(agent.Id);
+            #endregion
         }
     }
 }

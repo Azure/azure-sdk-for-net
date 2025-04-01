@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,6 +17,272 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerRegistryModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryArchiveData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="packageSource"> The package source of the archive. </param>
+        /// <param name="publishedVersion"> The published version of the archive. </param>
+        /// <param name="repositoryEndpointPrefix"></param>
+        /// <param name="repositoryEndpoint"></param>
+        /// <param name="provisioningState"> The provisioning state of the archive at the time the operation was called. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryArchiveData"/> instance for mocking. </returns>
+        public static ContainerRegistryArchiveData ContainerRegistryArchiveData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArchivePackageSourceProperties packageSource = null, string publishedVersion = null, string repositoryEndpointPrefix = null, string repositoryEndpoint = null, ContainerRegistryProvisioningState? provisioningState = null)
+        {
+            return new ContainerRegistryArchiveData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                packageSource,
+                publishedVersion,
+                repositoryEndpointPrefix,
+                repositoryEndpoint,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryArchiveVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the archive at the time the operation was called. </param>
+        /// <param name="archiveVersionErrorMessage"> The detailed error message for the archive version in the case of failure. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryArchiveVersionData"/> instance for mocking. </returns>
+        public static ContainerRegistryArchiveVersionData ContainerRegistryArchiveVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerRegistryProvisioningState? provisioningState = null, string archiveVersionErrorMessage = null)
+        {
+            return new ContainerRegistryArchiveVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                archiveVersionErrorMessage,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryCacheRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the cache rule. </param>
+        /// <param name="sourceRepository"> Source repository pulled from upstream. </param>
+        /// <param name="targetRepository">
+        /// Target repository specified in docker pull command.
+        /// Eg: docker pull myregistry.azurecr.io/{targetRepository}:{tag}
+        /// </param>
+        /// <param name="createdOn"> The creation date of the cache rule. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryCacheRuleData"/> instance for mocking. </returns>
+        public static ContainerRegistryCacheRuleData ContainerRegistryCacheRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier credentialSetResourceId = null, string sourceRepository = null, string targetRepository = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null)
+        {
+            return new ContainerRegistryCacheRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                credentialSetResourceId,
+                sourceRepository,
+                targetRepository,
+                createdOn,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ConnectedRegistryData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="mode"> The mode of the connected registry resource that indicates the permissions of the registry. </param>
+        /// <param name="version"> The current version of ACR runtime on the connected registry. </param>
+        /// <param name="connectionState"> The current connection state of the connected registry. </param>
+        /// <param name="lastActivityOn"> The last activity time of the connected registry. </param>
+        /// <param name="activationStatus"> The activation properties of the connected registry. </param>
+        /// <param name="parent"> The parent of the connected registry. </param>
+        /// <param name="clientTokenIds"> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </param>
+        /// <param name="loginServer"> The login server properties of the connected registry. </param>
+        /// <param name="logging"> The logging properties of the connected registry. </param>
+        /// <param name="statusDetails"> The list of current statuses of the connected registry. </param>
+        /// <param name="notificationsList"> The list of notifications subscription information for the connected registry. </param>
+        /// <param name="garbageCollection"> The garbage collection properties of the connected registry. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ConnectedRegistryData"/> instance for mocking. </returns>
+        public static ConnectedRegistryData ConnectedRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerRegistryProvisioningState? provisioningState = null, ConnectedRegistryMode? mode = null, string version = null, ConnectedRegistryConnectionState? connectionState = null, DateTimeOffset? lastActivityOn = null, ConnectedRegistryActivationStatus? activationStatus = null, ConnectedRegistryParent parent = null, IEnumerable<ResourceIdentifier> clientTokenIds = null, ConnectedRegistryLoginServer loginServer = null, ConnectedRegistryLogging logging = null, IEnumerable<ConnectedRegistryStatusDetail> statusDetails = null, IEnumerable<string> notificationsList = null, GarbageCollectionProperties garbageCollection = null)
+        {
+            clientTokenIds ??= new List<ResourceIdentifier>();
+            statusDetails ??= new List<ConnectedRegistryStatusDetail>();
+            notificationsList ??= new List<string>();
+
+            return new ConnectedRegistryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                mode,
+                version,
+                connectionState,
+                lastActivityOn,
+                activationStatus != null ? new ConnectedRegistryActivation(activationStatus, serializedAdditionalRawData: null) : null,
+                parent,
+                clientTokenIds?.ToList(),
+                loginServer,
+                logging,
+                statusDetails?.ToList(),
+                notificationsList?.ToList(),
+                garbageCollection,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedRegistrySyncProperties"/>. </summary>
+        /// <param name="tokenId"> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </param>
+        /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will sync with its parent. </param>
+        /// <param name="syncWindow"> The time window during which sync is enabled for each schedule occurrence. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
+        /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
+        /// <param name="lastSyncOn"> The last time a sync occurred between the connected registry and its parent. </param>
+        /// <param name="gatewayEndpoint"> The gateway endpoint used by the connected registry to communicate with its parent. </param>
+        /// <returns> A new <see cref="Models.ConnectedRegistrySyncProperties"/> instance for mocking. </returns>
+        public static ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(ResourceIdentifier tokenId = null, string schedule = null, TimeSpan? syncWindow = null, TimeSpan messageTtl = default, DateTimeOffset? lastSyncOn = null, string gatewayEndpoint = null)
+        {
+            return new ConnectedRegistrySyncProperties(
+                tokenId,
+                schedule,
+                syncWindow,
+                messageTtl,
+                lastSyncOn,
+                gatewayEndpoint,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedRegistryLoginServer"/>. </summary>
+        /// <param name="host"> The host of the connected registry. Can be FQDN or IP. </param>
+        /// <param name="tls"> The TLS properties of the connected registry login server. </param>
+        /// <returns> A new <see cref="Models.ConnectedRegistryLoginServer"/> instance for mocking. </returns>
+        public static ConnectedRegistryLoginServer ConnectedRegistryLoginServer(string host = null, ContainerRegistryTlsProperties tls = null)
+        {
+            return new ConnectedRegistryLoginServer(host, tls, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTlsProperties"/>. </summary>
+        /// <param name="status"> Indicates whether HTTPS is enabled for the login server. </param>
+        /// <param name="certificate"> The certificate used to configure HTTPS for the login server. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryTlsProperties"/> instance for mocking. </returns>
+        public static ContainerRegistryTlsProperties ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status = null, ContainerRegistryTlsCertificateProperties certificate = null)
+        {
+            return new ContainerRegistryTlsProperties(status, certificate, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTlsCertificateProperties"/>. </summary>
+        /// <param name="certificateType"> The type of certificate location. </param>
+        /// <param name="certificateLocation"> Indicates the location of the certificates. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryTlsCertificateProperties"/> instance for mocking. </returns>
+        public static ContainerRegistryTlsCertificateProperties ContainerRegistryTlsCertificateProperties(ContainerRegistryCertificateType? certificateType = null, string certificateLocation = null)
+        {
+            return new ContainerRegistryTlsCertificateProperties(certificateType, certificateLocation, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedRegistryStatusDetail"/>. </summary>
+        /// <param name="statusDetailType"> The component of the connected registry corresponding to the status. </param>
+        /// <param name="code"> The code of the status. </param>
+        /// <param name="description"> The description of the status. </param>
+        /// <param name="timestamp"> The timestamp of the status. </param>
+        /// <param name="correlationId"> The correlation ID of the status. </param>
+        /// <returns> A new <see cref="Models.ConnectedRegistryStatusDetail"/> instance for mocking. </returns>
+        public static ConnectedRegistryStatusDetail ConnectedRegistryStatusDetail(string statusDetailType = null, string code = null, string description = null, DateTimeOffset? timestamp = null, Guid? correlationId = null)
+        {
+            return new ConnectedRegistryStatusDetail(
+                statusDetailType,
+                code,
+                description,
+                timestamp,
+                correlationId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryCredentialSetData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> Identities associated with the resource. This is used to access the KeyVault secrets. </param>
+        /// <param name="loginServer"> The credentials are stored for this upstream or login server. </param>
+        /// <param name="authCredentials">
+        /// List of authentication credentials stored for an upstream.
+        /// Usually consists of a primary and an optional secondary credential.
+        /// </param>
+        /// <param name="createdOn"> The creation date of credential store resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryCredentialSetData"/> instance for mocking. </returns>
+        public static ContainerRegistryCredentialSetData ContainerRegistryCredentialSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string loginServer = null, IEnumerable<ContainerRegistryAuthCredential> authCredentials = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null)
+        {
+            authCredentials ??= new List<ContainerRegistryAuthCredential>();
+
+            return new ContainerRegistryCredentialSetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                loginServer,
+                authCredentials?.ToList(),
+                createdOn,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryAuthCredential"/>. </summary>
+        /// <param name="name"> The name of the credential. </param>
+        /// <param name="usernameSecretIdentifier"> KeyVault Secret URI for accessing the username. </param>
+        /// <param name="passwordSecretIdentifier"> KeyVault Secret URI for accessing the password. </param>
+        /// <param name="credentialHealth"> This provides data pertaining to the health of the auth credential. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryAuthCredential"/> instance for mocking. </returns>
+        public static ContainerRegistryAuthCredential ContainerRegistryAuthCredential(ContainerRegistryCredentialName? name = null, string usernameSecretIdentifier = null, string passwordSecretIdentifier = null, ContainerRegistryCredentialHealth credentialHealth = null)
+        {
+            return new ContainerRegistryAuthCredential(name, usernameSecretIdentifier, passwordSecretIdentifier, credentialHealth, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryCredentialHealth"/>. </summary>
+        /// <param name="status"> The health status of credential. </param>
+        /// <param name="errorCode"> Error code representing the health check error. </param>
+        /// <param name="errorMessage"> Descriptive message representing the health check error. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryCredentialHealth"/> instance for mocking. </returns>
+        public static ContainerRegistryCredentialHealth ContainerRegistryCredentialHealth(ContainerRegistryCredentialHealthStatus? status = null, string errorCode = null, string errorMessage = null)
+        {
+            return new ContainerRegistryCredentialHealth(status, errorCode, errorMessage, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryExportPipelineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location of the export pipeline. </param>
+        /// <param name="identity"> The identity of the export pipeline. </param>
+        /// <param name="target"> The target properties of the export pipeline. </param>
+        /// <param name="options"> The list of all options configured for the pipeline. </param>
+        /// <param name="provisioningState"> The provisioning state of the pipeline at the time the operation was called. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryExportPipelineData"/> instance for mocking. </returns>
+        public static ContainerRegistryExportPipelineData ContainerRegistryExportPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ExportPipelineTargetProperties target = null, IEnumerable<ContainerRegistryPipelineOption> options = null, ContainerRegistryProvisioningState? provisioningState = null)
+        {
+            options ??= new List<ContainerRegistryPipelineOption>();
+
+            return new ContainerRegistryExportPipelineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                identity,
+                target,
+                options?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryImportImageContent"/>. </summary>
         /// <param name="source"> The source of the image. </param>
         /// <param name="targetTags"> List of strings of the form repo[:tag]. When tag is omitted the source will be used (or 'latest' if source tag is also omitted). </param>
@@ -55,23 +322,110 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryImportSourceCredentials(username, password, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryImportPipelineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location of the import pipeline. </param>
+        /// <param name="identity"> The identity of the import pipeline. </param>
+        /// <param name="source"> The source properties of the import pipeline. </param>
+        /// <param name="sourceTriggerStatus"> The properties that describe the trigger of the import pipeline. </param>
+        /// <param name="options"> The list of all options configured for the pipeline. </param>
+        /// <param name="provisioningState"> The provisioning state of the pipeline at the time the operation was called. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryImportPipelineData"/> instance for mocking. </returns>
+        public static ContainerRegistryImportPipelineData ContainerRegistryImportPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ImportPipelineSourceProperties source = null, ContainerRegistryTriggerStatus? sourceTriggerStatus = null, IEnumerable<ContainerRegistryPipelineOption> options = null, ContainerRegistryProvisioningState? provisioningState = null)
+        {
+            options ??= new List<ContainerRegistryPipelineOption>();
+
+            return new ContainerRegistryImportPipelineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                identity,
+                source,
+                sourceTriggerStatus.HasValue ? new PipelineTriggerProperties(new PipelineSourceTriggerProperties(sourceTriggerStatus.Value, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                options?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the container registry. </param>
         /// <param name="resourceType"> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </param>
+        /// <param name="resourceGroupName"> The resource group name of the container registry. </param>
+        /// <param name="autoGeneratedDomainNameLabelScope"> The auto generated domain name label of the container registry. This value defaults to "Unsecure". </param>
         /// <returns> A new <see cref="Models.ContainerRegistryNameAvailabilityContent"/> instance for mocking. </returns>
-        public static ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name = null, ContainerRegistryResourceType resourceType = default)
+        public static ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name = null, ContainerRegistryResourceType resourceType = default, string resourceGroupName = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null)
         {
-            return new ContainerRegistryNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
+            return new ContainerRegistryNameAvailabilityContent(name, resourceType, resourceGroupName, autoGeneratedDomainNameLabelScope, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryNameAvailableResult"/>. </summary>
+        /// <param name="availableLoginServerName"> The complete login server name with domain name label (DNL) hash, if available. </param>
         /// <param name="isNameAvailable"> The value that indicates whether the name is available. </param>
         /// <param name="reason"> If any, the reason that the name is not available. </param>
         /// <param name="message"> If any, the error message that provides more detail for the reason that the name is not available. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryNameAvailableResult"/> instance for mocking. </returns>
-        public static ContainerRegistryNameAvailableResult ContainerRegistryNameAvailableResult(bool? isNameAvailable = null, string reason = null, string message = null)
+        public static ContainerRegistryNameAvailableResult ContainerRegistryNameAvailableResult(string availableLoginServerName = null, bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new ContainerRegistryNameAvailableResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new ContainerRegistryNameAvailableResult(availableLoginServerName, isNameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryPipelineRunData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of a pipeline run. </param>
+        /// <param name="request"> The request parameters for a pipeline run. </param>
+        /// <param name="response"> The response of a pipeline run. </param>
+        /// <param name="forceUpdateTag"> How the pipeline run should be forced to recreate even if the pipeline run configuration has not changed. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryPipelineRunData"/> instance for mocking. </returns>
+        public static ContainerRegistryPipelineRunData ContainerRegistryPipelineRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerRegistryProvisioningState? provisioningState = null, ConnectedRegistryPipelineRunContent request = null, PipelineRunResult response = null, string forceUpdateTag = null)
+        {
+            return new ContainerRegistryPipelineRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                request,
+                response,
+                forceUpdateTag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PipelineRunResult"/>. </summary>
+        /// <param name="status"> The current status of the pipeline run. </param>
+        /// <param name="importedArtifacts"> The artifacts imported in the pipeline run. </param>
+        /// <param name="progressPercentage"> The current progress of the copy operation. </param>
+        /// <param name="startOn"> The time the pipeline run started. </param>
+        /// <param name="finishOn"> The time the pipeline run finished. </param>
+        /// <param name="source"> The source of the pipeline run. </param>
+        /// <param name="target"> The target of the pipeline run. </param>
+        /// <param name="catalogDigest"> The digest of the tar used to transfer the artifacts. </param>
+        /// <param name="sourceTriggerTimestamp"> The trigger that caused the pipeline run. </param>
+        /// <param name="pipelineRunErrorMessage"> The detailed error message for the pipeline run in the case of failure. </param>
+        /// <returns> A new <see cref="Models.PipelineRunResult"/> instance for mocking. </returns>
+        public static PipelineRunResult PipelineRunResult(string status = null, IEnumerable<string> importedArtifacts = null, string progressPercentage = null, DateTimeOffset? startOn = null, DateTimeOffset? finishOn = null, ImportPipelineSourceProperties source = null, ExportPipelineTargetProperties target = null, string catalogDigest = null, DateTimeOffset? sourceTriggerTimestamp = null, string pipelineRunErrorMessage = null)
+        {
+            importedArtifacts ??= new List<string>();
+
+            return new PipelineRunResult(
+                status,
+                importedArtifacts?.ToList(),
+                progressPercentage != null ? new PipelineProgress(progressPercentage, serializedAdditionalRawData: null) : null,
+                startOn,
+                finishOn,
+                source,
+                target,
+                catalogDigest,
+                sourceTriggerTimestamp != null ? new PipelineTriggerDescriptor(new PipelineSourceTriggerDescriptor(sourceTriggerTimestamp, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                pipelineRunErrorMessage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData"/>. </summary>
@@ -119,8 +473,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
         /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
         /// <param name="zoneRedundancy"> Whether or not zone redundancy is enabled for this container registry. </param>
+        /// <param name="isAnonymousPullEnabled"> Enables registry-wide pull from unauthenticated clients. </param>
+        /// <param name="metadataSearch"> Determines whether registry artifacts are indexed for metadata search. </param>
+        /// <param name="autoGeneratedDomainNameLabelScope"> Determines the domain name label reuse scope. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryData"/> instance for mocking. </returns>
-        public static ContainerRegistryData ContainerRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerRegistrySku sku = null, ManagedServiceIdentity identity = null, string loginServer = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null, ContainerRegistryResourceStatus status = null, bool? isAdminUserEnabled = null, ContainerRegistryNetworkRuleSet networkRuleSet = null, ContainerRegistryPolicies policies = null, ContainerRegistryEncryption encryption = null, bool? isDataEndpointEnabled = null, IEnumerable<string> dataEndpointHostNames = null, IEnumerable<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = null, ContainerRegistryPublicNetworkAccess? publicNetworkAccess = null, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = null, ContainerRegistryZoneRedundancy? zoneRedundancy = null)
+        public static ContainerRegistryData ContainerRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerRegistrySku sku = null, ManagedServiceIdentity identity = null, string loginServer = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null, ContainerRegistryResourceStatus status = null, bool? isAdminUserEnabled = null, ContainerRegistryNetworkRuleSet networkRuleSet = null, ContainerRegistryPolicies policies = null, ContainerRegistryEncryption encryption = null, bool? isDataEndpointEnabled = null, IEnumerable<string> dataEndpointHostNames = null, IEnumerable<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = null, ContainerRegistryPublicNetworkAccess? publicNetworkAccess = null, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = null, ContainerRegistryZoneRedundancy? zoneRedundancy = null, bool? isAnonymousPullEnabled = null, ContainerRegistryMetadataSearch? metadataSearch = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null)
         {
             tags ??= new Dictionary<string, string>();
             dataEndpointHostNames ??= new List<string>();
@@ -149,6 +506,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 publicNetworkAccess,
                 networkRuleBypassOptions,
                 zoneRedundancy,
+                isAnonymousPullEnabled,
+                metadataSearch,
+                autoGeneratedDomainNameLabelScope,
                 serializedAdditionalRawData: null);
         }
 
@@ -179,6 +539,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryRetentionPolicy ContainerRegistryRetentionPolicy(int? days = null, DateTimeOffset? lastUpdatedOn = null, ContainerRegistryPolicyStatus? status = null)
         {
             return new ContainerRegistryRetentionPolicy(days, lastUpdatedOn, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistrySoftDeletePolicy"/>. </summary>
+        /// <param name="retentionDays"> The number of days after which a soft-deleted item is permanently deleted. </param>
+        /// <param name="lastUpdatedOn"> The timestamp when the policy was last updated. </param>
+        /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistrySoftDeletePolicy"/> instance for mocking. </returns>
+        public static ContainerRegistrySoftDeletePolicy ContainerRegistrySoftDeletePolicy(int? retentionDays = null, DateTimeOffset? lastUpdatedOn = null, ContainerRegistryPolicyStatus? status = null)
+        {
+            return new ContainerRegistrySoftDeletePolicy(retentionDays, lastUpdatedOn, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryKeyVaultProperties"/>. </summary>
@@ -920,6 +1290,57 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 encodedTaskContent,
                 encodedValuesContent,
                 values?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent" />. </summary>
+        /// <param name="name"> The name of the container registry. </param>
+        /// <param name="resourceType"> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name, ContainerRegistryResourceType resourceType)
+        {
+            return ContainerRegistryNameAvailabilityContent(name: name, resourceType: resourceType, resourceGroupName: default, autoGeneratedDomainNameLabelScope: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult" />. </summary>
+        /// <param name="isNameAvailable"> The value that indicates whether the name is available. </param>
+        /// <param name="reason"> If any, the reason that the name is not available. </param>
+        /// <param name="message"> If any, the error message that provides more detail for the reason that the name is not available. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerRegistryNameAvailableResult ContainerRegistryNameAvailableResult(bool? isNameAvailable, string reason, string message)
+        {
+            return ContainerRegistryNameAvailableResult(availableLoginServerName: default, isNameAvailable: isNameAvailable, reason: reason, message: message);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ContainerRegistry.ContainerRegistryData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The SKU of the container registry. </param>
+        /// <param name="identity"> The identity of the container registry. </param>
+        /// <param name="loginServer"> The URL that can be used to log into the container registry. </param>
+        /// <param name="createdOn"> The creation date of the container registry in ISO8601 format. </param>
+        /// <param name="provisioningState"> The provisioning state of the container registry at the time the operation was called. </param>
+        /// <param name="status"> The status of the container registry at the time the operation was called. </param>
+        /// <param name="isAdminUserEnabled"> The value that indicates whether the admin user is enabled. </param>
+        /// <param name="networkRuleSet"> The network rule set for a container registry. </param>
+        /// <param name="policies"> The policies for a container registry. </param>
+        /// <param name="encryption"> The encryption settings of container registry. </param>
+        /// <param name="isDataEndpointEnabled"> Enable a single data endpoint per region for serving data. </param>
+        /// <param name="dataEndpointHostNames"> List of host names that will serve data when dataEndpointEnabled is true. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections for a container registry. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
+        /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
+        /// <param name="zoneRedundancy"> Whether or not zone redundancy is enabled for this container registry. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ContainerRegistry.ContainerRegistryData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerRegistryData ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ManagedServiceIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IEnumerable<string> dataEndpointHostNames, IEnumerable<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, ContainerRegistryZoneRedundancy? zoneRedundancy)
+        {
+            return ContainerRegistryData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, identity: identity, loginServer: loginServer, createdOn: createdOn, provisioningState: provisioningState, status: status, isAdminUserEnabled: isAdminUserEnabled, networkRuleSet: networkRuleSet, policies: policies, encryption: encryption, isDataEndpointEnabled: isDataEndpointEnabled, dataEndpointHostNames: dataEndpointHostNames, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, networkRuleBypassOptions: networkRuleBypassOptions, zoneRedundancy: zoneRedundancy, isAnonymousPullEnabled: default, metadataSearch: default, autoGeneratedDomainNameLabelScope: default);
         }
     }
 }

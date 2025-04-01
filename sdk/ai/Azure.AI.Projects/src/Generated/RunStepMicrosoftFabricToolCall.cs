@@ -25,7 +25,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(microsoftFabric, nameof(microsoftFabric));
 
-            Type = "fabric_aiskill";
+            Type = "fabric_dataagent";
             MicrosoftFabric = microsoftFabric;
         }
 

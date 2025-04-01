@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2025-02-28)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-12-18-preview' to 'package-2025-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8abab3c9c1ff7c4f9d393c2ddb00e5f735289b37/specification/quota/resource-manager/readme.md.
+
+### Bugs Fixed
+
+- Fixed an issue where the GroupQuotaLimits and SubscriptionQuotaAllocations operations were erroring out even though the action completed successfully.
 
 ## 1.1.0-beta.3 (2025-01-20)
 

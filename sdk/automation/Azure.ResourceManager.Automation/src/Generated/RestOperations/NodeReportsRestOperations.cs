@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReportListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeReportListResult.DeserializeDscNodeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReportListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeReportListResult.DeserializeDscNodeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReport value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeReport.DeserializeDscNodeReport(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReport value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeReport.DeserializeDscNodeReport(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReportListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeReportListResult.DeserializeDscNodeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReportListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeReportListResult.DeserializeDscNodeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

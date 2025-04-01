@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetActionGroups_ListActionGroupsAtSubscriptionLevel()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/listActionGroups.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/listActionGroups.json
             // this example is just showing the usage of "ActionGroups_ListBySubscriptionId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -279,7 +279,6 @@ namespace Azure.ResourceManager.Monitor.Samples
             {
                 Content = new SubscriptionResourceGetMonitorMetricsWithPostContent
                 {
-                    Timespan = XmlConvert.ToTimeSpan("2021-06-08T19:00:00Z/2021-06-12T01:00:00Z"),
                     Interval = XmlConvert.ToTimeSpan("PT6H"),
                     MetricNames = "Data Disk Max Burst IOPS",
                     Aggregation = "count",
@@ -550,7 +549,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPipelineGroups_ListPipelineGroupsBySubscription()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupListBySubscription.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupListBySubscription.json
             // this example is just showing the usage of "PipelineGroups_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

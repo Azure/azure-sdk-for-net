@@ -45,7 +45,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static PhoneNumberCost FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePhoneNumberCost(document.RootElement);
         }
     }

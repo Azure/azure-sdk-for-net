@@ -123,7 +123,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new DocumentModelComposeOperationDetails FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentModelComposeOperationDetails(document.RootElement);
         }
     }

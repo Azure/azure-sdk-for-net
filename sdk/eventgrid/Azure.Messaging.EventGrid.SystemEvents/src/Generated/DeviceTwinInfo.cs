@@ -46,15 +46,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeviceTwinInfo"/>. </summary>
+        /// <param name="authenticationType"> Authentication type used for this device: either SAS, SelfSigned, or CertificateAuthority. </param>
+        /// <param name="connectionState"> Whether the device is connected or disconnected. </param>
+        /// <param name="deviceId"> The unique identifier of the device twin. </param>
+        /// <param name="etag"> A piece of information that describes the content of the device twin. Each etag is guaranteed to be unique per device twin. </param>
+        /// <param name="lastActivityTime"> The ISO8601 timestamp of the last activity. </param>
         /// <param name="properties"> Properties JSON element. </param>
+        /// <param name="status"> Whether the device twin is enabled or disabled. </param>
+        /// <param name="statusUpdateTime"> The ISO8601 timestamp of the last device twin status update. </param>
         /// <param name="x509Thumbprint"> The thumbprint is a unique value for the x509 certificate, commonly used to find a particular certificate in a certificate store. The thumbprint is dynamically generated using the SHA1 algorithm, and does not physically exist in the certificate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> or <paramref name="x509Thumbprint"/> is null. </exception>
-        internal DeviceTwinInfo(DeviceTwinInfoProperties properties, DeviceTwinInfoX509Thumbprint x509Thumbprint)
+        /// <exception cref="ArgumentNullException"> <paramref name="authenticationType"/>, <paramref name="connectionState"/>, <paramref name="deviceId"/>, <paramref name="etag"/>, <paramref name="lastActivityTime"/>, <paramref name="properties"/>, <paramref name="status"/>, <paramref name="statusUpdateTime"/> or <paramref name="x509Thumbprint"/> is null. </exception>
+        internal DeviceTwinInfo(string authenticationType, string connectionState, string deviceId, string etag, string lastActivityTime, DeviceTwinInfoProperties properties, string status, string statusUpdateTime, DeviceTwinInfoX509Thumbprint x509Thumbprint)
         {
+            Argument.AssertNotNull(authenticationType, nameof(authenticationType));
+            Argument.AssertNotNull(connectionState, nameof(connectionState));
+            Argument.AssertNotNull(deviceId, nameof(deviceId));
+            Argument.AssertNotNull(etag, nameof(etag));
+            Argument.AssertNotNull(lastActivityTime, nameof(lastActivityTime));
             Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(status, nameof(status));
+            Argument.AssertNotNull(statusUpdateTime, nameof(statusUpdateTime));
             Argument.AssertNotNull(x509Thumbprint, nameof(x509Thumbprint));
 
+            AuthenticationType = authenticationType;
+            ConnectionState = connectionState;
+            DeviceId = deviceId;
+            Etag = etag;
+            LastActivityTime = lastActivityTime;
             Properties = properties;
+            Status = status;
+            StatusUpdateTime = statusUpdateTime;
             X509Thumbprint = x509Thumbprint;
         }
 

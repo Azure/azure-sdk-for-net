@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -126,7 +127,7 @@ namespace Azure.Maps.Routing.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RouteSection FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRouteSection(document.RootElement);
         }
     }

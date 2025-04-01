@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Automanage
     /// </summary>
     public partial class AutomanageHciClusterConfigurationProfileAssignmentReportCollection : ArmCollection, IEnumerable<AutomanageHciClusterConfigurationProfileAssignmentReportResource>, IAsyncEnumerable<AutomanageHciClusterConfigurationProfileAssignmentReportResource>
     {
-        private readonly ClientDiagnostics _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics;
-        private readonly HCIReportsRestOperations _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient;
+        private readonly ClientDiagnostics _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics;
+        private readonly HCIReportsRestOperations _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportCollection"/> class for mocking. </summary>
         protected AutomanageHciClusterConfigurationProfileAssignmentReportCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AutomanageHciClusterConfigurationProfileAssignmentReportCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", AutomanageHciClusterConfigurationProfileAssignmentReportResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AutomanageHciClusterConfigurationProfileAssignmentReportResource.ResourceType, out string automanageHciClusterConfigurationProfileAssignmentReportHCIReportsApiVersion);
-            _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient = new HCIReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageHciClusterConfigurationProfileAssignmentReportHCIReportsApiVersion);
+            _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", AutomanageHciClusterConfigurationProfileAssignmentReportResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AutomanageHciClusterConfigurationProfileAssignmentReportResource.ResourceType, out string automanageHciClusterConfigurationProfileAssignmentReportHciReportsApiVersion);
+            _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient = new HCIReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageHciClusterConfigurationProfileAssignmentReportHciReportsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.Get");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.Get");
             scope.Start();
             try
             {
-                var response = await _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken).ConfigureAwait(false);
+                var response = await _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.Get");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.Get");
             scope.Start();
             try
             {
-                var response = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken);
+                var response = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics, Pipeline, "AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics, Pipeline, "AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics, Pipeline, "AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics, Pipeline, "AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.Exists");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.Exists");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.Exists");
             scope.Start();
             try
             {
-                var response = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken);
+                var response = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetIfExists");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<AutomanageHciClusterConfigurationProfileAssignmentReportResource>(response.GetRawResponse());
                 return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
@@ -359,11 +359,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetIfExists");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken);
+                var response = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<AutomanageHciClusterConfigurationProfileAssignmentReportResource>(response.GetRawResponse());
                 return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());

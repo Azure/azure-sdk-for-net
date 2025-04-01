@@ -45,7 +45,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static IncomingRelationshipCollection FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeIncomingRelationshipCollection(document.RootElement);
         }
     }

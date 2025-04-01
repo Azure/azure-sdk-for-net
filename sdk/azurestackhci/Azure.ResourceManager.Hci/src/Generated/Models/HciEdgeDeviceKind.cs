@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Hci.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string HCIValue = "HCI";
+        private const string HciValue = "HCI";
 
         /// <summary> Arc-enabled edge device with HCI OS. </summary>
-        public static HciEdgeDeviceKind HCI { get; } = new HciEdgeDeviceKind(HCIValue);
+        public static HciEdgeDeviceKind Hci { get; } = new HciEdgeDeviceKind(HciValue);
         /// <summary> Determines if two <see cref="HciEdgeDeviceKind"/> values are the same. </summary>
         public static bool operator ==(HciEdgeDeviceKind left, HciEdgeDeviceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciEdgeDeviceKind"/> values are not the same. </summary>

@@ -14,23 +14,23 @@ namespace Azure.AI.Projects
     public partial class MicrosoftFabricToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/>. </summary>
-        /// <param name="fabricAiskill"> The list of connections used by the Microsoft Fabric tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fabricAiskill"/> is null. </exception>
-        public MicrosoftFabricToolDefinition(ToolConnectionList fabricAiskill)
+        /// <param name="fabricDataagent"> The list of connections used by the Microsoft Fabric tool. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricDataagent"/> is null. </exception>
+        public MicrosoftFabricToolDefinition(ToolConnectionList fabricDataagent)
         {
-            Argument.AssertNotNull(fabricAiskill, nameof(fabricAiskill));
+            Argument.AssertNotNull(fabricDataagent, nameof(fabricDataagent));
 
-            Type = "fabric_aiskill";
-            FabricAiskill = fabricAiskill;
+            Type = "fabric_dataagent";
+            FabricDataagent = fabricDataagent;
         }
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="fabricAiskill"> The list of connections used by the Microsoft Fabric tool. </param>
-        internal MicrosoftFabricToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ToolConnectionList fabricAiskill) : base(type, serializedAdditionalRawData)
+        /// <param name="fabricDataagent"> The list of connections used by the Microsoft Fabric tool. </param>
+        internal MicrosoftFabricToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ToolConnectionList fabricDataagent) : base(type, serializedAdditionalRawData)
         {
-            FabricAiskill = fabricAiskill;
+            FabricDataagent = fabricDataagent;
         }
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/> for deserialization. </summary>
@@ -39,6 +39,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The list of connections used by the Microsoft Fabric tool. </summary>
-        public ToolConnectionList FabricAiskill { get; set; }
+        public ToolConnectionList FabricDataagent { get; set; }
     }
 }

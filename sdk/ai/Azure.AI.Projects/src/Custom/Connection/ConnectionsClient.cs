@@ -197,7 +197,7 @@ namespace Azure.AI.Projects
         public virtual async Task<Response<ListConnectionsResponse>> GetConnectionsAsync(ConnectionType? category = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetConnectionsAsync(category?.ToSerialString(), includeAll, target, context).ConfigureAwait(false);
+            Response response = await GetConnectionsAsync(category?.ToString(), includeAll, target, context).ConfigureAwait(false);
             return Response.FromValue(ListConnectionsResponse.FromResponse(response), response);
         }
 
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects
         public virtual Response<ListConnectionsResponse> GetConnections(ConnectionType? category = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetConnections(category?.ToSerialString(), includeAll, target, context);
+            Response response = GetConnections(category?.ToString(), includeAll, target, context);
             return Response.FromValue(ListConnectionsResponse.FromResponse(response), response);
         }
 
@@ -524,10 +524,11 @@ namespace Azure.AI.Projects
                 throw new InvalidOperationException("No connections found for the specified parameters.");
             }
 
-            var secret = connections.Value[0];
+            var connection = connections.Value[0];
             return withCredential.GetValueOrDefault()
-                ? await GetConnectionWithSecretsAsync(secret.Name, "ignored").ConfigureAwait(false)
-                : await GetConnectionAsync(secret.Name).ConfigureAwait(false);
+                ? await GetConnectionWithSecretsAsync(connection.Name, "ignored").ConfigureAwait(false)
+                : Response.FromValue(connection, null);
+            ;
         }
 
         /// <summary> Get the details of a single connection. </summary>
@@ -542,13 +543,13 @@ namespace Azure.AI.Projects
 
             if (connections?.Value == null || connections.Value.Count == 0)
             {
-                throw new InvalidOperationException("No connections found for the specified parameters.");
+                throw new InvalidOperationException($"No connections found for '{category}'. At least one connection is required. Please add a new connection in the Azure AI Foundry portal by following the instructions here: https://aka.ms/azsdk/azure-ai-projects/how-to/connections-add");
             }
 
-            var secret = connections.Value[0];
+            ConnectionResponse connection = connections.Value[0];
             return withCredential.GetValueOrDefault()
-                ? GetConnectionWithSecrets(secret.Name, "ignored")
-                : GetConnection(secret.Name);
+                ? GetConnectionWithSecrets(connection.Name, "ignored")
+                : Response.FromValue(connection, null);
         }
 
         // CUSTOM: Fixed the request URI by removing "/agents/v1.0"

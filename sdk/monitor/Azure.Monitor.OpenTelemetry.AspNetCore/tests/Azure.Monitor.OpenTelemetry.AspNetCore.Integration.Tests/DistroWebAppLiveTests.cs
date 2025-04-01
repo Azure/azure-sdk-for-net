@@ -22,7 +22,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using static Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.TelemetryValidationHelper;
 
-#if NET6_0_OR_GREATER
+#if NET
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public class DistroWebAppLiveTests : BaseLiveTest
@@ -181,6 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
+        [Ignore("TODO: Repurpose this test to validate the error.")]
         public async Task VerifySendingToTwoResources_UsingDistroWithExporter()
         {
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY

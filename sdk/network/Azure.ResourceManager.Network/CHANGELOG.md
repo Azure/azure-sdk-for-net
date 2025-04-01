@@ -1,6 +1,6 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.11.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.11.0-beta.1 (2025-02-14)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-05' to 'package-2024-06-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/177b67dfa65d476ac941b157ca42eec440e98cb0/specification/network/resource-manager/readme.md.
+    - Added all operations related to NetworkSecurityPerimeter resource type and it's proxy resource types
 
 ## 1.10.0 (2024-12-20)
 

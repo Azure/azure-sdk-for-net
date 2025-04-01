@@ -19,6 +19,311 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = null, Guid? perimeterGuid = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkSecurityPerimeterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                perimeterGuid,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
+        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkTrackedResourceData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterPatch"/>. </summary>
+        /// <param name="id"> Network security perimeter identifier. </param>
+        /// <param name="tags"> List of tags for Network Security Perimeter. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterPatch"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterPatch NetworkSecurityPerimeterPatch(string id = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkSecurityPerimeterPatch(id, tags, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
+        /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterProfileData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterProfileData NetworkSecurityPerimeterProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string accessRulesVersion = null, string diagnosticSettingsVersion = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkSecurityPerimeterProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                accessRulesVersion,
+                diagnosticSettingsVersion,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="direction"> Direction that specifies whether the access rules is inbound/outbound. </param>
+        /// <param name="addressPrefixes"> Inbound address prefixes (IPv4/IPv6). </param>
+        /// <param name="fullyQualifiedDomainNames"> Outbound rules fully qualified domain name format. </param>
+        /// <param name="subscriptions"> List of subscription ids. </param>
+        /// <param name="networkSecurityPerimeters"> Rule specified by the perimeter id. </param>
+        /// <param name="emailAddresses"> Outbound rules email address format. </param>
+        /// <param name="phoneNumbers"> Outbound rules phone number format. </param>
+        /// <param name="serviceTags"> Inbound rules service tag names. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterAccessRuleData NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = null, NetworkSecurityPerimeterAccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null, IEnumerable<string> fullyQualifiedDomainNames = null, IEnumerable<WritableSubResource> subscriptions = null, IEnumerable<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = null, IEnumerable<string> emailAddresses = null, IEnumerable<string> phoneNumbers = null, IEnumerable<string> serviceTags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            addressPrefixes ??= new List<string>();
+            fullyQualifiedDomainNames ??= new List<string>();
+            subscriptions ??= new List<WritableSubResource>();
+            networkSecurityPerimeters ??= new List<NetworkSecurityPerimeterBasedAccessRule>();
+            emailAddresses ??= new List<string>();
+            phoneNumbers ??= new List<string>();
+            serviceTags ??= new List<string>();
+
+            return new NetworkSecurityPerimeterAccessRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                direction,
+                addressPrefixes?.ToList(),
+                fullyQualifiedDomainNames?.ToList(),
+                subscriptions?.ToList(),
+                networkSecurityPerimeters?.ToList(),
+                emailAddresses?.ToList(),
+                phoneNumbers?.ToList(),
+                serviceTags?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterBasedAccessRule"/>. </summary>
+        /// <param name="id"> NSP id in the ARM id format. </param>
+        /// <param name="perimeterGuid"> Resource guid of the NSP supplied. </param>
+        /// <param name="location"> Location of the NSP supplied. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterBasedAccessRule"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterBasedAccessRule NetworkSecurityPerimeterBasedAccessRule(string id = null, Guid? perimeterGuid = null, AzureLocation? location = null)
+        {
+            return new NetworkSecurityPerimeterBasedAccessRule(id, perimeterGuid, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterAssociationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource  association resource. </param>
+        /// <param name="privateLinkResourceId"> The PaaS resource to be associated. </param>
+        /// <param name="profileId"> Profile id to which the PaaS resource is associated. </param>
+        /// <param name="accessMode"> Access mode on the association. </param>
+        /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAssociationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = null, ResourceIdentifier privateLinkResourceId = null, ResourceIdentifier profileId = null, NetworkSecurityPerimeterAssociationAccessMode? accessMode = null, string hasProvisioningIssues = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkSecurityPerimeterAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                privateLinkResourceId != null ? ResourceManagerModelFactory.WritableSubResource(privateLinkResourceId) : null,
+                profileId != null ? ResourceManagerModelFactory.WritableSubResource(profileId) : null,
+                accessMode,
+                hasProvisioningIssues,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterAssociableResourceType"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
+        /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterAssociableResourceType"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterAssociableResourceType NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string displayName = null, IEnumerable<string> publicDnsZones = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            publicDnsZones ??= new List<string>();
+
+            return new NetworkSecurityPerimeterAssociableResourceType(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                displayName,
+                publicDnsZones?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterLinkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the NSP Link resource. </param>
+        /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
+        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link gets created. </param>
+        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
+        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
+        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. This property can only be updated in auto-approval mode. </param>
+        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
+        /// <param name="status"> The NSP link state. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterLinkData NetworkSecurityPerimeterLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = null, string autoApprovedRemotePerimeterResourceId = null, Guid? remotePerimeterGuid = null, string remotePerimeterLocation = null, IEnumerable<string> localInboundProfiles = null, IEnumerable<string> localOutboundProfiles = null, IEnumerable<string> remoteInboundProfiles = null, IEnumerable<string> remoteOutboundProfiles = null, string description = null, NetworkSecurityPerimeterLinkStatus? status = null, ETag? etag = null)
+        {
+            localInboundProfiles ??= new List<string>();
+            localOutboundProfiles ??= new List<string>();
+            remoteInboundProfiles ??= new List<string>();
+            remoteOutboundProfiles ??= new List<string>();
+
+            return new NetworkSecurityPerimeterLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                autoApprovedRemotePerimeterResourceId,
+                remotePerimeterGuid,
+                remotePerimeterLocation,
+                localInboundProfiles?.ToList(),
+                localOutboundProfiles?.ToList(),
+                remoteInboundProfiles?.ToList(),
+                remoteOutboundProfiles?.ToList(),
+                description,
+                status,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the NSP LinkReference resource. </param>
+        /// <param name="remotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link is created. </param>
+        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link is created. </param>
+        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
+        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
+        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. ['*'] value implies inbound is allowed to all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
+        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
+        /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
+        /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterLinkReferenceData NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = null, string remotePerimeterResourceId = null, Guid? remotePerimeterGuid = null, string remotePerimeterLocation = null, IEnumerable<string> localInboundProfiles = null, IEnumerable<string> localOutboundProfiles = null, IEnumerable<string> remoteInboundProfiles = null, IEnumerable<string> remoteOutboundProfiles = null, string description = null, NetworkSecurityPerimeterLinkStatus? status = null, ETag? etag = null)
+        {
+            localInboundProfiles ??= new List<string>();
+            localOutboundProfiles ??= new List<string>();
+            remoteInboundProfiles ??= new List<string>();
+            remoteOutboundProfiles ??= new List<string>();
+
+            return new NetworkSecurityPerimeterLinkReferenceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                remotePerimeterResourceId,
+                remotePerimeterGuid,
+                remotePerimeterLocation,
+                localInboundProfiles?.ToList(),
+                localOutboundProfiles?.ToList(),
+                remoteInboundProfiles?.ToList(),
+                remoteOutboundProfiles?.ToList(),
+                description,
+                status,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Properties of the NSP logging configuration. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterLoggingConfigurationData NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterLoggingConfigurationProperties properties = null, ETag? etag = null)
+        {
+            return new NetworkSecurityPerimeterLoggingConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Network.ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -698,26 +1003,6 @@ namespace Azure.ResourceManager.Network.Models
                 etag,
                 resourceGuid,
                 provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
-        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new NetworkTrackedResourceData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.NetworkInterfaceData"/>. </summary>
@@ -8648,6 +8933,210 @@ namespace Azure.ResourceManager.Network.Models
                 direction,
                 provisioningState,
                 resourceGuid);
+        }
+
+        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="location"> The location of the backend address pool. </param>
+        /// <param name="tunnelInterfaces"> An array of gateway load balancer tunnel interfaces. </param>
+        /// <param name="loadBalancerBackendAddresses"> An array of backend addresses. </param>
+        /// <param name="backendIPConfigurations"> An array of references to IP addresses defined in network interfaces. </param>
+        /// <param name="loadBalancingRules"> An array of references to load balancing rules that use this backend address pool. </param>
+        /// <param name="outboundRuleId"> A reference to an outbound rule that uses this backend address pool. </param>
+        /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
+        /// <param name="inboundNatRules"> An array of references to inbound NAT rules that use this backend address pool. </param>
+        /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
+        /// <param name="drainPeriodInSeconds"> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </param>
+        /// <param name="virtualNetworkId"> A reference to a virtual network. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackendAddressPoolData BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AzureLocation? location, IEnumerable<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IEnumerable<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IEnumerable<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IEnumerable<WritableSubResource> loadBalancingRules, ResourceIdentifier outboundRuleId, IEnumerable<WritableSubResource> outboundRules, IEnumerable<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, ResourceIdentifier virtualNetworkId)
+        {
+            return BackendAddressPoolData(id: id, name: name, resourceType: resourceType, etag: etag, location: location, tunnelInterfaces: tunnelInterfaces, loadBalancerBackendAddresses: loadBalancerBackendAddresses, backendIPConfigurations: backendIPConfigurations, loadBalancingRules: loadBalancingRules, outboundRuleId: outboundRuleId, outboundRules: outboundRules, inboundNatRules: inboundNatRules, provisioningState: provisioningState, drainPeriodInSeconds: drainPeriodInSeconds, virtualNetworkId: virtualNetworkId, syncMode: default);
+        }
+
+        /// <summary> Initializes a new instance of BastionHostData. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> The sku of this Bastion Host. </param>
+        /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
+        /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
+        /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
+        /// <param name="scaleUnits"> The scale units for the Bastion Host resource. </param>
+        /// <param name="disableCopyPaste"> Enable/Disable Copy/Paste feature of the Bastion Host resource. </param>
+        /// <param name="enableFileCopy"> Enable/Disable File Copy feature of the Bastion Host resource. </param>
+        /// <param name="enableIPConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
+        /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
+        /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
+        /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.BastionHostData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BastionHostData BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, BastionHostSkuName? skuName, IEnumerable<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos)
+        {
+            return BastionHostData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, zones: default, etag: etag, skuName: skuName, ipConfigurations: ipConfigurations, dnsName: dnsName, virtualNetworkId: default, networkAclsIPRules: default, provisioningState: provisioningState, scaleUnits: scaleUnits, disableCopyPaste: disableCopyPaste, enableFileCopy: enableFileCopy, enableIPConnect: enableIPConnect, enableShareableLink: enableShareableLink, enableTunneling: enableTunneling, enableKerberos: enableKerberos, enableSessionRecording: default, enablePrivateOnlyBastion: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.BastionHostData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> The sku of this Bastion Host. </param>
+        /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
+        /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
+        /// <param name="virtualNetworkId"> Reference to an existing virtual network required for Developer Bastion Host only. </param>
+        /// <param name="networkAclsIPRules"></param>
+        /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
+        /// <param name="scaleUnits"> The scale units for the Bastion Host resource. </param>
+        /// <param name="disableCopyPaste"> Enable/Disable Copy/Paste feature of the Bastion Host resource. </param>
+        /// <param name="enableFileCopy"> Enable/Disable File Copy feature of the Bastion Host resource. </param>
+        /// <param name="enableIPConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
+        /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
+        /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
+        /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.BastionHostData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BastionHostData BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, BastionHostSkuName? skuName, IEnumerable<BastionHostIPConfiguration> ipConfigurations, string dnsName, ResourceIdentifier virtualNetworkId, IEnumerable<BastionHostIPRule> networkAclsIPRules, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos)
+        {
+            return BastionHostData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, zones: default, etag: etag, skuName: skuName, ipConfigurations: ipConfigurations, dnsName: dnsName, virtualNetworkId: virtualNetworkId, networkAclsIPRules: networkAclsIPRules, provisioningState: provisioningState, scaleUnits: scaleUnits, disableCopyPaste: disableCopyPaste, enableFileCopy: enableFileCopy, enableIPConnect: enableIPConnect, enableShareableLink: enableShareableLink, enableTunneling: enableTunneling, enableKerberos: enableKerberos, enableSessionRecording: default, enablePrivateOnlyBastion: default);
+        }
+
+        /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> The identity of the firewall policy. </param>
+        /// <param name="ruleCollectionGroups"> List of references to FirewallPolicyRuleCollectionGroups. </param>
+        /// <param name="provisioningState"> The provisioning state of the firewall policy resource. </param>
+        /// <param name="basePolicyId"> The parent firewall policy from which rules are inherited. </param>
+        /// <param name="firewalls"> List of references to Azure Firewalls that this Firewall Policy is associated with. </param>
+        /// <param name="childPolicies"> List of references to Child Firewall Policies. </param>
+        /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
+        /// <param name="threatIntelWhitelist"> ThreatIntel Whitelist for Firewall Policy. </param>
+        /// <param name="insights"> Insights on Firewall Policy. </param>
+        /// <param name="snat"> The private IP addresses/IP ranges to which traffic will not be SNAT. </param>
+        /// <param name="allowSqlRedirect"> SQL Settings definition. </param>
+        /// <param name="dnsSettings"> DNS Proxy Settings definition. </param>
+        /// <param name="explicitProxy"> Explicit Proxy Settings definition. </param>
+        /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
+        /// <param name="transportSecurityCertificateAuthority"> TLS Configuration definition. </param>
+        /// <param name="skuTier"> The Firewall Policy SKU. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.FirewallPolicyData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FirewallPolicyData FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, IEnumerable<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, ResourceIdentifier basePolicyId, IEnumerable<WritableSubResource> firewalls, IEnumerable<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, bool? allowSqlRedirect, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyCertificateAuthority transportSecurityCertificateAuthority, FirewallPolicySkuTier? skuTier)
+        {
+            return FirewallPolicyData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, etag: etag, identity: identity, size: default, ruleCollectionGroups: ruleCollectionGroups, provisioningState: provisioningState, basePolicyId: basePolicyId, firewalls: firewalls, childPolicies: childPolicies, threatIntelMode: threatIntelMode, threatIntelWhitelist: threatIntelWhitelist, insights: insights, snat: snat, allowSqlRedirect: allowSqlRedirect, dnsSettings: dnsSettings, explicitProxy: explicitProxy, intrusionDetection: intrusionDetection, transportSecurityCertificateAuthority: transportSecurityCertificateAuthority, skuTier: skuTier);
+        }
+
+        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
+        /// <param name="ruleCollections">
+        /// Group of Firewall Policy rule collections.
+        /// Please note <see cref="T:Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionInfo" /> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="T:Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionInfo" /> and <see cref="T:Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionInfo" />.
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FirewallPolicyRuleCollectionGroupData FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IEnumerable<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState)
+        {
+            return FirewallPolicyRuleCollectionGroupData(id: id, name: name, resourceType: resourceType, etag: etag, size: default, priority: priority, ruleCollections: ruleCollections, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of SubnetData. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="addressPrefix"> The address prefix for the subnet. </param>
+        /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>
+        /// <param name="networkSecurityGroup"> The reference to the NetworkSecurityGroup resource. </param>
+        /// <param name="routeTable"> The reference to the RouteTable resource. </param>
+        /// <param name="natGatewayId"> Nat gateway associated with this subnet. </param>
+        /// <param name="serviceEndpoints"> An array of service endpoints. </param>
+        /// <param name="serviceEndpointPolicies"> An array of service endpoint policies. </param>
+        /// <param name="privateEndpoints"> An array of references to private endpoints. </param>
+        /// <param name="ipConfigurations"> An array of references to the network interface IP configurations using subnet. </param>
+        /// <param name="ipConfigurationProfiles"> Array of IP configuration profiles which reference this subnet. </param>
+        /// <param name="ipAllocations"> Array of IpAllocation which reference this subnet. </param>
+        /// <param name="resourceNavigationLinks"> An array of references to the external resources using subnet. </param>
+        /// <param name="serviceAssociationLinks"> An array of references to services injecting into this subnet. </param>
+        /// <param name="delegations"> An array of references to the delegations on the subnet. </param>
+        /// <param name="purpose"> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </param>
+        /// <param name="provisioningState"> The provisioning state of the subnet resource. </param>
+        /// <param name="privateEndpointNetworkPolicy"> Enable or Disable apply network policies on private end point in the subnet. </param>
+        /// <param name="privateLinkServiceNetworkPolicy"> Enable or Disable apply network policies on private link service in the subnet. </param>
+        /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.SubnetData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SubnetData SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IEnumerable<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, ResourceIdentifier natGatewayId, IEnumerable<ServiceEndpointProperties> serviceEndpoints, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies, IEnumerable<PrivateEndpointData> privateEndpoints, IEnumerable<NetworkIPConfiguration> ipConfigurations, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles, IEnumerable<WritableSubResource> ipAllocations, IEnumerable<ResourceNavigationLink> resourceNavigationLinks, IEnumerable<ServiceAssociationLink> serviceAssociationLinks, IEnumerable<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations)
+        {
+            return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: default, defaultOutboundAccess: default, ipamPoolPrefixAllocations: default);
+        }
+
+        /// <summary> Initializes a new instance of ApplicationGatewayListener. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="frontendIPConfigurationId"> Frontend IP configuration resource of an application gateway. </param>
+        /// <param name="frontendPortId"> Frontend port resource of an application gateway. </param>
+        /// <param name="protocol"> Protocol of the listener. </param>
+        /// <param name="sslCertificateId"> SSL certificate resource of an application gateway. </param>
+        /// <param name="sslProfileId"> SSL profile resource of the application gateway. </param>
+        /// <param name="provisioningState"> The provisioning state of the listener resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.ApplicationGatewayListener" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayListener ApplicationGatewayListener(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ResourceIdentifier frontendIPConfigurationId, ResourceIdentifier frontendPortId, ApplicationGatewayProtocol? protocol, ResourceIdentifier sslCertificateId, ResourceIdentifier sslProfileId, NetworkProvisioningState? provisioningState)
+        {
+            return ApplicationGatewayListener(id: id, name: name, resourceType: resourceType, etag: etag, frontendIPConfigurationId: frontendIPConfigurationId, frontendPortId: frontendPortId, protocol: protocol, sslCertificateId: sslCertificateId, sslProfileId: sslProfileId, provisioningState: provisioningState, hostNames: default);
+        }
+
+        /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="nvaSku"> Network Virtual Appliance SKU. </param>
+        /// <param name="addressPrefix"> Address Prefix. </param>
+        /// <param name="bootStrapConfigurationBlobs"> BootStrapConfigurationBlobs storage URLs. </param>
+        /// <param name="virtualHubId"> The Virtual Hub where Network Virtual Appliance is being deployed. </param>
+        /// <param name="cloudInitConfigurationBlobs"> CloudInitConfigurationBlob storage URLs. </param>
+        /// <param name="cloudInitConfiguration"> CloudInitConfiguration string in plain text. </param>
+        /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </param>
+        /// <param name="sshPublicKey"> Public key for SSH login. </param>
+        /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
+        /// <param name="additionalNics"> Details required for Additional Network Interface. </param>
+        /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
+        /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
+        /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
+        /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
+        /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.NetworkVirtualApplianceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IEnumerable<string> bootStrapConfigurationBlobs, ResourceIdentifier virtualHubId, IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics, IEnumerable<WritableSubResource> virtualApplianceSites, IEnumerable<WritableSubResource> virtualApplianceConnections, IEnumerable<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource)
+        {
+            return NetworkVirtualApplianceData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, identity: identity, etag: etag, nvaSku: nvaSku, addressPrefix: addressPrefix, bootStrapConfigurationBlobs: bootStrapConfigurationBlobs, virtualHubId: virtualHubId, cloudInitConfigurationBlobs: cloudInitConfigurationBlobs, cloudInitConfiguration: cloudInitConfiguration, virtualApplianceAsn: virtualApplianceAsn, sshPublicKey: sshPublicKey, virtualApplianceNics: virtualApplianceNics, networkInterfaceConfigurations: default, additionalNics: additionalNics, internetIngressPublicIPs: default, virtualApplianceSites: virtualApplianceSites, virtualApplianceConnections: virtualApplianceConnections, inboundSecurityRules: inboundSecurityRules, provisioningState: provisioningState, deploymentType: deploymentType, delegation: delegation, partnerManagedResource: partnerManagedResource);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.SubnetData" />. </summary>

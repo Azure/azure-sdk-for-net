@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250302.1 (.NET Framework 4.8.9290.0; Microsoft Windows 10.0.26100 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -14,31 +14,31 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "279c8f36-a909-4b5d-adc9-7609cd21cdda",
-        "Content-Length": "321",
+        "apim-request-id": "33b1dd4d-7ae7-4c40-a899-6acfeedfc80f",
+        "Content-Length": "272",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 01 Dec 2024 19:26:47 GMT",
-        "request-id": "279c8f36-a909-4b5d-adc9-7609cd21cdda",
+        "Date": "Mon, 03 Mar 2025 06:42:49 GMT",
+        "request-id": "33b1dd4d-7ae7-4c40-a899-6acfeedfc80f",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "50",
+        "x-envoy-upstream-service-time": "22",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "createdDateTime": "2024-12-01T19:19:43Z",
-        "lastModifiedDateTime": "2024-12-01T19:20:04Z",
-        "projectKind": "CustomMultiLabelClassification",
-        "storageInputContainerName": "e2e0test0data",
+        "createdDateTime": "2024-12-02T03:53:58Z",
+        "lastModifiedDateTime": "2025-01-08T19:16:18Z",
+        "projectKind": "CustomSingleLabelClassification",
+        "storageInputContainerName": "test-data",
         "projectName": "MyTextProject",
-        "multilingual": true,
-        "description": "Project description for a Custom Entity Recognition project",
-        "language": "en"
+        "multilingual": false,
+        "description": "test test",
+        "language": "en-us"
       }
     }
   ],
   "Variables": {
-    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
     "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "304721772"
+    "RandomSeed": "1045965502"
   }
 }

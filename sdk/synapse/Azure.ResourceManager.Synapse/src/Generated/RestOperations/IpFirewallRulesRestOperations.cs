@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIPFirewallRuleInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseIPFirewallRuleInfoListResult.DeserializeSynapseIPFirewallRuleInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIPFirewallRuleInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseIPFirewallRuleInfoListResult.DeserializeSynapseIPFirewallRuleInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIPFirewallRuleInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIPFirewallRuleInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIPFirewallRuleInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseIPFirewallRuleInfoListResult.DeserializeSynapseIPFirewallRuleInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIPFirewallRuleInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseIPFirewallRuleInfoListResult.DeserializeSynapseIPFirewallRuleInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

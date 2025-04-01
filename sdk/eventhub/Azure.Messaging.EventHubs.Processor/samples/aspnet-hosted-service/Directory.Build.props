@@ -13,6 +13,6 @@
 
   <PropertyGroup>
     <IsShippingLibrary>false</IsShippingLibrary>
-    <RequiredTargetFrameworks Condition="$(IsTestProject) != 'true'">net6.0;net7.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="$(IsTestProject) != 'true'">net8.0;net9.0</RequiredTargetFrameworks>
   </PropertyGroup>
 </Project>

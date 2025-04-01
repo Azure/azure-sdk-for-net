@@ -87,12 +87,33 @@ namespace Azure.Communication
                 TeamUserPublicCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
                 TeamUserDodCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
                 TeamUserGcchCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
-                AcsUser or SpoolUser or AcsUserDodCloud or AcsUserGcchCloud => new CommunicationUserIdentifier(rawId),
+                SpoolUser => new CommunicationUserIdentifier(rawId),
+                AcsUser or AcsUserDodCloud or AcsUserGcchCloud => (CommunicationIdentifier)TryCreateTeamsExtensionUser(prefix, suffix) ?? new CommunicationUserIdentifier(rawId),
                 TeamsAppPublicCloud => new MicrosoftTeamsAppIdentifier(suffix, CommunicationCloudEnvironment.Public),
                 TeamsAppGcchCloud => new MicrosoftTeamsAppIdentifier(suffix, CommunicationCloudEnvironment.Gcch),
                 TeamsAppDodCloud => new MicrosoftTeamsAppIdentifier(suffix, CommunicationCloudEnvironment.Dod),
                 _ => new UnknownIdentifier(rawId),
             };
+        }
+
+        private static TeamsExtensionUserIdentifier TryCreateTeamsExtensionUser(string prefix, string suffix)
+        {
+            var segments = suffix.Split('_');
+            if (segments.Length != 3)
+            {
+                return null;
+            }
+            var resourceId = segments[0];
+            var tenantId = segments[1];
+            var userId = segments[2];
+            var cloud = prefix switch
+            {
+                AcsUser => CommunicationCloudEnvironment.Public,
+                AcsUserDodCloud => CommunicationCloudEnvironment.Dod,
+                AcsUserGcchCloud => CommunicationCloudEnvironment.Gcch,
+                _ => throw new ArgumentException($"Invalid prefix {prefix} for TeamsExtensionUserIdentifier")
+            };
+            return new TeamsExtensionUserIdentifier(userId, tenantId, resourceId, cloud);
         }
     }
 }

@@ -84,10 +84,19 @@ public class InterpolatedStringExpression(BicepExpression[] values) : BicepExpre
 public class ArrayExpression(params BicepExpression[] values) : BicepExpression
 {
     public BicepExpression[] Values { get; } = values;
-    internal override BicepWriter Write(BicepWriter writer) =>
-        writer.Append('[')
-            .Indent(w => w.AppendLine().AppendAll(Values, (w, v) => w.Append(v), w => w./*Append(',').*/AppendLine()))
-            .AppendLine().Append(']');
+    internal override BicepWriter Write(BicepWriter writer)
+    {
+        if (Values.Length == 0)
+        {
+            return writer.Append("[]");
+        }
+        else
+        {
+            return writer.Append('[')
+                .Indent(w => w.AppendLine().AppendAll(Values, (w, v) => w.Append(v), w => w./*Append(',').*/AppendLine()))
+                .AppendLine().Append(']');
+        }
+    }
 }
 
 public class ObjectExpression(params PropertyExpression[] properties) : BicepExpression

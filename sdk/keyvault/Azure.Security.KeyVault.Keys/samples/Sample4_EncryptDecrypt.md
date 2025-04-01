@@ -45,7 +45,7 @@ Note that RSA encryption algorithms have no chaining so they can only encrypt a 
 
 ```C# Snippet:KeysSample4EncryptKey
 byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
-EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RsaOaep, plaintext);
+EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RsaOaep256, plaintext);
 Debug.WriteLine($"Encrypted data using the algorithm {encryptResult.Algorithm}, with key {encryptResult.KeyId}. The resulting encrypted data is {Convert.ToBase64String(encryptResult.Ciphertext)}");
 ```
 
@@ -54,7 +54,7 @@ Debug.WriteLine($"Encrypted data using the algorithm {encryptResult.Algorithm}, 
 Now decrypt the encrypted data. Note that the same algorithm must always be used for both encrypt and decrypt.
 
 ```C# Snippet:KeysSample4DecryptKey
-DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
+DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep256, encryptResult.Ciphertext);
 Debug.WriteLine($"Decrypted data using the algorithm {decryptResult.Algorithm}, with key {decryptResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(decryptResult.Plaintext)}");
 ```
 

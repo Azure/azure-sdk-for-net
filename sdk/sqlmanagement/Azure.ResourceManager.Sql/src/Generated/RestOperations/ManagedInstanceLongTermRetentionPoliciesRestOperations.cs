@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

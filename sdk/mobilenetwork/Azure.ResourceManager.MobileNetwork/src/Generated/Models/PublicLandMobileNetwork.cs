@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Configuration relating to a particular PLMN
-    /// Serialized Name: PublicLandMobileNetwork
-    /// </summary>
+    /// <summary> Configuration relating to a particular PLMN. </summary>
     public partial class PublicLandMobileNetwork : MobileNetworkPlmnId
     {
         /// <summary> Initializes a new instance of <see cref="PublicLandMobileNetwork"/>. </summary>
-        /// <param name="mcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: PlmnId.mcc
-        /// </param>
-        /// <param name="mnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: PlmnId.mnc
-        /// </param>
+        /// <param name="mcc"> Mobile country code (MCC). </param>
+        /// <param name="mnc"> Mobile network code (MNC). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mcc"/> or <paramref name="mnc"/> is null. </exception>
         public PublicLandMobileNetwork(string mcc, string mnc) : base(mcc, mnc)
         {
@@ -33,19 +24,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicLandMobileNetwork"/>. </summary>
-        /// <param name="mcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: PlmnId.mcc
-        /// </param>
-        /// <param name="mnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: PlmnId.mnc
-        /// </param>
+        /// <param name="mcc"> Mobile country code (MCC). </param>
+        /// <param name="mnc"> Mobile network code (MNC). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="homeNetworkPublicKeys">
-        /// Configuration relating to SUPI concealment.
-        /// Serialized Name: PublicLandMobileNetwork.homeNetworkPublicKeys
-        /// </param>
+        /// <param name="homeNetworkPublicKeys"> Configuration relating to SUPI concealment. </param>
         internal PublicLandMobileNetwork(string mcc, string mnc, IDictionary<string, BinaryData> serializedAdditionalRawData, PublicLandMobileNetworkHomeNetworkPublicKeys homeNetworkPublicKeys) : base(mcc, mnc, serializedAdditionalRawData)
         {
             HomeNetworkPublicKeys = homeNetworkPublicKeys;
@@ -56,10 +38,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// Configuration relating to SUPI concealment.
-        /// Serialized Name: PublicLandMobileNetwork.homeNetworkPublicKeys
-        /// </summary>
+        /// <summary> Configuration relating to SUPI concealment. </summary>
         [WirePath("homeNetworkPublicKeys")]
         public PublicLandMobileNetworkHomeNetworkPublicKeys HomeNetworkPublicKeys { get; set; }
     }

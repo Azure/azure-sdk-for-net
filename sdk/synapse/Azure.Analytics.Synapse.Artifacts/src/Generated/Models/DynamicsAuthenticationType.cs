@@ -25,6 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private const string Office365Value = "Office365";
         private const string IfdValue = "Ifd";
         private const string AADServicePrincipalValue = "AADServicePrincipal";
+        private const string ActiveDirectoryValue = "Active Directory";
 
         /// <summary> Office365. </summary>
         public static DynamicsAuthenticationType Office365 { get; } = new DynamicsAuthenticationType(Office365Value);
@@ -32,6 +33,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static DynamicsAuthenticationType Ifd { get; } = new DynamicsAuthenticationType(IfdValue);
         /// <summary> AADServicePrincipal. </summary>
         public static DynamicsAuthenticationType AADServicePrincipal { get; } = new DynamicsAuthenticationType(AADServicePrincipalValue);
+        /// <summary> Active Directory. </summary>
+        public static DynamicsAuthenticationType ActiveDirectory { get; } = new DynamicsAuthenticationType(ActiveDirectoryValue);
         /// <summary> Determines if two <see cref="DynamicsAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(DynamicsAuthenticationType left, DynamicsAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicsAuthenticationType"/> values are not the same. </summary>

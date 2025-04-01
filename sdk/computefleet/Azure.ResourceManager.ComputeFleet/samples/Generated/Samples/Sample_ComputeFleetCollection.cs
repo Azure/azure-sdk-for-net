@@ -180,6 +180,7 @@ DiskIopsReadWrite = 27L,
 DiskMbpsReadWrite = 2L,
 DeleteOption = ComputeFleetDiskDeleteOptionType.Delete,
 }},
+                    DiskControllerType = new ComputeFleetDiskControllerType("uzb"),
                 },
                 NetworkProfile = new ComputeFleetVmssNetworkProfile
                 {
@@ -473,6 +474,7 @@ IsAcceleratedNetworkingEnabled = false,
 IsIPForwardingEnabled = true,
 },
 }},
+                    NetworkApiVersion = new ComputeFleetNetworkApiVersion("2022-07-01"),
                 },
             })
             {

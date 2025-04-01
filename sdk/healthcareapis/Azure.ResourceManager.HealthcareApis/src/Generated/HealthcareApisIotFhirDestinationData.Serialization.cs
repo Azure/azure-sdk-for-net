@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthcareApisIotFhirDestinationData(document.RootElement, options);
                     }
                 default:

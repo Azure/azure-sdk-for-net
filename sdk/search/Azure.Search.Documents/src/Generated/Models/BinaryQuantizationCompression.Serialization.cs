@@ -21,8 +21,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(RerankWithOriginalVectors))
             {
-                writer.WritePropertyName("rerankWithOriginalVectors"u8);
-                writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
+                if (RerankWithOriginalVectors != null)
+                {
+                    writer.WritePropertyName("rerankWithOriginalVectors"u8);
+                    writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rerankWithOriginalVectors");
+                }
             }
             if (Optional.IsDefined(DefaultOversampling))
             {
@@ -91,6 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rerankWithOriginalVectors = null;
                         continue;
                     }
                     rerankWithOriginalVectors = property.Value.GetBoolean();
@@ -140,7 +148,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new BinaryQuantizationCompression FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBinaryQuantizationCompression(document.RootElement);
         }
 

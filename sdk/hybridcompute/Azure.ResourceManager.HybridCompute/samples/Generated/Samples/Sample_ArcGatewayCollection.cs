@@ -19,7 +19,53 @@ namespace Azure.ResourceManager.HybridCompute.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+<<<<<<<< HEAD:sdk/eventgrid/Azure.ResourceManager.EventGrid/samples/Generated/Samples/Sample_PartnerDestinationCollection.cs
+        public async Task CreateOrUpdate_PartnerDestinationsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerDestinations_CreateOrUpdate.json
+            // this example is just showing the usage of "PartnerDestinations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string resourceGroupName = "examplerg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this PartnerDestinationResource
+            PartnerDestinationCollection collection = resourceGroupResource.GetPartnerDestinations();
+
+            // invoke the operation
+            string partnerDestinationName = "examplePartnerDestinationName1";
+            PartnerDestinationData data = new PartnerDestinationData(new AzureLocation("westus2"))
+            {
+                PartnerRegistrationImmutableId = Guid.Parse("0bd70ee2-7d95-447e-ab1f-c4f320019404"),
+                EndpointServiceContext = "This is an example",
+                ExpirationTimeIfNotActivatedUtc = DateTimeOffset.Parse("2022-03-14T19:33:43.430Z"),
+                EndpointBaseUri = new Uri("https://www.example/endpoint"),
+                MessageForActivation = "Sample Activation message",
+            };
+            ArmOperation<PartnerDestinationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, partnerDestinationName, data);
+            PartnerDestinationResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PartnerDestinationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_PartnerDestinationsGet()
+========
         public async Task CreateOrUpdate_CreateOrUpdateAGateway()
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/samples/Generated/Samples/Sample_ArcGatewayCollection.cs
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/gateway/Gateway_CreateOrUpdate.json
             // this example is just showing the usage of "Gateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
@@ -58,7 +104,46 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+<<<<<<<< HEAD:sdk/eventgrid/Azure.ResourceManager.EventGrid/samples/Generated/Samples/Sample_PartnerDestinationCollection.cs
+        public async Task GetAll_PartnerDestinationsListByResourceGroup()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerDestinations_ListByResourceGroup.json
+            // this example is just showing the usage of "PartnerDestinations_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string resourceGroupName = "examplerg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this PartnerDestinationResource
+            PartnerDestinationCollection collection = resourceGroupResource.GetPartnerDestinations();
+
+            // invoke the operation and iterate over the result
+            await foreach (PartnerDestinationResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PartnerDestinationData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_PartnerDestinationsGet()
+========
         public async Task Get_GetGateway()
+>>>>>>>> main:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/samples/Generated/Samples/Sample_ArcGatewayCollection.cs
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/gateway/Gateway_Get.json
             // this example is just showing the usage of "Gateways_Get" operation, for the dependent resources, they will have to be created separately.

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The kubernetes ingress configuration to control access to packet core diagnostics over local APIs.
-    /// Serialized Name: LocalDiagnosticsAccessConfiguration
-    /// </summary>
+    /// <summary> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </summary>
     public partial class MobileNetworkLocalDiagnosticsAccessConfiguration
     {
         /// <summary>
@@ -49,24 +46,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkLocalDiagnosticsAccessConfiguration"/>. </summary>
-        /// <param name="authenticationType">
-        /// How to authenticate users who access local diagnostics APIs.
-        /// Serialized Name: LocalDiagnosticsAccessConfiguration.authenticationType
-        /// </param>
+        /// <param name="authenticationType"> How to authenticate users who access local diagnostics APIs. </param>
         public MobileNetworkLocalDiagnosticsAccessConfiguration(MobileNetworkAuthenticationType authenticationType)
         {
             AuthenticationType = authenticationType;
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkLocalDiagnosticsAccessConfiguration"/>. </summary>
-        /// <param name="authenticationType">
-        /// How to authenticate users who access local diagnostics APIs.
-        /// Serialized Name: LocalDiagnosticsAccessConfiguration.authenticationType
-        /// </param>
-        /// <param name="httpsServerCertificate">
-        /// The HTTPS server TLS certificate used to secure local access to diagnostics.
-        /// Serialized Name: LocalDiagnosticsAccessConfiguration.httpsServerCertificate
-        /// </param>
+        /// <param name="authenticationType"> How to authenticate users who access local diagnostics APIs. </param>
+        /// <param name="httpsServerCertificate"> The HTTPS server TLS certificate used to secure local access to diagnostics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkLocalDiagnosticsAccessConfiguration(MobileNetworkAuthenticationType authenticationType, MobileNetworkHttpsServerCertificate httpsServerCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,16 +68,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// How to authenticate users who access local diagnostics APIs.
-        /// Serialized Name: LocalDiagnosticsAccessConfiguration.authenticationType
-        /// </summary>
+        /// <summary> How to authenticate users who access local diagnostics APIs. </summary>
         [WirePath("authenticationType")]
         public MobileNetworkAuthenticationType AuthenticationType { get; set; }
-        /// <summary>
-        /// The HTTPS server TLS certificate used to secure local access to diagnostics.
-        /// Serialized Name: LocalDiagnosticsAccessConfiguration.httpsServerCertificate
-        /// </summary>
+        /// <summary> The HTTPS server TLS certificate used to secure local access to diagnostics. </summary>
         [WirePath("httpsServerCertificate")]
         public MobileNetworkHttpsServerCertificate HttpsServerCertificate { get; set; }
     }

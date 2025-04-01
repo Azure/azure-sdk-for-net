@@ -12,6 +12,13 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
+#if NET8_0_OR_GREATER
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+#endif
+
 namespace Azure.Core.Extensions.Tests
 {
     public class ClientFactoryTests
@@ -270,6 +277,89 @@ namespace Azure.Core.Extensions.Tests
                 .Where(t => !string.IsNullOrWhiteSpace(t))
                 .ToList();
             Assert.AreEqual(expectedTenants, actualTenants);
+        }
+
+        [Test]
+        public void CreatesAzurePipelinesCredential()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "azurepipelines"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"),
+                new KeyValuePair<string, string>("serviceConnectionId", "SomeServiceConnectionId"),
+                new KeyValuePair<string, string>("systemAccessToken", "SomeSystemAccessToken")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<AzurePipelinesCredential>(credential);
+            var pipelinesCredential = (AzurePipelinesCredential)credential;
+
+            Assert.AreEqual("ConfigurationClientId", pipelinesCredential.Client.ClientId);
+            Assert.AreEqual("ConfigurationTenantId", pipelinesCredential.TenantId);
+            Assert.AreEqual("SomeServiceConnectionId", pipelinesCredential.ServiceConnectionId);
+            Assert.AreEqual("SomeSystemAccessToken", pipelinesCredential.SystemAccessToken);
+
+            var additionalTenants = (string[])typeof(AzurePipelinesCredential)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
+                .GetValue(pipelinesCredential);
+
+            Assert.IsEmpty(additionalTenants);
+        }
+
+        [Test]
+        [TestCase("*")]
+        [TestCase("tenantId1;tenantId2;tenantId3")]
+        [TestCase("tenantId1;tenantId2;;tenantId3")]
+        [TestCase("tenantId1;tenantId2; ;tenantId3")]
+        [TestCase("tenantId1; tenantId2; tenantId3")]
+        public void CreatesAzurePipelinesCredential_AdditionalTenants(string additionalTenants)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "azurepipelines"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"),
+                new KeyValuePair<string, string>("serviceConnectionId", "SomeServiceConnectionId"),
+                new KeyValuePair<string, string>("systemAccessToken", "SomeSystemAccessToken"),
+                new KeyValuePair<string, string>("additionallyAllowedTenants", additionalTenants)
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<AzurePipelinesCredential>(credential);
+            var pipelinesCredential = (AzurePipelinesCredential)credential;
+
+            Assert.AreEqual("ConfigurationClientId", pipelinesCredential.Client.ClientId);
+            Assert.AreEqual("ConfigurationTenantId", pipelinesCredential.TenantId);
+            Assert.AreEqual("SomeServiceConnectionId", pipelinesCredential.ServiceConnectionId);
+            Assert.AreEqual("SomeSystemAccessToken", pipelinesCredential.SystemAccessToken);
+
+            var expectedTenants = additionalTenants.Split(';')
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .ToList();
+
+            Assert.AreEqual(expectedTenants, pipelinesCredential.AdditionallyAllowedTenantIds);
+        }
+
+        [Test]
+        [TestCase(null, null, null, null)]
+        [TestCase("", "", "", "")]
+        [TestCase("ConfigurationClientId", null, "", null)]
+        [TestCase("", "ConfigurationTenantId", null, null)]
+        [TestCase(null, "", "SomeServiceConnectionId", null)]
+        [TestCase("", null, "", "SomeSystemAccessToken")]
+        public void CreatesAzurePipelinesCredential_InvalidConfig(string clientId, string tenantId, string serviceConnectionId, string systemAccessToken)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "azurepipelines"),
+                new KeyValuePair<string, string>("clientId", clientId),
+                new KeyValuePair<string, string>("tenantId", tenantId),
+                new KeyValuePair<string, string>("serviceConnectionId", serviceConnectionId),
+                new KeyValuePair<string, string>("systemAccessToken", systemAccessToken)
+            );
+
+            Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
         }
 
         [Test]
@@ -564,6 +654,44 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        [TestCase("*")]
+        [TestCase("tenantId1;tenantId2;tenantId3")]
+        [TestCase("tenantId1;tenantId2;;tenantId3")]
+        [TestCase("tenantId1;tenantId2; ;tenantId3")]
+        [TestCase("tenantId1; tenantId2; tenantId3")]
+        public void CreatesWorkloadIdentityCredential_AdditionalTenants(string additionalTenants)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "workloadidentity"),
+                new KeyValuePair<string, string>("additionallyAllowedTenants", additionalTenants)
+            );
+
+            using var envVariables = new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_TENANT_ID", "EnvTenantId" },
+                { "AZURE_CLIENT_ID", "EnvClientId" },
+                { "AZURE_FEDERATED_TOKEN_FILE", "EnvTokenFilePath" },
+            });
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<WorkloadIdentityCredential>(credential);
+            var workloadIdentityCredential = (WorkloadIdentityCredential)credential;
+
+            var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+
+            Assert.AreEqual("EnvTenantId", credentialAssertion.TenantId);
+            Assert.AreEqual("EnvClientId", credentialAssertion.ClientId);
+
+            var expectedTenants = additionalTenants.Split(';')
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .ToList();
+
+            Assert.AreEqual(expectedTenants, workloadIdentityCredential.AdditionallyAllowedTenantIds);
+        }
+
+        [Test]
         public void IgnoresConstructorWhenCredentialsNull()
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("uri", "http://localhost"));
@@ -625,6 +753,37 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreSame(clientOptions, client.Options);
             Assert.AreEqual("key", client.AzureSasCredential.Signature);
         }
+
+#if NET8_0_OR_GREATER
+        [Test]
+        public async Task AllowsAspNetCoreIntegrationTestHostConfiguration()
+        {
+            var expectedKeyVaultUriValue = "https://fake.vault.azure.net/";
+
+            // When configuration is set using the test host, the behavior of IConfigurationSection
+            // changes and the Value property is not null for a complex object.  Instead it returns an
+            // empty string, which we don't want to treat as a connection string.
+            //
+            // This is a bug in the configuration system, but there's no commitment for when it will
+            // be fixed.  See: https://github.com/dotnet/aspnetcore/issues/37680
+            //
+            var factory = new WebApplicationFactory<AspNetHost>()
+                .WithWebHostBuilder(builder =>
+                {
+                    builder.UseContentRoot("aspnet-host");
+
+                    builder.UseConfiguration(
+                        GetConfiguration(
+                            new KeyValuePair<string, string>("KeyVault:VaultUri", expectedKeyVaultUriValue)));
+                });
+
+            var client = factory.CreateClient();
+            var response = await client.GetAsync("/keyvault");
+            var keyVaultUriValue = await response.Content.ReadAsStringAsync();
+
+            Assert.AreEqual(expectedKeyVaultUriValue, keyVaultUriValue);
+        }
+#endif
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {

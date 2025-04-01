@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeStorageInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureLargeStorageInstanceListResult.DeserializeAzureLargeStorageInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeStorageInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureLargeStorageInstanceListResult.DeserializeAzureLargeStorageInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeStorageInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureLargeStorageInstanceListResult.DeserializeAzureLargeStorageInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeStorageInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureLargeStorageInstanceListResult.DeserializeAzureLargeStorageInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         LargeStorageInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LargeStorageInstanceData.DeserializeLargeStorageInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         LargeStorageInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LargeStorageInstanceData.DeserializeLargeStorageInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         LargeStorageInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LargeStorageInstanceData.DeserializeLargeStorageInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         LargeStorageInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LargeStorageInstanceData.DeserializeLargeStorageInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeStorageInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureLargeStorageInstanceListResult.DeserializeAzureLargeStorageInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeStorageInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureLargeStorageInstanceListResult.DeserializeAzureLargeStorageInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeStorageInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureLargeStorageInstanceListResult.DeserializeAzureLargeStorageInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case 200:
                     {
                         AzureLargeStorageInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureLargeStorageInstanceListResult.DeserializeAzureLargeStorageInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

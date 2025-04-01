@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePrivateStoreOfferData(document.RootElement, options);
                     }
                 default:

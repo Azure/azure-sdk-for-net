@@ -3,9 +3,7 @@
 
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.Configuration;
@@ -41,10 +39,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// parsed state values.
         /// </para>
         ///
-        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
+        /// <para>The following vendored instrumentation is added for distributed tracing:</para>
         /// <list type="bullet">
-        /// <item>ASP.NET Core.</item>
-        /// <item>HTTP Client.</item>
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
@@ -68,10 +64,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// parsed state values.
         /// </para>
         ///
-        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
+        /// <para>The following vendored instrumentation is added for distributed tracing:</para>
         /// <list type="bullet">
-        /// <item>ASP.NET Core.</item>
-        /// <item>HTTP Client.</item>
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
@@ -113,46 +107,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 }
                                 return true;
                             })
-                            .AddProcessor<ProfilingSessionTraceProcessor>()
-                            .AddAzureMonitorTraceExporter());
+                            .AddProcessor<ProfilingSessionTraceProcessor>());
 
-            builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) =>
-            {
-                var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
-                if (azureMonitorOptions.EnableLiveMetrics)
-                {
-                    var manager = sp.GetRequiredService<Manager>();
-                    builder.AddProcessor(new LiveMetricsActivityProcessor(manager));
-                }
-            });
-
-            builder.WithMetrics(b => b
-                            .AddHttpClientAndServerMetrics()
-                            .AddAzureMonitorMetricExporter());
-
-            builder.WithLogging(
-                    logging => logging.AddProcessor(sp =>
-                    {
-                        var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().CurrentValue;
-                        var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
-                        azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
-
-                        var exporter = new AzureMonitorLogExporter(azureMonitorExporterOptions);
-
-                        if (azureMonitorOptions.EnableLiveMetrics)
-                        {
-                            var manager = sp.GetRequiredService<Manager>();
-
-                            return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
-                            {
-                                new LiveMetricsLogProcessor(manager),
-                                new BatchLogRecordExportProcessor(exporter)
-                            });
-                        }
-
-                        return new BatchLogRecordExportProcessor(exporter);
-                    }),
-                    options => options.IncludeFormattedMessage = true);
+            builder.WithMetrics(b => b.AddHttpClientAndServerMetrics());
 
             // Register a configuration action so that when
             // AzureMonitorExporterOptions is requested it is populated from
@@ -180,13 +137,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 return new AzureEventSourceLogForwarder(loggerFactory, loggerFilterOptions);
             });
 
-            // Register Manager as a singleton
-            builder.Services.AddSingleton<Manager>(sp =>
-            {
-                AzureMonitorOptions options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
-                return new Manager(options, new DefaultPlatformDistro());
-            });
-
             builder.Services.AddOptions<AzureMonitorOptions>()
                 .Configure<IConfiguration>((options, config) =>
                 {
@@ -211,6 +161,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         options.ConnectionString = config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
                     }
                 });
+
+            builder.UseAzureMonitorExporter();
 
             return builder;
         }
