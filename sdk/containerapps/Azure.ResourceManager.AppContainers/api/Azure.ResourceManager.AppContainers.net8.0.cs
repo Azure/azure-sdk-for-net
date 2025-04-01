@@ -1245,15 +1245,15 @@ namespace Azure.ResourceManager.AppContainers
         public SessionPoolData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerType? ContainerType { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.CustomContainerTemplate CustomContainerTemplate { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration DynamicPoolLifecycleConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration DynamicPoolLifecycleConfiguration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier EnvironmentId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting> ManagedIdentitySettings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting> ManagedIdentitySettings { get { throw null; } }
         public int? NodeCount { get { throw null; } }
         public System.Uri PoolManagementEndpoint { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.PoolManagementType? PoolManagementType { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.SessionPoolProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.AppContainers.Models.ScaleConfiguration ScaleConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration ScaleConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.SessionPoolSecret> Secrets { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.SessionNetworkStatus? SessionNetworkStatus { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1422,12 +1422,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static Azure.ResourceManager.AppContainers.Models.ContainerAppAvailableWorkloadProfile ContainerAppAvailableWorkloadProfile(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.AppContainers.Models.ContainerAppAvailableWorkloadProfileProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeter ContainerAppBillingMeter(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppContainers.ContainerAppCertificateData ContainerAppCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProperties ContainerAppCertificateProperties(Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProvisioningState?), Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties certificateKeyVaultProperties = null, string password = null, string subjectName = null, System.Collections.Generic.IEnumerable<string> subjectAlternativeNames = null, byte[] value = null, string issuer = null, System.DateTimeOffset? issueOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string thumbprint = null, bool? isValid = default(bool?), string publicKeyHash = null) { throw null; }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProperties ContainerAppCertificateProperties(Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProvisioningState?), Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = null, string password = null, string subjectName = null, System.Collections.Generic.IEnumerable<string> subjectAlternativeNames = null, byte[] value = null, string issuer = null, System.DateTimeOffset? issueOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string thumbprint = null, bool? isValid = default(bool?), string publicKeyHash = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProperties ContainerAppCertificateProperties(Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProvisioningState? provisioningState, string password, string subjectName, System.Collections.Generic.IEnumerable<string> subjectAlternativeNames, byte[] value, string issuer, System.DateTimeOffset? issueOn, System.DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash) { throw null; }
         public static Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentData ContainerAppConnectedEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocation extendedLocation = null, Azure.ResourceManager.AppContainers.Models.ContainerAppConnectedEnvironmentProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.ContainerAppConnectedEnvironmentProvisioningState?), string deploymentErrors = null, string defaultDomain = null, System.Net.IPAddress staticIP = null, string daprAIConnectionString = null, Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration customDomainConfiguration = null) { throw null; }
         public static Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentStorageData ContainerAppConnectedEnvironmentStorageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppContainers.Models.ContainerAppAzureFileProperties connectedEnvironmentStorageAzureFile = null) { throw null; }
-        public static Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration ContainerAppCustomDomainConfiguration(string customDomainVerificationId = null, string dnsSuffix = null, Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties certificateKeyVaultProperties = null, byte[] certificateValue = null, string certificatePassword = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string thumbprint = null, string subjectName = null) { throw null; }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration ContainerAppCustomDomainConfiguration(string customDomainVerificationId = null, string dnsSuffix = null, Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = null, byte[] certificateValue = null, string certificatePassword = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string thumbprint = null, string subjectName = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration ContainerAppCustomDomainConfiguration(string customDomainVerificationId, string dnsSuffix, byte[] certificateValue, string certificatePassword, System.DateTimeOffset? expireOn, string thumbprint, string subjectName) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainVerificationFailureInfo ContainerAppCustomDomainVerificationFailureInfo(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainVerificationFailureInfoDetailsItem> details = null) { throw null; }
@@ -1470,22 +1470,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static Azure.ResourceManager.AppContainers.JavaComponentData JavaComponentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppContainers.Models.JavaComponentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.JavaComponentProperties JavaComponentProperties(string componentType = null, Azure.ResourceManager.AppContainers.Models.JavaComponentProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.JavaComponentProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.JavaComponentConfigurationProperty> configurations = null, Azure.ResourceManager.AppContainers.Models.JavaComponentPropertiesScale scale = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.JavaComponentServiceBind> serviceBinds = null) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.ManagedCertificateProperties ManagedCertificateProperties(Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProvisioningState?), string subjectName = null, string error = null, Azure.ResourceManager.AppContainers.Models.ManagedCertificateDomainControlValidation? domainControlValidation = default(Azure.ResourceManager.AppContainers.Models.ManagedCertificateDomainControlValidation?), string validationToken = null) { throw null; }
-        public static Azure.ResourceManager.AppContainers.SessionPoolData SessionPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.Core.ResourceIdentifier environmentId = null, Azure.ResourceManager.AppContainers.Models.ContainerType? containerType = default(Azure.ResourceManager.AppContainers.Models.ContainerType?), Azure.ResourceManager.AppContainers.Models.PoolManagementType? poolManagementType = default(Azure.ResourceManager.AppContainers.Models.PoolManagementType?), int? nodeCount = default(int?), Azure.ResourceManager.AppContainers.Models.ScaleConfiguration scaleConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.SessionPoolSecret> secrets = null, Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration dynamicPoolLifecycleConfiguration = null, Azure.ResourceManager.AppContainers.Models.CustomContainerTemplate customContainerTemplate = null, Azure.ResourceManager.AppContainers.Models.SessionNetworkStatus? sessionNetworkStatus = default(Azure.ResourceManager.AppContainers.Models.SessionNetworkStatus?), System.Uri poolManagementEndpoint = null, Azure.ResourceManager.AppContainers.Models.SessionPoolProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.SessionPoolProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting> managedIdentitySettings = null) { throw null; }
+        public static Azure.ResourceManager.AppContainers.SessionPoolData SessionPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.Core.ResourceIdentifier environmentId = null, Azure.ResourceManager.AppContainers.Models.ContainerType? containerType = default(Azure.ResourceManager.AppContainers.Models.ContainerType?), Azure.ResourceManager.AppContainers.Models.PoolManagementType? poolManagementType = default(Azure.ResourceManager.AppContainers.Models.PoolManagementType?), int? nodeCount = default(int?), Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration scaleConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.SessionPoolSecret> secrets = null, Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration dynamicPoolLifecycleConfiguration = null, Azure.ResourceManager.AppContainers.Models.CustomContainerTemplate customContainerTemplate = null, Azure.ResourceManager.AppContainers.Models.SessionNetworkStatus? sessionNetworkStatus = default(Azure.ResourceManager.AppContainers.Models.SessionNetworkStatus?), System.Uri poolManagementEndpoint = null, Azure.ResourceManager.AppContainers.Models.SessionPoolProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.SessionPoolProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting> managedIdentitySettings = null) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.SpringBootAdminComponent SpringBootAdminComponent(Azure.ResourceManager.AppContainers.Models.JavaComponentProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.JavaComponentProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.JavaComponentConfigurationProperty> configurations = null, Azure.ResourceManager.AppContainers.Models.JavaComponentPropertiesScale scale = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.JavaComponentServiceBind> serviceBinds = null, string ingressFqdn = null) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.SpringCloudConfigComponent SpringCloudConfigComponent(Azure.ResourceManager.AppContainers.Models.JavaComponentProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.JavaComponentProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.JavaComponentConfigurationProperty> configurations = null, Azure.ResourceManager.AppContainers.Models.JavaComponentPropertiesScale scale = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.JavaComponentServiceBind> serviceBinds = null) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.SpringCloudEurekaComponent SpringCloudEurekaComponent(Azure.ResourceManager.AppContainers.Models.JavaComponentProvisioningState? provisioningState = default(Azure.ResourceManager.AppContainers.Models.JavaComponentProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.JavaComponentConfigurationProperty> configurations = null, Azure.ResourceManager.AppContainers.Models.JavaComponentPropertiesScale scale = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.Models.JavaComponentServiceBind> serviceBinds = null, string ingressFqdn = null) { throw null; }
-    }
-    public partial class CertificateKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties>
-    {
-        public CertificateKeyVaultProperties() { }
-        public string Identity { get { throw null; } set { } }
-        public System.Uri KeyVaultUri { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerAppAccessMode : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppAccessMode>
@@ -1778,6 +1766,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ContainerAppCertificateKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties>
+    {
+        public ContainerAppCertificateKeyVaultProperties() { }
+        public string Identity { get { throw null; } set { } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ContainerAppCertificatePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificatePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificatePatch>
     {
         public ContainerAppCertificatePatch() { }
@@ -1792,7 +1792,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppCertificateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProperties>
     {
         public ContainerAppCertificateProperties() { }
-        public Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties CertificateKeyVaultProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public System.DateTimeOffset? IssueOn { get { throw null; } }
         public string Issuer { get { throw null; } }
@@ -1850,7 +1850,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public Azure.ResourceManager.AppContainers.Models.ContainerAppActiveRevisionsMode? ActiveRevisionsMode { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppDaprConfiguration Dapr { get { throw null; } set { } }
         public bool? EnableMetrics { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.IdentitySettings> IdentitySettings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings> IdentitySettings { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppIngressConfiguration Ingress { get { throw null; } set { } }
         public int? MaxInactiveRevisions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppRegistryCredentials> Registries { get { throw null; } }
@@ -2000,7 +2000,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppCustomDomainConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration>
     {
         public ContainerAppCustomDomainConfiguration() { }
-        public Azure.ResourceManager.AppContainers.Models.CertificateKeyVaultProperties CertificateKeyVaultProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties { get { throw null; } set { } }
         public string CertificatePassword { get { throw null; } set { } }
         public byte[] CertificateValue { get { throw null; } set { } }
         public string CustomDomainVerificationId { get { throw null; } }
@@ -2563,6 +2563,38 @@ namespace Azure.ResourceManager.AppContainers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentityProvidersConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentityProvidersConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ContainerAppIdentitySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings>
+    {
+        public ContainerAppIdentitySettings(string identity) { }
+        public string Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle? Lifecycle { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerAppIdentitySettingsLifeCycle : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerAppIdentitySettingsLifeCycle(string value) { throw null; }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle All { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle Init { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle Main { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle left, Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle left, Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerAppIngressClientCertificateMode : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppIngressClientCertificateMode>
     {
@@ -2671,7 +2703,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppJobConfiguration(Azure.ResourceManager.AppContainers.Models.ContainerAppJobTriggerType triggerType, int replicaTimeout) { }
         public Azure.ResourceManager.AppContainers.Models.EventTriggerConfiguration EventTriggerConfig { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.IdentitySettings> IdentitySettings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettings> IdentitySettings { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.JobConfigurationManualTriggerConfig ManualTriggerConfig { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppRegistryCredentials> Registries { get { throw null; } }
         public int? ReplicaRetryLimit { get { throw null; } set { } }
@@ -3704,38 +3736,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.EventTriggerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.EventTriggerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IdentitySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.IdentitySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.IdentitySettings>
-    {
-        public IdentitySettings(string identity) { }
-        public string Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle? Lifecycle { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.IdentitySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.IdentitySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.IdentitySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.IdentitySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.IdentitySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.IdentitySettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.IdentitySettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentitySettingsLifeCycle : System.IEquatable<Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentitySettingsLifeCycle(string value) { throw null; }
-        public static Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle All { get { throw null; } }
-        public static Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle Init { get { throw null; } }
-        public static Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle Main { get { throw null; } }
-        public static Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle left, Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle left, Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class IngressPortMapping : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.IngressPortMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.IngressPortMapping>
     {
         public IngressPortMapping(bool external, int targetPort) { }
@@ -3884,37 +3884,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator !=(Azure.ResourceManager.AppContainers.Models.JobExecutionRunningState left, Azure.ResourceManager.AppContainers.Models.JobExecutionRunningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LifecycleConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration>
-    {
-        public LifecycleConfiguration() { }
-        public int? CooldownPeriodInSeconds { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.LifecycleType? LifecycleType { get { throw null; } set { } }
-        public int? MaxAlivePeriodInSeconds { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LifecycleType : System.IEquatable<Azure.ResourceManager.AppContainers.Models.LifecycleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LifecycleType(string value) { throw null; }
-        public static Azure.ResourceManager.AppContainers.Models.LifecycleType OnContainerExit { get { throw null; } }
-        public static Azure.ResourceManager.AppContainers.Models.LifecycleType Timed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppContainers.Models.LifecycleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppContainers.Models.LifecycleType left, Azure.ResourceManager.AppContainers.Models.LifecycleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppContainers.Models.LifecycleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppContainers.Models.LifecycleType left, Azure.ResourceManager.AppContainers.Models.LifecycleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedCertificateDomainControlValidation : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ManagedCertificateDomainControlValidation>
     {
@@ -3961,18 +3930,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedIdentitySetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting>
-    {
-        public ManagedIdentitySetting(string identity) { }
-        public string Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.IdentitySettingsLifeCycle? Lifecycle { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ManagedIdentitySetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PoolManagementType : System.IEquatable<Azure.ResourceManager.AppContainers.Models.PoolManagementType>
     {
@@ -4012,18 +3969,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static implicit operator Azure.ResourceManager.AppContainers.Models.RevisionRunningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppContainers.Models.RevisionRunningState left, Azure.ResourceManager.AppContainers.Models.RevisionRunningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ScaleConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ScaleConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ScaleConfiguration>
-    {
-        public ScaleConfiguration() { }
-        public int? MaxConcurrentSessions { get { throw null; } set { } }
-        public int? ReadySessionInstances { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.ScaleConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ScaleConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ScaleConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.ScaleConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ScaleConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ScaleConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ScaleConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SecretVolumeItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SecretVolumeItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SecretVolumeItem>
     {
@@ -4083,13 +4028,56 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator !=(Azure.ResourceManager.AppContainers.Models.SessionNetworkStatus left, Azure.ResourceManager.AppContainers.Models.SessionNetworkStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SessionPoolLifecycleConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration>
+    {
+        public SessionPoolLifecycleConfiguration() { }
+        public int? CooldownPeriodInSeconds { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType? LifecycleType { get { throw null; } set { } }
+        public int? MaxAlivePeriodInSeconds { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SessionPoolLifecycleType : System.IEquatable<Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SessionPoolLifecycleType(string value) { throw null; }
+        public static Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType OnContainerExit { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType Timed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType left, Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType left, Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SessionPoolManagedIdentitySetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting>
+    {
+        public SessionPoolManagedIdentitySetting(string identity) { }
+        public string Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppIdentitySettingsLifeCycle? Lifecycle { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolManagedIdentitySetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SessionPoolPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolPatch>
     {
         public SessionPoolPatch() { }
         public Azure.ResourceManager.AppContainers.Models.CustomContainerTemplate CustomContainerTemplate { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.LifecycleConfiguration DynamicPoolLifecycleConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.SessionPoolLifecycleConfiguration DynamicPoolLifecycleConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ScaleConfiguration ScaleConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration ScaleConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.SessionPoolSecret> Secrets { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.SessionNetworkStatus? SessionNetworkStatus { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -4120,6 +4108,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static implicit operator Azure.ResourceManager.AppContainers.Models.SessionPoolProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppContainers.Models.SessionPoolProvisioningState left, Azure.ResourceManager.AppContainers.Models.SessionPoolProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SessionPoolScaleConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration>
+    {
+        public SessionPoolScaleConfiguration() { }
+        public int? MaxConcurrentSessions { get { throw null; } set { } }
+        public int? ReadySessionInstances { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolScaleConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SessionPoolSecret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.SessionPoolSecret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.SessionPoolSecret>
     {
