@@ -23,12 +23,13 @@ namespace Azure.Security.KeyVault.Keys
         public byte[] CertificatePemFile { get; set; }
 
         /// <summary>
-        /// Gets or sets the attestation blob bytes encoded as base64url string corresponding to a private key.
+        /// Gets or sets the attestation blob bytes encoded as a base64 URL string corresponding to the private key value.
         /// </summary>
         public byte[] PrivateKeyAttestation { get; set; }
 
         /// <summary>
-        /// Gets or sets the attestation blob bytes encoded as base64url string corresponding to a public key in case of asymmetric key.
+        /// Gets or sets the attestation blob bytes encoded as a base64 URL string. 
+ In the case of an asymmetric key, this corresponds to the public key value.
         /// </summary>
         public byte[] PublicKeyAttestation { get; set; }
 

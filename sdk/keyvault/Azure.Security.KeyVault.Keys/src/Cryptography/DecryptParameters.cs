@@ -106,11 +106,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             new DecryptParameters(EncryptionAlgorithm.A256Cbc, ciphertext, iv);
 
         /// <summary>
-        /// Creates an instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.CkmAesKeyWrap"/> encryption algorithm.
+        /// Creates an instance of the <see cref="DecryptParameters"/> class using the <see cref="EncryptionAlgorithm.CkmAesKeyWrap"/> encryption algorithm.
         /// </summary>
-        /// <param name="ciphertext">The ciphertext to decrypt.</param>
+        /// <param name="ciphertext">The cipher text to decrypt.</param>
         /// <param name="iv">The initialization vector used during encryption.</param>
-        /// <returns>An instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.CkmAesKeyWrap"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="DecryptParameters"/> class using the <see cref="EncryptionAlgorithm.CkmAesKeyWrap"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="ciphertext"/> or <paramref name="iv"/> is null.</exception>
         public static DecryptParameters CkmAesKeyWrapParameters(byte[] ciphertext, byte[] iv) =>
             new DecryptParameters(EncryptionAlgorithm.CkmAesKeyWrap, ciphertext, iv);
