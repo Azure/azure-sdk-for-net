@@ -74,7 +74,7 @@ Starting with the `1.4.0-beta.3` version you can use the cross-cutting `UseAzure
 
 > [!NOTE]
 > The cross cutting extension is currently only available when using the `AddOpenTelemetry` extension in the
-  [OpenTelemetry.Extensions.Hosting](../OpenTelemetry.Extensions.Hosting/README.md) package.
+  [OpenTelemetry.Extensions.Hosting](https://www.nuget.org/packages/OpenTelemetry.Extensions.Hosting) package.
 
 The following example demonstrates how to add the `AzureMonitorExporter` for all signals with a single api.
 To use this api, you need to add OpenTelemetry to a `ServiceCollection`.
