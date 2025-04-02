@@ -318,15 +318,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                     var symbol = semanticModel.GetSymbolInfo(identifierName).Symbol;
                     if (symbol is ILocalSymbol localSymbol)
                     {
-                        if (localSymbol.Type.Name == "Type" && localSymbol.HasConstantValue)
-                        {
-                            var constantValue = localSymbol.ConstantValue as Type;
-                            if (constantValue != null)
-                            {
-                                return semanticModel.Compilation.GetTypeByMetadataName(constantValue.FullName);
-                            }
-                        }
-
                         if (localSymbol.DeclaringSyntaxReferences.Length > 0)
                         {
                             var declSyntax = localSymbol.DeclaringSyntaxReferences[0].GetSyntax();
@@ -338,21 +329,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                         }
                         return localSymbol.Type;
                     }
-                    if (symbol is IParameterSymbol parameterSymbol)
-                        return parameterSymbol.Type;
-                    if (symbol is IFieldSymbol fieldSymbol)
-                        return fieldSymbol.Type;
-                    if (symbol is IPropertySymbol propertySymbol)
-                        return propertySymbol.Type;
                     return null;
-
-                case MemberAccessExpressionSyntax memberAccess:
-                    var memberSymbol = semanticModel.GetSymbolInfo(memberAccess).Symbol;
-                    if (memberSymbol is IFieldSymbol field)
-                        return field.Type;
-                    if (memberSymbol is IPropertySymbol property)
-                        return property.Type;
-                    return semanticModel.GetTypeInfo(memberAccess).Type;
 
                 default:
                     return semanticModel.GetTypeInfo(argExpression).Type ?? semanticModel.GetTypeInfo(argExpression).ConvertedType;

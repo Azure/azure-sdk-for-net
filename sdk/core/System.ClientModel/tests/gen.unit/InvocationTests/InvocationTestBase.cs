@@ -103,6 +103,38 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         [TestCase(true)]
         [TestCase(false)]
+        public void Read_NonGeneric_Local_NoInit(bool implicitContext)
+            => RunInvocationTest(
+                JsonModel,
+                string.Empty,
+                implicitContext,
+                LocalNoInitCall,
+                TypeValidations,
+                false);
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Read_NonGeneric_Local_Parenthesized(bool implicitContext)
+            => RunInvocationTest(
+                JsonModel,
+                "ModelReaderWriter.Read(BinaryData.Empty, (typeof({0})), ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
+                implicitContext,
+                LocalCall,
+                TypeValidations);
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Read_NonGeneric_Parameter(bool implicitContext)
+            => RunInvocationTest(
+                JsonModel,
+                string.Empty,
+                implicitContext,
+                ParameterCall,
+                TypeValidations,
+                false);
+
+        [TestCase(true)]
+        [TestCase(false)]
         public void Write_NonGeneric_Local(bool implicitContext)
             => RunInvocationTest(
                 JsonModel,
@@ -144,7 +176,13 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 LocalCall,
                 TypeValidations);
 
-        internal static void RunInvocationTest(string type, string invocation, bool implicitContext, Func<string, string, string> getCaller, List<TypeValidation> validations)
+        internal static void RunInvocationTest(
+            string type,
+            string invocation,
+            bool implicitContext,
+            Func<string, string, string> getCaller,
+            List<TypeValidation> validations,
+            bool shouldBeFound = true)
         {
             string source =
 $$"""
@@ -221,7 +259,9 @@ $$"""
 
             Assert.AreEqual(0, result.Diagnostics.Length);
 
-            Assert.AreEqual(validations.Count + 1, result.ContextFile!.TypeBuilders.Count);
+            var expectedBuilders = shouldBeFound ? validations.Count + 1 : 1;
+
+            Assert.AreEqual(expectedBuilders, result.ContextFile!.TypeBuilders.Count);
             var dict = result.ContextFile.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
 
             Assert.IsTrue(dict.ContainsKey(type));
@@ -229,9 +269,12 @@ $$"""
             Action<TypeRef> modelValidation = type == JsonModel ? AssertJsonModel : AssertAvailabilitySetData;
             modelValidation(item.Type);
 
-            foreach (var validation in validations)
+            if (shouldBeFound)
             {
-                validation(type, modelValidation, dict);
+                foreach (var validation in validations)
+                {
+                    validation(type, modelValidation, dict);
+                }
             }
         }
 
@@ -273,6 +316,45 @@ $$"""
         {
             ModelReaderWriter.Read<{{string.Format(TypeStringFormat, type)}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
             ModelReaderWriter.Read<{{string.Format(TypeStringFormat, type)}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
+        }
+    }
+""";
+        }
+
+        private string ParameterCall(string type, string invocation)
+        {
+            return
+$$"""
+
+    public class Caller
+    {
+        public void Invoke()
+        {
+            Call(typeof({{string.Format(TypeStringFormat, type)}}));
+        }
+
+        public void Call(Type type)
+        {
+            ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
+        }
+    }
+""";
+        }
+
+        private string LocalNoInitCall(string type, string invocation)
+        {
+            return
+$$"""
+
+    public class Caller
+    {
+        public void Call()
+        {
+            object obj = typeof({{string.Format(TypeStringFormat, type)}});
+            if (obj is Type type)
+            {
+                ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
+            }
         }
     }
 """;
