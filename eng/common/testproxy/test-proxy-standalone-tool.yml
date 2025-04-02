@@ -54,16 +54,20 @@ steps:
       condition: and(succeeded(), ${{ parameters.condition }})
 
     - pwsh: |
-        Write-Host "Start-Process $(PROXY_EXE) `
-          -ArgumentList `"start -u --storage-location ${{ parameters.rootFolder }}`" `
-          -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log `
-          -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-error.log"
+        $invocation = @"
+        Start-Process $(PROXY_EXE)
+          -ArgumentList `"start -u --storage-location ${{ parameters.rootFolder }}`"
+          -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log
+          -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-error.log
+        "@
+        Write-Host $invocation
 
         $Process = Start-Process $(PROXY_EXE) `
           -ArgumentList "start -u --storage-location ${{ parameters.rootFolder }}" `
           -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log `
           -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-error.log
 
+        Write-Host "Setting PROXY_PID to $($Process.Id)"
         Write-Host "##vso[task.setvariable variable=PROXY_PID]$($Process.Id)"
       displayName: 'Run the testproxy - windows'
       condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
@@ -74,6 +78,8 @@ steps:
         nohup $(PROXY_EXE) 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &
 
         echo $! > $(Build.SourcesDirectory)/test-proxy.pid
+
+        echo "Setting PROXY_PID to $(cat $(Build.SourcesDirectory)/test-proxy.pid)"
         echo "##vso[task.setvariable variable=PROXY_PID]$(cat $(Build.SourcesDirectory)/test-proxy.pid)"
       displayName: "Run the testproxy - linux/mac"
       condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
