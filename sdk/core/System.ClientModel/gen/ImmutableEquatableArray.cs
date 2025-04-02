@@ -15,31 +15,22 @@ internal sealed class ImmutableEquatableArray<T> : IEquatable<ImmutableEquatable
 #pragma warning restore SA1402 // File may only contain a single type
     where T : IEquatable<T>
 {
-    /// <summary>
-    /// .
-    /// </summary>
     public static ImmutableEquatableArray<T> Empty { get; } = new ImmutableEquatableArray<T>(Array.Empty<T>());
 
     private readonly T[] _values;
 
-    /// <inheritdoc/>
     public T this[int index] => _values[index];
-    /// <inheritdoc/>
     public int Count => _values.Length;
 
-    /// <inheritdoc/>
     public ImmutableEquatableArray(IEnumerable<T> values)
         => _values = values.ToArray();
 
-    /// <inheritdoc/>
     public bool Equals(ImmutableEquatableArray<T>? other)
         => other != null && ((ReadOnlySpan<T>)_values).SequenceEqual(other._values);
 
-    /// <inheritdoc/>
     public override bool Equals(object? obj)
         => obj is ImmutableEquatableArray<T> other && Equals(other);
 
-    /// <inheritdoc/>
     public override int GetHashCode()
     {
         int hash = 0;
@@ -51,12 +42,10 @@ internal sealed class ImmutableEquatableArray<T> : IEquatable<ImmutableEquatable
         return hash;
     }
 
-    /// <inheritdoc/>
     public Enumerator GetEnumerator() => new Enumerator(_values);
     IEnumerator<T> IEnumerable<T>.GetEnumerator() => ((IEnumerable<T>)_values).GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => _values.GetEnumerator();
 
-    /// <inheritdoc/>
     public struct Enumerator
     {
         private readonly T[] _values;
@@ -68,7 +57,6 @@ internal sealed class ImmutableEquatableArray<T> : IEquatable<ImmutableEquatable
             _index = -1;
         }
 
-        /// <inheritdoc/>
         public bool MoveNext()
         {
             int newIndex = _index + 1;
@@ -82,7 +70,6 @@ internal sealed class ImmutableEquatableArray<T> : IEquatable<ImmutableEquatable
             return false;
         }
 
-        /// <inheritdoc/>
         public readonly T Current => _values[_index];
     }
 }
