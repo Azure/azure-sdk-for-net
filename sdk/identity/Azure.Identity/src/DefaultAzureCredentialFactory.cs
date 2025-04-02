@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -263,11 +263,10 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        [UnconditionalSuppressMessage("Trimming", "IL2026:RequiresUnreferencedCode",
-            Justification = "Types are preserved with DynamicallyAccessedMembers")]
-        [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Azure.Identity.Broker.DevelopmentBrokerOptions", "Azure.Identity.Broker")]
-        [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor,
-            "Azure.Identity.Broker.DevelopmentBrokerOptions", "Azure.Identity.Broker")]
+        [UnconditionalSuppressMessage("Trimming", "IL2026",
+    Justification = "Assembly.Load is used for optional functionality. If the assembly is trimmed, the catch block handles it gracefully.")]
+        [UnconditionalSuppressMessage("Trimming", "IL2072",
+    Justification = "Loading Azure.Identity.Broker assembly is optional, method handles missing assembly gracefully")]
         internal static bool TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options)
         {
             options = null;
