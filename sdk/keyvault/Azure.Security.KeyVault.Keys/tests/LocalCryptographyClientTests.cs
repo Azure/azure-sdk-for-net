@@ -248,7 +248,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignDataVerifyDataRoundtrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512) })] SignatureAlgorithm algorithm)
+        public async Task SignDataVerifyDataRoundtrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512), nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
         {
             JsonWebKey jwk = KeyUtilities.CreateKey(algorithm, includePrivateParameters: true);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -298,7 +298,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void SignDataStreamRequiresPrivateKey([EnumValues] SignatureAlgorithm algorithm)
+        public void SignDataStreamRequiresPrivateKey([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm), nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
         {
             JsonWebKey jwk = KeyUtilities.CreateKey(algorithm, keyOps: new[] { KeyOperation.Sign, KeyOperation.Verify });
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -307,7 +307,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignDataStreamVerifyDataStreamRoundtrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512) })] SignatureAlgorithm algorithm)
+        public async Task SignDataStreamVerifyDataStreamRoundtrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512), nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
         {
             JsonWebKey jwk = KeyUtilities.CreateKey(algorithm, includePrivateParameters: true);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
