@@ -106,11 +106,6 @@ namespace Azure.Identity
             return chain.ToArray();
         }
 
-        private TokenCredential CreateBrokerAuthenticationCredential()
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual TokenCredential CreateEnvironmentCredential()
         {
             var options = Options.Clone<EnvironmentCredentialOptions>();
@@ -204,6 +199,7 @@ namespace Azure.Identity
             options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
 
             options.TenantId = Options.InteractiveBrowserTenantId;
+            options.IsChainedCredential = true;
 
             return new InteractiveBrowserCredential(
                 Options.InteractiveBrowserTenantId,
@@ -263,6 +259,12 @@ namespace Azure.Identity
             return new AzurePowerShellCredential(options, Pipeline, default);
         }
 
+        /// <summary>
+        /// Creates a DevelopmentBrokerOptions instance if the Azure.Identity.Broker assembly is loaded.
+        /// This is used to enable broker authentication for development purposes.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
         internal static bool TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options)
         {
             options = null;

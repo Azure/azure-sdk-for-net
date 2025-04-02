@@ -12,8 +12,8 @@ namespace Azure.Identity.Broker.Tests
         public void TryCreateDevelopmentBrokerOptionsFailsWithoutBrokerReference()
         {
             bool success = DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out var options);
-            Assert.IsFalse(success, "Failed to create DevelopmentBrokerOptions.");
-            Assert.IsNull(options, "DevelopmentBrokerOptions is null.");
+            Assert.IsFalse(success, "Should not have been able to create DevelopmentBrokerOptions.");
+            Assert.IsNull(options, "DevelopmentBrokerOptions is not null.");
         }
     }
 }
