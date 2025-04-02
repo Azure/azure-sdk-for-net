@@ -4,7 +4,10 @@ variables:
   AdditionalTestArguments: ''
   skipComponentGovernanceDetection: true
   nugetMultiFeedWarnLevel: 'none'
-  BuildConfiguration: 'Release'
+  ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+    BuildConfiguration: 'Debug'
+  ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+    BuildConfiguration: 'Release'
   DocFxVersion: 'v2.56.1'
   CollectCoverage: false
   NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages/

@@ -97,7 +97,7 @@ steps:
           /p:SDKType=${{ parameters.SDKType }} `
           /p:IncludeTests=false `
           /p:PublicSign=false $(VersioningProperties) `
-          /p:Configuration=$(BuildConfiguration) `
+          /p:Configuration=Release `
           /p:CommitSHA=$(Build.SourceVersion) `
           /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
           /p:ServiceDirectory=* `
@@ -116,7 +116,7 @@ steps:
         /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
         /p:IncludeTests=false
         /p:PublicSign=false $(VersioningProperties)
-        /p:Configuration=$(BuildConfiguration)
+        /p:Configuration=Release
         /p:CommitSHA=$(Build.SourceVersion)
         /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         $(DiagnosticArguments)
