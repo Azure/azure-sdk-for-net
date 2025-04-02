@@ -18,9 +18,10 @@ namespace Azure.Generator.Management
         private ManagementLongRunningOperationProvider? _genericArmOperation;
         internal ManagementLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
 
-        private IReadOnlyList<ResourceClientProvider> BuildResources()
+        private (IReadOnlyList<ResourceClientProvider> Resources, IReadOnlyList<ResourceCollectionClientProvider> Collection) BuildResources()
         {
-            var result = new List<ResourceClientProvider>();
+            var resources = new List<ResourceClientProvider>();
+            var collections = new List<ResourceCollectionClientProvider>();
             foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
                 // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
@@ -31,17 +32,19 @@ namespace Azure.Generator.Management
                 }
                 var resource = new ResourceClientProvider(client);
                 ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
-                result.Add(resource);
+                resources.Add(resource);
+                var collection = new ResourceCollectionClientProvider(client, resource);
+                ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
+                collections.Add(collection);
             }
-            return result;
+            return (resources, collections);
         }
 
         /// <inheritdoc/>
-        // TODO: generate collections
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var resources = BuildResources();
-            return [.. base.BuildTypeProviders(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
+            var (resources, collections) = BuildResources();
+            return [.. base.BuildTypeProviders(), ArmOperation, GenericArmOperation, .. resources, .. collections, .. resources.Select(r => r.Source)];
         }
     }
 }
