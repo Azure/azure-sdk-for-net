@@ -102,7 +102,7 @@ steps:
     - pwsh: |
         for ($i = 0; $i -lt 10; $i++) {
             try {
-                Write-Host "Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null"
+                Write-Host "Invoke-WebRequest -Uri `"http://localhost:5000/Admin/IsAlive`" | Out-Null"
                 Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
                 Write-Host "Successfully connected to the test proxy on port 5000."
                 exit 0
