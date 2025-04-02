@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -265,6 +263,11 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
+        [UnconditionalSuppressMessage("Trimming", "IL2026:RequiresUnreferencedCode",
+            Justification = "Types are preserved with DynamicallyAccessedMembers")]
+        [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Azure.Identity.Broker.DevelopmentBrokerOptions", "Azure.Identity.Broker")]
+        [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor,
+            "Azure.Identity.Broker.DevelopmentBrokerOptions", "Azure.Identity.Broker")]
         internal static bool TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options)
         {
             options = null;
