@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -42,20 +43,23 @@ namespace Azure.ResourceManager.Network.Tests
             _resourceGroup = (await CreateResourceGroup(Recording.GenerateAssetName(_rgNamePrefix)));
         }
 
-        private async Task<NetworkSecurityPerimeterResource> CreateNsp(string nspName)
+        private async Task<NetworkSecurityPerimeterResource> CreateRandomNsp()
         {
+            var nspName = Recording.GenerateAssetName(_nspNamePrefix);
             var createNspReqData = new NetworkSecurityPerimeterData(TestEnvironment.Location);
             return  (await _resourceGroup.GetNetworkSecurityPerimeters().CreateOrUpdateAsync(WaitUntil.Completed, nspName, createNspReqData)).Value;
         }
 
-        private async Task<NetworkSecurityPerimeterProfileResource> CreateProfile(NetworkSecurityPerimeterResource nsp, string profileName)
+        private async Task<NetworkSecurityPerimeterProfileResource> CreateRandomProfile(NetworkSecurityPerimeterResource nsp)
         {
+            var profileName = Recording.GenerateAssetName(_nspNamePrefix);
             var createProfileReqData = new NetworkSecurityPerimeterProfileData(TestEnvironment.Location);
             return (await nsp.GetNetworkSecurityPerimeterProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, createProfileReqData)).Value;
         }
 
-        private async Task<StorageAccountResource> CreateStorageAccount(string storageAccountName)
+        private async Task<StorageAccountResource> CreateRandomStorageAccount()
         {
+            var storageAccountName = Recording.GenerateAssetName(_saNamePrefix);
             var createStorageAccountReqData = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.Storage, TestEnvironment.Location);
             return (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, createStorageAccountReqData)).Value;
         }
@@ -125,8 +129,8 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task NetworkSecurityPrimeterAccessRuleTest()
         {
             // Create NSP, Profile
-            NetworkSecurityPerimeterResource nsp = await CreateNsp(Recording.GenerateAssetName(_nspNamePrefix));
-            NetworkSecurityPerimeterProfileResource profile = await CreateProfile(nsp, Recording.GenerateAssetName(_profileNamePrefix));
+            NetworkSecurityPerimeterResource nsp = await CreateRandomNsp();
+            NetworkSecurityPerimeterProfileResource profile = await CreateRandomProfile(nsp);
 
             // Create Ip Address Access Rule
             var ipRuleName = Recording.GenerateAssetName(_accessRuleNamePrefix);
@@ -191,19 +195,19 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task NetworkSecurityPerimeterAssociationTest()
         {
             // Create NSP, Profile
-            NetworkSecurityPerimeterResource nsp = await CreateNsp(Recording.GenerateAssetName(_nspNamePrefix));
-            NetworkSecurityPerimeterProfileResource profile = await CreateProfile(nsp, Recording.GenerateAssetName(_profileNamePrefix));
-            var storageAccountName = Recording.GenerateAssetName(_saNamePrefix);
+            NetworkSecurityPerimeterResource nsp = await CreateRandomNsp();
+            NetworkSecurityPerimeterProfileResource profile = await CreateRandomProfile(nsp);
             ResourceIdentifier storageAccountId = null;
             if (Mode == RecordedTestMode.Playback)
             {
+                var storageAccountName = Recording.GenerateAssetName(_saNamePrefix);
                 storageAccountId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, storageAccountName);
             }
             else
             {
                 using (Recording.DisableRecording())
                 {
-                    var storageAccount = await CreateStorageAccount(storageAccountName);
+                    var storageAccount = await CreateRandomStorageAccount();
                     storageAccountId = storageAccount.Id;
                 }
             }
@@ -255,11 +259,8 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task NetworkSecurityPerimeterLinkTest()
         {
             // Create NSPs
-            var nspName = Recording.GenerateAssetName(_nspNamePrefix);
-            NetworkSecurityPerimeterResource nsp = await CreateNsp(nspName);
-
-            var remoteNspName = Recording.GenerateAssetName(_nspNamePrefix);
-            NetworkSecurityPerimeterResource remoteNsp = await CreateNsp(remoteNspName);
+            NetworkSecurityPerimeterResource nsp = await CreateRandomNsp();
+            NetworkSecurityPerimeterResource remoteNsp = await CreateRandomNsp();
 
             // Create Link
             var linkName = Recording.GenerateAssetName(_linkNamePrefix);
@@ -306,6 +307,35 @@ namespace Azure.ResourceManager.Network.Tests
             // List Link references
             linkReferencesList = await remoteNsp.GetNetworkSecurityPerimeterLinkReferences().GetAllAsync().ToEnumerableAsync();
             Assert.That(linkReferencesList, Has.Count.EqualTo(0));
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task NetworkSecurityPerimeterLoggingConfigurationTest()
+        {
+            // Create NSP
+            NetworkSecurityPerimeterResource nsp = await CreateRandomNsp();
+
+            //Create Logging configuration
+            var logConfigName = "instance";
+            var createLogConfigReqData = new NetworkSecurityPerimeterLoggingConfigurationData
+            {
+                Properties = new NetworkSecurityPerimeterLoggingConfigurationProperties
+                {
+                    EnabledLogCategories = { "NspPublicInboundPerimeterRulesDenied", "NspPublicOutboundPerimeterRulesDenied" },
+                },
+            };
+            var createLogConfigResData = (await nsp.GetNetworkSecurityPerimeterLoggingConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, logConfigName, createLogConfigReqData)).Value;
+            Assert.AreEqual(createLogConfigResData.Data.Name, logConfigName);
+            CollectionAssert.AreEqual(createLogConfigResData.Data.Properties.EnabledLogCategories, createLogConfigReqData.Properties.EnabledLogCategories);
+
+            // Ge Logging configuration
+            NetworkSecurityPerimeterLoggingConfigurationResource logConfig = await nsp.GetNetworkSecurityPerimeterLoggingConfigurationAsync(logConfigName);
+            CollectionAssert.AreEqual(logConfig.Data.Properties.EnabledLogCategories, createLogConfigReqData.Properties.EnabledLogCategories);
+
+            await logConfig.DeleteAsync(WaitUntil.Completed);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => nsp.GetNetworkSecurityPerimeterLoggingConfigurationAsync(logConfigName));
         }
     }
 }
