@@ -22,7 +22,14 @@ namespace Azure.Identity.Broker.Tests
             var factory = new DefaultAzureCredentialFactory(new DefaultAzureCredentialOptions());
             DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out var options);
             var cred = factory.CreateBrokerAuthenticationCredential(options);
-            cred.GetToken(new TokenRequestContext(new[] { "https://management.azure.com/.default" }), default);
+            try
+            {
+                cred.GetToken(new TokenRequestContext(new[] { "https://management.azure.com/.default" }), default);
+            }
+            catch (CredentialUnavailableException)
+            {
+                // This is expected, as the broker is not available in the test environment.
+            }
         }
     }
 }
