@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             AutoUpgradeProfileResource autoUpgradeProfile = client.GetAutoUpgradeProfileResource(autoUpgradeProfileResourceId);
 
             // invoke the operation
-            ArmOperation<GenerateResponse> lro = await autoUpgradeProfile.GenerateUpdateRunAutoUpgradeProfileOperationAsync(WaitUntil.Completed);
-            GenerateResponse result = lro.Value;
+            ArmOperation<GenerateResult> lro = await autoUpgradeProfile.GenerateUpdateRunAutoUpgradeProfileOperationAsync(WaitUntil.Completed);
+            GenerateResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

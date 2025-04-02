@@ -58,6 +58,18 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
+operations-to-lro-api-version-override:
+  Fleets_CreateOrUpdate: "2016-03-30"
+  Fleets_Update: "2016-03-30"
+  Fleets_Delete: "2016-03-30"
+  FleetMembers_Create: "2016-03-30"
+  FleetMembers_Update: "2016-03-30"
+  FleetMembers_Delete: "2016-03-30"
+  UpdateRuns_CreateOrUpdate: "2016-03-30"
+  UpdateRuns_Delete: "2016-03-30"
+  FleetUpdateStrategies_CreateOrUpdate: "2016-03-30"
+  FleetUpdateStrategies_Delete: "2016-03-30"
+  
 acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
