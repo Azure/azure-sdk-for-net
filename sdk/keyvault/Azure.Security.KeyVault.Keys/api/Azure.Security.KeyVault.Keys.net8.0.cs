@@ -260,6 +260,7 @@ namespace Azure.Security.KeyVault.Keys
     {
         public KeyProperties(string name) { }
         public KeyProperties(System.Uri id) { }
+        public Azure.Security.KeyVault.Keys.KeyAttestation Attestation { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
