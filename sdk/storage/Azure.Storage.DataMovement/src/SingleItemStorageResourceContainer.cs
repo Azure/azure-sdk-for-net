@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement
         protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
         {
             // This should never be called for a single item
-            throw new InvalidOperationException("Single item container has no children.");
+            throw Errors.SingleItemContainerNoChildren();
         }
 
         protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
