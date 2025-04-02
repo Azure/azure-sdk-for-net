@@ -514,6 +514,7 @@
  "clients": [
   {
    "$id": "75",
+   "kind": "client",
    "name": "JsonMergePatchClient",
    "namespace": "Payload.JsonMergePatch",
    "doc": "Test for merge-patch+json content-type",
@@ -874,7 +875,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Payload.JsonMergePatch"
+   "crossLanguageDefinitionId": "Payload.JsonMergePatch",
+   "apiVersions": []
   }
  ]
 }

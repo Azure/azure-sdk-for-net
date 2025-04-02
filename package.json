@@ -1,6 +1,7 @@
 {
   "name": "azure-sdk-for-net",
   "version": "1.0.0",
+  "packageManager": "pnpm@10.6.3",
   "dependencies": {
     "autorest": "^3.7.1"
   }

@@ -23,7 +23,7 @@ namespace Azure.Generator.StubLibrary
         /// <summary>
         /// Customize the generation output for stub library.
         /// </summary>
-        public override void Configure()
+        protected override void Configure()
         {
             base.Configure();
             AddVisitor(new AzureStubVisitor());

@@ -15,8 +15,9 @@ if ($UseTypeSpecNext) {
     Write-Host "##vso[build.addbuildtag]typespec_next"
 }
 
-$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
-Push-Location $packageRoot
+Invoke-LoggedCommand "npm install -g pnpm" # Pnpm manage-package-manager-versions will respect packageManager field
+
+Push-Location $RepoRoot
 try {
     if (Test-Path "./node_modules") {
         Remove-Item -Recurse -Force "./node_modules"
@@ -28,9 +29,9 @@ try {
         # if we were passed a build_artifacts path, use the package.json and package-lock.json from there
         Write-Host "Using package.json and package-lock.json from $lockFilesPath"
         Copy-Item "$lockFilesPath/package.json" './package.json' -Force
-        Copy-Item "$lockFilesPath/package-lock.json" './package-lock.json' -Force
+        Copy-Item "$lockFilesPath/pnpm-lock.yaml" './pnpm-lock.yaml' -Force
 
-        Invoke-LoggedCommand "npm ci"
+        Invoke-LoggedCommand "pnpm install --frozen-lockfile"
     }
     elseif ($UseTypeSpecNext) {
         if (Test-Path "./package-lock.json") {
@@ -39,21 +40,19 @@ try {
 
         Write-Host "Using TypeSpec.Next"
         Invoke-LoggedCommand "npx -y @azure-tools/typespec-bump-deps@latest --add-npm-overrides package.json"
-        Invoke-LoggedCommand "npm install"
+        Invoke-LoggedCommand "pnpm install"
     }
     else {
-        Invoke-LoggedCommand "npm ci"
+        Invoke-LoggedCommand "pnpm install"
     }
-
-    Invoke-LoggedCommand "npm ls -a" -GroupOutput
 
     $artifactStagingDirectory = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
     if ($artifactStagingDirectory -and !$BuildArtifactsPath) {
         $lockFilesPath = "$artifactStagingDirectory/lock-files"
         New-Item -ItemType Directory -Path "$lockFilesPath" | Out-Null
-        Write-Host "Copying package.json and package-lock.json to $lockFilesPath"
+        Write-Host "Copying package.json to $lockFilesPath"
         Copy-Item "./package.json" "$lockFilesPath/package.json" -Force
-        Copy-Item "./package-lock.json" "$lockFilesPath/package-lock.json" -Force
+        Copy-Item "./pnpm-lock.yaml" "$lockFilesPath/pnpm-lock.yaml" -Force
     }
 }
 finally {

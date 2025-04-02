@@ -7,7 +7,7 @@ using TypeSpec.Versioning;
 using Azure.ResourceManager;
 
 @armProviderNamespace
-@service({
+@service(#{
   title: "MgmtTestClient",
 })
 @versioned(Versions)

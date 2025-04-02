@@ -44,7 +44,7 @@ namespace Azure.Generator.Management
         /// <summary>
         /// Customize the generation output for Azure client SDK.
         /// </summary>
-        public override void Configure()
+        protected override void Configure()
         {
             base.Configure();
             // Include Azure.ResourceManager
