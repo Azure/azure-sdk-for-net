@@ -120,7 +120,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 checkpointer,
                 TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
-                new ClientDiagnostics(ClientOptions.Default));
+                new ClientDiagnostics(ClientOptions.Default),
+                default);
 
             // Act
             List<StorageResourceItem> destinationItems = new List<StorageResourceItem>();
@@ -176,7 +177,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 checkpointer,
                 TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
-                new ClientDiagnostics(ClientOptions.Default));
+                new ClientDiagnostics(ClientOptions.Default),
+                default);
 
             // Act
             List<StorageResourceItem> destinationItems = new List<StorageResourceItem>();
