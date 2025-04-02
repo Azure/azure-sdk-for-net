@@ -67,7 +67,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ClientModel.SourceGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ClientModel.SourceGeneration.Tests", "..\System.ClientModel\tests\gen\System.ClientModel.SourceGeneration.Tests.csproj", "{F34B21B1-A3FC-5284-DBB8-1188EAA04B83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ClientModel.SourceGeneration.Tests.Unit", "..\System.ClientModel\tests\gen.unit\System.ClientModel.SourceGeneration.Tests.Unit.csproj", "{6ED66F0E-C7FA-3F0E-38C8-D576D48C8A58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ClientModel.SourceGeneration.Unit.Tests", "..\System.ClientModel\tests\gen.unit\System.ClientModel.SourceGeneration.Unit.Tests.csproj", "{6ED66F0E-C7FA-3F0E-38C8-D576D48C8A58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
