@@ -2,12 +2,7 @@
 ## 1.4.1-beta.2 (2025-04-01)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added user defined functions feature
 
 ## 1.4.1-beta.1 (2025-01-27)
 
