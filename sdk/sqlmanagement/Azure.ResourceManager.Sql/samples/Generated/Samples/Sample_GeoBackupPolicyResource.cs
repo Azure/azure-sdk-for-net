@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             GeoBackupPolicyData data = new GeoBackupPolicyData
             {
-                State = GeoBackupPolicyState.Enabled,
+                GeoBackupPolicyState = GeoBackupPolicyState.Enabled,
             };
             ArmOperation<GeoBackupPolicyResource> lro = await geoBackupPolicy.UpdateAsync(WaitUntil.Completed, data);
             GeoBackupPolicyResource result = lro.Value;

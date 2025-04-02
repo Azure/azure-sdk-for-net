@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of <see cref="SqlAdvisorData"/>. </summary>
         public SqlAdvisorData()
         {
-            RecommendedActions = new ChangeTrackingList<RecommendedAction>();
+            RecommendedActions = new ChangeTrackingList<RecommendedActionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlAdvisorData"/>. </summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="lastCheckedOn"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedAction> recommendedActions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedActionData> recommendedActions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -107,6 +107,6 @@ namespace Azure.ResourceManager.Sql
         public DateTimeOffset? LastCheckedOn { get; }
         /// <summary> Gets the recommended actions for this advisor. </summary>
         [WirePath("properties.recommendedActions")]
-        public IReadOnlyList<RecommendedAction> RecommendedActions { get; }
+        public IReadOnlyList<RecommendedActionData> RecommendedActions { get; }
     }
 }

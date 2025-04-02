@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public static string ToSerialString(this DataMaskingState value) => value switch
         {
-            DataMaskingState.Enabled => "Enabled",
             DataMaskingState.Disabled => "Disabled",
+            DataMaskingState.Enabled => "Enabled",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataMaskingState value.")
         };
 
         public static DataMaskingState ToDataMaskingState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataMaskingState.Enabled;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataMaskingState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataMaskingState.Enabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataMaskingState value.");
         }
     }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Samples
             GeoBackupPolicyName geoBackupPolicyName = GeoBackupPolicyName.Default;
             GeoBackupPolicyData data = new GeoBackupPolicyData
             {
-                State = GeoBackupPolicyState.Enabled,
+                GeoBackupPolicyState = GeoBackupPolicyState.Enabled,
             };
             ArmOperation<GeoBackupPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, geoBackupPolicyName, data);
             GeoBackupPolicyResource result = lro.Value;

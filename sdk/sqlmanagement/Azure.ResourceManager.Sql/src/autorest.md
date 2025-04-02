@@ -18,6 +18,7 @@ sample-gen:
   - ManagedDatabaseSensitivityLabels_Delete
   - SensitivityLabels_CreateOrUpdate
   - SensitivityLabels_Delete
+  - ManagedDatabaseSecurityEvents_ListByDatabase
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -360,11 +361,12 @@ rename-mapping:
   PhaseDetails: DatabaseOperationPhaseDetails
   UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
   DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
-  RecommendedAction.properties.details: AdditionalDetails
+  # RecommendedAction.properties.details: AdditionalDetails
   SqlAgentState: SqlAgentConfigurationPropertiesState
   TrustScope: ServerTrustGroupPropertiesTrustScopesItem
   ManagementOperationStepState: UpsertManagedServerOperationStepStatus
   StorageAccountType: StorageCapabilityStorageAccountType
+  GeoBackupPolicy.properties.state: GeoBackupPolicyState
 
 prompted-enum-values:
   - Default
@@ -620,6 +622,25 @@ directive:
               'TimedOut'
           ];
           $['x-ms-enum']['name'] = 'ManagedInstancePropertiesProvisioningState'
+    - from: DatabaseAdvisors.json
+      where: $.definitions.RecommendedAction
+      transform: >
+          delete $.allOf;
+          $.properties.id = {
+            description: "Resource ID.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.name = {
+            description: "Resource name.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.type = {
+            description: "Resource type.",
+            type: "string",
+            readOnly: true
+          };
     - from: DatabaseRecommendedActions.json
       where: $.definitions.RecommendedAction
       transform: >
@@ -639,4 +660,39 @@ directive:
             type: "string",
             readOnly: true
           };
+    - from: DataMaskingRules.json
+      where: $.definitions.DataMaskingRuleProperties.properties.ruleState
+      transform: >
+          $['enum'] = [
+              'Disabled',
+              'Enabled'
+            ];
+    - from: DataMaskingPolicies.json
+      where: $.definitions.DataMaskingPolicyProperties.properties.dataMaskingState
+      transform: >
+          $['enum'] = [
+              'Disabled',
+              'Enabled'
+            ];
+    - from: GeoBackupPolicies.json
+      where: $.definitions.GeoBackupPolicyProperties.properties.state
+      transform: >
+          $['enum'] = [
+              'Disabled',
+              'Enabled'
+            ];
+    - from: ServerUsages.json
+      where: $.definitions.ServerUsageProperties.properties
+      transform: >
+          $['resourceName'] = {
+              "readOnly": true,
+              "type": "string",
+              "description": "The name of the resource."
+            };
+          $['nextResetTime'] = {
+              "readOnly": true,
+              "type": "string",
+              "format": "date-time",
+              "description": "The next reset time for the metric (ISO8601 format)."
+            };
 ```

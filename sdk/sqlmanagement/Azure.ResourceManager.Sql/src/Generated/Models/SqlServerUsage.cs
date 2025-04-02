@@ -61,13 +61,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentValue"> Current value of the metric. </param>
         /// <param name="limit"> Boundary value of the metric. </param>
         /// <param name="unit"> Unit of the metric. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, double? currentValue, double? limit, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, double? currentValue, double? limit, string unit, string resourceName, DateTimeOffset? nextResetOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             CurrentValue = currentValue;
             Limit = limit;
             Unit = unit;
+            ResourceName = resourceName;
+            NextResetOn = nextResetOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,5 +87,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Unit of the metric. </summary>
         [WirePath("properties.unit")]
         public string Unit { get; }
+        /// <summary> The name of the resource. </summary>
+        [WirePath("properties.resourceName")]
+        public string ResourceName { get; }
+        /// <summary> The next reset time for the metric (ISO8601 format). </summary>
+        [WirePath("properties.nextResetTime")]
+        public DateTimeOffset? NextResetOn { get; }
     }
 }
