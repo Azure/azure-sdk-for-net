@@ -279,9 +279,9 @@
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20250310.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <!-- Note: Upgrading the .NET SDK version needs to be synchronized with the autorest.csharp repository -->
-    <PackageReference Update="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all"/>
+    <PackageReference Update="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="All"/>
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
-    <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="4.12.0" PrivateAssets="all" />
+    <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="4.12.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
