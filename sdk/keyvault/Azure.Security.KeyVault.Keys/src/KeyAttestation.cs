@@ -28,8 +28,8 @@ namespace Azure.Security.KeyVault.Keys
         public byte[] PrivateKeyAttestation { get; set; }
 
         /// <summary>
-        /// Gets or sets the attestation blob bytes encoded as a base64 URL string. 
- In the case of an asymmetric key, this corresponds to the public key value.
+        /// Gets or sets the attestation blob bytes encoded as a base64 URL string.
+        /// In the case of an asymmetric key, this corresponds to the public key value.
         /// </summary>
         public byte[] PublicKeyAttestation { get; set; }
 
