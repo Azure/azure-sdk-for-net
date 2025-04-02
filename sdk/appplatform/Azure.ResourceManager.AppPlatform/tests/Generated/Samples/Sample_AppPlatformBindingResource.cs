@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
 {
     public partial class Sample_AppPlatformBindingResource
     {
-        // Bindings_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BindingsGet()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Bindings_Get.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Bindings_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_BindingsDelete()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Bindings_Delete.json
@@ -77,12 +73,11 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // invoke the operation
             await appPlatformBinding.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Bindings_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BindingsUpdate()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Bindings_Update.json
@@ -104,15 +99,15 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformBindingResource appPlatformBinding = client.GetAppPlatformBindingResource(appPlatformBindingResourceId);
 
             // invoke the operation
-            AppPlatformBindingData data = new AppPlatformBindingData()
+            AppPlatformBindingData data = new AppPlatformBindingData
             {
-                Properties = new AppPlatformBindingProperties()
+                Properties = new AppPlatformBindingProperties
                 {
                     Key = "xxxx",
                     BindingParameters =
 {
-["apiType"] = BinaryData.FromString("SQL"),
-["databaseName"] = BinaryData.FromString("db1"),
+["apiType"] = BinaryData.FromObjectAsJson("SQL"),
+["databaseName"] = BinaryData.FromObjectAsJson("db1")
 },
                 },
             };
