@@ -25,8 +25,7 @@ In the API specifications, many properties and parameters are defined as string 
 
 - All `ListOperations` method should be removed because it's not useful in SDK and the SDK itself can show all the available operations in it through public APIs. 
 
-# Configruation for Generating SDK from TypeSpec Specifications
-
+# Configuration for Generating SDK from TypeSpec Specifications
 For SDKs generated from TypeSpec specifications, we can update the client.tsp file located in the same folder as the main.tsp to address APIView review comments in the .NET SDK.
 
 ## Using the correct namespace
