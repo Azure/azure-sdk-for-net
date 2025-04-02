@@ -73,7 +73,7 @@ namespace Azure.Identity.Tests
             int probeCount = 0;
             var mockTransport = new MockTransport(req =>
             {
-                if (!req.Headers.TryGetValue("Metadata", out var header))
+                if (!req.Headers.TryGetValue("Metadata", out var _))
                 {
                     probeCount++;
                     return CreateErrorMockResponse(400, "mock error");
