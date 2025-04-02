@@ -89,8 +89,11 @@ steps:
     parameters:
       LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
 
-  # only use the project list override file if the service directory is not auto
+  # Due to discovering differing pack errors during debug vs release builds, we simply always opt into the more advanced
+  # release pack. This ensures that the public ci is packing the same way as what we will eventually release, and we won't be
+  # surprised by new errors that pop up only in internal when public CI was clean.
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    # only use the project list override file if the service directory is not auto
     - pwsh: |
         dotnet pack eng/service.proj -warnaserror `
           /p:ValidateRunApiCompat=true `
