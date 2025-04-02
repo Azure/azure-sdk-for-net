@@ -8,16 +8,21 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
     public class NetworkSecurityPerimeterTests : NetworkServiceClientTestBase
     {
-        private string _rgNamePrefix = "rg-nsp-dot-net-sdk-tests";
-        private string _nspNamePrefix = "nsp-dot-net-sdk-test";
-        private string _profileNamePrefix = "profile-dot-net-sdk-test";
-        private string _accessRuleNamePrefix = "access-rule-dot-net-sdk-test";
+        private string _rgNamePrefix = "rg-nsp-dot-net-sdk-test-";
+        private string _nspNamePrefix = "nsp-dot-net-sdk-test-";
+        private string _profileNamePrefix = "profile-dot-net-sdk-test-";
+        private string _associationNamePrefix = "association-dot-net-sdk-test-";
+        private string _accessRuleNamePrefix = "access-rule-dot-net-sdk-test-";
+        private string _linkNamePrefix = "link-dot-net-sdk-test-";
+        private string _saNamePrefix = "sadotnetsdktest";
 
         private ResourceGroupResource _resourceGroup;
         private SubscriptionResource _subscription;
@@ -35,6 +40,24 @@ namespace Azure.ResourceManager.Network.Tests
             }
             _subscription = await ArmClient.GetDefaultSubscriptionAsync();
             _resourceGroup = (await CreateResourceGroup(Recording.GenerateAssetName(_rgNamePrefix)));
+        }
+
+        private async Task<NetworkSecurityPerimeterResource> CreateNsp(string nspName)
+        {
+            var createNspReqData = new NetworkSecurityPerimeterData(TestEnvironment.Location);
+            return  (await _resourceGroup.GetNetworkSecurityPerimeters().CreateOrUpdateAsync(WaitUntil.Completed, nspName, createNspReqData)).Value;
+        }
+
+        private async Task<NetworkSecurityPerimeterProfileResource> CreateProfile(NetworkSecurityPerimeterResource nsp, string profileName)
+        {
+            var createProfileReqData = new NetworkSecurityPerimeterProfileData(TestEnvironment.Location);
+            return (await nsp.GetNetworkSecurityPerimeterProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, createProfileReqData)).Value;
+        }
+
+        private async Task<StorageAccountResource> CreateStorageAccount(string storageAccountName)
+        {
+            var createStorageAccountReqData = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.Storage, TestEnvironment.Location);
+            return (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, createStorageAccountReqData)).Value;
         }
 
         [Test]
@@ -95,24 +118,15 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify if the profile deleted
             nspProfileList = await nsp.GetNetworkSecurityPerimeterProfiles().GetAllAsync().ToEnumerableAsync();
             Assert.That(nspProfileList, Has.Count.EqualTo(0));
-
-            // CLEANUP; Delete NSP
-            await nsp.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
         [RecordedTest]
         public async Task NetworkSecurityPrimeterAccessRuleTest()
         {
-            // Create NSP
-            var nspName = Recording.GenerateAssetName(_nspNamePrefix);
-            var createNspReqData = new NetworkSecurityPerimeterData(TestEnvironment.Location);
-            NetworkSecurityPerimeterResource nsp = (await _resourceGroup.GetNetworkSecurityPerimeters().CreateOrUpdateAsync(WaitUntil.Completed, nspName, createNspReqData)).Value;
-
-            // Crete NSP Profile
-            var profileName = Recording.GenerateAssetName(_profileNamePrefix);
-            var createProfileReqData = new NetworkSecurityPerimeterProfileData(TestEnvironment.Location);
-            NetworkSecurityPerimeterProfileResource profile = (await nsp.GetNetworkSecurityPerimeterProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, createProfileReqData)).Value;
+            // Create NSP, Profile
+            NetworkSecurityPerimeterResource nsp = await CreateNsp(Recording.GenerateAssetName(_nspNamePrefix));
+            NetworkSecurityPerimeterProfileResource profile = await CreateProfile(nsp, Recording.GenerateAssetName(_profileNamePrefix));
 
             // Create Ip Address Access Rule
             var ipRuleName = Recording.GenerateAssetName(_accessRuleNamePrefix);
@@ -170,9 +184,128 @@ namespace Azure.ResourceManager.Network.Tests
 
             rulesList = await profile.GetNetworkSecurityPerimeterAccessRules().GetAllAsync().ToEnumerableAsync();
             Assert.That(rulesList, Has.Count.EqualTo(1));
+        }
 
-            // CLEANUP: Delete NSP
-            await nsp.DeleteAsync(WaitUntil.Completed);
+        [Test]
+        [RecordedTest]
+        public async Task NetworkSecurityPerimeterAssociationTest()
+        {
+            // Create NSP, Profile
+            NetworkSecurityPerimeterResource nsp = await CreateNsp(Recording.GenerateAssetName(_nspNamePrefix));
+            NetworkSecurityPerimeterProfileResource profile = await CreateProfile(nsp, Recording.GenerateAssetName(_profileNamePrefix));
+            var storageAccountName = Recording.GenerateAssetName(_saNamePrefix);
+            ResourceIdentifier storageAccountId = null;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                storageAccountId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, storageAccountName);
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    var storageAccount = await CreateStorageAccount(storageAccountName);
+                    storageAccountId = storageAccount.Id;
+                }
+            }
+
+            // Create Association
+            var associationName = Recording.GenerateAssetName(_associationNamePrefix);
+            var createAssociationReqData = new NetworkSecurityPerimeterAssociationData(default)
+            {
+                ProfileId = profile.Id,
+                PrivateLinkResourceId = storageAccountId
+            };
+
+            var createAssociationResData = (await nsp.GetNetworkSecurityPerimeterAssociations().CreateOrUpdateAsync(WaitUntil.Completed, associationName, createAssociationReqData)).Value;
+            Assert.AreEqual(createAssociationResData.Data.Name, associationName);
+            Assert.AreEqual(createAssociationResData.Data.PrivateLinkResourceId, createAssociationReqData.PrivateLinkResourceId);
+            Assert.AreEqual(createAssociationResData.Data.ProfileId, createAssociationReqData.ProfileId);
+
+            // Get
+            NetworkSecurityPerimeterAssociationResource association = await nsp.GetNetworkSecurityPerimeterAssociationAsync(associationName);
+            Assert.AreEqual(association.Data.Name, associationName);
+            Assert.AreEqual(association.Data.PrivateLinkResourceId, createAssociationReqData.PrivateLinkResourceId);
+            Assert.AreEqual(association.Data.ProfileId, createAssociationReqData.ProfileId);
+
+            // Update Association
+            var partchAssociationReqData = new NetworkSecurityPerimeterAssociationData(default)
+            {
+                ProfileId = profile.Id,
+                PrivateLinkResourceId = storageAccountId,
+                AccessMode = NetworkSecurityPerimeterAssociationAccessMode.Enforced,
+            };
+            await association.UpdateAsync(WaitUntil.Completed, partchAssociationReqData);
+
+            association = await nsp.GetNetworkSecurityPerimeterAssociationAsync(associationName);
+            Assert.AreEqual(association.Data.AccessMode, partchAssociationReqData.AccessMode);
+
+            // List Associations
+            var associationsList = await nsp.GetNetworkSecurityPerimeterAssociations().GetAllAsync().ToEnumerableAsync();
+            Assert.That(associationsList, Has.Count.EqualTo(1));
+
+            // Delete Association
+            await association.DeleteAsync(WaitUntil.Completed);
+
+            associationsList =  await nsp.GetNetworkSecurityPerimeterAssociations().GetAllAsync().ToEnumerableAsync();
+            Assert.That(associationsList, Has.Count.EqualTo(0));
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task NetworkSecurityPerimeterLinkTest()
+        {
+            // Create NSPs
+            var nspName = Recording.GenerateAssetName(_nspNamePrefix);
+            NetworkSecurityPerimeterResource nsp = await CreateNsp(nspName);
+
+            var remoteNspName = Recording.GenerateAssetName(_nspNamePrefix);
+            NetworkSecurityPerimeterResource remoteNsp = await CreateNsp(remoteNspName);
+
+            // Create Link
+            var linkName = Recording.GenerateAssetName(_linkNamePrefix);
+            var createLinkReqData = new NetworkSecurityPerimeterLinkData
+            {
+                AutoApprovedRemotePerimeterResourceId = remoteNsp.Data.Id,
+                LocalInboundProfiles = { "*" },
+                RemoteInboundProfiles = { "*" },
+            };
+
+            var createLinkResData = (await nsp.GetNetworkSecurityPerimeterLinks().CreateOrUpdateAsync(WaitUntil.Completed, linkName, createLinkReqData)).Value;
+
+            Assert.AreEqual(createLinkResData.Data.Name, linkName);
+            Assert.AreEqual(createLinkResData.Data.AutoApprovedRemotePerimeterResourceId, remoteNsp.Data.Id.ToString());
+
+            //List Link & Link references
+            var linksList = await nsp.GetNetworkSecurityPerimeterLinks().GetAllAsync().ToEnumerableAsync();
+
+            Assert.That(linksList,Has.Count.EqualTo(1));
+
+            var linkReferencesList = await remoteNsp.GetNetworkSecurityPerimeterLinkReferences().GetAllAsync().ToEnumerableAsync();
+            Assert.That(linkReferencesList, Has.Count.EqualTo(1));
+
+            // Get Link
+            var link = (await nsp.GetNetworkSecurityPerimeterLinkAsync(linkName)).Value;
+            Assert.AreEqual(link.Data.Name, linkName);
+            Assert.AreEqual(link.Data.AutoApprovedRemotePerimeterResourceId, remoteNsp.Data.Id.ToString());
+
+            // Delete Link
+            await link.DeleteAsync(WaitUntil.Completed);
+
+            //List Link
+            linksList = await nsp.GetNetworkSecurityPerimeterLinks().GetAllAsync().ToEnumerableAsync();
+            Assert.That(linksList, Has.Count.EqualTo(0));
+
+            // Get Link Ref
+            var linkRefName = "Ref-from-" + linkName + "-" + nsp.Data.PerimeterGuid;
+            var linkRef = (await remoteNsp.GetNetworkSecurityPerimeterLinkReferenceAsync(linkRefName)).Value;
+            Assert.AreEqual(linkRef.Data.Status, NetworkSecurityPerimeterLinkStatus.Disconnected);
+
+            // Delete Link Ref
+            await linkRef.DeleteAsync(WaitUntil.Completed);
+
+            // List Link references
+            linkReferencesList = await remoteNsp.GetNetworkSecurityPerimeterLinkReferences().GetAllAsync().ToEnumerableAsync();
+            Assert.That(linkReferencesList, Has.Count.EqualTo(0));
         }
     }
 }
