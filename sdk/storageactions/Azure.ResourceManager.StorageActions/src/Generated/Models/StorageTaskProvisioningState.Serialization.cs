@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         {
             StorageTaskProvisioningState.ValidateSubscriptionQuotaBegin => "ValidateSubscriptionQuotaBegin",
             StorageTaskProvisioningState.ValidateSubscriptionQuotaEnd => "ValidateSubscriptionQuotaEnd",
+            StorageTaskProvisioningState.Accepted => "Accepted",
             StorageTaskProvisioningState.Creating => "Creating",
             StorageTaskProvisioningState.Succeeded => "Succeeded",
             StorageTaskProvisioningState.Deleting => "Deleting",
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSubscriptionQuotaBegin")) return StorageTaskProvisioningState.ValidateSubscriptionQuotaBegin;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSubscriptionQuotaEnd")) return StorageTaskProvisioningState.ValidateSubscriptionQuotaEnd;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return StorageTaskProvisioningState.Accepted;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return StorageTaskProvisioningState.Creating;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return StorageTaskProvisioningState.Succeeded;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return StorageTaskProvisioningState.Deleting;
