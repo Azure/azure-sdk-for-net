@@ -3793,9 +3793,10 @@ namespace Azure.ResourceManager.Storage.Models
         Succeeded = 2,
         ValidateSubscriptionQuotaBegin = 3,
         ValidateSubscriptionQuotaEnd = 4,
-        Deleting = 5,
-        Canceled = 6,
-        Failed = 7,
+        Accepted = 5,
+        Deleting = 6,
+        Canceled = 7,
+        Failed = 8,
     }
     public enum StoragePublicAccessType
     {
