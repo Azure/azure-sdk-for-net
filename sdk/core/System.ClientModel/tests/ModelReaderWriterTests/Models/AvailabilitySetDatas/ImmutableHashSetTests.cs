@@ -3,9 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
@@ -13,6 +11,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     public class ImmutableHashSetTests : MrwCollectionTests<ImmutableHashSet<AvailabilitySetData>, AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "List";
+
+        protected override string CollectionTypeName => "ImmutableHashSet<AvailabilitySetData>";
 
         protected override bool IsWriteOrderDeterministic => false;
 
@@ -69,8 +69,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(ImmutableHashSet<AvailabilitySetData>.Builder);
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => ImmutableHashSet<AvailabilitySetData>.Empty.ToBuilder();
 
