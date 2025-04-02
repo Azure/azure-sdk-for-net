@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         private readonly KeyClientOptions.ServiceVersion _serviceVersion;
 
         public CryptographyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
-            : this(isAsync, serviceVersion, RecordedTestMode.Playback /* to re-record */)
+            : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
