@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task TestCreateSparkClusterWithWASBMsi()
         {
-            string clusterName = "yk57sparkmsi";
+            string clusterName = "yk58sparkmsi";
             _storageAccountName = "yk1sparkhdistorage";
             string msi = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/guoweidong-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/guoweidong-test-mi";
             string resourceId = $"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/yukundemo3/providers/Microsoft.Storage/storageAccounts/{_storageAccountName}";
