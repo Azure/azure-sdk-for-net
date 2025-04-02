@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.1.0 (2025-03-0-01)
+
+### Features Added
+
+- Add GA AutoUpgrade and API version 2025-03-01 support
+
 ## 1.1.0-beta.1 (2024-10-10)
 
 ### Features Added
