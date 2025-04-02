@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maxLogSizeBytes"> The max log size for this database. </param>
         /// <param name="earliestRestoreOn"> This records the earliest start date and time that restore is available for this database (ISO8601 format). </param>
         /// <param name="readScale"> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </param>
-        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </param>
+        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </param>
         /// <param name="secondaryType"> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </param>
         /// <param name="currentSku"> The name and tier of the SKU. </param>
         /// <param name="autoPauseDelay"> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </param>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </summary>
         [WirePath("properties.readScale")]
         public DatabaseReadScale? ReadScale { get; set; }
-        /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
+        /// <summary> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
         [WirePath("properties.highAvailabilityReplicaCount")]
         public int? HighAvailabilityReplicaCount { get; set; }
         /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </summary>

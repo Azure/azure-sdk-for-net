@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Storage key type. </summary>
+    /// <summary> Storage key type: StorageAccessKey or SharedAccessKey. </summary>
     public readonly partial struct StorageKeyType : IEquatable<StorageKeyType>
     {
         private readonly string _value;

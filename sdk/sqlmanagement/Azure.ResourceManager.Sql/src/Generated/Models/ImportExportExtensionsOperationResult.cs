@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ImportExportExtensionsOperationResult"/>. </summary>
         public ImportExportExtensionsOperationResult()
         {
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportExportExtensionsOperationResult"/>. </summary>
@@ -64,8 +65,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseName"> Database name. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
+        /// <param name="queuedTime"> Queued time. </param>
+        /// <param name="blobUri"> Blob URI. </param>
+        /// <param name="privateEndpointConnections"> Gets the status of private endpoints associated with this request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportExportExtensionsOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string requestType, string lastModifiedTime, string serverName, string databaseName, string status, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ImportExportExtensionsOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string requestType, string lastModifiedTime, string serverName, string databaseName, string status, string errorMessage, string queuedTime, Uri blobUri, IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RequestId = requestId;
             RequestType = requestType;
@@ -74,6 +78,9 @@ namespace Azure.ResourceManager.Sql.Models
             DatabaseName = databaseName;
             Status = status;
             ErrorMessage = errorMessage;
+            QueuedTime = queuedTime;
+            BlobUri = blobUri;
+            PrivateEndpointConnections = privateEndpointConnections;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -98,5 +105,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Error message. </summary>
         [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
+        /// <summary> Queued time. </summary>
+        [WirePath("properties.queuedTime")]
+        public string QueuedTime { get; }
+        /// <summary> Blob URI. </summary>
+        [WirePath("properties.blobUri")]
+        public Uri BlobUri { get; }
+        /// <summary> Gets the status of private endpoints associated with this request. </summary>
+        [WirePath("properties.privateEndpointConnections")]
+        public IReadOnlyList<PrivateEndpointConnectionRequestStatus> PrivateEndpointConnections { get; }
     }
 }

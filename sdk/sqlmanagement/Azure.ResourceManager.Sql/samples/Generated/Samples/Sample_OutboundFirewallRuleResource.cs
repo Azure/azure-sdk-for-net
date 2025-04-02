@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsOutboundFirewallRule()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-02-01-preview/examples/OutboundFirewallRuleGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/OutboundFirewallRuleGet.json
             // this example is just showing the usage of "OutboundFirewallRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAOutboundFirewallRuleWithAGivenName()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-02-01-preview/examples/OutboundFirewallRuleDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/OutboundFirewallRuleDelete.json
             // this example is just showing the usage of "OutboundFirewallRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApproveOrRejectAOutboundFirewallRuleWithAGivenName()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-02-01-preview/examples/OutboundFirewallRuleCreate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/OutboundFirewallRuleCreate.json
             // this example is just showing the usage of "OutboundFirewallRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,8 +95,7 @@ namespace Azure.ResourceManager.Sql.Samples
             OutboundFirewallRuleResource outboundFirewallRule = client.GetOutboundFirewallRuleResource(outboundFirewallRuleResourceId);
 
             // invoke the operation
-            OutboundFirewallRuleData data = new OutboundFirewallRuleData();
-            ArmOperation<OutboundFirewallRuleResource> lro = await outboundFirewallRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<OutboundFirewallRuleResource> lro = await outboundFirewallRule.UpdateAsync(WaitUntil.Completed);
             OutboundFirewallRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

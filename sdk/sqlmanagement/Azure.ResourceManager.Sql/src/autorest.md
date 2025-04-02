@@ -4,9 +4,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-tag: package-composite-v5
-require: https://github.com/Azure/azure-rest-api-specs/blob/f45a76fc39f033947ed12faf4b6416e1e19724cd/specification/sql/resource-manager/readme.md
-#package-composite-v5
+tag: package-composite-v5-take-2023-08-01-stable
+require: https://github.com/Azure/azure-rest-api-specs/blob/c337a5599a9046b772a3f6d6a2a51667e36e5f7e/specification/sql/resource-manager/readme.md
+#package-composite-v5-take-2023-08-01-stable
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -18,6 +18,7 @@ sample-gen:
   - ManagedDatabaseSensitivityLabels_Delete
   - SensitivityLabels_CreateOrUpdate
   - SensitivityLabels_Delete
+  - ManagedDatabaseSecurityEvents_ListByDatabase
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -28,7 +29,7 @@ head-as-boolean: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
+# mgmt-debug: 
 #  show-serialized-names: true
 
 # this is temporary, to be removed when we find the owner of this feature
@@ -225,6 +226,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}/scanResults/{scanResultId}: SqlDatabaseSqlVulnerabilityAssessmentScanResult
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}: SqlDatabaseSqlVulnerabilityAssessmentBaseline
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}/rules/{ruleId}: SqlDatabaseSqlVulnerabilityAssessmentBaselineRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}: SqlDistributedAvailabilityGroup
 
 rename-mapping:
   CopyLongTermRetentionBackupParameters: CopyLongTermRetentionBackupContent
@@ -357,6 +359,13 @@ rename-mapping:
   BackupStorageAccessTier: SqlBackupStorageAccessTier
   Phase: DatabaseOperationPhase
   PhaseDetails: DatabaseOperationPhaseDetails
+  UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
+  DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
+  RecommendedAction.properties.details: AdditionalDetails
+  SqlAgentState: SqlAgentConfigurationPropertiesState
+  TrustScope: ServerTrustGroupPropertiesTrustScopesItem
+  ManagementOperationStepState: UpsertManagedServerOperationStepStatus
+  StorageAccountType: StorageCapabilityStorageAccountType
 
 prompted-enum-values:
   - Default
@@ -571,3 +580,64 @@ directive:
       transform: >
           $.push('SecuredByPerimeter');
       reason: Align the enum choices to avoid breaking changes of one enum split into two.
+    # - from: DatabaseExtensions.json
+    #   where: $.definitions.NetworkIsolationSettings
+    #   transform: >
+    #       $['x-ms-client-name'] = 'DatabaseExtensionNetworkIsolationSettings'
+    # - from: ManagedDatabaseVulnerabilityAssessments.json
+    #   where: $.definitions.DatabaseVulnerabilityAssessmentProperties.properties
+    #   transform: >
+    #       $.storageContainerSasKey['x-ms-secret'] = true;
+    #       $.storageAccountAccessKey['x-ms-secret'] = true;
+    - from: DatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: ManagedDatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: ManagedInstances.json
+      where: $.definitions.ManagedInstanceProperties.properties.provisioningState
+      transform: >
+          $['enum'] = [
+              'Created',
+              'InProgress',
+              'Succeeded',
+              'Failed',
+              'Canceled',
+              'Creating',
+              'Deleting',
+              'Updating',
+              'Unknown',
+              'Accepted',
+              'Deleted',
+              'Unrecognized',
+              'Running',
+              'NotSpecified',
+              'Registering',
+              'TimedOut'
+          ];
+          $['x-ms-enum']['name'] = 'ManagedInstancePropertiesProvisioningState'
+    - from: DatabaseRecommendedActions.json
+      where: $.definitions.RecommendedAction
+      transform: >
+          delete $.allOf;
+          $.properties.id = {
+            description: "Resource ID.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.name = {
+            description: "Resource name.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.type = {
+            description: "Resource type.",
+            type: "string",
+            readOnly: true
+          };
+```

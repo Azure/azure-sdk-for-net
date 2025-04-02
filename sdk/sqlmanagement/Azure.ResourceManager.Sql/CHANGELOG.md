@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Upgraded API version to `2023-08-01`.
+
 ## 1.3.0-beta.10 (2025-03-11)
 
 ### Features Added

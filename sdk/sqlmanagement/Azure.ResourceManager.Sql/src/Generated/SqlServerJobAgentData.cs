@@ -65,12 +65,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
+        /// <param name="identity"> The identity of the job agent. </param>
         /// <param name="databaseId"> Resource ID of the database to store job metadata in. </param>
         /// <param name="state"> The state of the job agent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerJobAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, ResourceIdentifier databaseId, JobAgentState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SqlServerJobAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, JobAgentIdentity identity, ResourceIdentifier databaseId, JobAgentState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
+            Identity = identity;
             DatabaseId = databaseId;
             State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -84,6 +86,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The name and tier of the SKU. </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; set; }
+        /// <summary> The identity of the job agent. </summary>
+        [WirePath("identity")]
+        public JobAgentIdentity Identity { get; set; }
         /// <summary> Resource ID of the database to store job metadata in. </summary>
         [WirePath("properties.databaseId")]
         public ResourceIdentifier DatabaseId { get; set; }
