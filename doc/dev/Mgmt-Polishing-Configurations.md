@@ -10,8 +10,7 @@ In the API specifications, many properties and parameters are defined as string 
 
 - The data type of a property should be `ResourceIdentifier` if its name is end of `Id` and value is really a ResourceIdentifier.
 
-- The data type of a property should be `ResouceType` if its name is `ResourceType` or end with `Type` and the value is really a ResourceType('Microsoft.xxxxx/xxxx').
-
+- The data type of a property should be `ResourceType` if its name is `ResourceType` or end with `Type` and the value is really a ResourceType('Microsoft.xxxxx/xxxx').
 - The data type of a property should be `ETag` if its name is `etag` and the value is really a ETag. The property name  should be `ETag`(Optional).
 
 - The data type of a property might be `AzureLocation` if its name is end with `location` / `locations` .
