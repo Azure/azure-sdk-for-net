@@ -137,7 +137,7 @@ steps:
       arguments: >
         -RepoRoot $(Build.SourcesDirectory)
         -PackageInfoDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
-        -BuildConfiguration $(BuildConfiguration)
+        -BuildConfiguration Release
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Update package properties with namespaces
