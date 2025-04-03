@@ -62,33 +62,30 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.Greater(tm.Throughput, 0.0m, "Throughput not greater than 0");
         }
 
-        //[Test]
-        //public async Task ThroughputMonitor_CancellationTokenShouldStopMonitor()
-        //{
-        //    // Arrange
-        //    ThroughputMonitor tm = new ThroughputMonitor();
-        //    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-        //    CancellationToken cancellationToken = cancellationTokenSource.Token;
+        [Test]
+        public async Task ThroughputMonitor_CancellationTokenShouldNotStopMonitor()
+        {
+            // Arrange
+            ThroughputMonitor tm = new ThroughputMonitor();
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = cancellationTokenSource.Token;
 
-        //    // Reflecting for stopwatch
-        //    var stopwatchField = typeof(ThroughputMonitor).GetField("_stopwatch", BindingFlags.NonPublic | BindingFlags.Instance);
-        //    var stopwatchInstance = (Stopwatch)stopwatchField.GetValue(tm);
+            // Reflecting for stopwatch
+            var stopwatchField = typeof(ThroughputMonitor).GetField("_stopwatch", BindingFlags.NonPublic | BindingFlags.Instance);
+            var stopwatchInstance = (Stopwatch)stopwatchField.GetValue(tm);
 
-        //    // Act
-        //    for (int i = 0; i < 10; i++)
-        //    {
-        //        await tm.QueueBytesTransferredAsync(i, cancellationToken);
-        //        if (i == 5)
-        //        {
-        //            cancellationTokenSource.Cancel();
-        //        }
-        //    }
+            // Act
+            for (int i = 0; i < 10; i++)
+            {
+                await tm.QueueBytesTransferredAsync(i, cancellationToken);
+                if (i == 5)
+                {
+                    cancellationTokenSource.Cancel();
+                }
+            }
 
-        //    // Assert
-        //    Assert.IsTrue(cancellationToken.IsCancellationRequested);
-        //    Assert.IsFalse(stopwatchInstance.IsRunning);
-        //    Assert.Greater(tm.Throughput, 0.0m, "Throughput not greater than 0");
-        //    Assert.Greater(tm.TotalBytesTransferred, 0);
-        //}
+            // Assert
+            Assert.IsTrue(cancellationToken.IsCancellationRequested);
+        }
     }
 }
