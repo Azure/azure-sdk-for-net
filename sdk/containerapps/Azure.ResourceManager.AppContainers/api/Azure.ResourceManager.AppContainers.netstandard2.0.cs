@@ -3687,7 +3687,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private readonly int _dummyPrimitive;
         public ContainerType(string value) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.ContainerType CustomContainer { get { throw null; } }
-        public static Azure.ResourceManager.AppContainers.Models.ContainerType PythonLTS { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerType PythonLts { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppContainers.Models.ContainerType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
