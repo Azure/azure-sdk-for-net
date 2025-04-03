@@ -166,6 +166,8 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
             => options.ClientLoggingOptions = new());
         Assert.Throws<InvalidOperationException>(()
             => options.ClientLoggingOptions.EnableLogging = true);
+        Assert.Throws<InvalidOperationException>(()
+            => options.EnableDistributedTracing = true);
     }
 
     [Test]
@@ -189,6 +191,8 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
             => options.ClientLoggingOptions = new());
         Assert.Throws<InvalidOperationException>(()
             => options.ClientLoggingOptions.EnableLogging = true);
+        Assert.Throws<InvalidOperationException>(()
+            => options.EnableDistributedTracing = true);
     }
 
     #region Helpers
