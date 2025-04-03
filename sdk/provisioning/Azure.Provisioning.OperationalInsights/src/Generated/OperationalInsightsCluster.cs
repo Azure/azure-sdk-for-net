@@ -201,7 +201,7 @@ public partial class OperationalInsightsCluster : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsCluster.</param>
     public OperationalInsightsCluster(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2023-09-01")
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2025-02-01")
     {
     }
 
@@ -234,6 +234,11 @@ public partial class OperationalInsightsCluster : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-01.
+        /// </summary>
+        public static readonly string V2025_02_01 = "2025-02-01";
+
         /// <summary>
         /// 2023-09-01.
         /// </summary>

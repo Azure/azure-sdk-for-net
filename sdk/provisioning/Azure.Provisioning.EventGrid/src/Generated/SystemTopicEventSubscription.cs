@@ -214,7 +214,7 @@ public partial class SystemTopicEventSubscription : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SystemTopicEventSubscription.</param>
     public SystemTopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/systemTopics/eventSubscriptions", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/systemTopics/eventSubscriptions", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -245,6 +245,11 @@ public partial class SystemTopicEventSubscription : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>
