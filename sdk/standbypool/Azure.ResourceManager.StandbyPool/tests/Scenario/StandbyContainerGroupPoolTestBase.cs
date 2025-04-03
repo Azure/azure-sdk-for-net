@@ -9,20 +9,16 @@ using System.Collections.Generic;
 using System;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StandbyPool.Models;
-using Azure.ResourceManager.Models;
-using System.Security.AccessControl;
-using System.Linq;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.StandbyPool.Tests
 {
     public class StandbyContainerGroupPoolTestBase : StandbyPoolManagementTestBase
     {
-        protected StandbyContainerGroupPoolTestBase(bool isAsync) : base(isAsync)
+        protected StandbyContainerGroupPoolTestBase(bool isAsync) : base(isAsync, AzureLocation.CentralIndia)
         {
         }
 
-        protected StandbyContainerGroupPoolTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        protected StandbyContainerGroupPoolTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, AzureLocation.CentralIndia)
         {
         }
 

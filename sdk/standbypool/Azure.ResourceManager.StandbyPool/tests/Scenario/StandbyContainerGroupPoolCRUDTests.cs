@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         public StandbyContainerGroupPoolTestProperties standbyContainerGroupPoolTestProperties;
 
         public StandbyContainerGroupPoolCRUDTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             await GetStandbyVirtualMachineRuntimeViewAndVerify(standbyContainerGroupPoolTestProperties);
 
             // Update - Increase MaxReadyCapacity
-            await UpdateStandbyContainerGroupPoolResourceAndVerify(standbyContainerGroupPoolResource, maxReadyCapacity: 3, standbyContainerGroupPoolTestProperties);
+            await UpdateStandbyContainerGroupPoolResourceAndVerify(standbyContainerGroupPoolResource, maxReadyCapacity: 0, standbyContainerGroupPoolTestProperties);
 
             // Delete
             await standbyContainerGroupPoolResource.DeleteAsync(WaitUntil.Completed);
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         {
             // StandbyPool
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");
-            string standbyPoolName = Recording.GenerateAssetName("standbyVM-");
+            string standbyPoolName = Recording.GenerateAssetName("standbyCGPool-");
             StandbyContainerGroupPoolTestProperties standbyContainerGroupPoolTestProperties = new StandbyContainerGroupPoolTestProperties();
             standbyContainerGroupPoolTestProperties.StandbyPoolName = standbyPoolName;
-            standbyContainerGroupPoolTestProperties.MaxReadyCapacity = 2;
+            standbyContainerGroupPoolTestProperties.MaxReadyCapacity = 1;
             standbyContainerGroupPoolTestProperties.ResourceGroup = await CreateResourceGroup(subscription, resourceGroupName, location);
 
             // Resources

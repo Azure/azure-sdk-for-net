@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         public StandbyVirtualMachinePoolTestProperties standbyVirtualMachinePoolTestProperties;
 
         public StandbyVirtualMachinePoolCRUDTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         {
             // StandbyPool
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");
-            string standbyPoolName = Recording.GenerateAssetName("standbyVM-");
+            string standbyPoolName = Recording.GenerateAssetName("standbyVMPool-");
             StandbyVirtualMachinePoolTestProperties standbyVirtualMachinePoolResourceProperties = new StandbyVirtualMachinePoolTestProperties();
             standbyVirtualMachinePoolResourceProperties.StandbyPoolName = standbyPoolName;
             standbyVirtualMachinePoolResourceProperties.MaxReadyCapacity = 2;
