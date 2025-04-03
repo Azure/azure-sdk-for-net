@@ -1069,9 +1069,6 @@
 # ServiceLabel: %Recovery Services Data-Replication %Mgmt
 # ServiceOwners:                                                   @helen-afework
 
-# PRLabel: %Secret Store Extension
-/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @locomotiveviaduct
-
 # (Remove this when uncommenting path) PRLabel: %Secret Store Extension
 #/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                @cjoprey @locomotiveviaduct
 
