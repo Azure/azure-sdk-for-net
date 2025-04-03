@@ -3,6 +3,7 @@
 ## 12.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- Explicitly setting `BlobStorageResourceOptions.AccessTier` to `null` will disable preserving the access tier value from the source blob to the destination blob.
 
 ### Breaking Changes
 
