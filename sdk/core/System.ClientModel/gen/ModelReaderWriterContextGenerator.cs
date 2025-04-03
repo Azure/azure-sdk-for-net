@@ -198,7 +198,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             contextGenerationSpec = new()
             {
                 Type = contextType,
-                Modifier = "internal",
+                Modifier = typeGenerationSpecs.Any() ? "public" : "internal",
                 TypeBuilders = new ImmutableEquatableArray<TypeBuilderSpec>(typeGenerationSpecs),
                 ReferencedContexts = new ImmutableEquatableArray<TypeRef>(referencedContexts),
             };

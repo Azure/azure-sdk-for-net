@@ -128,6 +128,7 @@ namespace TestProject
             Assert.IsNotNull(result.ContextFile);
             Assert.AreEqual("TestAssemblyContext", result.ContextFile!.Type.Name);
             Assert.AreEqual("TestAssembly", result.ContextFile!.Type.Namespace);
+            Assert.AreEqual("public", result.ContextFile.Modifier);
 
             Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
             Assert.AreEqual("JsonModel", result.ContextFile.TypeBuilders[0].Type.Name);
