@@ -180,14 +180,15 @@ function Set-ApiViewCommentForPR {
       $commentText += "APIView identified API level changes in this PR and created the following API reviews"
       $commentText += ""
 
+      $responseContent = $response.Content | ConvertFrom-Json
       if ($RepoName.StartsWith(("azure-sdk-for-"))) {
-        $response | ForEach-Object {
+        $responseContent | ForEach-Object {
           $commentText += "[$($_.packageName)]($($_.url))"
         }
       } else {
         $commentText += "| Language | API Review for Package |"
         $commentText += "|----------|---------|"
-        $response | ForEach-Object {
+        $responseContent | ForEach-Object {
           $commentText += "| $($_.language) | [$($_.packageName)]($($_.url)) |"
         }
       }
