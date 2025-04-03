@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Inference;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -26,7 +27,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(connectionString);
+        AIProjectClient client = new(connectionString);
         ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
 
         var requestOptions = new ChatCompletionsOptions()
@@ -84,7 +85,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(connectionString);
+        AIProjectClient client = new(connectionString);
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
         var input = new List<string> { "first phrase", "second phrase", "third phrase" };

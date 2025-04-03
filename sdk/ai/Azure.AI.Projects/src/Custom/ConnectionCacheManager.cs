@@ -35,50 +35,81 @@ namespace Azure.AI.Projects
                 return existingConnection;
             }
 
-            var connectionType = GetConnectionTypeFromId(connectionId);
-            var connection = _connectionCache.GetOrAdd(connectionType, type =>
+            ConnectionType connectionType = GetConnectionTypeFromId(connectionId);
+            ConnectionResponse connection = _connectionCache.GetOrAdd(connectionType, type =>
                 _connectionsClient.GetDefaultConnection(type, true));
+            ClientConnection newConnection = GetConnection(connection, connectionId, false).Value;
+            return _connections.GetOrAdd(connectionId, newConnection);
+        }
 
+        private ClientConnection? GetConnection(ConnectionResponse connection, string connectionId, bool skipBroken)
+        {
             if (connection.Properties.AuthType == AuthenticationType.ApiKey)
             {
                 ConnectionPropertiesApiKeyAuth apiKeyAuthProperties = connection.Properties as ConnectionPropertiesApiKeyAuth;
                 if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
                 {
-                    throw new ArgumentException($"The API key authentication target URI is missing or invalid for {connectionId}.");
+                    return returnNullOrThrow($"The API key authentication target URI is missing or invalid for {connectionId}.", skipBroken);
                 }
 
                 if (apiKeyAuthProperties.Credentials?.Key is null or { Length: 0 })
                 {
-                    throw new ArgumentException($"The API key is missing or invalid for {connectionId}.");
+                    return returnNullOrThrow($"The API key is missing or invalid for {connectionId}.", skipBroken);
                 }
 
-                var newConnection = new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key);
-                return _connections.GetOrAdd(connectionId, newConnection);
+                return new ClientConnection(connectionId, CorrectUriMayBe(apiKeyAuthProperties.Target, connection.Properties.Category), apiKeyAuthProperties.Credentials.Key);
             }
             else if (connection.Properties.AuthType == AuthenticationType.EntraId)
             {
                 InternalConnectionPropertiesAADAuth aadAuthProperties = connection.Properties as InternalConnectionPropertiesAADAuth;
                 if (string.IsNullOrWhiteSpace(aadAuthProperties.Target))
                 {
-                    throw new ArgumentException($"The AAD authentication target URI is missing or invalid for {connectionId}.");
+                    return returnNullOrThrow($"The AAD authentication target URI is missing or invalid for {connectionId}.", skipBroken);
                 }
 
-                var newConnection = new ClientConnection(connectionId, aadAuthProperties.Target, _tokenCredential);
-                return _connections.GetOrAdd(connectionId, newConnection);
+                return new ClientConnection(connectionId, CorrectUriMayBe(aadAuthProperties.Target, connection.Properties.Category), _tokenCredential);
             }
 
             throw new ArgumentException($"Cannot connect with {connectionId}! Unknown authentication type.");
         }
 
+        private static ClientConnection? returnNullOrThrow(string exceptionString, bool skip)
+        {
+            if (skip)
+            {
+                return null;
+            }
+            throw new ArgumentException(exceptionString);
+        }
+
+        private static string CorrectUriMayBe(string uri, ConnectionType connType)
+        {
+            return  connType == ConnectionType.AzureAIServices ? uri + "models/" : uri;
+        }
+
         /// <summary>
-        /// Retrieves all stored connections.
+        /// Retrieves all connections.
         /// </summary>
-        public IEnumerable<ClientConnection> GetAllConnections() => _connections.Values;
+        public IEnumerable<ClientConnection> GetAllConnections()
+        {
+            List<ClientConnection> lstConnections = [];
+            ListConnectionsResponse resp = _connectionsClient.GetConnections();
+            foreach (ConnectionResponse conn in resp.Value)
+            {
+                ConnectionResponse connWithSecrets = _connectionsClient.GetConnectionWithSecrets(
+                    connectionName: conn.Name,
+                    ignored: "true");
+                ClientConnection? clientConn = GetConnection(connWithSecrets, conn.Name, true);
+                if (clientConn.HasValue)
+                    lstConnections.Add(clientConn.Value);
+            }
+            return lstConnections;
+        }
 
         /// <summary>
         /// Determines the connection type from the connection ID.
         /// </summary>
-        private ConnectionType GetConnectionTypeFromId(string connectionId)
+        private static ConnectionType GetConnectionTypeFromId(string connectionId)
         {
             switch (connectionId)
             {
@@ -91,7 +122,7 @@ namespace Azure.AI.Projects
                 // Inference
                 case "Azure.AI.Inference.ChatCompletionsClient":
                 case "Azure.AI.Inference.EmbeddingsClient":
-                    return ConnectionType.Serverless;
+                    return ConnectionType.AzureAIServices;
 
                 // AzureAISearch
                 case "Azure.Search.Documents.SearchClient":
