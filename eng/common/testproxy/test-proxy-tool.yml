@@ -55,11 +55,11 @@ steps:
 
   - ${{ if eq(parameters.runProxy, 'true') }}:
     - pwsh: |
-        Write-Host "Setting ASPNETCORE_Kestrel__Certificates__Default__Path] to '${{ parameters.templateRoot }}/eng/common/testproxy/dotnet-devcert.pfx'"
+        Write-Host "Setting ASPNETCORE_Kestrel__Certificates__Default__Path to '${{ parameters.templateRoot }}/eng/common/testproxy/dotnet-devcert.pfx'"
         Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]${{ parameters.templateRoot }}/eng/common/testproxy/dotnet-devcert.pfx"
-        Write-Host "Setting ASPNETCORE_Kestrel__Certificates__Default__Password] to 'password'"
+        Write-Host "Setting ASPNETCORE_Kestrel__Certificates__Default__Password to 'password'"
         Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
-        Write-Host Setting PROXY_MANUAL_START to 'true'"
+        Write-Host "Setting PROXY_MANUAL_START to 'true'"
         Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
       displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
       condition: and(succeeded(), ${{ parameters.condition }})
