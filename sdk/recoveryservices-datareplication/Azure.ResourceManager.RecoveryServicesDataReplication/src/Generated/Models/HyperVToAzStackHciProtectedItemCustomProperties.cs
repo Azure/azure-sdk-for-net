@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> HyperV to AzStackHCI Protected item model custom properties. </summary>
-    public partial class HyperVToAzStackHciProtectedItemCustomProperties : ProtectedItemModelCustomProperties
+    public partial class HyperVToAzStackHciProtectedItemCustomProperties : DataReplicationProtectedItemCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedItemCustomProperties"/>. </summary>
         /// <param name="targetHciClusterId"> Gets or sets the Target HCI Cluster ARM Id. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedItemCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Discriminator property for ProtectedItemModelCustomProperties. </param>
+        /// <param name="instanceType"> Discriminator property for DataReplicationProtectedItemCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="activeLocation"> Gets or sets the location of the protected item. </param>
         /// <param name="targetHciClusterId"> Gets or sets the Target HCI Cluster ARM Id. </param>

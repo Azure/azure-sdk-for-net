@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 return null;
             }
-            PrivateEndpointConnectionResponseProperties properties = default;
+            DataReplicationPrivateEndpointConnectionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionResponseProperties.DeserializePrivateEndpointConnectionResponseProperties(property.Value, options);
+                    properties = DataReplicationPrivateEndpointConnectionProperties.DeserializeDataReplicationPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

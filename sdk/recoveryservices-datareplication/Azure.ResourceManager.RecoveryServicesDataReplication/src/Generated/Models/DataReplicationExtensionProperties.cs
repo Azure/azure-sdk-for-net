@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="DataReplicationExtensionProperties"/>. </summary>
         /// <param name="customProperties">
         /// Replication extension model custom properties.
-        /// Please note <see cref="ReplicationExtensionModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationExtensionCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="VMwareToAzStackHciReplicationExtensionCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
-        public DataReplicationExtensionProperties(ReplicationExtensionModelCustomProperties customProperties)
+        public DataReplicationExtensionProperties(DataReplicationExtensionCustomProperties customProperties)
         {
             Argument.AssertNotNull(customProperties, nameof(customProperties));
 
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="provisioningState"> Gets or sets the provisioning state of the replication extension. </param>
         /// <param name="customProperties">
         /// Replication extension model custom properties.
-        /// Please note <see cref="ReplicationExtensionModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationExtensionCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="VMwareToAzStackHciReplicationExtensionCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationExtensionProperties(DataReplicationProvisioningState? provisioningState, ReplicationExtensionModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationExtensionProperties(DataReplicationProvisioningState? provisioningState, DataReplicationExtensionCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CustomProperties = customProperties;
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public DataReplicationProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Replication extension model custom properties.
-        /// Please note <see cref="ReplicationExtensionModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationExtensionCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="VMwareToAzStackHciReplicationExtensionCustomProperties"/>.
         /// </summary>
-        public ReplicationExtensionModelCustomProperties CustomProperties { get; set; }
+        public DataReplicationExtensionCustomProperties CustomProperties { get; set; }
     }
 }

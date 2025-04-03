@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             DataReplicationProtectedItemResource dataReplicationProtectedItem = client.GetDataReplicationProtectedItemResource(dataReplicationProtectedItemResourceId);
 
             // invoke the operation
-            PlannedFailoverModel body = new PlannedFailoverModel(new PlannedFailoverModelProperties(null));
-            ArmOperation<PlannedFailoverModel> lro = await dataReplicationProtectedItem.PlannedFailoverAsync(WaitUntil.Completed, body);
-            PlannedFailoverModel result = lro.Value;
+            PlannedFailover body = new PlannedFailover(new PlannedFailoverProperties(null));
+            ArmOperation<PlannedFailover> lro = await dataReplicationProtectedItem.PlannedFailoverAsync(WaitUntil.Completed, body);
+            PlannedFailover result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -59,26 +59,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Protected item model properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationProtectedItemPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProtectedItemModelPropertiesUpdate properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataReplicationProtectedItemPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataReplicationProtectedItemPropertiesUpdate properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Protected item model properties. </summary>
-        internal ProtectedItemModelPropertiesUpdate Properties { get; set; }
+        internal DataReplicationProtectedItemPropertiesUpdate Properties { get; set; }
         /// <summary>
         /// Protected item model custom properties update.
-        /// Please note <see cref="ProtectedItemModelCustomPropertiesUpdate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomPropertiesUpdate"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomPropertiesUpdate"/>.
+        /// Please note <see cref="DataReplicationProtectedItemCustomPropertiesUpdate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomPropertiesUpdate"/> and <see cref="VMwareToAzStackHciProtectedItemCustomPropertiesUpdate"/>.
         /// </summary>
-        public ProtectedItemModelCustomPropertiesUpdate CustomProperties
+        public DataReplicationProtectedItemCustomPropertiesUpdate CustomProperties
         {
             get => Properties is null ? default : Properties.CustomProperties;
             set
             {
                 if (Properties is null)
-                    Properties = new ProtectedItemModelPropertiesUpdate();
+                    Properties = new DataReplicationProtectedItemPropertiesUpdate();
                 Properties.CustomProperties = value;
             }
         }

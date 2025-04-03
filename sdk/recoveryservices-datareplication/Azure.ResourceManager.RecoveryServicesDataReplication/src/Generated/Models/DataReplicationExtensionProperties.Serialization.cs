@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             DataReplicationProvisioningState? provisioningState = default;
-            ReplicationExtensionModelCustomProperties customProperties = default;
+            DataReplicationExtensionCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = ReplicationExtensionModelCustomProperties.DeserializeReplicationExtensionModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationExtensionCustomProperties.DeserializeDataReplicationExtensionCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

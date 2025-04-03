@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="fabricContainerId"> Gets or sets the fabric container Id. </param>
         /// <param name="migrationSolutionId"> Gets or sets the Migration solution ARM Id. </param>
         /// <param name="migrationHubUri"> Gets or sets the migration hub Uri. </param>
-        internal AzStackHciFabricCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azStackHciSiteId, IReadOnlyList<string> applianceName, AzStackHciClusterProperties cluster, string fabricResourceId, string fabricContainerId, ResourceIdentifier migrationSolutionId, Uri migrationHubUri) : base(instanceType, serializedAdditionalRawData)
+        internal AzStackHciFabricCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azStackHciSiteId, IReadOnlyList<string> applianceName, AzStackHciClusterProperties cluster, ResourceIdentifier fabricResourceId, ResourceIdentifier fabricContainerId, ResourceIdentifier migrationSolutionId, Uri migrationHubUri) : base(instanceType, serializedAdditionalRawData)
         {
             AzStackHciSiteId = azStackHciSiteId;
             ApplianceName = applianceName;
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> AzStackHCI cluster properties. </summary>
         public AzStackHciClusterProperties Cluster { get; set; }
         /// <summary> Gets or sets the fabric resource Id. </summary>
-        public string FabricResourceId { get; }
+        public ResourceIdentifier FabricResourceId { get; }
         /// <summary> Gets or sets the fabric container Id. </summary>
-        public string FabricContainerId { get; }
+        public ResourceIdentifier FabricContainerId { get; }
         /// <summary> Gets or sets the Migration solution ARM Id. </summary>
         public ResourceIdentifier MigrationSolutionId { get; set; }
         /// <summary> Gets or sets the migration hub Uri. </summary>

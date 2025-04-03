@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="provisioningState"> Gets or sets the provisioning state of the replication extension. </param>
         /// <param name="customProperties">
         /// Replication extension model custom properties.
-        /// Please note <see cref="ReplicationExtensionModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="Models.VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationExtensionCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="Models.VMwareToAzStackHciReplicationExtensionCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationExtensionProperties"/> instance for mocking. </returns>
-        public static DataReplicationExtensionProperties DataReplicationExtensionProperties(DataReplicationProvisioningState? provisioningState = null, ReplicationExtensionModelCustomProperties customProperties = null)
+        public static DataReplicationExtensionProperties DataReplicationExtensionProperties(DataReplicationProvisioningState? provisioningState = null, DataReplicationExtensionCustomProperties customProperties = null)
         {
             return new DataReplicationExtensionProperties(provisioningState, customProperties, serializedAdditionalRawData: null);
         }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 resourceGroup);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciReplicationExtensionCustomProperties"/>. </summary>
         /// <param name="vmwareFabricArmId"> Gets or sets the ARM Id of the source VMware fabric. </param>
         /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
         /// <param name="azStackHciFabricArmId"> Gets or sets the ARM Id of the target AzStackHCI fabric. </param>
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceLocation"> Gets or sets the resource location. </param>
         /// <param name="subscriptionId"> Gets or sets the subscription. </param>
         /// <param name="resourceGroup"> Gets or sets the resource group. </param>
-        /// <returns> A new <see cref="Models.VMwareToAzStackHciReplicationExtensionModelCustomProperties"/> instance for mocking. </returns>
-        public static VMwareToAzStackHciReplicationExtensionModelCustomProperties VMwareToAzStackHciReplicationExtensionModelCustomProperties(ResourceIdentifier vmwareFabricArmId = null, ResourceIdentifier vmwareSiteId = null, ResourceIdentifier azStackHciFabricArmId = null, ResourceIdentifier azStackHciSiteId = null, string storageAccountId = null, string storageAccountSasSecretName = null, Uri asrServiceUri = null, Uri rcmServiceUri = null, Uri gatewayServiceUri = null, string sourceGatewayServiceId = null, string targetGatewayServiceId = null, string sourceStorageContainerName = null, string targetStorageContainerName = null, string resourceLocation = null, string subscriptionId = null, string resourceGroup = null)
+        /// <returns> A new <see cref="Models.VMwareToAzStackHciReplicationExtensionCustomProperties"/> instance for mocking. </returns>
+        public static VMwareToAzStackHciReplicationExtensionCustomProperties VMwareToAzStackHciReplicationExtensionCustomProperties(ResourceIdentifier vmwareFabricArmId = null, ResourceIdentifier vmwareSiteId = null, ResourceIdentifier azStackHciFabricArmId = null, ResourceIdentifier azStackHciSiteId = null, string storageAccountId = null, string storageAccountSasSecretName = null, Uri asrServiceUri = null, Uri rcmServiceUri = null, Uri gatewayServiceUri = null, string sourceGatewayServiceId = null, string targetGatewayServiceId = null, string sourceStorageContainerName = null, string targetStorageContainerName = null, string resourceLocation = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new VMwareToAzStackHciReplicationExtensionModelCustomProperties(
+            return new VMwareToAzStackHciReplicationExtensionCustomProperties(
                 "VMwareToAzStackHCI",
                 serializedAdditionalRawData: null,
                 vmwareFabricArmId,
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="recoveryPointType"> Gets or sets the recovery point type. </param>
         /// <param name="customProperties">
         /// Recovery point model custom properties.
-        /// Please note <see cref="RecoveryPointModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.HyperVToAzStackHciRecoveryPointCustomProperties"/> and <see cref="Models.VMwareToAzStackHciRecoveryPointModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationRecoveryPointCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.HyperVToAzStackHciRecoveryPointCustomProperties"/> and <see cref="Models.VMwareToAzStackHciRecoveryPointCustomProperties"/>.
         /// </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the recovery point item. </param>
         /// <returns> A new <see cref="Models.DataReplicationRecoveryPointProperties"/> instance for mocking. </returns>
-        public static DataReplicationRecoveryPointProperties DataReplicationRecoveryPointProperties(DateTimeOffset recoveryPointOn = default, DataReplicationRecoveryPointType recoveryPointType = default, RecoveryPointModelCustomProperties customProperties = null, DataReplicationProvisioningState? provisioningState = null)
+        public static DataReplicationRecoveryPointProperties DataReplicationRecoveryPointProperties(DateTimeOffset recoveryPointOn = default, DataReplicationRecoveryPointType recoveryPointType = default, DataReplicationRecoveryPointCustomProperties customProperties = null, DataReplicationProvisioningState? provisioningState = null)
         {
             return new DataReplicationRecoveryPointProperties(recoveryPointOn, recoveryPointType, customProperties, provisioningState, serializedAdditionalRawData: null);
         }
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new HyperVToAzStackHciRecoveryPointCustomProperties("HyperVToAzStackHCI", serializedAdditionalRawData: null, diskIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciRecoveryPointModelCustomProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciRecoveryPointCustomProperties"/>. </summary>
         /// <param name="diskIds"> Gets or sets the list of the disk Ids. </param>
-        /// <returns> A new <see cref="Models.VMwareToAzStackHciRecoveryPointModelCustomProperties"/> instance for mocking. </returns>
-        public static VMwareToAzStackHciRecoveryPointModelCustomProperties VMwareToAzStackHciRecoveryPointModelCustomProperties(IEnumerable<string> diskIds = null)
+        /// <returns> A new <see cref="Models.VMwareToAzStackHciRecoveryPointCustomProperties"/> instance for mocking. </returns>
+        public static VMwareToAzStackHciRecoveryPointCustomProperties VMwareToAzStackHciRecoveryPointCustomProperties(IEnumerable<string> diskIds = null)
         {
             diskIds ??= new List<string>();
 
-            return new VMwareToAzStackHciRecoveryPointModelCustomProperties("VMwareToAzStackHCIRecoveryPointModelCustomProperties", serializedAdditionalRawData: null, diskIds?.ToList());
+            return new VMwareToAzStackHciRecoveryPointCustomProperties("VMwareToAzStackHCIRecoveryPointModelCustomProperties", serializedAdditionalRawData: null, diskIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesDataReplication.DataReplicationProtectedItemData"/>. </summary>
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="healthErrors"> Gets or sets the list of health errors. </param>
         /// <param name="customProperties">
         /// Protected item model custom properties.
-        /// Please note <see cref="ProtectedItemModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.HyperVToAzStackHciProtectedItemCustomProperties"/> and <see cref="Models.VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationProtectedItemCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.HyperVToAzStackHciProtectedItemCustomProperties"/> and <see cref="Models.VMwareToAzStackHciProtectedItemCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationProtectedItemProperties"/> instance for mocking. </returns>
-        public static DataReplicationProtectedItemProperties DataReplicationProtectedItemProperties(string policyName = null, string replicationExtensionName = null, string correlationId = null, DataReplicationProvisioningState? provisioningState = null, DataReplicationProtectionState? protectionState = null, string protectionStateDescription = null, DataReplicationTestFailoverState? testFailoverState = null, string testFailoverStateDescription = null, DataReplicationResynchronizationState? resynchronizationState = null, string fabricObjectId = null, string fabricObjectName = null, string sourceFabricProviderId = null, string targetFabricProviderId = null, string fabricId = null, string targetFabricId = null, string fabricAgentId = null, string targetFabricAgentId = null, bool? isResyncRequired = null, DateTimeOffset? lastSuccessfulPlannedFailoverOn = null, DateTimeOffset? lastSuccessfulUnplannedFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, ProtectedItemJobProperties currentJob = null, IEnumerable<string> allowedJobs = null, ProtectedItemJobProperties lastFailedEnableProtectionJob = null, ProtectedItemJobProperties lastFailedPlannedFailoverJob = null, ProtectedItemJobProperties lastTestFailoverJob = null, DataReplicationHealthStatus? replicationHealth = null, IEnumerable<DataReplicationHealthErrorInfo> healthErrors = null, ProtectedItemModelCustomProperties customProperties = null)
+        public static DataReplicationProtectedItemProperties DataReplicationProtectedItemProperties(string policyName = null, string replicationExtensionName = null, string correlationId = null, DataReplicationProvisioningState? provisioningState = null, DataReplicationProtectionState? protectionState = null, string protectionStateDescription = null, DataReplicationTestFailoverState? testFailoverState = null, string testFailoverStateDescription = null, DataReplicationResynchronizationState? resynchronizationState = null, string fabricObjectId = null, string fabricObjectName = null, string sourceFabricProviderId = null, string targetFabricProviderId = null, string fabricId = null, string targetFabricId = null, string fabricAgentId = null, string targetFabricAgentId = null, bool? isResyncRequired = null, DateTimeOffset? lastSuccessfulPlannedFailoverOn = null, DateTimeOffset? lastSuccessfulUnplannedFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, ProtectedItemJobProperties currentJob = null, IEnumerable<string> allowedJobs = null, ProtectedItemJobProperties lastFailedEnableProtectionJob = null, ProtectedItemJobProperties lastFailedPlannedFailoverJob = null, ProtectedItemJobProperties lastTestFailoverJob = null, DataReplicationHealthStatus? replicationHealth = null, IEnumerable<DataReplicationHealthErrorInfo> healthErrors = null, DataReplicationProtectedItemCustomProperties customProperties = null)
         {
             allowedJobs ??= new List<string>();
             healthErrors ??= new List<DataReplicationHealthErrorInfo>();
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciProtectedItemModelCustomProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciProtectedItemCustomProperties"/>. </summary>
         /// <param name="activeLocation"> Gets or sets the location of the protected item. </param>
         /// <param name="targetHciClusterId"> Gets or sets the Target HCI Cluster ARM Id. </param>
         /// <param name="targetArcClusterCustomLocationId"> Gets or sets the Target Arc Cluster Custom Location ARM Id. </param>
@@ -591,15 +591,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="performAutoResync"> Gets or sets a value indicating whether auto resync is to be done. </param>
         /// <param name="resumeRetryCount"> Gets or sets the resume retry count. </param>
         /// <param name="lastReplicationUpdateOn"> Gets or sets the latest timestamp that replication status is updated. </param>
-        /// <returns> A new <see cref="Models.VMwareToAzStackHciProtectedItemModelCustomProperties"/> instance for mocking. </returns>
-        public static VMwareToAzStackHciProtectedItemModelCustomProperties VMwareToAzStackHciProtectedItemModelCustomProperties(ProtectedItemActiveLocation? activeLocation = null, ResourceIdentifier targetHciClusterId = null, ResourceIdentifier targetArcClusterCustomLocationId = null, string targetAzStackHciClusterName = null, ResourceIdentifier storageContainerId = null, ResourceIdentifier targetResourceGroupId = null, string targetLocation = null, string customLocationRegion = null, IEnumerable<VMwareToAzStackHciDiskInput> disksToInclude = null, IEnumerable<VMwareToAzStackHciNicInput> nicsToInclude = null, IEnumerable<VMwareToAzStackHciProtectedDiskProperties> protectedDisks = null, IEnumerable<VMwareToAzStackHciProtectedNicProperties> protectedNics = null, string targetVmBiosId = null, string targetVmName = null, string hyperVGeneration = null, string targetNetworkId = null, string testNetworkId = null, int? targetCpuCores = null, bool? isDynamicRam = null, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig = null, int? targetMemoryInMegaBytes = null, string osType = null, string osName = null, string firmwareType = null, ResourceIdentifier fabricDiscoveryMachineId = null, string sourceVmName = null, int? sourceCpuCores = null, double? sourceMemoryInMegaBytes = null, string runAsAccountId = null, string sourceFabricAgentName = null, string targetFabricAgentName = null, string sourceApplianceName = null, string targetApplianceName = null, string failoverRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceivedOn = null, string lastRecoveryPointId = null, int? initialReplicationProgressPercentage = null, int? migrationProgressPercentage = null, int? resumeProgressPercentage = null, int? resyncProgressPercentage = null, long? resyncRetryCount = null, bool? resyncRequired = null, VMwareToAzureMigrateResyncState? resyncState = null, bool? performAutoResync = null, long? resumeRetryCount = null, DateTimeOffset? lastReplicationUpdateOn = null)
+        /// <returns> A new <see cref="Models.VMwareToAzStackHciProtectedItemCustomProperties"/> instance for mocking. </returns>
+        public static VMwareToAzStackHciProtectedItemCustomProperties VMwareToAzStackHciProtectedItemCustomProperties(ProtectedItemActiveLocation? activeLocation = null, ResourceIdentifier targetHciClusterId = null, ResourceIdentifier targetArcClusterCustomLocationId = null, string targetAzStackHciClusterName = null, ResourceIdentifier storageContainerId = null, ResourceIdentifier targetResourceGroupId = null, string targetLocation = null, string customLocationRegion = null, IEnumerable<VMwareToAzStackHciDiskInput> disksToInclude = null, IEnumerable<VMwareToAzStackHciNicInput> nicsToInclude = null, IEnumerable<VMwareToAzStackHciProtectedDiskProperties> protectedDisks = null, IEnumerable<VMwareToAzStackHciProtectedNicProperties> protectedNics = null, string targetVmBiosId = null, string targetVmName = null, string hyperVGeneration = null, string targetNetworkId = null, string testNetworkId = null, int? targetCpuCores = null, bool? isDynamicRam = null, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig = null, int? targetMemoryInMegaBytes = null, string osType = null, string osName = null, string firmwareType = null, ResourceIdentifier fabricDiscoveryMachineId = null, string sourceVmName = null, int? sourceCpuCores = null, double? sourceMemoryInMegaBytes = null, string runAsAccountId = null, string sourceFabricAgentName = null, string targetFabricAgentName = null, string sourceApplianceName = null, string targetApplianceName = null, string failoverRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceivedOn = null, string lastRecoveryPointId = null, int? initialReplicationProgressPercentage = null, int? migrationProgressPercentage = null, int? resumeProgressPercentage = null, int? resyncProgressPercentage = null, long? resyncRetryCount = null, bool? resyncRequired = null, VMwareToAzureMigrateResyncState? resyncState = null, bool? performAutoResync = null, long? resumeRetryCount = null, DateTimeOffset? lastReplicationUpdateOn = null)
         {
             disksToInclude ??= new List<VMwareToAzStackHciDiskInput>();
             nicsToInclude ??= new List<VMwareToAzStackHciNicInput>();
             protectedDisks ??= new List<VMwareToAzStackHciProtectedDiskProperties>();
             protectedNics ??= new List<VMwareToAzStackHciProtectedNicProperties>();
 
-            return new VMwareToAzStackHciProtectedItemModelCustomProperties(
+            return new VMwareToAzStackHciProtectedItemCustomProperties(
                 "VMwareToAzStackHCI",
                 serializedAdditionalRawData: null,
                 activeLocation,
@@ -741,14 +741,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="customProperties"> Protected item model properties. </param>
         /// <returns> A new <see cref="Models.DataReplicationProtectedItemPatch"/> instance for mocking. </returns>
-        public static DataReplicationProtectedItemPatch DataReplicationProtectedItemPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectedItemModelCustomPropertiesUpdate customProperties = null)
+        public static DataReplicationProtectedItemPatch DataReplicationProtectedItemPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataReplicationProtectedItemCustomPropertiesUpdate customProperties = null)
         {
             return new DataReplicationProtectedItemPatch(
                 id,
                 name,
                 resourceType,
                 systemData,
-                customProperties != null ? new ProtectedItemModelPropertiesUpdate(customProperties, serializedAdditionalRawData: null) : null,
+                customProperties != null ? new DataReplicationProtectedItemPropertiesUpdate(customProperties, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static DataReplicationPrivateEndpointConnectionData DataReplicationPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionResponseProperties properties = null)
+        public static DataReplicationPrivateEndpointConnectionData DataReplicationPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataReplicationPrivateEndpointConnectionProperties properties = null)
         {
             return new DataReplicationPrivateEndpointConnectionData(
                 id,
@@ -831,14 +831,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionResponseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataReplicationPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> Represent private Endpoint network resource that is linked to the Private Endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Represents Private link service connection state. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionResponseProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionResponseProperties PrivateEndpointConnectionResponseProperties(DataReplicationProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, RecoveryServicesDataReplicationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null)
+        /// <returns> A new <see cref="Models.DataReplicationPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static DataReplicationPrivateEndpointConnectionProperties DataReplicationPrivateEndpointConnectionProperties(DataReplicationProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, DataReplicationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null)
         {
-            return new PrivateEndpointConnectionResponseProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState, serializedAdditionalRawData: null);
+            return new DataReplicationPrivateEndpointConnectionProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesDataReplication.DataReplicationPolicyData"/>. </summary>
@@ -863,11 +863,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="provisioningState"> Gets or sets the provisioning state of the policy. </param>
         /// <param name="customProperties">
         /// Policy model custom properties.
-        /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationPolicyCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationPolicyProperties"/> instance for mocking. </returns>
-        public static DataReplicationPolicyProperties DataReplicationPolicyProperties(DataReplicationProvisioningState? provisioningState = null, PolicyModelCustomProperties customProperties = null)
+        public static DataReplicationPolicyProperties DataReplicationPolicyProperties(DataReplicationProvisioningState? provisioningState = null, DataReplicationPolicyCustomProperties customProperties = null)
         {
             return new DataReplicationPolicyProperties(provisioningState, customProperties, serializedAdditionalRawData: null);
         }
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Job model custom properties.
         /// Please note <see cref="Models.DataReplicationJobCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.FailoverJobCustomProperties"/>, <see cref="Models.TestFailoverCleanupJobModelCustomProperties"/> and <see cref="Models.TestFailoverJobModelCustomProperties"/>.
+        /// The available derived classes include <see cref="Models.FailoverJobCustomProperties"/>, <see cref="Models.TestFailoverCleanupJobCustomProperties"/> and <see cref="Models.TestFailoverJobCustomProperties"/>.
         /// </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the job. </param>
         /// <returns> A new <see cref="Models.DataReplicationJobProperties"/> instance for mocking. </returns>
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 state,
                 startOn,
                 endOn,
-                customInstanceType != null ? new TaskModelCustomProperties(customInstanceType, serializedAdditionalRawData: null) : null,
+                customInstanceType != null ? new DataReplicationTaskCustomProperties(customInstanceType, serializedAdditionalRawData: null) : null,
                 childrenJobs?.ToList(),
                 serializedAdditionalRawData: null);
         }
@@ -1037,24 +1037,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TestFailoverCleanupJobModelCustomProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TestFailoverCleanupJobCustomProperties"/>. </summary>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="comments"> Gets or sets the test failover cleanup comments. </param>
-        /// <returns> A new <see cref="Models.TestFailoverCleanupJobModelCustomProperties"/> instance for mocking. </returns>
-        public static TestFailoverCleanupJobModelCustomProperties TestFailoverCleanupJobModelCustomProperties(AffectedObjectDetails affectedObjectDetails = null, string comments = null)
+        /// <returns> A new <see cref="Models.TestFailoverCleanupJobCustomProperties"/> instance for mocking. </returns>
+        public static TestFailoverCleanupJobCustomProperties TestFailoverCleanupJobCustomProperties(AffectedObjectDetails affectedObjectDetails = null, string comments = null)
         {
-            return new TestFailoverCleanupJobModelCustomProperties("TestFailoverCleanupJobDetails", affectedObjectDetails, serializedAdditionalRawData: null, comments);
+            return new TestFailoverCleanupJobCustomProperties("TestFailoverCleanupJobDetails", affectedObjectDetails, serializedAdditionalRawData: null, comments);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TestFailoverJobModelCustomProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TestFailoverJobCustomProperties"/>. </summary>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="protectedItemDetails"> Gets or sets the test VM details. </param>
-        /// <returns> A new <see cref="Models.TestFailoverJobModelCustomProperties"/> instance for mocking. </returns>
-        public static TestFailoverJobModelCustomProperties TestFailoverJobModelCustomProperties(AffectedObjectDetails affectedObjectDetails = null, IEnumerable<FailoverProtectedItemProperties> protectedItemDetails = null)
+        /// <returns> A new <see cref="Models.TestFailoverJobCustomProperties"/> instance for mocking. </returns>
+        public static TestFailoverJobCustomProperties TestFailoverJobCustomProperties(AffectedObjectDetails affectedObjectDetails = null, IEnumerable<FailoverProtectedItemProperties> protectedItemDetails = null)
         {
             protectedItemDetails ??= new List<FailoverProtectedItemProperties>();
 
-            return new TestFailoverJobModelCustomProperties("TestFailoverJobDetails", affectedObjectDetails, serializedAdditionalRawData: null, protectedItemDetails?.ToList());
+            return new TestFailoverJobCustomProperties("TestFailoverJobDetails", affectedObjectDetails, serializedAdditionalRawData: null, protectedItemDetails?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesDataReplication.DataReplicationFabricAgentData"/>. </summary>
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Fabric agent model custom properties.
         /// Please note <see cref="DataReplicationFabricAgentCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareFabricAgentModelCustomProperties"/>.
+        /// The available derived classes include <see cref="VMwareFabricAgentCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationFabricAgentProperties"/> instance for mocking. </returns>
         public static DataReplicationFabricAgentProperties DataReplicationFabricAgentProperties(string correlationId = null, string machineId = null, string machineName = null, DataReplicationIdentity authenticationIdentity = null, DataReplicationIdentity resourceAccessIdentity = null, bool? isResponsive = null, DateTimeOffset? lastHeartbeatOn = null, string versionNumber = null, DataReplicationProvisioningState? provisioningState = null, IEnumerable<DataReplicationHealthErrorInfo> healthErrors = null, DataReplicationFabricAgentCustomProperties customProperties = null)
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Fabric model custom properties.
         /// Please note <see cref="DataReplicationFabricCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AzStackHciFabricCustomProperties"/>, <see cref="Models.HyperVMigrateFabricCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
+        /// The available derived classes include <see cref="Models.AzStackHciFabricCustomProperties"/>, <see cref="Models.HyperVMigrateFabricCustomProperties"/> and <see cref="VMwareMigrateFabricCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationFabricProperties"/> instance for mocking. </returns>
         public static DataReplicationFabricProperties DataReplicationFabricProperties(DataReplicationProvisioningState? provisioningState = null, string serviceEndpoint = null, ResourceIdentifier serviceResourceId = null, DataReplicationHealthStatus? health = null, IEnumerable<DataReplicationHealthErrorInfo> healthErrors = null, DataReplicationFabricCustomProperties customProperties = null)
@@ -1170,7 +1170,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="migrationSolutionId"> Gets or sets the Migration solution ARM Id. </param>
         /// <param name="migrationHubUri"> Gets or sets the migration hub Uri. </param>
         /// <returns> A new <see cref="Models.AzStackHciFabricCustomProperties"/> instance for mocking. </returns>
-        public static AzStackHciFabricCustomProperties AzStackHciFabricCustomProperties(ResourceIdentifier azStackHciSiteId = null, IEnumerable<string> applianceName = null, AzStackHciClusterProperties cluster = null, string fabricResourceId = null, string fabricContainerId = null, ResourceIdentifier migrationSolutionId = null, Uri migrationHubUri = null)
+        public static AzStackHciFabricCustomProperties AzStackHciFabricCustomProperties(ResourceIdentifier azStackHciSiteId = null, IEnumerable<string> applianceName = null, AzStackHciClusterProperties cluster = null, ResourceIdentifier fabricResourceId = null, ResourceIdentifier fabricContainerId = null, ResourceIdentifier migrationSolutionId = null, Uri migrationHubUri = null)
         {
             applianceName ??= new List<string>();
 
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="migrationSolutionId"> Gets or sets the migration solution ARM Id. </param>
         /// <param name="migrationHubUri"> Gets or sets the migration hub Uri. </param>
         /// <returns> A new <see cref="Models.HyperVMigrateFabricCustomProperties"/> instance for mocking. </returns>
-        public static HyperVMigrateFabricCustomProperties HyperVMigrateFabricCustomProperties(ResourceIdentifier hyperVSiteId = null, ResourceIdentifier fabricResourceId = null, string fabricContainerId = null, ResourceIdentifier migrationSolutionId = null, Uri migrationHubUri = null)
+        public static HyperVMigrateFabricCustomProperties HyperVMigrateFabricCustomProperties(ResourceIdentifier hyperVSiteId = null, ResourceIdentifier fabricResourceId = null, ResourceIdentifier fabricContainerId = null, ResourceIdentifier migrationSolutionId = null, Uri migrationHubUri = null)
         {
             return new HyperVMigrateFabricCustomProperties(
                 "HyperVMigrate",
@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Event model custom properties.
         /// Please note <see cref="DataReplicationEventCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.HyperVToAzStackHciEventCustomProperties"/> and <see cref="Models.VMwareToAzStackHciEventModelCustomProperties"/>.
+        /// The available derived classes include <see cref="Models.HyperVToAzStackHciEventCustomProperties"/> and <see cref="Models.VMwareToAzStackHciEventCustomProperties"/>.
         /// </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the event. </param>
         /// <returns> A new <see cref="Models.DataReplicationEventProperties"/> instance for mocking. </returns>
@@ -1300,16 +1300,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 serverType);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciEventModelCustomProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciEventCustomProperties"/>. </summary>
         /// <param name="eventSourceFriendlyName"> Gets or sets the friendly name of the source which has raised this health event. </param>
         /// <param name="protectedItemFriendlyName"> Gets or sets the protected item friendly name. </param>
         /// <param name="sourceApplianceName"> Gets or sets the source appliance name. </param>
         /// <param name="targetApplianceName"> Gets or sets the source target name. </param>
         /// <param name="serverType"> Gets or sets the server type. </param>
-        /// <returns> A new <see cref="Models.VMwareToAzStackHciEventModelCustomProperties"/> instance for mocking. </returns>
-        public static VMwareToAzStackHciEventModelCustomProperties VMwareToAzStackHciEventModelCustomProperties(string eventSourceFriendlyName = null, string protectedItemFriendlyName = null, string sourceApplianceName = null, string targetApplianceName = null, string serverType = null)
+        /// <returns> A new <see cref="Models.VMwareToAzStackHciEventCustomProperties"/> instance for mocking. </returns>
+        public static VMwareToAzStackHciEventCustomProperties VMwareToAzStackHciEventCustomProperties(string eventSourceFriendlyName = null, string protectedItemFriendlyName = null, string sourceApplianceName = null, string targetApplianceName = null, string serverType = null)
         {
-            return new VMwareToAzStackHciEventModelCustomProperties(
+            return new VMwareToAzStackHciEventCustomProperties(
                 "VMwareToAzStackHCI",
                 serializedAdditionalRawData: null,
                 eventSourceFriendlyName,

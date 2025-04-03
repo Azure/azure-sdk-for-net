@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // invoke the operation
             DataReplicationPrivateEndpointConnectionData data = new DataReplicationPrivateEndpointConnectionData
             {
-                Properties = new PrivateEndpointConnectionResponseProperties
+                Properties = new DataReplicationPrivateEndpointConnectionProperties
                 {
                     PrivateEndpointId = new ResourceIdentifier("cwcdqoynostmqwdwy"),
-                    PrivateLinkServiceConnectionState = new RecoveryServicesDataReplicationPrivateLinkServiceConnectionState
+                    PrivateLinkServiceConnectionState = new DataReplicationPrivateLinkServiceConnectionState
                     {
-                        Status = PrivateEndpointConnectionStatus.Approved,
+                        Status = DataReplicationPrivateEndpointConnectionStatus.Approved,
                         Description = "y",
                         ActionsRequired = "afwbq",
                     },

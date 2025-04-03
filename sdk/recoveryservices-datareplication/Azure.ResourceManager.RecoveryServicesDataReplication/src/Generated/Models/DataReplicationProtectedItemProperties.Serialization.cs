@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ProtectedItemJobProperties lastTestFailoverJob = default;
             DataReplicationHealthStatus? replicationHealth = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
-            ProtectedItemModelCustomProperties customProperties = default;
+            DataReplicationProtectedItemCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = ProtectedItemModelCustomProperties.DeserializeProtectedItemModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationProtectedItemCustomProperties.DeserializeDataReplicationProtectedItemCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
-            PrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
-            ManualPrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
-            PrivateLinkServiceProxies = new ChangeTrackingList<PrivateLinkServiceProxy>();
+            PrivateLinkServiceConnections = new ChangeTrackingList<DataReplicationPrivateLinkServiceConnection>();
+            ManualPrivateLinkServiceConnections = new ChangeTrackingList<DataReplicationPrivateLinkServiceConnection>();
+            PrivateLinkServiceProxies = new ChangeTrackingList<DataReplicationPrivateLinkServiceProxy>();
             ConnectionDetails = new ChangeTrackingList<RemotePrivateEndpointConnectionDetails>();
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="privateLinkServiceProxies"> Gets or sets the list of private link service proxies. </param>
         /// <param name="connectionDetails"> Gets or sets the list of Connection Details. This is the connection details for private endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePrivateEndpoint(string id, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<PrivateLinkServiceProxy> privateLinkServiceProxies, IList<RemotePrivateEndpointConnectionDetails> connectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemotePrivateEndpoint(string id, IList<DataReplicationPrivateLinkServiceConnection> privateLinkServiceConnections, IList<DataReplicationPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<DataReplicationPrivateLinkServiceProxy> privateLinkServiceProxies, IList<RemotePrivateEndpointConnectionDetails> connectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PrivateLinkServiceConnections = privateLinkServiceConnections;
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets private link service proxy id. </summary>
         public string Id { get; set; }
         /// <summary> Gets or sets the list of Private Link Service Connections and gets populated for Auto approval flow. </summary>
-        public IList<PrivateLinkServiceConnection> PrivateLinkServiceConnections { get; }
+        public IList<DataReplicationPrivateLinkServiceConnection> PrivateLinkServiceConnections { get; }
         /// <summary> Gets or sets the list of Manual Private Link Service Connections and gets populated for Manual approval flow. </summary>
-        public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
+        public IList<DataReplicationPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
         /// <summary> Gets or sets the list of private link service proxies. </summary>
-        public IList<PrivateLinkServiceProxy> PrivateLinkServiceProxies { get; }
+        public IList<DataReplicationPrivateLinkServiceProxy> PrivateLinkServiceProxies { get; }
         /// <summary> Gets or sets the list of Connection Details. This is the connection details for private endpoint. </summary>
         public IList<RemotePrivateEndpointConnectionDetails> ConnectionDetails { get; }
     }

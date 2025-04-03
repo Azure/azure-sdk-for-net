@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> HyperV to AzStackHCI planned failover model custom properties. </summary>
-    public partial class HyperVToAzStackHciPlannedFailoverCustomProperties : PlannedFailoverModelCustomProperties
+    public partial class HyperVToAzStackHciPlannedFailoverCustomProperties : PlannedFailoverCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPlannedFailoverCustomProperties"/>. </summary>
         /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPlannedFailoverCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Discriminator property for PlannedFailoverModelCustomProperties. </param>
+        /// <param name="instanceType"> Discriminator property for PlannedFailoverCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
         internal HyperVToAzStackHciPlannedFailoverCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool shutdownSourceVm) : base(instanceType, serializedAdditionalRawData)

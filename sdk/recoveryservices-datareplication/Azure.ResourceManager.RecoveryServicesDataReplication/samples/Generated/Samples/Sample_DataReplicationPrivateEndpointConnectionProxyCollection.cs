@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
                 {
                     RemotePrivateEndpoint = new RemotePrivateEndpoint("yipalno")
                     {
-                        PrivateLinkServiceConnections = {new PrivateLinkServiceConnection
+                        PrivateLinkServiceConnections = {new DataReplicationPrivateLinkServiceConnection
 {
 Name = "jqwntlzfsksl",
 GroupIds = {"hvejynjktikteipnioyeja"},
 RequestMessage = "bukgzpkvcvfbmcdmpcbiigbvugicqa",
 }},
-                        ManualPrivateLinkServiceConnections = {new PrivateLinkServiceConnection
+                        ManualPrivateLinkServiceConnections = {new DataReplicationPrivateLinkServiceConnection
 {
 Name = "jqwntlzfsksl",
 GroupIds = {"hvejynjktikteipnioyeja"},
 RequestMessage = "bukgzpkvcvfbmcdmpcbiigbvugicqa",
 }},
-                        PrivateLinkServiceProxies = {new PrivateLinkServiceProxy
+                        PrivateLinkServiceProxies = {new DataReplicationPrivateLinkServiceProxy
 {
 Id = "nzqxevuyqeedrqnkbnlcyrrrbzxvl",
-RemotePrivateLinkServiceConnectionState = new RecoveryServicesDataReplicationPrivateLinkServiceConnectionState
+RemotePrivateLinkServiceConnectionState = new DataReplicationPrivateLinkServiceConnectionState
 {
-Status = PrivateEndpointConnectionStatus.Approved,
+Status = DataReplicationPrivateEndpointConnectionStatus.Approved,
 Description = "y",
 ActionsRequired = "afwbq",
 },

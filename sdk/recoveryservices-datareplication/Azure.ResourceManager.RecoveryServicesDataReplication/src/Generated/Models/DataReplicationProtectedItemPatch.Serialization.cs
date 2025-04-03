@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            ProtectedItemModelPropertiesUpdate properties = default;
+            DataReplicationProtectedItemPropertiesUpdate properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    properties = ProtectedItemModelPropertiesUpdate.DeserializeProtectedItemModelPropertiesUpdate(property.Value, options);
+                    properties = DataReplicationProtectedItemPropertiesUpdate.DeserializeDataReplicationProtectedItemPropertiesUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

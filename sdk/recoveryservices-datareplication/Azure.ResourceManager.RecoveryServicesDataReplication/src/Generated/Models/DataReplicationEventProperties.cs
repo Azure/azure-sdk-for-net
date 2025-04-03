@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Event model custom properties.
         /// Please note <see cref="DataReplicationEventCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciEventCustomProperties"/> and <see cref="VMwareToAzStackHciEventModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciEventCustomProperties"/> and <see cref="VMwareToAzStackHciEventCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         internal DataReplicationEventProperties(DataReplicationEventCustomProperties customProperties)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Event model custom properties.
         /// Please note <see cref="DataReplicationEventCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciEventCustomProperties"/> and <see cref="VMwareToAzStackHciEventModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciEventCustomProperties"/> and <see cref="VMwareToAzStackHciEventCustomProperties"/>.
         /// </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary>
         /// Event model custom properties.
         /// Please note <see cref="DataReplicationEventCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciEventCustomProperties"/> and <see cref="VMwareToAzStackHciEventModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciEventCustomProperties"/> and <see cref="VMwareToAzStackHciEventCustomProperties"/>.
         /// </summary>
         public DataReplicationEventCustomProperties CustomProperties { get; }
         /// <summary> Gets or sets the provisioning state of the event. </summary>

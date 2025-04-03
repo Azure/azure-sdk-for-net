@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DataReplicationTaskState? state = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            TaskModelCustomProperties customProperties = default;
+            DataReplicationTaskCustomProperties customProperties = default;
             IReadOnlyList<DataReplicationJobData> childrenJobs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    customProperties = TaskModelCustomProperties.DeserializeTaskModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationTaskCustomProperties.DeserializeDataReplicationTaskCustomProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("childrenJobs"u8))

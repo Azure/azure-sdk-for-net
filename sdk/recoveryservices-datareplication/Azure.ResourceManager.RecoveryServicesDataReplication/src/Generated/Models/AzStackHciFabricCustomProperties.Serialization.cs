@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ResourceIdentifier azStackHciSiteId = default;
             IReadOnlyList<string> applianceName = default;
             AzStackHciClusterProperties cluster = default;
-            string fabricResourceId = default;
-            string fabricContainerId = default;
+            ResourceIdentifier fabricResourceId = default;
+            ResourceIdentifier fabricContainerId = default;
             ResourceIdentifier migrationSolutionId = default;
             Uri migrationHubUri = default;
             string instanceType = default;
@@ -126,12 +126,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("fabricResourceId"u8))
                 {
-                    fabricResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fabricContainerId"u8))
                 {
-                    fabricContainerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricContainerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationSolutionId"u8))

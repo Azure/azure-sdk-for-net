@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 switch (discriminator.GetString())
                 {
                     case "FailoverJobDetails": return FailoverJobCustomProperties.DeserializeFailoverJobCustomProperties(element, options);
-                    case "TestFailoverCleanupJobDetails": return TestFailoverCleanupJobModelCustomProperties.DeserializeTestFailoverCleanupJobModelCustomProperties(element, options);
-                    case "TestFailoverJobDetails": return TestFailoverJobModelCustomProperties.DeserializeTestFailoverJobModelCustomProperties(element, options);
+                    case "TestFailoverCleanupJobDetails": return TestFailoverCleanupJobCustomProperties.DeserializeTestFailoverCleanupJobCustomProperties(element, options);
+                    case "TestFailoverJobDetails": return TestFailoverJobCustomProperties.DeserializeTestFailoverJobCustomProperties(element, options);
                 }
             }
             return UnknownDataReplicationJobCustomProperties.DeserializeUnknownDataReplicationJobCustomProperties(element, options);

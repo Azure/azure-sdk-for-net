@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             DateTimeOffset recoveryPointTime = default;
             DataReplicationRecoveryPointType recoveryPointType = default;
-            RecoveryPointModelCustomProperties customProperties = default;
+            DataReplicationRecoveryPointCustomProperties customProperties = default;
             DataReplicationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = RecoveryPointModelCustomProperties.DeserializeRecoveryPointModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationRecoveryPointCustomProperties.DeserializeDataReplicationRecoveryPointCustomProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

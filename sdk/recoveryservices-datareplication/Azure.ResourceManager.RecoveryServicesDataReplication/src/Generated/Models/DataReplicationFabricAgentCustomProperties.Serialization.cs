@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VMware": return VMwareFabricAgentModelCustomProperties.DeserializeVMwareFabricAgentModelCustomProperties(element, options);
+                    case "VMware": return VMwareFabricAgentCustomProperties.DeserializeVMwareFabricAgentCustomProperties(element, options);
                 }
             }
             return UnknownDataReplicationFabricAgentCustomProperties.DeserializeUnknownDataReplicationFabricAgentCustomProperties(element, options);

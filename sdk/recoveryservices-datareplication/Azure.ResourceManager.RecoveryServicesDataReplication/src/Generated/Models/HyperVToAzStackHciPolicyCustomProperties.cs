@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> HyperV To AzStackHCI Policy model custom properties. </summary>
-    public partial class HyperVToAzStackHciPolicyCustomProperties : PolicyModelCustomProperties
+    public partial class HyperVToAzStackHciPolicyCustomProperties : DataReplicationPolicyCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPolicyCustomProperties"/>. </summary>
         /// <param name="recoveryPointHistoryInMinutes"> Gets or sets the duration in minutes until which the recovery points need to be stored. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPolicyCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Discriminator property for PolicyModelCustomProperties. </param>
+        /// <param name="instanceType"> Discriminator property for DataReplicationPolicyCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointHistoryInMinutes"> Gets or sets the duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> Gets or sets the crash consistent snapshot frequency (in minutes). </param>

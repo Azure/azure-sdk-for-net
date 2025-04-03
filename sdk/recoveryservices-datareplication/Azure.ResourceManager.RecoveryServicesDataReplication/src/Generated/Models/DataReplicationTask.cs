@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties"> Task model custom properties. </param>
         /// <param name="childrenJobs"> Gets or sets the list of children job models. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationTask(string taskName, DataReplicationTaskState? state, DateTimeOffset? startOn, DateTimeOffset? endOn, TaskModelCustomProperties customProperties, IReadOnlyList<DataReplicationJobData> childrenJobs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationTask(string taskName, DataReplicationTaskState? state, DateTimeOffset? startOn, DateTimeOffset? endOn, DataReplicationTaskCustomProperties customProperties, IReadOnlyList<DataReplicationJobData> childrenJobs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskName = taskName;
             State = state;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the end time. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> Task model custom properties. </summary>
-        internal TaskModelCustomProperties CustomProperties { get; }
+        internal DataReplicationTaskCustomProperties CustomProperties { get; }
         /// <summary> Gets or sets the instance type. </summary>
         public string CustomInstanceType
         {

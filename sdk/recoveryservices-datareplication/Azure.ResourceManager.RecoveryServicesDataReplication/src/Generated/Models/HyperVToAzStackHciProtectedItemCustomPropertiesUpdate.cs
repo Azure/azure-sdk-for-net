@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> HyperV to AzStackHCI Protected item model custom properties. </summary>
-    public partial class HyperVToAzStackHciProtectedItemCustomPropertiesUpdate : ProtectedItemModelCustomPropertiesUpdate
+    public partial class HyperVToAzStackHciProtectedItemCustomPropertiesUpdate : DataReplicationProtectedItemCustomPropertiesUpdate
     {
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedItemCustomPropertiesUpdate"/>. </summary>
         public HyperVToAzStackHciProtectedItemCustomPropertiesUpdate()
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedItemCustomPropertiesUpdate"/>. </summary>
-        /// <param name="instanceType"> Discriminator property for ProtectedItemModelCustomPropertiesUpdate. </param>
+        /// <param name="instanceType"> Discriminator property for DataReplicationProtectedItemCustomPropertiesUpdate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="nicsToInclude"> Gets or sets the list of VM NIC to replicate. </param>
         /// <param name="targetCpuCores"> Gets or sets the target CPU cores. </param>

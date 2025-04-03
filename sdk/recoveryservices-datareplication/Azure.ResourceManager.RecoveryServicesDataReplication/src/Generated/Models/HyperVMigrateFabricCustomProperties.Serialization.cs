@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             ResourceIdentifier hyperVSiteId = default;
             ResourceIdentifier fabricResourceId = default;
-            string fabricContainerId = default;
+            ResourceIdentifier fabricContainerId = default;
             ResourceIdentifier migrationSolutionId = default;
             Uri migrationHubUri = default;
             string instanceType = default;
@@ -102,7 +102,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("fabricContainerId"u8))
                 {
-                    fabricContainerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricContainerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationSolutionId"u8))

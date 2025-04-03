@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="body"> Planned failover model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<PlannedFailoverModel>> PlannedFailoverAsync(WaitUntil waitUntil, PlannedFailoverModel body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PlannedFailover>> PlannedFailoverAsync(WaitUntil waitUntil, PlannedFailover body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             try
             {
                 var response = await _dataReplicationProtectedItemProtectedItemRestClient.PlannedFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailoverModel>(new PlannedFailoverModelOperationSource(), _dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(new PlannedFailoverOperationSource(), _dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="body"> Planned failover model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<PlannedFailoverModel> PlannedFailover(WaitUntil waitUntil, PlannedFailoverModel body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PlannedFailover> PlannedFailover(WaitUntil waitUntil, PlannedFailover body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             try
             {
                 var response = _dataReplicationProtectedItemProtectedItemRestClient.PlannedFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailoverModel>(new PlannedFailoverModelOperationSource(), _dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(new PlannedFailoverOperationSource(), _dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

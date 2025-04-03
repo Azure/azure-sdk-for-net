@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 {
                     case "AzStackHCI": return AzStackHciFabricCustomProperties.DeserializeAzStackHciFabricCustomProperties(element, options);
                     case "HyperVMigrate": return HyperVMigrateFabricCustomProperties.DeserializeHyperVMigrateFabricCustomProperties(element, options);
-                    case "VMwareMigrate": return VMwareMigrateFabricModelCustomProperties.DeserializeVMwareMigrateFabricModelCustomProperties(element, options);
+                    case "VMwareMigrate": return VMwareMigrateFabricCustomProperties.DeserializeVMwareMigrateFabricCustomProperties(element, options);
                 }
             }
             return UnknownDataReplicationFabricCustomProperties.DeserializeUnknownDataReplicationFabricCustomProperties(element, options);

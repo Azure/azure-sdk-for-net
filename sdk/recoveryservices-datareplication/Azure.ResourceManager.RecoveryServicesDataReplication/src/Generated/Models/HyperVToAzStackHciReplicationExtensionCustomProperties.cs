@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> HyperV to AzStackHCI Replication extension model custom properties. </summary>
-    public partial class HyperVToAzStackHciReplicationExtensionCustomProperties : ReplicationExtensionModelCustomProperties
+    public partial class HyperVToAzStackHciReplicationExtensionCustomProperties : DataReplicationExtensionCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciReplicationExtensionCustomProperties"/>. </summary>
         /// <param name="hyperVFabricArmId"> Gets or sets the ARM Id of the source HyperV fabric. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciReplicationExtensionCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Discriminator property for ReplicationExtensionModelCustomProperties. </param>
+        /// <param name="instanceType"> Discriminator property for DataReplicationExtensionCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hyperVFabricArmId"> Gets or sets the ARM Id of the source HyperV fabric. </param>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>

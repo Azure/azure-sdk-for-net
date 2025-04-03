@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             string id = default;
-            IList<PrivateLinkServiceConnection> privateLinkServiceConnections = default;
-            IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
-            IList<PrivateLinkServiceProxy> privateLinkServiceProxies = default;
+            IList<DataReplicationPrivateLinkServiceConnection> privateLinkServiceConnections = default;
+            IList<DataReplicationPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
+            IList<DataReplicationPrivateLinkServiceProxy> privateLinkServiceProxies = default;
             IList<RemotePrivateEndpointConnectionDetails> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    List<PrivateLinkServiceConnection> array = new List<PrivateLinkServiceConnection>();
+                    List<DataReplicationPrivateLinkServiceConnection> array = new List<DataReplicationPrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkServiceConnection.DeserializePrivateLinkServiceConnection(item, options));
+                        array.Add(DataReplicationPrivateLinkServiceConnection.DeserializeDataReplicationPrivateLinkServiceConnection(item, options));
                     }
                     privateLinkServiceConnections = array;
                     continue;
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    List<PrivateLinkServiceConnection> array = new List<PrivateLinkServiceConnection>();
+                    List<DataReplicationPrivateLinkServiceConnection> array = new List<DataReplicationPrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkServiceConnection.DeserializePrivateLinkServiceConnection(item, options));
+                        array.Add(DataReplicationPrivateLinkServiceConnection.DeserializeDataReplicationPrivateLinkServiceConnection(item, options));
                     }
                     manualPrivateLinkServiceConnections = array;
                     continue;
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    List<PrivateLinkServiceProxy> array = new List<PrivateLinkServiceProxy>();
+                    List<DataReplicationPrivateLinkServiceProxy> array = new List<DataReplicationPrivateLinkServiceProxy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkServiceProxy.DeserializePrivateLinkServiceProxy(item, options));
+                        array.Add(DataReplicationPrivateLinkServiceProxy.DeserializeDataReplicationPrivateLinkServiceProxy(item, options));
                     }
                     privateLinkServiceProxies = array;
                     continue;
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new RemotePrivateEndpoint(
                 id,
-                privateLinkServiceConnections ?? new ChangeTrackingList<PrivateLinkServiceConnection>(),
-                manualPrivateLinkServiceConnections ?? new ChangeTrackingList<PrivateLinkServiceConnection>(),
-                privateLinkServiceProxies ?? new ChangeTrackingList<PrivateLinkServiceProxy>(),
+                privateLinkServiceConnections ?? new ChangeTrackingList<DataReplicationPrivateLinkServiceConnection>(),
+                manualPrivateLinkServiceConnections ?? new ChangeTrackingList<DataReplicationPrivateLinkServiceConnection>(),
+                privateLinkServiceProxies ?? new ChangeTrackingList<DataReplicationPrivateLinkServiceProxy>(),
                 connectionDetails ?? new ChangeTrackingList<RemotePrivateEndpointConnectionDetails>(),
                 serializedAdditionalRawData);
         }
