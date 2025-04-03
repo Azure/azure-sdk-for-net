@@ -23,9 +23,6 @@ runner.Tools.AddLocalTools(typeof(Tools));
 
 ChatThread conversation = new();
 
-
-await runner.Tools.AddMcpServerAsync(new Uri("http://localhost:5000/sse")).ConfigureAwait(false);
-
 while (true)
 {
     Console.Write("> ");
