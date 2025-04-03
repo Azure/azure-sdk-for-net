@@ -910,7 +910,6 @@ namespace Azure.Communication.PhoneNumbers
                 scope.Start();
                 try
                 {
-                    int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
                     return RestClient.CreateListReservationsNextPageRequest(nextLink, pageSizeHint);
                 }
                 catch (Exception ex)
@@ -949,7 +948,6 @@ namespace Azure.Communication.PhoneNumbers
                 scope.Start();
                 try
                 {
-                    int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
                     return RestClient.CreateListReservationsNextPageRequest(nextLink, pageSizeHint);
                 }
                 catch (Exception ex)

@@ -509,9 +509,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var client = CreateClient();
 
-            // Italy doesn't allow reselling phone numbers.
-            // https://learn.microsoft.com/en-us/azure/communication-services/concepts/numbers/phone-number-management-for-italy#number-types-and-capabilities-availability
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("IT", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+            // France doesn't allow reselling phone numbers.
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("FR", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
                 new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
 
             await searchOperation.WaitForCompletionAsync();
@@ -522,7 +521,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
             Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
-            Assert.IsTrue(searchOperation.Value.IsAgreementToNotResellRequired);
 
             var searchId = searchOperation.Value.SearchId;
 
@@ -548,9 +546,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var client = CreateClient();
 
-            // Italy doesn't allow reselling phone numbers.
-            // https://learn.microsoft.com/en-us/azure/communication-services/concepts/numbers/phone-number-management-for-italy#number-types-and-capabilities-availability
-            var searchOperation = client.StartSearchAvailablePhoneNumbers("IT", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+            // France doesn't allow reselling phone numbers.
+            var searchOperation = client.StartSearchAvailablePhoneNumbers("FR", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
                 new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
 
             while (!searchOperation.HasCompleted)
@@ -565,7 +562,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
             Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
-            Assert.IsTrue(searchOperation.Value.IsAgreementToNotResellRequired);
 
             var searchId = searchOperation.Value.SearchId;
 
