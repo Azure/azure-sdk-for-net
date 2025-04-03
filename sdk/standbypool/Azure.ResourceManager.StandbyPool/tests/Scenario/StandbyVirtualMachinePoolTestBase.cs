@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.StandbyPool.Tests
     {
         private const string dummySSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com";
 
-        protected StandbyVirtualMachinePoolTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        protected StandbyVirtualMachinePoolTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, AzureLocation.EastAsia)
         {
         }
-        public StandbyVirtualMachinePoolTestBase(bool isAsync) : base(isAsync)
+        public StandbyVirtualMachinePoolTestBase(bool isAsync) : base(isAsync, AzureLocation.EastAsia)
         {
         }
 
@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         protected async Task<VirtualMachineScaleSetResource> CreateDependencyResourcs(ResourceGroupResource resourceGroup, GenericResourceCollection _genericResourceCollection, AzureLocation location)
         {
             var vnet = this.CreateVirtualNetwork(resourceGroup, _genericResourceCollection, location);
-            // var subnet = this.CreateSubnet(vnet.Result.Id, _genericResourceCollection, location);
             ResourceIdentifier subnetId = GetSubnetId(vnet.Result);
             var networksSecurityGroup = this.CreateNetworkSecurityGroups(resourceGroup, _genericResourceCollection, location);
             return await this.CreateVirtualMachineScaleSet(resourceGroup, _genericResourceCollection, subnetId, networksSecurityGroup.Result.Id, location);

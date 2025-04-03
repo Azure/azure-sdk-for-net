@@ -55,12 +55,16 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewProperties"/>. </summary>
         /// <param name="instanceCountSummary"> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </param>
+        /// <param name="status"> Display status of the standby pool. </param>
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
+        /// <param name="prediction"> Displays prediction information of the standby pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolRuntimeViewProperties(IReadOnlyList<ContainerGroupInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolRuntimeViewProperties(IReadOnlyList<ContainerGroupInstanceCountSummary> instanceCountSummary, StandbyPoolStatus status, StandbyProvisioningState? provisioningState, StandbyContainerGroupPoolPrediction prediction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCountSummary = instanceCountSummary;
+            Status = status;
             ProvisioningState = provisioningState;
+            Prediction = prediction;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,7 +75,11 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </summary>
         public IReadOnlyList<ContainerGroupInstanceCountSummary> InstanceCountSummary { get; }
+        /// <summary> Display status of the standby pool. </summary>
+        public StandbyPoolStatus Status { get; }
         /// <summary> Displays the provisioning state of the standby pool. </summary>
         public StandbyProvisioningState? ProvisioningState { get; }
+        /// <summary> Displays prediction information of the standby pool. </summary>
+        public StandbyContainerGroupPoolPrediction Prediction { get; }
     }
 }

@@ -47,30 +47,24 @@ namespace Azure.ResourceManager.StandbyPool.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolRuntimeViewProperties"/>. </summary>
-        /// <param name="instanceCountSummary">
-        /// A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider.
-        /// If zones are not enabled on the attached VMSS, the list will contain a single entry with null zone values.
-        /// Note: any updates to pool resources outside of StandbyPoolRP (i.e deleting a VM through portal) are not reflected here.
-        /// Note: any resources in the Running state may still be installing extensions / not fully provisioned.
-        /// </param>
+        /// <param name="instanceCountSummary"> A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider. If zones are not enabled on the attached VMSS, the list will contain a single entry without zone values. Note: any resources in the Running state may still be installing extensions / not fully provisioned. </param>
         internal StandbyVirtualMachinePoolRuntimeViewProperties(IEnumerable<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary)
         {
             InstanceCountSummary = instanceCountSummary.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolRuntimeViewProperties"/>. </summary>
-        /// <param name="instanceCountSummary">
-        /// A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider.
-        /// If zones are not enabled on the attached VMSS, the list will contain a single entry with null zone values.
-        /// Note: any updates to pool resources outside of StandbyPoolRP (i.e deleting a VM through portal) are not reflected here.
-        /// Note: any resources in the Running state may still be installing extensions / not fully provisioned.
-        /// </param>
+        /// <param name="instanceCountSummary"> A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider. If zones are not enabled on the attached VMSS, the list will contain a single entry without zone values. Note: any resources in the Running state may still be installing extensions / not fully provisioned. </param>
+        /// <param name="status"> Display status of the standby pool. </param>
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
+        /// <param name="prediction"> Displays prediction information of the standby pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolRuntimeViewProperties(IReadOnlyList<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolRuntimeViewProperties(IReadOnlyList<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, StandbyPoolStatus status, StandbyProvisioningState? provisioningState, StandbyVirtualMachinePoolPrediction prediction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCountSummary = instanceCountSummary;
+            Status = status;
             ProvisioningState = provisioningState;
+            Prediction = prediction;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,14 +73,13 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
         }
 
-        /// <summary>
-        /// A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider.
-        /// If zones are not enabled on the attached VMSS, the list will contain a single entry with null zone values.
-        /// Note: any updates to pool resources outside of StandbyPoolRP (i.e deleting a VM through portal) are not reflected here.
-        /// Note: any resources in the Running state may still be installing extensions / not fully provisioned.
-        /// </summary>
+        /// <summary> A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider. If zones are not enabled on the attached VMSS, the list will contain a single entry without zone values. Note: any resources in the Running state may still be installing extensions / not fully provisioned. </summary>
         public IReadOnlyList<StandbyVirtualMachineInstanceCountSummary> InstanceCountSummary { get; }
+        /// <summary> Display status of the standby pool. </summary>
+        public StandbyPoolStatus Status { get; }
         /// <summary> Displays the provisioning state of the standby pool. </summary>
         public StandbyProvisioningState? ProvisioningState { get; }
+        /// <summary> Displays prediction information of the standby pool. </summary>
+        public StandbyVirtualMachinePoolPrediction Prediction { get; }
     }
 }
