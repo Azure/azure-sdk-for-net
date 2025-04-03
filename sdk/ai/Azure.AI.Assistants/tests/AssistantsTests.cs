@@ -632,8 +632,8 @@ namespace Azure.AI.Assistants.Tests
             while (toolRun.Status == RunStatus.Queued
                 || toolRun.Status == RunStatus.InProgress
                 || toolRun.Status == RunStatus.RequiresAction);
-            Assert.True(functionCalled);
             Assert.AreEqual(RunStatus.Completed, toolRun.Status, message: toolRun.LastError?.Message);
+            Assert.True(functionCalled);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
@@ -842,6 +842,8 @@ namespace Azure.AI.Assistants.Tests
             Assert.Greater(messages.Data.Count, 1);
         }
 
+        // TODO: Check the service and enable this test.
+        [Ignore("There is a regression on the service side and test will fail. 2025-04-03")]
         [RecordedTest]
         [TestCase(true, true)]
         [TestCase(true, false)]
