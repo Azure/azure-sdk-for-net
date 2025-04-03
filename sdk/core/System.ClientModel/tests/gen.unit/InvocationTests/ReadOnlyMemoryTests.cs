@@ -18,10 +18,10 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             var arrayJsonModel = dict[$"ReadOnlyMemory<{type}>"];
             Assert.AreEqual($"ReadOnlyMemory<{type}>", arrayJsonModel.Type.Name);
             Assert.AreEqual("System", arrayJsonModel.Type.Namespace);
-            Assert.AreEqual(1, arrayJsonModel.Type.GenericArguments.Count);
+            Assert.IsNotNull(arrayJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.ReadOnlyMemory, arrayJsonModel.Kind);
 
-            var genericArgument = arrayJsonModel.Type.GenericArguments[0];
+            var genericArgument = arrayJsonModel.Type.ItemType!;
             modelValidator(genericArgument);
         }
     }

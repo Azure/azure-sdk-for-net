@@ -364,13 +364,13 @@ $$"""
         {
             Assert.AreEqual("JsonModel", jsonModel.Name);
             Assert.AreEqual("TestProject", jsonModel.Namespace);
-            Assert.AreEqual(0, jsonModel.GenericArguments.Count);
+            Assert.IsNull(jsonModel.ItemType);
         }
         private static void AssertAvailabilitySetData(TypeRef aset)
         {
             Assert.AreEqual("AvailabilitySetData", aset.Name);
             Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", aset.Namespace);
-            Assert.AreEqual(0, aset.GenericArguments.Count);
+            Assert.IsNull(aset.ItemType);
         }
 
         [TestCase(true)]

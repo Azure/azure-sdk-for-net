@@ -161,7 +161,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             return modelInfo.Kind == TypeBuilderKind.Array ||
                 modelInfo.Kind == TypeBuilderKind.MultiDimensionalArray ||
                 !referenceContextLookup.ContainsKey(modelInfo.Type.Assembly) ||
-                IsSameAssembly(contextGenerationSpec.Type, modelInfo.Type);
+                contextGenerationSpec.Type.IsSameAssembly(modelInfo.Type);
         }
 
         private static void EmitModelInfo(
@@ -193,7 +193,6 @@ internal sealed partial class ModelReaderWriterContextGenerator
                     EmitReadOnlyMemoryModelInfo(indent, builder, modelInfo, context, referenceContextLookup, identifierLookup);
                     break;
                 default:
-                    //give warning and skip
                     break;
             }
         }
@@ -206,7 +205,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             Dictionary<string, TypeRef> referenceContextLookup,
             Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
         {
-            var elementType = modelInfo.Type.GenericArguments[0];
+            var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {identifierLookup[modelInfo.Type].TypeCase}Builder : ModelReaderWriterTypeBuilder");
             builder.AppendLine(indent, "{");
             indent++;
@@ -262,7 +261,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             Dictionary<string, TypeRef> referenceContextLookup,
             Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
         {
-            var elementType = modelInfo.Type.GenericArguments[0];
+            var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {identifierLookup[modelInfo.Type].TypeCase}Builder : ModelReaderWriterTypeBuilder");
             builder.AppendLine(indent, "{");
             indent++;
@@ -329,7 +328,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             Dictionary<string, TypeRef> referenceContextLookup,
             Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
         {
-            var elementType = modelInfo.Type.GenericArguments[0];
+            var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {identifierLookup[modelInfo.Type].TypeCase}Builder : ModelReaderWriterTypeBuilder");
             builder.AppendLine(indent, "{");
             indent++;
@@ -366,7 +365,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             Dictionary<string, TypeRef> referenceContextLookup,
             Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
         {
-            var elementType = modelInfo.Type.GenericArguments[1];
+            var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {identifierLookup[modelInfo.Type].TypeCase}Builder : ModelReaderWriterTypeBuilder");
             builder.AppendLine(indent, "{");
             indent++;
@@ -389,21 +388,6 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine(indent, "}");
         }
 
-        private static bool IsSameAssembly(TypeRef context, TypeRef elementType)
-        {
-            if (context.Assembly.Equals(elementType.Assembly, StringComparison.Ordinal))
-                return true;
-
-            //If we made the context implicitly its assembly will be a simple name
-            //TestAssembly
-            //vs
-            //TestAssembly, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-            if (!context.Assembly.AsSpan().Contains(", Version".AsSpan(), StringComparison.Ordinal))
-                return elementType.Assembly.StartsWith(context.Assembly, StringComparison.Ordinal);
-
-            return false;
-        }
-
         private static void EmitEnumerableModelInfo(
             int indent,
             StringBuilder builder,
@@ -412,7 +396,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             Dictionary<string, TypeRef> referenceContextLookup,
             Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
         {
-            var elementType = modelInfo.Type.GenericArguments[0];
+            var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {identifierLookup[modelInfo.Type].TypeCase}Builder : ModelReaderWriterTypeBuilder");
             builder.AppendLine(indent, "{");
             indent++;
@@ -442,7 +426,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             TypeRef context,
             Dictionary<TypeRef, (string TypeCase, string CamelCase)> identifierLookup)
         {
-            if (IsSameAssembly(context, modelInfo.Type))
+            if (context.IsSameAssembly(modelInfo.Type))
             {
                 builder.AppendLine(indent, $"internal class {identifierLookup[modelInfo.Type].TypeCase}Builder : ModelReaderWriterTypeBuilder");
                 builder.AppendLine(indent, "{");
@@ -483,17 +467,17 @@ internal sealed partial class ModelReaderWriterContextGenerator
             return namespaces;
         }
 
-        private void AddNamespaces(HashSet<string> namespaces, TypeRef referencedContext, HashSet<TypeRef> visited)
+        private void AddNamespaces(HashSet<string> namespaces, TypeRef type, HashSet<TypeRef> visited)
         {
-            if (!visited.Add(referencedContext))
+            if (!visited.Add(type))
             {
                 return;
             }
 
-            namespaces.Add(referencedContext.Namespace);
-            foreach (var genericArgument in referencedContext.GenericArguments)
+            namespaces.Add(type.Namespace);
+            if (type.ItemType is not null)
             {
-                AddNamespaces(namespaces, genericArgument, visited);
+                AddNamespaces(namespaces, type.ItemType, visited);
             }
         }
 

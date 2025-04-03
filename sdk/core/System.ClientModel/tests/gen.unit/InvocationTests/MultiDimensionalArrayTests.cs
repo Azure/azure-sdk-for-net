@@ -27,10 +27,10 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             {
                 Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", arrayJsonModel.Type.Namespace);
             }
-            Assert.AreEqual(1, arrayJsonModel.Type.GenericArguments.Count);
+            Assert.IsNotNull(arrayJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.MultiDimensionalArray, arrayJsonModel.Kind);
 
-            var genericArgument = arrayJsonModel.Type.GenericArguments[0];
+            var genericArgument = arrayJsonModel.Type.ItemType!;
             modelValidator(genericArgument);
         }
     }
