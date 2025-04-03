@@ -83,15 +83,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignVerifyDataRoundTrip([EnumValues] SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
         {
-            if ((algorithm == SignatureAlgorithm.HS256 ||
-                 algorithm == SignatureAlgorithm.HS384 ||
-                 algorithm == SignatureAlgorithm.HS512) && !IsManagedHSM)
-            {
-                Assert.Ignore("HMAC signature algorithms are only supported in Managed HSM");
-            }
+            await SignVerifyDataRoundTripInternal(algorithm);
+        }
 
+        protected async Task SignVerifyDataRoundTripInternal(SignatureAlgorithm algorithm)
+        {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
@@ -132,15 +130,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignVerifyDataStreamRoundTrip([EnumValues] SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataStreamRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
         {
-            if ((algorithm == SignatureAlgorithm.HS256 ||
-                 algorithm == SignatureAlgorithm.HS384 ||
-                 algorithm == SignatureAlgorithm.HS512) && !IsManagedHSM)
-            {
-                Assert.Ignore("HMAC signature algorithms are only supported in Managed HSM");
-            }
+            await SignVerifyDataStreamRoundTripInternal(algorithm);
+        }
 
+        protected async Task SignVerifyDataStreamRoundTripInternal(SignatureAlgorithm algorithm)
+        {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
 
@@ -189,7 +185,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
 
         [RecordedTest]
-        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
+        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K), nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
+        {
+            await LocalSignVerifyRoundTripInternal(algorithm);
+        }
+
+        protected async Task LocalSignVerifyRoundTripInternal(SignatureAlgorithm algorithm)
         {
 #if NET462
             if (algorithm.GetEcKeyCurveName() != default)
@@ -204,13 +205,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 Assert.Ignore("RSA-PSS signature padding is not supported on .NET Framework.");
             }
 #endif
-
-            if ((algorithm == SignatureAlgorithm.HS256 ||
-                 algorithm == SignatureAlgorithm.HS384 ||
-                 algorithm == SignatureAlgorithm.HS512) && !IsManagedHSM)
-            {
-                Assert.Ignore("HMAC signature algorithms are only supported in Managed HSM");
-            }
 
             KeyVaultKey key = await CreateTestKeyWithKeyMaterial(algorithm);
             RegisterForCleanup(key.Name);
@@ -273,7 +267,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
+        public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K), nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
+        {
+            await SignLocalVerifyRoundTripInternal(algorithm);
+        }
+
+        protected async Task SignLocalVerifyRoundTripInternal(SignatureAlgorithm algorithm)
         {
 #if NET462
             if (algorithm.GetEcKeyCurveName() != default)

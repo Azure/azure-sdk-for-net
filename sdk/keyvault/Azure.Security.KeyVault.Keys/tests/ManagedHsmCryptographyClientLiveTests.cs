@@ -205,6 +205,32 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(plaintext, decrypted.Key);
         }
 
+        [RecordedTest]
+        public async Task SignLocalVerifyRoundTripHSM([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
+        {
+            await SignLocalVerifyRoundTripInternal(algorithm);
+        }
+
+        // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
+
+        [RecordedTest]
+        public async Task LocalSignVerifyRoundTripHSM([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
+        {
+            await LocalSignVerifyRoundTripInternal(algorithm);
+        }
+
+        [RecordedTest]
+        public async Task SignVerifyDataRoundTripHSM([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
+        {
+            await SignVerifyDataRoundTripInternal(algorithm);
+        }
+
+        [RecordedTest]
+        public async Task SignVerifyDataStreamRoundTripHSM([EnumValues] SignatureAlgorithm algorithm)
+        {
+            await SignVerifyDataStreamRoundTripInternal(algorithm);
+        }
+
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
