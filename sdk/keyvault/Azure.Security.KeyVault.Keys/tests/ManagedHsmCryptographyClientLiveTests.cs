@@ -220,7 +220,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignVerifyDataRoundTripHSM([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataRoundTripHSM([EnumValues] SignatureAlgorithm algorithm)
         {
             await SignVerifyDataRoundTripInternal(algorithm);
         }
