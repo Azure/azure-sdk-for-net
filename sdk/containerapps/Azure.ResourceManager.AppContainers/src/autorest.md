@@ -52,6 +52,7 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
   Github: GitHub
+  LTS: Lts
 
 rename-mapping:
   ContainerAppProbeHttpGet: ContainerAppHttpRequestInfo

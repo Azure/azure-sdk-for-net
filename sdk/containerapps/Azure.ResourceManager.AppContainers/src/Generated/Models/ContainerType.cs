@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         private const string CustomContainerValue = "CustomContainer";
-        private const string PythonLTSValue = "PythonLTS";
+        private const string PythonLtsValue = "PythonLTS";
 
         /// <summary> CustomContainer. </summary>
         public static ContainerType CustomContainer { get; } = new ContainerType(CustomContainerValue);
         /// <summary> PythonLTS. </summary>
-        public static ContainerType PythonLTS { get; } = new ContainerType(PythonLTSValue);
+        public static ContainerType PythonLts { get; } = new ContainerType(PythonLtsValue);
         /// <summary> Determines if two <see cref="ContainerType"/> values are the same. </summary>
         public static bool operator ==(ContainerType left, ContainerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerType"/> values are not the same. </summary>
