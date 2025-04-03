@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
-    public partial class HybridConnectivityPostOperationResult : IUtf8JsonSerializable, IJsonModel<HybridConnectivityPostOperationResult>
+    public partial class GenerateAwsTemplateResult : IUtf8JsonSerializable, IJsonModel<GenerateAwsTemplateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridConnectivityPostOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenerateAwsTemplateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HybridConnectivityPostOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GenerateAwsTemplateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityPostOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GenerateAwsTemplateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectivityPostOperationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateAwsTemplateResult)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
         }
 
-        HybridConnectivityPostOperationResult IJsonModel<HybridConnectivityPostOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GenerateAwsTemplateResult IJsonModel<GenerateAwsTemplateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityPostOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GenerateAwsTemplateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectivityPostOperationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateAwsTemplateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridConnectivityPostOperationResult(document.RootElement, options);
+            return DeserializeGenerateAwsTemplateResult(document.RootElement, options);
         }
 
-        internal static HybridConnectivityPostOperationResult DeserializeHybridConnectivityPostOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GenerateAwsTemplateResult DeserializeGenerateAwsTemplateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,38 +81,38 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HybridConnectivityPostOperationResult(serializedAdditionalRawData);
+            return new GenerateAwsTemplateResult(serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HybridConnectivityPostOperationResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GenerateAwsTemplateResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityPostOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GenerateAwsTemplateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectivityPostOperationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateAwsTemplateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HybridConnectivityPostOperationResult IPersistableModel<HybridConnectivityPostOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GenerateAwsTemplateResult IPersistableModel<GenerateAwsTemplateResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityPostOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GenerateAwsTemplateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHybridConnectivityPostOperationResult(document.RootElement, options);
+                        return DeserializeGenerateAwsTemplateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectivityPostOperationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateAwsTemplateResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HybridConnectivityPostOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GenerateAwsTemplateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             PublicCloudConnectorSolutionConfigurationResource publicCloudConnectorSolutionConfiguration = client.GetPublicCloudConnectorSolutionConfigurationResource(publicCloudConnectorSolutionConfigurationResourceId);
 
             // invoke the operation
-            ArmOperation<OperationStatusResult> lro = await publicCloudConnectorSolutionConfiguration.SyncNowAsync(WaitUntil.Completed);
-            OperationStatusResult result = lro.Value;
+            ArmOperation<HybridConnectivityOperationStatus> lro = await publicCloudConnectorSolutionConfiguration.SyncNowAsync(WaitUntil.Completed);
+            HybridConnectivityOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

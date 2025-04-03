@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             double? percentComplete = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            IReadOnlyList<OperationStatusResult> operations = default;
+            IReadOnlyList<HybridConnectivityOperationStatus> operations = default;
             ResponseError error = default;
             ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    List<OperationStatusResult> array = new List<OperationStatusResult>();
+                    List<HybridConnectivityOperationStatus> array = new List<HybridConnectivityOperationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationStatusResult.DeserializeOperationStatusResult(item, options));
+                        array.Add(DeserializeHybridConnectivityOperationStatus(item, options));
                     }
                     operations = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 percentComplete,
                 startTime,
                 endTime,
-                operations ?? new ChangeTrackingList<OperationStatusResult>(),
+                operations ?? new ChangeTrackingList<HybridConnectivityOperationStatus>(),
                 error,
                 resourceId,
                 serializedAdditionalRawData);

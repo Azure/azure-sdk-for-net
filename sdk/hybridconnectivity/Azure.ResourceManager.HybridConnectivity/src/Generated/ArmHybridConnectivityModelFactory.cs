@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridConnectivityOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
-        public static OperationStatusResult OperationStatusResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, string resourceId = null)
+        /// <returns> A new <see cref="Models.HybridConnectivityOperationStatus"/> instance for mocking. </returns>
+        public static HybridConnectivityOperationStatus HybridConnectivityOperationStatus(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<HybridConnectivityOperationStatus> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<OperationStatusResult>();
+            operations ??= new List<HybridConnectivityOperationStatus>();
 
-            return new OperationStatusResult(
+            return new HybridConnectivityOperationStatus(
                 id,
                 name,
                 status,
@@ -247,34 +247,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 systemData,
                 awsCloudExcludedAccounts != null ? new PublicCloudConnectorPropertiesUpdate(new AwsCloudProfileUpdate(awsCloudExcludedAccounts?.ToList(), serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
                 tags,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridConnectivityOperationStatus"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
-        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <returns> A new <see cref="Models.HybridConnectivityOperationStatus"/> instance for mocking. </returns>
-        public static HybridConnectivityOperationStatus HybridConnectivityOperationStatus(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
-        {
-            operations ??= new List<OperationStatusResult>();
-
-            return new HybridConnectivityOperationStatus(
-                id,
-                name,
-                status,
-                percentComplete,
-                startOn,
-                endOn,
-                operations?.ToList(),
-                error,
-                resourceId,
                 serializedAdditionalRawData: null);
         }
 

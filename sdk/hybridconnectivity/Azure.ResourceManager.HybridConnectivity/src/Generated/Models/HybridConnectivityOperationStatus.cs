@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             Argument.AssertNotNull(status, nameof(status));
 
             Status = status;
-            Operations = new ChangeTrackingList<OperationStatusResult>();
+            Operations = new ChangeTrackingList<HybridConnectivityOperationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectivityOperationStatus"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectivityOperationStatus(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridConnectivityOperationStatus(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<HybridConnectivityOperationStatus> operations, ResponseError error, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> The end time of the operation. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> The operations list. </summary>
-        public IReadOnlyList<OperationStatusResult> Operations { get; }
+        public IReadOnlyList<HybridConnectivityOperationStatus> Operations { get; }
         /// <summary> If present, details of the operation error. </summary>
         public ResponseError Error { get; }
         /// <summary> Fully qualified ID of the resource against which the original async operation was started. </summary>

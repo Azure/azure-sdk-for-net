@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> The HybridConnectivity post operation response. </summary>
-    public partial class HybridConnectivityPostOperationResult
+    public partial class GenerateAwsTemplateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HybridConnectivityPostOperationResult"/>. </summary>
-        internal HybridConnectivityPostOperationResult()
+        /// <summary> Initializes a new instance of <see cref="GenerateAwsTemplateResult"/>. </summary>
+        internal GenerateAwsTemplateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridConnectivityPostOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateAwsTemplateResult"/>. </summary>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectivityPostOperationResult(IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GenerateAwsTemplateResult(IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
 SolutionSettings = new PublicCloudConnectorSolutionSettings(),
 }},
             };
-            HybridConnectivityPostOperationResult result = await subscriptionResource.PostGenerateAwsTemplateAsync(content);
+            GenerateAwsTemplateResult result = await subscriptionResource.PostGenerateAwsTemplateAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

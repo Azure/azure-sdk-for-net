@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate AWS CFT Template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<HybridConnectivityPostOperationResult>> PostGenerateAwsTemplateAsync(this SubscriptionResource subscriptionResource, GenerateAwsTemplateContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<GenerateAwsTemplateResult>> PostGenerateAwsTemplateAsync(this SubscriptionResource subscriptionResource, GenerateAwsTemplateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate AWS CFT Template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<HybridConnectivityPostOperationResult> PostGenerateAwsTemplate(this SubscriptionResource subscriptionResource, GenerateAwsTemplateContent content, CancellationToken cancellationToken = default)
+        public static Response<GenerateAwsTemplateResult> PostGenerateAwsTemplate(this SubscriptionResource subscriptionResource, GenerateAwsTemplateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
