@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Projects.AppConfiguration;
-using Azure.Projects.Core;
-
-namespace Azure.Projects;
+namespace Azure.Projects.Core;
 
 public abstract class ConnectionStore
 {

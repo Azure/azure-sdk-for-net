@@ -21,13 +21,14 @@ $RepoRoot = Resolve-Path (Join-Path "$PSScriptRoot" ".." "..")
 $snippetEnabledProjects = Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
 | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json } `
 | Where-Object { $_.ArtifactName -in $TargetProjects -and $_.CIParameters.BuildSnippets -eq $true }
-
-$scopedFile = Write-PkgInfoToDependencyGroupFile -OutputPath "$RepoRoot" -PackageInfoFolder $PackageInfoFolder -ProjectNames $TargetProjects
-
-Write-Host "Writing project list to $scopedFile"
-Write-Host (Get-Content -Raw -Path $scopedFile)
+| ForEach-Object { $_.ArtifactName }
 
 if ($snippetEnabledProjects) {
+    $scopedFile = Write-PkgInfoToDependencyGroupFile -OutputPath "$RepoRoot" -PackageInfoFolder $PackageInfoFolder -ProjectNames $snippetEnabledProjects
+
+    Write-Host "Writing project list to $scopedFile"
+    Write-Host (Get-Content -Raw -Path $scopedFile)
+
     dotnet build eng/service.proj -warnaserror `
     /t:rebuild `
     /p:DebugType=none `

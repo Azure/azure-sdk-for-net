@@ -4,11 +4,17 @@
 
 ### Features Added
 
+- `ServiceBusClientOptions` now supports registering a callback delegate for participating in the validation of SSL certificates when connections are established.  This delegate may override the built-in validation and allow or deny certificates based on application-specific logic.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Added jitter to the lock renewal timer to reduce the likelihood of lock renewal collisions when using the `ServiceBusProcessor` or the `ServiceBusSessionProcessor`.
+
+- Enhanced retry logic to consider additional cases for web socket-based failures.  In many cases, a `WebSocketException` is triggered which wraps a `SocketException` with the details for the specific network conditions.  Retry decisions are now based on the internal exception, if present, to ensure retries are correctly applied.
 
 ## 7.18.4 (2025-02-11)
 
