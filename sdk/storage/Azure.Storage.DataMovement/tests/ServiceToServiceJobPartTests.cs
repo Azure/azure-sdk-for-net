@@ -139,6 +139,9 @@ namespace Azure.Storage.DataMovement.Tests
             mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(Constants.MB);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(Constants.MB);
 
+            SingleItemStorageResourceContainer source = new(mockSource.Object);
+            SingleItemStorageResourceContainer destination = new(mockDestination.Object);
+
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);
             await checkpointer.AddNewJobAsync(
@@ -150,9 +153,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferJobInternal job = new(
                 new TransferOperation(id: transferId),
-                mockSource.Object,
-                mockDestination.Object,
-                ServiceToServiceJobPart.CreateJobPartAsync,
+                source,
+                destination,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
@@ -161,7 +163,9 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1) as ServiceToServiceJobPart;
+                1,
+                mockSource.Object,
+                mockDestination.Object) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act
@@ -210,6 +214,9 @@ namespace Azure.Storage.DataMovement.Tests
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(chunkSize);
             mockDestination.Setup(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
 
+            SingleItemStorageResourceContainer source = new(mockSource.Object);
+            SingleItemStorageResourceContainer destination = new(mockDestination.Object);
+
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);
             await checkpointer.AddNewJobAsync(
@@ -221,9 +228,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferJobInternal job = new(
                 new TransferOperation(id: transferId),
-                mockSource.Object,
-                mockDestination.Object,
-                ServiceToServiceJobPart.CreateJobPartAsync,
+                source,
+                destination,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
@@ -232,7 +238,9 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1) as ServiceToServiceJobPart;
+                1,
+                mockSource.Object,
+                mockDestination.Object) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             await jobPart.ProcessPartToChunkAsync();
