@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(PhoneNumberIdentifier targetPhoneNumberIdentity)
         {
             Target = targetPhoneNumberIdentity;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), null);
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null);
         }
 
         /// <summary>

@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
-        internal AvailabilitySetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy) : base(tags, serializedAdditionalRawData)
+        /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
+        internal AvailabilitySetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo) : base(tags, serializedAdditionalRawData)
         {
             Sku = sku;
             PlatformUpdateDomainCount = platformUpdateDomainCount;
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             ProximityPlacementGroup = proximityPlacementGroup;
             Statuses = statuses;
             ScheduledEventsPolicy = scheduledEventsPolicy;
+            VirtualMachineScaleSetMigrationInfo = virtualMachineScaleSetMigrationInfo;
         }
 
         /// <summary> Sku of the availability set. </summary>
@@ -69,5 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
         /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </summary>
         public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
+        /// <summary> Describes the migration properties on the Availability Set. </summary>
+        public VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo { get; }
     }
 }
