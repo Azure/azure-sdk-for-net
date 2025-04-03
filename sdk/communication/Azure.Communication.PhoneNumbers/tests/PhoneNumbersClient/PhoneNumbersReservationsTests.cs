@@ -71,8 +71,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(reservationResponse.Value);
             Assert.AreEqual(reservationId, reservationResponse.Value.Id);
             Assert.AreEqual(ReservationStatus.Active, reservationResponse.Value.Status);
-            Assert.Greater(reservationResponse.Value.ExpiresAt, DateTimeOffset.UtcNow);
             Assert.IsEmpty(reservationResponse.Value.PhoneNumbers);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.Greater(reservationResponse.Value.ExpiresAt, DateTimeOffset.UtcNow);
+            }
 
             _initialReservationState = reservationResponse.Value;
         }
@@ -93,8 +96,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(reservationResponse.Value);
             Assert.AreEqual(reservationId, reservationResponse.Value.Id);
             Assert.AreEqual(ReservationStatus.Active, reservationResponse.Value.Status);
-            Assert.Greater(reservationResponse.Value.ExpiresAt, DateTimeOffset.UtcNow);
             Assert.IsEmpty(reservationResponse.Value.PhoneNumbers);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.Greater(reservationResponse.Value.ExpiresAt, DateTimeOffset.UtcNow);
+            }
 
             _initialReservationState = reservationResponse.Value;
         }
