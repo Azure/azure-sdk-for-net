@@ -2393,6 +2393,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task GetSetAccesPolicy_OAuth()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(service);
+
+            // Act
+            Response<FileSystemAccessPolicy> response = await test.FileSystem.GetAccessPolicyAsync();
+            await test.FileSystem.SetAccessPolicyAsync(permissions: response.Value.SignedIdentifiers);
+        }
+
+        [RecordedTest]
         public async Task SetAccessPolicyAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2806,9 +2819,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task GetDeletedPathsAsync()
         {
             // Arrange
@@ -2848,9 +2860,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(paths[1].RemainingRetentionDays);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task GetDeletedPathsAsync_Path()
         {
             // Arrange
@@ -2877,9 +2888,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{directoryName}/{fileName}", paths[0].Path);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task GetDeletedPathsAsync_Error()
         {
             // Arrange
@@ -2892,9 +2902,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task UndeletePathAsync()
         {
             // Arrange
@@ -2918,9 +2927,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await restoredPathClient.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task UndeletePathAsync_Error()
         {
             // Arrange
@@ -2935,13 +2943,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase(" my cool directory ")]
         [TestCase("directory")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task UndeletePathAsync_SpecialCharacters(string directoryName)
         {
             // Arrange

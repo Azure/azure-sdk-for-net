@@ -754,6 +754,19 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task GetSetAccessPolicyAsync_OAuth()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_OAuth();
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            // Act
+            Response<IEnumerable<QueueSignedIdentifier>> response = await test.Queue.GetAccessPolicyAsync();
+            await test.Queue.SetAccessPolicyAsync(permissions: response.Value);
+        }
+
+        [RecordedTest]
         public async Task SetAccessPolicyAsync()
         {
             await using DisposingQueue test = await GetTestQueueAsync();

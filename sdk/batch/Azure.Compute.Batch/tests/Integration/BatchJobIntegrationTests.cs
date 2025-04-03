@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Azure.Compute.Batch.Tests.Infrastructure;
@@ -117,13 +118,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     TerminationReason = "<terminateReason>",
                 };
-                response = await client.TerminateJobAsync(jobID, parameters);
+                response = await client.TerminateJobAsync(jobID, parameters, force: true);
                 Assert.IsFalse(response.IsError);
             }
             finally
             {
                 await client.DeletePoolAsync(poolID);
-                await client.DeleteJobAsync(jobID);
+                await client.DeleteJobAsync(jobID, force: true);
             }
         }
 
@@ -135,6 +136,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             string poolID = iaasWindowsPoolFixture.PoolId;
             string jobID = "batchJob2";
             string commandLine = "cmd /c echo Hello World";
+            //string subnetID = "0.0.0.0";
             try
             {
                 // create a pool to verify we have something to query for
@@ -155,6 +157,10 @@ namespace Azure.Compute.Batch.Tests.Integration
                 // verify update job
                 BatchJobUpdateContent batchUpdateContent = new BatchJobUpdateContent();
                 batchUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+
+                // todo need to setup specific account for this to be set
+                //batchUpdateContent.NetworkConfiguration = new BatchJobNetworkConfiguration(subnetID, false);
+
                 response = await client.UpdateJobAsync(jobID, batchUpdateContent);
                 Assert.AreEqual(200, response.Status);
 
@@ -162,6 +168,55 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 Assert.IsNotNull(job);
                 Assert.AreEqual(job.Metadata.First().Value, "value");
+                //Assert.AreEqual(job.NetworkConfiguration.SubnetId, subnetID);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(jobID);
+            }
+        }
+
+        [RecordedTest]
+        public async Task TerminateJob()
+        {
+            var client = CreateBatchClient();
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "PatchJob", IsPlayBack());
+            string poolID = iaasWindowsPoolFixture.PoolId;
+            string jobID = "terminateJob";
+            string commandLine = "cmd /c echo Hello World";
+            //string subnetID = "0.0.0.0";
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
+
+                BatchPoolInfo batchPoolInfo = new BatchPoolInfo()
+                {
+                    PoolId = pool.Id
+                };
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo)
+                {
+                    JobPreparationTask = new BatchJobPreparationTask(commandLine),
+                    JobReleaseTask = new BatchJobReleaseTask(commandLine),
+                };
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
+                Assert.AreEqual(201, response.Status);
+
+                // get the job
+                BatchJob job = await client.GetJobAsync(jobID);
+                Assert.AreEqual(BatchJobState.Active, job.State);
+
+                await client.TerminateJobAsync(jobID, force: true);
+
+                job = await client.GetJobAsync(jobID);
+                while (job.State != BatchJobState.Completed)
+                {
+                    TestSleep(10);
+                    job = await client.GetJobAsync(jobID);
+                }
+
+                Assert.AreEqual("UserTerminate", job.ExecutionInfo.TerminationReason);
             }
             finally
             {

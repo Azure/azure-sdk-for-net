@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Added jitter to the lock renewal timer to reduce the likelihood of lock renewal collisions when using the `ServiceBusProcessor` or the `ServiceBusSessionProcessor`.
+
 ## 7.18.4 (2025-02-11)
 
 ### Bugs Fixed

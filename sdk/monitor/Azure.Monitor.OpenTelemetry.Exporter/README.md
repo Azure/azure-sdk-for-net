@@ -11,7 +11,7 @@ The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet)
 
 ### Migrating from Application Insights SDK
 
-If you are currently using the Application Insights SDK and want to migrate to OpenTelemetry, please follow our [migration guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-dotnet-migrate?tabs=console). 
+If you are currently using the Application Insights SDK and want to migrate to OpenTelemetry, please follow our [migration guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-dotnet-migrate?tabs=console).
 
 ### Already using OpenTelemetry?
 
@@ -19,7 +19,7 @@ If you are currently using OpenTelemetry and want to send telemetry data to Azur
 
 ### Install the package
 
-#### Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTelemetry.Exporter.svg)](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/)  
+#### Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTelemetry.Exporter.svg)](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/)
 
 Install the Azure Monitor Exporter for OpenTelemetry .NET with [NuGet](https://www.nuget.org/):
 ```dotnetcli
@@ -103,10 +103,10 @@ There are two options to enable AAD authentication. Note that if both have been 
 
 Some key concepts for .NET include:
 
-- [Overview of .NET distributed tracing](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing): 
-  Distributed tracing is a diagnostic technique that helps engineers localize failures and performance issues within applications, especially those that may be distributed across multiple machines or processes. 
+- [Overview of .NET distributed tracing](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing):
+  Distributed tracing is a diagnostic technique that helps engineers localize failures and performance issues within applications, especially those that may be distributed across multiple machines or processes.
 
-- [Overview of Logging in .NET](https://learn.microsoft.com/dotnet/core/extensions/logging): 
+- [Overview of Logging in .NET](https://learn.microsoft.com/dotnet/core/extensions/logging):
   .NET supports a logging API that works with a variety of built-in and third-party logging providers.
 
 Some key concepts for Azure Monitor include:
@@ -125,10 +125,10 @@ Some key concepts for OpenTelemetry include:
   The ability to call the OpenTelemetry API directly by any application is
   facilitated by instrumentation. A library that enables OpenTelemetry observability for another library is called an Instrumentation Library.
 
-- [Tracing Signal](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/overview.md#tracing-signal): 
+- [Tracing Signal](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/overview.md#tracing-signal):
   Trace refers to distributed tracing. It can be thought of as a directed acyclic graph (DAG) of Spans, where the edges between Spans are defined as parent/child relationship.
 
-- [Sampling](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/sdk.md#sampling): 
+- [Sampling](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/sdk.md#sampling):
   Sampling is a mechanism to control the noise and overhead introduced by OpenTelemetry by reducing the number of samples of traces collected and sent to the backend.
 
 - [Metric Signal](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/overview.md#metric-signal):
@@ -179,6 +179,51 @@ using (logger.BeginScope(scope))
 In scenarios involving multiple scopes or a single scope with multiple key-value pairs, if duplicate keys are present,
 only the first occurrence of the key-value pair from the outermost scope will be recorded.
 However, when the same key is utilized both within a logging scope and directly in the log statement, the value specified in the log message template will take precedence.
+
+### CustomEvents
+
+Azure Monitor relies on OpenTelemetry's Log Signal to create CustomEvents.
+For .NET, users will use ILogger and place an attribute named `"microsoft.custom_event.name"` in the message template.
+Severity and CategoryName are not recorded in the CustomEvent.
+
+#### via ILogger.Log methods
+
+To send a CustomEvent via ILogger, include the `"microsoft.custom_event.name"` attribute in the message template.
+
+Note: This example shows `LogInformation`, but any Log method can be used.
+Severity is not recorded, but depending on your configuration it may be filtered out.
+Users should take care to select a severity for CustomEvents that is not filtered out by their configuration.
+
+```csharp
+var loggerFactory = LoggerFactory.Create(builder =>
+{
+    builder.AddOpenTelemetry(logging =>
+    {
+        logging.AddAzureMonitorLogExporter();
+    });
+});
+
+var logger = loggerFactory.CreateLogger(logCategoryName);
+logger.LogInformation("{microsoft.custom_event.name} {key1} {key2}", "MyCustomEventName", "value1", "value2");
+```
+
+This example generates a CustomEvent structured like this:
+
+```json
+{
+    "name": "Event",
+    "data": {
+        "baseType": "EventData",
+        "baseData": {
+            "name": "MyCustomEventName",
+            "properties": {
+                "key1": "value1",
+                "key2": "value2"
+            }
+        }
+    }
+}
+``
 
 ## Troubleshooting
 
