@@ -925,7 +925,8 @@ namespace Azure.ResourceManager.HDInsight
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightClusterGatewaySettings.DeserializeHDInsightClusterGatewaySettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
-                    }
+                        ;
+                    } 
                 default:
                     throw new RequestFailedException(message.Response);
             }

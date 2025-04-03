@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
@@ -673,20 +674,20 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.StorageAccounts.Add(hdis);
             var clusterIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             clusterIdentity.UserAssignedIdentities.Add(msiId, new UserAssignedIdentity());
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var content = new HDInsightClusterCreateOrUpdateContent()
             {
                 Properties = properties,
                 Location = DefaultLocation,
                 Identity = clusterIdentity
             };
-            var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content);
             Assert.IsNotNull(cluster);
         }
 
         [RecordedTest]
         public async Task TestCreateSparkClusterWithADLSGen2Msi()
         {
-            string clusterName = "yk62sparkgen2msi";
+            string clusterName = "yk63sparkgen2msi";
             _storageAccountName = "yk4adlsgen2";
             string msi = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/guoweidong-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/guoweidong-test-mi";
             string resourceId = $"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/yukundemo3/providers/Microsoft.Storage/storageAccounts/{_storageAccountName}";
@@ -759,14 +760,49 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.StorageAccounts.Add(hdis);
             var clusterIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             clusterIdentity.UserAssignedIdentities.Add(msiId, new UserAssignedIdentity());
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var content = new HDInsightClusterCreateOrUpdateContent()
             {
                 Properties = properties,
                 Location = DefaultLocation,
                 Identity = clusterIdentity
             };
-            var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content);
             Assert.IsNotNull(cluster);
+        }
+
+        [RecordedTest]
+        public async Task TestEntraUser()
+        {
+            string clusterName = "yk01Entra";
+            var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
+            var content = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = DefaultLocation,
+            };
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content);
+            var updateContent = new HDInsightClusterUpdateGatewaySettingsContent
+            {
+                RestAuthEntraUsers = {
+                    new EntraUserInfo {
+                        ObjectId = "9cd85b81-c262-44da-bc33-96c3b8c182d3",
+                        Upn = "v-yukunli@microsoft.com"
+                    },new EntraUserInfo {
+                        ObjectId = "9cd85b81-c262-44da-bc33-96c3b8c182d3",
+                        Upn = "v-yukunli@microsoft.com"
+                    }
+                }
+            };
+
+            var operation = await cluster.Value.UpdateGatewaySettingsAsync(WaitUntil.Completed, updateContent);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            var updatedSettings = await cluster.Value.GetGatewaySettingsAsync();
+            Assert.IsNotEmpty(updateContent.RestAuthEntraUsers);
+            Console.WriteLine(updateContent.RestAuthEntraUsers.Count);
+            foreach (var entraUser in updateContent.RestAuthEntraUsers)
+            {
+                Console.WriteLine("ObjectId: "+ entraUser.ObjectId+ ", Upn: "+entraUser.Upn);
+            }
         }
     }
 }
