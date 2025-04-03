@@ -25,9 +25,10 @@ namespace Azure.Communication.Identity
         protected string TokenResponse = string.Format(TokenResponseTemplate, SampleToken, SampleTokenExpiry);
 
         private Mock<TokenCredential> _mockTokenCredential = null!;
-        private const string comunicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
-        private const string communicationClientsScope = "https://communication.azure.com/clients/VoIP";
-        private const string teamsExtensionEndpoint = "/access/teamsPhone/:exchangeAccessToken";
+        private const string communicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
+        private const string communicationClientsPrefix = "https://communication.azure.com/clients/";
+        private const string communicationClientsScope = communicationClientsPrefix + "VoIP";
+        private const string teamsExtensionEndpoint = "/access/teamsExtension/:exchangeAccessToken";
         private const string teamsExtensionScope = "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls";
         private string _resourceEndpoint = "https://myResource.communication.azure.com";
 
@@ -123,13 +124,13 @@ namespace Azure.Communication.Identity
             }
             else
             {
-                Assert.AreEqual(comunicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
+                Assert.AreEqual(communicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
             }
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
-        public async Task EntraTokenCredential_InitWithoutScopes_ReturnsComunicationClientsToken()
+        public async Task EntraTokenCredential_InitWithoutScopes_ReturnsCommunicationClientsToken()
         {
             // Arrange
             var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
@@ -143,7 +144,7 @@ namespace Azure.Communication.Identity
             // Assert
             Assert.AreEqual(SampleToken, token.Token);
             Assert.AreEqual(token.ExpiresOn, expiryTime);
-            Assert.AreEqual(comunicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
+            Assert.AreEqual(communicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -152,18 +153,20 @@ namespace Azure.Communication.Identity
         {
             // Arrange
             var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
-            var newToken = "newToken";
             var refreshOn = DateTimeOffset.Now;
+            _mockTokenCredential.Reset();
             _mockTokenCredential
                 .SetupSequence(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new AccessToken("Entra token for call from constructor", refreshOn))
                 .ReturnsAsync(new AccessToken("Entra token for the first getToken call token", expiryTime));
 
-            var options = CreateEntraTokenCredentialOptions(scopes);
+            var newToken = "newToken";
             var latestTokenResponse = string.Format(TokenResponseTemplate, newToken, SampleTokenExpiry);
             var mockTransport = CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse), CreateMockResponse(200, latestTokenResponse) });
-            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
+            var options = CreateEntraTokenCredentialOptions(scopes);
+
             // Act
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
             var token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
 
             // Assert for cached tokens are updated
@@ -270,6 +273,38 @@ namespace Azure.Communication.Identity
             // Act & Assert
             var ex = Assert.ThrowsAsync<ArgumentException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
             StringAssert.Contains("Scopes validation failed. Ensure all scopes start with either", ex?.Message);
+        }
+
+        [Test]
+        public async Task EntraTokenCredential_GetToken_NoIssueIfScopesChanged()
+        {
+            var scopes = new string[] { communicationClientsScope, communicationClientsPrefix + "Chat" };
+
+            // Arrange
+            _mockTokenCredential.Reset();
+            var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            var refreshOn = DateTimeOffset.Now;
+            _mockTokenCredential
+                .SetupSequence(tc => tc.GetTokenAsync(It.Is<TokenRequestContext>(c => c.Scopes.SequenceEqual(scopes)), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new AccessToken("Entra token for call from constructor", refreshOn))
+                .ReturnsAsync(new AccessToken("Entra token for the first getToken call token", expiryTime));
+
+            var newToken = "newToken";
+            var latestTokenResponse = string.Format(TokenResponseTemplate, newToken, SampleTokenExpiry);
+            var mockTransport = CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse), CreateMockResponse(200, latestTokenResponse) });
+
+            var options = CreateEntraTokenCredentialOptions((string[])scopes.Clone());
+
+            // Act
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
+
+            // Change scopes
+            options.Scopes[1] = teamsExtensionScope;
+            var token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
+
+            // Assert for cached tokens are updated
+            Assert.AreEqual(newToken, token.Token);
+            _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         private EntraCommunicationTokenCredentialOptions CreateEntraTokenCredentialOptions(string[] scopes)
