@@ -66,7 +66,7 @@ steps:
 
     - pwsh: |
         $invocation = @"
-        `$Process = Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe
+        Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe
           -ArgumentList `"start -u --storage-location ${{ parameters.rootFolder }}`"
           -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log
           -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-error.log
