@@ -38,7 +38,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             MetadataReference[]? additionalReferences = null,
             string assemblyName = "TestAssembly",
             bool includeSTJ = true,
-            CSharpParseOptions? parseOptions = null)
+            CSharpParseOptions? parseOptions = null,
+            string contextName = "LocalContext")
         {
             List<MetadataReference> references =
             [
@@ -83,8 +84,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             foreach (var diag in compilationDiagnostics)
             {
                 // The TestAssemblyContext won't exist yet since the ContextGenerator hasn't run yet
-                if (diag.ToString().EndsWith("error CS0103: The name 'TestAssemblyContext' does not exist in the current context", StringComparison.Ordinal) ||
-                    diag.ToString().EndsWith("error CS0117: 'TestAssemblyContext' does not contain a definition for 'Default'", StringComparison.Ordinal))
+                if (diag.ToString().EndsWith($"error CS0103: The name '{contextName}' does not exist in the current context", StringComparison.Ordinal) ||
+                    diag.ToString().EndsWith($"error CS0117: '{contextName}' does not contain a definition for 'Default'", StringComparison.Ordinal))
                     continue;
 
                 Assert.Fail($"Compilation Error: {diag}");
@@ -124,8 +125,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                     generators: [generator.AsSourceGenerator()],
                     parseOptions: parseOptions,
                     driverOptions: new GeneratorDriverOptions(
-                        disabledOutputs: IncrementalGeneratorOutputKind.None,
-                        trackIncrementalGeneratorSteps: true));
+                        disabledOutputs: IncrementalGeneratorOutputKind.None));
         }
     }
 }

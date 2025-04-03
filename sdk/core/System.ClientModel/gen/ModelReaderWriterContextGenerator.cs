@@ -60,7 +60,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
                 if (targetBaseType is null)
                 {
-                    return [];
+                    return ImmutableArray<INamedTypeSymbol>.Empty;
                 }
 
                 List<INamedTypeSymbol> matchingTypes = [];
@@ -154,12 +154,16 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             return;
         }
 
-        var contextSymbol = data.Contexts.Length == 0 || data.Contexts[0] is null ? null : data.Contexts[0];
+        if (data.Contexts.Length == 0)
+        {
+            // nothing to generate
+            return;
+        }
+
+        var contextSymbol = data.Contexts[0]!;
 
         string assemblyName = data.Assembly.Name;
-        var contextType = contextSymbol is null
-            ? new TypeRef($"{assemblyName.RemovePeriods()}Context", assemblyName, data.Assembly.ToDisplayString())
-            : new TypeRef(contextSymbol.Name, contextSymbol.ContainingNamespace.ToDisplayString(), contextSymbol.ContainingAssembly.ToDisplayString());
+        var contextType = new TypeRef(contextSymbol.Name, contextSymbol.ContainingNamespace.ToDisplayString(), contextSymbol.ContainingAssembly.ToDisplayString());
 
         var referencedContexts = data.ReferencedContexts.Select(refContext
             => new TypeRef(refContext.Name, refContext.ContainingNamespace.ToDisplayString(), refContext.ContainingAssembly.ToDisplayString()));
@@ -192,33 +196,19 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             .Where(spec => spec is not null)
             .Select(spec => spec!);
 
-        ModelReaderWriterContextGenerationSpec contextGenerationSpec;
-        if (contextSymbol is null)
+        if (!IsPartialClass(contextSymbol))
         {
-            contextGenerationSpec = new()
-            {
-                Type = contextType,
-                Modifier = typeGenerationSpecs.Any() ? "public" : "internal",
-                TypeBuilders = new ImmutableEquatableArray<TypeBuilderSpec>(typeGenerationSpecs),
-                ReferencedContexts = new ImmutableEquatableArray<TypeRef>(referencedContexts),
-            };
+            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.ContextMustBePartial, Location.None));
+            return;
         }
-        else
-        {
-            if (!IsPartialClass(contextSymbol))
-            {
-                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.ContextMustBePartial, Location.None));
-                return;
-            }
 
-            contextGenerationSpec = new()
-            {
-                Type = contextType,
-                Modifier = contextSymbol.DeclaredAccessibility.ToString().ToLowerInvariant(),
-                TypeBuilders = new ImmutableEquatableArray<TypeBuilderSpec>(typeGenerationSpecs),
-                ReferencedContexts = new ImmutableEquatableArray<TypeRef>(referencedContexts),
-            };
-        }
+        ModelReaderWriterContextGenerationSpec contextGenerationSpec = new()
+        {
+            Type = contextType,
+            Modifier = contextSymbol.DeclaredAccessibility.ToString().ToLowerInvariant(),
+            TypeBuilders = new ImmutableEquatableArray<TypeBuilderSpec>(typeGenerationSpecs),
+            ReferencedContexts = new ImmutableEquatableArray<TypeRef>(referencedContexts),
+        };
 
         OnSourceEmitting?.Invoke(contextGenerationSpec);
         Emitter emitter = new(context);
