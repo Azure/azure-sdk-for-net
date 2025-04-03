@@ -99,14 +99,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointDetails.4.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointDetails.VariableLengthStartIndex))
-                /*
-            using (FileStream fileStream = File.OpenWrite(samplePath))
-            {
-                data.Serialize(dataStream);
-                dataStream.Seek(0, SeekOrigin.Begin);
-                dataStream.CopyTo(fileStream);
-            }
-                */
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
                 data.Serialize(dataStream);
