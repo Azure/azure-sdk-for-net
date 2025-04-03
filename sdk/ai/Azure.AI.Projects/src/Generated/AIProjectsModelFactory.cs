@@ -325,7 +325,7 @@ namespace Azure.AI.Projects
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Projects.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Projects.RunStepAzureAISearchToolCall"/>, <see cref="Projects.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Projects.RunStepMicrosoftFabricToolCall"/>, <see cref="Projects.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="Projects.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Projects.RunStepAzureAISearchToolCall"/>, <see cref="Projects.RunStepCustomSearchToolCall"/>, <see cref="Projects.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Projects.RunStepMicrosoftFabricToolCall"/>, <see cref="Projects.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="Projects.RunStepOpenAPIToolCall"/> and <see cref="Projects.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Projects.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -452,6 +452,28 @@ namespace Azure.AI.Projects
             microsoftFabric ??= new Dictionary<string, string>();
 
             return new RunStepMicrosoftFabricToolCall("fabric_dataagent", id, serializedAdditionalRawData: null, microsoftFabric);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.RunStepCustomSearchToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="bingCustomSearch"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Projects.RunStepCustomSearchToolCall"/> instance for mocking. </returns>
+        public static RunStepCustomSearchToolCall RunStepCustomSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
+        {
+            bingCustomSearch ??= new Dictionary<string, string>();
+
+            return new RunStepCustomSearchToolCall("bing_custom_search", id, serializedAdditionalRawData: null, bingCustomSearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.RunStepOpenAPIToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="openAPI"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Projects.RunStepOpenAPIToolCall"/> instance for mocking. </returns>
+        public static RunStepOpenAPIToolCall RunStepOpenAPIToolCall(string id = null, IReadOnlyDictionary<string, string> openAPI = null)
+        {
+            openAPI ??= new Dictionary<string, string>();
+
+            return new RunStepOpenAPIToolCall("openapi", id, serializedAdditionalRawData: null, openAPI);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.RunStepError"/>. </summary>

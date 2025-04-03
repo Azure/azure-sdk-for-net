@@ -17,6 +17,7 @@ namespace Azure.AI.Projects
                     description: description,
                     spec: spec,
                     auth: auth,
+                    defaultParams: [],
                     serializedAdditionalRawData: null
                     )
             ){}
