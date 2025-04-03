@@ -334,6 +334,48 @@ In scenarios involving multiple scopes or a single scope with multiple key-value
 only the first occurrence of the key-value pair from the outermost scope will be recorded.
 However, when the same key is utilized both within a logging scope and directly in the log statement, the value specified in the log message template will take precedence.
 
+### CustomEvents
+
+Azure Monitor relies on OpenTelemetry's Log Signal to create CustomEvents.
+For .NET, users will use ILogger and place an attribute named `"microsoft.custom_event.name"` in the message template.
+Severity and CategoryName are not recorded in the CustomEvent.
+
+#### via ILogger.Log methods
+
+To send a CustomEvent via ILogger, include the `"microsoft.custom_event.name"` attribute in the message template.
+
+Note: This example shows `LogInformation`, but any Log method can be used.
+Severity is not recorded, but depending on your configuration it may be filtered out.
+Users should take care to select a severity for CustomEvents that is not filtered out by their configuration.
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+
+var app = builder.Build();
+
+app.Logger.LogInformation("{microsoft.custom_event.name} {key1} {key2}", "MyCustomEventName", "value1", "value2");
+```
+
+This example generates a CustomEvent structured like this:
+
+```json
+{
+    "name": "Event",
+    "data": {
+        "baseType": "EventData",
+        "baseData": {
+            "name": "MyCustomEventName",
+            "properties": {
+                "key1": "value1",
+                "key2": "value2"
+            }
+        }
+    }
+}
+```
+
 ## Troubleshooting
 
 The Azure Monitor Distro uses EventSource for its own internal logging. The logs are available to any EventListener by opting into the source named "OpenTelemetry-AzureMonitor-Exporter".

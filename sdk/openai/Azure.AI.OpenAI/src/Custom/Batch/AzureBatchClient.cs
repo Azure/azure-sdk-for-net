@@ -32,9 +32,4 @@ internal partial class AzureBatchClient : BatchClient
 
     protected AzureBatchClient()
     { }
-
-    internal override CreateBatchOperation CreateCreateBatchOperation(string batchId, string status, PipelineResponse response)
-    {
-        return new AzureCreateBatchOperation(Pipeline, _endpoint, batchId, status, response, _apiVersion);
-    }
 }

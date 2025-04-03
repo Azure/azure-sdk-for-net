@@ -89,15 +89,18 @@ steps:
     parameters:
       LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
 
-  # only use the project list override file if the service directory is not auto
+  # Due to discovering differing pack errors during debug vs release builds, we simply always opt into the more advanced
+  # release pack. This ensures that the public ci is packing the same way as what we will eventually release, and we won't be
+  # surprised by new errors that pop up only in internal when public CI was clean.
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    # only use the project list override file if the service directory is not auto
     - pwsh: |
         dotnet pack eng/service.proj -warnaserror `
           /p:ValidateRunApiCompat=true `
           /p:SDKType=${{ parameters.SDKType }} `
           /p:IncludeTests=false `
           /p:PublicSign=false $(VersioningProperties) `
-          /p:Configuration=$(BuildConfiguration) `
+          /p:Configuration=Release `
           /p:CommitSHA=$(Build.SourceVersion) `
           /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
           /p:ServiceDirectory=* `
@@ -116,7 +119,7 @@ steps:
         /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
         /p:IncludeTests=false
         /p:PublicSign=false $(VersioningProperties)
-        /p:Configuration=$(BuildConfiguration)
+        /p:Configuration=Release
         /p:CommitSHA=$(Build.SourceVersion)
         /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         $(DiagnosticArguments)
@@ -134,7 +137,7 @@ steps:
       arguments: >
         -RepoRoot $(Build.SourcesDirectory)
         -PackageInfoDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
-        -BuildConfiguration $(BuildConfiguration)
+        -BuildConfiguration Release
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Update package properties with namespaces
@@ -153,6 +156,7 @@ steps:
       parameters:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         AOTTestInputs: ${{ parameters.AOTTestInputs }}
+        PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: "Component Detection"
@@ -180,6 +184,8 @@ steps:
   - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
     parameters:
       Artifacts: ${{ parameters.Artifacts }}
+      ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        ArtifactName: 'packages_$(System.JobName)'
 
   - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
     parameters:

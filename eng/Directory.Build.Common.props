@@ -14,6 +14,7 @@
     <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
     <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
+    <IsSourceGenerator Condition="'$(IsSourceGenerator)' == '' and $(MSBuildProjectName.EndsWith('.SourceGeneration'))">true</IsSourceGenerator>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="'$(IsSamplesProject)' == '' and $(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
@@ -21,7 +22,7 @@
     <IsStressProject Condition="'$(IsStressProject)' == '' and $(MSBuildProjectName.EndsWith('.Stress'))">true</IsStressProject>
     <IsTestSupportProject Condition="'$(IsTestSupportProject)' == '' and '$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
     <IsShippingLibrary Condition="'$(IsShippingLibrary)' == '' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingLibrary>
-    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'">true</IsShippingClientLibrary>
+    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true' and '$(IsSourceGenerator)' != 'true'">true</IsShippingClientLibrary>
     <TestFrameworkSupportFiles>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Shared/*.cs</TestFrameworkSupportFiles>
 
     <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
@@ -135,9 +136,10 @@
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == ''">false</SupportsNetStandard20>
 
-    <RequiredTargetFrameworks>net452;netstandard1.4;net461;netstandard2.0</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">net8.0;netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net452;net461;netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true' and '$(IsSourceGenerator)' != 'true'">net8.0;netstandard2.0</RequiredTargetFrameworks>
     <RequiredTargetFrameworks Condition="'$(IsGeneratorLibrary)' == 'true'">net8.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(IsSourceGenerator)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsGeneratorLibrary)' != 'true' and ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true')">
@@ -162,6 +164,13 @@
     <IsTargetingNetCoreApp Condition="$(TargetFramework.StartsWith('netcoreapp'))">true</IsTargetingNetCoreApp>
 
     <DefineConstants Condition="'$(IsTargetingNetFx)' == 'true'">$(DefineConstants);FullNetFx</DefineConstants>
+  </PropertyGroup>
+
+  <!-- SourceGeneration common settings -->
+  <PropertyGroup Condition="'$(IsSourceGenerator)' == 'true'">
+    <OutputItemType>Analyzer</OutputItemType>
+    <AnalyzerLanguage>cs</AnalyzerLanguage>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
   </PropertyGroup>
 
   <!-- Common library and package properties -->

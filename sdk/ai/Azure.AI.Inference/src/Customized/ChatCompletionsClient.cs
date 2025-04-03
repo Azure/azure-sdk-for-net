@@ -19,8 +19,8 @@ namespace Azure.AI.Inference
     /// <summary> The ChatCompletions service client. </summary>
 
     [SuppressMessage("Azure Analysis", "AZC0007", Justification = "Analyzer is incorrectly flagging valid overloads.")]
-    [CodeGenSuppress("Complete", typeof(IEnumerable<ChatRequestMessage>), typeof(float?), typeof(bool?), typeof(float?), typeof(float?), typeof(float?), typeof(int?), typeof(ChatCompletionsResponseFormat), typeof(IEnumerable<string>), typeof(IEnumerable<ChatCompletionsToolDefinition>), typeof(BinaryData), typeof(long?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
-    [CodeGenSuppress("CompleteAsync", typeof(IEnumerable<ChatRequestMessage>), typeof(float?), typeof(bool?), typeof(float?), typeof(float?), typeof(float?), typeof(int?), typeof(ChatCompletionsResponseFormat), typeof(IEnumerable<string>), typeof(IEnumerable<ChatCompletionsToolDefinition>), typeof(BinaryData), typeof(long?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("Complete", typeof(ChatCompletionsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("CompleteAsync", typeof(ChatCompletionsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class ChatCompletionsClient
     {
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>

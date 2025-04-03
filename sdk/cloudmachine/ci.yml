@@ -53,7 +53,12 @@ extends:
       safeName: AzureProjects
     - name: Azure.Projects.Web
       safeName: AzureProjectsWeb
-    - name: Azure.Projects.OpenAI
-      safeName: AzureProjectsOpenAI
+    - name: Azure.Projects.AI
+      safeName: AzureProjectAI
     - name: Azure.Projects.Provisioning
       safeName: AzureProjectsProvisioning
+    - name: Azure.Projects.AI.Foundry
+      safeName: AzureProjectsAIFoundry
+    - name: Azure.Projects.Tsp
+      safeName: AzureProjectsTsp
+

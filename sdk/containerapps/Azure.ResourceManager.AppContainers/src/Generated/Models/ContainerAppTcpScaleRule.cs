@@ -55,11 +55,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppTcpScaleRule"/>. </summary>
         /// <param name="metadata"> Metadata properties to describe tcp scale rule. </param>
         /// <param name="auth"> Authentication secrets for the tcp scale rule. </param>
+        /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppTcpScaleRule(IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppTcpScaleRule(IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metadata = metadata;
             Auth = auth;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,5 +71,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Authentication secrets for the tcp scale rule. </summary>
         [WirePath("auth")]
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
+        /// <summary> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </summary>
+        [WirePath("identity")]
+        public string Identity { get; set; }
     }
 }

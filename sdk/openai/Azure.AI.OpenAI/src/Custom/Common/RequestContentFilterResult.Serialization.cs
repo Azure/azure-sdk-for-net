@@ -18,7 +18,7 @@ public partial class RequestContentFilterResult
         }
         int? promptIndex = default;
         InternalAzureContentFilterResultForPromptContentFilterResults contentFilterResults = default;
-        IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+        IDictionary<string, BinaryData> additionalBinaryDataProperties = default;
         Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
         foreach (var property in element.EnumerateObject())
         {
@@ -47,7 +47,7 @@ public partial class RequestContentFilterResult
                 rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
         }
-        serializedAdditionalRawData = rawDataDictionary;
-        return new RequestContentFilterResult(promptIndex, contentFilterResults, serializedAdditionalRawData);
+        additionalBinaryDataProperties = rawDataDictionary;
+        return new RequestContentFilterResult(promptIndex, contentFilterResults, additionalBinaryDataProperties);
     }
 }

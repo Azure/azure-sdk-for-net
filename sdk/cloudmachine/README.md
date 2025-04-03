@@ -11,7 +11,7 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 ```dotnetcli
 dotnet add package Azure.Projects --prerelease
 dotnet add package Azure.Projects.Provisioning --prerelease
-dotnet add package Azure.Projects.OpenAI --prerelease
+dotnet add package Azure.Projects.AI --prerelease
 ```
 
 ### Authenticate the Client
@@ -45,7 +45,7 @@ dotnet new web
 Add `Azure.Projects.*` packages
 ```dotnetcli
 dotnet add package Azure.Projects.Provisioning --prerelease
-dotnet add package Azure.Projects.OpenAI --prerelease
+dotnet add package Azure.Projects.AI --prerelease
 ```
 #### Use Azure Developer CLI to provision Projects
 

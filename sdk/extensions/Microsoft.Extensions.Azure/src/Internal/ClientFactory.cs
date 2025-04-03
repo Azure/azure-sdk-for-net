@@ -11,7 +11,6 @@ using System.Text;
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -179,11 +178,11 @@ namespace Microsoft.Extensions.Azure
                 throw new ArgumentException("For workload identity, 'tenantId', 'clientId', and 'tokenFilePath' must be specified via environment variables or the configuration.");
             }
 
-            if (string.Equals(credentialType, "azurepipelinescredential", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(credentialType, "azurepipelines", StringComparison.OrdinalIgnoreCase))
             {
                 if (string.IsNullOrWhiteSpace(tenantId) ||
                     string.IsNullOrWhiteSpace(clientId) ||
-                    string.IsNullOrEmpty(serviceConnectionId) ||
+                    string.IsNullOrWhiteSpace(serviceConnectionId) ||
                     string.IsNullOrWhiteSpace(systemAccessToken))
                 {
                     throw new ArgumentException("For Azure Pipelines, 'tenantId', 'clientId', 'serviceConnectionId', and 'systemAccessToken' must be specified via the configuration.");

@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Projects.AppConfiguration;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Projects.Core;
 

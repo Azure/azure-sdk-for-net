@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using Azure.Projects.AppConfiguration;
 using Azure.Projects.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Expressions;

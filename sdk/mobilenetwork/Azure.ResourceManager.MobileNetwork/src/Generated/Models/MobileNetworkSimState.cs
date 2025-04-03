@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The state of the SIM resource.
-    /// Serialized Name: SimState
-    /// </summary>
+    /// <summary> The state of the SIM resource. </summary>
     public readonly partial struct MobileNetworkSimState : IEquatable<MobileNetworkSimState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string EnabledValue = "Enabled";
         private const string InvalidValue = "Invalid";
 
-        /// <summary>
-        /// The SIM is disabled because not all configuration required for enabling is present.
-        /// Serialized Name: SimState.Disabled
-        /// </summary>
+        /// <summary> The SIM is disabled because not all configuration required for enabling is present. </summary>
         public static MobileNetworkSimState Disabled { get; } = new MobileNetworkSimState(DisabledValue);
-        /// <summary>
-        /// The SIM is enabled.
-        /// Serialized Name: SimState.Enabled
-        /// </summary>
+        /// <summary> The SIM is enabled. </summary>
         public static MobileNetworkSimState Enabled { get; } = new MobileNetworkSimState(EnabledValue);
-        /// <summary>
-        /// The SIM cannot be enabled because some of the associated configuration is invalid.
-        /// Serialized Name: SimState.Invalid
-        /// </summary>
+        /// <summary> The SIM cannot be enabled because some of the associated configuration is invalid. </summary>
         public static MobileNetworkSimState Invalid { get; } = new MobileNetworkSimState(InvalidValue);
         /// <summary> Determines if two <see cref="MobileNetworkSimState"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkSimState left, MobileNetworkSimState right) => left.Equals(right);

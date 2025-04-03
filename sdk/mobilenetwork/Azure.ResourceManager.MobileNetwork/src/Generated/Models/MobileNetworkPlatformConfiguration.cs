@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The platform where the packet core is deployed.
-    /// Serialized Name: PlatformConfiguration
-    /// </summary>
+    /// <summary> The platform where the packet core is deployed. </summary>
     public partial class MobileNetworkPlatformConfiguration
     {
         /// <summary>
@@ -51,10 +48,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatformConfiguration"/>. </summary>
-        /// <param name="platformType">
-        /// The platform type where packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.type
-        /// </param>
+        /// <param name="platformType"> The platform type where packet core is deployed. </param>
         public MobileNetworkPlatformConfiguration(MobileNetworkPlatformType platformType)
         {
             PlatformType = platformType;
@@ -62,30 +56,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatformConfiguration"/>. </summary>
-        /// <param name="platformType">
-        /// The platform type where packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.type
-        /// </param>
-        /// <param name="azureStackEdgeDevice">
-        /// The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified.
-        /// Serialized Name: PlatformConfiguration.azureStackEdgeDevice
-        /// </param>
-        /// <param name="azureStackEdgeDevices">
-        /// The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list.
-        /// Serialized Name: PlatformConfiguration.azureStackEdgeDevices
-        /// </param>
-        /// <param name="azureStackHciCluster">
-        /// The Azure Stack HCI cluster where the packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.azureStackHciCluster
-        /// </param>
-        /// <param name="connectedCluster">
-        /// Azure Arc connected cluster where the packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.connectedCluster
-        /// </param>
-        /// <param name="customLocation">
-        /// Azure Arc custom location where the packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.customLocation
-        /// </param>
+        /// <param name="platformType"> The platform type where packet core is deployed. </param>
+        /// <param name="azureStackEdgeDevice"> The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified. </param>
+        /// <param name="azureStackEdgeDevices"> The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list. </param>
+        /// <param name="azureStackHciCluster"> The Azure Stack HCI cluster where the packet core is deployed. </param>
+        /// <param name="connectedCluster"> Azure Arc connected cluster where the packet core is deployed. </param>
+        /// <param name="customLocation"> Azure Arc custom location where the packet core is deployed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkPlatformConfiguration(MobileNetworkPlatformType platformType, WritableSubResource azureStackEdgeDevice, IReadOnlyList<WritableSubResource> azureStackEdgeDevices, WritableSubResource azureStackHciCluster, WritableSubResource connectedCluster, WritableSubResource customLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -103,16 +79,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// The platform type where packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.type
-        /// </summary>
+        /// <summary> The platform type where packet core is deployed. </summary>
         [WirePath("type")]
         public MobileNetworkPlatformType PlatformType { get; set; }
-        /// <summary>
-        /// The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified.
-        /// Serialized Name: PlatformConfiguration.azureStackEdgeDevice
-        /// </summary>
+        /// <summary> The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified. </summary>
         internal WritableSubResource AzureStackEdgeDevice { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("azureStackEdgeDevice.id")]
@@ -127,16 +97,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary>
-        /// The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list.
-        /// Serialized Name: PlatformConfiguration.azureStackEdgeDevices
-        /// </summary>
+        /// <summary> The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list. </summary>
         [WirePath("azureStackEdgeDevices")]
         public IReadOnlyList<WritableSubResource> AzureStackEdgeDevices { get; }
-        /// <summary>
-        /// The Azure Stack HCI cluster where the packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.azureStackHciCluster
-        /// </summary>
+        /// <summary> The Azure Stack HCI cluster where the packet core is deployed. </summary>
         internal WritableSubResource AzureStackHciCluster { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("azureStackHciCluster.id")]
@@ -151,10 +115,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary>
-        /// Azure Arc connected cluster where the packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.connectedCluster
-        /// </summary>
+        /// <summary> Azure Arc connected cluster where the packet core is deployed. </summary>
         internal WritableSubResource ConnectedCluster { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("connectedCluster.id")]
@@ -169,10 +130,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary>
-        /// Azure Arc custom location where the packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.customLocation
-        /// </summary>
+        /// <summary> Azure Arc custom location where the packet core is deployed. </summary>
         internal WritableSubResource CustomLocation { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("customLocation.id")]

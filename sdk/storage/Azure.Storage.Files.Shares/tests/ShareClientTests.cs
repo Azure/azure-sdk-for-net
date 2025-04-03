@@ -303,6 +303,13 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
+        [Test]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareClient("UseDevelopmentStorage=true", "share"));
+            Assert.AreEqual("connectionString", ex.ParamName);
+        }
+
         [RecordedTest]
         public void WithSnapshot()
         {

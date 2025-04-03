@@ -80,6 +80,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(IdentitySettings))
+            {
+                writer.WritePropertyName("identitySettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in IdentitySettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -125,6 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             JobConfigurationScheduleTriggerConfig scheduleTriggerConfig = default;
             EventTriggerConfiguration eventTriggerConfig = default;
             IList<ContainerAppRegistryCredentials> registries = default;
+            IList<ContainerAppIdentitySettings> identitySettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,6 +214,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                     registries = array;
                     continue;
                 }
+                if (property.NameEquals("identitySettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerAppIdentitySettings> array = new List<ContainerAppIdentitySettings>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerAppIdentitySettings.DeserializeContainerAppIdentitySettings(item, options));
+                    }
+                    identitySettings = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -218,6 +243,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 scheduleTriggerConfig,
                 eventTriggerConfig,
                 registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
+                identitySettings ?? new ChangeTrackingList<ContainerAppIdentitySettings>(),
                 serializedAdditionalRawData);
         }
 
@@ -356,6 +382,29 @@ namespace Azure.ResourceManager.AppContainers.Models
                         foreach (var item in Registries)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  registries: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentitySettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identitySettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IdentitySettings))
+                {
+                    if (IdentitySettings.Any())
+                    {
+                        builder.Append("  identitySettings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IdentitySettings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  identitySettings: ");
                         }
                         builder.AppendLine("  ]");
                     }

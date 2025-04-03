@@ -197,7 +197,7 @@ namespace Azure.AI.Projects
         public virtual async Task<Response<ListConnectionsResponse>> GetConnectionsAsync(ConnectionType? category = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetConnectionsAsync(category?.ToSerialString(), includeAll, target, context).ConfigureAwait(false);
+            Response response = await GetConnectionsAsync(category?.ToString(), includeAll, target, context).ConfigureAwait(false);
             return Response.FromValue(ListConnectionsResponse.FromResponse(response), response);
         }
 
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects
         public virtual Response<ListConnectionsResponse> GetConnections(ConnectionType? category = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetConnections(category?.ToSerialString(), includeAll, target, context);
+            Response response = GetConnections(category?.ToString(), includeAll, target, context);
             return Response.FromValue(ListConnectionsResponse.FromResponse(response), response);
         }
 

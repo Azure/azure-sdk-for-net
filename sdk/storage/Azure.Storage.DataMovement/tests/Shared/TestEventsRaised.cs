@@ -152,7 +152,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
-            Assert.IsEmpty(SingleCompletedEvents);
+            Assert.That(SingleCompletedEvents.Count, Is.EqualTo(1));
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {

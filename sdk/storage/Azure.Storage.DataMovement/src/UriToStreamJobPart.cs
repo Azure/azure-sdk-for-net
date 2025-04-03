@@ -23,32 +23,6 @@ namespace Azure.Storage.DataMovement
         private DownloadChunkHandler _downloadChunkHandler;
 
         /// <summary>
-        /// Creating job part based on a single transfer job
-        /// </summary>
-        private UriToStreamJobPart(
-            TransferJobInternal job,
-            int partNumber)
-            : base(transferOperation: job._transferOperation,
-                  partNumber: partNumber,
-                  sourceResource: job._sourceResource,
-                  destinationResource: job._destinationResource,
-                  transferChunkSize: job._maximumTransferChunkSize,
-                  initialTransferSize: job._initialTransferSize,
-                  errorHandling: job._errorMode,
-                  createMode: job._creationPreference,
-                  checkpointer: job._checkpointer,
-                  progressTracker: job._progressTracker,
-                  arrayPool: job.UploadArrayPool,
-                  jobPartEventHandler: job.GetJobPartStatusEventHandler(),
-                  statusEventHandler: job.TransferStatusEventHandler,
-                  failedEventHandler: job.TransferFailedEventHandler,
-                  skippedEventHandler: job.TransferSkippedEventHandler,
-                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
-                  clientDiagnostics: job.ClientDiagnostics,
-                  cancellationToken: job._cancellationToken)
-        { }
-
-        /// <summary>
         /// Creating transfer job based on a storage resource created from listing.
         /// </summary>
         private UriToStreamJobPart(
@@ -118,19 +92,6 @@ namespace Azure.Storage.DataMovement
         public async ValueTask DisposeAsync()
         {
             await DisposeHandlersAsync().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Called when creating a job part from a single transfer.
-        /// </summary>
-        public static async Task<JobPartInternal> CreateJobPartAsync(
-            TransferJobInternal job,
-            int partNumber)
-        {
-            // Create Job Part file as we're initializing the job part
-            UriToStreamJobPart part = new UriToStreamJobPart(job, partNumber);
-            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
-            return part;
         }
 
         /// <summary>

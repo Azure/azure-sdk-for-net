@@ -476,5 +476,53 @@ Name = "testcontainerappsjob-1102",
             Assert.AreEqual(data1.GitHubActionConfiguration.AzureCredentials.ClientSecret, data2.GitHubActionConfiguration.AzureCredentials.ClientSecret);
         }
         #endregion
+
+        # region SessionPoolData
+        public static SessionPoolData GetSessionPoolData(ResourceIdentifier envId)
+        {
+            SessionPoolData data = new SessionPoolData(AzureLocation.WestUS)
+            {
+                EnvironmentId = envId,
+                PoolManagementType = PoolManagementType.Dynamic,
+                ContainerType = ContainerType.CustomContainer,
+                ScaleConfiguration = new SessionPoolScaleConfiguration() { MaxConcurrentSessions = 10, ReadySessionInstances = 10 },
+                DynamicPoolConfiguration = new DynamicPoolConfiguration()
+                {
+                    LifecycleConfiguration = new SessionPoolLifecycleConfiguration()
+                    {
+                        CooldownPeriodInSeconds = 1000,
+                        LifecycleType = SessionPoolLifecycleType.Timed,
+                    }
+                },
+                CustomContainerTemplate = new CustomContainerTemplate(
+                    ingress: new SessionIngress() { TargetPort = 80 },
+                    registryCredentials: null,
+                    containers: new List<SessionContainer>()
+                    {
+                        new SessionContainer()
+                        {
+                            Image = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest",
+                            Name = "testcontainerappsjob-1102",
+                            Resources = new SessionContainerResources()
+                            {
+                                Cpu = 0.25,
+                                Memory = "0.5Gi",
+                            }
+                        }
+                    },
+                    serializedAdditionalRawData: new Dictionary<string, BinaryData>()
+                    )
+            };
+            return data;
+        }
+
+        public static void AssertSessionPoolData(SessionPoolData data1, SessionPoolData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Name, data2.Name);
+            Assert.AreEqual(data1.Secrets, data2.Secrets);
+            Assert.AreEqual(data1.ContainerType, data2.ContainerType);
+        }
+        # endregion
     }
 }

@@ -20,7 +20,7 @@ internal static class AdditionalPropertyHelpers
         }
 
         using JsonDocument document = JsonDocument.Parse(additionalPropertyValue);
-        return deserializeFunction(document.RootElement, null);
+        return deserializeFunction(document.RootElement, ModelSerializationExtensions.WireOptions);
     }
 
     private static IList<T> GetAdditionalPropertyAsList<T>(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey, Func<JsonElement, ModelReaderWriterOptions, T> deserializeFunction) where T : class, IJsonModel<T>
@@ -35,7 +35,7 @@ internal static class AdditionalPropertyHelpers
 
         foreach (JsonElement element in document.RootElement.EnumerateArray())
         {
-            items.Add(deserializeFunction(element, null));
+            items.Add(deserializeFunction(element, ModelSerializationExtensions.WireOptions));
         }
 
         return items;

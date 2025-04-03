@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Security;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Core;
@@ -144,6 +147,76 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                             await (receiver?.DisposeAsync() ?? new ValueTask());
                         }
                     }, Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="ServiceBusClient" /> is able to
+        ///   connect to the Service Bus service when the SSL certificate is accepted.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectWhenCustomValidationAcceptsTheCertificate()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions
+                {
+                    CertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) => true
+                };
+
+                await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options))
+                {
+                    Assert.That(async () =>
+                    {
+                        ServiceBusReceiver receiver = null;
+
+                        try
+                        {
+                            receiver = client.CreateReceiver(scope.QueueName);
+                            await receiver.PeekMessageAsync().ConfigureAwait(false);
+                        }
+                        finally
+                        {
+                            await (receiver?.DisposeAsync() ?? new ValueTask());
+                        }
+                    }, Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="ServiceBusClient" /> is unable to
+        ///   connect to the Service Bus service when the SSL certificate is rejected.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCannotConnectWhenCustomValidationAcceptsTheCertificate()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions
+                {
+                    CertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) => false
+                };
+
+                await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options))
+                {
+                    Assert.That(async () =>
+                    {
+                        ServiceBusReceiver receiver = null;
+
+                        try
+                        {
+                            receiver = client.CreateReceiver(scope.QueueName);
+                            await receiver.PeekMessageAsync().ConfigureAwait(false);
+                        }
+                        finally
+                        {
+                            await (receiver?.DisposeAsync() ?? new ValueTask());
+                        }
+                    }, Throws.InstanceOf<AuthenticationException>());
                 }
             }
         }

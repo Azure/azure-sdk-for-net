@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>1.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.DeviceUpdate</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DeviceUpdate.</Description>
     <PackageTags>azure;management;arm;resource manager;deviceupdate</PackageTags>

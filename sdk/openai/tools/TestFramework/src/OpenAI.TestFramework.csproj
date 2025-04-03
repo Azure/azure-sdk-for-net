@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
+    <NoWarn>$(NoWarn);NU1604</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="System.ClientModel" />
+    <PackageReference Update="System.ClientModel" VersionOverride="1.4.0-beta.1" />
   </ItemGroup>
 
   <ItemGroup>

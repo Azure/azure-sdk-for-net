@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI.Files;
 /// <remarks>
 /// To retrieve an instance of this type, use the matching method on <see cref="AzureOpenAIClient"/>.
 /// </remarks>
-[CodeGenModel("AzureOpenAIFile")]
+[CodeGenType("AzureOpenAIFile")]
 [Experimental("AOAI001")]
 internal partial class AzureOpenAIFile : OpenAIFile
 {
@@ -75,9 +75,10 @@ internal partial class AzureOpenAIFile : OpenAIFile
     /// <param name="purpose"> The intended purpose of the file. Supported values are `assistants`, `assistants_output`, `batch`, `batch_output`, `fine-tune`, `fine-tune-results` and `vision`. </param>
     /// <param name="statusDetails"> Deprecated. For details on why a fine-tuning training file failed validation, see the `error` field on `fine_tuning.job`. </param>
     /// <param name="azureStatus"></param>
-    /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-    internal AzureOpenAIFile(string id, int? bytes, DateTimeOffset createdAt, string filename, InternalOpenAIFileObject @object, string purpose, string statusDetails, AzureOpenAIFileStatus azureStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        : base(id, createdAt, filename, purpose.ToFilePurpose(), @object, bytes, azureStatus.ToFileStatus(), statusDetails, serializedAdditionalRawData)
+    /// <param name="expiresAt"></param>
+    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+    internal AzureOpenAIFile(string id, int? bytes, DateTimeOffset createdAt, DateTimeOffset? expiresAt, string filename, InternalOpenAIFileObject @object, string purpose, string statusDetails, AzureOpenAIFileStatus azureStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        : base(id, createdAt, expiresAt, filename, purpose.ToFilePurpose(), @object, bytes, azureStatus.ToFileStatus(), statusDetails, additionalBinaryDataProperties)
     {
         _object = @object.ToString();
         _purpose = purpose;

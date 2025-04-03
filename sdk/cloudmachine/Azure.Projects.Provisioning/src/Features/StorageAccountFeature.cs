@@ -2,15 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using Azure.Projects.Core;
-using Azure.Projects.EventGrid;
-using Azure.Projects.ServiceBus;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
-namespace Azure.Projects.Storage;
+namespace Azure.Projects;
 
 public class StorageAccountFeature : AzureProjectFeature
 {

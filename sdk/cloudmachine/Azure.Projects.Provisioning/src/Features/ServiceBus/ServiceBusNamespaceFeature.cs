@@ -4,7 +4,7 @@
 using Azure.Projects.Core;
 using Azure.Provisioning.ServiceBus;
 
-namespace Azure.Projects.ServiceBus;
+namespace Azure.Projects;
 
 public class ServiceBusNamespaceFeature : AzureProjectFeature
 {

@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Secrets
     }
     public partial class SecretClientOptions : Azure.Core.ClientOptions
     {
-        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V7_5) { }
+        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V7_6_Preview_2) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -106,6 +106,7 @@ namespace Azure.Security.KeyVault.Secrets
             V7_3 = 3,
             V7_4 = 4,
             V7_5 = 5,
+            V7_6_Preview_2 = 6,
         }
     }
     public static partial class SecretModelFactory
@@ -143,7 +144,6 @@ namespace Microsoft.Extensions.Azure
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.KeyVault.Secrets.SecretClient, Azure.Security.KeyVault.Secrets.SecretClientOptions> AddSecretClient<TBuilder>(this TBuilder builder, System.Uri vaultUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.KeyVault.Secrets.SecretClient, Azure.Security.KeyVault.Secrets.SecretClientOptions> AddSecretClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

@@ -3,20 +3,18 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using OpenAI;
 using OpenAI.Assistants;
 using OpenAI.Files;
 using OpenAI.TestFramework;
 using OpenAI.TestFramework.Utils;
 using OpenAI.VectorStores;
+using System;
+using System.ClientModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -656,9 +654,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     }
 
     private static readonly DateTimeOffset s_2024 = new(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
-    private static FunctionToolDefinition s_getFoodForDayOfWeekTool = new()
+    private static FunctionToolDefinition s_getFoodForDayOfWeekTool = new("get_favorite_food_for_day_of_week")
     {
-        FunctionName = "get_favorite_food_for_day_of_week",
         Description = "gets the user's favorite food for a given day of the week, like Tuesday",
         Parameters = BinaryData.FromObjectAsJson(new
         {

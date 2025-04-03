@@ -52,14 +52,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputeSkuProfileVmSize"/>. </summary>
         /// <param name="name"> Specifies the name of the VM Size. </param>
+        /// <param name="rank"> Specifies the rank (a.k.a priority) associated with the VM Size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSkuProfileVmSize(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeSkuProfileVmSize(string name, int? rank, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            Rank = rank;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the name of the VM Size. </summary>
         public string Name { get; set; }
+        /// <summary> Specifies the rank (a.k.a priority) associated with the VM Size. </summary>
+        public int? Rank { get; set; }
     }
 }

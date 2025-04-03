@@ -56,13 +56,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the VM. **Note:** This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </param>
+        /// <param name="alignRegionalDisksToVmZone"> Specifies whether the regional disks should be aligned/moved to the VM zone. This is applicable only for VMs with placement property set. Please note that this change is irreversible. Minimum api-version: 2024-11-01. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineStorageProfile(ImageReference imageReference, VirtualMachineOSDisk osDisk, IList<VirtualMachineDataDisk> dataDisks, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineStorageProfile(ImageReference imageReference, VirtualMachineOSDisk osDisk, IList<VirtualMachineDataDisk> dataDisks, DiskControllerType? diskControllerType, bool? alignRegionalDisksToVmZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImageReference = imageReference;
             OSDisk = osDisk;
             DataDisks = dataDisks;
             DiskControllerType = diskControllerType;
+            AlignRegionalDisksToVmZone = alignRegionalDisksToVmZone;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,5 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<VirtualMachineDataDisk> DataDisks { get; }
         /// <summary> Specifies the disk controller type configured for the VM. **Note:** This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </summary>
         public DiskControllerType? DiskControllerType { get; set; }
+        /// <summary> Specifies whether the regional disks should be aligned/moved to the VM zone. This is applicable only for VMs with placement property set. Please note that this change is irreversible. Minimum api-version: 2024-11-01. </summary>
+        public bool? AlignRegionalDisksToVmZone { get; set; }
     }
 }

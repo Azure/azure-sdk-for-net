@@ -51,7 +51,7 @@ new WritableSubResource
 Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.MobileNetwork/mobileNetworks/testMobileNetwork/sites/testSite"),
 }
             },
-                new MobileNetworkPlatformConfiguration(MobileNetworkPlatformType.AKSHCI)
+                new MobileNetworkPlatformConfiguration(MobileNetworkPlatformType.AksHci)
                 {
                     AzureStackEdgeDeviceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/TestAzureStackEdgeDevice"),
                     ConnectedClusterId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Kubernetes/connectedClusters/TestConnectedCluster"),

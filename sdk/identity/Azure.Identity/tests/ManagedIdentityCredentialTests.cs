@@ -34,26 +34,6 @@ namespace Azure.Identity.Tests
 
         private const string ExpectedToken = "mock-msi-access-token";
 
-        [Test]
-        public async Task VerifyExpiringTokenRefresh()
-        {
-            int callCount = 0;
-
-            var mockClient = new MockManagedIdentityClient(CredentialPipeline.GetInstance(null))
-            {
-                TokenFactory = () => { callCount++; return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(2)); }
-            };
-
-            var cred = InstrumentClient(new ManagedIdentityCredential(mockClient));
-
-            for (int i = 0; i < 5; i++)
-            {
-                await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
-            }
-
-            Assert.AreEqual(5, callCount);
-        }
-
         [NonParallelizable]
         [Test]
         public async Task VerifyImdsRequestWithClientIdMockAsync()
@@ -82,6 +62,38 @@ namespace Azure.Identity.Tests
             Assert.IsTrue(query.Contains("api-version=2018-02-01"));
             Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
             Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task VerifyImdsSendsProbeOnlyOnFirstRequest()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            int probeCount = 0;
+            var mockTransport = new MockTransport(req =>
+            {
+                if (!req.Headers.TryGetValue("Metadata", out var _))
+                {
+                    probeCount++;
+                    return CreateErrorMockResponse(400, "mock error");
+                }
+                else
+                {
+                    return CreateMockResponse(200, ExpectedToken);
+                }
+            });
+            var options = new TokenCredentialOptions() { Transport = mockTransport, IsChainedCredential = true };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions() { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId("mock-client-id"), IsForceRefreshEnabled = true, Options = options })));
+
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.AreEqual(1, probeCount, "Probe was sent more than once.");
         }
 
         [NonParallelizable]

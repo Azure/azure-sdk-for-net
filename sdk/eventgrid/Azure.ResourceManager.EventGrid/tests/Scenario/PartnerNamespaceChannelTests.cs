@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
@@ -43,10 +40,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 ChannelType = PartnerNamespaceChannelType.PartnerTopic,
                 PartnerTopicInfo = new PartnerTopicInfo()
                 {
-                    AzureSubscriptionId = new Guid(DefaultSubscription.Id),
+                    AzureSubscriptionId = new Guid("5b4b650e-28b9-4790-b3ab-ddbd88d727c4"),
                     ResourceGroupName = _resourceGroup.Data.Name,
-                    Name = "",
-                    Source = ""
+                    Name = "partner-topic",
+                    Source = "Partner Topic Source"
                 }
             };
             var channel = await _partnerNamespaceChannelCollection.CreateOrUpdateAsync(WaitUntil.Completed, channelName, data);
@@ -63,6 +60,27 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // GetAll
             var list = await _partnerNamespaceChannelCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
+
+            // Get Full URL
+            var fullUrlResponse = await getResponse.Value.GetFullUriAsync();
+            Assert.IsNotNull(fullUrlResponse);
+
+            // List By Partner Namespace
+            var listByNamespace = await _partnerNamespaceChannelCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(listByNamespace);
+
+            var updateData = new PartnerNamespaceChannelPatch()
+            {
+                PartnerTopicInfo = new PartnerUpdateTopicInfo()
+                {
+                    EventTypeInfo = new PartnerTopicEventTypeInfo()
+                    {
+                        Kind = EventDefinitionKind.Inline,
+                    }
+                }
+            };
+            var updateResponse = await channel.Value.UpdateAsync(updateData, new System.Threading.CancellationToken());
+            Assert.IsNotNull(updateResponse);
 
             // Delete
             await channel.Value.DeleteAsync(WaitUntil.Completed);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// An IPv4 route.
-    /// Serialized Name: Ipv4Route
-    /// </summary>
+    /// <summary> An IPv4 route. </summary>
     public partial class MobileNetworkIPv4Route
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkIPv4Route"/>. </summary>
-        /// <param name="destination">
-        /// The destination IPv4 prefix.
-        /// Serialized Name: Ipv4Route.destination
-        /// </param>
-        /// <param name="nextHops">
-        /// A list of next hops for the destination.
-        /// Serialized Name: Ipv4Route.nextHops
-        /// </param>
+        /// <param name="destination"> The destination IPv4 prefix. </param>
+        /// <param name="nextHops"> A list of next hops for the destination. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkIPv4Route(string destination, IList<MobileNetworkIPv4RouteNextHop> nextHops, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The destination IPv4 prefix.
-        /// Serialized Name: Ipv4Route.destination
-        /// </summary>
+        /// <summary> The destination IPv4 prefix. </summary>
         [WirePath("destination")]
         public string Destination { get; set; }
-        /// <summary>
-        /// A list of next hops for the destination.
-        /// Serialized Name: Ipv4Route.nextHops
-        /// </summary>
+        /// <summary> A list of next hops for the destination. </summary>
         [WirePath("nextHops")]
         public IList<MobileNetworkIPv4RouteNextHop> NextHops { get; }
     }

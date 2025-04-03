@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using Azure.Core;
 using Azure.Security.KeyVault.Secrets;
 
-namespace Azure.Projects.KeyVault;
+namespace Azure.Projects;
 
 /// <summary>
 /// The key vault extensions.

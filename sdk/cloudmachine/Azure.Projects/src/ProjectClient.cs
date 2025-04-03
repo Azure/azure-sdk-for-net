@@ -6,7 +6,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Data.AppConfiguration;
 using Azure.Identity;
 
 namespace Azure.Projects;

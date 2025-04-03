@@ -7,8 +7,11 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- `DefaultAzureCredential` no longer sends a probe request on each call to `GetToken`. It now only happens on the first call.
 
 ### Other Changes
+
+- Marked `VisualStudioCodeCredential` as obsolete because the VS Code Azure Account extension on which this credential relies has been deprecated. See the Azure Account extension deprecation notice [here](https://github.com/microsoft/vscode-azure-account/issues/964).
 
 ## 1.14.0-beta.2 (2025-03-11)
 

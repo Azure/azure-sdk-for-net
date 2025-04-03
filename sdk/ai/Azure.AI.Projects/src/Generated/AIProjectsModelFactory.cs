@@ -451,7 +451,7 @@ namespace Azure.AI.Projects
         {
             microsoftFabric ??= new Dictionary<string, string>();
 
-            return new RunStepMicrosoftFabricToolCall("fabric_aiskill", id, serializedAdditionalRawData: null, microsoftFabric);
+            return new RunStepMicrosoftFabricToolCall("fabric_dataagent", id, serializedAdditionalRawData: null, microsoftFabric);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.RunStepError"/>. </summary>

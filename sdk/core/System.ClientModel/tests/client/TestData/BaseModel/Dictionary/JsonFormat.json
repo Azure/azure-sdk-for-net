@@ -1,0 +1,25 @@
+{
+  "xModel" : {
+    "kind": "X",
+    "name": "xModel",
+    "fields": [
+        "testField"
+    ],
+    "keyValuePairs": {
+        "color": "red"
+    },
+    "xProperty": 100,
+    "extraX": "stuff" 
+  },
+  "yModel" : {
+    "kind": "Y",
+    "name": "yModel",
+    "yProperty": "200",
+    "extraY": "stuff" 
+  },
+  "zModel" : {
+    "kind": "Z",
+    "name": "zModel",
+    "extraZ": "stuff" 
+  }
+}

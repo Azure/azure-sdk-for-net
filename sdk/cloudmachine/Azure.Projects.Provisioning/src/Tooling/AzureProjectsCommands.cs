@@ -7,6 +7,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Rest;
 using Azure.Identity;
+using Azure.Projects.Tooling;
 
 namespace Azure.Projects;
 

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Traffic control permission.
-    /// Serialized Name: TrafficControlPermission
-    /// </summary>
+    /// <summary> Traffic control permission. </summary>
     public readonly partial struct MobileNetworkTrafficControlPermission : IEquatable<MobileNetworkTrafficControlPermission>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string EnabledValue = "Enabled";
         private const string BlockedValue = "Blocked";
 
-        /// <summary>
-        /// Traffic matching this rule is allowed to flow.
-        /// Serialized Name: TrafficControlPermission.Enabled
-        /// </summary>
+        /// <summary> Traffic matching this rule is allowed to flow. </summary>
         public static MobileNetworkTrafficControlPermission Enabled { get; } = new MobileNetworkTrafficControlPermission(EnabledValue);
-        /// <summary>
-        /// Traffic matching this rule is not allowed to flow.
-        /// Serialized Name: TrafficControlPermission.Blocked
-        /// </summary>
+        /// <summary> Traffic matching this rule is not allowed to flow. </summary>
         public static MobileNetworkTrafficControlPermission Blocked { get; } = new MobileNetworkTrafficControlPermission(BlockedValue);
         /// <summary> Determines if two <see cref="MobileNetworkTrafficControlPermission"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkTrafficControlPermission left, MobileNetworkTrafficControlPermission right) => left.Equals(right);

@@ -22,8 +22,8 @@ public partial class ProjectClientTests : SamplesBase<AzureProjectsTestEnvironme
     public void CloudMachineProject()
     {
         ProjectInfrastructure infrastructure = new();
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
 
-        OfxProjectClient project = new();
+        OfxClient project = new();
     }
 }

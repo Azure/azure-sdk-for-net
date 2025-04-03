@@ -21,7 +21,7 @@ public partial class AgentsClient
     /// <see cref="Agent"/>.
     /// </summary>
     /// <param name="threadId"> Identifier of the thread. </param>
-    /// <param name="agentId"> The ID of the agent that should run the thread. </param>
+    /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
     /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
     /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
     /// <param name="additionalInstructions">
@@ -57,17 +57,17 @@ public partial class AgentsClient
     /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="agentId"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string agentId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-        Argument.AssertNotNull(agentId, nameof(agentId));
+        Argument.AssertNotNull(assistantId, nameof(assistantId));
 
         CreateRunRequest createRunRequest = new CreateRunRequest(
-            agentId,
+            assistantId,
             overrideModelName,
             overrideInstructions,
             additionalInstructions,
@@ -97,7 +97,7 @@ public partial class AgentsClient
     /// <see cref="Agent"/>.
     /// </summary>
     /// <param name="threadId"> Identifier of the thread. </param>
-    /// <param name="agentId"> The ID of the agent that should run the thread. </param>
+    /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
     /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
     /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
     /// <param name="additionalInstructions">
@@ -133,17 +133,17 @@ public partial class AgentsClient
     /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="agentId"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual CollectionResult<StreamingUpdate> CreateRunStreaming(string threadId, string agentId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<StreamingUpdate> CreateRunStreaming(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-        Argument.AssertNotNull(agentId, nameof(agentId));
+        Argument.AssertNotNull(assistantId, nameof(assistantId));
 
         CreateRunRequest createRunRequest = new CreateRunRequest(
-            agentId,
+            assistantId,
             overrideModelName,
             overrideInstructions,
             additionalInstructions,

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="storageType"> Storage type for the volume. If not provided, use EmptyDir. </param>
         /// <param name="storageName"> Name of storage resource. No need to provide for EmptyDir and Secret. </param>
         /// <param name="secrets"> List of secrets to be added in volume. If no secrets are provided, all secrets in collection will be added to volume. </param>
-        /// <param name="mountOptions"> Mount options used while mounting the AzureFile. Must be a comma-separated string. </param>
+        /// <param name="mountOptions"> Mount options used while mounting the Azure file share or NFS Azure file share. Must be a comma-separated string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerAppVolume(string name, ContainerAppStorageType? storageType, string storageName, IList<SecretVolumeItem> secrets, string mountOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> List of secrets to be added in volume. If no secrets are provided, all secrets in collection will be added to volume. </summary>
         [WirePath("secrets")]
         public IList<SecretVolumeItem> Secrets { get; }
-        /// <summary> Mount options used while mounting the AzureFile. Must be a comma-separated string. </summary>
+        /// <summary> Mount options used while mounting the Azure file share or NFS Azure file share. Must be a comma-separated string. </summary>
         [WirePath("mountOptions")]
         public string MountOptions { get; set; }
     }

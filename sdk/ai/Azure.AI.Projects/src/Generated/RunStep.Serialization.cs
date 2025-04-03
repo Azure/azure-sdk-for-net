@@ -41,7 +41,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("assistant_id"u8);
-            writer.WriteStringValue(AgentId);
+            writer.WriteStringValue(AssistantId);
             writer.WritePropertyName("thread_id"u8);
             writer.WriteStringValue(ThreadId);
             writer.WritePropertyName("run_id"u8);

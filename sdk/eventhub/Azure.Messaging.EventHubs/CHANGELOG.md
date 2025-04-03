@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Enhanced retry logic to consider additional cases for web socket-based failures.  In many cases, a `WebSocketException` is triggered which wraps a `SocketException` with the details for the specific network conditions.  Retry decisions are now based on the internal exception, if present, to ensure retries are correctly applied.
+
 ## 5.12.0-beta.2 (2025-02-11)
 
 ### Acknowledgments

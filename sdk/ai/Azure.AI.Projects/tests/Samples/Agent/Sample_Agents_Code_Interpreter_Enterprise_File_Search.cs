@@ -3,8 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,23 +13,32 @@ namespace Azure.AI.Projects.Tests;
 public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
+    [AsyncOnly]
     public async Task CodeInterpreterEnterpriseSearch()
     {
+        #region Snippet:CodeInterpreterEnterpriseSearch_CreateClient
+#if SNIPPET
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
+#else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         // For now we will take the File URI from the environment variables.
         // In future we may want to upload file to Azure here.
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
-        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
-
+#endif
+        AgentsClient client = new(connectionString, new DefaultAzureCredential());
+        #endregion
+        #region Snippet:CodeInterpreterEnterpriseSearchAsync_CreateAgent
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
-        Response<Agent> agentResponse = await client.CreateAgentAsync(
-            model: modelName,
+        Agent agent = await client.CreateAgentAsync(
+            model: modelDeploymentName,
             name: "my-assistant",
             instructions: "You are helpful assistant.",
             tools: tools
         );
-        Agent agent = agentResponse.Value;
+        #endregion
 
         #region Snippet:CreateMessageAttachmentWithBlobStore
         var ds = new VectorStoreDataSource(
@@ -43,41 +51,121 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
             tools: tools
         );
         #endregion
+        #region Snippet:CodeInterpreterEnterpriseSearchAsync_CreateThreadRun
+        AgentThread thread = await client.CreateThreadAsync();
 
-        Response<AgentThread> threadResponse = await client.CreateThreadAsync();
-        AgentThread thread = threadResponse.Value;
-
-        Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+        ThreadMessage message = await client.CreateMessageAsync(
             threadId: thread.Id,
             role: MessageRole.User,
             content: "What does the attachment say?",
-            attachments: new List< MessageAttachment > { attachment}
-            );
-        ThreadMessage message = messageResponse.Value;
+            attachments: [ attachment ]
+        );
 
-        Response<ThreadRun> runResponse = await client.CreateRunAsync(
+        ThreadRun run = await client.CreateRunAsync(
             thread.Id,
             agent.Id
         );
-        ThreadRun run = runResponse.Value;
-
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+            run = await client.GetRunAsync(thread.Id, run.Id);
         }
-        while (runResponse.Value.Status == RunStatus.Queued
-            || runResponse.Value.Status == RunStatus.InProgress);
-
-        Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-            = await client.GetMessagesAsync(thread.Id);
-        IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
+        while (run.Status == RunStatus.Queued
+            || run.Status == RunStatus.InProgress);
+        Assert.AreEqual(
+            RunStatus.Completed,
+            run.Status,
+            run.LastError?.Message);
+        #endregion
+        #region Snippet:CodeInterpreterEnterpriseSearchAsync_PrintMessages
+        PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+            threadId: thread.Id,
+            order: ListSortOrder.Ascending
+        );
         WriteMessages(messages);
-
-        await client.DeleteAgentAsync(agentResponse.Value.Id);
+        #endregion
+        #region Snippet:CodeInterpreterEnterpriseSearchAsync_Cleanup
+        await client.DeleteThreadAsync(thread.Id);
+        await client.DeleteAgentAsync(agent.Id);
+        #endregion
     }
 
-    private void WriteMessages(IEnumerable<ThreadMessage> messages)
+    [Test]
+    [SyncOnly]
+    public void CodeInterpreterEnterpriseSearchSync()
+    {
+#if SNIPPET
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
+#else
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        // For now we will take the File URI from the environment variables.
+        // In future we may want to upload file to Azure here.
+        var blobURI = TestEnvironment.AZURE_BLOB_URI;
+#endif
+        AgentsClient client = new(connectionString, new DefaultAzureCredential());
+        #region Snippet:CodeInterpreterEnterpriseSearch_CreateAgent
+        List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
+        Agent agent = client.CreateAgent(
+            model: modelDeploymentName,
+            name: "my-assistant",
+            instructions: "You are helpful assistant.",
+            tools: tools
+        );
+        #endregion
+
+        var ds = new VectorStoreDataSource(
+            assetIdentifier: blobURI,
+            assetType: VectorStoreDataSourceAssetType.UriAsset
+        );
+
+        var attachment = new MessageAttachment(
+            ds: ds,
+            tools: tools
+        );
+        #region Snippet:CodeInterpreterEnterpriseSearch_CreateThreadRun
+        AgentThread thread = client.CreateThread();
+
+        ThreadMessage message = client.CreateMessage(
+            threadId: thread.Id,
+            role: MessageRole.User,
+            content: "What does the attachment say?",
+            attachments: [attachment]
+        );
+
+        ThreadRun run = client.CreateRun(
+            thread.Id,
+            agent.Id
+        );
+        do
+        {
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            run = client.GetRun(thread.Id, run.Id);
+        }
+        while (run.Status == RunStatus.Queued
+            || run.Status == RunStatus.InProgress);
+        Assert.AreEqual(
+            RunStatus.Completed,
+            run.Status,
+            run.LastError?.Message);
+        #endregion
+        #region Snippet:CodeInterpreterEnterpriseSearch_PrintMessages
+        PageableList<ThreadMessage> messages = client.GetMessages(
+            threadId: thread.Id,
+            order: ListSortOrder.Ascending
+        );
+        WriteMessages(messages);
+        #endregion
+        #region Snippet:CodeInterpreterEnterpriseSearch_Cleanup
+        client.DeleteThread(thread.Id);
+        client.DeleteAgent(agent.Id);
+        #endregion
+    }
+
+    #region Snippet:CodeInterpreterEnterpriseSearch_Print
+    private static void WriteMessages(IEnumerable<ThreadMessage> messages)
     {
         foreach (ThreadMessage threadMessage in messages)
         {
@@ -96,4 +184,5 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
             }
         }
     }
+    #endregion
 }

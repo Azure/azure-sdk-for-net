@@ -75,7 +75,6 @@ public class PlaywrightServiceOptionsTest
     [TestCase("InteractiveBrowserCredential", typeof(InteractiveBrowserCredential))]
     [TestCase("SharedTokenCacheCredential", typeof(SharedTokenCacheCredential))]
     [TestCase("VisualStudioCredential", typeof(VisualStudioCredential))]
-    [TestCase("VisualStudioCodeCredential", typeof(VisualStudioCodeCredential))]
     [TestCase("DefaultAzureCredential", typeof(DefaultAzureCredential))]
     [TestCase("", typeof(DefaultAzureCredential))]
     [TestCase(null, typeof(DefaultAzureCredential))]

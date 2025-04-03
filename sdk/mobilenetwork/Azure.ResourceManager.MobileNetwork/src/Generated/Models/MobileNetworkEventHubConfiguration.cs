@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Configuration for sending packet core events to Azure Event Hub.
-    /// Serialized Name: EventHubConfiguration
-    /// </summary>
+    /// <summary> Configuration for sending packet core events to Azure Event Hub. </summary>
     public partial class MobileNetworkEventHubConfiguration
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkEventHubConfiguration"/>. </summary>
-        /// <param name="id">
-        /// Resource ID  of Azure Event Hub to send packet core events to.
-        /// Serialized Name: EventHubConfiguration.id
-        /// </param>
+        /// <param name="id"> Resource ID  of Azure Event Hub to send packet core events to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public MobileNetworkEventHubConfiguration(ResourceIdentifier id)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkEventHubConfiguration"/>. </summary>
-        /// <param name="id">
-        /// Resource ID  of Azure Event Hub to send packet core events to.
-        /// Serialized Name: EventHubConfiguration.id
-        /// </param>
-        /// <param name="reportingInterval">
-        /// The duration (in seconds) between UE usage reports.
-        /// Serialized Name: EventHubConfiguration.reportingInterval
-        /// </param>
+        /// <param name="id"> Resource ID  of Azure Event Hub to send packet core events to. </param>
+        /// <param name="reportingInterval"> The duration (in seconds) between UE usage reports. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkEventHubConfiguration(ResourceIdentifier id, int? reportingInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,16 +72,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// Resource ID  of Azure Event Hub to send packet core events to.
-        /// Serialized Name: EventHubConfiguration.id
-        /// </summary>
+        /// <summary> Resource ID  of Azure Event Hub to send packet core events to. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
-        /// <summary>
-        /// The duration (in seconds) between UE usage reports.
-        /// Serialized Name: EventHubConfiguration.reportingInterval
-        /// </summary>
+        /// <summary> The duration (in seconds) between UE usage reports. </summary>
         [WirePath("reportingInterval")]
         public int? ReportingInterval { get; set; }
     }

@@ -1,5 +1,21 @@
 # Release History
 
+## 2.2.0-beta.4 (2025-03-18)
+
+This update brings compatibility with the `2025-03-01-preview` service API version, including support for the new `/responses` API via `OpenAIResponseClient`.
+
+### Features Added
+
+- To use the new `/responses` endpoint, call `GetOpenAIResponseClient()` on an `AzureOpenAIClient` instance, following the same pattern as other operations. Using the overload without a deployment name will not be able to create new responses, only retrieve and list existing response data.
+
+In addition to the new features transitive via the `OpenAI` library:
+
+- Azure OpenAI file upload for batch (`FileUploadPurpose.Batch`) now supports the specification of a custom expiration policy in supported regions. To use this capability, call one of the supplied extension method overloads of `UploadFile()` that accepts an `AzureFileExpirationOptions` parameter.
+
+### Breaking Changes
+
+- Transitive from the OpenAI package, several types in the `[Experimental]` attributed `Assistants`, `VectorStores`, and `RealtimeConversation` namespaces have removed use of the `required` keyword, standardizing their constructor-based required input patterns with the rest of the library. To address these build breaks, use one of the new constructor signatures that accepts required parameters previously provided via property `init`.
+
 ## 2.2.0-beta.2 (2025-02-18)
 
 ### Bugs fixed
@@ -35,7 +51,7 @@ This GA library release aligns functionality with the latest `2024-10-21` stable
 - [GA] The `2024-10-21` API version brings GA AOAI support for streaming token usage in chat completions; `Usage` is now automatically populated in `StreamingChatCompletionUpdate` instances.
   - Note 1: this feature is not yet compatible when using On Your Data features (after invoking the `.AddDataSource()` extension method on `ChatCompletionOptions`)
   - Note 2: this feature is not yet compatible when using image input (a `ChatMessageContentPart` of `Kind` `Image`)
-- [GA] The `AllowParalllelToolCalls` property on `ChatCompletionOptions`, which can be set to `false` to disable the invocation of multiple tools on a single chat completion response, is now supported.
+- [GA] The `AllowParallelToolCalls` property on `ChatCompletionOptions`, which can be set to `false` to disable the invocation of multiple tools on a single chat completion response, is now supported.
 - [GA] Structured outputs, via the use of `ChatResponseFormat.CreateJsonSchemaFormat()`, is now supported.
 - When using `o1-preview` and `o1-mini` models, `max_completion_tokens` may now be configured by calling the `[Experimental] SetNewMaxCompletionTokensPropertyEnabled()` extension method on `ChatCompletionOptions`.
   - This extension method will be removed in a future service API version, when it becomes unnecessary once all models support the `max_completion_tokens` property
@@ -54,7 +70,7 @@ The `2024-10-21` service API label introduces stable support for batch chat comp
 > GA library releases only permit breaking changes to items marked with an `[Experimental]` attribute and these changes will be minimized whenever possible.
 
 - `[Experimental]` `GetBatchClient(string deploymentName)` on `AzureOpenAIClient` is removed, as the Azure OpenAI batch API now aligns with OpenAI's in not using a deployment-based request URI path. Please use `GetBatchClient()`, instead.
-- `[Expermental]` the `Uri` property of type `System.Uri` in `ChatCitation` and `ChatRetrivedDocument` has been replaced by a `Url` property of type `string`. This contains the same information but properly handles document paths that don't conform to a valid RFC 3986 identifier.
+- `[Experimental]` the `Uri` property of type `System.Uri` in `ChatCitation` and `ChatRetrievedDocument` has been replaced by a `Url` property of type `string`. This contains the same information but properly handles document paths that don't conform to a valid RFC 3986 identifier.
 
 ## 2.1.0-beta.2 (2024-11-04)
 
@@ -77,7 +93,7 @@ This update brings compatibility with the Azure OpenAI `2024-10-01-preview` serv
 
 ## 2.1.0-beta.1 (2024-10-01)
 
-Relative to the prior GA release, this update restores preview surfaces, retargeting to the latest `2024-08-01-preview` service `api-version` label. It also brings early support for the newly-announced `/realtime` capabilities with `gpt-4o-realtime-preview`. You can read more about Azure OpenAI support for `/realtime` in the annoucement post here: https://azure.microsoft.com/blog/announcing-new-products-and-features-for-azure-openai-service-including-gpt-4o-realtime-preview-with-audio-and-speech-capabilities/
+Relative to the prior GA release, this update restores preview surfaces, re-targeting to the latest `2024-08-01-preview` service `api-version` label. It also brings early support for the newly-announced `/realtime` capabilities with `gpt-4o-realtime-preview`. You can read more about Azure OpenAI support for `/realtime` in the announcement post here: https://azure.microsoft.com/blog/announcing-new-products-and-features-for-azure-openai-service-including-gpt-4o-realtime-preview-with-audio-and-speech-capabilities/
 
 ### Features Added
 
@@ -323,7 +339,7 @@ Given the nature of this update, breaking changes are extensive. Please see the 
   - If not otherwise specified, `Verbose` format will default to using segment-level timestamp information
   - Corresponding word-level information is found on the `.Words` collection of `AudioTranscription`, peer to the
     existing `.Segments` collection
-  - Note that word-level timing information incurs a small amount of additional processingly latency; segment-level
+  - Note that word-level timing information incurs a small amount of additional processing latency; segment-level
     timestamps do not encounter this behavior
 - `GenerateSpeechFromText()` can now use `Wav` and `Pcm` values from `SpeechGenerationResponseFormat`, these new
   options providing alternative uncompressed formats to `Flac`
@@ -686,7 +702,7 @@ A number of Completions request properties have been renamed and further documen
 - ASP.NET integration via `Microsoft.Extensions.Azure`'s `IAzureClientBuilder` interfaces is available. `OpenAIClient` is now a supported client type for these extension methods.
 
 ### Breaking Changes
-- `CompletionsLogProbability.TokenLogProbability`, available on `Choice` elements of a `Completions` response value's `.Choices` collection when a non-zero `LogProbability` value is provided via `CompletionsOptions`, is now an `IReadOnlyList<float?>` vs. its previous type of `IReadOnlyList<float>`. This nullability addition accomodates circumstances where some tokens produce expected null values in log probability arrays.
+- `CompletionsLogProbability.TokenLogProbability`, available on `Choice` elements of a `Completions` response value's `.Choices` collection when a non-zero `LogProbability` value is provided via `CompletionsOptions`, is now an `IReadOnlyList<float?>` vs. its previous type of `IReadOnlyList<float>`. This nullability addition accommodates circumstances where some tokens produce expected null values in log probability arrays.
 
 ### Bugs Fixed
 - Setting `CompletionsOptions.Echo` to true while also setting a non-zero `CompletionsOptions.LogProbability` no longer results in a deserialization error during response processing.

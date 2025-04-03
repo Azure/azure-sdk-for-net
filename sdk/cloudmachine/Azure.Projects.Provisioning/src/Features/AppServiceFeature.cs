@@ -4,10 +4,9 @@
 using Azure.Projects.Core;
 using Azure.Provisioning.AppService;
 using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
-namespace Azure.Projects.AppService;
+namespace Azure.Projects;
 
 public class AppServiceFeature : AzureProjectFeature
 {

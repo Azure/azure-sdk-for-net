@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("ElasticsearchChatDataSource")]
+[CodeGenType("ElasticsearchChatDataSource")]
 [Experimental("AOAI001")]
 #if AZURE_OPENAI_GA
 [EditorBrowsable(EditorBrowsableState.Never)]
@@ -104,7 +104,7 @@ public partial class ElasticsearchChatDataSource : ChatDataSource
         set => InternalParameters.VectorizationSource = value;
     }
 
-    public ElasticsearchChatDataSource() : base(type: "elasticsearch", serializedAdditionalRawData: null)
+    public ElasticsearchChatDataSource() : base(type: "elasticsearch", additionalBinaryDataProperties: null)
     {
         InternalParameters = new();
     }
@@ -129,11 +129,11 @@ public partial class ElasticsearchChatDataSource : ChatDataSource
 
     /// <summary> Initializes a new instance of <see cref="ElasticsearchChatDataSource"/>. </summary>
     /// <param name="type"></param>
-    /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal ElasticsearchChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalElasticsearchChatDataSourceParameters internalParameters)
-        : base(type, serializedAdditionalRawData)
+    internal ElasticsearchChatDataSource(string type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalElasticsearchChatDataSourceParameters internalParameters)
+        : base(type, additionalBinaryDataProperties)
     {
         InternalParameters = internalParameters;
     }

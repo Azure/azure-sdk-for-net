@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Projects.Core;
-using Azure.Projects.ServiceBus;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.ServiceBus;
 
-namespace Azure.Projects.EventGrid;
+namespace Azure.Projects;
 
 internal class SystemTopicEventSubscriptionFeature : AzureProjectFeature
 {

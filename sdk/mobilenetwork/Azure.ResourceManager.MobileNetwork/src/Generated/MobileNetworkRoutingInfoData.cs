@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the MobileNetworkRoutingInfo data model.
     /// Routing information
-    /// Serialized Name: RoutingInfoModel
     /// </summary>
     public partial class MobileNetworkRoutingInfoData : ResourceData
     {
@@ -65,18 +64,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="controlPlaneAccessRoutes">
-        /// A list of IPv4 routes.
-        /// Serialized Name: RoutingInfoModel.properties.controlPlaneAccessRoutes
-        /// </param>
-        /// <param name="userPlaneAccessRoutes">
-        /// A list of IPv4 routes.
-        /// Serialized Name: RoutingInfoModel.properties.userPlaneAccessRoutes
-        /// </param>
-        /// <param name="userPlaneDataRoutes">
-        /// A list of attached data networks and their IPv4 routes.
-        /// Serialized Name: RoutingInfoModel.properties.userPlaneDataRoutes
-        /// </param>
+        /// <param name="controlPlaneAccessRoutes"> A list of IPv4 routes. </param>
+        /// <param name="userPlaneAccessRoutes"> A list of IPv4 routes. </param>
+        /// <param name="userPlaneDataRoutes"> A list of attached data networks and their IPv4 routes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkRoutingInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<MobileNetworkIPv4Route> controlPlaneAccessRoutes, IList<MobileNetworkIPv4Route> userPlaneAccessRoutes, IList<UserPlaneDataRoutesItem> userPlaneDataRoutes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -86,22 +76,13 @@ namespace Azure.ResourceManager.MobileNetwork
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of IPv4 routes.
-        /// Serialized Name: RoutingInfoModel.properties.controlPlaneAccessRoutes
-        /// </summary>
+        /// <summary> A list of IPv4 routes. </summary>
         [WirePath("properties.controlPlaneAccessRoutes")]
         public IList<MobileNetworkIPv4Route> ControlPlaneAccessRoutes { get; }
-        /// <summary>
-        /// A list of IPv4 routes.
-        /// Serialized Name: RoutingInfoModel.properties.userPlaneAccessRoutes
-        /// </summary>
+        /// <summary> A list of IPv4 routes. </summary>
         [WirePath("properties.userPlaneAccessRoutes")]
         public IList<MobileNetworkIPv4Route> UserPlaneAccessRoutes { get; }
-        /// <summary>
-        /// A list of attached data networks and their IPv4 routes.
-        /// Serialized Name: RoutingInfoModel.properties.userPlaneDataRoutes
-        /// </summary>
+        /// <summary> A list of attached data networks and their IPv4 routes. </summary>
         [WirePath("properties.userPlaneDataRoutes")]
         public IList<UserPlaneDataRoutesItem> UserPlaneDataRoutes { get; }
     }

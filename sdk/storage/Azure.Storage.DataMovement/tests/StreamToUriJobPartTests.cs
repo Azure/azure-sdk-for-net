@@ -154,6 +154,9 @@ namespace Azure.Storage.DataMovement.Tests
             mockSource.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(readStreamResult));
 
+            SingleItemStorageResourceContainer source = new(mockSource.Object);
+            SingleItemStorageResourceContainer destination = new(mockDestination.Object);
+
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);
             await checkpointer.AddNewJobAsync(
@@ -163,9 +166,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferJobInternal job = new(
                 new TransferOperation(id: transferId),
-                mockSource.Object,
-                mockDestination.Object,
-                StreamToUriJobPart.CreateJobPartAsync,
+                source,
+                destination,
                 StreamToUriJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
@@ -174,7 +176,9 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job,
-                1) as StreamToUriJobPart;
+                1,
+                mockSource.Object,
+                mockDestination.Object) as StreamToUriJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act
@@ -260,6 +264,9 @@ namespace Azure.Storage.DataMovement.Tests
                         properties); // Your actual properties
                 });
 
+            SingleItemStorageResourceContainer source = new(mockSource.Object);
+            SingleItemStorageResourceContainer destination = new(mockDestination.Object);
+
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);
             await checkpointer.AddNewJobAsync(
@@ -271,9 +278,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferJobInternal job = new(
                 new TransferOperation(id: transferId),
-                mockSource.Object,
-                mockDestination.Object,
-                StreamToUriJobPart.CreateJobPartAsync,
+                source,
+                destination,
                 StreamToUriJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
@@ -282,7 +288,9 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job,
-                1) as StreamToUriJobPart;
+                1,
+                mockSource.Object,
+                mockDestination.Object) as StreamToUriJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act

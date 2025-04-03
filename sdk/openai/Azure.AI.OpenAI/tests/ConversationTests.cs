@@ -279,9 +279,8 @@ public class ConversationTests : ConversationTestFixtureBase
         RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
         using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
 
-        ConversationFunctionTool getWeatherTool = new()
+        ConversationFunctionTool getWeatherTool = new("get_weather_for_location")
         {
-            Name = "get_weather_for_location",
             Description = "gets the weather for a location",
             Parameters = BinaryData.FromString("""
             {
