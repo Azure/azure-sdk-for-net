@@ -148,9 +148,9 @@ public class TransferManagerTests
                 srcResource.Object,
                 dstResource.Object,
                 new()
-                {
-                    InitialTransferSize = chunkSize,
-                    MaximumTransferChunkSize = chunkSize,
+            {
+                InitialTransferSize = chunkSize,
+                MaximumTransferChunkSize = chunkSize,
                 });
             Assert.That(transfer.HasCompleted, Is.False);
             transfers.Add(transfer);
@@ -273,9 +273,9 @@ public class TransferManagerTests
                 srcResource.Object,
                 dstResource.Object,
                 new()
-                {
-                    InitialTransferSize = chunkSize,
-                    MaximumTransferChunkSize = chunkSize,
+            {
+                InitialTransferSize = chunkSize,
+                MaximumTransferChunkSize = chunkSize,
                 });
             transfers.Add((transfer, GetItemCountFromContainerIndex(i), srcResource, dstResource));
 
@@ -632,10 +632,6 @@ public class TransferManagerTests
             checkpointer,
             default);
 
-        // Set Throughput monitor
-        var throughputMonitorField = typeof(TransferManager).GetField("_throughputMonitor", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        throughputMonitorField.SetValue(transferManager, new ThroughputMonitor());
-
         int numFiles = 3;
         Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
         Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
@@ -650,12 +646,13 @@ public class TransferManagerTests
 
         Assert.That(transfer.Status.HasCompletedSuccessfully);
 
-        // Use reflection to access the private _throughputMonitor field
-        var throughputMonitor = (ThroughputMonitor)throughputMonitorField.GetValue(transferManager);
+        // Use reflection to access the private _conncurrencyTuner field
+        var concurrencyTunerField = typeof(TransferManager).GetField("_concurrencyTuner", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        var concurrencyTuner = (ConcurrencyTuner)concurrencyTunerField.GetValue(transferManager);
 
         // Assert the throughput monitor values
-        Assert.AreEqual(throughputMonitor.TotalBytesTransferred, 3072, "Throughput not equal to 2048");
-        Assert.Greater(throughputMonitor.Throughput, 0, "Thoughput not greater than 0");
+        Assert.AreEqual(concurrencyTuner.ThroughputMonitor.TotalBytesTransferred, 3072, "Throughput not equal to 2048");
+        Assert.Greater(concurrencyTuner.ThroughputMonitor.Throughput, 0, "Thoughput not greater than 0");
     }
 }
 
