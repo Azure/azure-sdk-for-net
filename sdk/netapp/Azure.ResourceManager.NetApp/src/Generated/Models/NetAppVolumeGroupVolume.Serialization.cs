@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection, options);
             }
-            if (Optional.IsDefined(IsRestoring))
+            if (options.Format != "W" && Optional.IsDefined(IsRestoring))
             {
                 writer.WritePropertyName("isRestoring"u8);
                 writer.WriteBooleanValue(IsRestoring.Value);
