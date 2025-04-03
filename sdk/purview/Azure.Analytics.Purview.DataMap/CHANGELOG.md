@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2025-04-08)
 
 ### Features Added
 
@@ -9,6 +9,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Updated type of endorsements from string to list[string] in SuggestResultValue and SuggestResultValue models.
 
 ### Other Changes
 
