@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> GenerateResult is the response of a generate request. </summary>
+    /// <summary> GenerateResponse is the response of a generate request. </summary>
     public partial class GenerateResult
     {
         /// <summary>

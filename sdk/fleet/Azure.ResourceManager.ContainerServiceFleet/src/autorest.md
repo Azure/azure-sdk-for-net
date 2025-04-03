@@ -31,6 +31,7 @@ rename-mapping:
   SkipTarget: ContainerServiceFleetSkipTarget
   TargetType: ContainerServiceFleetTargetType
   UpgradeChannel: ContainerServiceFleetUpgradeChannel
+  GenerateResponse: GenerateResult
 
 prepend-rp-prefix:
   - AgentProfile
@@ -69,7 +70,7 @@ operations-to-lro-api-version-override:
   UpdateRuns_Delete: "2016-03-30"
   FleetUpdateStrategies_CreateOrUpdate: "2016-03-30"
   FleetUpdateStrategies_Delete: "2016-03-30"
-  
+
 acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
