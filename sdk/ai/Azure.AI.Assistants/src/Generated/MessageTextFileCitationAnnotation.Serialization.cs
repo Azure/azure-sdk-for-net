@@ -36,7 +36,7 @@ namespace Azure.AI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("file_citation"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalMessageTextFileCitationDetails>(InternalDetails, options);
             if (Optional.IsDefined(StartIndex))
             {
                 writer.WritePropertyName("start_index"u8);

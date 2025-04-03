@@ -43,8 +43,5 @@ namespace Azure.AI.Assistants
         internal RunStepCodeInterpreterToolCall()
         {
         }
-
-        /// <summary> The details of the tool call to the code interpreter tool. </summary>
-        public InternalCodeInterpreterToolCallDetails InternalDetails { get; }
     }
 }

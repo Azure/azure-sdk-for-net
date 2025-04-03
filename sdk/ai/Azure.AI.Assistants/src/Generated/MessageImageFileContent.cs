@@ -14,17 +14,6 @@ namespace Azure.AI.Assistants
     public partial class MessageImageFileContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageImageFileContent"/>. </summary>
-        /// <param name="internalDetails"> The image file for this thread message content item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="internalDetails"/> is null. </exception>
-        internal MessageImageFileContent(InternalMessageImageFileDetails internalDetails)
-        {
-            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
-
-            Type = "image_file";
-            InternalDetails = internalDetails;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MessageImageFileContent"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails"> The image file for this thread message content item. </param>
@@ -37,8 +26,5 @@ namespace Azure.AI.Assistants
         internal MessageImageFileContent()
         {
         }
-
-        /// <summary> The image file for this thread message content item. </summary>
-        public InternalMessageImageFileDetails InternalDetails { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Assistants
 {
     /// <summary> The UploadFileRequest. </summary>
-    public partial class UploadFileRequest
+    internal partial class UploadFileRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,7 +49,7 @@ namespace Azure.AI.Assistants
         /// <param name="data"> The file data, in bytes. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public UploadFileRequest(File data, OpenAIFilePurpose purpose)
+        public UploadFileRequest(File data, AgentFilePurpose purpose)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -62,7 +62,7 @@ namespace Azure.AI.Assistants
         /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
         /// <param name="filename"> The name of the file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UploadFileRequest(File data, OpenAIFilePurpose purpose, string filename, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UploadFileRequest(File data, AgentFilePurpose purpose, string filename, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Data = data;
             Purpose = purpose;
@@ -78,7 +78,7 @@ namespace Azure.AI.Assistants
         /// <summary> The file data, in bytes. </summary>
         public File Data { get; }
         /// <summary> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </summary>
-        public OpenAIFilePurpose Purpose { get; }
+        public AgentFilePurpose Purpose { get; }
         /// <summary> The name of the file. </summary>
         public string Filename { get; set; }
     }

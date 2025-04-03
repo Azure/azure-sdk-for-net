@@ -43,7 +43,7 @@ namespace Azure.AI.Assistants
         /// <param name="tools">
         /// The collection of tools enabled for the agent.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </param>
         /// <param name="toolResources">
         /// A set of resources that are used by the agent's tools. The resources are specific to the type of tool. For example, the `code_interpreter`
@@ -132,50 +132,6 @@ namespace Azure.AI.Assistants
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.ThreadMessage"/>. </summary>
-        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
-        /// <param name="object"> The object type, which is always 'thread.message'. </param>
-        /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
-        /// <param name="threadId"> The ID of the thread that this message belongs to. </param>
-        /// <param name="status"> The status of the message. </param>
-        /// <param name="incompleteDetails"> On an incomplete message, details about why the message is incomplete. </param>
-        /// <param name="completedAt"> The Unix timestamp (in seconds) for when the message was completed. </param>
-        /// <param name="incompleteAt"> The Unix timestamp (in seconds) for when the message was marked as incomplete. </param>
-        /// <param name="role"> The role associated with the agent thread message. </param>
-        /// <param name="contentItems">
-        /// The list of content items associated with the agent thread message.
-        /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
-        /// </param>
-        /// <param name="assistantId"> If applicable, the ID of the agent that authored this message. </param>
-        /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
-        /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Assistants.ThreadMessage"/> instance for mocking. </returns>
-        public static ThreadMessage ThreadMessage(string id = null, ThreadMessageObject @object = default, DateTimeOffset createdAt = default, string threadId = null, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = null, DateTimeOffset? completedAt = null, DateTimeOffset? incompleteAt = null, MessageRole role = default, IEnumerable<MessageContent> contentItems = null, string assistantId = null, string runId = null, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null)
-        {
-            contentItems ??= new List<MessageContent>();
-            attachments ??= new List<MessageAttachment>();
-            metadata ??= new Dictionary<string, string>();
-
-            return new ThreadMessage(
-                id,
-                @object,
-                createdAt,
-                threadId,
-                status,
-                incompleteDetails,
-                completedAt,
-                incompleteAt,
-                role,
-                contentItems?.ToList(),
-                assistantId,
-                runId,
-                attachments?.ToList(),
-                metadata,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Assistants.MessageIncompleteDetails"/>. </summary>
         /// <param name="reason"> The provided reason describing why the message was marked as incomplete. </param>
         /// <returns> A new <see cref="Assistants.MessageIncompleteDetails"/> instance for mocking. </returns>
@@ -219,88 +175,13 @@ namespace Azure.AI.Assistants
             return new MessageTextUrlCitationDetails(url, title, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.ThreadRun"/>. </summary>
-        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
-        /// <param name="object"> The object type, which is always 'thread.run'. </param>
-        /// <param name="threadId"> The ID of the thread associated with this run. </param>
-        /// <param name="assistantId"> The ID of the agent associated with the thread this run was performed against. </param>
-        /// <param name="status"> The status of the agent thread run. </param>
-        /// <param name="requiredAction">
-        /// The details of the action required for the agent thread run to continue.
-        /// Please note <see cref="RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SubmitToolOutputsAction"/>.
-        /// </param>
-        /// <param name="lastError"> The last error, if any, encountered by this agent thread run. </param>
-        /// <param name="model"> The ID of the model to use. </param>
-        /// <param name="instructions"> The overridden system instructions used for this agent thread run. </param>
-        /// <param name="tools">
-        /// The overridden enabled tools used for this agent thread run.
-        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
-        /// </param>
-        /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
-        /// <param name="expiresAt"> The Unix timestamp, in seconds, representing when this item expires. </param>
-        /// <param name="startedAt"> The Unix timestamp, in seconds, representing when this item was started. </param>
-        /// <param name="completedAt"> The Unix timestamp, in seconds, representing when this completed. </param>
-        /// <param name="cancelledAt"> The Unix timestamp, in seconds, representing when this was cancelled. </param>
-        /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
-        /// <param name="incompleteDetails"> Details on why the run is incomplete. Will be `null` if the run is not incomplete. </param>
-        /// <param name="usage"> Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.). </param>
-        /// <param name="temperature"> The sampling temperature used for this run. If not set, defaults to 1. </param>
-        /// <param name="topP"> The nucleus sampling value used for this run. If not set, defaults to 1. </param>
-        /// <param name="maxPromptTokens"> The maximum number of prompt tokens specified to have been used over the course of the run. </param>
-        /// <param name="maxCompletionTokens"> The maximum number of completion tokens specified to have been used over the course of the run. </param>
-        /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
-        /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
-        /// <param name="responseFormat"> The response format of the tool calls used in this run. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
-        /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
-        /// <returns> A new <see cref="Assistants.ThreadRun"/> instance for mocking. </returns>
-        public static ThreadRun ThreadRun(string id = null, ThreadRunObject @object = default, string threadId = null, string assistantId = null, RunStatus status = default, RequiredAction requiredAction = null, RunError lastError = null, string model = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, IncompleteRunDetails incompleteDetails = null, RunCompletionUsage usage = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, UpdateToolResourcesOptions toolResources = null, bool parallelToolCalls = default)
-        {
-            tools ??= new List<ToolDefinition>();
-            metadata ??= new Dictionary<string, string>();
-
-            return new ThreadRun(
-                id,
-                @object,
-                threadId,
-                assistantId,
-                status,
-                requiredAction,
-                lastError,
-                model,
-                instructions,
-                tools?.ToList(),
-                createdAt,
-                expiresAt,
-                startedAt,
-                completedAt,
-                cancelledAt,
-                failedAt,
-                incompleteDetails,
-                usage,
-                temperature,
-                topP,
-                maxPromptTokens,
-                maxCompletionTokens,
-                truncationStrategy,
-                toolChoice,
-                responseFormat,
-                metadata,
-                toolResources,
-                parallelToolCalls,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Assistants.RequiredToolCall"/>. </summary>
-        /// <param name="type"> The object type for the required tool call. </param>
+        /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <returns> A new <see cref="Assistants.RequiredToolCall"/> instance for mocking. </returns>
         public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
         {
-            return new UnknownRequiredToolCall(type, id, serializedAdditionalRawData: null);
+            return new UnknownRequiredToolCall(type, serializedAdditionalRawData: null, id);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunError"/>. </summary>
@@ -330,52 +211,6 @@ namespace Azure.AI.Assistants
             return new RunCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.RunStep"/>. </summary>
-        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
-        /// <param name="object"> The object type, which is always 'thread.run.step'. </param>
-        /// <param name="type"> The type of run step, which can be either message_creation or tool_calls. </param>
-        /// <param name="assistantId"> The ID of the agent associated with the run step. </param>
-        /// <param name="threadId"> The ID of the thread that was run. </param>
-        /// <param name="runId"> The ID of the run that this run step is a part of. </param>
-        /// <param name="status"> The status of this run step. </param>
-        /// <param name="stepDetails">
-        /// The details for this run step.
-        /// Please note <see cref="RunStepDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Assistants.RunStepMessageCreationDetails"/> and <see cref="Assistants.RunStepToolCallDetails"/>.
-        /// </param>
-        /// <param name="lastError"> If applicable, information about the last error encountered by this run step. </param>
-        /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
-        /// <param name="expiredAt"> The Unix timestamp, in seconds, representing when this item expired. </param>
-        /// <param name="completedAt"> The Unix timestamp, in seconds, representing when this completed. </param>
-        /// <param name="cancelledAt"> The Unix timestamp, in seconds, representing when this was cancelled. </param>
-        /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
-        /// <param name="usage"> Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Assistants.RunStep"/> instance for mocking. </returns>
-        public static RunStep RunStep(string id = null, RunStepObject @object = default, RunStepType type = default, string assistantId = null, string threadId = null, string runId = null, RunStepStatus status = default, RunStepDetails stepDetails = null, RunStepError lastError = null, DateTimeOffset createdAt = default, DateTimeOffset? expiredAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, RunStepCompletionUsage usage = null, IReadOnlyDictionary<string, string> metadata = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-
-            return new RunStep(
-                id,
-                @object,
-                type,
-                assistantId,
-                threadId,
-                runId,
-                status,
-                stepDetails,
-                lastError,
-                createdAt,
-                expiredAt,
-                completedAt,
-                cancelledAt,
-                failedAt,
-                usage,
-                metadata,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepMessageCreationDetails"/>. </summary>
         /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
         /// <returns> A new <see cref="Assistants.RunStepMessageCreationDetails"/> instance for mocking. </returns>
@@ -396,7 +231,7 @@ namespace Azure.AI.Assistants
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Assistants.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Assistants.RunStepAzureAISearchToolCall"/>, <see cref="Assistants.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Assistants.RunStepMicrosoftFabricToolCall"/>, <see cref="Assistants.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="Assistants.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Assistants.RunStepAzureAISearchToolCall"/>, <see cref="Assistants.RunStepCustomSearchToolCall"/>, <see cref="Assistants.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Assistants.RunStepMicrosoftFabricToolCall"/>, <see cref="Assistants.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="Assistants.RunStepOpenAPIToolCall"/> and <see cref="Assistants.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Assistants.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -413,6 +248,30 @@ namespace Azure.AI.Assistants
         public static RunStepToolCall RunStepToolCall(string type = null, string id = null)
         {
             return new UnknownRunStepToolCall(type, id, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepCodeInterpreterLogOutput"/>. </summary>
+        /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
+        /// <returns> A new <see cref="Assistants.RunStepCodeInterpreterLogOutput"/> instance for mocking. </returns>
+        public static RunStepCodeInterpreterLogOutput RunStepCodeInterpreterLogOutput(string logs = null)
+        {
+            return new RunStepCodeInterpreterLogOutput("logs", serializedAdditionalRawData: null, logs);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepCodeInterpreterImageOutput"/>. </summary>
+        /// <param name="image"> Referential information for the image associated with this output. </param>
+        /// <returns> A new <see cref="Assistants.RunStepCodeInterpreterImageOutput"/> instance for mocking. </returns>
+        public static RunStepCodeInterpreterImageOutput RunStepCodeInterpreterImageOutput(RunStepCodeInterpreterImageReference image = null)
+        {
+            return new RunStepCodeInterpreterImageOutput("image", serializedAdditionalRawData: null, image);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepCodeInterpreterImageReference"/>. </summary>
+        /// <param name="fileId"> The ID of the file associated with this image. </param>
+        /// <returns> A new <see cref="Assistants.RunStepCodeInterpreterImageReference"/> instance for mocking. </returns>
+        public static RunStepCodeInterpreterImageReference RunStepCodeInterpreterImageReference(string fileId = null)
+        {
+            return new RunStepCodeInterpreterImageReference(fileId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepFileSearchToolCall"/>. </summary>
@@ -501,6 +360,28 @@ namespace Azure.AI.Assistants
             return new RunStepMicrosoftFabricToolCall("fabric_dataagent", id, serializedAdditionalRawData: null, microsoftFabric);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepCustomSearchToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="bingCustomSearch"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Assistants.RunStepCustomSearchToolCall"/> instance for mocking. </returns>
+        public static RunStepCustomSearchToolCall RunStepCustomSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
+        {
+            bingCustomSearch ??= new Dictionary<string, string>();
+
+            return new RunStepCustomSearchToolCall("bing_custom_search", id, serializedAdditionalRawData: null, bingCustomSearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepOpenAPIToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="openAPI"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Assistants.RunStepOpenAPIToolCall"/> instance for mocking. </returns>
+        public static RunStepOpenAPIToolCall RunStepOpenAPIToolCall(string id = null, IReadOnlyDictionary<string, string> openAPI = null)
+        {
+            openAPI ??= new Dictionary<string, string>();
+
+            return new RunStepOpenAPIToolCall("openapi", id, serializedAdditionalRawData: null, openAPI);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepError"/>. </summary>
         /// <param name="code"> The error code for this error. </param>
         /// <param name="message"> The human-readable text associated with this error. </param>
@@ -520,62 +401,18 @@ namespace Azure.AI.Assistants
             return new RunStepCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.OpenAIFile"/>. </summary>
-        /// <param name="object"> The object type, which is always 'file'. </param>
-        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
-        /// <param name="size"> The size of the file, in bytes. </param>
-        /// <param name="filename"> The name of the file. </param>
-        /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
-        /// <param name="purpose"> The intended purpose of a file. </param>
-        /// <param name="status"> The state of the file. This field is available in Azure OpenAI only. </param>
-        /// <param name="statusDetails"> The error message with details in case processing of this file failed. This field is available in Azure OpenAI only. </param>
-        /// <returns> A new <see cref="Assistants.OpenAIFile"/> instance for mocking. </returns>
-        public static OpenAIFile OpenAIFile(OpenAIFileObject @object = default, string id = null, int size = default, string filename = null, DateTimeOffset createdAt = default, OpenAIFilePurpose purpose = default, FileState? status = null, string statusDetails = null)
-        {
-            return new OpenAIFile(
-                @object,
-                id,
-                size,
-                filename,
-                createdAt,
-                purpose,
-                status,
-                statusDetails,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Assistants.UploadFileRequest"/>. </summary>
-        /// <param name="data"> The file data, in bytes. </param>
-        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
-        /// <param name="filename"> The name of the file. </param>
-        /// <returns> A new <see cref="Assistants.UploadFileRequest"/> instance for mocking. </returns>
-        public static UploadFileRequest UploadFileRequest(File data = null, OpenAIFilePurpose purpose = default, string filename = null)
-        {
-            return new UploadFileRequest(data, purpose, filename, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Assistants.File"/>. </summary>
-        /// <param name="contentType"></param>
-        /// <param name="filename"></param>
-        /// <param name="contents"></param>
-        /// <returns> A new <see cref="Assistants.File"/> instance for mocking. </returns>
-        public static File File(string contentType = null, string filename = null, BinaryData contents = null)
-        {
-            return new File(contentType, filename, contents, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Assistants.OpenAIPageableListOfVectorStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assistants.AgentPageableListOfVectorStore"/>. </summary>
         /// <param name="object"> The object type, which is always list. </param>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Assistants.OpenAIPageableListOfVectorStore"/> instance for mocking. </returns>
-        public static OpenAIPageableListOfVectorStore OpenAIPageableListOfVectorStore(OpenAIPageableListOfVectorStoreObject @object = default, IEnumerable<VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = default)
+        /// <returns> A new <see cref="Assistants.AgentPageableListOfVectorStore"/> instance for mocking. </returns>
+        public static AgentPageableListOfVectorStore AgentPageableListOfVectorStore(AgentPageableListOfVectorStoreObject @object = default, IEnumerable<VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = default)
         {
             data ??= new List<VectorStore>();
 
-            return new OpenAIPageableListOfVectorStore(
+            return new AgentPageableListOfVectorStore(
                 @object,
                 data?.ToList(),
                 firstId,
@@ -652,18 +489,18 @@ namespace Azure.AI.Assistants
             return new VectorStoreDeletionStatus(id, deleted, @object, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.OpenAIPageableListOfVectorStoreFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assistants.AgentPageableListOfVectorStoreFile"/>. </summary>
         /// <param name="object"> The object type, which is always list. </param>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Assistants.OpenAIPageableListOfVectorStoreFile"/> instance for mocking. </returns>
-        public static OpenAIPageableListOfVectorStoreFile OpenAIPageableListOfVectorStoreFile(OpenAIPageableListOfVectorStoreFileObject @object = default, IEnumerable<VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = default)
+        /// <returns> A new <see cref="Assistants.AgentPageableListOfVectorStoreFile"/> instance for mocking. </returns>
+        public static AgentPageableListOfVectorStoreFile AgentPageableListOfVectorStoreFile(AgentPageableListOfVectorStoreFileObject @object = default, IEnumerable<VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = default)
         {
             data ??= new List<VectorStoreFile>();
 
-            return new OpenAIPageableListOfVectorStoreFile(
+            return new AgentPageableListOfVectorStoreFile(
                 @object,
                 data?.ToList(),
                 firstId,

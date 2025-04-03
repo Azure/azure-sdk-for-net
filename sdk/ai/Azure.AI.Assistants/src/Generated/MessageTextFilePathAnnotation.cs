@@ -14,19 +14,6 @@ namespace Azure.AI.Assistants
     public partial class MessageTextFilePathAnnotation : MessageTextAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/>. </summary>
-        /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="internalDetails"> A URL for the file that's generated when the agent used the code_interpreter tool to generate a file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="internalDetails"/> is null. </exception>
-        internal MessageTextFilePathAnnotation(string text, InternalMessageTextFilePathDetails internalDetails) : base(text)
-        {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
-
-            Type = "file_path";
-            InternalDetails = internalDetails;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -44,9 +31,6 @@ namespace Azure.AI.Assistants
         internal MessageTextFilePathAnnotation()
         {
         }
-
-        /// <summary> A URL for the file that's generated when the agent used the code_interpreter tool to generate a file. </summary>
-        public InternalMessageTextFilePathDetails InternalDetails { get; }
         /// <summary> The first text index associated with this text annotation. </summary>
         public int? StartIndex { get; }
         /// <summary> The last text index associated with this text annotation. </summary>

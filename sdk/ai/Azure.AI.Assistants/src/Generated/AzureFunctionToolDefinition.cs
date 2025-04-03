@@ -14,17 +14,6 @@ namespace Azure.AI.Assistants
     public partial class AzureFunctionToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionToolDefinition"/>. </summary>
-        /// <param name="internalAzureFunction"> The definition of the concrete function that the function tool should call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="internalAzureFunction"/> is null. </exception>
-        public AzureFunctionToolDefinition(InternalAzureFunctionDefinition internalAzureFunction)
-        {
-            Argument.AssertNotNull(internalAzureFunction, nameof(internalAzureFunction));
-
-            Type = "azure_function";
-            InternalAzureFunction = internalAzureFunction;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalAzureFunction"> The definition of the concrete function that the function tool should call. </param>
@@ -37,8 +26,5 @@ namespace Azure.AI.Assistants
         internal AzureFunctionToolDefinition()
         {
         }
-
-        /// <summary> The definition of the concrete function that the function tool should call. </summary>
-        public InternalAzureFunctionDefinition InternalAzureFunction { get; set; }
     }
 }

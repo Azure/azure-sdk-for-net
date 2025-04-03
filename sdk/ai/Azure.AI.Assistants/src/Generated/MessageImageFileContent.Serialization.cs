@@ -36,7 +36,7 @@ namespace Azure.AI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("image_file"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalMessageImageFileDetails>(InternalDetails, options);
         }
 
         MessageImageFileContent IJsonModel<MessageImageFileContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

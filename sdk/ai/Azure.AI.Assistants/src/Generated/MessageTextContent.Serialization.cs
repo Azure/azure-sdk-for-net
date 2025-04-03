@@ -36,7 +36,7 @@ namespace Azure.AI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("text"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalMessageTextDetails>(InternalDetails, options);
         }
 
         MessageTextContent IJsonModel<MessageTextContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -36,7 +36,7 @@ namespace Azure.AI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalRunStepFunctionToolCallDetails>(InternalDetails, options);
         }
 
         RunStepFunctionToolCall IJsonModel<RunStepFunctionToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

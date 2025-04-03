@@ -36,7 +36,7 @@ namespace Azure.AI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("code_interpreter"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalCodeInterpreterToolCallDetails>(InternalDetails, options);
         }
 
         RunStepCodeInterpreterToolCall IJsonModel<RunStepCodeInterpreterToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

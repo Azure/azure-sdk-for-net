@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Assistants
 {
     /// <summary> An image reference emitted by a code interpreter tool in response to a tool call by the model. </summary>
-    internal partial class RunStepCodeInterpreterImageReference
+    public partial class RunStepCodeInterpreterImageReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

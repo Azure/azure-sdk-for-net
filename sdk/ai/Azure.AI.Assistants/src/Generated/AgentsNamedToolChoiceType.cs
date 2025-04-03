@@ -29,6 +29,7 @@ namespace Azure.AI.Assistants
         private const string MicrosoftFabricValue = "fabric_dataagent";
         private const string SharepointValue = "sharepoint_grounding";
         private const string AzureAISearchValue = "azure_ai_search";
+        private const string BingCustomSearchValue = "bing_custom_search";
 
         /// <summary> Tool type `function`. </summary>
         public static AgentsNamedToolChoiceType Function { get; } = new AgentsNamedToolChoiceType(FunctionValue);
@@ -44,6 +45,8 @@ namespace Azure.AI.Assistants
         public static AgentsNamedToolChoiceType Sharepoint { get; } = new AgentsNamedToolChoiceType(SharepointValue);
         /// <summary> Tool type `azure_ai_search`. </summary>
         public static AgentsNamedToolChoiceType AzureAISearch { get; } = new AgentsNamedToolChoiceType(AzureAISearchValue);
+        /// <summary> Tool type `bing_custom_search`. </summary>
+        public static AgentsNamedToolChoiceType BingCustomSearch { get; } = new AgentsNamedToolChoiceType(BingCustomSearchValue);
         /// <summary> Determines if two <see cref="AgentsNamedToolChoiceType"/> values are the same. </summary>
         public static bool operator ==(AgentsNamedToolChoiceType left, AgentsNamedToolChoiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentsNamedToolChoiceType"/> values are not the same. </summary>

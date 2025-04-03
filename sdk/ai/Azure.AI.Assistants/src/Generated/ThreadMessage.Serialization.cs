@@ -37,7 +37,7 @@ namespace Azure.AI.Assistants
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object.ToString());
+            writer.WriteStringValue(Object);
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("thread_id"u8);
@@ -165,7 +165,7 @@ namespace Azure.AI.Assistants
                 return null;
             }
             string id = default;
-            ThreadMessageObject @object = default;
+            string @object = default;
             DateTimeOffset createdAt = default;
             string threadId = default;
             MessageStatus status = default;
@@ -189,7 +189,7 @@ namespace Azure.AI.Assistants
                 }
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new ThreadMessageObject(property.Value.GetString());
+                    @object = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("created_at"u8))

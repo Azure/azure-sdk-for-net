@@ -36,7 +36,7 @@ namespace Azure.AI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalRequiredFunctionToolCallDetails>(InternalDetails, options);
         }
 
         RequiredFunctionToolCall IJsonModel<RequiredFunctionToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -60,8 +60,8 @@ namespace Azure.AI.Assistants
                 return null;
             }
             InternalRequiredFunctionToolCallDetails function = default;
-            string type = default;
             string id = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -71,14 +71,14 @@ namespace Azure.AI.Assistants
                     function = InternalRequiredFunctionToolCallDetails.DeserializeInternalRequiredFunctionToolCallDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -87,7 +87,7 @@ namespace Azure.AI.Assistants
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RequiredFunctionToolCall(type, id, serializedAdditionalRawData, function);
+            return new RequiredFunctionToolCall(type, serializedAdditionalRawData, id, function);
         }
 
         BinaryData IPersistableModel<RequiredFunctionToolCall>.Write(ModelReaderWriterOptions options)

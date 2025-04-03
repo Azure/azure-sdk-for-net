@@ -36,7 +36,7 @@ namespace Azure.AI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("submit_tool_outputs"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalSubmitToolOutputsDetails>(InternalDetails, options);
         }
 
         SubmitToolOutputsAction IJsonModel<SubmitToolOutputsAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

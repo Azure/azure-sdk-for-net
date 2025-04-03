@@ -14,22 +14,6 @@ namespace Azure.AI.Assistants
     public partial class MessageTextFileCitationAnnotation : MessageTextAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="MessageTextFileCitationAnnotation"/>. </summary>
-        /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="internalDetails">
-        /// A citation within the message that points to a specific quote from a specific file.
-        /// Generated when the agent uses the "file_search" tool to search files.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="internalDetails"/> is null. </exception>
-        internal MessageTextFileCitationAnnotation(string text, InternalMessageTextFileCitationDetails internalDetails) : base(text)
-        {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
-
-            Type = "file_citation";
-            InternalDetails = internalDetails;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MessageTextFileCitationAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -50,12 +34,6 @@ namespace Azure.AI.Assistants
         internal MessageTextFileCitationAnnotation()
         {
         }
-
-        /// <summary>
-        /// A citation within the message that points to a specific quote from a specific file.
-        /// Generated when the agent uses the "file_search" tool to search files.
-        /// </summary>
-        public InternalMessageTextFileCitationDetails InternalDetails { get; }
         /// <summary> The first text index associated with this text annotation. </summary>
         public int? StartIndex { get; }
         /// <summary> The last text index associated with this text annotation. </summary>

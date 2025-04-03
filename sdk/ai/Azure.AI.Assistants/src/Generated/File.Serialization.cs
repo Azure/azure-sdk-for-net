@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Assistants
 {
-    public partial class File : IUtf8JsonSerializable, IJsonModel<File>
+    internal partial class File : IUtf8JsonSerializable, IJsonModel<File>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<File>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

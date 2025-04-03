@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Assistants
 {
-    internal partial class RunStepCodeInterpreterImageReference : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterImageReference>
+    public partial class RunStepCodeInterpreterImageReference : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterImageReference>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterImageReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

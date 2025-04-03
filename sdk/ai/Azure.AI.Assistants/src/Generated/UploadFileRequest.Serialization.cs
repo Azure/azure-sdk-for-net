@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.AI.Assistants
 {
-    public partial class UploadFileRequest : IUtf8JsonSerializable, IJsonModel<UploadFileRequest>
+    internal partial class UploadFileRequest : IUtf8JsonSerializable, IJsonModel<UploadFileRequest>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadFileRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -82,7 +82,7 @@ namespace Azure.AI.Assistants
                 return null;
             }
             File file = default;
-            OpenAIFilePurpose purpose = default;
+            AgentFilePurpose purpose = default;
             string filename = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.AI.Assistants
                 }
                 if (property.NameEquals("purpose"u8))
                 {
-                    purpose = new OpenAIFilePurpose(property.Value.GetString());
+                    purpose = new AgentFilePurpose(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filename"u8))
@@ -125,18 +125,6 @@ namespace Azure.AI.Assistants
             {
                 return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
             }
-        }
-
-        internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
-        {
-            MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
-            content.Add(ModelReaderWriter.Write(Data, ModelSerializationExtensions.WireOptions), "file");
-            content.Add(Purpose.ToString(), "purpose");
-            if (Optional.IsDefined(Filename))
-            {
-                content.Add(Filename, "filename");
-            }
-            return content;
         }
 
         BinaryData IPersistableModel<UploadFileRequest>.Write(ModelReaderWriterOptions options)

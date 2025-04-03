@@ -4,7 +4,11 @@
     <AssemblyTitle>Azure SDK Code Generation Azure.AI.Assistants for Azure Data Plane</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.AI.Assistants</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <GenerateAPIListing>true</GenerateAPIListing>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;SA1649;SA1402;</NoWarn>
+    <LangVersion>latest</LangVersion>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Assistants
 {
     /// <summary> The File. </summary>
-    public partial class File
+    internal partial class File
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
