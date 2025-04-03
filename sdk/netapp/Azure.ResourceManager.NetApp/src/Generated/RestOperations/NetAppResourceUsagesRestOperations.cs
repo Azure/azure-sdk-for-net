@@ -15,20 +15,20 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class NetAppResourceRegionInfosRestOperations
+    internal partial class NetAppResourceUsagesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of NetAppResourceRegionInfosRestOperations. </summary>
+        /// <summary> Initializes a new instance of NetAppResourceUsagesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public NetAppResourceRegionInfosRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public NetAppResourceUsagesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
             uri.AppendPath(location, true);
-            uri.AppendPath("/regionInfos", false);
+            uri.AppendPath("/usages", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
             uri.AppendPath(location, true);
-            uri.AppendPath("/regionInfos", false);
+            uri.AppendPath("/usages", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        /// <summary> Provides region specific information. </summary>
+        /// <summary> Get current subscription usages. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RegionInfosList>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<UsagesListResult>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        RegionInfosList value = default;
+                        UsagesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RegionInfosList.DeserializeRegionInfosList(document.RootElement);
+                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Provides region specific information. </summary>
+        /// <summary> Get current subscription usages. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RegionInfosList> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<UsagesListResult> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        RegionInfosList value = default;
+                        UsagesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RegionInfosList.DeserializeRegionInfosList(document.RootElement);
+                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string usageType)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -128,12 +128,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
             uri.AppendPath(location, true);
-            uri.AppendPath("/regionInfos/default", false);
+            uri.AppendPath("/usages/", false);
+            uri.AppendPath(usageType, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string usageType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -144,7 +145,8 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
             uri.AppendPath(location, true);
-            uri.AppendPath("/regionInfos/default", false);
+            uri.AppendPath("/usages/", false);
+            uri.AppendPath(usageType, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -152,57 +154,57 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        /// <summary> Provides storage to network proximity and logical zone mapping information. </summary>
+        /// <summary> Get current subscription usage of the specific type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="usageType"> The type of usage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RegionInfoResourceData>> GetAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="usageType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<UsageResult>> GetAsync(string subscriptionId, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
 
-            using var message = CreateGetRequest(subscriptionId, location);
+            using var message = CreateGetRequest(subscriptionId, location, usageType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RegionInfoResourceData value = default;
+                        UsageResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RegionInfoResourceData.DeserializeRegionInfoResourceData(document.RootElement);
+                        value = UsageResult.DeserializeUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((RegionInfoResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Provides storage to network proximity and logical zone mapping information. </summary>
+        /// <summary> Get current subscription usage of the specific type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="usageType"> The type of usage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RegionInfoResourceData> Get(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="usageType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<UsageResult> Get(string subscriptionId, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
 
-            using var message = CreateGetRequest(subscriptionId, location);
+            using var message = CreateGetRequest(subscriptionId, location, usageType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RegionInfoResourceData value = default;
+                        UsageResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RegionInfoResourceData.DeserializeRegionInfoResourceData(document.RootElement);
+                        value = UsageResult.DeserializeUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((RegionInfoResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -230,14 +232,14 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        /// <summary> Provides region specific information. </summary>
+        /// <summary> Get current subscription usages. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RegionInfosList>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<UsagesListResult>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -248,9 +250,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        RegionInfosList value = default;
+                        UsagesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RegionInfosList.DeserializeRegionInfosList(document.RootElement);
+                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,14 +260,14 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Provides region specific information. </summary>
+        /// <summary> Get current subscription usages. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RegionInfosList> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<UsagesListResult> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -276,9 +278,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        RegionInfosList value = default;
+                        UsagesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RegionInfosList.DeserializeRegionInfosList(document.RootElement);
+                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

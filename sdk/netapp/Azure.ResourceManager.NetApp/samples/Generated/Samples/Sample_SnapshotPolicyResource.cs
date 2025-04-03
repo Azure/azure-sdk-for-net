@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SnapshotPoliciesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/SnapshotPolicies_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/SnapshotPolicies_Get.json
             // this example is just showing the usage of "SnapshotPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SnapshotPolicyResource created on azure
             // for more information of creating SnapshotPolicyResource, please refer to the document of SnapshotPolicyResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string snapshotPolicyName = "snapshotPolicyName";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_SnapshotPoliciesDelete()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/SnapshotPolicies_Delete.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/SnapshotPolicies_Delete.json
             // this example is just showing the usage of "SnapshotPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SnapshotPolicyResource created on azure
             // for more information of creating SnapshotPolicyResource, please refer to the document of SnapshotPolicyResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup";
             string accountName = "accountName";
             string snapshotPolicyName = "snapshotPolicyName";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_SnapshotPoliciesUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/SnapshotPolicies_Update.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/SnapshotPolicies_Update.json
             // this example is just showing the usage of "SnapshotPolicies_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SnapshotPolicyResource created on azure
             // for more information of creating SnapshotPolicyResource, please refer to the document of SnapshotPolicyResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string snapshotPolicyName = "snapshotPolicyName";
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetVolumes_SnapshotPoliciesListVolumes()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/SnapshotPolicies_ListVolumes.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/SnapshotPolicies_ListVolumes.json
             // this example is just showing the usage of "SnapshotPolicies_ListVolumes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SnapshotPolicyResource created on azure
             // for more information of creating SnapshotPolicyResource, please refer to the document of SnapshotPolicyResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string snapshotPolicyName = "snapshotPolicyName";
