@@ -27,6 +27,9 @@ namespace Azure.Storage.DataMovement
         internal Channel<ConcurrencyObservation> _observations;
         internal Channel<ConcurrencyRecommendation> _recommendations;
         private CancellationToken _cancellationToken;
+        private ThroughputMonitor _throughputMonitor;
+
+        internal ThroughputMonitor ThroughputMonitor { get; set; }
 
         private IProcessor<Func<Task>> _chunkProcessor;
 
@@ -58,8 +61,10 @@ namespace Azure.Storage.DataMovement
             _finalConcurrency = _initialConcurrency;
             _observations = Channel.CreateUnbounded<ConcurrencyObservation>();
             _recommendations = Channel.CreateUnbounded<ConcurrencyRecommendation>();
+            _throughputMonitor = throughputMonitor;
         }
 
+        //TODO REmove highCpuUsage
         internal async Task<ConcurrencyRecommendation> GetRecommendedConcurrency(int currentMbps, bool highCpuUsage)
         {
             if (currentMbps < 0)
