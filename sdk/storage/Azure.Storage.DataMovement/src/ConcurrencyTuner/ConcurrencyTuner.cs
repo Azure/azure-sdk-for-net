@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken;
         private ThroughputMonitor _throughputMonitor;
 
-        internal ThroughputMonitor ThroughputMonitor { get; set; }
+        internal ThroughputMonitor ThroughputMonitor { get => _throughputMonitor;  }
 
         private IProcessor<Func<Task>> _chunkProcessor;
 
