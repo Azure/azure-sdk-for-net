@@ -37,7 +37,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private readonly ITransferCheckpointer _checkpointer;
         private readonly ConcurrencyTuner _concurrencyTuner;
-        private readonly bool _concurrencyTunerEnabled;
 
         private readonly List<StorageResourceProvider> _resumeProviders;
 
@@ -48,7 +47,6 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
         private readonly Func<string> _generateTransferId;
-        private readonly ThroughputMonitor _throughputMonitor;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -75,23 +73,7 @@ namespace Azure.Storage.DataMovement
             CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
             options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
             default)
-        {
-            _concurrencyTunerEnabled = options?.ConcurrencyTunerEnabled ?? true;
-
-            if (_concurrencyTunerEnabled)
-            {
-                _throughputMonitor = new ThroughputMonitor();
-                _concurrencyTuner = new ConcurrencyTuner(
-                    _throughputMonitor,
-                    _chunksProcessor,
-                    DataMovementConstants.TransferManagerOptions.MonitoringInterval,
-                    DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
-                    DataMovementConstants.TransferManagerOptions.InitialConcurrency,
-                    DataMovementConstants.TransferManagerOptions.MaxConcurrency,
-                    DataMovementConstants.TransferManagerOptions.MaxCpuUsage
-                );
-            }
-        }
+        { }
         /// <summary>
         /// Dependency injection constructor.
         /// </summary>
@@ -113,6 +95,16 @@ namespace Azure.Storage.DataMovement
             _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
+
+            _concurrencyTuner = new ConcurrencyTuner(
+                new ThroughputMonitor(),
+                _chunksProcessor,
+                DataMovementConstants.TransferManagerOptions.MonitoringInterval,
+                DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
+                DataMovementConstants.TransferManagerOptions.InitialConcurrency,
+                DataMovementConstants.TransferManagerOptions.MaxConcurrency,
+                DataMovementConstants.TransferManagerOptions.MaxCpuUsage
+                );
 
             ConfigureProcessorCallbacks();
         }
@@ -395,13 +387,10 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new TransferOptions();
 
-            if (_throughputMonitor != null)
+            transferOptions.ProgressHandlerOptions = new TransferProgressHandlerOptions()
             {
-                transferOptions.ProgressHandlerOptions = new TransferProgressHandlerOptions()
-                {
-                    TrackBytesTransferred = true
-                };
-            }
+                TrackBytesTransferred = true
+            };
 
             string transferId = _generateTransferId();
             try
@@ -467,7 +456,7 @@ namespace Azure.Storage.DataMovement
                 _checkpointer,
                 transferId,
                 resumeJob,
-                _throughputMonitor,
+                _concurrencyTuner.ThroughputMonitor,
                 cancellationToken)
                 .ConfigureAwait(false);
 
