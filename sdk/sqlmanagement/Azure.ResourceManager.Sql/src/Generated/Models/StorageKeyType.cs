@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Storage key type. </summary>
+    /// <summary> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </summary>
     public readonly partial struct StorageKeyType : IEquatable<StorageKeyType>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         private const string SharedAccessKeyValue = "SharedAccessKey";
         private const string StorageAccessKeyValue = "StorageAccessKey";
+        private const string ManagedIdentityValue = "ManagedIdentity";
 
         /// <summary> SharedAccessKey. </summary>
         public static StorageKeyType SharedAccessKey { get; } = new StorageKeyType(SharedAccessKeyValue);
         /// <summary> StorageAccessKey. </summary>
         public static StorageKeyType StorageAccessKey { get; } = new StorageKeyType(StorageAccessKeyValue);
+        /// <summary> ManagedIdentity. </summary>
+        public static StorageKeyType ManagedIdentity { get; } = new StorageKeyType(ManagedIdentityValue);
         /// <summary> Determines if two <see cref="StorageKeyType"/> values are the same. </summary>
         public static bool operator ==(StorageKeyType left, StorageKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageKeyType"/> values are not the same. </summary>

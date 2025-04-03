@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The storage redundancy type of the backup. </summary>
+    /// <summary> The storage account type used to store backups for this database. </summary>
     public readonly partial struct SqlBackupStorageRedundancy : IEquatable<SqlBackupStorageRedundancy>
     {
         private readonly string _value;

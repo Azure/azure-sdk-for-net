@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_GetByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Samples
             AzureLocation locationName = new AzureLocation("japaneast");
             string managedInstanceName = "testInstance";
             string databaseName = "testDatabase";
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
             ResourceIdentifier resourceGroupLongTermRetentionManagedInstanceBackupResourceId = ResourceGroupLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, locationName, managedInstanceName, databaseName, backupName);
             ResourceGroupLongTermRetentionManagedInstanceBackupResource resourceGroupLongTermRetentionManagedInstanceBackup = client.GetResourceGroupLongTermRetentionManagedInstanceBackupResource(resourceGroupLongTermRetentionManagedInstanceBackupResourceId);
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupDelete.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_DeleteByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Samples
             AzureLocation locationName = new AzureLocation("japaneast");
             string managedInstanceName = "testInstance";
             string databaseName = "testDatabase";
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
             ResourceIdentifier resourceGroupLongTermRetentionManagedInstanceBackupResourceId = ResourceGroupLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, locationName, managedInstanceName, databaseName, backupName);
             ResourceGroupLongTermRetentionManagedInstanceBackupResource resourceGroupLongTermRetentionManagedInstanceBackup = client.GetResourceGroupLongTermRetentionManagedInstanceBackupResource(resourceGroupLongTermRetentionManagedInstanceBackupResourceId);
 
