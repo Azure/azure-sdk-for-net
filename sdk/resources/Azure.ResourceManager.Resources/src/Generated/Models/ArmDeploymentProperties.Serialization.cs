@@ -68,6 +68,28 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("parametersLink"u8);
                 writer.WriteObjectValue(ParametersLink, options);
             }
+            if (Optional.IsCollectionDefined(ExtensionConfigs))
+            {
+                writer.WritePropertyName("extensionConfigs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExtensionConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartObject();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        writer.WriteObjectValue(item0.Value, options);
+                    }
+                    writer.WriteEndObject();
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
             if (Optional.IsDefined(DebugSetting))
@@ -131,6 +153,7 @@ namespace Azure.ResourceManager.Resources.Models
             ArmDeploymentTemplateLink templateLink = default;
             BinaryData parameters = default;
             ArmDeploymentParametersLink parametersLink = default;
+            IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> extensionConfigs = default;
             ArmDeploymentMode mode = default;
             DebugSetting debugSetting = default;
             ErrorDeployment onErrorDeployment = default;
@@ -174,6 +197,32 @@ namespace Azure.ResourceManager.Resources.Models
                         continue;
                     }
                     parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("extensionConfigs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> dictionary = new Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            Dictionary<string, DeploymentExtensionConfigItem> dictionary0 = new Dictionary<string, DeploymentExtensionConfigItem>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary0.Add(property1.Name, DeploymentExtensionConfigItem.DeserializeDeploymentExtensionConfigItem(property1.Value, options));
+                            }
+                            dictionary.Add(property0.Name, dictionary0);
+                        }
+                    }
+                    extensionConfigs = dictionary;
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -228,6 +277,7 @@ namespace Azure.ResourceManager.Resources.Models
                 templateLink,
                 parameters,
                 parametersLink,
+                extensionConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>(),
                 mode,
                 debugSetting,
                 onErrorDeployment,

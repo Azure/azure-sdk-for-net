@@ -36,8 +36,11 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
             if (Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);

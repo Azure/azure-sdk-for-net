@@ -50,8 +50,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Providers = new ChangeTrackingList<ResourceProviderData>();
             Dependencies = new ChangeTrackingList<ArmDependency>();
-            OutputResources = new ChangeTrackingList<SubResource>();
-            ValidatedResources = new ChangeTrackingList<SubResource>();
+            Extensions = new ChangeTrackingList<DeploymentExtensionDefinition>();
+            OutputResources = new ChangeTrackingList<ResourceReference>();
+            ValidatedResources = new ChangeTrackingList<ResourceReference>();
             Diagnostics = new ChangeTrackingList<DeploymentDiagnosticsDefinition>();
         }
 
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="templateLink"> The URI referencing the template. </param>
         /// <param name="parameters"> Deployment parameters. </param>
         /// <param name="parametersLink"> The URI referencing the parameters. </param>
+        /// <param name="extensions"> The extensions used in this deployment. </param>
         /// <param name="mode"> The deployment mode. Possible values are Incremental and Complete. </param>
         /// <param name="debugSetting"> The debug setting of the deployment. </param>
         /// <param name="errorDeployment"> The deployment on error behavior. </param>
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="diagnostics"> Contains diagnostic information collected during validation process. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ResponseError error, IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics, ValidationLevel? validationLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, IReadOnlyList<DeploymentExtensionDefinition> extensions, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<ResourceReference> outputResources, IReadOnlyList<ResourceReference> validatedResources, ResponseError error, IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics, ValidationLevel? validationLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -88,6 +90,7 @@ namespace Azure.ResourceManager.Resources.Models
             TemplateLink = templateLink;
             Parameters = parameters;
             ParametersLink = parametersLink;
+            Extensions = extensions;
             Mode = mode;
             DebugSetting = debugSetting;
             ErrorDeployment = errorDeployment;
@@ -188,6 +191,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The URI referencing the parameters. </summary>
         [WirePath("parametersLink")]
         public ArmDeploymentParametersLink ParametersLink { get; }
+        /// <summary> The extensions used in this deployment. </summary>
+        [WirePath("extensions")]
+        public IReadOnlyList<DeploymentExtensionDefinition> Extensions { get; }
         /// <summary> The deployment mode. Possible values are Incremental and Complete. </summary>
         [WirePath("mode")]
         public ArmDeploymentMode? Mode { get; }
@@ -202,10 +208,10 @@ namespace Azure.ResourceManager.Resources.Models
         public string TemplateHash { get; }
         /// <summary> Array of provisioned resources. </summary>
         [WirePath("outputResources")]
-        public IReadOnlyList<SubResource> OutputResources { get; }
+        public IReadOnlyList<ResourceReference> OutputResources { get; }
         /// <summary> Array of validated resources. </summary>
         [WirePath("validatedResources")]
-        public IReadOnlyList<SubResource> ValidatedResources { get; }
+        public IReadOnlyList<ResourceReference> ValidatedResources { get; }
         /// <summary> The deployment error. </summary>
         [WirePath("error")]
         public ResponseError Error { get; }
