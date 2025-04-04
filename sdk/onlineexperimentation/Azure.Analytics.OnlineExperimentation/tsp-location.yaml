@@ -1,0 +1,4 @@
+directory: specification/onlineexperimentation/Azure.Analytics.OnlineExperimentation
+commit: 3e5d940e535dab22a90e9a4349361e944daf2b46
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
