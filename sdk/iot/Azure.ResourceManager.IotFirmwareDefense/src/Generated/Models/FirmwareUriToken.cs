@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Url data for creating or accessing a blob file. </summary>
+    /// <summary>
+    /// Url data for creating or accessing a blob file.
+    /// Serialized Name: UrlToken
+    /// </summary>
     public partial class FirmwareUriToken
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareUriToken"/>. </summary>
-        /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
+        /// <param name="uri">
+        /// SAS URL for creating or accessing a blob file.
+        /// Serialized Name: UrlToken.url
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FirmwareUriToken(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SAS URL for creating or accessing a blob file. </summary>
+        /// <summary>
+        /// SAS URL for creating or accessing a blob file.
+        /// Serialized Name: UrlToken.url
+        /// </summary>
         public Uri Uri { get; }
     }
 }

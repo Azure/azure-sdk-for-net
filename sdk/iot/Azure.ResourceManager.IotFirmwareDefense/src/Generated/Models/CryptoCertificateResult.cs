@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Crypto certificate resource. </summary>
-    public partial class CryptoCertificateResult : ResourceData
+    /// <summary>
+    /// Crypto certificate properties
+    /// Serialized Name: CryptoCertificate
+    /// </summary>
+    public partial class CryptoCertificateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,100 +51,226 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="CryptoCertificateResult"/>. </summary>
         public CryptoCertificateResult()
         {
-            Usage = new ChangeTrackingList<string>();
+            CertificateUsage = new ChangeTrackingList<CertificateUsage>();
             FilePaths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CryptoCertificateResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="cryptoCertId"> ID for the certificate result. </param>
-        /// <param name="namePropertiesName"> Name of the certificate. </param>
-        /// <param name="subject"> Subject information of the certificate. </param>
-        /// <param name="issuer"> Issuer information of the certificate. </param>
-        /// <param name="issuedOn"> Issue date for the certificate. </param>
-        /// <param name="expireOn"> Expiration date for the certificate. </param>
-        /// <param name="role"> Role of the certificate (Root CA, etc). </param>
-        /// <param name="signatureAlgorithm"> The signature algorithm used in the certificate. </param>
-        /// <param name="keySize"> Size of the certificate's key in bits. </param>
-        /// <param name="keyAlgorithm"> Key algorithm used in the certificate. </param>
-        /// <param name="encoding"> Encoding used for the certificate. </param>
-        /// <param name="serialNumber"> Serial number of the certificate. </param>
-        /// <param name="fingerprint"> Fingerprint of the certificate. </param>
-        /// <param name="usage"> List of functions the certificate can fulfill. </param>
-        /// <param name="filePaths"> List of files where this certificate was found. </param>
-        /// <param name="pairedKey"> A matching paired private key. </param>
-        /// <param name="isExpired"> Indicates if the certificate is expired. </param>
-        /// <param name="isSelfSigned"> Indicates if the certificate is self-signed. </param>
-        /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
-        /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </param>
+        /// <param name="cryptoCertId">
+        /// ID for the certificate result.
+        /// Serialized Name: CryptoCertificate.cryptoCertId
+        /// </param>
+        /// <param name="certificateName">
+        /// Name of the certificate.
+        /// Serialized Name: CryptoCertificate.certificateName
+        /// </param>
+        /// <param name="subject">
+        /// Subject information of the certificate.
+        /// Serialized Name: CryptoCertificate.subject
+        /// </param>
+        /// <param name="issuer">
+        /// Issuer information of the certificate.
+        /// Serialized Name: CryptoCertificate.issuer
+        /// </param>
+        /// <param name="issuedOn">
+        /// Issue date for the certificate.
+        /// Serialized Name: CryptoCertificate.issuedDate
+        /// </param>
+        /// <param name="expireOn">
+        /// Expiration date for the certificate.
+        /// Serialized Name: CryptoCertificate.expirationDate
+        /// </param>
+        /// <param name="certificateRole">
+        /// Role of the certificate (Root CA, etc)
+        /// Serialized Name: CryptoCertificate.certificateRole
+        /// </param>
+        /// <param name="signatureAlgorithm">
+        /// The signature algorithm used in the certificate.
+        /// Serialized Name: CryptoCertificate.signatureAlgorithm
+        /// </param>
+        /// <param name="certificateKeySize">
+        /// Size of the certificate's key in bits
+        /// Serialized Name: CryptoCertificate.certificateKeySize
+        /// </param>
+        /// <param name="certificateKeyAlgorithm">
+        /// Key algorithm used in the certificate.
+        /// Serialized Name: CryptoCertificate.certificateKeyAlgorithm
+        /// </param>
+        /// <param name="encoding">
+        /// Encoding used for the certificate.
+        /// Serialized Name: CryptoCertificate.encoding
+        /// </param>
+        /// <param name="serialNumber">
+        /// Serial number of the certificate.
+        /// Serialized Name: CryptoCertificate.serialNumber
+        /// </param>
+        /// <param name="fingerprint">
+        /// Fingerprint of the certificate.
+        /// Serialized Name: CryptoCertificate.fingerprint
+        /// </param>
+        /// <param name="certificateUsage">
+        /// List of functions the certificate can fulfill.
+        /// Serialized Name: CryptoCertificate.certificateUsage
+        /// </param>
+        /// <param name="filePaths">
+        /// List of files where this certificate was found.
+        /// Serialized Name: CryptoCertificate.filePaths
+        /// </param>
+        /// <param name="pairedKey">
+        /// A matching paired private key.
+        /// Serialized Name: CryptoCertificate.pairedKey
+        /// </param>
+        /// <param name="isExpired">
+        /// Indicates if the certificate is expired.
+        /// Serialized Name: CryptoCertificate.isExpired
+        /// </param>
+        /// <param name="isSelfSigned">
+        /// Indicates if the certificate is self-signed.
+        /// Serialized Name: CryptoCertificate.isSelfSigned
+        /// </param>
+        /// <param name="isWeakSignature">
+        /// Indicates the signature algorithm used is insecure according to NIST guidance.
+        /// Serialized Name: CryptoCertificate.isWeakSignature
+        /// </param>
+        /// <param name="isShortKeySize">
+        /// Indicates the certificate's key size is considered too small to be secure for the key algorithm according to NIST guidance.
+        /// Serialized Name: CryptoCertificate.isShortKeySize
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the last operation.
+        /// Serialized Name: CryptoCertificate.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CryptoCertificateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoCertId, string namePropertiesName, CryptoCertificateEntity subject, CryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string role, string signatureAlgorithm, long? keySize, string keyAlgorithm, string encoding, string serialNumber, string fingerprint, IList<string> usage, IReadOnlyList<string> filePaths, CryptoPairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CryptoCertificateResult(string cryptoCertId, string certificateName, CryptoCertificateEntity subject, CryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string certificateRole, string signatureAlgorithm, long? certificateKeySize, string certificateKeyAlgorithm, string encoding, string serialNumber, string fingerprint, IList<CertificateUsage> certificateUsage, IReadOnlyList<string> filePaths, CryptoPairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CryptoCertId = cryptoCertId;
-            NamePropertiesName = namePropertiesName;
+            CertificateName = certificateName;
             Subject = subject;
             Issuer = issuer;
             IssuedOn = issuedOn;
             ExpireOn = expireOn;
-            Role = role;
+            CertificateRole = certificateRole;
             SignatureAlgorithm = signatureAlgorithm;
-            KeySize = keySize;
-            KeyAlgorithm = keyAlgorithm;
+            CertificateKeySize = certificateKeySize;
+            CertificateKeyAlgorithm = certificateKeyAlgorithm;
             Encoding = encoding;
             SerialNumber = serialNumber;
             Fingerprint = fingerprint;
-            Usage = usage;
+            CertificateUsage = certificateUsage;
             FilePaths = filePaths;
             PairedKey = pairedKey;
             IsExpired = isExpired;
             IsSelfSigned = isSelfSigned;
             IsWeakSignature = isWeakSignature;
             IsShortKeySize = isShortKeySize;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ID for the certificate result. </summary>
+        /// <summary>
+        /// ID for the certificate result.
+        /// Serialized Name: CryptoCertificate.cryptoCertId
+        /// </summary>
         public string CryptoCertId { get; set; }
-        /// <summary> Name of the certificate. </summary>
-        public string NamePropertiesName { get; set; }
-        /// <summary> Subject information of the certificate. </summary>
+        /// <summary>
+        /// Name of the certificate.
+        /// Serialized Name: CryptoCertificate.certificateName
+        /// </summary>
+        public string CertificateName { get; set; }
+        /// <summary>
+        /// Subject information of the certificate.
+        /// Serialized Name: CryptoCertificate.subject
+        /// </summary>
         public CryptoCertificateEntity Subject { get; set; }
-        /// <summary> Issuer information of the certificate. </summary>
+        /// <summary>
+        /// Issuer information of the certificate.
+        /// Serialized Name: CryptoCertificate.issuer
+        /// </summary>
         public CryptoCertificateEntity Issuer { get; set; }
-        /// <summary> Issue date for the certificate. </summary>
+        /// <summary>
+        /// Issue date for the certificate.
+        /// Serialized Name: CryptoCertificate.issuedDate
+        /// </summary>
         public DateTimeOffset? IssuedOn { get; set; }
-        /// <summary> Expiration date for the certificate. </summary>
+        /// <summary>
+        /// Expiration date for the certificate.
+        /// Serialized Name: CryptoCertificate.expirationDate
+        /// </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> Role of the certificate (Root CA, etc). </summary>
-        public string Role { get; set; }
-        /// <summary> The signature algorithm used in the certificate. </summary>
+        /// <summary>
+        /// Role of the certificate (Root CA, etc)
+        /// Serialized Name: CryptoCertificate.certificateRole
+        /// </summary>
+        public string CertificateRole { get; set; }
+        /// <summary>
+        /// The signature algorithm used in the certificate.
+        /// Serialized Name: CryptoCertificate.signatureAlgorithm
+        /// </summary>
         public string SignatureAlgorithm { get; set; }
-        /// <summary> Size of the certificate's key in bits. </summary>
-        public long? KeySize { get; set; }
-        /// <summary> Key algorithm used in the certificate. </summary>
-        public string KeyAlgorithm { get; set; }
-        /// <summary> Encoding used for the certificate. </summary>
+        /// <summary>
+        /// Size of the certificate's key in bits
+        /// Serialized Name: CryptoCertificate.certificateKeySize
+        /// </summary>
+        public long? CertificateKeySize { get; set; }
+        /// <summary>
+        /// Key algorithm used in the certificate.
+        /// Serialized Name: CryptoCertificate.certificateKeyAlgorithm
+        /// </summary>
+        public string CertificateKeyAlgorithm { get; set; }
+        /// <summary>
+        /// Encoding used for the certificate.
+        /// Serialized Name: CryptoCertificate.encoding
+        /// </summary>
         public string Encoding { get; set; }
-        /// <summary> Serial number of the certificate. </summary>
+        /// <summary>
+        /// Serial number of the certificate.
+        /// Serialized Name: CryptoCertificate.serialNumber
+        /// </summary>
         public string SerialNumber { get; set; }
-        /// <summary> Fingerprint of the certificate. </summary>
+        /// <summary>
+        /// Fingerprint of the certificate.
+        /// Serialized Name: CryptoCertificate.fingerprint
+        /// </summary>
         public string Fingerprint { get; set; }
-        /// <summary> List of functions the certificate can fulfill. </summary>
-        public IList<string> Usage { get; set; }
-        /// <summary> List of files where this certificate was found. </summary>
+        /// <summary>
+        /// List of functions the certificate can fulfill.
+        /// Serialized Name: CryptoCertificate.certificateUsage
+        /// </summary>
+        public IList<CertificateUsage> CertificateUsage { get; }
+        /// <summary>
+        /// List of files where this certificate was found.
+        /// Serialized Name: CryptoCertificate.filePaths
+        /// </summary>
         public IReadOnlyList<string> FilePaths { get; }
-        /// <summary> A matching paired private key. </summary>
+        /// <summary>
+        /// A matching paired private key.
+        /// Serialized Name: CryptoCertificate.pairedKey
+        /// </summary>
         public CryptoPairedKey PairedKey { get; set; }
-        /// <summary> Indicates if the certificate is expired. </summary>
+        /// <summary>
+        /// Indicates if the certificate is expired.
+        /// Serialized Name: CryptoCertificate.isExpired
+        /// </summary>
         public bool? IsExpired { get; set; }
-        /// <summary> Indicates if the certificate is self-signed. </summary>
+        /// <summary>
+        /// Indicates if the certificate is self-signed.
+        /// Serialized Name: CryptoCertificate.isSelfSigned
+        /// </summary>
         public bool? IsSelfSigned { get; set; }
-        /// <summary> Indicates the signature algorithm used is insecure. </summary>
+        /// <summary>
+        /// Indicates the signature algorithm used is insecure according to NIST guidance.
+        /// Serialized Name: CryptoCertificate.isWeakSignature
+        /// </summary>
         public bool? IsWeakSignature { get; set; }
-        /// <summary> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </summary>
+        /// <summary>
+        /// Indicates the certificate's key size is considered too small to be secure for the key algorithm according to NIST guidance.
+        /// Serialized Name: CryptoCertificate.isShortKeySize
+        /// </summary>
         public bool? IsShortKeySize { get; set; }
+        /// <summary>
+        /// The status of the last operation.
+        /// Serialized Name: CryptoCertificate.provisioningState
+        /// </summary>
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

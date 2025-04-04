@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CryptoKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -35,116 +34,76 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
             if (Optional.IsDefined(CryptoKeyId))
             {
-                if (CryptoKeyId != null)
-                {
-                    writer.WritePropertyName("cryptoKeyId"u8);
-                    writer.WriteStringValue(CryptoKeyId);
-                }
-                else
-                {
-                    writer.WriteNull("cryptoKeyId");
-                }
+                writer.WritePropertyName("cryptoKeyId"u8);
+                writer.WriteStringValue(CryptoKeyId);
             }
             if (Optional.IsDefined(KeyType))
             {
-                if (KeyType != null)
-                {
-                    writer.WritePropertyName("keyType"u8);
-                    writer.WriteStringValue(KeyType);
-                }
-                else
-                {
-                    writer.WriteNull("keyType");
-                }
+                writer.WritePropertyName("keyType"u8);
+                writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (Optional.IsDefined(KeySize))
+            if (Optional.IsDefined(CryptoKeySize))
             {
-                if (KeySize != null)
-                {
-                    writer.WritePropertyName("keySize"u8);
-                    writer.WriteNumberValue(KeySize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("keySize");
-                }
+                writer.WritePropertyName("cryptoKeySize"u8);
+                writer.WriteNumberValue(CryptoKeySize.Value);
             }
             if (Optional.IsDefined(KeyAlgorithm))
             {
-                if (KeyAlgorithm != null)
-                {
-                    writer.WritePropertyName("keyAlgorithm"u8);
-                    writer.WriteStringValue(KeyAlgorithm);
-                }
-                else
-                {
-                    writer.WriteNull("keyAlgorithm");
-                }
+                writer.WritePropertyName("keyAlgorithm"u8);
+                writer.WriteStringValue(KeyAlgorithm);
             }
             if (Optional.IsCollectionDefined(Usage))
             {
-                if (Usage != null)
+                writer.WritePropertyName("usage"u8);
+                writer.WriteStartArray();
+                foreach (var item in Usage)
                 {
-                    writer.WritePropertyName("usage"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Usage)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("usage");
-                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FilePaths))
             {
-                if (FilePaths != null)
+                writer.WritePropertyName("filePaths"u8);
+                writer.WriteStartArray();
+                foreach (var item in FilePaths)
                 {
-                    writer.WritePropertyName("filePaths"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in FilePaths)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("filePaths");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(PairedKey))
             {
-                if (PairedKey != null)
-                {
-                    writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue(PairedKey, options);
-                }
-                else
-                {
-                    writer.WriteNull("pairedKey");
-                }
+                writer.WritePropertyName("pairedKey"u8);
+                writer.WriteObjectValue(PairedKey, options);
             }
             if (Optional.IsDefined(IsShortKeySize))
             {
-                if (IsShortKeySize != null)
+                writer.WritePropertyName("isShortKeySize"u8);
+                writer.WriteBooleanValue(IsShortKeySize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName("isShortKeySize"u8);
-                    writer.WriteBooleanValue(IsShortKeySize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isShortKeySize");
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CryptoKeyResult IJsonModel<CryptoKeyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -167,144 +126,100 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
             string cryptoKeyId = default;
-            string keyType = default;
-            long? keySize = default;
+            CryptoKeyType? keyType = default;
+            long? cryptoKeySize = default;
             string keyAlgorithm = default;
             IList<string> usage = default;
             IReadOnlyList<string> filePaths = default;
             CryptoPairedKey pairedKey = default;
             bool? isShortKeySize = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("cryptoKeyId"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    cryptoKeyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
+                if (property.NameEquals("keyType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    keyType = new CryptoKeyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (property.NameEquals("cryptoKeySize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    cryptoKeySize = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("keyAlgorithm"u8))
+                {
+                    keyAlgorithm = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("usage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("cryptoKeyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                cryptoKeyId = null;
-                                continue;
-                            }
-                            cryptoKeyId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("keyType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                keyType = null;
-                                continue;
-                            }
-                            keyType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("keySize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                keySize = null;
-                                continue;
-                            }
-                            keySize = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("keyAlgorithm"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                keyAlgorithm = null;
-                                continue;
-                            }
-                            keyAlgorithm = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("usage"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            usage = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("filePaths"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            filePaths = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("pairedKey"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                pairedKey = null;
-                                continue;
-                            }
-                            pairedKey = CryptoPairedKey.DeserializeCryptoPairedKey(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("isShortKeySize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                isShortKeySize = null;
-                                continue;
-                            }
-                            isShortKeySize = property0.Value.GetBoolean();
-                            continue;
-                        }
+                        continue;
                     }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    usage = array;
+                    continue;
+                }
+                if (property.NameEquals("filePaths"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    filePaths = array;
+                    continue;
+                }
+                if (property.NameEquals("pairedKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pairedKey = CryptoPairedKey.DeserializeCryptoPairedKey(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("isShortKeySize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isShortKeySize = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -314,18 +229,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CryptoKeyResult(
-                id,
-                name,
-                type,
-                systemData,
                 cryptoKeyId,
                 keyType,
-                keySize,
+                cryptoKeySize,
                 keyAlgorithm,
                 usage ?? new ChangeTrackingList<string>(),
                 filePaths ?? new ChangeTrackingList<string>(),
                 pairedKey,
                 isShortKeySize,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

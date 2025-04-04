@@ -10,42 +10,82 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Properties for cryptographic key summary. </summary>
+    /// <summary>
+    /// Properties for cryptographic key summary.
+    /// Serialized Name: CryptoKeySummaryResource
+    /// </summary>
     public partial class CryptoKeySummary : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="CryptoKeySummary"/>. </summary>
-        internal CryptoKeySummary()
+        public CryptoKeySummary()
         {
             SummaryType = FirmwareAnalysisSummaryType.CryptoKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="CryptoKeySummary"/>. </summary>
-        /// <param name="summaryType"> Describes the type of summary. </param>
+        /// <param name="summaryType">
+        /// The type of summary.
+        /// Serialized Name: SummaryResourceProperties.summaryType
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the last operation.
+        /// Serialized Name: SummaryResourceProperties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="totalKeys"> Total number of cryptographic keys found. </param>
-        /// <param name="publicKeys"> Total number of (non-certificate) public keys found. </param>
-        /// <param name="privateKeys"> Total number of private keys found. </param>
-        /// <param name="pairedKeys"> Total number of keys found that have a matching paired key or certificate. </param>
-        /// <param name="shortKeySize"> Total number of keys found that have an insecure key size for the algorithm. </param>
-        internal CryptoKeySummary(FirmwareAnalysisSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalKeys, long? publicKeys, long? privateKeys, long? pairedKeys, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
+        /// <param name="totalKeyCount">
+        /// Total number of cryptographic keys found.
+        /// Serialized Name: CryptoKeySummaryResource.totalKeyCount
+        /// </param>
+        /// <param name="publicKeyCount">
+        /// Total number of (non-certificate) public keys found.
+        /// Serialized Name: CryptoKeySummaryResource.publicKeyCount
+        /// </param>
+        /// <param name="privateKeyCount">
+        /// Total number of private keys found.
+        /// Serialized Name: CryptoKeySummaryResource.privateKeyCount
+        /// </param>
+        /// <param name="pairedKeyCount">
+        /// Total number of keys found that have a matching paired key or certificate.
+        /// Serialized Name: CryptoKeySummaryResource.pairedKeyCount
+        /// </param>
+        /// <param name="shortKeySizeCount">
+        /// Total number of keys found that have an insecure key size for the algorithm.
+        /// Serialized Name: CryptoKeySummaryResource.shortKeySizeCount
+        /// </param>
+        internal CryptoKeySummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalKeyCount, long? publicKeyCount, long? privateKeyCount, long? pairedKeyCount, long? shortKeySizeCount) : base(summaryType, provisioningState, serializedAdditionalRawData)
         {
-            TotalKeys = totalKeys;
-            PublicKeys = publicKeys;
-            PrivateKeys = privateKeys;
-            PairedKeys = pairedKeys;
-            ShortKeySize = shortKeySize;
+            TotalKeyCount = totalKeyCount;
+            PublicKeyCount = publicKeyCount;
+            PrivateKeyCount = privateKeyCount;
+            PairedKeyCount = pairedKeyCount;
+            ShortKeySizeCount = shortKeySizeCount;
             SummaryType = summaryType;
         }
 
-        /// <summary> Total number of cryptographic keys found. </summary>
-        public long? TotalKeys { get; }
-        /// <summary> Total number of (non-certificate) public keys found. </summary>
-        public long? PublicKeys { get; }
-        /// <summary> Total number of private keys found. </summary>
-        public long? PrivateKeys { get; }
-        /// <summary> Total number of keys found that have a matching paired key or certificate. </summary>
-        public long? PairedKeys { get; }
-        /// <summary> Total number of keys found that have an insecure key size for the algorithm. </summary>
-        public long? ShortKeySize { get; }
+        /// <summary>
+        /// Total number of cryptographic keys found.
+        /// Serialized Name: CryptoKeySummaryResource.totalKeyCount
+        /// </summary>
+        public long? TotalKeyCount { get; set; }
+        /// <summary>
+        /// Total number of (non-certificate) public keys found.
+        /// Serialized Name: CryptoKeySummaryResource.publicKeyCount
+        /// </summary>
+        public long? PublicKeyCount { get; set; }
+        /// <summary>
+        /// Total number of private keys found.
+        /// Serialized Name: CryptoKeySummaryResource.privateKeyCount
+        /// </summary>
+        public long? PrivateKeyCount { get; set; }
+        /// <summary>
+        /// Total number of keys found that have a matching paired key or certificate.
+        /// Serialized Name: CryptoKeySummaryResource.pairedKeyCount
+        /// </summary>
+        public long? PairedKeyCount { get; set; }
+        /// <summary>
+        /// Total number of keys found that have an insecure key size for the algorithm.
+        /// Serialized Name: CryptoKeySummaryResource.shortKeySizeCount
+        /// </summary>
+        public long? ShortKeySizeCount { get; set; }
     }
 }

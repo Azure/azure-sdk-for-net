@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -35,260 +34,136 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
             if (Optional.IsDefined(CryptoCertId))
             {
-                if (CryptoCertId != null)
-                {
-                    writer.WritePropertyName("cryptoCertId"u8);
-                    writer.WriteStringValue(CryptoCertId);
-                }
-                else
-                {
-                    writer.WriteNull("cryptoCertId");
-                }
+                writer.WritePropertyName("cryptoCertId"u8);
+                writer.WriteStringValue(CryptoCertId);
             }
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(CertificateName))
             {
-                if (NamePropertiesName != null)
-                {
-                    writer.WritePropertyName("name"u8);
-                    writer.WriteStringValue(NamePropertiesName);
-                }
-                else
-                {
-                    writer.WriteNull("name");
-                }
+                writer.WritePropertyName("certificateName"u8);
+                writer.WriteStringValue(CertificateName);
             }
             if (Optional.IsDefined(Subject))
             {
-                if (Subject != null)
-                {
-                    writer.WritePropertyName("subject"u8);
-                    writer.WriteObjectValue(Subject, options);
-                }
-                else
-                {
-                    writer.WriteNull("subject");
-                }
+                writer.WritePropertyName("subject"u8);
+                writer.WriteObjectValue(Subject, options);
             }
             if (Optional.IsDefined(Issuer))
             {
-                if (Issuer != null)
-                {
-                    writer.WritePropertyName("issuer"u8);
-                    writer.WriteObjectValue(Issuer, options);
-                }
-                else
-                {
-                    writer.WriteNull("issuer");
-                }
+                writer.WritePropertyName("issuer"u8);
+                writer.WriteObjectValue(Issuer, options);
             }
             if (Optional.IsDefined(IssuedOn))
             {
-                if (IssuedOn != null)
-                {
-                    writer.WritePropertyName("issuedDate"u8);
-                    writer.WriteStringValue(IssuedOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("issuedDate");
-                }
+                writer.WritePropertyName("issuedDate"u8);
+                writer.WriteStringValue(IssuedOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                if (ExpireOn != null)
-                {
-                    writer.WritePropertyName("expirationDate"u8);
-                    writer.WriteStringValue(ExpireOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("expirationDate");
-                }
+                writer.WritePropertyName("expirationDate"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Role))
+            if (Optional.IsDefined(CertificateRole))
             {
-                if (Role != null)
-                {
-                    writer.WritePropertyName("role"u8);
-                    writer.WriteStringValue(Role);
-                }
-                else
-                {
-                    writer.WriteNull("role");
-                }
+                writer.WritePropertyName("certificateRole"u8);
+                writer.WriteStringValue(CertificateRole);
             }
             if (Optional.IsDefined(SignatureAlgorithm))
             {
-                if (SignatureAlgorithm != null)
-                {
-                    writer.WritePropertyName("signatureAlgorithm"u8);
-                    writer.WriteStringValue(SignatureAlgorithm);
-                }
-                else
-                {
-                    writer.WriteNull("signatureAlgorithm");
-                }
+                writer.WritePropertyName("signatureAlgorithm"u8);
+                writer.WriteStringValue(SignatureAlgorithm);
             }
-            if (Optional.IsDefined(KeySize))
+            if (Optional.IsDefined(CertificateKeySize))
             {
-                if (KeySize != null)
-                {
-                    writer.WritePropertyName("keySize"u8);
-                    writer.WriteNumberValue(KeySize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("keySize");
-                }
+                writer.WritePropertyName("certificateKeySize"u8);
+                writer.WriteNumberValue(CertificateKeySize.Value);
             }
-            if (Optional.IsDefined(KeyAlgorithm))
+            if (Optional.IsDefined(CertificateKeyAlgorithm))
             {
-                if (KeyAlgorithm != null)
-                {
-                    writer.WritePropertyName("keyAlgorithm"u8);
-                    writer.WriteStringValue(KeyAlgorithm);
-                }
-                else
-                {
-                    writer.WriteNull("keyAlgorithm");
-                }
+                writer.WritePropertyName("certificateKeyAlgorithm"u8);
+                writer.WriteStringValue(CertificateKeyAlgorithm);
             }
             if (Optional.IsDefined(Encoding))
             {
-                if (Encoding != null)
-                {
-                    writer.WritePropertyName("encoding"u8);
-                    writer.WriteStringValue(Encoding);
-                }
-                else
-                {
-                    writer.WriteNull("encoding");
-                }
+                writer.WritePropertyName("encoding"u8);
+                writer.WriteStringValue(Encoding);
             }
             if (Optional.IsDefined(SerialNumber))
             {
-                if (SerialNumber != null)
-                {
-                    writer.WritePropertyName("serialNumber"u8);
-                    writer.WriteStringValue(SerialNumber);
-                }
-                else
-                {
-                    writer.WriteNull("serialNumber");
-                }
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
             }
             if (Optional.IsDefined(Fingerprint))
             {
-                if (Fingerprint != null)
-                {
-                    writer.WritePropertyName("fingerprint"u8);
-                    writer.WriteStringValue(Fingerprint);
-                }
-                else
-                {
-                    writer.WriteNull("fingerprint");
-                }
+                writer.WritePropertyName("fingerprint"u8);
+                writer.WriteStringValue(Fingerprint);
             }
-            if (Optional.IsCollectionDefined(Usage))
+            if (Optional.IsCollectionDefined(CertificateUsage))
             {
-                if (Usage != null)
+                writer.WritePropertyName("certificateUsage"u8);
+                writer.WriteStartArray();
+                foreach (var item in CertificateUsage)
                 {
-                    writer.WritePropertyName("usage"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Usage)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToString());
                 }
-                else
-                {
-                    writer.WriteNull("usage");
-                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FilePaths))
             {
-                if (FilePaths != null)
+                writer.WritePropertyName("filePaths"u8);
+                writer.WriteStartArray();
+                foreach (var item in FilePaths)
                 {
-                    writer.WritePropertyName("filePaths"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in FilePaths)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("filePaths");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(PairedKey))
             {
-                if (PairedKey != null)
-                {
-                    writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue(PairedKey, options);
-                }
-                else
-                {
-                    writer.WriteNull("pairedKey");
-                }
+                writer.WritePropertyName("pairedKey"u8);
+                writer.WriteObjectValue(PairedKey, options);
             }
             if (Optional.IsDefined(IsExpired))
             {
-                if (IsExpired != null)
-                {
-                    writer.WritePropertyName("isExpired"u8);
-                    writer.WriteBooleanValue(IsExpired.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isExpired");
-                }
+                writer.WritePropertyName("isExpired"u8);
+                writer.WriteBooleanValue(IsExpired.Value);
             }
             if (Optional.IsDefined(IsSelfSigned))
             {
-                if (IsSelfSigned != null)
-                {
-                    writer.WritePropertyName("isSelfSigned"u8);
-                    writer.WriteBooleanValue(IsSelfSigned.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isSelfSigned");
-                }
+                writer.WritePropertyName("isSelfSigned"u8);
+                writer.WriteBooleanValue(IsSelfSigned.Value);
             }
             if (Optional.IsDefined(IsWeakSignature))
             {
-                if (IsWeakSignature != null)
-                {
-                    writer.WritePropertyName("isWeakSignature"u8);
-                    writer.WriteBooleanValue(IsWeakSignature.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isWeakSignature");
-                }
+                writer.WritePropertyName("isWeakSignature"u8);
+                writer.WriteBooleanValue(IsWeakSignature.Value);
             }
             if (Optional.IsDefined(IsShortKeySize))
             {
-                if (IsShortKeySize != null)
+                writer.WritePropertyName("isShortKeySize"u8);
+                writer.WriteBooleanValue(IsShortKeySize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName("isShortKeySize"u8);
-                    writer.WriteBooleanValue(IsShortKeySize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isShortKeySize");
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CryptoCertificateResult IJsonModel<CryptoCertificateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -311,276 +186,196 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
             string cryptoCertId = default;
-            string name0 = default;
+            string certificateName = default;
             CryptoCertificateEntity subject = default;
             CryptoCertificateEntity issuer = default;
             DateTimeOffset? issuedDate = default;
             DateTimeOffset? expirationDate = default;
-            string role = default;
+            string certificateRole = default;
             string signatureAlgorithm = default;
-            long? keySize = default;
-            string keyAlgorithm = default;
+            long? certificateKeySize = default;
+            string certificateKeyAlgorithm = default;
             string encoding = default;
             string serialNumber = default;
             string fingerprint = default;
-            IList<string> usage = default;
+            IList<CertificateUsage> certificateUsage = default;
             IReadOnlyList<string> filePaths = default;
             CryptoPairedKey pairedKey = default;
             bool? isExpired = default;
             bool? isSelfSigned = default;
             bool? isWeakSignature = default;
             bool? isShortKeySize = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("cryptoCertId"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    cryptoCertId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("certificateName"u8))
                 {
-                    name = property.Value.GetString();
+                    certificateName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
+                if (property.NameEquals("subject"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    subject = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (property.NameEquals("issuer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    issuer = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("issuedDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("cryptoCertId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                cryptoCertId = null;
-                                continue;
-                            }
-                            cryptoCertId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("name"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                name0 = null;
-                                continue;
-                            }
-                            name0 = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("subject"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                subject = null;
-                                continue;
-                            }
-                            subject = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("issuer"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                issuer = null;
-                                continue;
-                            }
-                            issuer = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("issuedDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                issuedDate = null;
-                                continue;
-                            }
-                            issuedDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("expirationDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                expirationDate = null;
-                                continue;
-                            }
-                            expirationDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("role"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                role = null;
-                                continue;
-                            }
-                            role = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("signatureAlgorithm"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                signatureAlgorithm = null;
-                                continue;
-                            }
-                            signatureAlgorithm = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("keySize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                keySize = null;
-                                continue;
-                            }
-                            keySize = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("keyAlgorithm"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                keyAlgorithm = null;
-                                continue;
-                            }
-                            keyAlgorithm = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("encoding"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                encoding = null;
-                                continue;
-                            }
-                            encoding = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serialNumber"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                serialNumber = null;
-                                continue;
-                            }
-                            serialNumber = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fingerprint"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                fingerprint = null;
-                                continue;
-                            }
-                            fingerprint = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("usage"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            usage = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("filePaths"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            filePaths = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("pairedKey"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                pairedKey = null;
-                                continue;
-                            }
-                            pairedKey = CryptoPairedKey.DeserializeCryptoPairedKey(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("isExpired"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                isExpired = null;
-                                continue;
-                            }
-                            isExpired = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isSelfSigned"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                isSelfSigned = null;
-                                continue;
-                            }
-                            isSelfSigned = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isWeakSignature"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                isWeakSignature = null;
-                                continue;
-                            }
-                            isWeakSignature = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isShortKeySize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                isShortKeySize = null;
-                                continue;
-                            }
-                            isShortKeySize = property0.Value.GetBoolean();
-                            continue;
-                        }
+                        continue;
                     }
+                    issuedDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("expirationDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expirationDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("certificateRole"u8))
+                {
+                    certificateRole = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("signatureAlgorithm"u8))
+                {
+                    signatureAlgorithm = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("certificateKeySize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateKeySize = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("certificateKeyAlgorithm"u8))
+                {
+                    certificateKeyAlgorithm = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("encoding"u8))
+                {
+                    encoding = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serialNumber"u8))
+                {
+                    serialNumber = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fingerprint"u8))
+                {
+                    fingerprint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("certificateUsage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CertificateUsage> array = new List<CertificateUsage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new CertificateUsage(item.GetString()));
+                    }
+                    certificateUsage = array;
+                    continue;
+                }
+                if (property.NameEquals("filePaths"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    filePaths = array;
+                    continue;
+                }
+                if (property.NameEquals("pairedKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pairedKey = CryptoPairedKey.DeserializeCryptoPairedKey(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("isExpired"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isExpired = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isSelfSigned"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSelfSigned = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isWeakSignature"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isWeakSignature = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isShortKeySize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isShortKeySize = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -590,30 +385,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CryptoCertificateResult(
-                id,
-                name,
-                type,
-                systemData,
                 cryptoCertId,
-                name0,
+                certificateName,
                 subject,
                 issuer,
                 issuedDate,
                 expirationDate,
-                role,
+                certificateRole,
                 signatureAlgorithm,
-                keySize,
-                keyAlgorithm,
+                certificateKeySize,
+                certificateKeyAlgorithm,
                 encoding,
                 serialNumber,
                 fingerprint,
-                usage ?? new ChangeTrackingList<string>(),
+                certificateUsage ?? new ChangeTrackingList<CertificateUsage>(),
                 filePaths ?? new ChangeTrackingList<string>(),
                 pairedKey,
                 isExpired,
                 isSelfSigned,
                 isWeakSignature,
                 isShortKeySize,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

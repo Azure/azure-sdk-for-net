@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// <summary>
     /// A class representing the FirmwareAnalysisWorkspace data model.
     /// Firmware analysis workspace.
+    /// Serialized Name: Workspace
     /// </summary>
     public partial class FirmwareAnalysisWorkspaceData : TrackedResourceData
     {
@@ -64,11 +65,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="properties">
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: Workspace.properties
+        /// </param>
+        /// <param name="sku">
+        /// The SKU (Stock Keeping Unit) assigned to this resource.
+        /// Serialized Name: Workspace.sku
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareAnalysisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal FirmwareAnalysisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, IotFirmwareDefenseSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,7 +86,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
         }
 
-        /// <summary> Provisioning state of the resource. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        /// <summary>
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: Workspace.properties
+        /// </summary>
+        internal WorkspaceProperties Properties { get; set; }
+        /// <summary>
+        /// Provisioning state of the resource.
+        /// Serialized Name: WorkspaceProperties.provisioningState
+        /// </summary>
+        public FirmwareProvisioningState? WorkspaceProvisioningState
+        {
+            get => Properties is null ? default : Properties.ProvisioningState;
+        }
+
+        /// <summary>
+        /// The SKU (Stock Keeping Unit) assigned to this resource.
+        /// Serialized Name: Workspace.sku
+        /// </summary>
+        public IotFirmwareDefenseSku Sku { get; set; }
     }
 }

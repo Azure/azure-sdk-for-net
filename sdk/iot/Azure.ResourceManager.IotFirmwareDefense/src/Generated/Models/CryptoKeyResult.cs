@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Crypto key resource. </summary>
-    public partial class CryptoKeyResult : ResourceData
+    /// <summary>
+    /// Crypto key properties
+    /// Serialized Name: CryptoKey
+    /// </summary>
+    public partial class CryptoKeyResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -55,47 +56,101 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CryptoKeyResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="cryptoKeyId"> ID for the key result. </param>
-        /// <param name="keyType"> Type of the key (public or private). </param>
-        /// <param name="keySize"> Size of the key in bits. </param>
-        /// <param name="keyAlgorithm"> Key algorithm name. </param>
-        /// <param name="usage"> Functions the key can fulfill. </param>
-        /// <param name="filePaths"> List of files where this key was found. </param>
-        /// <param name="pairedKey"> A matching paired key or certificate. </param>
-        /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm. </param>
+        /// <param name="cryptoKeyId">
+        /// ID for the key result.
+        /// Serialized Name: CryptoKey.cryptoKeyId
+        /// </param>
+        /// <param name="keyType">
+        /// Type of the key (public or private).
+        /// Serialized Name: CryptoKey.keyType
+        /// </param>
+        /// <param name="cryptoKeySize">
+        /// Size of the key in bits.
+        /// Serialized Name: CryptoKey.cryptoKeySize
+        /// </param>
+        /// <param name="keyAlgorithm">
+        /// Key algorithm name.
+        /// Serialized Name: CryptoKey.keyAlgorithm
+        /// </param>
+        /// <param name="usage">
+        /// Functions the key can fulfill.
+        /// Serialized Name: CryptoKey.usage
+        /// </param>
+        /// <param name="filePaths">
+        /// List of files where this key was found.
+        /// Serialized Name: CryptoKey.filePaths
+        /// </param>
+        /// <param name="pairedKey">
+        /// A matching paired key or certificate.
+        /// Serialized Name: CryptoKey.pairedKey
+        /// </param>
+        /// <param name="isShortKeySize">
+        /// Indicates the key size is considered too small to be secure for the algorithm according to NIST guidance.
+        /// Serialized Name: CryptoKey.isShortKeySize
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the last operation.
+        /// Serialized Name: CryptoKey.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CryptoKeyResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoKeyId, string keyType, long? keySize, string keyAlgorithm, IList<string> usage, IReadOnlyList<string> filePaths, CryptoPairedKey pairedKey, bool? isShortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CryptoKeyResult(string cryptoKeyId, CryptoKeyType? keyType, long? cryptoKeySize, string keyAlgorithm, IList<string> usage, IReadOnlyList<string> filePaths, CryptoPairedKey pairedKey, bool? isShortKeySize, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CryptoKeyId = cryptoKeyId;
             KeyType = keyType;
-            KeySize = keySize;
+            CryptoKeySize = cryptoKeySize;
             KeyAlgorithm = keyAlgorithm;
             Usage = usage;
             FilePaths = filePaths;
             PairedKey = pairedKey;
             IsShortKeySize = isShortKeySize;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ID for the key result. </summary>
+        /// <summary>
+        /// ID for the key result.
+        /// Serialized Name: CryptoKey.cryptoKeyId
+        /// </summary>
         public string CryptoKeyId { get; set; }
-        /// <summary> Type of the key (public or private). </summary>
-        public string KeyType { get; set; }
-        /// <summary> Size of the key in bits. </summary>
-        public long? KeySize { get; set; }
-        /// <summary> Key algorithm name. </summary>
+        /// <summary>
+        /// Type of the key (public or private).
+        /// Serialized Name: CryptoKey.keyType
+        /// </summary>
+        public CryptoKeyType? KeyType { get; set; }
+        /// <summary>
+        /// Size of the key in bits.
+        /// Serialized Name: CryptoKey.cryptoKeySize
+        /// </summary>
+        public long? CryptoKeySize { get; set; }
+        /// <summary>
+        /// Key algorithm name.
+        /// Serialized Name: CryptoKey.keyAlgorithm
+        /// </summary>
         public string KeyAlgorithm { get; set; }
-        /// <summary> Functions the key can fulfill. </summary>
-        public IList<string> Usage { get; set; }
-        /// <summary> List of files where this key was found. </summary>
+        /// <summary>
+        /// Functions the key can fulfill.
+        /// Serialized Name: CryptoKey.usage
+        /// </summary>
+        public IList<string> Usage { get; }
+        /// <summary>
+        /// List of files where this key was found.
+        /// Serialized Name: CryptoKey.filePaths
+        /// </summary>
         public IReadOnlyList<string> FilePaths { get; }
-        /// <summary> A matching paired key or certificate. </summary>
+        /// <summary>
+        /// A matching paired key or certificate.
+        /// Serialized Name: CryptoKey.pairedKey
+        /// </summary>
         public CryptoPairedKey PairedKey { get; set; }
-        /// <summary> Indicates the key size is considered too small to be secure for the algorithm. </summary>
+        /// <summary>
+        /// Indicates the key size is considered too small to be secure for the algorithm according to NIST guidance.
+        /// Serialized Name: CryptoKey.isShortKeySize
+        /// </summary>
         public bool? IsShortKeySize { get; set; }
+        /// <summary>
+        /// The status of the last operation.
+        /// Serialized Name: CryptoKey.provisioningState
+        /// </summary>
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

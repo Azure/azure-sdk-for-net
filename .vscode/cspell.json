@@ -1628,7 +1628,14 @@
         "Rpath",
         "rpath",
         "runpath",
-        "Cves"
+        "Cves",
+        "cves",
+	"Ocsp",
+	"ocsp",
+	"OCSP",
+	"sbom",
+	"Diffie",
+	"iotfirmwaredefense"
       ]
     },
     {

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_SummariesGetMaximumSetGen()
+        public async Task Get_SummariesGetMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Summaries_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Summaries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
+            string resourceGroupName = "rgiotfirmwaredefense";
+            string workspaceName = "exampleWorkspaceName";
+            string firmwareId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareAnalysisSummaryCollection collection = iotFirmware.GetFirmwareAnalysisSummaries();
 
             // invoke the operation
-            FirmwareAnalysisSummaryName summaryName = FirmwareAnalysisSummaryName.Firmware;
-            FirmwareAnalysisSummaryResource result = await collection.GetAsync(summaryName);
+            FirmwareAnalysisSummaryType summaryType = FirmwareAnalysisSummaryType.Firmware;
+            FirmwareAnalysisSummaryResource result = await collection.GetAsync(summaryType);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SummariesGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Summaries_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Summaries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareAnalysisSummaryCollection collection = iotFirmware.GetFirmwareAnalysisSummaries();
 
             // invoke the operation
-            FirmwareAnalysisSummaryName summaryName = FirmwareAnalysisSummaryName.Firmware;
-            FirmwareAnalysisSummaryResource result = await collection.GetAsync(summaryName);
+            FirmwareAnalysisSummaryType summaryType = FirmwareAnalysisSummaryType.Firmware;
+            FirmwareAnalysisSummaryResource result = await collection.GetAsync(summaryType);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_SummariesListByFirmwareMaximumSetGen()
+        public async Task GetAll_SummariesListByFirmwareMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_ListByFirmware_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Summaries_ListByFirmware_MaximumSet_Gen.json
             // this example is just showing the usage of "Summaries_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
+            string resourceGroupName = "rgiotfirmwaredefense";
+            string workspaceName = "exampleWorkspaceName";
+            string firmwareId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SummariesListByFirmwareMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_ListByFirmware_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Summaries_ListByFirmware_MinimumSet_Gen.json
             // this example is just showing the usage of "Summaries_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_SummariesGetMaximumSetGen()
+        public async Task Exists_SummariesGetMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Summaries_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Summaries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
+            string resourceGroupName = "rgiotfirmwaredefense";
+            string workspaceName = "exampleWorkspaceName";
+            string firmwareId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareAnalysisSummaryCollection collection = iotFirmware.GetFirmwareAnalysisSummaries();
 
             // invoke the operation
-            FirmwareAnalysisSummaryName summaryName = FirmwareAnalysisSummaryName.Firmware;
-            bool result = await collection.ExistsAsync(summaryName);
+            FirmwareAnalysisSummaryType summaryType = FirmwareAnalysisSummaryType.Firmware;
+            bool result = await collection.ExistsAsync(summaryType);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SummariesGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Summaries_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Summaries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -216,17 +216,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareAnalysisSummaryCollection collection = iotFirmware.GetFirmwareAnalysisSummaries();
 
             // invoke the operation
-            FirmwareAnalysisSummaryName summaryName = FirmwareAnalysisSummaryName.Firmware;
-            bool result = await collection.ExistsAsync(summaryName);
+            FirmwareAnalysisSummaryType summaryType = FirmwareAnalysisSummaryType.Firmware;
+            bool result = await collection.ExistsAsync(summaryType);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_SummariesGetMaximumSetGen()
+        public async Task GetIfExists_SummariesGetMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Summaries_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Summaries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
+            string resourceGroupName = "rgiotfirmwaredefense";
+            string workspaceName = "exampleWorkspaceName";
+            string firmwareId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareAnalysisSummaryCollection collection = iotFirmware.GetFirmwareAnalysisSummaries();
 
             // invoke the operation
-            FirmwareAnalysisSummaryName summaryName = FirmwareAnalysisSummaryName.Firmware;
-            NullableResponse<FirmwareAnalysisSummaryResource> response = await collection.GetIfExistsAsync(summaryName);
+            FirmwareAnalysisSummaryType summaryType = FirmwareAnalysisSummaryType.Firmware;
+            NullableResponse<FirmwareAnalysisSummaryResource> response = await collection.GetIfExistsAsync(summaryType);
             FirmwareAnalysisSummaryResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SummariesGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Summaries_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Summaries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareAnalysisSummaryCollection collection = iotFirmware.GetFirmwareAnalysisSummaries();
 
             // invoke the operation
-            FirmwareAnalysisSummaryName summaryName = FirmwareAnalysisSummaryName.Firmware;
-            NullableResponse<FirmwareAnalysisSummaryResource> response = await collection.GetIfExistsAsync(summaryName);
+            FirmwareAnalysisSummaryType summaryType = FirmwareAnalysisSummaryType.Firmware;
+            NullableResponse<FirmwareAnalysisSummaryResource> response = await collection.GetIfExistsAsync(summaryType);
             FirmwareAnalysisSummaryResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

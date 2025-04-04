@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -35,97 +34,55 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 throw new FormatException($"The model {nameof(CveResult)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
             if (Optional.IsDefined(CveId))
             {
-                if (CveId != null)
-                {
-                    writer.WritePropertyName("cveId"u8);
-                    writer.WriteStringValue(CveId);
-                }
-                else
-                {
-                    writer.WriteNull("cveId");
-                }
+                writer.WritePropertyName("cveId"u8);
+                writer.WriteStringValue(CveId);
             }
-            if (Optional.IsDefined(Component))
+            if (Optional.IsDefined(ComponentId))
             {
-                if (Component != null)
-                {
-                    writer.WritePropertyName("component"u8);
-                    writer.WriteObjectValue(Component, options);
-                }
-                else
-                {
-                    writer.WriteNull("component");
-                }
+                writer.WritePropertyName("componentId"u8);
+                writer.WriteStringValue(ComponentId);
+            }
+            if (Optional.IsDefined(ComponentName))
+            {
+                writer.WritePropertyName("componentName"u8);
+                writer.WriteStringValue(ComponentName);
+            }
+            if (Optional.IsDefined(ComponentVersion))
+            {
+                writer.WritePropertyName("componentVersion"u8);
+                writer.WriteStringValue(ComponentVersion);
             }
             if (Optional.IsDefined(Severity))
             {
-                if (Severity != null)
-                {
-                    writer.WritePropertyName("severity"u8);
-                    writer.WriteStringValue(Severity);
-                }
-                else
-                {
-                    writer.WriteNull("severity");
-                }
+                writer.WritePropertyName("severity"u8);
+                writer.WriteStringValue(Severity);
             }
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(CveName))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(NamePropertiesName);
+                writer.WritePropertyName("cveName"u8);
+                writer.WriteStringValue(CveName);
             }
-            if (Optional.IsDefined(CvssScore))
+            if (Optional.IsDefined(EffectiveCvssScore))
             {
-                if (CvssScore != null)
-                {
-                    writer.WritePropertyName("cvssScore"u8);
-                    writer.WriteStringValue(CvssScore);
-                }
-                else
-                {
-                    writer.WriteNull("cvssScore");
-                }
+                writer.WritePropertyName("effectiveCvssScore"u8);
+                writer.WriteNumberValue(EffectiveCvssScore.Value);
             }
-            if (Optional.IsDefined(CvssVersion))
+            if (Optional.IsDefined(EffectiveCvssVersion))
             {
-                if (CvssVersion != null)
-                {
-                    writer.WritePropertyName("cvssVersion"u8);
-                    writer.WriteStringValue(CvssVersion);
-                }
-                else
-                {
-                    writer.WriteNull("cvssVersion");
-                }
+                writer.WritePropertyName("effectiveCvssVersion"u8);
+                writer.WriteNumberValue(EffectiveCvssVersion.Value);
             }
-            if (Optional.IsDefined(CvssV2Score))
+            if (Optional.IsCollectionDefined(CvssScores))
             {
-                if (CvssV2Score != null)
+                writer.WritePropertyName("cvssScores"u8);
+                writer.WriteStartArray();
+                foreach (var item in CvssScores)
                 {
-                    writer.WritePropertyName("cvssV2Score"u8);
-                    writer.WriteStringValue(CvssV2Score);
+                    writer.WriteObjectValue(item, options);
                 }
-                else
-                {
-                    writer.WriteNull("cvssV2Score");
-                }
-            }
-            if (Optional.IsDefined(CvssV3Score))
-            {
-                if (CvssV3Score != null)
-                {
-                    writer.WritePropertyName("cvssV3Score"u8);
-                    writer.WriteStringValue(CvssV3Score);
-                }
-                else
-                {
-                    writer.WriteNull("cvssV3Score");
-                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Links))
             {
@@ -139,17 +96,29 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             if (Optional.IsDefined(Description))
             {
-                if (Description != null)
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName("description"u8);
-                    writer.WriteStringValue(Description);
-                }
-                else
-                {
-                    writer.WriteNull("description");
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CveResult IJsonModel<CveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -172,157 +141,110 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
             string cveId = default;
-            CveComponent component = default;
+            string componentId = default;
+            string componentName = default;
+            string componentVersion = default;
             string severity = default;
-            string name0 = default;
-            string cvssScore = default;
-            string cvssVersion = default;
-            string cvssV2Score = default;
-            string cvssV3Score = default;
+            string cveName = default;
+            float? effectiveCvssScore = default;
+            int? effectiveCvssVersion = default;
+            IList<CvssScore> cvssScores = default;
             IReadOnlyList<CveLink> links = default;
             string description = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("cveId"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    cveId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("componentId"u8))
                 {
-                    name = property.Value.GetString();
+                    componentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (property.NameEquals("componentName"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    componentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemData"u8))
+                if (property.NameEquals("componentVersion"u8))
+                {
+                    componentVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("severity"u8))
+                {
+                    severity = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("cveName"u8))
+                {
+                    cveName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("effectiveCvssScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    effectiveCvssScore = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (property.NameEquals("effectiveCvssVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    effectiveCvssVersion = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("cvssScores"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("cveId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                cveId = null;
-                                continue;
-                            }
-                            cveId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("component"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                component = null;
-                                continue;
-                            }
-                            component = CveComponent.DeserializeCveComponent(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("severity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                severity = null;
-                                continue;
-                            }
-                            severity = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("name"u8))
-                        {
-                            name0 = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cvssScore"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                cvssScore = null;
-                                continue;
-                            }
-                            cvssScore = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cvssVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                cvssVersion = null;
-                                continue;
-                            }
-                            cvssVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cvssV2Score"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                cvssV2Score = null;
-                                continue;
-                            }
-                            cvssV2Score = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cvssV3Score"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                cvssV3Score = null;
-                                continue;
-                            }
-                            cvssV3Score = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("links"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<CveLink> array = new List<CveLink>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(CveLink.DeserializeCveLink(item, options));
-                            }
-                            links = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                description = null;
-                                continue;
-                            }
-                            description = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    List<CvssScore> array = new List<CvssScore>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CvssScore.DeserializeCvssScore(item, options));
+                    }
+                    cvssScores = array;
+                    continue;
+                }
+                if (property.NameEquals("links"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CveLink> array = new List<CveLink>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CveLink.DeserializeCveLink(item, options));
+                    }
+                    links = array;
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -332,20 +254,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CveResult(
-                id,
-                name,
-                type,
-                systemData,
                 cveId,
-                component,
+                componentId,
+                componentName,
+                componentVersion,
                 severity,
-                name0,
-                cvssScore,
-                cvssVersion,
-                cvssV2Score,
-                cvssV3Score,
+                cveName,
+                effectiveCvssScore,
+                effectiveCvssVersion,
+                cvssScores ?? new ChangeTrackingList<CvssScore>(),
                 links ?? new ChangeTrackingList<CveLink>(),
                 description,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

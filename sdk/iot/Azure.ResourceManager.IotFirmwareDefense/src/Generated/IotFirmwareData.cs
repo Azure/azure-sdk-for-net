@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// <summary>
     /// A class representing the IotFirmware data model.
     /// Firmware definition
+    /// Serialized Name: Firmware
     /// </summary>
     public partial class IotFirmwareData : ResourceData
     {
@@ -54,7 +55,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <summary> Initializes a new instance of <see cref="IotFirmwareData"/>. </summary>
         public IotFirmwareData()
         {
-            StatusMessages = new ChangeTrackingList<FirmwareAnalysisStatusMessage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotFirmwareData"/>. </summary>
@@ -62,47 +62,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="fileName"> File name for a firmware that user uploaded. </param>
-        /// <param name="vendor"> Firmware vendor. </param>
-        /// <param name="model"> Firmware model. </param>
-        /// <param name="version"> Firmware version. </param>
-        /// <param name="description"> User-specified description of the firmware. </param>
-        /// <param name="fileSize"> File size of the uploaded firmware image. </param>
-        /// <param name="status"> The status of firmware scan. </param>
-        /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="properties">
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: Firmware.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotFirmwareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string fileName, string vendor, string model, string version, string description, long? fileSize, FirmwareAnalysisStatus? status, IList<FirmwareAnalysisStatusMessage> statusMessages, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal IotFirmwareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirmwareProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            FileName = fileName;
-            Vendor = vendor;
-            Model = model;
-            Version = version;
-            Description = description;
-            FileSize = fileSize;
-            Status = status;
-            StatusMessages = statusMessages;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> File name for a firmware that user uploaded. </summary>
-        public string FileName { get; set; }
-        /// <summary> Firmware vendor. </summary>
-        public string Vendor { get; set; }
-        /// <summary> Firmware model. </summary>
-        public string Model { get; set; }
-        /// <summary> Firmware version. </summary>
-        public string Version { get; set; }
-        /// <summary> User-specified description of the firmware. </summary>
-        public string Description { get; set; }
-        /// <summary> File size of the uploaded firmware image. </summary>
-        public long? FileSize { get; set; }
-        /// <summary> The status of firmware scan. </summary>
-        public FirmwareAnalysisStatus? Status { get; set; }
-        /// <summary> A list of errors or other messages generated during firmware analysis. </summary>
-        public IList<FirmwareAnalysisStatusMessage> StatusMessages { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        /// <summary>
+        /// The resource-specific properties for this resource.
+        /// Serialized Name: Firmware.properties
+        /// </summary>
+        public FirmwareProperties Properties { get; set; }
     }
 }

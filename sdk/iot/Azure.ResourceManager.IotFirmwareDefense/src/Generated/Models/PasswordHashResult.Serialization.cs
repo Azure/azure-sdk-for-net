@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -35,94 +34,61 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 throw new FormatException($"The model {nameof(PasswordHashResult)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
             if (Optional.IsDefined(PasswordHashId))
             {
-                if (PasswordHashId != null)
-                {
-                    writer.WritePropertyName("passwordHashId"u8);
-                    writer.WriteStringValue(PasswordHashId);
-                }
-                else
-                {
-                    writer.WriteNull("passwordHashId");
-                }
+                writer.WritePropertyName("passwordHashId"u8);
+                writer.WriteStringValue(PasswordHashId);
             }
             if (Optional.IsDefined(FilePath))
             {
-                if (FilePath != null)
-                {
-                    writer.WritePropertyName("filePath"u8);
-                    writer.WriteStringValue(FilePath);
-                }
-                else
-                {
-                    writer.WriteNull("filePath");
-                }
+                writer.WritePropertyName("filePath"u8);
+                writer.WriteStringValue(FilePath);
             }
             if (Optional.IsDefined(Salt))
             {
-                if (Salt != null)
-                {
-                    writer.WritePropertyName("salt"u8);
-                    writer.WriteStringValue(Salt);
-                }
-                else
-                {
-                    writer.WriteNull("salt");
-                }
+                writer.WritePropertyName("salt"u8);
+                writer.WriteStringValue(Salt);
             }
             if (Optional.IsDefined(Hash))
             {
-                if (Hash != null)
-                {
-                    writer.WritePropertyName("hash"u8);
-                    writer.WriteStringValue(Hash);
-                }
-                else
-                {
-                    writer.WriteNull("hash");
-                }
+                writer.WritePropertyName("hash"u8);
+                writer.WriteStringValue(Hash);
             }
             if (Optional.IsDefined(Context))
             {
-                if (Context != null)
-                {
-                    writer.WritePropertyName("context"u8);
-                    writer.WriteStringValue(Context);
-                }
-                else
-                {
-                    writer.WriteNull("context");
-                }
+                writer.WritePropertyName("context"u8);
+                writer.WriteStringValue(Context);
             }
             if (Optional.IsDefined(Username))
             {
-                if (Username != null)
-                {
-                    writer.WritePropertyName("username"u8);
-                    writer.WriteStringValue(Username);
-                }
-                else
-                {
-                    writer.WriteNull("username");
-                }
+                writer.WritePropertyName("username"u8);
+                writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Algorithm))
             {
-                if (Algorithm != null)
+                writer.WritePropertyName("algorithm"u8);
+                writer.WriteStringValue(Algorithm);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName("algorithm"u8);
-                    writer.WriteStringValue(Algorithm);
-                }
-                else
-                {
-                    writer.WriteNull("algorithm");
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PasswordHashResult IJsonModel<PasswordHashResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -145,10 +111,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
             string passwordHashId = default;
             string filePath = default;
             string salt = default;
@@ -156,114 +118,53 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             string context = default;
             string username = default;
             string algorithm = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("passwordHashId"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    passwordHashId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("filePath"u8))
                 {
-                    name = property.Value.GetString();
+                    filePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (property.NameEquals("salt"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    salt = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemData"u8))
+                if (property.NameEquals("hash"u8))
+                {
+                    hash = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("context"u8))
+                {
+                    context = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("username"u8))
+                {
+                    username = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("algorithm"u8))
+                {
+                    algorithm = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("passwordHashId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                passwordHashId = null;
-                                continue;
-                            }
-                            passwordHashId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("filePath"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                filePath = null;
-                                continue;
-                            }
-                            filePath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("salt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                salt = null;
-                                continue;
-                            }
-                            salt = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("hash"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                hash = null;
-                                continue;
-                            }
-                            hash = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("context"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                context = null;
-                                continue;
-                            }
-                            context = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("username"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                username = null;
-                                continue;
-                            }
-                            username = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("algorithm"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                algorithm = null;
-                                continue;
-                            }
-                            algorithm = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -273,10 +174,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new PasswordHashResult(
-                id,
-                name,
-                type,
-                systemData,
                 passwordHashId,
                 filePath,
                 salt,
@@ -284,6 +181,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 context,
                 username,
                 algorithm,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

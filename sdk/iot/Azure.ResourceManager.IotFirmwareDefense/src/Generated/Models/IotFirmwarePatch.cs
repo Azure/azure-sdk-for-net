@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Firmware definition. </summary>
+    /// <summary>
+    /// Firmware definition
+    /// Serialized Name: FirmwareUpdateDefinition
+    /// </summary>
     public partial class IotFirmwarePatch
     {
         /// <summary>
@@ -48,51 +51,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="IotFirmwarePatch"/>. </summary>
         public IotFirmwarePatch()
         {
-            StatusMessages = new ChangeTrackingList<FirmwareAnalysisStatusMessage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotFirmwarePatch"/>. </summary>
-        /// <param name="fileName"> File name for a firmware that user uploaded. </param>
-        /// <param name="vendor"> Firmware vendor. </param>
-        /// <param name="model"> Firmware model. </param>
-        /// <param name="version"> Firmware version. </param>
-        /// <param name="description"> User-specified description of the firmware. </param>
-        /// <param name="fileSize"> File size of the uploaded firmware image. </param>
-        /// <param name="status"> The status of firmware scan. </param>
-        /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="properties">
+        /// The editable properties of a firmware
+        /// Serialized Name: FirmwareUpdateDefinition.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotFirmwarePatch(string fileName, string vendor, string model, string version, string description, long? fileSize, FirmwareAnalysisStatus? status, IList<FirmwareAnalysisStatusMessage> statusMessages, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotFirmwarePatch(FirmwareProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FileName = fileName;
-            Vendor = vendor;
-            Model = model;
-            Version = version;
-            Description = description;
-            FileSize = fileSize;
-            Status = status;
-            StatusMessages = statusMessages;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> File name for a firmware that user uploaded. </summary>
-        public string FileName { get; set; }
-        /// <summary> Firmware vendor. </summary>
-        public string Vendor { get; set; }
-        /// <summary> Firmware model. </summary>
-        public string Model { get; set; }
-        /// <summary> Firmware version. </summary>
-        public string Version { get; set; }
-        /// <summary> User-specified description of the firmware. </summary>
-        public string Description { get; set; }
-        /// <summary> File size of the uploaded firmware image. </summary>
-        public long? FileSize { get; set; }
-        /// <summary> The status of firmware scan. </summary>
-        public FirmwareAnalysisStatus? Status { get; set; }
-        /// <summary> A list of errors or other messages generated during firmware analysis. </summary>
-        public IList<FirmwareAnalysisStatusMessage> StatusMessages { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        /// <summary>
+        /// The editable properties of a firmware
+        /// Serialized Name: FirmwareUpdateDefinition.properties
+        /// </summary>
+        public FirmwareProperties Properties { get; set; }
     }
 }

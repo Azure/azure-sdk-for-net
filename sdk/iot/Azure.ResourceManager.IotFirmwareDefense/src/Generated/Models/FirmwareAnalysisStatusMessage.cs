@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Error and status message. </summary>
+    /// <summary>
+    /// Error and status message
+    /// Serialized Name: StatusMessage
+    /// </summary>
     public partial class FirmwareAnalysisStatusMessage
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisStatusMessage"/>. </summary>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="message"> The error or status message. </param>
+        /// <param name="errorCode">
+        /// The error code
+        /// Serialized Name: StatusMessage.errorCode
+        /// </param>
+        /// <param name="message">
+        /// The error or status message
+        /// Serialized Name: StatusMessage.message
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FirmwareAnalysisStatusMessage(long? errorCode, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The error code. </summary>
+        /// <summary>
+        /// The error code
+        /// Serialized Name: StatusMessage.errorCode
+        /// </summary>
         public long? ErrorCode { get; set; }
-        /// <summary> The error or status message. </summary>
+        /// <summary>
+        /// The error or status message
+        /// Serialized Name: StatusMessage.message
+        /// </summary>
         public string Message { get; set; }
     }
 }
