@@ -14,7 +14,7 @@ public partial class Readme : SamplesBase<AIAssistantsTestEnvironment>
     [Test]
     public void Authenticate()
     {
-        #region Snippet:OverviewCreateClient
+        #region Snippet:AssistantsOverviewCreateClient
 #if SNIPPET
         var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 #else
@@ -30,7 +30,7 @@ public partial class Readme : SamplesBase<AIAssistantsTestEnvironment>
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
 
-        #region Snippet:Readme_Troubleshooting
+        #region Snippet:AssistantsReadme_Troubleshooting
         try
         {
             client.CreateMessage(

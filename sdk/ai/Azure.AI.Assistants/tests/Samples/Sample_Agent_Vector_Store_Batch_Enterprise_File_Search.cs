@@ -16,7 +16,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
     [AsyncOnly]
     public async Task VectorStoreBatchEnterpriseFileSearch()
     {
-        #region Snippet:VectorStoreBatchEnterpriseFileSearch_CreateClient_Async
+        #region Snippet:AssistantsVectorStoreBatchEnterpriseFileSearch_CreateClient_Async
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -30,7 +30,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
         #endregion
-        #region Snippet:BatchFileAttachment
+        #region Snippet:AssistantsBatchFileAttachment
         var ds = new VectorStoreDataSource(
             assetIdentifier: blobURI,
             assetType: VectorStoreDataSourceAssetType.UriAsset
@@ -47,7 +47,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
 
         FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
         #endregion
-        #region  Snippet:VectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread_Async
+        #region  Snippet:AssistantsVectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread_Async
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
         Agent agent = await client.CreateAgentAsync(
             model: modelName,
@@ -65,7 +65,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
             content: "What feature does Smart Eyewear offer?"
             );
         #endregion
-        #region Snippet:VectorStoreBatchEnterpriseFileSearch_ThreadRun_Async
+        #region Snippet:AssistantsVectorStoreBatchEnterpriseFileSearch_ThreadRun_Async
         ThreadRun run = await client.CreateRunAsync(
             thread.Id,
             agent.Id
@@ -107,7 +107,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
         while (storeFiles.HasMore);
         WriteMessages(messages, dtFiles);
         #endregion
-        #region Snippet:VectorStoreBatchEnterpriseFileSearch_Cleanup_Async
+        #region Snippet:AssistantsVectorStoreBatchEnterpriseFileSearch_Cleanup_Async
         VectorStoreDeletionStatus delStatus = await client.DeleteVectorStoreAsync(vectorStore.Id);
         if (delStatus.Deleted)
         {
@@ -138,7 +138,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
-        #region Snippet:BatchFileAttachment_Sync
+        #region Snippet:AssistantsBatchFileAttachment_Sync
         var ds = new VectorStoreDataSource(
             assetIdentifier: blobURI,
             assetType: VectorStoreDataSourceAssetType.UriAsset
@@ -155,7 +155,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
 
         FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
         #endregion
-        #region  Snippet:VectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread
+        #region  Snippet:AssistantsVectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
         Agent agent = client.CreateAgent(
             model: modelName,
@@ -173,7 +173,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
             content: "What feature does Smart Eyewear offer?"
             );
         #endregion
-        #region Snippet:VectorStoreBatchEnterpriseFileSearch_ThreadRun
+        #region Snippet:AssistantsVectorStoreBatchEnterpriseFileSearch_ThreadRun
         ThreadRun run = client.CreateRun(
             thread.Id,
             agent.Id
@@ -215,7 +215,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
         while (storeFiles.HasMore);
         WriteMessages(messages, dtFiles);
         #endregion
-        #region Snippet:VectorStoreBatchEnterpriseFileSearch_Cleanup
+        #region Snippet:AssistantsVectorStoreBatchEnterpriseFileSearch_Cleanup
         VectorStoreDeletionStatus delStatus = client.DeleteVectorStore(vectorStore.Id);
         if (delStatus.Deleted)
         {
@@ -230,7 +230,7 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
         #endregion
     }
 
-    #region Snippet:VectorStoreBatchEnterpriseFileSearch_Print
+    #region Snippet:AssistantsVectorStoreBatchEnterpriseFileSearch_Print
     private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
     {
         foreach (ThreadMessage threadMessage in messages)

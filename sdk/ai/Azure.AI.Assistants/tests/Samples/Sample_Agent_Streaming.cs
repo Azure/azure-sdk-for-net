@@ -15,7 +15,7 @@ namespace Azure.AI.Assistants.Tests
         [AsyncOnly]
         public async Task StreamingAsync()
         {
-            #region Snippet:StreamingAsync_CreateClient
+            #region Snippet:AssistantsStreamingAsync_CreateClient
 #if SNIPPET
             var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
             var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -25,7 +25,7 @@ namespace Azure.AI.Assistants.Tests
 #endif
             AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
             #endregion
-            #region Snippet:StreamingAsync_CreateAgent
+            #region Snippet:AssistantsStreamingAsync_CreateAgent
             Agent agent = await client.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "My Friendly Test Assistant",
@@ -33,7 +33,7 @@ namespace Azure.AI.Assistants.Tests
                 tools: [ new CodeInterpreterToolDefinition() ]
             );
             #endregion
-            # region Snippet:StreamingAsync_CreateThread
+            # region Snippet:AssistantsStreamingAsync_CreateThread
             AgentThread thread = await client.CreateThreadAsync();
 
             ThreadMessage message = await client.CreateMessageAsync(
@@ -41,7 +41,7 @@ namespace Azure.AI.Assistants.Tests
                 MessageRole.User,
                 "Hi, Assistant! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
             #endregion
-            #region Snippet:StreamingAsync_StreamLoop
+            #region Snippet:AssistantsStreamingAsync_StreamLoop
             await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -58,7 +58,7 @@ namespace Azure.AI.Assistants.Tests
                 }
             }
             #endregion
-            #region Snippet::StreamingAsync_Cleanup
+            #region Snippet:AssistantsStreamingAsync_Cleanup
             await client.DeleteThreadAsync(thread.Id);
             await client.DeleteAgentAsync(agent.Id);
             #endregion
@@ -76,7 +76,7 @@ namespace Azure.AI.Assistants.Tests
             var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
             AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
-            #region Snippet:Streaming_CreateAgent
+            #region Snippet:AssistantsStreaming_CreateAgent
             Agent agent = client.CreateAgent(
                 model: modelDeploymentName,
                 name: "My Friendly Test Assistant",
@@ -84,7 +84,7 @@ namespace Azure.AI.Assistants.Tests
                 tools: [new CodeInterpreterToolDefinition()]
             );
             #endregion
-            #region Snippet:Streaming_CreateThread
+            #region Snippet:AssistantsStreaming_CreateThread
             AgentThread thread = client.CreateThread();
 
             ThreadMessage message = client.CreateMessage(
@@ -92,7 +92,7 @@ namespace Azure.AI.Assistants.Tests
                 MessageRole.User,
                 "Hi, Assistant! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
             #endregion
-            #region Snippet:Streaming_StreamLoop
+            #region Snippet:AssistantsStreaming_StreamLoop
             foreach (StreamingUpdate streamingUpdate in client.CreateRunStreaming(thread.Id, agent.Id))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -109,7 +109,7 @@ namespace Azure.AI.Assistants.Tests
                 }
             }
             #endregion
-            #region Snippet::Streaming_Cleanup
+            #region Snippet:AssistantsStreaming_Cleanup
             client.DeleteThread(thread.Id);
             client.DeleteAgent(agent.Id);
             #endregion

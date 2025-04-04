@@ -17,7 +17,7 @@ namespace Azure.AI.Assistants.Tests;
 
 public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironment>
 {
-    #region Snippet:OpenAPICallingExample_GetFile
+    #region Snippet:AssistantsOpenAPICallingExample_GetFile
     private static string GetFile([CallerFilePath] string pth = "")
     {
         var dirName = Path.GetDirectoryName(pth) ?? "";
@@ -29,7 +29,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironm
     [AsyncOnly]
     public async Task OpenAPICallingExampleAsync()
     {
-        #region Snippet:OpenAPICallingExample_CreateClient
+        #region Snippet:AssistantsOpenAPICallingExample_CreateClient
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -41,7 +41,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironm
         var file_path = GetFile();
         #endregion
 
-        #region Snippet:OpenAPIDefineFunctionTools
+        #region Snippet:AssistantsOpenAPIDefineFunctionTools
         OpenApiAnonymousAuthDetails oaiAuth = new();
         OpenApiToolDefinition openapiTool = new(
             name: "get_weather",
@@ -58,7 +58,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironm
         );
         #endregion
 
-        #region Snippet:OpenAPIHandlePollingWithRequiredAction
+        #region Snippet:AssistantsOpenAPIHandlePollingWithRequiredAction
         AgentThread thread = await client.CreateThreadAsync();
         ThreadMessage message = await client.CreateMessageAsync(
             thread.Id,
@@ -81,7 +81,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironm
             run.LastError?.Message);
         #endregion
 
-        #region Snippet:OpenAPI_Print
+        #region Snippet:AssistantsOpenAPI_Print
         PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -104,7 +104,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironm
             }
         }
         #endregion
-        #region Snippet:OpenAPI_Cleanup
+        #region Snippet:AssistantsOpenAPI_Cleanup
         await client.DeleteThreadAsync(thread.Id);
         await client.DeleteAgentAsync(agent.Id);
         #endregion
@@ -126,7 +126,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironm
         AIAssistantClient client = new(connectionString, new AzureCliCredential(), options);
         var file_path = GetFile();
 
-        #region Snippet:OpenAPISyncDefineFunctionTools
+        #region Snippet:AssistantsOpenAPISyncDefineFunctionTools
         OpenApiAnonymousAuthDetails oaiAuth = new();
         OpenApiToolDefinition openapiTool = new(
             name: "get_weather",
@@ -143,7 +143,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironm
         );
         #endregion
 
-        #region Snippet:OpenAPISyncHandlePollingWithRequiredAction
+        #region Snippet:AssistantsOpenAPISyncHandlePollingWithRequiredAction
         AgentThread thread = client.CreateThread();
         ThreadMessage message = client.CreateMessage(
             thread.Id,
@@ -166,7 +166,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironm
             run.LastError?.Message);
         #endregion
 
-        #region Snippet:OpenAPISync_Print
+        #region Snippet:AssistantsOpenAPISync_Print
         PageableList<ThreadMessage> messages = client.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -189,7 +189,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIAssistantsTestEnvironm
             }
         }
         #endregion
-        #region Snippet:OpenAPISync_Cleanup
+        #region Snippet:AssistantsOpenAPISync_Cleanup
         client.DeleteThread(thread.Id);
         client.DeleteAgent(agent.Id);
         #endregion

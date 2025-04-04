@@ -17,7 +17,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
     [AsyncOnly]
     public async Task BasicExample()
     {
-        #region Snippet:OverviewCreateAgentClient
+        #region Snippet:AssistantsOverviewCreateAgentClient
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -29,7 +29,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
         #endregion
 
         // Step 1: Create an agent
-        #region Snippet:OverviewCreateAgent
+        #region Snippet:AssistantsOverviewCreateAgent
         Agent agent = await client.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Math Tutor",
@@ -38,12 +38,12 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
         #endregion
 
         //// Step 2: Create a thread
-        #region Snippet:OverviewCreateThread
+        #region Snippet:AssistantsOverviewCreateThread
         AgentThread thread = await client.CreateThreadAsync();
         #endregion
 
         // Step 3: Add a message to a thread
-        #region Snippet:OverviewCreateMessage
+        #region Snippet:AssistantsOverviewCreateMessage
         ThreadMessage message = await client.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
@@ -57,14 +57,14 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
         Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
 
         // Step 4: Run the agent
-        #region Snippet:OverviewCreateRun
+        #region Snippet:AssistantsOverviewCreateRun
         ThreadRun run = await client.CreateRunAsync(
             thread.Id,
             agent.Id,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
         #endregion
 
-        #region Snippet:OverviewWaitForRun
+        #region Snippet:AssistantsOverviewWaitForRun
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -78,7 +78,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
             run.LastError?.Message);
         #endregion
 
-        #region Snippet:OverviewListUpdatedMessages
+        #region Snippet:AssistantsOverviewListUpdatedMessages
         PageableList<ThreadMessage> messages
             = await client.GetMessagesAsync(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
@@ -100,7 +100,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
             }
         }
         #endregion
-        #region Snippet:OverviewCleanup
+        #region Snippet:AssistantsOverviewCleanup
         await client.DeleteThreadAsync(threadId: thread.Id);
         await client.DeleteAgentAsync(agentId: agent.Id);
         #endregion
@@ -120,7 +120,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
 
         // Step 1: Create an agent
-        #region Snippet:OverviewCreateAgentSync
+        #region Snippet:AssistantsOverviewCreateAgentSync
         Agent agent = client.CreateAgent(
             model: modelDeploymentName,
             name: "Math Tutor",
@@ -129,12 +129,12 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
         #endregion
 
         //// Step 2: Create a thread
-        #region Snippet:OverviewCreateThreadSync
+        #region Snippet:AssistantsOverviewCreateThreadSync
         AgentThread thread = client.CreateThread();
         #endregion
 
         // Step 3: Add a message to a thread
-        #region Snippet:OverviewCreateMessageSync
+        #region Snippet:AssistantsOverviewCreateMessageSync
         ThreadMessage message = client.CreateMessage(
             thread.Id,
             MessageRole.User,
@@ -148,14 +148,14 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
         Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
 
         // Step 4: Run the agent
-        #region Snippet:OverviewCreateRunSync
+        #region Snippet:AssistantsOverviewCreateRunSync
         ThreadRun run = client.CreateRun(
             thread.Id,
             agent.Id,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
         #endregion
 
-        #region Snippet:OverviewWaitForRunSync
+        #region Snippet:AssistantsOverviewWaitForRunSync
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -169,7 +169,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
             run.LastError?.Message);
         #endregion
 
-        #region Snippet:OverviewListUpdatedMessagesSync
+        #region Snippet:AssistantsOverviewListUpdatedMessagesSync
         PageableList<ThreadMessage> messages
             = client.GetMessages(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
@@ -192,7 +192,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIAssistantsTestEnvironme
         }
         #endregion
 
-        #region Snippet:OverviewCleanupSync
+        #region Snippet:AssistantsOverviewCleanupSync
         client.DeleteThread(threadId: thread.Id);
         client.DeleteAgent(agentId: agent.Id);
         #endregion

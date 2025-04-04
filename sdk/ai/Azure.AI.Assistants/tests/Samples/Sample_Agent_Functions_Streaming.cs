@@ -19,7 +19,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
     [AsyncOnly]
     public async Task FunctionCallingWithStreamingExampleAsync()
     {
-        #region Snippet:FunctionsWithStreaming_CreateClient
+        #region Snippet:AssistantsFunctionsWithStreaming_CreateClient
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -30,7 +30,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
         #endregion
 
-        #region Snippet:FunctionsWithStreaming_DefineFunctionTools
+        #region Snippet:AssistantsFunctionsWithStreaming_DefineFunctionTools
         // Example of a function that defines no parameters
         string GetUserFavoriteCity() => "Seattle, WA";
         FunctionToolDefinition getUserFavoriteCityTool = new("getUserFavoriteCity", "Gets the user's favorite city.");
@@ -88,7 +88,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
                 },
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
         #endregion
-        #region Snippet:FunctionsWithStreamingUpdateHandling
+        #region Snippet:AssistantsFunctionsWithStreamingUpdateHandling
         ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string functionArguments)
         {
             if (functionName == getUserFavoriteCityTool.Name)
@@ -114,7 +114,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
             return null;
         }
         #endregion
-        #region Snippet:FunctionsWithStreaming_CreateAgent
+        #region Snippet:AssistantsFunctionsWithStreaming_CreateAgent
         Agent agent = await client.CreateAgentAsync(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
@@ -124,7 +124,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
             tools: [ getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool ]
         );
         #endregion
-        #region Snippet:FunctionsWithStreaming_CreateThread
+        #region Snippet:AssistantsFunctionsWithStreaming_CreateThread
         AgentThread thread = await client.CreateThreadAsync();
 
         ThreadMessage message = await client.CreateMessageAsync(
@@ -132,7 +132,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
             MessageRole.User,
             "What's the weather like in my favorite city?");
         #endregion
-        #region Snippet:FunctionsWithStreamingUpdateCycle
+        #region Snippet:AssistantsFunctionsWithStreamingUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
         AsyncCollectionResult<StreamingUpdate> stream = client.CreateRunStreamingAsync(thread.Id, agent.Id);
@@ -173,7 +173,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
         }
         while (toolOutputs.Count > 0);
         #endregion
-        #region Snippet:FunctionsWithStreaming_Cleanup
+        #region Snippet:AssistantsFunctionsWithStreaming_Cleanup
         await client.DeleteThreadAsync(thread.Id);
         await client.DeleteAgentAsync(agent.Id);
         #endregion
@@ -272,7 +272,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
             }
             return null;
         }
-        #region Snippet:FunctionsWithStreamingSync_CreateAgent
+        #region Snippet:AssistantsFunctionsWithStreamingSync_CreateAgent
         Agent agent = client.CreateAgent(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
@@ -282,7 +282,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
             tools: [getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool]
         );
         #endregion
-        #region Snippet:FunctionsWithStreamingSync_CreateThread
+        #region Snippet:AssistantsFunctionsWithStreamingSync_CreateThread
         AgentThread thread = client.CreateThread();
 
         ThreadMessage message = client.CreateMessage(
@@ -290,7 +290,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
             MessageRole.User,
             "What's the weather like in my favorite city?");
         #endregion
-        #region Snippet:FunctionsWithStreamingSyncUpdateCycle
+        #region Snippet:AssistantsFunctionsWithStreamingSyncUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
         CollectionResult<StreamingUpdate> stream = client.CreateRunStreaming(thread.Id, agent.Id);
@@ -331,7 +331,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIAssistants
         }
         while (toolOutputs.Count > 0);
         #endregion
-        #region Snippet:FunctionsWithStreamingSync_Cleanup
+        #region Snippet:AssistantsFunctionsWithStreamingSync_Cleanup
         client.DeleteThread(thread.Id);
         client.DeleteAgent(agent.Id);
         #endregion

@@ -17,7 +17,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIAss
     [AsyncOnly]
     public async Task AzureAISearchStreamingExampleAsync()
     {
-        #region Snippet:AzureAISearchStreamingExample_CreateProjectClient
+        #region Snippet:AssistantsAzureAISearchStreamingExample_CreateProjectClient
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -27,7 +27,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIAss
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         #endregion
-        #region Snippet:AzureAISearchStreamingExample_CreateTool_Async
+        #region Snippet:AssistantsAzureAISearchStreamingExample_CreateTool_Async
 #if SNIPPET
         ListConnectionsResponse connections = await projectClient.GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
 
@@ -63,7 +63,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIAss
            tools: [ new AzureAISearchToolDefinition() ],
            toolResources: searchResource);
         #endregion
-        #region Snippet:AzureAISearchStreamingExample_CreateThread_Async
+        #region Snippet:AssistantsAzureAISearchStreamingExample_CreateThread_Async
         // Create thread for communication
         AgentThread thread = await agentClient.CreateThreadAsync();
 
@@ -73,7 +73,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIAss
             MessageRole.User,
             "What is the temperature rating of the cozynights sleeping bag?");
         #endregion
-        #region Snippet:AzureAISearchStreamingExample_PrintMessages_Async
+        #region Snippet:AssistantsAzureAISearchStreamingExample_PrintMessages_Async
         await foreach (StreamingUpdate streamingUpdate in agentClient.CreateRunStreamingAsync(thread.Id, agent.Id))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -100,7 +100,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIAss
             }
         }
         #endregion
-        #region Snippet:AzureAISearchStreamingExample_Cleanup_Async
+        #region Snippet:AssistantsAzureAISearchStreamingExample_Cleanup_Async
         await agentClient.DeleteThreadAsync(thread.Id);
         await agentClient.DeleteAgentAsync(agent.Id);
         #endregion
@@ -118,7 +118,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIAss
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        #region Snippet:AzureAISearchStreamingExample_CreateTool
+        #region Snippet:AssistantsAzureAISearchStreamingExample_CreateTool
 #if SNIPPET
         ListConnectionsResponse connections = projectClient.GetConnectionsClient().GetConnections(ConnectionType.AzureAISearch);
 
@@ -153,7 +153,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIAss
            tools: [new AzureAISearchToolDefinition()],
            toolResources: searchResource);
         #endregion
-        #region Snippet:AzureAISearchStreamingExample_CreateThread
+        #region Snippet:AssistantsAzureAISearchStreamingExample_CreateThread
         // Create thread for communication
         AgentThread thread = agentClient.CreateThread();
 
@@ -163,7 +163,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIAss
             MessageRole.User,
             "What is the temperature rating of the cozynights sleeping bag?");
         #endregion
-        #region Snippet:AzureAISearchStreamingExample_PrintMessages
+        #region Snippet:AssistantsAzureAISearchStreamingExample_PrintMessages
         foreach (StreamingUpdate streamingUpdate in agentClient.CreateRunStreaming(thread.Id, agent.Id))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -190,7 +190,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIAss
             }
         }
         #endregion
-        #region Snippet:AzureAISearchStreamingExample_Cleanup
+        #region Snippet:AssistantsAzureAISearchStreamingExample_Cleanup
         agentClient.DeleteThread(thread.Id);
         agentClient.DeleteAgent(agent.Id);
         #endregion

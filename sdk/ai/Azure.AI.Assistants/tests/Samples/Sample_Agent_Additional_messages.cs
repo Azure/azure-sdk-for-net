@@ -17,7 +17,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIAssistantsTe
     [AsyncOnly]
     public async Task CreateAdditionalMessageExampleAsync()
     {
-        #region Snippet:Sample_Agent_Multiple_Messages_CreateAsync
+        #region Snippet:Sample_Assistant_Multiple_Messages_CreateAsync
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -35,7 +35,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIAssistantsTe
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
             tools: [new CodeInterpreterToolDefinition()]);
         #endregion
-        #region Snippet:Sample_Agent_Multiple_Messages_RunAsync
+        #region Snippet:Sample_Assistant_Multiple_Messages_RunAsync
         AgentThread thread = await agentClient.CreateThreadAsync();
         ThreadMessage message = await agentClient.CreateMessageAsync(
             thread.Id,
@@ -65,7 +65,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIAssistantsTe
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);
         #endregion
-        #region Snippet:Sample_Agent_Multiple_Messages_PrintAsync
+        #region Snippet:Sample_Assistant_Multiple_Messages_PrintAsync
         PageableList<ThreadMessage> messages = await agentClient.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
 
         foreach (ThreadMessage threadMessage in messages)
@@ -91,7 +91,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIAssistantsTe
     [SyncOnly]
     public void CreateAdditionalMessageExample()
     {
-        #region Snippet:Sample_Agent_Multiple_Messages_Create
+        #region Snippet:Sample_Assistant_Multiple_Messages_Create
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -109,7 +109,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIAssistantsTe
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
             tools: [new CodeInterpreterToolDefinition()]);
         #endregion
-        #region Snippet:Sample_Agent_Multiple_Messages_Run
+        #region Snippet:Sample_Assistant_Multiple_Messages_Run
         AgentThread thread = agentClient.CreateThread();
         ThreadMessage message = agentClient.CreateMessage(
             thread.Id,
@@ -139,7 +139,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIAssistantsTe
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);
         #endregion
-        #region Snippet:Sample_Agent_Multiple_Messages_Print
+        #region Snippet:Sample_Assistant_Multiple_Messages_Print
         PageableList<ThreadMessage> messages = agentClient.GetMessages(thread.Id, order: ListSortOrder.Ascending);
 
         foreach (ThreadMessage threadMessage in messages)

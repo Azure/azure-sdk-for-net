@@ -18,7 +18,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIAssistantsTes
     [AsyncOnly]
     public async Task AzureAISearchExampleAsync()
     {
-        #region Snippet:AzureAISearchExample_CreateProjectClient
+        #region Snippet:AssistantsAzureAISearchExample_CreateProjectClient
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -28,7 +28,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIAssistantsTes
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         #endregion
-        #region Snippet:CreateAgentWithAzureAISearchTool
+        #region Snippet:AssistantsCreateAgentWithAzureAISearchTool
 #if SNIPPET
         ListConnectionsResponse connections = await projectClient.GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
 
@@ -64,7 +64,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIAssistantsTes
            tools: [ new AzureAISearchToolDefinition() ],
            toolResources: searchResource);
 #endregion
-        #region Snippet:AzureAISearchExample_CreateRun
+        #region Snippet:AssistantsAzureAISearchExample_CreateRun
         // Create thread for communication
         Response<AgentThread> threadResponse = await agentClient.CreateThreadAsync();
         AgentThread thread = threadResponse.Value;
@@ -91,7 +91,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIAssistantsTes
             run.Status,
             run.LastError?.Message);
         #endregion
-        #region Snippet:PopulateReferencesAgentWithAzureAISearchTool
+        #region Snippet:AssistantsPopulateReferencesAgentWithAzureAISearchTool
         PageableList<ThreadMessage> messages = await agentClient.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -132,7 +132,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIAssistantsTes
             }
         }
         #endregion
-        #region Snippet:AzureAISearchExample_Cleanup
+        #region Snippet:AssistantsAzureAISearchExample_Cleanup
         await agentClient.DeleteThreadAsync(thread.Id);
         await agentClient.DeleteAgentAsync(agent.Id);
         #endregion
@@ -150,7 +150,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIAssistantsTes
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        #region Snippet:CreateAgentWithAzureAISearchTool_Sync
+        #region Snippet:AssistantsCreateAgentWithAzureAISearchTool_Sync
 #if SNIPPET
         ListConnectionsResponse connections = projectClient.GetConnectionsClient().GetConnections(ConnectionType.AzureAISearch);
 
@@ -185,7 +185,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIAssistantsTes
            tools: [new AzureAISearchToolDefinition()],
            toolResources: searchResource);
 #endregion
-        #region Snippet:AzureAISearchExample_CreateRun_Sync
+        #region Snippet:AssistantsAzureAISearchExample_CreateRun_Sync
         // Create thread for communication
         Response<AgentThread> threadResponse = agentClient.CreateThread();
         AgentThread thread = threadResponse.Value;
@@ -212,7 +212,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIAssistantsTes
             runResponse.Value.Status,
             runResponse.Value.LastError?.Message);
         #endregion
-        #region Snippet:PopulateReferencesAgentWithAzureAISearchTool_Sync
+        #region Snippet:AssistantsPopulateReferencesAgentWithAzureAISearchTool_Sync
         PageableList<ThreadMessage> messages = agentClient.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -253,7 +253,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIAssistantsTes
             }
         }
         #endregion
-        #region Snippet:AzureAISearchExample_Cleanup_Sync
+        #region Snippet:AssistantsAzureAISearchExample_Cleanup_Sync
         agentClient.DeleteThread(thread.Id);
         agentClient.DeleteAgent(agent.Id);
         #endregion

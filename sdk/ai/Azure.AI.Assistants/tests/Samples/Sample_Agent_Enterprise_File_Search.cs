@@ -16,7 +16,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
     [AsyncOnly]
     public async Task EnterpriseFileSearchAsync()
     {
-        #region Snippet:EnterpriseFileSearch_CreateProject
+        #region Snippet:AssistantsEnterpriseFileSearch_CreateProject
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
@@ -30,7 +30,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
         #endregion
-        #region Snippet:CreateVectorStoreBlob
+        #region Snippet:AssistantsCreateVectorStoreBlob
         var ds = new VectorStoreDataSource(
             assetIdentifier: blobURI,
             assetType: VectorStoreDataSourceAssetType.UriAsset
@@ -53,7 +53,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
             toolResources: new ToolResources() { FileSearch = fileSearchResource }
         );
         #endregion
-        #region Snippet:EnterpriseFileSearchAsync_CreateThreadMessage
+        #region Snippet:AssistantsEnterpriseFileSearchAsync_CreateThreadMessage
         AgentThread thread = await client.CreateThreadAsync();
 
         ThreadMessage message = await client.CreateMessageAsync(
@@ -79,7 +79,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
             run.Status,
             run.LastError?.Message);
         #endregion
-        #region Snippet:EnterpriseFileSearchAsync_ListUpdatedMessages
+        #region Snippet:AssistantsEnterpriseFileSearchAsync_ListUpdatedMessages
         PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -105,7 +105,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
         while (storeFiles.HasMore);
         WriteMessages(messages, dtFiles);
         #endregion
-        #region Snippet:EnterpriseFileSearchAsync_Cleanup
+        #region Snippet:AssistantsEnterpriseFileSearchAsync_Cleanup
         VectorStoreDeletionStatus delTask = await client.DeleteVectorStoreAsync(vectorStore.Id);
         if (delTask.Deleted)
         {
@@ -136,7 +136,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
-        #region Snippet:CreateVectorStoreBlobSync
+        #region Snippet:AssistantsCreateVectorStoreBlobSync
         var ds = new VectorStoreDataSource(
             assetIdentifier: blobURI,
             assetType: VectorStoreDataSourceAssetType.UriAsset
@@ -159,7 +159,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
             toolResources: new ToolResources() { FileSearch = fileSearchResource }
         );
         #endregion
-        #region Snippet:EnterpriseFileSearch_CreateThreadMessage
+        #region Snippet:AssistantsEnterpriseFileSearch_CreateThreadMessage
         AgentThread thread = client.CreateThread();
 
         ThreadMessage message = client.CreateMessage(
@@ -185,7 +185,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
             run.Status,
             run.LastError?.Message);
         #endregion
-        #region Snippet:EnterpriseFileSearch_ListUpdatedMessages
+        #region Snippet:AssistantsEnterpriseFileSearch_ListUpdatedMessages
         PageableList<ThreadMessage> messages = client.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -211,7 +211,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
         while (storeFiles.HasMore);
         WriteMessages(messages, dtFiles);
         #endregion
-        #region Snippet:EnterpriseFileSearch_Cleanup
+        #region Snippet:AssistantsEnterpriseFileSearch_Cleanup
         VectorStoreDeletionStatus delTask = client.DeleteVectorStore(vectorStore.Id);
         if (delTask.Deleted)
         {
@@ -226,7 +226,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIAssista
         #endregion
     }
 
-    #region Snippet:EnterpriseFileSearch_WriteMessages
+    #region Snippet:AssistantsEnterpriseFileSearch_WriteMessages
     private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
     {
         foreach (ThreadMessage threadMessage in messages)

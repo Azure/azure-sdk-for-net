@@ -24,7 +24,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
     [AsyncOnly]
     public async Task VectorStoreBatchFileSearchAsync()
     {
-        #region Snippet:VectorStoreBatchFileAsyncSearchCreateVectorStore
+        #region Snippet:AssistantsVectorStoreBatchFileAsyncSearchCreateVectorStore
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -62,7 +62,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
             toolResources: new ToolResources() { FileSearch = fileSearchResource }
         );
         #endregion
-        #region Snippet:VectorStoreBatchFileSearchAsyncThreadAndResponse
+        #region Snippet:AssistantsVectorStoreBatchFileSearchAsyncThreadAndResponse
         AgentThread thread = await client.CreateThreadAsync();
 
         ThreadMessage message = await client.CreateMessageAsync(
@@ -94,7 +94,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
         WriteMessages(messages, dtReferences);
         #endregion
 
-        #region Snippet:VectorStoreBatchFileSearchAsyncCleanup
+        #region Snippet:AssistantsVectorStoreBatchFileSearchAsyncCleanup
         VectorStoreDeletionStatus delTask = await client.DeleteVectorStoreAsync(vectorStore.Id);
         if (delTask.Deleted)
         {
@@ -112,7 +112,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
     [SyncOnly]
     public void VectorStoreBatchFileSearch()
     {
-        #region Snippet:VectorStoreBatchFileSearchCreateVectorStore
+        #region Snippet:AssistantsVectorStoreBatchFileSearchCreateVectorStore
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -150,7 +150,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
             toolResources: new ToolResources() { FileSearch = fileSearchResource }
         );
         #endregion
-        #region Snippet:VectorStoreBatchFileSearchThreadAndResponse
+        #region Snippet:AssistantsVectorStoreBatchFileSearchThreadAndResponse
         AgentThread thread = client.CreateThread();
 
         ThreadMessage message = client.CreateMessage(
@@ -183,7 +183,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
         WriteMessages(messages, dtReferences);
         #endregion
 
-        #region Snippet:VectorStoreBatchFileSearchCleanup
+        #region Snippet:AssistantsVectorStoreBatchFileSearchCleanup
         VectorStoreDeletionStatus delTask = client.DeleteVectorStore(vectorStore.Id);
         if (delTask.Deleted)
         {
@@ -197,7 +197,7 @@ public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<A
         #endregion
     }
 
-    #region Snippet:VectorStoreBatchFileSearchParseResults
+    #region Snippet:AssistantsVectorStoreBatchFileSearchParseResults
     private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
     {
         foreach (ThreadMessage threadMessage in messages)

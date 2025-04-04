@@ -18,7 +18,7 @@ public partial class Sample_Agents_Code_Interpreter_File_Attachment : SamplesBas
     [AsyncOnly]
     public async Task CodeInterpreterFileAttachmentAsync()
     {
-        #region Snippet:CodeInterpreterFileAttachment_CreateClient
+        #region Snippet:AssistantsCodeInterpreterFileAttachment_CreateClient
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -28,7 +28,7 @@ public partial class Sample_Agents_Code_Interpreter_File_Attachment : SamplesBas
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
         #endregion
-        #region Snippet:CreateAgentWithInterpreterTool
+        #region Snippet:AssistantsCreateAgentWithInterpreterTool
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
         Agent agent = await client.CreateAgentAsync(
             model: modelDeploymentName,
@@ -59,7 +59,7 @@ public partial class Sample_Agents_Code_Interpreter_File_Attachment : SamplesBas
             attachments: [ attachment ]
         );
         #endregion
-        #region Snippet:CodeInterpreterFileAttachment_CreateRun
+        #region Snippet:AssistantsCodeInterpreterFileAttachment_CreateRun
         ThreadRun run = await client.CreateRunAsync(
             thread.Id,
             agent.Id
@@ -77,14 +77,14 @@ public partial class Sample_Agents_Code_Interpreter_File_Attachment : SamplesBas
             run.Status,
             run.LastError?.Message);
         #endregion
-        #region Snippet:CodeInterpreterFileAttachment_PrintMessages
+        #region Snippet:AssistantsCodeInterpreterFileAttachment_PrintMessages
         PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
         WriteMessages(messages);
         #endregion
-        #region Snippet:CodeInterpreterFileAttachment_Cleanup
+        #region Snippet:AssistantsCodeInterpreterFileAttachment_Cleanup
         await client.DeleteThreadAsync(thread.Id);
         await client.DeleteAgentAsync(agent.Id);
         #endregion
@@ -103,7 +103,7 @@ public partial class Sample_Agents_Code_Interpreter_File_Attachment : SamplesBas
 
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
-        #region Snippet:CreateAgentWithInterpreterToolSync
+        #region Snippet:AssistantsCreateAgentWithInterpreterToolSync
         List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
         Agent agent = client.CreateAgent(
             model: modelDeploymentName,
@@ -134,7 +134,7 @@ public partial class Sample_Agents_Code_Interpreter_File_Attachment : SamplesBas
             attachments: [attachment]
         );
         #endregion
-        #region Snippet:CodeInterpreterFileAttachmentSync_CreateRun
+        #region Snippet:AssistantsCodeInterpreterFileAttachmentSync_CreateRun
         ThreadRun run = client.CreateRun(
             thread.Id,
             agent.Id
@@ -152,20 +152,20 @@ public partial class Sample_Agents_Code_Interpreter_File_Attachment : SamplesBas
             run.Status,
             run.LastError?.Message);
         #endregion
-        #region Snippet:CodeInterpreterFileAttachmentSync_PrintMessages
+        #region Snippet:AssistantsCodeInterpreterFileAttachmentSync_PrintMessages
         PageableList<ThreadMessage> messages = client.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
         WriteMessages(messages);
         #endregion
-        #region Snippet:CodeInterpreterFileAttachmentSync_Cleanup
+        #region Snippet:AssistantsCodeInterpreterFileAttachmentSync_Cleanup
         client.DeleteThread(thread.Id);
         client.DeleteAgent(agent.Id);
         #endregion
     }
 
-    #region Snippet:CodeInterpreterFileAttachment_Print
+    #region Snippet:AssistantsCodeInterpreterFileAttachment_Print
     private static void WriteMessages(IEnumerable<ThreadMessage> messages)
     {
         foreach (ThreadMessage threadMessage in messages)

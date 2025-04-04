@@ -20,7 +20,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
     [AsyncOnly]
     public async Task FunctionCallingExample()
     {
-        #region Snippet:Functions_CreateClient
+        #region Snippet:AssistantsFunctions_CreateClient
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -31,7 +31,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
         #endregion
 
-        #region Snippet:FunctionsDefineFunctionTools
+        #region Snippet:AssistantsFunctionsDefineFunctionTools
         // Example of a function that defines no parameters
         string GetUserFavoriteCity() => "Seattle, WA";
         FunctionToolDefinition getUserFavoriteCityTool = new("getUserFavoriteCity", "Gets the user's favorite city.");
@@ -90,7 +90,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
         #endregion
 
-        #region Snippet:FunctionsHandleFunctionCalls
+        #region Snippet:AssistantsFunctionsHandleFunctionCalls
         ToolOutput GetResolvedToolOutput(RequiredToolCall toolCall)
         {
             if (toolCall is RequiredFunctionToolCall functionToolCall)
@@ -120,7 +120,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
         }
         #endregion
 
-        #region Snippet:FunctionsCreateAgentWithFunctionTools
+        #region Snippet:AssistantsFunctionsCreateAgentWithFunctionTools
         // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
         Agent agent = await client.CreateAgentAsync(
             model: modelDeploymentName,
@@ -131,7 +131,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
             tools: [ getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool ]
             );
         #endregion
-        #region Snippet:Functions_CreateRun
+        #region Snippet:AssistantsFunctions_CreateRun
         AgentThread thread = await client.CreateThreadAsync();
 
         await client.CreateMessageAsync(
@@ -141,7 +141,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
 
         ThreadRun run = await client.CreateRunAsync(thread, agent);
         #endregion
-        #region Snippet:FunctionsHandlePollingWithRequiredAction
+        #region Snippet:AssistantsFunctionsHandlePollingWithRequiredAction
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -166,7 +166,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
             run.LastError?.Message);
         #endregion
 
-        #region Snippet:Functions_ListMessages
+        #region Snippet:AssistantsFunctions_ListMessages
         PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -189,7 +189,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
             }
         }
         #endregion
-        #region Snippet:Functions_Cleanup
+        #region Snippet:AssistantsFunctions_Cleanup
         await client.DeleteThreadAsync(thread.Id);
         await client.DeleteAgentAsync(agent.Id);
         #endregion
@@ -293,7 +293,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
             return null;
         }
 
-        #region Snippet:FunctionsSyncCreateAgentWithFunctionTools
+        #region Snippet:AssistantsFunctionsSyncCreateAgentWithFunctionTools
         // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
         Agent agent = client.CreateAgent(
             model: modelDeploymentName,
@@ -304,7 +304,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
             tools: [getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool]
             );
         #endregion
-        #region Snippet:FunctionsSync_CreateRun
+        #region Snippet:AssistantsFunctionsSync_CreateRun
         AgentThread thread = client.CreateThread();
 
         client.CreateMessage(
@@ -314,7 +314,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
 
         ThreadRun run = client.CreateRun(thread, agent);
         #endregion
-        #region Snippet:FunctionsSyncHandlePollingWithRequiredAction
+        #region Snippet:AssistantsFunctionsSyncHandlePollingWithRequiredAction
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -339,7 +339,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
             run.LastError?.Message);
         #endregion
 
-        #region Snippet:FunctionsSync_ListMessages
+        #region Snippet:AssistantsFunctionsSync_ListMessages
         PageableList<ThreadMessage> messages = client.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -362,7 +362,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIAssistantsTestEnviro
             }
         }
         #endregion
-        #region Snippet:FunctionsSync_Cleanup
+        #region Snippet:AssistantsFunctionsSync_Cleanup
         client.DeleteThread(thread.Id);
         client.DeleteAgent(agent.Id);
         #endregion

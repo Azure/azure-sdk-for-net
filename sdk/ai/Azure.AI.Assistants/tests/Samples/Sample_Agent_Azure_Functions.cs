@@ -18,7 +18,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIAssistantsTest
     [AsyncOnly]
     public async Task AzureFunctionCallingExampleAsync()
     {
-        #region Snippet:AzureFunctionsDefineFunctionTools
+        #region Snippet:AssistantsAzureFunctionsDefineFunctionTools
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -69,7 +69,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIAssistantsTest
         );
         #endregion
 
-        #region Snippet:AzureFunctionsCreateAgentWithFunctionTools
+        #region Snippet:AssistantsAzureFunctionsCreateAgentWithFunctionTools
         Agent agent = await client.CreateAgentAsync(
             model: modelDeploymentName,
             name: "azure-function-agent-foo",
@@ -81,7 +81,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIAssistantsTest
             tools: [ azureFnTool ]
             );
         #endregion
-        #region Snippet:AzureFunctionsHandlePollingWithRequiredAction
+        #region Snippet:AssistantsAzureFunctionsHandlePollingWithRequiredAction
         AgentThread thread = await client.CreateThreadAsync();
 
         ThreadMessage message = await client.CreateMessageAsync(
@@ -105,7 +105,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIAssistantsTest
             run.LastError?.Message);
         #endregion
 
-        #region Snippet:AzureFunctionsPrint
+        #region Snippet:AssistantsAzureFunctionsPrint
         PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -128,7 +128,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIAssistantsTest
             }
         }
         #endregion
-        #region Snippet:AzureFunctionsCleanup
+        #region Snippet:AssistantsAzureFunctionsCleanup
         await client.DeleteThreadAsync(thread.Id);
         await client.DeleteAgentAsync(agent.Id);
         #endregion
@@ -187,7 +187,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIAssistantsTest
             )
         );
 
-        #region Snippet:AzureFunctionsCreateAgentWithFunctionToolsSync
+        #region Snippet:AssistantsAzureFunctionsCreateAgentWithFunctionToolsSync
         Agent agent = client.CreateAgent(
             model: modelDeploymentName,
             name: "azure-function-agent-foo",
@@ -199,7 +199,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIAssistantsTest
             tools: [azureFnTool]
             );
         #endregion
-        #region Snippet:AzureFunctionsHandlePollingWithRequiredActionSync
+        #region Snippet:AssistantsAzureFunctionsHandlePollingWithRequiredActionSync
         AgentThread thread = client.CreateThread();
 
         ThreadMessage message = client.CreateMessage(
@@ -223,7 +223,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIAssistantsTest
             run.LastError?.Message);
         #endregion
 
-        #region Snippet:AzureFunctionsPrintSync
+        #region Snippet:AssistantsAzureFunctionsPrintSync
         PageableList<ThreadMessage> messages = client.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -246,7 +246,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIAssistantsTest
             }
         }
         #endregion
-        #region Snippet:AzureFunctionsCleanupSync
+        #region Snippet:AssistantsAzureFunctionsCleanupSync
         client.DeleteThread(thread.Id);
         client.DeleteAgent(agent.Id);
         #endregion

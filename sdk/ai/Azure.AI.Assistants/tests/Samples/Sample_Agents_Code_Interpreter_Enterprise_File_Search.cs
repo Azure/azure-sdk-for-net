@@ -17,7 +17,7 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
     [AsyncOnly]
     public async Task CodeInterpreterEnterpriseSearch()
     {
-        #region Snippet:CodeInterpreterEnterpriseSearch_CreateClient
+        #region Snippet:AssistantsCodeInterpreterEnterpriseSearch_CreateClient
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -31,7 +31,7 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
         #endregion
-        #region Snippet:CodeInterpreterEnterpriseSearchAsync_CreateAgent
+        #region Snippet:AssistantsCodeInterpreterEnterpriseSearchAsync_CreateAgent
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
         Agent agent = await client.CreateAgentAsync(
             model: modelDeploymentName,
@@ -41,7 +41,7 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
         );
         #endregion
 
-        #region Snippet:CreateMessageAttachmentWithBlobStore
+        #region Snippet:AssistantsCreateMessageAttachmentWithBlobStore
         var ds = new VectorStoreDataSource(
             assetIdentifier: blobURI,
             assetType: VectorStoreDataSourceAssetType.UriAsset
@@ -52,7 +52,7 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
             tools: tools
         );
         #endregion
-        #region Snippet:CodeInterpreterEnterpriseSearchAsync_CreateThreadRun
+        #region Snippet:AssistantsCodeInterpreterEnterpriseSearchAsync_CreateThreadRun
         AgentThread thread = await client.CreateThreadAsync();
 
         ThreadMessage message = await client.CreateMessageAsync(
@@ -78,14 +78,14 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
             run.Status,
             run.LastError?.Message);
         #endregion
-        #region Snippet:CodeInterpreterEnterpriseSearchAsync_PrintMessages
+        #region Snippet:AssistantsCodeInterpreterEnterpriseSearchAsync_PrintMessages
         PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
         WriteMessages(messages);
         #endregion
-        #region Snippet:CodeInterpreterEnterpriseSearchAsync_Cleanup
+        #region Snippet:AssistantsCodeInterpreterEnterpriseSearchAsync_Cleanup
         await client.DeleteThreadAsync(thread.Id);
         await client.DeleteAgentAsync(agent.Id);
         #endregion
@@ -107,7 +107,7 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
-        #region Snippet:CodeInterpreterEnterpriseSearch_CreateAgent
+        #region Snippet:AssistantsCodeInterpreterEnterpriseSearch_CreateAgent
         List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
         Agent agent = client.CreateAgent(
             model: modelDeploymentName,
@@ -126,7 +126,7 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
             ds: ds,
             tools: tools
         );
-        #region Snippet:CodeInterpreterEnterpriseSearch_CreateThreadRun
+        #region Snippet:AssistantsCodeInterpreterEnterpriseSearch_CreateThreadRun
         AgentThread thread = client.CreateThread();
 
         ThreadMessage message = client.CreateMessage(
@@ -152,20 +152,20 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
             run.Status,
             run.LastError?.Message);
         #endregion
-        #region Snippet:CodeInterpreterEnterpriseSearch_PrintMessages
+        #region Snippet:AssistantsCodeInterpreterEnterpriseSearch_PrintMessages
         PageableList<ThreadMessage> messages = client.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
         WriteMessages(messages);
         #endregion
-        #region Snippet:CodeInterpreterEnterpriseSearch_Cleanup
+        #region Snippet:AssistantsCodeInterpreterEnterpriseSearch_Cleanup
         client.DeleteThread(thread.Id);
         client.DeleteAgent(agent.Id);
         #endregion
     }
 
-    #region Snippet:CodeInterpreterEnterpriseSearch_Print
+    #region Snippet:AssistantsCodeInterpreterEnterpriseSearch_Print
     private static void WriteMessages(IEnumerable<ThreadMessage> messages)
     {
         foreach (ThreadMessage threadMessage in messages)

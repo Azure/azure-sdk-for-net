@@ -5,10 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Assistants.Custom;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -20,7 +18,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
     [AsyncOnly]
     public async Task FilesSearchExampleAsync()
     {
-        #region Snippet:FilesSearchExample_CreateClient
+        #region Snippet:AssistantsFilesSearchExample_CreateClient
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -30,7 +28,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
         #endregion
-        #region Snippet:UploadAgentFilesToUse
+        #region Snippet:AssistantsUploadAgentFilesToUse
         // Upload a file and wait for it to be processed
         System.IO.File.WriteAllText(
             path: "sample_file_for_upload.txt",
@@ -44,7 +42,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
         };
         #endregion
 
-        #region Snippet:CreateVectorStore
+        #region Snippet:AssistantsCreateVectorStore
         // Create a vector store with the file and wait for it to be processed.
         // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
         VectorStore vectorStore = await client.CreateVectorStoreAsync(
@@ -52,7 +50,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
             name: "my_vector_store");
         #endregion
 
-        #region Snippet:CreateAgentWithFiles
+        #region Snippet:AssistantsCreateAgentWithFiles
         FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
         fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
@@ -65,7 +63,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
                 toolResources: new ToolResources() { FileSearch = fileSearchToolResource });
         #endregion
 
-        #region Snippet:FilesSearchExample_CreateThreadAndRun
+        #region Snippet:AssistantsFilesSearchExample_CreateThreadAndRun
         // Create thread for communication
         AgentThread thread = await client.CreateThreadAsync();
 
@@ -95,7 +93,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
         );
         WriteMessages(messages, fileIds);
         #endregion
-        #region Snippet:FilesSearchExample_Cleanup
+        #region Snippet:AssistantsFilesSearchExample_Cleanup
         await client.DeleteVectorStoreAsync(vectorStore.Id);
         await client.DeleteFileAsync(uploadedAgentFile.Id);
         await client.DeleteThreadAsync(thread.Id);
@@ -115,7 +113,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
-        #region Snippet:UploadAgentFilesToUse_Sync
+        #region Snippet:AssistantsUploadAgentFilesToUse_Sync
         // Upload a file and wait for it to be processed
         System.IO.File.WriteAllText(
             path: "sample_file_for_upload.txt",
@@ -129,7 +127,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
         };
         #endregion
 
-        #region Snippet:CreateVectorStore_Sync
+        #region Snippet:AssistantsCreateVectorStore_Sync
         // Create a vector store with the file and wait for it to be processed.
         // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
         VectorStore vectorStore = client.CreateVectorStore(
@@ -137,7 +135,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
             name: "my_vector_store");
         #endregion
 
-        #region Snippet:CreateAgentWithFiles_Sync
+        #region Snippet:AssistantsCreateAgentWithFiles_Sync
         FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
         fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
@@ -150,7 +148,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
                 toolResources: new ToolResources() { FileSearch = fileSearchToolResource });
         #endregion
 
-        #region Snippet:FilesSearchExample_CreateThreadAndRun_Sync
+        #region Snippet:AssistantsFilesSearchExample_CreateThreadAndRun_Sync
         // Create thread for communication
         AgentThread thread = client.CreateThread();
 
@@ -180,7 +178,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
         );
         WriteMessages(messages, fileIds);
         #endregion
-        #region Snippet:FilesSearchExample_Cleanup_Sync
+        #region Snippet:AssistantsFilesSearchExample_Cleanup_Sync
         client.DeleteVectorStore(vectorStore.Id);
         client.DeleteFile(uploadedAgentFile.Id);
         client.DeleteThread(thread.Id);
@@ -188,7 +186,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIAssistantsTestEnvir
         #endregion
     }
 
-    #region Snippet:FilesSearchExample_Print
+    #region Snippet:AssistantsFilesSearchExample_Print
     private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
     {
         foreach (ThreadMessage threadMessage in messages)
