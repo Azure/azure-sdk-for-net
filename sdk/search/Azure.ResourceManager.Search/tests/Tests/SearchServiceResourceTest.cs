@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
 {
     public class SearchServiceResourceTest : SearchManagementTestBase
     {
-        public SearchServiceResourceTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public SearchServiceResourceTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

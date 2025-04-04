@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -22,12 +23,26 @@ namespace Azure.ResourceManager.Search.Tests
         : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$.value.[*].key");
+            JsonPathSanitizers.Add("$..key");
+
+            UriRegexSanitizers.Add(new UriRegexSanitizer("deleteQueryKey/(?<key>[^/]+)\\?api-version")
+            {
+                GroupForReplace = "key",
+                Value = "{sanitized-query-key}"
+            });
         }
 
         protected SearchManagementTestBase(bool isAsync)
             : base(isAsync)
         {
             JsonPathSanitizers.Add("$.value.[*].key");
+            JsonPathSanitizers.Add("$..key");
+
+            UriRegexSanitizers.Add(new UriRegexSanitizer("deleteQueryKey/(?<key>[^/]+)\\?api-version")
+            {
+                GroupForReplace = "key",
+                Value = "{sanitized-query-key}"
+            });
         }
 
         [SetUp]
