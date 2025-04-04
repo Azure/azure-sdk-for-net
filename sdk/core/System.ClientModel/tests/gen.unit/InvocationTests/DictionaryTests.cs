@@ -18,10 +18,10 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             var firstType = dict[$"Dictionary<string, {type}>"];
             Assert.AreEqual($"Dictionary<string, {type}>", firstType.Type.Name);
             Assert.AreEqual("System.Collections.Generic", firstType.Type.Namespace);
-            Assert.AreEqual(2, firstType.Type.GenericArguments.Count);
+            Assert.IsNotNull(firstType.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.IDictionary, firstType.Kind);
 
-            var genericArgument = firstType.Type.GenericArguments[1];
+            var genericArgument = firstType.Type.ItemType!;
             modelValidator(genericArgument);
         }
     }

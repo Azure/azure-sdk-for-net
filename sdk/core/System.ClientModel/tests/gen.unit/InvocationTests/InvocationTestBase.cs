@@ -1,14 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.Json;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using NUnit.Framework;
 
 namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
@@ -40,7 +36,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 string.Empty,
                 true,
                 AttributeCall,
-                TypeValidations);
+                TypeValidations,
+                addDefaultContext: false);
 
         [Test]
         public void Dependency_Attribute()
@@ -49,140 +46,142 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 string.Empty,
                 true,
                 AttributeCall,
-                TypeValidations);
+                TypeValidations,
+                addDefaultContext: false);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Read_Generic_Local(bool implicitContext)
+        public void Read_Generic_Local(bool contextAdded)
             => RunInvocationTest(
                 JsonModel,
-                "ModelReaderWriter.Read<{0}>(BinaryData.Empty, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
-                implicitContext,
+                "ModelReaderWriter.Read<{0}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);",
+                contextAdded,
                 LocalCall,
                 TypeValidations);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Read_Generic_Dependency(bool implicitContext)
+        public void Read_Generic_Dependency(bool contextAdded)
             => RunInvocationTest(
                 AvailabilitySetData,
-                "ModelReaderWriter.Read<{0}>(BinaryData.Empty, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
-                implicitContext,
+                "ModelReaderWriter.Read<{0}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);",
+                contextAdded,
                 LocalCall,
                 TypeValidations);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Write_Generic_Local(bool implicitContext)
+        public void Write_Generic_Local(bool contextAdded)
             => RunInvocationTest(
                 JsonModel,
-                "ModelReaderWriter.Write<{0}>([], ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
-                implicitContext,
+                $"ModelReaderWriter.Write<{{0}}>({InitializeObject}, ModelReaderWriterOptions.Json, LocalContext.Default);",
+                contextAdded,
                 LocalCall,
                 TypeValidations);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Write_Generic_Dependency(bool implicitContext)
+        public void Write_Generic_Dependency(bool contextAdded)
           => RunInvocationTest(
               AvailabilitySetData,
-              "ModelReaderWriter.Write<{0}>([], ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
-              implicitContext,
+              $"ModelReaderWriter.Write<{{0}}>({InitializeObject}, ModelReaderWriterOptions.Json, LocalContext.Default);",
+              contextAdded,
                 LocalCall,
                 TypeValidations);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Read_NonGeneric_Local(bool implicitContext)
+        public void Read_NonGeneric_Local(bool contextAdded)
             => RunInvocationTest(
                 JsonModel,
-                "ModelReaderWriter.Read(BinaryData.Empty, typeof({0}), ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
-                implicitContext,
+                "ModelReaderWriter.Read(BinaryData.Empty, typeof({0}), ModelReaderWriterOptions.Json, LocalContext.Default);",
+                contextAdded,
                 LocalCall,
                 TypeValidations);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Read_NonGeneric_Local_NoInit(bool implicitContext)
+        public void Read_NonGeneric_Local_NoInit(bool contextAdded)
             => RunInvocationTest(
                 JsonModel,
                 string.Empty,
-                implicitContext,
+                contextAdded,
                 LocalNoInitCall,
                 TypeValidations,
                 false);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Read_NonGeneric_Local_Parenthesized(bool implicitContext)
+        public void Read_NonGeneric_Local_Parenthesized(bool contextAdded)
             => RunInvocationTest(
                 JsonModel,
-                "ModelReaderWriter.Read(BinaryData.Empty, (typeof({0})), ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
-                implicitContext,
+                "ModelReaderWriter.Read(BinaryData.Empty, (typeof({0})), ModelReaderWriterOptions.Json, LocalContext.Default);",
+                contextAdded,
                 LocalCall,
                 TypeValidations);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Read_NonGeneric_Parameter(bool implicitContext)
+        public void Read_NonGeneric_Parameter(bool contextAdded)
             => RunInvocationTest(
                 JsonModel,
                 string.Empty,
-                implicitContext,
+                contextAdded,
                 ParameterCall,
                 TypeValidations,
                 false);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Write_NonGeneric_Local(bool implicitContext)
+        public void Write_NonGeneric_Local(bool contextAdded)
             => RunInvocationTest(
                 JsonModel,
-                $"ModelReaderWriter.Write((object){InitializeObject}, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
-                implicitContext,
+                $"ModelReaderWriter.Write((object){InitializeObject}, ModelReaderWriterOptions.Json, LocalContext.Default);",
+                contextAdded,
                 LocalCall,
                 TypeValidations);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Read_NonGeneric_Dependency(bool implicitContext)
+        public void Read_NonGeneric_Dependency(bool contextAdded)
             => RunInvocationTest(
                 AvailabilitySetData,
-                "ModelReaderWriter.Read(BinaryData.Empty, typeof({0}), ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
-                implicitContext,
+                "ModelReaderWriter.Read(BinaryData.Empty, typeof({0}), ModelReaderWriterOptions.Json, LocalContext.Default);",
+                contextAdded,
                 LocalCall,
                 TypeValidations);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Read_NonGeneric_Type_Dependency(bool implicitContext)
+        public void Read_NonGeneric_Type_Dependency(bool contextAdded)
             => RunInvocationTest(
                 AvailabilitySetData,
                 $$"""
                 Type type = typeof({0});
-                ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
+                ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, LocalContext.Default);
                 """,
-                implicitContext,
+                contextAdded,
                 LocalCall,
                 TypeValidations);
 
         [TestCase(true)]
         [TestCase(false)]
-        public void Write_NonGeneric_Dependency(bool implicitContext)
+        public void Write_NonGeneric_Dependency(bool contextAdded)
             => RunInvocationTest(
                 AvailabilitySetData,
-                $"ModelReaderWriter.Write((object){InitializeObject}, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);",
-                implicitContext,
+                $"ModelReaderWriter.Write((object){InitializeObject}, ModelReaderWriterOptions.Json, LocalContext.Default);",
+                contextAdded,
                 LocalCall,
                 TypeValidations);
 
         internal static void RunInvocationTest(
             string type,
             string invocation,
-            bool implicitContext,
+            bool contextAdded,
             Func<string, string, string> getCaller,
             List<TypeValidation> validations,
-            bool shouldBeFound = true)
+            bool shouldBeFound = true,
+            bool addDefaultContext = true)
         {
             string source =
 $$"""
@@ -204,14 +203,12 @@ $$"""
 namespace TestProject
 {
 """;
-            if (!implicitContext)
+            if (addDefaultContext && contextAdded)
             {
                 source +=
 $$"""
 
-    public partial class TestAssemblyContext : ModelReaderWriterContext
-    {
-    }
+    public partial class LocalContext : ModelReaderWriterContext { }
 """;
             }
 
@@ -259,21 +256,29 @@ $$"""
 
             Assert.AreEqual(0, result.Diagnostics.Length);
 
-            var expectedBuilders = shouldBeFound ? validations.Count + 1 : 1;
-
-            Assert.AreEqual(expectedBuilders, result.ContextFile!.TypeBuilders.Count);
-            var dict = result.ContextFile.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
-
-            Assert.IsTrue(dict.ContainsKey(type));
-            var item = dict[type];
-            Action<TypeRef> modelValidation = type == JsonModel ? AssertJsonModel : AssertAvailabilitySetData;
-            modelValidation(item.Type);
-
-            if (shouldBeFound)
+            if (!contextAdded)
             {
-                foreach (var validation in validations)
+                Assert.IsNull(result.ContextFile);
+            }
+            else
+            {
+                Assert.IsNotNull(result.ContextFile);
+                var expectedBuilders = shouldBeFound ? validations.Count + 1 : 1;
+
+                Assert.AreEqual(expectedBuilders, result.ContextFile!.TypeBuilders.Count);
+                var dict = result.ContextFile.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
+
+                Assert.IsTrue(dict.ContainsKey(type));
+                var item = dict[type];
+                Action<TypeRef> modelValidation = type == JsonModel ? (type) => AssertJsonModel(type) : AssertAvailabilitySetData;
+                modelValidation(item.Type);
+
+                if (shouldBeFound)
                 {
-                    validation(type, modelValidation, dict);
+                    foreach (var validation in validations)
+                    {
+                        validation(type, modelValidation, dict);
+                    }
                 }
             }
         }
@@ -284,7 +289,7 @@ $$"""
 $$"""
 
     [ModelReaderWriterBuildable(typeof({{string.Format(TypeStringFormat, type)}}))]
-    public partial class TestProjectContext : ModelReaderWriterContext
+    public partial class LocalContext : ModelReaderWriterContext
     {
     }
 """;
@@ -314,8 +319,8 @@ $$"""
     {
         public void Call()
         {
-            ModelReaderWriter.Read<{{string.Format(TypeStringFormat, type)}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
-            ModelReaderWriter.Read<{{string.Format(TypeStringFormat, type)}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
+            ModelReaderWriter.Read<{{string.Format(TypeStringFormat, type)}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+            ModelReaderWriter.Read<{{string.Format(TypeStringFormat, type)}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
         }
     }
 """;
@@ -335,7 +340,7 @@ $$"""
 
         public void Call(Type type)
         {
-            ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
+            ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, LocalContext.Default);
         }
     }
 """;
@@ -353,33 +358,33 @@ $$"""
             object obj = typeof({{string.Format(TypeStringFormat, type)}});
             if (obj is Type type)
             {
-                ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
+                ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, LocalContext.Default);
             }
         }
     }
 """;
         }
 
-        internal static void AssertJsonModel(TypeRef jsonModel)
+        internal static void AssertJsonModel(TypeRef jsonModel, string expectedNamespace = "TestProject")
         {
             Assert.AreEqual("JsonModel", jsonModel.Name);
-            Assert.AreEqual("TestProject", jsonModel.Namespace);
-            Assert.AreEqual(0, jsonModel.GenericArguments.Count);
+            Assert.AreEqual(expectedNamespace, jsonModel.Namespace);
+            Assert.IsNull(jsonModel.ItemType);
         }
         private static void AssertAvailabilitySetData(TypeRef aset)
         {
             Assert.AreEqual("AvailabilitySetData", aset.Name);
             Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", aset.Namespace);
-            Assert.AreEqual(0, aset.GenericArguments.Count);
+            Assert.IsNull(aset.ItemType);
         }
 
         [TestCase(true)]
         [TestCase(false)]
-        public void DuplicateInvocation(bool implicitContext)
+        public void DuplicateInvocation(bool contextAdded)
             => RunInvocationTest(
                 JsonModel,
                 string.Empty,
-                implicitContext,
+                contextAdded,
                 DuplicateCall,
                 TypeValidations);
     }

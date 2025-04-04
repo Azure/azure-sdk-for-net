@@ -18,10 +18,10 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             var listJsonModel = dict[$"List<{type}>"];
             Assert.AreEqual($"List<{type}>", listJsonModel.Type.Name);
             Assert.AreEqual("System.Collections.Generic", listJsonModel.Type.Namespace);
-            Assert.AreEqual(1, listJsonModel.Type.GenericArguments.Count);
+            Assert.IsNotNull(listJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.IList, listJsonModel.Kind);
 
-            var genericArgument = listJsonModel.Type.GenericArguments[0];
+            var genericArgument = listJsonModel.Type.ItemType!;
             modelValidator(genericArgument);
         }
     }
