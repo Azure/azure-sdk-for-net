@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAFleetUpdateStrategyResource()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/UpdateStrategies_Get.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/UpdateStrategies_Get.json
             // this example is just showing the usage of "FleetUpdateStrategies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,9 +49,40 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAFleetUpdateStrategyResourceGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/FleetUpdateStrategies_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "FleetUpdateStrategies_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FleetUpdateStrategyResource created on azure
+            // for more information of creating FleetUpdateStrategyResource, please refer to the document of FleetUpdateStrategyResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgfleets";
+            string fleetName = "fleet1";
+            string updateStrategyName = "fleet1";
+            ResourceIdentifier fleetUpdateStrategyResourceId = FleetUpdateStrategyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName, updateStrategyName);
+            FleetUpdateStrategyResource fleetUpdateStrategy = client.GetFleetUpdateStrategyResource(fleetUpdateStrategyResourceId);
+
+            // invoke the operation
+            FleetUpdateStrategyResource result = await fleetUpdateStrategy.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FleetUpdateStrategyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAFleetUpdateStrategyResource()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/UpdateStrategies_Delete.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/UpdateStrategies_Delete.json
             // this example is just showing the usage of "FleetUpdateStrategies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +92,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 
             // this example assumes you already have this FleetUpdateStrategyResource created on azure
             // for more information of creating FleetUpdateStrategyResource, please refer to the document of FleetUpdateStrategyResource
-            string subscriptionId = "subid1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string fleetName = "fleet1";
             string updateStrategyName = "strategy1";
@@ -76,9 +107,37 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAFleetUpdateStrategyResourceGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/FleetUpdateStrategies_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "FleetUpdateStrategies_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FleetUpdateStrategyResource created on azure
+            // for more information of creating FleetUpdateStrategyResource, please refer to the document of FleetUpdateStrategyResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgfleets";
+            string fleetName = "fleet1";
+            string updateStrategyName = "fleet1";
+            ResourceIdentifier fleetUpdateStrategyResourceId = FleetUpdateStrategyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName, updateStrategyName);
+            FleetUpdateStrategyResource fleetUpdateStrategy = client.GetFleetUpdateStrategyResource(fleetUpdateStrategyResourceId);
+
+            // invoke the operation
+            string ifMatch = "saqprswlk";
+            await fleetUpdateStrategy.DeleteAsync(WaitUntil.Completed, ifMatch: ifMatch);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAFleetUpdateStrategy()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/UpdateStrategies_CreateOrUpdate.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/UpdateStrategies_CreateOrUpdate.json
             // this example is just showing the usage of "FleetUpdateStrategies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,6 +164,48 @@ AfterStageWaitInSeconds = 3600,
 }},
             };
             ArmOperation<FleetUpdateStrategyResource> lro = await fleetUpdateStrategy.UpdateAsync(WaitUntil.Completed, data);
+            FleetUpdateStrategyResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FleetUpdateStrategyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateAFleetUpdateStrategyGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/FleetUpdateStrategies_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "FleetUpdateStrategies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FleetUpdateStrategyResource created on azure
+            // for more information of creating FleetUpdateStrategyResource, please refer to the document of FleetUpdateStrategyResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgfleets";
+            string fleetName = "fleet1";
+            string updateStrategyName = "fleet1";
+            ResourceIdentifier fleetUpdateStrategyResourceId = FleetUpdateStrategyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName, updateStrategyName);
+            FleetUpdateStrategyResource fleetUpdateStrategy = client.GetFleetUpdateStrategyResource(fleetUpdateStrategyResourceId);
+
+            // invoke the operation
+            FleetUpdateStrategyData data = new FleetUpdateStrategyData
+            {
+                StrategyStages = {new ContainerServiceFleetUpdateStage("stage1")
+{
+Groups = {new ContainerServiceFleetUpdateGroup("group-a")},
+AfterStageWaitInSeconds = 3600,
+}},
+            };
+            string ifMatch = "bttptpmhheves";
+            string ifNoneMatch = "tlx";
+            ArmOperation<FleetUpdateStrategyResource> lro = await fleetUpdateStrategy.UpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch);
             FleetUpdateStrategyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
