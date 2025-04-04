@@ -16,93 +16,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmInformaticaDataManagementModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/> instance for mocking. </returns>
-        public static InformaticaServerlessRuntimeData InformaticaServerlessRuntimeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InformaticaServerlessRuntimeProperties properties = null)
-        {
-            return new InformaticaServerlessRuntimeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InformaticaServerlessRuntimeProperties"/>. </summary>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="description"> description of the serverless runtime. </param>
-        /// <param name="platform"> Platform type of the Serverless Runtime. </param>
-        /// <param name="applicationType"> Application type of the Serverless Runtime environment. </param>
-        /// <param name="computeUnits"> Compute units of the serverless runtime. </param>
-        /// <param name="executionTimeout"> Serverless Execution timeout. </param>
-        /// <param name="serverlessAccountLocation"> Serverless account creation location. </param>
-        /// <param name="networkInterfaceConfiguration"> Informatica Serverless Network profile properties. </param>
-        /// <param name="advancedCustomProperties"> String KV pairs indicating Advanced custom properties. </param>
-        /// <param name="supplementaryFileLocation"> Supplementary file location. </param>
-        /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
-        /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
-        /// <param name="userContextToken"> Serverless runtime user context properties. </param>
-        /// <returns> A new <see cref="Models.InformaticaServerlessRuntimeProperties"/> instance for mocking. </returns>
-        public static InformaticaServerlessRuntimeProperties InformaticaServerlessRuntimeProperties(InformaticaProvisioningState? provisioningState = null, string description = null, InformaticaPlatformType? platform = null, InformaticaApplicationType? applicationType = null, string computeUnits = null, string executionTimeout = null, string serverlessAccountLocation = null, InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration = null, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = null, string supplementaryFileLocation = null, ServerlessRuntimeConfigProperties serverlessRuntimeConfig = null, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = null, string userContextToken = null)
-        {
-            advancedCustomProperties ??= new List<AdvancedCustomProperties>();
-            serverlessRuntimeTags ??= new List<ServerlessRuntimeTag>();
-
-            return new InformaticaServerlessRuntimeProperties(
-                provisioningState,
-                description,
-                platform,
-                applicationType,
-                computeUnits,
-                executionTimeout,
-                serverlessAccountLocation,
-                networkInterfaceConfiguration != null ? new ServerlessRuntimeNetworkProfile(networkInterfaceConfiguration, serializedAdditionalRawData: null) : null,
-                advancedCustomProperties?.ToList(),
-                supplementaryFileLocation,
-                serverlessRuntimeConfig,
-                serverlessRuntimeTags?.ToList(),
-                userContextToken != null ? new ServerlessRuntimeUserContextProperties(userContextToken, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CheckDependenciesResult"/>. </summary>
-        /// <param name="count"> Count of dependencies. </param>
-        /// <param name="id"> id of resource. </param>
-        /// <param name="references"> List of dependencies. </param>
-        /// <returns> A new <see cref="Models.CheckDependenciesResult"/> instance for mocking. </returns>
-        public static CheckDependenciesResult CheckDependenciesResult(int count = default, string id = null, IEnumerable<ServerlessRuntimeDependency> references = null)
-        {
-            references ??= new List<ServerlessRuntimeDependency>();
-
-            return new CheckDependenciesResult(count, id, references?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServerlessRuntimeDependency"/>. </summary>
-        /// <param name="id"> Dependency ID. </param>
-        /// <param name="appContextId"> Application context ID. </param>
-        /// <param name="path"> Dependency path. </param>
-        /// <param name="documentType"> document type. </param>
-        /// <param name="description"> description of Dependency. </param>
-        /// <param name="lastUpdatedTime"> Last Update Time. </param>
-        /// <returns> A new <see cref="Models.ServerlessRuntimeDependency"/> instance for mocking. </returns>
-        public static ServerlessRuntimeDependency ServerlessRuntimeDependency(string id = null, string appContextId = null, string path = null, string documentType = null, string description = null, string lastUpdatedTime = null)
-        {
-            return new ServerlessRuntimeDependency(
-                id,
-                appContextId,
-                path,
-                documentType,
-                description,
-                lastUpdatedTime,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="InformaticaDataManagement.InformaticaOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -283,6 +196,93 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 subscriptionId,
                 region,
                 serverlessArmResourceId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/> instance for mocking. </returns>
+        public static InformaticaServerlessRuntimeData InformaticaServerlessRuntimeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InformaticaServerlessRuntimeProperties properties = null)
+        {
+            return new InformaticaServerlessRuntimeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InformaticaServerlessRuntimeProperties"/>. </summary>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <param name="description"> description of the serverless runtime. </param>
+        /// <param name="platform"> Platform type of the Serverless Runtime. </param>
+        /// <param name="applicationType"> Application type of the Serverless Runtime environment. </param>
+        /// <param name="computeUnits"> Compute units of the serverless runtime. </param>
+        /// <param name="executionTimeout"> Serverless Execution timeout. </param>
+        /// <param name="serverlessAccountLocation"> Serverless account creation location. </param>
+        /// <param name="networkInterfaceConfiguration"> Informatica Serverless Network profile properties. </param>
+        /// <param name="advancedCustomProperties"> String KV pairs indicating Advanced custom properties. </param>
+        /// <param name="supplementaryFileLocation"> Supplementary file location. </param>
+        /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
+        /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
+        /// <param name="userContextToken"> Serverless runtime user context properties. </param>
+        /// <returns> A new <see cref="Models.InformaticaServerlessRuntimeProperties"/> instance for mocking. </returns>
+        public static InformaticaServerlessRuntimeProperties InformaticaServerlessRuntimeProperties(InformaticaProvisioningState? provisioningState = null, string description = null, InformaticaPlatformType? platform = null, InformaticaApplicationType? applicationType = null, string computeUnits = null, string executionTimeout = null, string serverlessAccountLocation = null, InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration = null, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = null, string supplementaryFileLocation = null, ServerlessRuntimeConfigProperties serverlessRuntimeConfig = null, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = null, string userContextToken = null)
+        {
+            advancedCustomProperties ??= new List<AdvancedCustomProperties>();
+            serverlessRuntimeTags ??= new List<ServerlessRuntimeTag>();
+
+            return new InformaticaServerlessRuntimeProperties(
+                provisioningState,
+                description,
+                platform,
+                applicationType,
+                computeUnits,
+                executionTimeout,
+                serverlessAccountLocation,
+                networkInterfaceConfiguration != null ? new ServerlessRuntimeNetworkProfile(networkInterfaceConfiguration, serializedAdditionalRawData: null) : null,
+                advancedCustomProperties?.ToList(),
+                supplementaryFileLocation,
+                serverlessRuntimeConfig,
+                serverlessRuntimeTags?.ToList(),
+                userContextToken != null ? new ServerlessRuntimeUserContextProperties(userContextToken, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CheckDependenciesResult"/>. </summary>
+        /// <param name="count"> Count of dependencies. </param>
+        /// <param name="id"> id of resource. </param>
+        /// <param name="references"> List of dependencies. </param>
+        /// <returns> A new <see cref="Models.CheckDependenciesResult"/> instance for mocking. </returns>
+        public static CheckDependenciesResult CheckDependenciesResult(int count = default, string id = null, IEnumerable<ServerlessRuntimeDependency> references = null)
+        {
+            references ??= new List<ServerlessRuntimeDependency>();
+
+            return new CheckDependenciesResult(count, id, references?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServerlessRuntimeDependency"/>. </summary>
+        /// <param name="id"> Dependency ID. </param>
+        /// <param name="appContextId"> Application context ID. </param>
+        /// <param name="path"> Dependency path. </param>
+        /// <param name="documentType"> document type. </param>
+        /// <param name="description"> description of Dependency. </param>
+        /// <param name="lastUpdatedTime"> Last Update Time. </param>
+        /// <returns> A new <see cref="Models.ServerlessRuntimeDependency"/> instance for mocking. </returns>
+        public static ServerlessRuntimeDependency ServerlessRuntimeDependency(string id = null, string appContextId = null, string path = null, string documentType = null, string description = null, string lastUpdatedTime = null)
+        {
+            return new ServerlessRuntimeDependency(
+                id,
+                appContextId,
+                path,
+                documentType,
+                description,
+                lastUpdatedTime,
                 serializedAdditionalRawData: null);
         }
     }

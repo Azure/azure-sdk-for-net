@@ -16,16 +16,53 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDatabaseWatcherModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcher.DatabaseWatcherData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherData"/> instance for mocking. </returns>
+        public static DatabaseWatcherData DatabaseWatcherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DatabaseWatcherProperties properties = null, ManagedServiceIdentity identity = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DatabaseWatcherData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherProperties"/>. </summary>
+        /// <param name="datastore"> The data store for collected monitoring data. </param>
+        /// <param name="status"> The monitoring collection status of the watcher. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource watcher. </param>
+        /// <param name="defaultAlertRuleIdentityResourceId"> The resource ID of a user-assigned managed identity that will be assigned to a new alert rule. </param>
+        /// <returns> A new <see cref="Models.DatabaseWatcherProperties"/> instance for mocking. </returns>
+        public static DatabaseWatcherProperties DatabaseWatcherProperties(DatabaseWatcherDatastore datastore = null, DatabaseWatcherStatus? status = null, DatabaseWatcherProvisioningState? provisioningState = null, ResourceIdentifier defaultAlertRuleIdentityResourceId = null)
+        {
+            return new DatabaseWatcherProperties(datastore, status, provisioningState, defaultAlertRuleIdentityResourceId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcher.DatabaseWatcherAlertRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static DatabaseWatcherSharedPrivateLinkResourceData DatabaseWatcherSharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatabaseWatcherSharedPrivateLinkResourceProperties properties = null)
+        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherAlertRuleData"/> instance for mocking. </returns>
+        public static DatabaseWatcherAlertRuleData DatabaseWatcherAlertRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatabaseWatcherAlertRuleProperties properties = null)
         {
-            return new DatabaseWatcherSharedPrivateLinkResourceData(
+            return new DatabaseWatcherAlertRuleData(
                 id,
                 name,
                 resourceType,
@@ -34,23 +71,83 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherSharedPrivateLinkResourceProperties"/>. </summary>
-        /// <param name="privateLinkResourceId"> The resource ID of the resource the shared private link resource is for. </param>
-        /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
-        /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
-        /// <param name="dnsZone"> The DNS zone segment to be included in the DNS name of the shared private link. Value is required for Azure Data Explorer clusters and SQL managed instances, and must be omitted for SQL logical servers and key vaults. The value is the second segment of the host FQDN name of the resource that the shared private link resource is for. For example: if the host name is 'adx-cluster-21187695.eastus.kusto.windows.net', then the value is 'eastus'; if the host name is 'sql-mi-23961134.767d5869f605.database.windows.net', then the value is '767d5869f605'. </param>
-        /// <param name="status"> Status of the shared private link resource. Can be Pending, Approved, Rejected or Disconnected. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.DatabaseWatcherSharedPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static DatabaseWatcherSharedPrivateLinkResourceProperties DatabaseWatcherSharedPrivateLinkResourceProperties(ResourceIdentifier privateLinkResourceId = null, string groupId = null, string requestMessage = null, string dnsZone = null, DatabaseWatcherSharedPrivateLinkResourceStatus? status = null, DatabaseWatcherResourceProvisioningState? provisioningState = null)
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherAlertRuleProperties"/>. </summary>
+        /// <param name="alertRuleResourceId"> The resource ID of the alert rule resource. </param>
+        /// <param name="createdWithProperties"> The properties with which the alert rule resource was created. </param>
+        /// <param name="createdOn"> The creation time of the alert rule resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the alert rule resource. </param>
+        /// <param name="alertRuleTemplateId"> The template ID associated with alert rule resource. </param>
+        /// <param name="alertRuleTemplateVersion"> The alert rule template version. </param>
+        /// <returns> A new <see cref="Models.DatabaseWatcherAlertRuleProperties"/> instance for mocking. </returns>
+        public static DatabaseWatcherAlertRuleProperties DatabaseWatcherAlertRuleProperties(ResourceIdentifier alertRuleResourceId = null, AlertRuleCreationProperty createdWithProperties = default, DateTimeOffset createdOn = default, DatabaseWatcherResourceProvisioningState? provisioningState = null, string alertRuleTemplateId = null, string alertRuleTemplateVersion = null)
         {
-            return new DatabaseWatcherSharedPrivateLinkResourceProperties(
-                privateLinkResourceId,
-                groupId,
-                requestMessage,
-                dnsZone,
-                status,
+            return new DatabaseWatcherAlertRuleProperties(
+                alertRuleResourceId,
+                createdWithProperties,
+                createdOn,
                 provisioningState,
+                alertRuleTemplateId,
+                alertRuleTemplateVersion,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcher.DatabaseWatcherHealthValidationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherHealthValidationData"/> instance for mocking. </returns>
+        public static DatabaseWatcherHealthValidationData DatabaseWatcherHealthValidationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatabaseWatcherHealthValidationProperties properties = null)
+        {
+            return new DatabaseWatcherHealthValidationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherHealthValidationProperties"/>. </summary>
+        /// <param name="startOn"> The start time of health validation, in UTC. </param>
+        /// <param name="endOn"> The end time of health validation, in UTC. </param>
+        /// <param name="status"> The current health validation status. </param>
+        /// <param name="issues"> The list of issues found by health validation. </param>
+        /// <param name="provisioningState"> The provisioning state of the health validation resource. </param>
+        /// <returns> A new <see cref="Models.DatabaseWatcherHealthValidationProperties"/> instance for mocking. </returns>
+        public static DatabaseWatcherHealthValidationProperties DatabaseWatcherHealthValidationProperties(DateTimeOffset startOn = default, DateTimeOffset endOn = default, DatabaseWatcherHealthValidationStatus status = default, IEnumerable<DatabaseWatcherHealthValidationIssue> issues = null, DatabaseWatcherResourceProvisioningState? provisioningState = null)
+        {
+            issues ??= new List<DatabaseWatcherHealthValidationIssue>();
+
+            return new DatabaseWatcherHealthValidationProperties(
+                startOn,
+                endOn,
+                status,
+                issues?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherHealthValidationIssue"/>. </summary>
+        /// <param name="errorCode"> The error code of the issue. </param>
+        /// <param name="errorMessage"> The error message of the issue. </param>
+        /// <param name="additionalDetails"> The additional details for the issue. </param>
+        /// <param name="recommendationMessage"> The recommendation for resolving the issue. </param>
+        /// <param name="recommendationUri"> The URL related to resolving the issue. </param>
+        /// <param name="relatedResourceId"> The resource ID of the Azure resource related to the issue. </param>
+        /// <param name="relatedResourceType"> The type of the Azure resource related to the issue. </param>
+        /// <returns> A new <see cref="Models.DatabaseWatcherHealthValidationIssue"/> instance for mocking. </returns>
+        public static DatabaseWatcherHealthValidationIssue DatabaseWatcherHealthValidationIssue(string errorCode = null, string errorMessage = null, string additionalDetails = null, string recommendationMessage = null, Uri recommendationUri = null, ResourceIdentifier relatedResourceId = null, ResourceType? relatedResourceType = null)
+        {
+            return new DatabaseWatcherHealthValidationIssue(
+                errorCode,
+                errorMessage,
+                additionalDetails,
+                recommendationMessage,
+                recommendationUri,
+                relatedResourceId,
+                relatedResourceType,
                 serializedAdditionalRawData: null);
         }
 
@@ -161,16 +258,16 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 readIntent);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseWatcher.DatabaseWatcherHealthValidationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherHealthValidationData"/> instance for mocking. </returns>
-        public static DatabaseWatcherHealthValidationData DatabaseWatcherHealthValidationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatabaseWatcherHealthValidationProperties properties = null)
+        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static DatabaseWatcherSharedPrivateLinkResourceData DatabaseWatcherSharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatabaseWatcherSharedPrivateLinkResourceProperties properties = null)
         {
-            return new DatabaseWatcherHealthValidationData(
+            return new DatabaseWatcherSharedPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
@@ -179,121 +276,24 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherHealthValidationProperties"/>. </summary>
-        /// <param name="startOn"> The start time of health validation, in UTC. </param>
-        /// <param name="endOn"> The end time of health validation, in UTC. </param>
-        /// <param name="status"> The current health validation status. </param>
-        /// <param name="issues"> The list of issues found by health validation. </param>
-        /// <param name="provisioningState"> The provisioning state of the health validation resource. </param>
-        /// <returns> A new <see cref="Models.DatabaseWatcherHealthValidationProperties"/> instance for mocking. </returns>
-        public static DatabaseWatcherHealthValidationProperties DatabaseWatcherHealthValidationProperties(DateTimeOffset startOn = default, DateTimeOffset endOn = default, DatabaseWatcherHealthValidationStatus status = default, IEnumerable<DatabaseWatcherHealthValidationIssue> issues = null, DatabaseWatcherResourceProvisioningState? provisioningState = null)
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherSharedPrivateLinkResourceProperties"/>. </summary>
+        /// <param name="privateLinkResourceId"> The resource ID of the resource the shared private link resource is for. </param>
+        /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
+        /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
+        /// <param name="dnsZone"> The DNS zone segment to be included in the DNS name of the shared private link. Value is required for Azure Data Explorer clusters and SQL managed instances, and must be omitted for SQL logical servers and key vaults. The value is the second segment of the host FQDN name of the resource that the shared private link resource is for. For example: if the host name is 'adx-cluster-21187695.eastus.kusto.windows.net', then the value is 'eastus'; if the host name is 'sql-mi-23961134.767d5869f605.database.windows.net', then the value is '767d5869f605'. </param>
+        /// <param name="status"> Status of the shared private link resource. Can be Pending, Approved, Rejected or Disconnected. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DatabaseWatcherSharedPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static DatabaseWatcherSharedPrivateLinkResourceProperties DatabaseWatcherSharedPrivateLinkResourceProperties(ResourceIdentifier privateLinkResourceId = null, string groupId = null, string requestMessage = null, string dnsZone = null, DatabaseWatcherSharedPrivateLinkResourceStatus? status = null, DatabaseWatcherResourceProvisioningState? provisioningState = null)
         {
-            issues ??= new List<DatabaseWatcherHealthValidationIssue>();
-
-            return new DatabaseWatcherHealthValidationProperties(
-                startOn,
-                endOn,
+            return new DatabaseWatcherSharedPrivateLinkResourceProperties(
+                privateLinkResourceId,
+                groupId,
+                requestMessage,
+                dnsZone,
                 status,
-                issues?.ToList(),
                 provisioningState,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherHealthValidationIssue"/>. </summary>
-        /// <param name="errorCode"> The error code of the issue. </param>
-        /// <param name="errorMessage"> The error message of the issue. </param>
-        /// <param name="additionalDetails"> The additional details for the issue. </param>
-        /// <param name="recommendationMessage"> The recommendation for resolving the issue. </param>
-        /// <param name="recommendationUri"> The URL related to resolving the issue. </param>
-        /// <param name="relatedResourceId"> The resource ID of the Azure resource related to the issue. </param>
-        /// <param name="relatedResourceType"> The type of the Azure resource related to the issue. </param>
-        /// <returns> A new <see cref="Models.DatabaseWatcherHealthValidationIssue"/> instance for mocking. </returns>
-        public static DatabaseWatcherHealthValidationIssue DatabaseWatcherHealthValidationIssue(string errorCode = null, string errorMessage = null, string additionalDetails = null, string recommendationMessage = null, Uri recommendationUri = null, ResourceIdentifier relatedResourceId = null, ResourceType? relatedResourceType = null)
-        {
-            return new DatabaseWatcherHealthValidationIssue(
-                errorCode,
-                errorMessage,
-                additionalDetails,
-                recommendationMessage,
-                recommendationUri,
-                relatedResourceId,
-                relatedResourceType,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DatabaseWatcher.DatabaseWatcherAlertRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherAlertRuleData"/> instance for mocking. </returns>
-        public static DatabaseWatcherAlertRuleData DatabaseWatcherAlertRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatabaseWatcherAlertRuleProperties properties = null)
-        {
-            return new DatabaseWatcherAlertRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherAlertRuleProperties"/>. </summary>
-        /// <param name="alertRuleResourceId"> The resource ID of the alert rule resource. </param>
-        /// <param name="createdWithProperties"> The properties with which the alert rule resource was created. </param>
-        /// <param name="createdOn"> The creation time of the alert rule resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the alert rule resource. </param>
-        /// <param name="alertRuleTemplateId"> The template ID associated with alert rule resource. </param>
-        /// <param name="alertRuleTemplateVersion"> The alert rule template version. </param>
-        /// <returns> A new <see cref="Models.DatabaseWatcherAlertRuleProperties"/> instance for mocking. </returns>
-        public static DatabaseWatcherAlertRuleProperties DatabaseWatcherAlertRuleProperties(ResourceIdentifier alertRuleResourceId = null, AlertRuleCreationProperty createdWithProperties = default, DateTimeOffset createdOn = default, DatabaseWatcherResourceProvisioningState? provisioningState = null, string alertRuleTemplateId = null, string alertRuleTemplateVersion = null)
-        {
-            return new DatabaseWatcherAlertRuleProperties(
-                alertRuleResourceId,
-                createdWithProperties,
-                createdOn,
-                provisioningState,
-                alertRuleTemplateId,
-                alertRuleTemplateVersion,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DatabaseWatcher.DatabaseWatcherData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherData"/> instance for mocking. </returns>
-        public static DatabaseWatcherData DatabaseWatcherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DatabaseWatcherProperties properties = null, ManagedServiceIdentity identity = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DatabaseWatcherData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                identity,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseWatcherProperties"/>. </summary>
-        /// <param name="datastore"> The data store for collected monitoring data. </param>
-        /// <param name="status"> The monitoring collection status of the watcher. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource watcher. </param>
-        /// <param name="defaultAlertRuleIdentityResourceId"> The resource ID of a user-assigned managed identity that will be assigned to a new alert rule. </param>
-        /// <returns> A new <see cref="Models.DatabaseWatcherProperties"/> instance for mocking. </returns>
-        public static DatabaseWatcherProperties DatabaseWatcherProperties(DatabaseWatcherDatastore datastore = null, DatabaseWatcherStatus? status = null, DatabaseWatcherProvisioningState? provisioningState = null, ResourceIdentifier defaultAlertRuleIdentityResourceId = null)
-        {
-            return new DatabaseWatcherProperties(datastore, status, provisioningState, defaultAlertRuleIdentityResourceId, serializedAdditionalRawData: null);
         }
     }
 }
