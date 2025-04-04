@@ -312,7 +312,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
         #region Programmability
         [RecordedTest]
-        [Ignore("This test cannot be run until we fix the query parameter to match the rest spec.")]
         public async Task UserDefinedEndpointsTest()
         {
             // Deploy JS App
@@ -349,7 +348,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
-        [Ignore("This test cannot be run until we fix the endpoint to match the rest spec.")]
         public async Task JSRuntimeOptionsTest()
         {
             // Get Default JS Runtime Options
@@ -447,6 +445,41 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
         #endregion
 
+        #region UserDefinedFunction
+        [RecordedTest]
+        public async Task UserDefinedFunctionTest()
+        {
+            // Delete UDF
+            Response result = await Client.CreateUserDefinedEndpointAsync("{\"metadata\": {\"endpoints\": {}}, \"modules\": []}");
+            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
+
+            string functionId = "myFunction";
+
+            // Create UDF
+            var functionParam = new UserFunctionParam
+            {
+                Code= "export function main() { return true }",
+                Id = functionId
+            };
+
+            try
+            {
+                Response userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
+                Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
+                userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
+
+                var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
+                // Validate Fetched user function with Added function Id
+                Assert.AreEqual(functionId, functionData.Id);
+            }
+            finally
+            {
+                Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
+                Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
+            }
+        }
+        #endregion
+
         #region LedgerTestHelpers
         private async Task<(string TransactionId, string StringResult)> GetFirstTransactionIdFromGetEntries()
         {
@@ -511,6 +544,15 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             [JsonPropertyName("roles")]
             public List<Role> Roles { get; set; } = new List<Role>();
+        }
+
+        private class UserFunctionParam
+        {
+            [JsonPropertyName("code")]
+            public string Code { get; set; }
+
+            [JsonPropertyName("id")]
+            public string Id { get; set; }
         }
 
         private class RuntimeOptions
