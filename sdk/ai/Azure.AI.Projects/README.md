@@ -601,7 +601,7 @@ ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string 
 }
 ```
 
-We parse streaming updates in two cycles. One iterates over the streaming run outputs and when we are getting update, requiring the action, we are starting the second cycle, which iterates over the outputs of the same run, after submission of the local functions calls results.
+We create a stream and wait for the stream update of the `RequiredActionUpdate` type. This update will mark the point, when we need to submit tool outputs to the stream. We will submit outputs in the inner cycle. Please note that `RequiredActionUpdate` keeps only one required action, while our run may require multiple function calls, this case is handled in the inner cycle, so that we can add tool output to the existing array of outputs. After all required actions were submitted we clean up the array of required actions.
 
 ```C# Snippet:FunctionsWithStreamingUpdateCycle
 List<ToolOutput> toolOutputs = [];
