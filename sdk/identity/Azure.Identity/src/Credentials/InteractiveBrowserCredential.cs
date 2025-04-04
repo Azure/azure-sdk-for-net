@@ -31,6 +31,7 @@ namespace Azure.Identity
         internal string DefaultScope { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
         internal bool UseOperatingSystemAccount { get; }
+        internal bool IsChainedCredential { get; set; }
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to interactively authenticate.";
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
@@ -96,6 +97,7 @@ namespace Azure.Identity
             Record = (options as InteractiveBrowserCredentialOptions)?.AuthenticationRecord;
             BrowserCustomization = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomization;
             UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseDefaultBrokerAccount ?? false;
+            IsChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <summary>
@@ -243,6 +245,10 @@ namespace Azure.Identity
                     }
                     catch (MsalUiRequiredException e)
                     {
+                        if (UseOperatingSystemAccount && IsChainedCredential)
+                        {
+                            throw;
+                        }
                         inner = e;
                     }
                 }
@@ -256,7 +262,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, null, IsChainedCredential);
             }
         }
 

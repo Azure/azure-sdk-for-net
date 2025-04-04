@@ -27,7 +27,11 @@ namespace Azure.Identity
             if (options is IMsalPublicClientInitializerOptions initializerOptions)
             {
                 _beforeBuildClient = initializerOptions.BeforeBuildClient;
-            };
+            }
+            else if (options is IMsalSettablePublicClientInitializerOptions settableInitializerOptions)
+            {
+                _beforeBuildClient = settableInitializerOptions.BeforeBuildClient;
+            }
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
