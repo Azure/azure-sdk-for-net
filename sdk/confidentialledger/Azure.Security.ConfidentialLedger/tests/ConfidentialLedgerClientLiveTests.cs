@@ -325,6 +325,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
 
             // Deploy Empty JS Bundle to remove JS App
+            programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
             result = await Client.CreateUserDefinedEndpointAsync("{\"metadata\": {\"endpoints\": {}}, \"modules\": []}");
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
         }
@@ -393,7 +394,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRole1";
+            string roleName = "TestRole3";
 
             // Add Custom Role
             var rolesParam = new RolesParam
