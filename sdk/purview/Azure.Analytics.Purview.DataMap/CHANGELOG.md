@@ -6,13 +6,9 @@
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Updated type of endorsements from string to list[string] in SuggestResultValue and SuggestResultValue models.
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2024-03-12)
 
