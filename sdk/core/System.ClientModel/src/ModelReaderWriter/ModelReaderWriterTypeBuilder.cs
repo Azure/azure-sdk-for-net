@@ -14,7 +14,7 @@ public abstract partial class ModelReaderWriterTypeBuilder
     /// <summary>
     /// Creates an object based on the type information.
     /// </summary>
-    public object CreateObject()
+    internal object CreateObject()
     {
         if (IsCollection)
         {
@@ -31,10 +31,9 @@ public abstract partial class ModelReaderWriterTypeBuilder
 
     internal Type? GetItemType() => ItemType;
 
-    /// <summary>
-    /// Gets a value indicating whether the object is a collection.
-    /// </summary>
-    protected virtual bool IsCollection => false;
+    internal IEnumerable? ToEnumerable(object obj) => GetItems(obj);
+
+    private bool IsCollection => ItemType is not null;
 
     /// <summary>
     /// Gets the type this builder creates.
@@ -50,7 +49,7 @@ public abstract partial class ModelReaderWriterTypeBuilder
     /// Gets an <see cref="IEnumerable"/> representation of the object.
     /// </summary>
     /// <returns>An <see cref="IEnumerable"/> representation if its a collection otherwise null.</returns>
-    protected internal virtual IEnumerable? GetItems(object obj) => null;
+    protected virtual IEnumerable? GetItems(object obj) => null;
 
     /// <summary>
     /// Creates and returns a new instance of the object type that this builder represents.

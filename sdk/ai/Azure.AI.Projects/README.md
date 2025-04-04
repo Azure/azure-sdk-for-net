@@ -606,56 +606,43 @@ We parse streaming updates in two cycles. One iterates over the streaming run ou
 ```C# Snippet:FunctionsWithStreamingUpdateCycle
 List<ToolOutput> toolOutputs = [];
 ThreadRun streamRun = null;
-await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+AsyncCollectionResult<StreamingUpdate> stream = client.CreateRunStreamingAsync(thread.Id, agent.Id);
+do
 {
-    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+    toolOutputs.Clear();
+    await foreach (StreamingUpdate streamingUpdate in stream)
     {
-        Console.WriteLine("--- Run started! ---");
-    }
-    else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
-    {
-        streamRun = submitToolOutputsUpdate.Value;
-        RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
-        while (streamRun.Status == RunStatus.RequiresAction) {
+        if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+        {
+            Console.WriteLine("--- Run started! ---");
+        }
+        else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
+        {
+            RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
             toolOutputs.Add(
                 GetResolvedToolOutput(
                     newActionUpdate.FunctionName,
                     newActionUpdate.ToolCallId,
                     newActionUpdate.FunctionArguments
             ));
-            await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs))
-            {
-                if (actionUpdate is MessageContentUpdate contentUpdate)
-                {
-                    Console.Write(contentUpdate.Text);
-                }
-                else if (actionUpdate is RequiredActionUpdate newAction)
-                {
-                    newActionUpdate = newAction;
-                    toolOutputs.Add(
-                        GetResolvedToolOutput(
-                            newActionUpdate.FunctionName,
-                            newActionUpdate.ToolCallId,
-                            newActionUpdate.FunctionArguments
-                        )
-                    );
-                }
-                else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("--- Run completed! ---");
-                }
-            }
-            streamRun = client.GetRun(thread.Id, streamRun.Id);
-            toolOutputs.Clear();
+            streamRun = submitToolOutputsUpdate.Value;
         }
-        break;
+        else if (streamingUpdate is MessageContentUpdate contentUpdate)
+        {
+            Console.Write(contentUpdate.Text);
+        }
+        else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+        {
+            Console.WriteLine();
+            Console.WriteLine("--- Run completed! ---");
+        }
     }
-    else if (streamingUpdate is MessageContentUpdate contentUpdate)
+    if (toolOutputs.Count > 0)
     {
-        Console.Write(contentUpdate.Text);
+        stream = client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
     }
 }
+while (toolOutputs.Count > 0);
 ```
 
 #### Azure function call
@@ -900,7 +887,7 @@ Any operation that fails will throw a [RequestFailedException][RequestFailedExce
 try
 {
     client.CreateMessage(
-    "1234",
+    "thread1234",
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
 }
