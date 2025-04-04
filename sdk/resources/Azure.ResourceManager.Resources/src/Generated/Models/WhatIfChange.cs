@@ -46,14 +46,9 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WhatIfChange"/>. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        internal WhatIfChange(string resourceId, WhatIfChangeType changeType)
+        internal WhatIfChange(WhatIfChangeType changeType)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            ResourceId = resourceId;
             ChangeType = changeType;
             Delta = new ChangeTrackingList<WhatIfPropertyChange>();
         }
