@@ -667,7 +667,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private static AccessTier? GetAccessTier(
             BlobStorageResourceOptions options,
             IDictionary<string, object> properties)
-            => options?.AccessTier != default
+            => options?._isAccessTierSet ?? false
                 ? options?.AccessTier
                 : properties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true
                     ? (AccessTier?)accessTierObject

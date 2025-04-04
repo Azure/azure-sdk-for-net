@@ -30,6 +30,9 @@ namespace Azure.Storage.DataMovement.Blobs
         private string _contentType = default;
         internal bool _isContentTypeSet = false;
 
+        private AccessTier? _accessTier = default;
+        internal bool _isAccessTierSet = false;
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -52,6 +55,7 @@ namespace Azure.Storage.DataMovement.Blobs
             ContentType = other?.ContentType;
             _isContentTypeSet = other?._isContentTypeSet ?? false;
             AccessTier = other?.AccessTier;
+            _isAccessTierSet = other?._isAccessTierSet ?? false;
         }
 
         internal BlobStorageResourceOptions(BlobDestinationCheckpointDetails checkpointDetails)
@@ -69,6 +73,7 @@ namespace Azure.Storage.DataMovement.Blobs
             ContentType = checkpointDetails.ContentType;
             _isContentTypeSet = checkpointDetails.IsContentTypeSet;
             AccessTier = checkpointDetails.AccessTierValue;
+            _isAccessTierSet = checkpointDetails.IsAccessTierSet;
         }
 
         /// <summary>
@@ -189,11 +194,19 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional. See <see cref="Storage.Blobs.Models.AccessTier"/>.
         /// Indicates the access tier to be set on the destination blob.
         ///
-        /// Access Tier is automatically preserved during blob to blob copies.
+        /// Access Tier is automatically preserved during blob to blob copies. If explicitly set to null, the Access Tier will not be preserved from source to destination.
         ///
         /// Applies to upload and copy transfers.
         /// Also respective Tier Values applies only to Block or Page Blobs.
         /// </summary>
-        public AccessTier? AccessTier { get; set; }
+        public AccessTier? AccessTier
+        {
+            get => _accessTier;
+            set
+            {
+                _accessTier = value;
+                _isAccessTierSet = true;
+            }
+        }
     }
 }
