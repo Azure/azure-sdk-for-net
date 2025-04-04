@@ -253,7 +253,7 @@ List<ChatMessage> conversationMessages =
     [
         new UserChatMessage("What's the weather like in Boston?"),
     ];
-ChatCompletion completion = chatClient.CompleteChat(conversationMessages);
+ChatCompletion completion = chatClient.CompleteChat(conversationMessages, options);
 ```
 
 When the assistant decides that one or more tools should be used, the response message includes one or more "tool
