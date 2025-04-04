@@ -5,29 +5,109 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     internal static partial class SipRoutingModelFactory
     {
-        /// <summary> Initializes a new instance of SipTrunkRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="SipRouting.SipTrunk"/>. </summary>
+        /// <param name="sipSignalingPort"> Gets or sets SIP signaling port of the trunk. </param>
+        /// <param name="enabled"> Enabled flag. </param>
+        /// <param name="health"> Represents health state of a SIP trunk for routing calls. </param>
+        /// <param name="directTransfer"> When enabled, removes Azure Communication Services from the signaling path on call transfer and sets the SIP Refer-To header to the trunk's FQDN. By default false. </param>
+        /// <param name="privacyHeader"> SIP Privacy header. Default value is id. </param>
+        /// <param name="ipAddressVersion"> IP address version used by the trunk. Default value is ipv4. </param>
+        /// <returns> A new <see cref="SipRouting.SipTrunk"/> instance for mocking. </returns>
+        public static SipTrunk SipTrunk(int sipSignalingPort = default, bool? enabled = null, SipHealth health = null, bool? directTransfer = null, PrivacyHeader? privacyHeader = null, IpAddressVersion? ipAddressVersion = null)
+        {
+            return new SipTrunk(
+                sipSignalingPort,
+                enabled,
+                health,
+                directTransfer,
+                privacyHeader,
+                ipAddressVersion);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SipRouting.SipHealth"/>. </summary>
+        /// <param name="tls"> The status of the TLS connections of the Trunk. </param>
+        /// <param name="ping"> The status of SIP OPTIONS message sent by Trunk. </param>
+        /// <param name="overall"> The overall health status of Trunk. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tls"/>, <paramref name="ping"/> or <paramref name="overall"/> is null. </exception>
+        /// <returns> A new <see cref="SipRouting.SipHealth"/> instance for mocking. </returns>
+        public static SipHealth SipHealth(SipTls tls = null, SipPing ping = null, OverallHealth overall = null)
+        {
+            if (tls == null)
+            {
+                throw new ArgumentNullException(nameof(tls));
+            }
+            if (ping == null)
+            {
+                throw new ArgumentNullException(nameof(ping));
+            }
+            if (overall == null)
+            {
+                throw new ArgumentNullException(nameof(overall));
+            }
+
+            return new SipHealth(tls, ping, overall);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SipRouting.SipTls"/>. </summary>
+        /// <param name="status"> The status of the TLS connections of the Trunk. </param>
+        /// <returns> A new <see cref="SipRouting.SipTls"/> instance for mocking. </returns>
+        public static SipTls SipTls(TlsStatus status = default)
+        {
+            return new SipTls(status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SipRouting.SipPing"/>. </summary>
+        /// <param name="status"> The status of SIP OPTIONS message sent by Trunk. </param>
+        /// <returns> A new <see cref="SipRouting.SipPing"/> instance for mocking. </returns>
+        public static SipPing SipPing(PingStatus status = default)
+        {
+            return new SipPing(status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SipRouting.OverallHealth"/>. </summary>
+        /// <param name="status"> The overall health status of Trunk. </param>
+        /// <param name="reason"> The reason overall status of Trunk is inactive. </param>
+        /// <returns> A new <see cref="SipRouting.OverallHealth"/> instance for mocking. </returns>
+        public static OverallHealth OverallHealth(OverallHealthStatus status = default, InactiveStatusReason? reason = null)
+        {
+            return new OverallHealth(status, reason);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SipRouting.SipTrunkRoute"/>. </summary>
         /// <param name="description"> Gets or sets description of the route. </param>
         /// <param name="name"> Gets or sets name of the route. </param>
         /// <param name="numberPattern">
         /// Gets or sets regex number pattern for routing calls. .NET regex format is supported.
-        /// The regex should match only digits with an optional &apos;+&apos; prefix without spaces.
-        /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
+        /// The regex should match only digits with an optional '+' prefix without spaces.
+        /// I.e. "^\+[1-9][0-9]{3,23}$".
         /// </param>
         /// <param name="trunks"> Gets or sets list of SIP trunks for routing calls. Trunks are represented as FQDN. </param>
+        /// <param name="callerIdOverride"> Gets or sets caller ID override. This value will override caller ID of outgoing call specified at runtime. </param>
         /// <returns> A new <see cref="SipRouting.SipTrunkRoute"/> instance for mocking. </returns>
-        public static SipTrunkRoute SipTrunkRoute(string description = null, string name = null, string numberPattern = null, IEnumerable<string> trunks = null)
+        public static SipTrunkRoute SipTrunkRoute(string description = null, string name = null, string numberPattern = null, IEnumerable<string> trunks = null, string callerIdOverride = null)
         {
             trunks ??= new List<string>();
 
-            return new SipTrunkRoute(description, name, numberPattern, trunks?.ToList());
+            return new SipTrunkRoute(description, name, numberPattern, trunks?.ToList(), callerIdOverride);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SipRouting.RoutesForNumber"/>. </summary>
+        /// <param name="matchingRoutes"> The list of routes whose number patterns are matched by the target number. The routes are displayed and apply in the same order as in SipConfiguration. </param>
+        /// <returns> A new <see cref="SipRouting.RoutesForNumber"/> instance for mocking. </returns>
+        public static RoutesForNumber RoutesForNumber(IEnumerable<SipTrunkRoute> matchingRoutes = null)
+        {
+            matchingRoutes ??= new List<SipTrunkRoute>();
+
+            return new RoutesForNumber(matchingRoutes?.ToList());
         }
     }
 }
