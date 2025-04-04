@@ -13,7 +13,7 @@ tag: package-preview-2023-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
     - ApiProduct_ListByApis
@@ -621,7 +621,7 @@ directive:
   - from: apimcontenttypes.json
     where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'].put
     transform: >
-                $['parameters']=[      
+                $['parameters']=[
                       {
                         "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
                       },
