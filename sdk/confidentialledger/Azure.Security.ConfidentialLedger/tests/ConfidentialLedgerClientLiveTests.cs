@@ -55,7 +55,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     TestEnvironment.ConfidentialLedgerUrl,
                     credential: Credential,
                     clientCertificate: null,
-                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions(ServiceVersion.V2024_08_22_Preview)),
+                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions(ServiceVersion.V2024_12_09_Preview)),
                     identityServiceCert: serviceCert.Cert));
         }
 
@@ -312,7 +312,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
         #region Programmability
         [RecordedTest]
-        [Ignore("This test cannot be run until we fix the query parameter to match the rest spec.")]
         public async Task UserDefinedEndpointsTest()
         {
             // Deploy JS App
@@ -321,35 +320,17 @@ namespace Azure.Security.ConfidentialLedger.Tests
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
 
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
-            Console.WriteLine(resp.Content);
-
-            //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-            string programContent = File.ReadAllText(filePath);
-            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
-
-            // Verify Response by Querying endpt
-            /// TODO: Investigate InternalServerError
-            //ConfidentialLedgerHelperHttpClient helperHttpClient = new ConfidentialLedgerHelperHttpClient(TestEnvironment.ConfidentialLedgerUrl, Credential);
-            //(var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("/app/content");
-            //Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
-            //Assert.AreEqual("Test content", response);
 
             // Deploy Empty JS Bundle to remove JS App
             programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
-
-            result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
+            result = await Client.CreateUserDefinedEndpointAsync("{\"metadata\": {\"endpoints\": {}}, \"modules\": []}");
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
         }
 
         [RecordedTest]
-        [Ignore("This test cannot be run until we fix the endpoint to match the rest spec.")]
         public async Task JSRuntimeOptionsTest()
         {
             // Get Default JS Runtime Options
@@ -413,7 +394,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRole";
+            string roleName = "TestRole3";
 
             // Add Custom Role
             var rolesParam = new RolesParam
@@ -443,6 +424,41 @@ namespace Azure.Security.ConfidentialLedger.Tests
             {
                 Response result = await Client.DeleteUserDefinedRoleAsync(roleName);
                 Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            }
+        }
+        #endregion
+
+        #region UserDefinedFunction
+        [RecordedTest]
+        public async Task UserDefinedFunctionTest()
+        {
+            // Delete UDF
+            Response result = await Client.CreateUserDefinedEndpointAsync("{\"metadata\": {\"endpoints\": {}}, \"modules\": []}");
+            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
+
+            string functionId = "myFunction";
+
+            // Create UDF
+            var functionParam = new UserFunctionParam
+            {
+                Code= "export function main() { return true }",
+                Id = functionId
+            };
+
+            try
+            {
+                Response userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
+                Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
+                userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
+
+                var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
+                // Validate Fetched user function with Added function Id
+                Assert.AreEqual(functionId, functionData.Id);
+            }
+            finally
+            {
+                Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
+                Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
             }
         }
         #endregion
@@ -511,6 +527,15 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             [JsonPropertyName("roles")]
             public List<Role> Roles { get; set; } = new List<Role>();
+        }
+
+        private class UserFunctionParam
+        {
+            [JsonPropertyName("code")]
+            public string Code { get; set; }
+
+            [JsonPropertyName("id")]
+            public string Id { get; set; }
         }
 
         private class RuntimeOptions

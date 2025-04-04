@@ -100,26 +100,29 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntry</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: string, # Optional.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
+        ///   collectionId: string, # Required.
+        ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
+        ///   tags: string, # Optional.
         /// }
         /// </code>
         /// </remarks>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
+        /// <param name="tags"> The tags. </param>
         /// <param name="context"> The request context. </param>
         public virtual Operation PostLedgerEntry(
             WaitUntil waitUntil,
             RequestContent content,
             string collectionId = null,
+            string tags = null,
             RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
                 var response = _pipeline.ProcessMessage(message, context);
                 response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
@@ -154,18 +157,20 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
+        /// <param name="tags"> The tags. </param>
         /// <param name="context"> The request context. </param>
         public virtual async Task<Operation> PostLedgerEntryAsync(
             WaitUntil waitUntil,
             RequestContent content,
             string collectionId = null,
+            string tags = null,
             RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
                 var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
@@ -244,5 +249,118 @@ namespace Azure.Security.ConfidentialLedger
             var span = new ReadOnlySpan<char>(eccPem.ToCharArray());
             return PemReader.LoadCertificate(span, null, PemReader.KeyType.Auto, true);
         }
+
+        // overloads to keep backward compatibility
+
+        /// <summary>
+        /// [Protocol Method] Writes a ledger entry.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateLedgerEntry(RequestContent content, string collectionId, RequestContext context)
+            => CreateLedgerEntry(content, collectionId: collectionId, tags: null, context: context);
+
+        /// <summary>
+        /// [Protocol Method] Writes a ledger entry.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateLedgerEntryAsync(RequestContent content, string collectionId, RequestContext context)
+            => CreateLedgerEntryAsync(content, collectionId: collectionId, tags: null, context: context);
+
+        /// <summary>
+        /// [Protocol Method] Gets all ledger entries.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="fromTransactionId"> The from transaction id. </param>
+        /// <param name="toTransactionId"> The to transaction id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Azure.Pageable<System.BinaryData> GetLedgerEntries(string collectionId, string fromTransactionId, string toTransactionId, Azure.RequestContext context)
+            => GetLedgerEntries(collectionId: collectionId, fromTransactionId: fromTransactionId, toTransactionId: toTransactionId, tag: null, context: context);
+
+        /// <summary>
+        /// [Protocol Method] Gets all ledger entries.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="fromTransactionId"> The from transaction id. </param>
+        /// <param name="toTransactionId"> The to transaction id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Azure.AsyncPageable<System.BinaryData> GetLedgerEntriesAsync(string collectionId, string fromTransactionId, string toTransactionId, Azure.RequestContext context)
+            => GetLedgerEntriesAsync(collectionId: collectionId, fromTransactionId: fromTransactionId, toTransactionId: toTransactionId, tag: null, context: context);
+
+        /// <summary>
+        /// [Protocol Method] Gets all ledger entries.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="context"> The request context. </param>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Azure.Operation PostLedgerEntry(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context)
+            => PostLedgerEntry(waitUntil, content, collectionId: collectionId, tags: null, context: context);
+
+        /// <summary>
+        /// [Protocol Method] Gets all ledger entries.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="context"> The request context. </param>
+        /// <returns> The response returned from the service. </returns>
+        public virtual System.Threading.Tasks.Task<Azure.Operation> PostLedgerEntryAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context)
+            => PostLedgerEntryAsync(waitUntil, content, collectionId: collectionId, tags: null, context: context);
     }
 }
