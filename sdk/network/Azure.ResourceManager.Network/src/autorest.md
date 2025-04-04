@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/177b67dfa65d476ac941b157ca42eec440e98cb0/specification/network/resource-manager/readme.md
-tag: package-2024-06-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/83285553a7c00c297af72316bd511e0a03ab6a00/specification/network/resource-manager/readme.md
+#tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -24,11 +24,9 @@ sample-gen:
     - VirtualMachineScaleSetVMs_ListPublicIPAddresses
     - VirtualMachineScaleSetVMs_ListNetworkInterfaces
     - VirtualMachineScaleSets_GetNetworkInterface
-    - NetworkSecurityPerimeterOperationStatus_Get
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 use-model-reader-writer: true
 model-namespace: true
 public-clients: false
@@ -356,7 +354,7 @@ directive:
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
   - remove-operation: 'NetworkSecurityPerimeterAssociations_Reconcile'
   - remove-operation: 'NetworkSecurityPerimeterAccessRules_Reconcile'
-  - remove-operation: 'NetworkSecurityPerimeterOperationStatus_Get'
+  - remove-operation: 'NetworkSecurityPerimeterOperationStatuses_Get'
   # This part is for generate partial class in network
   # these operations are renamed because their api-versions are different from others in the same operation group
   # - rename-operation:
