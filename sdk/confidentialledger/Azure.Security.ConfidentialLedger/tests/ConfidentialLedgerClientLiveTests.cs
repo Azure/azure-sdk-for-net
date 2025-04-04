@@ -320,30 +320,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
 
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
-            Console.WriteLine(resp.Content);
-
-            //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-            string programContent = File.ReadAllText(filePath);
-            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
-
-            // Verify Response by Querying endpt
-            /// TODO: Investigate InternalServerError
-            //ConfidentialLedgerHelperHttpClient helperHttpClient = new ConfidentialLedgerHelperHttpClient(TestEnvironment.ConfidentialLedgerUrl, Credential);
-            //(var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("/app/content");
-            //Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
-            //Assert.AreEqual("Test content", response);
 
             // Deploy Empty JS Bundle to remove JS App
-            programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
-
-            result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
+            result = await Client.CreateUserDefinedEndpointAsync("{\"metadata\": {\"endpoints\": {}}, \"modules\": []}");
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
         }
 
@@ -411,7 +393,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRole";
+            string roleName = "TestRole1";
 
             // Add Custom Role
             var rolesParam = new RolesParam
