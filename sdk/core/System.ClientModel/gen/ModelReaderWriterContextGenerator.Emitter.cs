@@ -83,6 +83,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine();
 
                 builder.AppendLine(indent, $"private static {contextName} _{contextName.ToCamelCase()};");
+                builder.AppendLine(indent, "/// <summary> Gets the default instance </summary>");
                 builder.AppendLine(indent, $"public static {contextName} Default => _{contextName.ToCamelCase()} ??= new();");
                 builder.AppendLine();
 
@@ -110,6 +111,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine();
             }
 
+            builder.AppendLine(indent, "/// <inheritdoc/>");
             builder.AppendLine(indent, "protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)");
             builder.AppendLine(indent, "{");
             indent++;
