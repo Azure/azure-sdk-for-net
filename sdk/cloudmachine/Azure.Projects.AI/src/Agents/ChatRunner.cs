@@ -23,7 +23,7 @@ namespace Azure.Projects.AI
         /// <summary>
         /// Tools to call.
         /// </summary>
-        public ChatTools Tools { get; protected set; } = new();
+        public ChatTools Tools { get; protected set; }
 
         private readonly ChatClient _chat;
 
@@ -34,6 +34,7 @@ namespace Azure.Projects.AI
         public ChatRunner(ChatClient chat)
         {
             _chat = chat;
+            Tools = new ChatTools();
         }
 
         /// <summary>
@@ -44,6 +45,7 @@ namespace Azure.Projects.AI
         public ChatRunner(ChatClient chat, EmbeddingClient? embeddings)
         {
             _chat = chat;
+            Tools = new ChatTools(embeddings);
             if (embeddings != null)
             {
                 VectorDb = new MemoryEmbeddingsStore(embeddings);
@@ -106,7 +108,7 @@ namespace Azure.Projects.AI
         {
             if (Tools != null)
             {
-                ChatCompletion completion = _chat.CompleteChat(conversation, Tools.ToOptions());
+                ChatCompletion completion = _chat.CompleteChat(conversation, Tools.ToOptions(prompt));
                 return completion;
             }
             else
