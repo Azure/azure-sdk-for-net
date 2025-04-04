@@ -1779,7 +1779,7 @@ namespace Azure.AI.Projects
     public partial class OpenApiToolDefinition : Azure.AI.Projects.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenApiToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenApiToolDefinition>
     {
         public OpenApiToolDefinition(Azure.AI.Projects.OpenApiFunctionDefinition openapi) { }
-        public OpenApiToolDefinition(string name, string description, System.BinaryData spec, Azure.AI.Projects.OpenApiAuthDetails auth) { }
+        public OpenApiToolDefinition(string name, string description, System.BinaryData spec, Azure.AI.Projects.OpenApiAuthDetails auth, System.Collections.Generic.IList<string> defaultParams = null) { }
         public Azure.AI.Projects.OpenApiFunctionDefinition Openapi { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.OpenApiToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenApiToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
