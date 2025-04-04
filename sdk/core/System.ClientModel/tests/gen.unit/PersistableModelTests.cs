@@ -19,7 +19,7 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
-    public partial class LocalContext : ModelReaderWriterContext
+    {{modifier}} partial class LocalContext : ModelReaderWriterContext
     {
     }
 
@@ -39,7 +39,8 @@ namespace TestProject
 
             Assert.IsNotNull(result.ContextFile);
             Assert.AreEqual("LocalContext", result.ContextFile!.Type.Name);
-            Assert.AreEqual("TestProject", result.ContextFile!.Type.Namespace);
+            Assert.AreEqual("TestProject", result.ContextFile.Type.Namespace);
+            Assert.AreEqual(modifier, result.ContextFile.Modifier);
             Assert.AreEqual(0, result.Diagnostics.Length);
 
             Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
@@ -59,7 +60,7 @@ using System.Text.Json;
 
 namespace TestProject
 {
-    public partial class LocalContext : ModelReaderWriterContext
+    {{modifier}} partial class LocalContext : ModelReaderWriterContext
     {
     }
 
@@ -85,7 +86,8 @@ namespace TestProject
 
             Assert.IsNotNull(result.ContextFile);
             Assert.AreEqual("LocalContext", result.ContextFile!.Type.Name);
-            Assert.AreEqual("TestProject", result.ContextFile!.Type.Namespace);
+            Assert.AreEqual("TestProject", result.ContextFile.Type.Namespace);
+            Assert.AreEqual(modifier, result.ContextFile.Modifier);
             Assert.AreEqual(0, result.Diagnostics.Length);
 
             Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
