@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// This is a measure of Bytes per second
         /// </summary>
-        public decimal Throughput
+        public virtual decimal Throughput
         {
             get
             {

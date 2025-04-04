@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -18,22 +22,19 @@ namespace Azure.Storage.DataMovement
         internal int _initialConcurrency;
         internal int _maxConcurrency;
         internal float _maxCpuUsage;
-        internal int _finalReason; // ConcurrencyTunerState
+        internal int _finalReason;
         internal int _finalConcurrency;
         internal SemaphoreSlim _lockFinal;
-        internal Channel<ConcurrencyObservation> _observations;
-        internal Channel<ConcurrencyRecommendation> _recommendations;
-        private CancellationToken _cancellationToken;
-        private ThroughputMonitor _throughputMonitor;
+        internal IProcessor<ConcurrencyRecommendation> _concurrencyRecommendations;
 
-        internal ThroughputMonitor ThroughputMonitor { get => _throughputMonitor; }
+        internal ThroughputMonitor ThroughputMonitor { get; }
 
         private IProcessor<Func<Task>> _chunkProcessor;
 
         public int MaxConcurrency
         {
             get => _maxConcurrency;
-            set
+            private set
             {
                 _maxConcurrency = value;
                 _chunkProcessor.MaxConcurrentProcessing = value;
@@ -56,47 +57,178 @@ namespace Azure.Storage.DataMovement
             _maxCpuUsage = maxCpuUsage;
             _finalReason = (int)ConcurrencyTunerState.ConcurrencyReasonNone;
             _finalConcurrency = _initialConcurrency;
-            _observations = Channel.CreateUnbounded<ConcurrencyObservation>();
-            _recommendations = Channel.CreateUnbounded<ConcurrencyRecommendation>();
-            _throughputMonitor = throughputMonitor;
+            _concurrencyRecommendations = ChannelProcessing.NewProcessor<ConcurrencyRecommendation>(readers: 1);
+            ThroughputMonitor = throughputMonitor;
+
+            // Passing no cancellation token. Leaving open possibility to pass token in the future
+            StartConcurrencyTuner();
+            _concurrencyRecommendations.Process = ProcessConcurrencyRecommendationsAsync;
         }
 
-        internal async Task<ConcurrencyRecommendation> GetRecommendedConcurrency()
+        private void StartConcurrencyTuner()
         {
-            decimal throughput = ThroughputMonitor.Throughput;
-            if (throughput == 0)
+            //_resourceMonitor.StartMonitoring(cancellationToken);
+            Task.Run(() => Worker(CancellationToken.None));
+        }
+
+        private Task ProcessConcurrencyRecommendationsAsync(ConcurrencyRecommendation concurrencyRecommandation, CancellationToken cancellationToken)
+        {
+            _chunkProcessor.MaxConcurrentProcessing = concurrencyRecommandation.Concurrency;
+            return Task.CompletedTask;
+        }
+
+        private async Task Worker(CancellationToken cancellationToken)
+        {
+            decimal multiplier = DataMovementConstants.ConcurrencyTuner.BoostedMultiplier;
+            double concurrency = _initialConcurrency;
+            bool atMax = false;
+            bool everSawHighCpu = false;
+            bool probeHigherRegardless = false;
+            bool dontBackoffRegardless = false;
+            int numOfReductions = 0;
+            ConcurrencyTunerState lastReason = ConcurrencyTunerState.ConcurrencyReasonNone;
+
+            var prevThroughput = ThroughputMonitor.Throughput;
+            var currThroughput = 0.0M;
+
+            while (!cancellationToken.IsCancellationRequested)
             {
-                return new ConcurrencyRecommendation()
+                ConcurrencyTunerState rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonSeeking;
+
+                if (IsBoostedMultiplierNeeded(multiplier, concurrency))
                 {
-                    Concurrency = _initialConcurrency,
-                    State = ConcurrencyTunerState.ConcurrencyReasonInitial
-                };
+                    multiplier = DataMovementConstants.ConcurrencyTuner.StandardMultiplier;
+                }
+                atMax = IsAtMaxConcurrency(multiplier, concurrency);
+
+                if (atMax)
+                {
+                    DecreaseMultiplier(concurrency, ref multiplier);
+                    rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonHitMax;
+                }
+
+                IncreaseConcurrency(multiplier, ref concurrency);
+
+                decimal desiredNewThroughput = CalculateDesiredThroughput(prevThroughput, multiplier);
+
+                lastReason = rateChangeReason;
+                await SetConcurrencyAsync((int)concurrency, rateChangeReason, cancellationToken).ConfigureAwait(false);
+
+                currThroughput = ThroughputMonitor.Throughput;
+
+                if (
+                    ( atMax && (currThroughput > desiredNewThroughput || probeHigherRegardless) ) ||
+                    dontBackoffRegardless
+                    )
+                {
+                    break;
+                }
+                else
+                {
+                    concurrency = (double)((decimal)concurrency / multiplier);
+
+                    multiplier = AdjustMultiplier(multiplier);
+
+                    numOfReductions++;
+                    if (numOfReductions <= 2)
+                    {
+                        while ((int)multiplier * concurrency == (int)concurrency)
+                        {
+                            multiplier += 0.05M;
+                        }
+                    }
+
+                    if (multiplier < (decimal)DataMovementConstants.ConcurrencyTuner.MinMulitplier)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        lastReason = ConcurrencyTunerState.ConcurrencyReasonBackoff;
+                        await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonBackoff, cancellationToken).ConfigureAwait(false);
+                        prevThroughput = currThroughput;
+                    }
+                }
+            }
+
+            if (!atMax)
+            {
+                if (everSawHighCpu)
+                {
+                    lastReason = ConcurrencyTunerState.ConcurrencyReasonHighCpu;
+                    await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonHighCpu, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    lastReason = ConcurrencyTunerState.ConcurrencyReasonAtOptimum;
+                    await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonAtOptimum, cancellationToken).ConfigureAwait(false);
+                }
+                currThroughput = ThroughputMonitor.Throughput;
+            }
+
+            StoreFinalState(new ConcurrencyRecommendation()
+            {
+                State = lastReason,
+                Concurrency = (int)concurrency
+            });
+
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonFinished, cancellationToken).ConfigureAwait(false);
+                currThroughput = ThroughputMonitor.Throughput;
+            }
+        }
+
+        private static decimal AdjustMultiplier(decimal multiplier)
+        {
+            if (multiplier > DataMovementConstants.ConcurrencyTuner.StandardMultiplier)
+            {
+                multiplier = DataMovementConstants.ConcurrencyTuner.StandardMultiplier;
             }
             else
             {
-                // push value into worker, and get its result
-                await _observations.Writer.WriteAsync(new ConcurrencyObservation()
-                {
-                    Throughput = throughput
-                }).ConfigureAwait(false);
+                multiplier = 1 + (multiplier - 1) / DataMovementConstants.ConcurrencyTuner.SlowdownFactor;
             }
 
-            return await _recommendations.Reader.ReadAsync().ConfigureAwait(false);
+            return multiplier;
         }
+
+        //private async Task ProcessConcurrencyRecommendationsAsync(ConcurrencyRecommendation concurrencyRecommendation, CancellationToken _)
+        //{
+        //    // We want to start the runner that is looking for concurrency recommendations
+        //    await _concurrencyRecommendations.QueueAsync(concurrencyRecommendation, CancellationToken.None).ConfigureAwait(false);
+        //}
+
+        //private async Task<ConcurrencyRecommendation> GetRecommendedConcurrency()
+        //{
+        //    decimal throughput = ThroughputMonitor.Throughput;
+        //    if (throughput == 0)
+        //    {
+        //        return new ConcurrencyRecommendation()
+        //        {
+        //            Concurrency = _initialConcurrency,
+        //            State = ConcurrencyTunerState.ConcurrencyReasonInitial
+        //        };
+        //    }
+        //    else
+        //    {
+        //        // push value into worker, and get its result
+        //        await _thoughtputObservations.QueueAsync(new ThroughputObservation()
+        //        {
+        //            Throughput = throughput
+        //        }).ConfigureAwait(false);
+        //    }
+
+        //    await _concurrencyRecommendations.Process
+        //}
 
         internal async Task SetConcurrencyAsync(int concurrency, ConcurrencyTunerState state, CancellationToken cancellationToken)
         {
-            await _recommendations.Writer.WriteAsync(new ConcurrencyRecommendation()
+            await _concurrencyRecommendations.QueueAsync(new ConcurrencyRecommendation()
             {
                 State = state,
                 Concurrency = concurrency
             }, cancellationToken).ConfigureAwait(false);
-            UpdateChunkProcessorConcurrency(concurrency);
-        }
-
-        internal async Task<ConcurrencyObservation> GetCurrentSpeedAsync(CancellationToken cancellationToken)
-        {
-            return await _observations.Reader.ReadAsync(cancellationToken).ConfigureAwait(false);
         }
 
         internal Task SignalStabilityAsync(CancellationToken cancellationToken)
@@ -124,161 +256,39 @@ namespace Azure.Storage.DataMovement
             throw new NotImplementedException();
         }
 
-        internal void Start(CancellationToken cancellationToken)
-        {
-            _cancellationToken = cancellationToken;
-            _resourceMonitor.StartMonitoring(cancellationToken);
-            Task.Run(() => Worker(cancellationToken)).Start();
-        }
+        //private void UpdateChunkProcessorConcurrency(int newMaxConcurrency)
+        //{
+        //    _chunkProcessor.MaxConcurrentProcessing = newMaxConcurrency;
+        ////    var parallelProcessor = _chunkProcessor as object;
+        ////    if (parallelProcessor != null)
+        ////    {
+        ////        var methodInfo = parallelProcessor.GetType().GetMethod("UpdateMaxConcurrentProcessing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
-        internal async Task Worker(CancellationToken cancellationToken)
-        {
-            decimal multiplier = DataMovementConstants.ConcurrencyTuner.BoostedMultiplier;
-            double concurrency = _initialConcurrency;
-            bool atMax = false;
-            bool everSawHighCpu = false;
-            bool probeHigherRegardless = false;
-            bool dontBackoffRegardless = false;
-            int multiplierReductionCount = 0;
-            ConcurrencyTunerState lastReason = ConcurrencyTunerState.ConcurrencyReasonNone;
-
-            ConcurrencyObservation lastSpeed = await GetCurrentSpeedAsync(cancellationToken).ConfigureAwait(false);
-
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                ConcurrencyTunerState rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonSeeking;
-
-                if (IsBoostedMultiplierNeeded(multiplier, concurrency))
-                {
-                    multiplier = DataMovementConstants.ConcurrencyTuner.StandardMultiplier;
-                }
-                atMax = IsAtMaxConcurrency(multiplier, concurrency);
-
-                if (atMax)
-                {
-                    DecreaseMultiplier(concurrency, ref multiplier);
-                    rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonHitMax;
-                }
-
-                IncreaseConcurrency(multiplier, ref concurrency);
-
-                decimal desiredNewSpeed = CalculateDesiredSpeed(lastSpeed, multiplier);
-
-                lastReason = rateChangeReason;
-                await SetConcurrencyAsync((int)concurrency, rateChangeReason, cancellationToken).ConfigureAwait(false);
-
-                ConcurrencyObservation currentObservation = await GetCurrentSpeedAsync(cancellationToken).ConfigureAwait(false);
-
-                if (currentObservation.Throughput > desiredNewSpeed || probeHigherRegardless)
-                {
-                    if (atMax)
-                    {
-                        break;
-                    }
-                }
-                else if (dontBackoffRegardless)
-                {
-                    break;
-                }
-                else
-                {
-                    concurrency /= multiplier;
-
-                    if (multiplier > DataMovementConstants.ConcurrencyTuner.StandardMultiplier)
-                    {
-                        multiplier = DataMovementConstants.ConcurrencyTuner.StandardMultiplier;
-                    }
-                    else
-                    {
-                        multiplier = 1 + (multiplier - 1) / DataMovementConstants.ConcurrencyTuner.SlowdownFactor;
-                    }
-
-                    multiplierReductionCount++;
-                    if (multiplierReductionCount <= 2)
-                    {
-                        while ((int)multiplier * concurrency == (int)concurrency)
-                        {
-                            multiplier += 0.05M;
-                        }
-                    }
-
-                    if (multiplier < (decimal)DataMovementConstants.ConcurrencyTuner.MinMulitplier)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        lastReason = ConcurrencyTunerState.ConcurrencyReasonBackoff;
-                        await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonBackoff, cancellationToken).ConfigureAwait(false);
-                        lastSpeed = await GetCurrentSpeedAsync(cancellationToken).ConfigureAwait(false);
-                    }
-                }
-            }
-
-            if (atMax)
-            {
-            }
-            else
-            {
-                if (everSawHighCpu)
-                {
-                    lastReason = ConcurrencyTunerState.ConcurrencyReasonHighCpu;
-                    await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonHighCpu, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    lastReason = ConcurrencyTunerState.ConcurrencyReasonAtOptimum;
-                    await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonAtOptimum, cancellationToken).ConfigureAwait(false);
-                }
-                await GetCurrentSpeedAsync(cancellationToken).ConfigureAwait(false);
-            }
-
-            StoreFinalState(new ConcurrencyRecommendation()
-            {
-                State = lastReason,
-                Concurrency = (int)concurrency
-            });
-
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonFinished, cancellationToken).ConfigureAwait(false);
-                await GetCurrentSpeedAsync(cancellationToken).ConfigureAwait(false);
-            }
-        }
-
-        private void UpdateChunkProcessorConcurrency(int newMaxConcurrency)
-        {
-            _chunkProcessor.MaxConcurrentProcessing = newMaxConcurrency;
-        //    var parallelProcessor = _chunkProcessor as object;
-        //    if (parallelProcessor != null)
-        //    {
-        //        var methodInfo = parallelProcessor.GetType().GetMethod("UpdateMaxConcurrentProcessing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-        //        if (methodInfo != null)
-        //        {
-        //            methodInfo.Invoke(parallelProcessor, new object[] { newMaxConcurrency });
-        //        }
-        //        else
-        //        {
-        //            throw new InvalidOperationException("The method UpdateMaxConcurrentProcessing was not found.");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new InvalidOperationException("The chunks processor is not a ParallelChannelProcessor.");
-        //    }
-        }
+        ////        if (methodInfo != null)
+        ////        {
+        ////            methodInfo.Invoke(parallelProcessor, new object[] { newMaxConcurrency });
+        ////        }
+        ////        else
+        ////        {
+        ////            throw new InvalidOperationException("The method UpdateMaxConcurrentProcessing was not found.");
+        ////        }
+        ////    }
+        ////    else
+        ////    {
+        ////        throw new InvalidOperationException("The chunks processor is not a ParallelChannelProcessor.");
+        ////    }
+        //}
 
         #region
-        private static decimal CalculateDesiredSpeed(ConcurrencyObservation lastSpeed, decimal multiplier)
+        private static decimal CalculateDesiredThroughput(decimal lastThroughput, decimal multiplier)
         {
-            decimal desiredSpeedIncrease = lastSpeed.Throughput * (multiplier - 1) * (decimal)DataMovementConstants.ConcurrencyTuner.FudgeFactor;
-            return lastSpeed.Throughput + desiredSpeedIncrease;
+            decimal desiredSpeedIncrease = lastThroughput * (multiplier - 1) * (decimal)DataMovementConstants.ConcurrencyTuner.FudgeFactor;
+            return lastThroughput + desiredSpeedIncrease;
         }
 
-        private static void IncreaseConcurrency(double multiplier, ref double concurrency)
+        private static void IncreaseConcurrency(decimal multiplier, ref double concurrency)
         {
-            concurrency *= multiplier;
+            concurrency = (double)((decimal)concurrency *multiplier);
         }
 
         private void DecreaseMultiplier(double concurrency, ref decimal multiplier)
@@ -303,11 +313,6 @@ namespace Azure.Storage.DataMovement
     {
         public ConcurrencyTunerState State;
         public int Concurrency;
-    }
-
-    internal struct ConcurrencyObservation
-    {
-        public decimal Throughput;
     }
     #endregion
 }
