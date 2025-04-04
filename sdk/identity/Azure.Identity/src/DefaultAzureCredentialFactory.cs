@@ -91,7 +91,7 @@ namespace Azure.Identity
                 chain.Add(CreateInteractiveBrowserCredential());
             }
 
-            if (!Options.ExcludeBrokerAuthentication && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
+            if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
             {
                 chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
             }
