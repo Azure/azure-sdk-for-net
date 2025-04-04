@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -134,56 +135,43 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
         #region Snippet:FunctionsWithStreamingUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
-        await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+        AsyncCollectionResult<StreamingUpdate> stream = client.CreateRunStreamingAsync(thread.Id, agent.Id);
+        do
         {
-            if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+            toolOutputs.Clear();
+            await foreach (StreamingUpdate streamingUpdate in stream)
             {
-                Console.WriteLine("--- Run started! ---");
-            }
-            else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
-            {
-                streamRun = submitToolOutputsUpdate.Value;
-                RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
-                while (streamRun.Status == RunStatus.RequiresAction) {
+                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+                {
+                    Console.WriteLine("--- Run started! ---");
+                }
+                else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
+                {
+                    RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
                     toolOutputs.Add(
                         GetResolvedToolOutput(
                             newActionUpdate.FunctionName,
                             newActionUpdate.ToolCallId,
                             newActionUpdate.FunctionArguments
                     ));
-                    await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs))
-                    {
-                        if (actionUpdate is MessageContentUpdate contentUpdate)
-                        {
-                            Console.Write(contentUpdate.Text);
-                        }
-                        else if (actionUpdate is RequiredActionUpdate newAction)
-                        {
-                            newActionUpdate = newAction;
-                            toolOutputs.Add(
-                                GetResolvedToolOutput(
-                                    newActionUpdate.FunctionName,
-                                    newActionUpdate.ToolCallId,
-                                    newActionUpdate.FunctionArguments
-                                )
-                            );
-                        }
-                        else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("--- Run completed! ---");
-                        }
-                    }
-                    streamRun = client.GetRun(thread.Id, streamRun.Id);
-                    toolOutputs.Clear();
+                    streamRun = submitToolOutputsUpdate.Value;
                 }
-                break;
+                else if (streamingUpdate is MessageContentUpdate contentUpdate)
+                {
+                    Console.Write(contentUpdate.Text);
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("--- Run completed! ---");
+                }
             }
-            else if (streamingUpdate is MessageContentUpdate contentUpdate)
+            if (toolOutputs.Count > 0)
             {
-                Console.Write(contentUpdate.Text);
+                stream = client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
             }
         }
+        while (toolOutputs.Count > 0);
         #endregion
         #region Snippet:FunctionsWithStreaming_Cleanup
         await client.DeleteThreadAsync(thread.Id);
@@ -305,57 +293,43 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
         #region Snippet:FunctionsWithStreamingSyncUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
-        foreach (StreamingUpdate streamingUpdate in client.CreateRunStreaming(thread.Id, agent.Id))
+        CollectionResult<StreamingUpdate> stream = client.CreateRunStreaming(thread.Id, agent.Id);
+        do
         {
-            if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+            toolOutputs.Clear();
+            foreach (StreamingUpdate streamingUpdate in stream)
             {
-                Console.WriteLine("--- Run started! ---");
-            }
-            else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
-            {
-                streamRun = submitToolOutputsUpdate.Value;
-                RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
-                while (streamRun.Status == RunStatus.RequiresAction)
+                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
                 {
+                    Console.WriteLine("--- Run started! ---");
+                }
+                else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
+                {
+                    RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
                     toolOutputs.Add(
                         GetResolvedToolOutput(
                             newActionUpdate.FunctionName,
                             newActionUpdate.ToolCallId,
                             newActionUpdate.FunctionArguments
                     ));
-                    foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStream(streamRun, toolOutputs))
-                    {
-                        if (actionUpdate is MessageContentUpdate contentUpdate)
-                        {
-                            Console.Write(contentUpdate.Text);
-                        }
-                        else if (actionUpdate is RequiredActionUpdate newAction)
-                        {
-                            newActionUpdate = newAction;
-                            toolOutputs.Add(
-                                GetResolvedToolOutput(
-                                    newActionUpdate.FunctionName,
-                                    newActionUpdate.ToolCallId,
-                                    newActionUpdate.FunctionArguments
-                                )
-                            );
-                        }
-                        else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("--- Run completed! ---");
-                        }
-                    }
-                    streamRun = client.GetRun(thread.Id, streamRun.Id);
-                    toolOutputs.Clear();
+                    streamRun = submitToolOutputsUpdate.Value;
                 }
-                break;
+                else if (streamingUpdate is MessageContentUpdate contentUpdate)
+                {
+                    Console.Write(contentUpdate.Text);
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("--- Run completed! ---");
+                }
             }
-            else if (streamingUpdate is MessageContentUpdate contentUpdate)
+            if (toolOutputs.Count > 0)
             {
-                Console.Write(contentUpdate.Text);
+                stream = client.SubmitToolOutputsToStream(streamRun, toolOutputs);
             }
         }
+        while (toolOutputs.Count > 0);
         #endregion
         #region Snippet:FunctionsWithStreamingSync_Cleanup
         client.DeleteThread(thread.Id);

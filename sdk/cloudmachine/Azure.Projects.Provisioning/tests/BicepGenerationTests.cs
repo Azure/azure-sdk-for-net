@@ -6,12 +6,8 @@
 using System;
 using System.IO;
 using System.Linq;
-using Azure.Projects.AppService;
-using Azure.Projects.KeyVault;
 using Azure.Projects.Ofx;
-using Azure.Projects.OpenAI;
-using Azure.Projects.ServiceBus;
-using Azure.Projects.Storage;
+using Azure.Projects.AI;
 using NUnit.Framework;
 
 [assembly: NonParallelizable]
@@ -109,7 +105,7 @@ public class BicepGenerationTests
     public void MaaS()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new AIServicesFeature("DeepSeek-V3", "1"));
+        infrastructure.AddFeature(new AIModelsFeature("DeepSeek-V3", "1"));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         string path = Path.Combine(Path.GetTempPath(), "maas.bicep");
@@ -138,7 +134,7 @@ public class BicepGenerationTests
     public void Ofx()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         // Un-comment to debug bicep creation issues
@@ -162,20 +158,6 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "app.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("app.bicep");
-        Assert.AreEqual(expectedBicep, actualBicep);
-    }
-
-    [Test]
-    public void AIFoundry()
-    {
-        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new AIFoundry.AIProjectFeature());
-
-        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        // Un-comment to debug bicep creation issues
-        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "foundry.bicep"), actualBicep);
-
-        string expectedBicep = LoadTestFile("foundry.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
