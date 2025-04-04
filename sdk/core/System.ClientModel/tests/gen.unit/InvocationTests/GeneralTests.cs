@@ -26,8 +26,8 @@ $$"""
     {
         public void Call()
         {
-            ModelReaderWriter.Read<List<{{type}}>>(BinaryData.Empty, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
-            ModelReaderWriter.Read<List<List<{{type}}>>>(BinaryData.Empty, ModelReaderWriterOptions.Json, TestAssemblyContext.Default);
+            ModelReaderWriter.Read<List<{{type}}>>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+            ModelReaderWriter.Read<List<List<{{type}}>>>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
         }
     }
 """;
