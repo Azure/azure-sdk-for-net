@@ -47,7 +47,7 @@ public partial class PageableList<T> : IEnumerable<T>
         HasMore = hasMore;
     }
 
-    internal static PageableList<Agent> Create(InternalOpenAIPageableListOfAgent internalList)
+    internal static PageableList<Assistant> Create(InternalOpenAIPageableListOfAssistant internalList)
         => new(internalList.Data, internalList.FirstId, internalList.LastId, internalList.HasMore);
     internal static PageableList<ThreadMessage> Create(InternalOpenAIPageableListOfThreadMessage internalList)
                 => new(internalList.Data, internalList.FirstId, internalList.LastId, internalList.HasMore);
@@ -89,12 +89,12 @@ public partial class PageableList<T> : IEnumerable<T>
  * Included here for concision, these perform renames of the rerouted types for clarity.
  */
 
-[CodeGenType("OpenAIPageableListOfAgent")]
-internal partial class InternalOpenAIPageableListOfAgent { }
-internal readonly partial struct OpenAIPageableListOfAgentObject { }
-//[CodeGenType("OpenAIPageableListOfAgentFile")]
-//internal partial class InternalOpenAIPageableListOfAgentFile { }
-internal readonly partial struct OpenAIPageableListOfAgentFileObject { }
+[CodeGenType("OpenAIPageableListOfAssistant")]
+internal partial class InternalOpenAIPageableListOfAssistant{ }
+internal readonly partial struct OpenAIPageableListOfAssistantObject { }
+//[CodeGenType("OpenAIPageableListOfAssistantFile")]
+//internal partial class InternalOpenAIPageableListOfAssistantFile { }
+internal readonly partial struct OpenAIPageableListOfAssistantFileObject { }
 [CodeGenType("OpenAIPageableListOfThreadMessage")]
 internal partial class InternalOpenAIPageableListOfThreadMessage { }
 internal readonly partial struct OpenAIPageableListOfThreadMessageObject { }

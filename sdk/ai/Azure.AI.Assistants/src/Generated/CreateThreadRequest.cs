@@ -55,7 +55,7 @@ namespace Azure.AI.Assistants
         /// <summary> Initializes a new instance of <see cref="CreateThreadRequest"/>. </summary>
         /// <param name="messages"> The initial messages to associate with the new thread. </param>
         /// <param name="toolResources">
-        /// A set of resources that are made available to the agent's tools in this thread. The resources are specific to the
+        /// A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the
         /// type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires
         /// a list of vector store IDs.
         /// </param>
@@ -72,7 +72,7 @@ namespace Azure.AI.Assistants
         /// <summary> The initial messages to associate with the new thread. </summary>
         public IReadOnlyList<ThreadMessageOptions> Messages { get; }
         /// <summary>
-        /// A set of resources that are made available to the agent's tools in this thread. The resources are specific to the
+        /// A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the
         /// type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires
         /// a list of vector store IDs.
         /// </summary>

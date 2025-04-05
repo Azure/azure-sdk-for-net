@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> The input definition information for a function tool as used to configure an agent. </summary>
+    /// <summary> The input definition information for a function tool as used to configure an assistant. </summary>
     public partial class FunctionToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="FunctionToolDefinition"/>. </summary>

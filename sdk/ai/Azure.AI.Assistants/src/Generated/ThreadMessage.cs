@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> A single, existing message within an agent thread. </summary>
+    /// <summary> A single, existing message within an assistant thread. </summary>
     public partial class ThreadMessage
     {
         /// <summary>
@@ -54,13 +54,13 @@ namespace Azure.AI.Assistants
         /// <param name="incompleteDetails"> On an incomplete message, details about why the message is incomplete. </param>
         /// <param name="completedAt"> The Unix timestamp (in seconds) for when the message was completed. </param>
         /// <param name="incompleteAt"> The Unix timestamp (in seconds) for when the message was marked as incomplete. </param>
-        /// <param name="role"> The role associated with the agent thread message. </param>
+        /// <param name="role"> The role associated with the assistant thread message. </param>
         /// <param name="contentItems">
-        /// The list of content items associated with the agent thread message.
+        /// The list of content items associated with the assistant thread message.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
         /// </param>
-        /// <param name="assistantId"> If applicable, the ID of the agent that authored this message. </param>
+        /// <param name="assistantId"> If applicable, the ID of the assistant that authored this message. </param>
         /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
@@ -95,13 +95,13 @@ namespace Azure.AI.Assistants
         /// <param name="incompleteDetails"> On an incomplete message, details about why the message is incomplete. </param>
         /// <param name="completedAt"> The Unix timestamp (in seconds) for when the message was completed. </param>
         /// <param name="incompleteAt"> The Unix timestamp (in seconds) for when the message was marked as incomplete. </param>
-        /// <param name="role"> The role associated with the agent thread message. </param>
+        /// <param name="role"> The role associated with the assistant thread message. </param>
         /// <param name="contentItems">
-        /// The list of content items associated with the agent thread message.
+        /// The list of content items associated with the assistant thread message.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
         /// </param>
-        /// <param name="assistantId"> If applicable, the ID of the agent that authored this message. </param>
+        /// <param name="assistantId"> If applicable, the ID of the assistant that authored this message. </param>
         /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
@@ -145,15 +145,15 @@ namespace Azure.AI.Assistants
         public DateTimeOffset? CompletedAt { get; }
         /// <summary> The Unix timestamp (in seconds) for when the message was marked as incomplete. </summary>
         public DateTimeOffset? IncompleteAt { get; }
-        /// <summary> The role associated with the agent thread message. </summary>
+        /// <summary> The role associated with the assistant thread message. </summary>
         public MessageRole Role { get; }
         /// <summary>
-        /// The list of content items associated with the agent thread message.
+        /// The list of content items associated with the assistant thread message.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
         /// </summary>
         public IReadOnlyList<MessageContent> ContentItems { get; }
-        /// <summary> If applicable, the ID of the agent that authored this message. </summary>
+        /// <summary> If applicable, the ID of the assistant that authored this message. </summary>
         public string AssistantId { get; }
         /// <summary> If applicable, the ID of the run associated with the authoring of this message. </summary>
         public string RunId { get; }

@@ -20,7 +20,7 @@ public partial class Readme : SamplesBase<AIAssistantsTestEnvironment>
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
 #endif
-        AIAssistantClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient projectClient = new(connectionString, new DefaultAzureCredential());
         #endregion
     }
 
@@ -28,7 +28,7 @@ public partial class Readme : SamplesBase<AIAssistantsTestEnvironment>
     public void Troubleshooting()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
 
         #region Snippet:AssistantsReadme_Troubleshooting
         try

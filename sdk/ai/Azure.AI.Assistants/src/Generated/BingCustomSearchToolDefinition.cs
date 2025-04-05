@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+    /// <summary> The input definition information for a Bing custom search tool as used to configure an assistant. </summary>
     public partial class BingCustomSearchToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolDefinition"/>. </summary>

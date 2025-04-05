@@ -82,7 +82,7 @@ namespace Azure.AI.Assistants
                 return null;
             }
             File file = default;
-            AgentFilePurpose purpose = default;
+            AssistantFilePurpose purpose = default;
             string filename = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.AI.Assistants
                 }
                 if (property.NameEquals("purpose"u8))
                 {
-                    purpose = new AgentFilePurpose(property.Value.GetString());
+                    purpose = new AssistantFilePurpose(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filename"u8))

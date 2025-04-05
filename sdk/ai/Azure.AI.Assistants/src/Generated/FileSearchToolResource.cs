@@ -54,8 +54,8 @@ namespace Azure.AI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="FileSearchToolResource"/>. </summary>
         /// <param name="vectorStoreIds">
-        /// The ID of the vector store attached to this agent. There can be a maximum of 1 vector
-        /// store attached to the agent.
+        /// The ID of the vector store attached to this assistant. There can be a maximum of 1 vector
+        /// store attached to the assistant.
         /// </param>
         /// <param name="vectorStores">
         /// The list of vector store configuration objects from Azure.
@@ -71,8 +71,8 @@ namespace Azure.AI.Assistants
         }
 
         /// <summary>
-        /// The ID of the vector store attached to this agent. There can be a maximum of 1 vector
-        /// store attached to the agent.
+        /// The ID of the vector store attached to this assistant. There can be a maximum of 1 vector
+        /// store attached to the assistant.
         /// </summary>
         public IList<string> VectorStoreIds { get; }
         /// <summary>

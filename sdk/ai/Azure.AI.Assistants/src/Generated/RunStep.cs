@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> Detailed information about a single step of an agent thread run. </summary>
+    /// <summary> Detailed information about a single step of an assistant thread run. </summary>
     public partial class RunStep
     {
         /// <summary>
@@ -48,7 +48,7 @@ namespace Azure.AI.Assistants
         /// <summary> Initializes a new instance of <see cref="RunStep"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="type"> The type of run step, which can be either message_creation or tool_calls. </param>
-        /// <param name="assistantId"> The ID of the agent associated with the run step. </param>
+        /// <param name="assistantId"> The ID of the assistant associated with the run step. </param>
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run that this run step is a part of. </param>
         /// <param name="status"> The status of this run step. </param>
@@ -93,7 +93,7 @@ namespace Azure.AI.Assistants
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always 'thread.run.step'. </param>
         /// <param name="type"> The type of run step, which can be either message_creation or tool_calls. </param>
-        /// <param name="assistantId"> The ID of the agent associated with the run step. </param>
+        /// <param name="assistantId"> The ID of the assistant associated with the run step. </param>
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run that this run step is a part of. </param>
         /// <param name="status"> The status of this run step. </param>
@@ -142,7 +142,7 @@ namespace Azure.AI.Assistants
 
         /// <summary> The type of run step, which can be either message_creation or tool_calls. </summary>
         public RunStepType Type { get; }
-        /// <summary> The ID of the agent associated with the run step. </summary>
+        /// <summary> The ID of the assistant associated with the run step. </summary>
         public string AssistantId { get; }
         /// <summary> The ID of the thread that was run. </summary>
         public string ThreadId { get; }

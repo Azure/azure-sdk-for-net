@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> Possible values for the status of an agent thread run. </summary>
+    /// <summary> Possible values for the status of an assistant thread run. </summary>
     public readonly partial struct RunStatus : IEquatable<RunStatus>
     {
         private readonly string _value;

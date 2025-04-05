@@ -48,7 +48,7 @@ namespace Azure.AI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="InternalSubmitToolOutputsDetails"/>. </summary>
         /// <param name="toolCalls">
-        /// The list of tool calls that must be resolved for the agent thread run to continue.
+        /// The list of tool calls that must be resolved for the assistant thread run to continue.
         /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RequiredFunctionToolCall"/>.
         /// </param>
@@ -62,7 +62,7 @@ namespace Azure.AI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="InternalSubmitToolOutputsDetails"/>. </summary>
         /// <param name="toolCalls">
-        /// The list of tool calls that must be resolved for the agent thread run to continue.
+        /// The list of tool calls that must be resolved for the assistant thread run to continue.
         /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RequiredFunctionToolCall"/>.
         /// </param>
@@ -79,7 +79,7 @@ namespace Azure.AI.Assistants
         }
 
         /// <summary>
-        /// The list of tool calls that must be resolved for the agent thread run to continue.
+        /// The list of tool calls that must be resolved for the assistant thread run to continue.
         /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RequiredFunctionToolCall"/>.
         /// </summary>

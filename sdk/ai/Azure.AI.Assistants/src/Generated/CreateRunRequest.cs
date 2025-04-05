@@ -46,7 +46,7 @@ namespace Azure.AI.Assistants
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CreateRunRequest"/>. </summary>
-        /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
+        /// <param name="assistantId"> The ID of the assistant that should run the thread. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         internal CreateRunRequest(string assistantId)
         {
@@ -59,16 +59,16 @@ namespace Azure.AI.Assistants
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateRunRequest"/>. </summary>
-        /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
-        /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
-        /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
+        /// <param name="assistantId"> The ID of the assistant that should run the thread. </param>
+        /// <param name="overrideModelName"> The overridden model name that the assistant should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions that the assistant should use to run the thread. </param>
         /// <param name="additionalInstructions">
         /// Additional instructions to append at the end of the instructions for the run. This is useful for modifying the behavior
         /// on a per-run basis without overriding other instructions.
         /// </param>
         /// <param name="additionalMessages"> Adds additional messages to the thread before creating the run. </param>
         /// <param name="overrideTools">
-        /// The overridden list of enabled tools that the agent should use to run the thread.
+        /// The overridden list of enabled tools that the assistant should use to run the thread.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </param>
@@ -129,11 +129,11 @@ namespace Azure.AI.Assistants
         {
         }
 
-        /// <summary> The ID of the agent that should run the thread. </summary>
+        /// <summary> The ID of the assistant that should run the thread. </summary>
         public string AssistantId { get; }
-        /// <summary> The overridden model name that the agent should use to run the thread. </summary>
+        /// <summary> The overridden model name that the assistant should use to run the thread. </summary>
         public string OverrideModelName { get; }
-        /// <summary> The overridden system instructions that the agent should use to run the thread. </summary>
+        /// <summary> The overridden system instructions that the assistant should use to run the thread. </summary>
         public string OverrideInstructions { get; }
         /// <summary>
         /// Additional instructions to append at the end of the instructions for the run. This is useful for modifying the behavior
@@ -143,7 +143,7 @@ namespace Azure.AI.Assistants
         /// <summary> Adds additional messages to the thread before creating the run. </summary>
         public IReadOnlyList<ThreadMessageOptions> AdditionalMessages { get; }
         /// <summary>
-        /// The overridden list of enabled tools that the agent should use to run the thread.
+        /// The overridden list of enabled tools that the assistant should use to run the thread.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </summary>
@@ -196,10 +196,10 @@ namespace Azure.AI.Assistants
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsApiToolChoiceOptionMode"/></description>
+        /// <description><see cref="AssistantsApiToolChoiceOptionMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsNamedToolChoice"/></description>
+        /// <description><see cref="AssistantsNamedToolChoice"/></description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -241,10 +241,10 @@ namespace Azure.AI.Assistants
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsApiResponseFormatMode"/></description>
+        /// <description><see cref="AssistantsApiResponseFormatMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsApiResponseFormat"/></description>
+        /// <description><see cref="AssistantsApiResponseFormat"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="ResponseFormatJsonSchemaType"/></description>

@@ -53,8 +53,8 @@ namespace Azure.AI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchResource"/>. </summary>
         /// <param name="indexList">
-        /// The indices attached to this agent. There can be a maximum of 1 index
-        /// resource attached to the agent.
+        /// The indices attached to this assistant. There can be a maximum of 1 index
+        /// resource attached to the assistant.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AzureAISearchResource(IList<AISearchIndexResource> indexList, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -64,8 +64,8 @@ namespace Azure.AI.Assistants
         }
 
         /// <summary>
-        /// The indices attached to this agent. There can be a maximum of 1 index
-        /// resource attached to the agent.
+        /// The indices attached to this assistant. There can be a maximum of 1 index
+        /// resource attached to the assistant.
         /// </summary>
         public IList<AISearchIndexResource> IndexList { get; }
     }

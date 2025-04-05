@@ -23,12 +23,12 @@ namespace Azure.AI.Assistants
         }
 
         private const string UserValue = "user";
-        private const string AgentValue = "assistant";
+        private const string AssistantValue = "assistant";
 
         /// <summary> The role representing the end-user. </summary>
         public static MessageRole User { get; } = new MessageRole(UserValue);
-        /// <summary> The role representing the agent. </summary>
-        public static MessageRole Agent { get; } = new MessageRole(AgentValue);
+        /// <summary> The role representing the assistant. </summary>
+        public static MessageRole Assistant { get; } = new MessageRole(AssistantValue);
         /// <summary> Determines if two <see cref="MessageRole"/> values are the same. </summary>
         public static bool operator ==(MessageRole left, MessageRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageRole"/> values are not the same. </summary>

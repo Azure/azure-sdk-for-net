@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> A citation within the message that points to a specific URL associated with the message. Generated when the agent uses tools such as 'bing_grounding' to search the Internet. </summary>
+    /// <summary> A citation within the message that points to a specific URL associated with the message. Generated when the assistant uses tools such as 'bing_grounding' to search the Internet. </summary>
     public partial class MessageTextUrlCitationAnnotation : MessageTextAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="MessageTextUrlCitationAnnotation"/>. </summary>

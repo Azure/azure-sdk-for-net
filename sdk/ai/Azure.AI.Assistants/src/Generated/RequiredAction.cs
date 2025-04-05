@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Assistants
 {
     /// <summary>
-    /// An abstract representation of a required action for an agent thread run to continue.
+    /// An abstract representation of a required action for an assistant thread run to continue.
     /// Please note <see cref="RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SubmitToolOutputsAction"/>.
     /// </summary>

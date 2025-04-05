@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> The details of an error as encountered by an agent thread run. </summary>
+    /// <summary> The details of an error as encountered by an assistant thread run. </summary>
     public partial class RunError
     {
         /// <summary>

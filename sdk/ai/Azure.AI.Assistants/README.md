@@ -1,7 +1,7 @@
 # Azure AI Assistants client library for .NET
 Use the AI Assistants client library to:
 
-* **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
+* **Develop Agents using the Azure AI Assustants Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Assistants Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
 
 [Product documentation][product_doc]
 | [Samples][samples]
@@ -17,20 +17,20 @@ Use the AI Assistants client library to:
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
-  - [Agents](#agents)
-    - [Create an Agent](#create-an-agent)
+  - [Assistants](#assistants)
+    - [Create an Assistant](#create-an-assistant)
       - [Create thread](#create-thread)
       - [Create message](#create-message)
       - [Create and execute run](#create-and-execute-run)
       - [Retrieve messages](#retrieve-messages)
     - [File search](#file-search)
-    - [Enterprise File Search](#create-agent-with-enterprise-file-search)
+    - [Enterprise File Search](#create-assistant-with-enterprise-file-search)
     - [Code interpreter attachment](#create-message-with-code-interpreter-attachment)
-    - [Create Agent with Bing Grounding](#create-agent-with-bing-grounding)
-    - [Azure AI Search](#create-agent-with-azure-ai-search)
+    - [Create Assistant with Bing Grounding](#create-assistant-with-bing-grounding)
+    - [Azure AI Search](#create-assistant-with-azure-ai-search)
     - [Function call](#function-call)
     - [Azure function Call](#azure-function-call)
-    - [OpenAPI](#create-agent-with-openapi)
+    - [OpenAPI](#create-assistant-with-openapi)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -65,27 +65,27 @@ To interact with Azure AI Assistants, you’ll need to create an instance of `AI
 
 ```C# Snippet:AssistantsOverviewCreateClient
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-AIAssistantClient projectClient = new(connectionString, new DefaultAzureCredential());
+AssistantsClient projectClient = new(connectionString, new DefaultAzureCredential());
 ```
 
 ## Examples
 
-### Agents
+### Assistants
 
 Agents in the Azure AI Assistants client library are designed to facilitate various interactions and operations within your AI projects. They serve as the core components that manage and execute tasks, leveraging different tools and resources to achieve specific goals. The following steps outline the typical sequence for interacting with agents:
 
-#### Create an Agent
+#### Create an Assistant
 
-First, you need to create an `AgentsClient`
+First, you need to create an `AssistantsClient`
 ```C# Snippet:AssistantsOverviewCreateAgentClient
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(connectionString, new DefaultAzureCredential());
 ```
 
-With an authenticated client, an agent can be created:
+With an authenticated client, an assistant can be created:
 ```C# Snippet:AssistantsOverviewCreateAgent
-Agent agent = await client.CreateAgentAsync(
+Assistant assistant = await client.CreateAssistantAsync(
     model: modelDeploymentName,
     name: "Math Tutor",
     instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -96,7 +96,7 @@ Agent agent = await client.CreateAgentAsync(
 
 Next, create a thread:
 ```C# Snippet:AssistantsOverviewCreateThread
-AgentThread thread = await client.CreateThreadAsync();
+AssistantThread thread = await client.CreateThreadAsync();
 ```
 
 #### Create message
@@ -111,11 +111,11 @@ ThreadMessage message = await client.CreateMessageAsync(
 
 #### Create and execute run
 
-A run can then be started that evaluates the thread against an agent:
+A run can then be started that evaluates the thread against an assistant:
 ```C# Snippet:AssistantsOverviewCreateRun
 ThreadRun run = await client.CreateRunAsync(
     thread.Id,
-    agent.Id,
+    assistant.Id,
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 ```
 
@@ -137,7 +137,7 @@ Assert.AreEqual(
 #### Retrieve messages
 
 Assuming the run successfully completed, listing messages from the thread that was run will now reflect new information
-added by the agent:
+added by the assistant:
 ```C# Snippet:AssistantsOverviewListUpdatedMessages
 PageableList<ThreadMessage> messages
     = await client.GetMessagesAsync(
@@ -169,19 +169,19 @@ Example output from this sequence:
 
 #### File search
 
-Files can be uploaded and then referenced by agents or messages. First, use the generalized upload API with a
-purpose of 'agents' to make a file ID available:
+Files can be uploaded and then referenced by assistants or messages. First, use the generalized upload API with a
+purpose of 'assistants' to make a file ID available:
 ```C# Snippet:AssistantsUploadAgentFilesToUse
 // Upload a file and wait for it to be processed
 System.IO.File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-AgentFile uploadedAgentFile = await client.UploadFileAsync(
+AssistantFile uploadedAssistantFile = await client.UploadFileAsync(
     filePath: "sample_file_for_upload.txt",
-    purpose: AgentFilePurpose.Agents);
+    purpose: AssistantFilePurpose.Assistants);
 Dictionary<string, string> fileIds = new()
 {
-    { uploadedAgentFile.Id, uploadedAgentFile.Filename }
+    { uploadedAssistantFile.Id, uploadedAssistantFile.Filename }
 };
 ```
 
@@ -190,28 +190,28 @@ Once uploaded, the file ID can then be provided to create a vector store for it
 // Create a vector store with the file and wait for it to be processed.
 // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
 VectorStore vectorStore = await client.CreateVectorStoreAsync(
-    fileIds:  new List<string> { uploadedAgentFile.Id },
+    fileIds:  new List<string> { uploadedAssistantFile.Id },
     name: "my_vector_store");
 ```
 
-The vectorStore ID can then be provided to an agent upon creation. Note that file search will only be used if an appropriate tool like Code Interpreter is enabled. Also, you do not need to provide toolResources if you did not create a vector store above
+The vectorStore ID can then be provided to an assistant upon creation. Note that file search will only be used if an appropriate tool like Code Interpreter is enabled. Also, you do not need to provide toolResources if you did not create a vector store above
 ```C# Snippet:AssistantsCreateAgentWithFiles
 FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
-// Create an agent with toolResources and process assistant run
-Agent agent = await client.CreateAgentAsync(
+// Create an assistant with toolResources and process assistant run
+Assistant assistant = await client.CreateAssistantAsync(
         model: modelDeploymentName,
-        name: "SDK Test Agent - Retrieval",
-        instructions: "You are a helpful agent that can help fetch data from files you know about.",
+        name: "SDK Test Assistant - Retrieval",
+        instructions: "You are a helpful assistant that can help fetch data from files you know about.",
         tools: new List<ToolDefinition> { new FileSearchToolDefinition() },
         toolResources: new ToolResources() { FileSearch = fileSearchToolResource });
 ```
 
-With a file ID association and a supported tool enabled, the agent will then be able to consume the associated
+With a file ID association and a supported tool enabled, the assistant will then be able to consume the associated
 data when running threads.
 
-#### Create Agent with Enterprise File Search
+#### Create Assistant with Enterprise File Search
 
 We can upload file to Azure as it is shown in the example, or use the existing Azure blob storage. In the code below we demonstrate how this can be achieved. First we upload file to azure and create `VectorStoreDataSource`, which then is used to create vector store. This vector store is then given to the `FileSearchTool` constructor.
 
@@ -230,7 +230,7 @@ VectorStore vectorStore = await client.CreateVectorStoreAsync(
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-Agent agent = await client.CreateAgentAsync(
+Assistant assistant = await client.CreateAssistantAsync(
     model: modelDeploymentName,
     name: "my-assistant",
     instructions: "You are helpful assistant.",
@@ -261,33 +261,33 @@ FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 #### Create Message with Code Interpreter Attachment
 
-To attach a file with the context to the message, use the `MessageAttachment` class. To be able to process the attached file contents we need to provide the `List` with the single element `CodeInterpreterToolDefinition` as a `tools` parameter to both `CreateAgent` method and `MessageAttachment` class constructor.
+To attach a file with the context to the message, use the `MessageAttachment` class. To be able to process the attached file contents we need to provide the `List` with the single element `CodeInterpreterToolDefinition` as a `tools` parameter to both `CreateAssistant` method and `MessageAttachment` class constructor.
 
 Here is an example to pass `CodeInterpreterTool` as tool:
 
 ```C# Snippet:AssistantsCreateAgentWithInterpreterTool
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
-Agent agent = await client.CreateAgentAsync(
+Assistant assistant = await client.CreateAssistantAsync(
     model: modelDeploymentName,
     name: "my-assistant",
-    instructions: "You are a helpful agent that can help fetch data from files you know about.",
+    instructions: "You are a helpful assistant that can help fetch data from files you know about.",
     tools: tools
 );
 
 System.IO.File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-AgentFile uploadedAgentFile = await client.UploadFileAsync(
+AssistantFile uploadedAssistantFile = await client.UploadFileAsync(
     filePath: "sample_file_for_upload.txt",
-    purpose: AgentFilePurpose.Agents);
-var fileId = uploadedAgentFile.Id;
+    purpose: AssistantFilePurpose.Assistants);
+var fileId = uploadedAssistantFile.Id;
 
 var attachment = new MessageAttachment(
     fileId: fileId,
     tools: tools
 );
 
-AgentThread thread = await client.CreateThreadAsync();
+AssistantThread thread = await client.CreateThreadAsync();
 
 ThreadMessage message = await client.CreateMessageAsync(
     threadId: thread.Id,
@@ -311,9 +311,9 @@ var attachment = new MessageAttachment(
 );
 ```
 
-#### Create Agent with Bing Grounding
+#### Create Assistant with Bing Grounding
 
-To enable your Agent to perform search through Bing search API, you use `BingGroundingTool` along with a connection.
+To enable your Assistant to perform search through Bing search API, you use `BingGroundingTool` along with a connection.
 
 Here is an example:
 ```C# Snippet:AssistantsBingGroundingAsync_GetConnection
@@ -326,19 +326,19 @@ ToolConnectionList connectionList = new()
 BingGroundingToolDefinition bingGroundingTool = new(connectionList);
 ```
 ```C# Snippet:AssistantsBingGroundingAsync_CreateAgent
-Agent agent = await agentClient.CreateAgentAsync(
+Assistant assistant = await assistantClient.CreateAssistantAsync(
    model: modelDeploymentName,
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
    tools: [ bingGroundingTool ]);
 ```
 
-#### Create Agent with Azure AI Search
+#### Create Assistant with Azure AI Search
 
 Azure AI Search is an enterprise search system for high-performance applications.
 It integrates with Azure OpenAI Service and Azure Machine Learning, offering advanced
 search technologies like vector search and full-text search. Ideal for knowledge base
-insights, information discovery, and automation. Creating an Agent with Azure AI
+insights, information discovery, and automation. Creating an Assistant with Azure AI
 Search requires an existing Azure AI Search Index. For more information and setup
 guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 
@@ -365,9 +365,9 @@ ToolResources searchResource = new ToolResources
     }
 };
 
-AIAssistantClient agentClient = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(connectionString, new DefaultAzureCredential());
 
-Agent agent = await agentClient.CreateAgentAsync(
+Assistant assistant = await client.CreateAssistantAsync(
    model: modelDeploymentName,
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
@@ -375,13 +375,13 @@ Agent agent = await agentClient.CreateAgentAsync(
    toolResources: searchResource);
 ```
 
-If the agent has found the relevant information in the index, the reference
+If the assistant has found the relevant information in the index, the reference
 and annotation will be provided in the message response. In the example above, we replace
 the reference placeholder by the actual reference and url. Please note, that to
 get sensible result, the index needs to have fields "title" and "url".
 
 ```C# Snippet:AssistantsPopulateReferencesAgentWithAzureAISearchTool
-PageableList<ThreadMessage> messages = await agentClient.GetMessagesAsync(
+PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -394,7 +394,7 @@ foreach (ThreadMessage threadMessage in messages)
         if (contentItem is MessageTextContent textItem)
         {
             // We need to annotate only Agent messages.
-            if (threadMessage.Role == MessageRole.Agent && textItem.Annotations.Count > 0)
+            if (threadMessage.Role == MessageRole.Assistant && textItem.Annotations.Count > 0)
             {
                 string annotatedText = textItem.Text;
                 foreach (MessageTextAnnotation annotation in textItem.Annotations)
@@ -424,10 +424,10 @@ foreach (ThreadMessage threadMessage in messages)
 
 #### Function call
 
-Tools that reference caller-defined capabilities as functions can be provided to an agent to allow it to
+Tools that reference caller-defined capabilities as functions can be provided to an assistant to allow it to
 dynamically resolve and disambiguate during a run.
 
-Here, outlined is a simple agent that "knows how to," via caller-provided functions:
+Here, outlined is a simple assistant that "knows how to," via caller-provided functions:
 
 1. Get the user's favorite city
 1. Get a nickname for a given city
@@ -494,13 +494,13 @@ FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
         new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
 ```
 
-With the functions defined in their appropriate tools, an agent can be now created that has those tools enabled:
+With the functions defined in their appropriate tools, an assistant can be now created that has those tools enabled:
 
 ```C# Snippet:AssistantsFunctionsCreateAgentWithFunctionTools
 // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
-Agent agent = await client.CreateAgentAsync(
+Assistant assistant = await client.CreateAssistantAsync(
     model: modelDeploymentName,
-    name: "SDK Test Agent - Functions",
+    name: "SDK Test Assistant - Functions",
         instructions: "You are a weather bot. Use the provided functions to help answer questions. "
             + "Customize your responses to the user's preferences as much as possible and use friendly "
             + "nicknames for cities whenever possible.",
@@ -508,7 +508,7 @@ Agent agent = await client.CreateAgentAsync(
     );
 ```
 
-If the agent calls tools, the calling code will need to resolve `ToolCall` instances into matching
+If the assistant calls tools, the calling code will need to resolve `ToolCall` instances into matching
 `ToolOutput` instances. For convenience, a basic example is extracted here:
 
 ```C# Snippet:AssistantsFunctionsHandleFunctionCalls
@@ -604,7 +604,7 @@ We create a stream and wait for the stream update of the `RequiredActionUpdate` 
 ```C# Snippet:AssistantsFunctionsWithStreamingUpdateCycle
 List<ToolOutput> toolOutputs = [];
 ThreadRun streamRun = null;
-AsyncCollectionResult<StreamingUpdate> stream = client.CreateRunStreamingAsync(thread.Id, agent.Id);
+AsyncCollectionResult<StreamingUpdate> stream = client.CreateRunStreamingAsync(thread.Id, assistant.Id);
 do
 {
     toolOutputs.Clear();
@@ -645,13 +645,13 @@ while (toolOutputs.Count > 0);
 
 #### Azure function call
 
-We can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. See below for the instructions on function deployment.
+We can use Azure Function from inside the assistant. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. See below for the instructions on function deployment.
 ```C# Snippet:AssistantsAzureFunctionsDefineFunctionTools
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 
-AIAssistantClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(connectionString, new DefaultAzureCredential());
 
 AzureFunctionToolDefinition azureFnTool = new(
     name: "foo",
@@ -691,12 +691,12 @@ AzureFunctionToolDefinition azureFnTool = new(
 );
 ```
 
-Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
+Note that in this scenario we are asking assistant to supply storage queue URI to the azure function whenever it is called.
 ```C# Snippet:AssistantsAzureFunctionsCreateAgentWithFunctionTools
-Agent agent = await client.CreateAgentAsync(
+Assistant assistant = await client.CreateAssistantAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
-        instructions: "You are a helpful support agent. Use the provided function any "
+        instructions: "You are a helpful support assistant. Use the provided function any "
         + "time the prompt contains the string 'What would foo say?'. When you invoke "
         + "the function, ALWAYS specify the output queue uri parameter as "
         + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
@@ -707,14 +707,14 @@ Agent agent = await client.CreateAgentAsync(
 
 After we have created a message with request to ask "What would foo say?", we need to wait while the run is in queued, in progress or requires action states.
 ```C# Snippet:AssistantsAzureFunctionsHandlePollingWithRequiredAction
-AgentThread thread = await client.CreateThreadAsync();
+AssistantThread thread = await client.CreateThreadAsync();
 
 ThreadMessage message = await client.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What is the most prevalent element in the universe? What would foo say?");
 
-ThreadRun run = await client.CreateRunAsync(thread, agent);
+ThreadRun run = await client.CreateRunAsync(thread, assistant);
 
 do
 {
@@ -828,12 +828,12 @@ Next, we will monitor the output queue or the message. You should receive the ne
 ```
 Please note that the input `CorrelationId` is the same as output.
 *Hint:* Place multiple messages to input queue and keep second internet browser window with the output queue open and hit the refresh button on the portal user interface, so that you will not miss the message. If the message instead went to `azure-function-foo-input-poison` queue, the function completed with error, please check your setup.
-After we have tested the function and made sure it works, please make sure that the Azure AI Project have the next roles for the storage account: `Storage Account Contributor`, `Storage Blob Data Contributor`, `Storage File Data Privileged Contributor`, `Storage Queue Data Contributor` and `Storage Table Data Contributor`. Now the function is ready to be used by the agent.
+After we have tested the function and made sure it works, please make sure that the Azure AI Project have the next roles for the storage account: `Storage Account Contributor`, `Storage Blob Data Contributor`, `Storage File Data Privileged Contributor`, `Storage Queue Data Contributor` and `Storage Table Data Contributor`. Now the function is ready to be used by the assistant.
 
 
-#### Create Agent With OpenAPI
+#### Create Assistant With OpenAPI
 
-OpenAPI specifications describe REST operations against a specific endpoint. Agents SDK can read an OpenAPI spec, create a function from it, and call that function against the REST endpoint without additional client-side execution.
+OpenAPI specifications describe REST operations against a specific endpoint. Assistants SDK can read an OpenAPI spec, create a function from it, and call that function against the REST endpoint without additional client-side execution.
 
 Here is an example creating an OpenAPI tool (using anonymous authentication):
 ```C# Snippet:AssistantsOpenAPIDefineFunctionTools
@@ -845,7 +845,7 @@ OpenApiToolDefinition openapiTool = new(
     auth: oaiAuth
 );
 
-Agent agent = await client.CreateAgentAsync(
+Assistant assistant = await client.CreateAssistantAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
     instructions: "You are a helpful assistant.",
@@ -855,13 +855,13 @@ Agent agent = await client.CreateAgentAsync(
 
 In this example we are using the `weather_openapi.json` file and agent will request the wttr.in website for the weather in a location fron the prompt.
 ```C# Snippet:AssistantsOpenAPIHandlePollingWithRequiredAction
-AgentThread thread = await client.CreateThreadAsync();
+AssistantThread thread = await client.CreateThreadAsync();
 ThreadMessage message = await client.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What's the weather in Seattle?");
 
-ThreadRun run = await client.CreateRunAsync(thread, agent);
+ThreadRun run = await client.CreateRunAsync(thread, assistant);
 
 do
 {

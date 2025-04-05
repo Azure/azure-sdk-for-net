@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Assistants
 {
     /// <summary>
-    /// Request object. A set of resources that are used by the agent's tools. The resources are specific to the type of tool.
+    /// Request object. A set of resources that are used by the assistant's tools. The resources are specific to the type of tool.
     /// For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of
     /// vector store IDs.
     /// </summary>
@@ -59,7 +59,7 @@ namespace Azure.AI.Assistants
         /// Overrides the list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files
         /// associated with the tool.
         /// </param>
-        /// <param name="fileSearch"> Overrides the vector store attached to this agent. There can be a maximum of 1 vector store attached to the agent. </param>
+        /// <param name="fileSearch"> Overrides the vector store attached to this assistant. There can be a maximum of 1 vector store attached to the assistant. </param>
         /// <param name="azureAISearch"> Overrides the resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UpdateToolResourcesOptions(UpdateCodeInterpreterToolResourceOptions codeInterpreter, UpdateFileSearchToolResourceOptions fileSearch, AzureAISearchResource azureAISearch, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -75,7 +75,7 @@ namespace Azure.AI.Assistants
         /// associated with the tool.
         /// </summary>
         public UpdateCodeInterpreterToolResourceOptions CodeInterpreter { get; set; }
-        /// <summary> Overrides the vector store attached to this agent. There can be a maximum of 1 vector store attached to the agent. </summary>
+        /// <summary> Overrides the vector store attached to this assistant. There can be a maximum of 1 vector store attached to the assistant. </summary>
         public UpdateFileSearchToolResourceOptions FileSearch { get; set; }
         /// <summary> Overrides the resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </summary>
         public AzureAISearchResource AzureAISearch { get; set; }

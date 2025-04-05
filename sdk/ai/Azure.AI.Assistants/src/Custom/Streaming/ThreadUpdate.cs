@@ -11,30 +11,30 @@ namespace Azure.AI.Assistants;
 /// <summary>
 /// The update type presented when a streamed event indicates a thread was created.
 /// </summary>
-public class ThreadUpdate : StreamingUpdate<AgentThread>
+public class ThreadUpdate : StreamingUpdate<AssistantThread>
 {
-    /// <see cref="AgentThread.Id"/>
+    /// <see cref="AssistantThread.Id"/>
     public string Id => Value.Id;
-    /// <see cref="AgentThread.Metadata"/>
+    /// <see cref="AssistantThread.Metadata"/>
     public IReadOnlyDictionary<string, string> Metadata => Value.Metadata;
-    /// <see cref="AgentThread.CreatedAt"/>
+    /// <see cref="AssistantThread.CreatedAt"/>
     public DateTimeOffset CreatedAt => Value.CreatedAt;
-    /// <see cref="AgentThread.ToolResources"/>
+    /// <see cref="AssistantThread.ToolResources"/>
     public ToolResources ToolResources => Value.ToolResources;
 
-    internal ThreadUpdate(AgentThread thread) : base(thread, StreamingUpdateReason.ThreadCreated)
+    internal ThreadUpdate(AssistantThread thread) : base(thread, StreamingUpdateReason.ThreadCreated)
     { }
 
-    internal static IEnumerable<StreamingUpdate<AgentThread>> DeserializeThreadCreationUpdates(
+    internal static IEnumerable<StreamingUpdate<AssistantThread>> DeserializeThreadCreationUpdates(
         JsonElement element,
         StreamingUpdateReason updateKind,
         ModelReaderWriterOptions options = null)
     {
-        AgentThread thread = AgentThread.DeserializeAgentThread(element, options);
+        AssistantThread thread = AssistantThread.DeserializeAssistantThread(element, options);
         return updateKind switch
         {
-            StreamingUpdateReason.ThreadCreated => new List<StreamingUpdate<AgentThread>> { new ThreadUpdate(thread) },
-            _ => new List<StreamingUpdate<AgentThread>> { new StreamingUpdate<AgentThread>(thread, updateKind) },
+            StreamingUpdateReason.ThreadCreated => new List<StreamingUpdate<AssistantThread>> { new ThreadUpdate(thread) },
+            _ => new List<StreamingUpdate<AssistantThread>> { new StreamingUpdate<AssistantThread>(thread, updateKind) },
         };
     }
 }

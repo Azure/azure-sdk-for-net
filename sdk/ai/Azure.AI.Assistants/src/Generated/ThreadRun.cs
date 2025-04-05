@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> Data representing a single evaluation run of an agent thread. </summary>
+    /// <summary> Data representing a single evaluation run of an assistant thread. </summary>
     public partial class ThreadRun
     {
         /// <summary>
@@ -49,13 +49,13 @@ namespace Azure.AI.Assistants
         /// <summary> Initializes a new instance of <see cref="ThreadRun"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="threadId"> The ID of the thread associated with this run. </param>
-        /// <param name="assistantId"> The ID of the agent associated with the thread this run was performed against. </param>
-        /// <param name="status"> The status of the agent thread run. </param>
-        /// <param name="lastError"> The last error, if any, encountered by this agent thread run. </param>
+        /// <param name="assistantId"> The ID of the assistant associated with the thread this run was performed against. </param>
+        /// <param name="status"> The status of the assistant thread run. </param>
+        /// <param name="lastError"> The last error, if any, encountered by this assistant thread run. </param>
         /// <param name="model"> The ID of the model to use. </param>
-        /// <param name="instructions"> The overridden system instructions used for this agent thread run. </param>
+        /// <param name="instructions"> The overridden system instructions used for this assistant thread run. </param>
         /// <param name="tools">
-        /// The overridden enabled tools used for this agent thread run.
+        /// The overridden enabled tools used for this assistant thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </param>
@@ -113,18 +113,18 @@ namespace Azure.AI.Assistants
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always 'thread.run'. </param>
         /// <param name="threadId"> The ID of the thread associated with this run. </param>
-        /// <param name="assistantId"> The ID of the agent associated with the thread this run was performed against. </param>
-        /// <param name="status"> The status of the agent thread run. </param>
+        /// <param name="assistantId"> The ID of the assistant associated with the thread this run was performed against. </param>
+        /// <param name="status"> The status of the assistant thread run. </param>
         /// <param name="requiredAction">
-        /// The details of the action required for the agent thread run to continue.
+        /// The details of the action required for the assistant thread run to continue.
         /// Please note <see cref="Assistants.RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SubmitToolOutputsAction"/>.
         /// </param>
-        /// <param name="lastError"> The last error, if any, encountered by this agent thread run. </param>
+        /// <param name="lastError"> The last error, if any, encountered by this assistant thread run. </param>
         /// <param name="model"> The ID of the model to use. </param>
-        /// <param name="instructions"> The overridden system instructions used for this agent thread run. </param>
+        /// <param name="instructions"> The overridden system instructions used for this assistant thread run. </param>
         /// <param name="tools">
-        /// The overridden enabled tools used for this agent thread run.
+        /// The overridden enabled tools used for this assistant thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </param>
@@ -144,7 +144,7 @@ namespace Azure.AI.Assistants
         /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
         /// <param name="responseFormat"> The response format of the tool calls used in this run. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
+        /// <param name="toolResources"> Override the tools the assistant can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, UpdateToolResourcesOptions toolResources, bool parallelToolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -190,24 +190,24 @@ namespace Azure.AI.Assistants
 
         /// <summary> The ID of the thread associated with this run. </summary>
         public string ThreadId { get; }
-        /// <summary> The ID of the agent associated with the thread this run was performed against. </summary>
+        /// <summary> The ID of the assistant associated with the thread this run was performed against. </summary>
         public string AssistantId { get; }
-        /// <summary> The status of the agent thread run. </summary>
+        /// <summary> The status of the assistant thread run. </summary>
         public RunStatus Status { get; }
         /// <summary>
-        /// The details of the action required for the agent thread run to continue.
+        /// The details of the action required for the assistant thread run to continue.
         /// Please note <see cref="Assistants.RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SubmitToolOutputsAction"/>.
         /// </summary>
         public RequiredAction RequiredAction { get; }
-        /// <summary> The last error, if any, encountered by this agent thread run. </summary>
+        /// <summary> The last error, if any, encountered by this assistant thread run. </summary>
         public RunError LastError { get; }
         /// <summary> The ID of the model to use. </summary>
         public string Model { get; }
-        /// <summary> The overridden system instructions used for this agent thread run. </summary>
+        /// <summary> The overridden system instructions used for this assistant thread run. </summary>
         public string Instructions { get; }
         /// <summary>
-        /// The overridden enabled tools used for this agent thread run.
+        /// The overridden enabled tools used for this assistant thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </summary>
@@ -254,10 +254,10 @@ namespace Azure.AI.Assistants
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsApiToolChoiceOptionMode"/></description>
+        /// <description><see cref="AssistantsApiToolChoiceOptionMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsNamedToolChoice"/></description>
+        /// <description><see cref="AssistantsNamedToolChoice"/></description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -299,10 +299,10 @@ namespace Azure.AI.Assistants
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsApiResponseFormatMode"/></description>
+        /// <description><see cref="AssistantsApiResponseFormatMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsApiResponseFormat"/></description>
+        /// <description><see cref="AssistantsApiResponseFormat"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="ResponseFormatJsonSchemaType"/></description>
@@ -333,7 +333,7 @@ namespace Azure.AI.Assistants
         public BinaryData ResponseFormat { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
-        /// <summary> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
+        /// <summary> Override the tools the assistant can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
         public UpdateToolResourcesOptions ToolResources { get; }
         /// <summary> Determines if tools can be executed in parallel within the run. </summary>
         public bool ParallelToolCalls { get; }

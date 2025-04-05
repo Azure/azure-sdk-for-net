@@ -258,7 +258,7 @@ namespace Azure.AI.Assistants
                 return null;
             }
             string assistantId = default;
-            AgentThreadCreationOptions thread = default;
+            AssistantThreadCreationOptions thread = default;
             string model = default;
             string instructions = default;
             IReadOnlyList<ToolDefinition> tools = default;
@@ -288,7 +288,7 @@ namespace Azure.AI.Assistants
                     {
                         continue;
                     }
-                    thread = AgentThreadCreationOptions.DeserializeAgentThreadCreationOptions(property.Value, options);
+                    thread = AssistantThreadCreationOptions.DeserializeAssistantThreadCreationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("model"u8))

@@ -76,18 +76,18 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreateAgent(ArgumentType argType)
         {
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
             string id;
             string name;
             if (argType == ArgumentType.Metadata)
             {
-                Response<Agent> agentResponse = await client.CreateAgentAsync(
+                Response<Assistant> assistantResponse = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are helpful assistant."
                 );
-                id = agentResponse.Value.Id;
-                name = agentResponse.Value.Name;
+                id = assistantResponse.Value.Id;
+                name = assistantResponse.Value.Name;
             }
             else
             {
@@ -97,13 +97,13 @@ namespace Azure.AI.Assistants.Tests
                     instructions = "You are helpful assistant"
                 };
                 RequestContent content = argType == ArgumentType.Bytes?RequestContent.Create(GetBytes(objParams)): RequestContent.Create(GetStream(objParams));
-                Response agentResponse = await client.CreateAgentAsync(content);
+                Response agentResponse = await client.CreateAssistantAsync(content);
                 id = GetFieldFromJson(agentResponse.Content, "id");
                 name = GetFieldFromJson(agentResponse.Content, "name");
             }
             Assert.AreNotEqual(default, id);
             Assert.AreEqual(name, AGENT_NAME);
-            Response<bool> delResponse = await client.DeleteAgentAsync(id);
+            Response<bool> delResponse = await client.DeleteAssistantAsync(id);
             Assert.IsTrue(delResponse.Value);
         }
 
@@ -113,12 +113,12 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestUpdateAgent(ArgumentType argType)
         {
-            AIAssistantClient client = GetClient();
-            Agent agent = await GetAgent(client);
+            AssistantsClient client = GetClient();
+            Assistant agent = await GetAssistant(client);
             string name = default;
             if (argType == ArgumentType.Metadata)
             {
-                Response<Agent> agentResponse = await client.UpdateAgentAsync(
+                Response<Assistant> agentResponse = await client.UpdateAssistantAsync(
                 assistantId: agent.Id,
                 model: "gpt-4",
                 name: AGENT_NAME2,
@@ -135,7 +135,7 @@ namespace Azure.AI.Assistants.Tests
                     instructions = "You are helpful assistant"
                 };
                 RequestContent content = argType == ArgumentType.Bytes ? RequestContent.Create(GetBytes(objParams)) : RequestContent.Create(GetStream(objParams));
-                Response agentResponse = await client.UpdateAgentAsync(agent.Id, content);
+                Response agentResponse = await client.UpdateAssistantAsync(agent.Id, content);
                 name = GetFieldFromJson(agentResponse.Content, "name");
             }
             Assert.AreEqual(AGENT_NAME2, name);
@@ -144,17 +144,17 @@ namespace Azure.AI.Assistants.Tests
         [RecordedTest]
         public async Task TestListAgent()
         {
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
             // Note: if the numer  of arent will be bigger then 100 this test will fail.
             HashSet<string> ids = new();
             int initialAgentCount = await CountElementsAndRemoveIds(client, ids);
-            Agent agent1 = await GetAgent(client, AGENT_NAME);
+            Assistant agent1 = await GetAssistant(client, AGENT_NAME);
             ids = [agent1.Id];
             int count = await CountElementsAndRemoveIds(client, ids);
             Assert.AreEqual(0, ids.Count);
             Assert.AreEqual(initialAgentCount + 1, count);
 
-            Agent agent2 = await GetAgent(client, AGENT_NAME2);
+            Assistant agent2 = await GetAssistant(client, AGENT_NAME2);
             ids.Add(agent1.Id);
             ids.Add(agent2.Id);
             count = await CountElementsAndRemoveIds(client, ids);
@@ -177,14 +177,14 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreateThread(ArgumentType argType)
         {
-            AIAssistantClient client = GetClient();
-            Agent agent = await GetAgent(client);
+            AssistantsClient client = GetClient();
+            Assistant agent = await GetAssistant(client);
 
             string thread_id;
             IReadOnlyDictionary<string, string> metadata;
             if (argType == ArgumentType.Metadata)
             {
-                Response<AgentThread> threadResponse = await client.CreateThreadAsync(
+                Response<AssistantThread> threadResponse = await client.CreateThreadAsync(
                     metadata: new Dictionary<string, string> {
                         {"key1", "value1"},
                         {"key2", "value2"}
@@ -205,7 +205,7 @@ namespace Azure.AI.Assistants.Tests
                 RequestContent content = argType == ArgumentType.Bytes ? RequestContent.Create(GetBytes(data)) : RequestContent.Create(GetStream(data));
                 Response rawThreadResponse = await client.CreateThreadAsync(content);
                 thread_id = GetFieldFromJson(rawThreadResponse.Content, "id");
-                Response<AgentThread> threadResponse = await client.GetThreadAsync(thread_id);
+                Response<AssistantThread> threadResponse = await client.GetThreadAsync(thread_id);
                 metadata = threadResponse.Value.Metadata;
             }
             Assert.AreNotEqual(default, thread_id);
@@ -222,8 +222,8 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestUpdateThread(ArgumentType argType)
         {
-            AIAssistantClient client = GetClient();
-            AgentThread thread = await GetThread(client);
+            AssistantsClient client = GetClient();
+            AssistantThread thread = await GetThread(client);
             Assert.AreEqual(0, thread.Metadata.Count);
 
             if (argType == ArgumentType.Metadata)
@@ -251,7 +251,7 @@ namespace Azure.AI.Assistants.Tests
             }
 
             // Test get thread
-            Response<AgentThread> getThreadResponse = await client.GetThreadAsync(thread.Id);
+            Response<AssistantThread> getThreadResponse = await client.GetThreadAsync(thread.Id);
             thread = getThreadResponse.Value;
             Assert.AreNotEqual(default, thread.Id);
             Assert.AreEqual(2, thread.Metadata.Count);
@@ -267,8 +267,8 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreateMessage(ArgumentType argType)
         {
-            AIAssistantClient client = GetClient();
-            AgentThread thread = await GetThread(client);
+            AssistantsClient client = GetClient();
+            AssistantThread thread = await GetThread(client);
             ThreadMessage tmTest;
             string message = "Hello, tell me a joke";
             if (argType == ArgumentType.Metadata)
@@ -299,8 +299,8 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestUpdateMessage(ArgumentType argType)
         {
-            AIAssistantClient client = GetClient();
-            AgentThread thread = await GetThread(client);
+            AssistantsClient client = GetClient();
+            AssistantThread thread = await GetThread(client);
             ThreadMessage tmTest;
             Response<ThreadMessage> oldMsgResp = await client.CreateMessageAsync(
                 thread.Id,
@@ -336,8 +336,8 @@ namespace Azure.AI.Assistants.Tests
         [RecordedTest]
         public async Task TestListMessage()
         {
-            AIAssistantClient client = GetClient();
-            AgentThread thread = await GetThread(client);
+            AssistantsClient client = GetClient();
+            AssistantThread thread = await GetThread(client);
             Response<PageableList<ThreadMessage>> msgResp = await client.GetMessagesAsync(thread.Id);
             Assert.AreEqual(0, msgResp.Value.Data.Count);
 
@@ -370,9 +370,9 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreateRun(ArgumentType argType)
         {
-            AIAssistantClient client = GetClient();
-            Agent agent = await GetAgent(client);
-            AgentThread thread = await GetThread(client);
+            AssistantsClient client = GetClient();
+            Assistant agent = await GetAssistant(client);
+            AssistantThread thread = await GetThread(client);
             await client.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
             ThreadRun result;
             if (argType == ArgumentType.Metadata)
@@ -397,7 +397,7 @@ namespace Azure.AI.Assistants.Tests
             result = await WaitForRun(client, result);
             Response<PageableList<ThreadMessage>> msgResp = await client.GetMessagesAsync(thread.Id);
             Assert.AreEqual(2, msgResp.Value.Data.Count);
-            Assert.AreEqual(MessageRole.Agent, msgResp.Value.Data[0].Role);
+            Assert.AreEqual(MessageRole.Assistant, msgResp.Value.Data[0].Role);
             Assert.AreEqual(MessageRole.User, msgResp.Value.Data[1].Role);
             // Get Run steps
             PageableList<RunStep> steps = await client.GetRunStepsAsync(result);
@@ -412,10 +412,10 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreateThreadAndRun(ArgumentType argType)
         {
-            AIAssistantClient client = GetClient();
-            Agent agent = await GetAgent(client);
+            AssistantsClient client = GetClient();
+            Assistant agent = await GetAssistant(client);
             ThreadRun result;
-            var threadOp = new AgentThreadCreationOptions();
+            var threadOp = new AssistantThreadCreationOptions();
             threadOp.Messages.Add(new ThreadMessageOptions(
                 role: MessageRole.User,
                 content: "Hello, tell me a joke"
@@ -462,7 +462,7 @@ namespace Azure.AI.Assistants.Tests
             result = await WaitForRun(client, result);
             Response<PageableList<ThreadMessage>> msgResp = await client.GetMessagesAsync(result.ThreadId);
             Assert.AreEqual(2, msgResp.Value.Data.Count);
-            Assert.AreEqual(MessageRole.Agent, msgResp.Value.Data[0].Role);
+            Assert.AreEqual(MessageRole.Assistant, msgResp.Value.Data[0].Role);
             Assert.AreEqual(MessageRole.User, msgResp.Value.Data[1].Role);
         }
 
@@ -472,9 +472,9 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestUpdateRun(ArgumentType argType)
         {
-            AIAssistantClient client = GetClient();
-            Agent agent = await GetAgent(client);
-            AgentThread thread = await GetThread(client);
+            AssistantsClient client = GetClient();
+            Assistant agent = await GetAssistant(client);
+            AssistantThread thread = await GetThread(client);
             await client.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
             ThreadRun  runResp = await client.CreateRunAsync(thread.Id, agent.Id);
             runResp = await WaitForRun(client, runResp);
@@ -510,9 +510,9 @@ namespace Azure.AI.Assistants.Tests
         [RecordedTest]
         public async Task ListDeleteRuns()
         {
-            AIAssistantClient client = GetClient();
-            Agent agent = await GetAgent(client);
-            AgentThread thread = await GetThread(client);
+            AssistantsClient client = GetClient();
+            Assistant agent = await GetAssistant(client);
+            AssistantThread thread = await GetThread(client);
             await client.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
             ThreadRun runResp1 = await client.CreateRunAsync(thread.Id, agent.Id);
             runResp1 = await WaitForRun(client, runResp1);
@@ -538,7 +538,7 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(ArgumentType.Metadata, false, true)]
         public async Task TestSubmitToolOutputs(ArgumentType argType, bool parallelToolCalls, bool CreateThreadAndRun)
         {
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
             FunctionToolDefinition getFavouriteNameTool = new(
                 name: "getFavouriteWord",
                 description: "Gets the favourite word of the person.",
@@ -557,7 +557,7 @@ namespace Azure.AI.Assistants.Tests
                         Required = new[] { "name" },
                     },
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-            Agent agent = await client.CreateAgentAsync(
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "Use the provided functions to help answer questions.",
@@ -566,7 +566,7 @@ namespace Azure.AI.Assistants.Tests
             ThreadRun toolRun;
             if (CreateThreadAndRun)
             {
-                var threadOp = new AgentThreadCreationOptions();
+                var threadOp = new AssistantThreadCreationOptions();
                 threadOp.Messages.Add(new ThreadMessageOptions(
                     role: MessageRole.User,
                     content: "Tell me the favourite word of Mike?"
@@ -579,7 +579,7 @@ namespace Azure.AI.Assistants.Tests
             }
             else
             {
-                AgentThread thread = await GetThread(client);
+                AssistantThread thread = await GetThread(client);
                 await client.CreateMessageAsync(thread.Id, MessageRole.User, "Tell me the favourite word of Mike?");
                 toolRun = await client.CreateRunAsync(
                     threadId: thread.Id,
@@ -658,16 +658,16 @@ namespace Azure.AI.Assistants.Tests
                 Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
             if (useStreaming && !IsAsync)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
             VectorStore vectorStore;
 
-            AgentFile fileDataSource = null;
+            AssistantFile fileDataSource = null;
             VectorStoreDataSource vectorStoreDataSource = null;
             VectorStoreConfiguration vectorStoreConf = null;
             List<string> fileIds = null;
             if (useFileSource)
             {
-                fileDataSource = await client.UploadFileAsync(GetFile(), AgentFilePurpose.Agents);
+                fileDataSource = await client.UploadFileAsync(GetFile(), AssistantFilePurpose.Assistants);
                 fileIds = [ fileDataSource.Id ];
             }
             else
@@ -713,13 +713,13 @@ namespace Azure.AI.Assistants.Tests
             // Test file search
             FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
             fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
-            Agent agent = await client.CreateAgentAsync(
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: "SDK Test Agent - Retrieval",
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
                 tools: new List<ToolDefinition> { new FileSearchToolDefinition() },
                 toolResources: new ToolResources() { FileSearch = fileSearchToolResource });
-            var threadOp = new AgentThreadCreationOptions();
+            var threadOp = new AssistantThreadCreationOptions();
             threadOp.Messages.Add(new ThreadMessageOptions(
                 role: MessageRole.User,
                 content: "What does the attachment say?"
@@ -727,7 +727,7 @@ namespace Azure.AI.Assistants.Tests
             ThreadRun fileSearchRun = default;
             if (useStreaming)
             {
-                AgentThread thread = await client.CreateThreadAsync(messages: [new ThreadMessageOptions(
+                AssistantThread thread = await client.CreateThreadAsync(messages: [new ThreadMessageOptions(
                     role: MessageRole.User,
                     content: "What does the attachment say?"
                 )]);
@@ -752,7 +752,7 @@ namespace Azure.AI.Assistants.Tests
             // Check list, get and delete operations.
             VectorStore getVct = await client.GetVectorStoreAsync(vectorStore.Id);
             Assert.AreEqual(vectorStore.Id, getVct.Id);
-            AgentPageableListOfVectorStore stores = await client.GetVectorStoresAsync(limit: 100);
+            AssistantPageableListOfVectorStore stores = await client.GetVectorStoresAsync(limit: 100);
             getVct = null;
             foreach (VectorStore store in stores.Data)
             {
@@ -787,7 +787,7 @@ namespace Azure.AI.Assistants.Tests
         {
             if (useFileSource && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
 
             MessageAttachment attachment;
             List<ToolDefinition> tools = [
@@ -797,7 +797,7 @@ namespace Azure.AI.Assistants.Tests
             string fileId = default;
             if (useFileSource)
             {
-                AgentFile fileDataSource = await client.UploadFileAsync(GetFile(), AgentFilePurpose.Agents);
+                AssistantFile fileDataSource = await client.UploadFileAsync(GetFile(), AssistantFilePurpose.Assistants);
                 fileId = fileDataSource.Id;
                 attachment = new MessageAttachment(fileDataSource.Id, tools);
             }
@@ -810,12 +810,12 @@ namespace Azure.AI.Assistants.Tests
                 attachment = new MessageAttachment(vectorStoreDataSource, tools);
             }
             // Test file search
-            Agent agent = await client.CreateAgentAsync(
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: "SDK Test Agent - Retrieval",
                 instructions: "You are a helpful agent that can help fetch data from files you know about."
                 );
-            AgentThread thread;
+            AssistantThread thread;
             List<ThreadMessageOptions> opts = null;
             if (attachmentOnThread)
             {
@@ -853,11 +853,11 @@ namespace Azure.AI.Assistants.Tests
         {
             if (useFileSource && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
             CodeInterpreterToolResource toolRes = new();
             if (useFileSource)
             {
-                AgentFile fileDataSource = await client.UploadFileAsync(GetFile(), AgentFilePurpose.Agents);
+                AssistantFile fileDataSource = await client.UploadFileAsync(GetFile(), AssistantFilePurpose.Assistants);
                 toolRes.FileIds.Add(fileDataSource.Id);
             }
             else
@@ -872,14 +872,14 @@ namespace Azure.AI.Assistants.Tests
             {
                 CodeInterpreter = toolRes
             };
-            Agent agent = await client.CreateAgentAsync(
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
                 tools: [ new CodeInterpreterToolDefinition() ],
                 toolResources: useThreads ? null : resources
             );
-            AgentThread thread = await client.CreateThreadAsync(
+            AssistantThread thread = await client.CreateThreadAsync(
                 toolResources: useThreads ? resources : null
             );
             ThreadMessage message = await client.CreateMessageAsync(
@@ -899,7 +899,7 @@ namespace Azure.AI.Assistants.Tests
         [RecordedTest]
         public async Task TestCreateVectorStoreOnline()
         {
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
             VectorStoreDataSource vectorStoreDataSource = new(
                 assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
                 assetType: VectorStoreDataSourceAssetType.UriAsset
@@ -914,14 +914,14 @@ namespace Azure.AI.Assistants.Tests
             {
                 FileSearch=fileSearch
             };
-            Agent agent = await client.CreateAgentAsync(
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
                 tools: [new FileSearchToolDefinition()],
                 toolResources: tools
             );
-            AgentThread thread = await client.CreateThreadAsync();
+            AssistantThread thread = await client.CreateThreadAsync();
             ThreadMessage message = await client.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
@@ -944,7 +944,7 @@ namespace Azure.AI.Assistants.Tests
         {
             if (useStream && !IsAsync)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
             VectorStoreDataSource vectorStoreDataSource = new(
                     assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
                     assetType: VectorStoreDataSourceAssetType.UriAsset
@@ -963,14 +963,14 @@ namespace Azure.AI.Assistants.Tests
             {
                 FileSearch = fileSearch
             };
-            Agent agent = await client.CreateAgentAsync(
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "Hello, you are helpful assistant and can search information from uploaded files",
                 tools: [new FileSearchToolDefinition()],
                 toolResources: tools
             );
-            AgentThread thread = await client.CreateThreadAsync();
+            AssistantThread thread = await client.CreateThreadAsync();
             ThreadMessage message = await client.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
@@ -1064,8 +1064,8 @@ namespace Azure.AI.Assistants.Tests
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
                 )
             );
-            AIAssistantClient client = GetClient();
-            Agent agent = await client.CreateAgentAsync(
+            AssistantsClient client = GetClient();
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful support agent. Use the provided function any "
@@ -1075,7 +1075,7 @@ namespace Azure.AI.Assistants.Tests
                 + "\"Foo says\" and then the response from the tool.",
                 tools: new List<ToolDefinition> { azureFnTool }
             );
-            AgentThread thread = await client.CreateThreadAsync();
+            AssistantThread thread = await client.CreateThreadAsync();
             ThreadMessage message = await client.CreateMessageAsync(
                 thread.Id,
                 MessageRole.User,
@@ -1106,16 +1106,16 @@ namespace Azure.AI.Assistants.Tests
         [RecordedTest]
         public async Task TestClientWithThreadMessages()
         {
-            AIAssistantClient client = GetClient();
-            Agent agent = await GetAgent(
+            AssistantsClient client = GetClient();
+            Assistant agent = await GetAssistant(
                 client,
                 instruction: "You are a personal electronics tutor. Write and run code to answer questions.");
 
             List<ThreadMessageOptions> messages = [
-                new(role: MessageRole.Agent, content: "E=mc^2"),
-                new(role: MessageRole.Agent, content: "What is the impedance formula?")
+                new(role: MessageRole.Assistant, content: "E=mc^2"),
+                new(role: MessageRole.Assistant, content: "What is the impedance formula?")
             ];
-            AgentThread thread = await client.CreateThreadAsync(messages: messages);
+            AssistantThread thread = await client.CreateThreadAsync(messages: messages);
             ThreadRun run = await client.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
             Assert.AreEqual(RunStatus.Completed, run.Status);
@@ -1135,15 +1135,15 @@ namespace Azure.AI.Assistants.Tests
                 stream.Write(Encoding.UTF8.GetBytes(content), 0, content.Length);
             };
 
-            AIAssistantClient client = GetClient();
-            AgentFile fileDataSource = await client.UploadFileAsync(file.FullName, AgentFilePurpose.Agents);
+            AssistantsClient client = GetClient();
+            AssistantFile fileDataSource = await client.UploadFileAsync(file.FullName, AssistantFilePurpose.Assistants);
 
             CodeInterpreterToolResource cdResource = new();
             cdResource.FileIds.Add(fileDataSource.Id);
             ToolResources toolRes = new();
             toolRes.CodeInterpreter = cdResource;
 
-            Agent agent = await client.CreateAgentAsync(
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are helpful assistant",
@@ -1151,7 +1151,7 @@ namespace Azure.AI.Assistants.Tests
                 toolResources: toolRes
             );
 
-            AgentThread thread = await client.CreateThreadAsync();
+            AssistantThread thread = await client.CreateThreadAsync();
             await client.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
@@ -1189,10 +1189,10 @@ namespace Azure.AI.Assistants.Tests
         [TestCase(AzureAISearchQueryTypeEnum.VectorSemanticHybrid)]
         public async Task TestAzureAiSearch(AzureAISearchQueryTypeEnum queryType)
         {
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
 
             ToolResources searchResource = GetAISearchToolResource(queryType);
-            Agent agent = await client.CreateAgentAsync(
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful assistant.",
@@ -1200,7 +1200,7 @@ namespace Azure.AI.Assistants.Tests
                 toolResources: searchResource);
 
             // Create thread for communication
-            AgentThread thread = await client.CreateThreadAsync();
+            AssistantThread thread = await client.CreateThreadAsync();
 
             // Create message to thread
             await client.CreateMessageAsync(
@@ -1235,7 +1235,7 @@ namespace Azure.AI.Assistants.Tests
                     if (contentItem is MessageTextContent textItem)
                     {
                         // We need to annotate only Agent messages.
-                        if (threadMessage.Role == MessageRole.Agent && textItem.Annotations.Count > 0)
+                        if (threadMessage.Role == MessageRole.Assistant && textItem.Annotations.Count > 0)
                         {
                             string annotatedText = textItem.Text;
                             foreach (MessageTextAnnotation annotation in textItem.Annotations)
@@ -1273,10 +1273,10 @@ namespace Azure.AI.Assistants.Tests
         {
             if (!IsAsync)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
-            AIAssistantClient client = GetClient();
+            AssistantsClient client = GetClient();
             ToolResources searchResource = GetAISearchToolResource(queryType);
 
-            Agent agent = await client.CreateAgentAsync(
+            Assistant agent = await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful assistant.",
@@ -1284,7 +1284,7 @@ namespace Azure.AI.Assistants.Tests
                 toolResources: searchResource);
 
             // Create thread for communication
-            AgentThread thread = await client.CreateThreadAsync();
+            AssistantThread thread = await client.CreateThreadAsync();
 
             // Create message to thread
             await client.CreateMessageAsync(
@@ -1331,13 +1331,13 @@ namespace Azure.AI.Assistants.Tests
             return tempDir;
         }
 
-        private AIAssistantClient GetClient()
+        private AssistantsClient GetClient()
         {
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
             // If we are in the Playback, do not ask for authentication.
             if (Mode == RecordedTestMode.Playback)
             {
-                return InstrumentClient(new AIAssistantClient(connectionString, new MockCredential(), InstrumentClientOptions(new AIAssistantClientOptions())));
+                return InstrumentClient(new AssistantsClient(connectionString, new MockCredential(), InstrumentClientOptions(new AssistantsClientOptions())));
             }
             // For local testing if you are using non default account
             // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
@@ -1346,30 +1346,30 @@ namespace Azure.AI.Assistants.Tests
             var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                return InstrumentClient(new AIAssistantClient(connectionString, new AzureCliCredential(), InstrumentClientOptions(new AIAssistantClientOptions())));
+                return InstrumentClient(new AssistantsClient(connectionString, new AzureCliCredential(), InstrumentClientOptions(new AssistantsClientOptions())));
             }
             else
             {
-                return InstrumentClient(new AIAssistantClient(connectionString, new DefaultAzureCredential(), InstrumentClientOptions(new AIAssistantClientOptions())));
+                return InstrumentClient(new AssistantsClient(connectionString, new DefaultAzureCredential(), InstrumentClientOptions(new AssistantsClientOptions())));
             }
         }
 
-        private static async void DeleteAndAssert(AIAssistantClient client, Agent agent)
+        private static async void DeleteAndAssert(AssistantsClient client, Assistant agent)
         {
-            Response<bool> resp = await client.DeleteAgentAsync(agent.Id);
+            Response<bool> resp = await client.DeleteAssistantAsync(agent.Id);
             Assert.IsTrue(resp.Value);
         }
 
-        private static async Task<Agent> GetAgent(AIAssistantClient client, string agentName=AGENT_NAME, string instruction= "You are helpful assistant.")
+        private static async Task<Assistant> GetAssistant(AssistantsClient client, string agentName=AGENT_NAME, string instruction= "You are helpful assistant.")
         {
-            return await client.CreateAgentAsync(
+            return await client.CreateAssistantAsync(
                 model: "gpt-4",
                 name: agentName,
                 instructions: instruction
             );
         }
 
-        private static async Task<AgentThread> GetThread(AIAssistantClient client, Dictionary<string, string> metadata=null)
+        private static async Task<AssistantThread> GetThread(AssistantsClient client, Dictionary<string, string> metadata=null)
         {
             return await client.CreateThreadAsync(metadata: metadata);
         }
@@ -1400,7 +1400,7 @@ namespace Azure.AI.Assistants.Tests
             return default;
         }
 
-        private async Task<ThreadRun> WaitForRun(AIAssistantClient client, ThreadRun run)
+        private async Task<ThreadRun> WaitForRun(AssistantsClient client, ThreadRun run)
         {
             double delay = 500;
             if (Mode == RecordedTestMode.Playback)
@@ -1426,15 +1426,15 @@ namespace Azure.AI.Assistants.Tests
             return Path.Combine(new string[] { dirName, "TestData", FILE_NAME });
         }
 
-        private static async Task<int> CountElementsAndRemoveIds(AIAssistantClient client, HashSet<string> ids)
+        private static async Task<int> CountElementsAndRemoveIds(AssistantsClient client, HashSet<string> ids)
         {
-            PageableList<Agent> agentsResp;
+            PageableList<Assistant> agentsResp;
             int count = 0;
             string lastId = null;
             do
             {
-                agentsResp = await client.GetAgentsAsync(limit: 100, after: lastId);
-                foreach (Agent agent in agentsResp)
+                agentsResp = await client.GetAssistantsAsync(limit: 100, after: lastId);
+                foreach (Assistant agent in agentsResp)
                     ids.Remove(agent.Id);
                 count += agentsResp.Count();
                 lastId = agentsResp.LastId;
@@ -1470,27 +1470,27 @@ namespace Azure.AI.Assistants.Tests
             }
             if (Mode == RecordedTestMode.Playback)
                 return;
-            AIAssistantClient client;
+            AssistantsClient client;
             var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                client = new AIAssistantClient(TestEnvironment.AzureAICONNECTIONSTRING, new AzureCliCredential());
+                client = new AssistantsClient(TestEnvironment.AzureAICONNECTIONSTRING, new AzureCliCredential());
             }
             else
             {
-                client = new AIAssistantClient(TestEnvironment.AzureAICONNECTIONSTRING, new DefaultAzureCredential());
+                client = new AssistantsClient(TestEnvironment.AzureAICONNECTIONSTRING, new DefaultAzureCredential());
             }
 
             // Remove all files
-            IReadOnlyList<AgentFile> files = client.GetFiles().Value;
-            foreach (AgentFile af in files)
+            IReadOnlyList<AssistantFile> files = client.GetFiles().Value;
+            foreach (AssistantFile af in files)
             {
                 if (af.Filename.Equals(FILE_NAME) || af.Filename.Equals(FILE_NAME2))
                     client.DeleteFile(af.Id);
             }
 
             // Remove all vector stores
-            AgentPageableListOfVectorStore stores = client.GetVectorStores();
+            AssistantPageableListOfVectorStore stores = client.GetVectorStores();
             foreach (VectorStore store in stores.Data)
             {
                 if (store.Name == null || store.Name.Equals(VCT_STORE_NAME))
@@ -1498,11 +1498,11 @@ namespace Azure.AI.Assistants.Tests
             }
 
             // Remove all agents
-            PageableList<Agent> agents = client.GetAgents();
-            foreach (Agent agent in agents)
+            PageableList<Assistant> agents = client.GetAssistants();
+            foreach (Assistant agent in agents)
             {
                 if (agent.Name.StartsWith(AGENT_NAME))
-                    client.DeleteAgent(agent.Id);
+                    client.DeleteAssistant(agent.Id);
             }
         }
         #endregion

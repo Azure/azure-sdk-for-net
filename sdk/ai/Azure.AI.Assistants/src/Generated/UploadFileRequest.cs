@@ -47,9 +47,9 @@ namespace Azure.AI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
         /// <param name="data"> The file data, in bytes. </param>
-        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Assistants and Message files, `vision` for Assistants image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public UploadFileRequest(File data, AgentFilePurpose purpose)
+        public UploadFileRequest(File data, AssistantFilePurpose purpose)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -59,10 +59,10 @@ namespace Azure.AI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
         /// <param name="data"> The file data, in bytes. </param>
-        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Assistants and Message files, `vision` for Assistants image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
         /// <param name="filename"> The name of the file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UploadFileRequest(File data, AgentFilePurpose purpose, string filename, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UploadFileRequest(File data, AssistantFilePurpose purpose, string filename, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Data = data;
             Purpose = purpose;
@@ -77,8 +77,8 @@ namespace Azure.AI.Assistants
 
         /// <summary> The file data, in bytes. </summary>
         public File Data { get; }
-        /// <summary> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </summary>
-        public AgentFilePurpose Purpose { get; }
+        /// <summary> The intended purpose of the uploaded file. Use `assistants` for Assistants and Message files, `vision` for Assistants image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </summary>
+        public AssistantFilePurpose Purpose { get; }
         /// <summary> The name of the file. </summary>
         public string Filename { get; set; }
     }

@@ -18,7 +18,7 @@ namespace Azure.AI.Assistants;
 
 public static partial class AIClientModelFactory
 {
-    /// <summary> Initializes a new instance of <see cref="Custom.Agent"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Assistants"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="name"> The name of the agent. </param>
@@ -46,12 +46,12 @@ public static partial class AIClientModelFactory
     /// </param>
     /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-    public static Agent Agent(string id = null, DateTimeOffset createdAt = default, string name = null, string description = null, string model = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null)
+    public static Assistant Assistant(string id = null, DateTimeOffset createdAt = default, string name = null, string description = null, string model = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null)
     {
         tools ??= new List<ToolDefinition>();
         metadata ??= new Dictionary<string, string>();
 
-        return new Agent(
+        return new Assistant(
             id,
             @object: null,
             createdAt,
@@ -77,12 +77,12 @@ public static partial class AIClientModelFactory
     /// of vector store IDs.
     /// </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-    /// <returns> A new <see cref="Custom.AgentThread"/> instance for mocking. </returns>
-    public static AgentThread AgentThread(string id = null, DateTimeOffset createdAt = default, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null)
+    /// <returns> A new <see cref="AssistantThread"/> instance for mocking. </returns>
+    public static AssistantThread AgentThread(string id = null, DateTimeOffset createdAt = default, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null)
     {
         metadata ??= new Dictionary<string, string>();
 
-        return new AgentThread(
+        return new AssistantThread(
             id,
             @object: null,
             createdAt,
@@ -136,16 +136,16 @@ public static partial class AIClientModelFactory
         return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls ?? true, serializedAdditionalRawData: null);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Azure.AI.Assistants.AgentFile"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Azure.AI.Assistants.AssistantFile"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="size"> The size of the file, in bytes. </param>
     /// <param name="filename"> The name of the file. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="purpose"> The intended purpose of a file. </param>
-    /// <returns> A new <see cref="Azure.AI.Assistants.AgentFile"/> instance for mocking. </returns>
-    public static AgentFile AgentFile(string id = null, int size = default, string filename = null, DateTimeOffset createdAt = default, AgentFilePurpose purpose = default)
+    /// <returns> A new <see cref="Azure.AI.Assistants.AssistantFile"/> instance for mocking. </returns>
+    public static AssistantFile AssistantFile(string id = null, int size = default, string filename = null, DateTimeOffset createdAt = default, AssistantFilePurpose purpose = default)
     {
-        return new AgentFile(id, size, filename, createdAt, purpose);
+        return new AssistantFile(id, size, filename, createdAt, purpose);
     }
 
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Assistants.RunStep"/>. </summary>

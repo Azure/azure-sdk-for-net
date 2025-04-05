@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> The text and associated annotations for a single item of agent thread message content. </summary>
+    /// <summary> The text and associated annotations for a single item of assistant thread message content. </summary>
     internal partial class InternalMessageTextDetails
     {
         /// <summary>

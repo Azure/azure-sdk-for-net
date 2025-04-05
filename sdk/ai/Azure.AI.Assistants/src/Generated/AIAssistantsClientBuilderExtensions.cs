@@ -12,41 +12,41 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="AIAssistantClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="AssistantsClient"/> to client builder. </summary>
     public static partial class AIAssistantsClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="AIAssistantClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="AssistantsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
         /// <param name="projectName"> The Azure AI Foundry project name. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<AIAssistantClient, AIAssistantClientOptions> AddAIAssistantClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, AzureKeyCredential credential)
+        public static IAzureClientBuilder<AssistantsClient, AssistantsClientOptions> AddAssistantsClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<AIAssistantClient, AIAssistantClientOptions>((options) => new AIAssistantClient(endpoint, subscriptionId, resourceGroupName, projectName, credential, options));
+            return builder.RegisterClientFactory<AssistantsClient, AssistantsClientOptions>((options) => new AssistantsClient(endpoint, subscriptionId, resourceGroupName, projectName, credential, options));
         }
 
-        /// <summary> Registers a <see cref="AIAssistantClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="AssistantsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
         /// <param name="projectName"> The Azure AI Foundry project name. </param>
-        public static IAzureClientBuilder<AIAssistantClient, AIAssistantClientOptions> AddAIAssistantClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName)
+        public static IAzureClientBuilder<AssistantsClient, AssistantsClientOptions> AddAssistantsClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<AIAssistantClient, AIAssistantClientOptions>((options, cred) => new AIAssistantClient(endpoint, subscriptionId, resourceGroupName, projectName, cred, options));
+            return builder.RegisterClientFactory<AssistantsClient, AssistantsClientOptions>((options, cred) => new AssistantsClient(endpoint, subscriptionId, resourceGroupName, projectName, cred, options));
         }
 
-        /// <summary> Registers a <see cref="AIAssistantClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="AssistantsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<AIAssistantClient, AIAssistantClientOptions> AddAIAssistantClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<AssistantsClient, AssistantsClientOptions> AddAssistantsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<AIAssistantClient, AIAssistantClientOptions>(configuration);
+            return builder.RegisterClientFactory<AssistantsClient, AssistantsClientOptions>(configuration);
         }
     }
 }

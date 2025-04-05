@@ -24,7 +24,7 @@ namespace Azure.AI.Assistants
 
         private const string ThreadCreatedValue = "thread.created";
 
-        /// <summary> Event sent when a new thread is created. The data of this event is of type AgentThread. </summary>
+        /// <summary> Event sent when a new thread is created. The data of this event is of type AssistantThread. </summary>
         public static ThreadStreamEvent ThreadCreated { get; } = new ThreadStreamEvent(ThreadCreatedValue);
         /// <summary> Determines if two <see cref="ThreadStreamEvent"/> values are the same. </summary>
         public static bool operator ==(ThreadStreamEvent left, ThreadStreamEvent right) => left.Equals(right);

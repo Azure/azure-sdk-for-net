@@ -52,7 +52,7 @@ namespace Azure.AI.Assistants
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateFileSearchToolResourceOptions"/>. </summary>
-        /// <param name="vectorStoreIds"> A list of vector store IDs to override the current list of the agent. </param>
+        /// <param name="vectorStoreIds"> A list of vector store IDs to override the current list of the assistant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UpdateFileSearchToolResourceOptions(IList<string> vectorStoreIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +60,7 @@ namespace Azure.AI.Assistants
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of vector store IDs to override the current list of the agent. </summary>
+        /// <summary> A list of vector store IDs to override the current list of the assistant. </summary>
         public IList<string> VectorStoreIds { get; }
     }
 }

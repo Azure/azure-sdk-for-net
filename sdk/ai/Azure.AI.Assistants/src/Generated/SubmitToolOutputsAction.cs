@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> The details for required tool calls that must be submitted for an agent thread run to continue. </summary>
+    /// <summary> The details for required tool calls that must be submitted for an assistant thread run to continue. </summary>
     public partial class SubmitToolOutputsAction : RequiredAction
     {
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsAction"/>. </summary>

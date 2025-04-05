@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Assistants
 {
-    /// <summary> A citation within the message that points to a specific quote from a specific File associated with the agent or the message. Generated when the agent uses the 'file_search' tool to search files. </summary>
+    /// <summary> A citation within the message that points to a specific quote from a specific File associated with the assistant or the message. Generated when the assistant uses the 'file_search' tool to search files. </summary>
     public partial class MessageTextFileCitationAnnotation : MessageTextAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="MessageTextFileCitationAnnotation"/>. </summary>
@@ -19,7 +19,7 @@ namespace Azure.AI.Assistants
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails">
         /// A citation within the message that points to a specific quote from a specific file.
-        /// Generated when the agent uses the "file_search" tool to search files.
+        /// Generated when the assistant uses the "file_search" tool to search files.
         /// </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>

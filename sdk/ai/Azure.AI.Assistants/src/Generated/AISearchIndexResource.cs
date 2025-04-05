@@ -46,8 +46,8 @@ namespace Azure.AI.Assistants
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/>. </summary>
-        /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this agent. </param>
-        /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
+        /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this assistant. </param>
+        /// <param name="indexName"> The name of an index in an IndexResource attached to this assistant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexConnectionId"/> or <paramref name="indexName"/> is null. </exception>
         public AISearchIndexResource(string indexConnectionId, string indexName)
         {
@@ -59,9 +59,9 @@ namespace Azure.AI.Assistants
         }
 
         /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/>. </summary>
-        /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this agent. </param>
-        /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
-        /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
+        /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this assistant. </param>
+        /// <param name="indexName"> The name of an index in an IndexResource attached to this assistant. </param>
+        /// <param name="queryType"> Type of query in an AIIndexResource attached to this assistant. </param>
         /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
         /// <param name="filter"> Odata filter string for search resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -80,11 +80,11 @@ namespace Azure.AI.Assistants
         {
         }
 
-        /// <summary> An index connection id in an IndexResource attached to this agent. </summary>
+        /// <summary> An index connection id in an IndexResource attached to this assistant. </summary>
         public string IndexConnectionId { get; set; }
-        /// <summary> The name of an index in an IndexResource attached to this agent. </summary>
+        /// <summary> The name of an index in an IndexResource attached to this assistant. </summary>
         public string IndexName { get; set; }
-        /// <summary> Type of query in an AIIndexResource attached to this agent. </summary>
+        /// <summary> Type of query in an AIIndexResource attached to this assistant. </summary>
         public AzureAISearchQueryType? QueryType { get; set; }
         /// <summary> Number of documents to retrieve from search and present to the model. </summary>
         public int? TopK { get; set; }

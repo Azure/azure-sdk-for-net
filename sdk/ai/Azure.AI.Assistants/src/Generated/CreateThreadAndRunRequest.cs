@@ -46,7 +46,7 @@ namespace Azure.AI.Assistants
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CreateThreadAndRunRequest"/>. </summary>
-        /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
+        /// <param name="assistantId"> The ID of the assistant for which the thread should be created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         internal CreateThreadAndRunRequest(string assistantId)
         {
@@ -58,16 +58,16 @@ namespace Azure.AI.Assistants
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateThreadAndRunRequest"/>. </summary>
-        /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
+        /// <param name="assistantId"> The ID of the assistant for which the thread should be created. </param>
         /// <param name="thread"> The details used to create the new thread. If no thread is provided, an empty one will be created. </param>
-        /// <param name="overrideModelName"> The overridden model that the agent should use to run the thread. </param>
-        /// <param name="overrideInstructions"> The overridden system instructions the agent should use to run the thread. </param>
+        /// <param name="overrideModelName"> The overridden model that the assistant should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions the assistant should use to run the thread. </param>
         /// <param name="overrideTools">
-        /// The overridden list of enabled tools the agent should use to run the thread.
+        /// The overridden list of enabled tools the assistant should use to run the thread.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </param>
-        /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
+        /// <param name="toolResources"> Override the tools the assistant can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
         /// <param name="stream">
         /// If `true`, returns a stream of events that happen during the Run as server-sent events,
         /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
@@ -99,7 +99,7 @@ namespace Azure.AI.Assistants
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateThreadAndRunRequest(string assistantId, AgentThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IReadOnlyList<ToolDefinition> overrideTools, UpdateToolResourcesOptions toolResources, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateThreadAndRunRequest(string assistantId, AssistantThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IReadOnlyList<ToolDefinition> overrideTools, UpdateToolResourcesOptions toolResources, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssistantId = assistantId;
             Thread = thread;
@@ -125,21 +125,21 @@ namespace Azure.AI.Assistants
         {
         }
 
-        /// <summary> The ID of the agent for which the thread should be created. </summary>
+        /// <summary> The ID of the assistant for which the thread should be created. </summary>
         public string AssistantId { get; }
         /// <summary> The details used to create the new thread. If no thread is provided, an empty one will be created. </summary>
-        public AgentThreadCreationOptions Thread { get; }
-        /// <summary> The overridden model that the agent should use to run the thread. </summary>
+        public AssistantThreadCreationOptions Thread { get; }
+        /// <summary> The overridden model that the assistant should use to run the thread. </summary>
         public string OverrideModelName { get; }
-        /// <summary> The overridden system instructions the agent should use to run the thread. </summary>
+        /// <summary> The overridden system instructions the assistant should use to run the thread. </summary>
         public string OverrideInstructions { get; }
         /// <summary>
-        /// The overridden list of enabled tools the agent should use to run the thread.
+        /// The overridden list of enabled tools the assistant should use to run the thread.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </summary>
         public IReadOnlyList<ToolDefinition> OverrideTools { get; }
-        /// <summary> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
+        /// <summary> Override the tools the assistant can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
         public UpdateToolResourcesOptions ToolResources { get; }
         /// <summary>
         /// If `true`, returns a stream of events that happen during the Run as server-sent events,
@@ -189,10 +189,10 @@ namespace Azure.AI.Assistants
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsApiToolChoiceOptionMode"/></description>
+        /// <description><see cref="AssistantsApiToolChoiceOptionMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsNamedToolChoice"/></description>
+        /// <description><see cref="AssistantsNamedToolChoice"/></description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -234,10 +234,10 @@ namespace Azure.AI.Assistants
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsApiResponseFormatMode"/></description>
+        /// <description><see cref="AssistantsApiResponseFormatMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="AgentsApiResponseFormat"/></description>
+        /// <description><see cref="AssistantsApiResponseFormat"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="ResponseFormatJsonSchemaType"/></description>

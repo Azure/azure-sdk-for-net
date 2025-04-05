@@ -81,7 +81,7 @@ namespace Azure.AI.Assistants
                 return null;
             }
             InternalFileListResponseObject @object = default;
-            IReadOnlyList<AgentFile> data = default;
+            IReadOnlyList<AssistantFile> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,10 +93,10 @@ namespace Azure.AI.Assistants
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    List<AgentFile> array = new List<AgentFile>();
+                    List<AssistantFile> array = new List<AssistantFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentFile.DeserializeAgentFile(item, options));
+                        array.Add(AssistantFile.DeserializeAssistantFile(item, options));
                     }
                     data = array;
                     continue;
