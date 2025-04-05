@@ -1063,8 +1063,14 @@
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
+# PRLabel: %Recovery Services Data-Replication
+/sdk/recoveryservices-datareplication/Azure.ResourceManager.*/     @helen-afework
+
+# ServiceLabel: %Recovery Services Data-Replication %Mgmt
+# ServiceOwners:                                                   @helen-afework
+
 # (Remove this when uncommenting path) PRLabel: %Secret Store Extension
-#/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @locomotiveviaduct
+#/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                @cjoprey @locomotiveviaduct
 
 # ServiceLabel: %Secret Store Extension %Mgmt
 # ServiceOwners:                                                   @cjoprey @locomotiveviaduct
@@ -1073,7 +1079,7 @@
 /sdk/selfhelp/Azure.ResourceManager.*/                             @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Service Fabric
-/sdk/servicefabric/Azure.ResourceManager.*/                       @QingChenmsft @vaishnavk @juhacket
+/sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket
 
 # ServiceLabel: %Service Fabric
 # ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
@@ -1085,7 +1091,7 @@
 # ServiceOwners:                                                   @sunkun99
 
 # PRLabel: %Migration Assessment
-/sdk/migrationassessment/Azure.ResourceManager.*/                   @srilipta-swain
+/sdk/migrationassessment/Azure.ResourceManager.*/                  @srilipta-swain
 
 # ServiceLabel: %%Migration Assessment %Mgmt
 # ServiceOwners:                                                   @srilipta-swain

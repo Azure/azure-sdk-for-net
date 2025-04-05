@@ -52,13 +52,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationData"/>. </summary>
-        /// <param name="properties"> Email configuration model properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataReplicationEmailConfigurationData(DataReplicationEmailConfigurationProperties properties)
+        public DataReplicationEmailConfigurationData()
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationData"/>. </summary>
@@ -66,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Email configuration model properties. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataReplicationEmailConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataReplicationEmailConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -74,12 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationData"/> for deserialization. </summary>
-        internal DataReplicationEmailConfigurationData()
-        {
-        }
-
-        /// <summary> Email configuration model properties. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         public DataReplicationEmailConfigurationProperties Properties { get; set; }
     }
 }
