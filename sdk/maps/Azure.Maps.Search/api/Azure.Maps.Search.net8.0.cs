@@ -22,13 +22,14 @@ namespace Azure.Maps.Search
     }
     public partial class MapsSearchClientOptions : Azure.Core.ClientOptions
     {
-        public MapsSearchClientOptions(Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion version = Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion.V2_0, System.Uri endpoint = null, Azure.Maps.Search.SearchLanguage language = null) { }
+        public MapsSearchClientOptions(Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion version = Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion.V2_1, System.Uri endpoint = null, Azure.Maps.Search.SearchLanguage language = null) { }
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.Maps.Search.SearchLanguage SearchLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 1,
             V2_0 = 2,
+            V2_1 = 3,
         }
     }
     public partial class SearchLanguage
@@ -101,6 +102,8 @@ namespace Azure.Maps.Search.Models
         public string Locality { get { throw null; } }
         public string Neighborhood { get { throw null; } }
         public string PostalCode { get { throw null; } }
+        public string StreetName { get { throw null; } }
+        public string StreetNumber { get { throw null; } }
     }
     public partial class AddressAdminDistrictsItem
     {
@@ -117,9 +120,7 @@ namespace Azure.Maps.Search.Models
     public partial class Boundary
     {
         internal Boundary() { }
-        public string FeatureType { get { throw null; } }
         public Azure.Core.GeoJson.GeoCollection Geometry { get { throw null; } }
-        public string Id { get { throw null; } }
         public Azure.Maps.Search.Models.BoundaryProperties Properties { get { throw null; } }
     }
     public partial class BoundaryProperties
@@ -356,7 +357,7 @@ namespace Azure.Maps.Search.Models
     }
     public static partial class MapsSearchModelFactory
     {
-        public static Azure.Maps.Search.Models.Address Address(string addressLine = null, string locality = null, string neighborhood = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, Azure.Maps.Search.Models.AddressCountryRegion countryRegion = null, string formattedAddress = null, Azure.Maps.Search.Models.Intersection intersection = null) { throw null; }
+        public static Azure.Maps.Search.Models.Address Address(string addressLine = null, string locality = null, string neighborhood = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, Azure.Maps.Search.Models.AddressCountryRegion countryRegion = null, string formattedAddress = null, string streetName = null, string streetNumber = null, Azure.Maps.Search.Models.Intersection intersection = null) { throw null; }
         public static Azure.Maps.Search.Models.AddressAdminDistrictsItem AddressAdminDistrictsItem(string name = null, string shortName = null) { throw null; }
         public static Azure.Maps.Search.Models.AddressCountryRegion AddressCountryRegion(string iso = null, string name = null) { throw null; }
         public static Azure.Maps.Search.Models.BoundaryProperties BoundaryProperties(string name = null, string copyright = null, string copyrightUrl = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeometryCopyright> geometriesCopyright = null) { throw null; }

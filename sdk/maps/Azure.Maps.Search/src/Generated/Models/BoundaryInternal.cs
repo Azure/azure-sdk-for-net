@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
@@ -16,54 +15,34 @@ namespace Azure.Maps.Search.Models
     ///
     /// Please note, the service typically returns a GeometryCollection with Polygon or MultiPolygon sub-types.
     /// </summary>
-    internal partial class BoundaryInternal : GeoJsonFeature
+    internal partial class BoundaryInternal
     {
         /// <summary> Initializes a new instance of <see cref="BoundaryInternal"/>. </summary>
-        /// <param name="geometry">
-        /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </param>
+        /// <param name="geometry"> A valid `GeoJSON GeometryCollection` object type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.8) for details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometry"/> is null. </exception>
-        internal BoundaryInternal(GeoJsonGeometry geometry) : base(geometry)
+        internal BoundaryInternal(GeoJsonGeometryCollection geometry)
         {
             Argument.AssertNotNull(geometry, nameof(geometry));
 
-            GeometriesCopyright = new ChangeTrackingList<GeometryCopyright>();
-            Type = new GeoJsonObjectType("Boundary");
+            Geometry = geometry;
         }
 
         /// <summary> Initializes a new instance of <see cref="BoundaryInternal"/>. </summary>
-        /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
-        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
-        /// <param name="geometry">
-        /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </param>
-        /// <param name="properties"> Properties can contain any additional metadata about the `Feature`. Value can be any JSON object or a JSON null value. </param>
-        /// <param name="id"> Identifier for the feature. </param>
-        /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
-        /// <param name="name"> The name associated with the geographical area. </param>
-        /// <param name="copyright"> The copyright string. </param>
-        /// <param name="copyrightURL"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
-        /// <param name="geometriesCopyright"> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </param>
-        internal BoundaryInternal(GeoJsonObjectType type, IReadOnlyList<double> boundingBox, GeoJsonGeometry geometry, object properties, string id, string featureType, string name, string copyright, string copyrightURL, IReadOnlyList<GeometryCopyright> geometriesCopyright) : base(type, boundingBox, geometry, properties, id, featureType)
+        /// <param name="type"> The type of a feature must be Feature. </param>
+        /// <param name="geometry"> A valid `GeoJSON GeometryCollection` object type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.8) for details. </param>
+        /// <param name="properties"> Properties of a Boundary object. </param>
+        internal BoundaryInternal(FeatureTypeEnum? type, GeoJsonGeometryCollection geometry, BoundaryProperties properties)
         {
-            Name = name;
-            Copyright = copyright;
-            CopyrightURL = copyrightURL;
-            GeometriesCopyright = geometriesCopyright;
             Type = type;
+            Geometry = geometry;
+            Properties = properties;
         }
 
-        /// <summary> The name associated with the geographical area. </summary>
-        public string Name { get; }
-        /// <summary> The copyright string. </summary>
-        public string Copyright { get; }
-        /// <summary> A URL that lists many of the data providers for Azure Maps and their related copyright information. </summary>
-        public string CopyrightURL { get; }
-        /// <summary> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </summary>
-        public IReadOnlyList<GeometryCopyright> GeometriesCopyright { get; }
+        /// <summary> The type of a feature must be Feature. </summary>
+        public FeatureTypeEnum? Type { get; }
+        /// <summary> A valid `GeoJSON GeometryCollection` object type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.8) for details. </summary>
+        public GeoJsonGeometryCollection Geometry { get; }
+        /// <summary> Properties of a Boundary object. </summary>
+        public BoundaryProperties Properties { get; }
     }
 }
