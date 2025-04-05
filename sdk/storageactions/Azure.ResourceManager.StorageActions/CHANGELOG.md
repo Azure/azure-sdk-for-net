@@ -3,6 +3,7 @@
 ## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added "Accepted" to StorageTask properties ProvisioningState
 
 ### Breaking Changes
 

@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.StorageActions.Models
         ValidateSubscriptionQuotaBegin,
         /// <summary> ValidateSubscriptionQuotaEnd. </summary>
         ValidateSubscriptionQuotaEnd,
+        /// <summary> Accepted. </summary>
+        Accepted,
         /// <summary> Creating. </summary>
         Creating,
         /// <summary> Succeeded. </summary>
