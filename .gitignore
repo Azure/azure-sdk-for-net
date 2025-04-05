@@ -180,3 +180,6 @@ TempTypeSpecFiles/
 
 # Common toolchain intermediate files
 temp
+
+# Runsettings files
+**/*.runsettings
