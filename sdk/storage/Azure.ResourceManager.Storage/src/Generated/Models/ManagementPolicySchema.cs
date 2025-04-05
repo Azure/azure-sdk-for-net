@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>
+    /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
     internal partial class ManagementPolicySchema
     {
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagementPolicySchema"/>. </summary>
-        /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
+        /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
         public ManagementPolicySchema(IEnumerable<ManagementPolicyRule> rules)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementPolicySchema"/>. </summary>
-        /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
+        /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementPolicySchema(IList<ManagementPolicyRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>
+        /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
         [WirePath("rules")]
         public IList<ManagementPolicyRule> Rules { get; }
     }

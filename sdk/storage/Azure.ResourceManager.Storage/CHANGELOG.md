@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added "Accepted" to StorageTaskAssignment properties ProvisioningState
+- Updated doc link in API description
+
 ### Breaking Changes
 
 ### Bugs Fixed
