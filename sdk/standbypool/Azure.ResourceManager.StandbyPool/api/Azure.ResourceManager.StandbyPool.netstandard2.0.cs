@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public static Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary ContainerGroupInstanceCountSummary(long? zone = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.StandbyPool.Models.PoolContainerGroupStateCount> instanceCountsByStateUpdated = null) { throw null; }
         public static Azure.ResourceManager.StandbyPool.Models.PoolContainerGroupStateCount PoolContainerGroupStateCount(Azure.ResourceManager.StandbyPool.Models.PoolContainerGroupState state = default(Azure.ResourceManager.StandbyPool.Models.PoolContainerGroupState), long count = (long)0) { throw null; }
         public static Azure.ResourceManager.StandbyPool.Models.PoolResourceStateCount PoolResourceStateCount(string state = null, long count = (long)0) { throw null; }
-        public static Azure.ResourceManager.StandbyPool.Models.PoolStatus PoolStatus(Azure.ResourceManager.StandbyPool.Models.HealthStateCode code = default(Azure.ResourceManager.StandbyPool.Models.HealthStateCode), string message = null) { throw null; }
+        public static Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus PoolStatus(Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode code = default(Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode), string message = null) { throw null; }
         public static Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineStateCount PoolVirtualMachineStateCount(Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineState state = default(Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineState), long count = (long)0) { throw null; }
         public static Azure.ResourceManager.StandbyPool.StandbyContainerGroupPoolData StandbyContainerGroupPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolProperties properties = null) { throw null; }
         public static Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolPrediction StandbyContainerGroupPoolPrediction(System.Collections.Generic.IEnumerable<long> forecastValuesInstancesRequestedCount = null, System.DateTimeOffset forecastStartOn = default(System.DateTimeOffset), string forecastInfo = null) { throw null; }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolProperties StandbyContainerGroupPoolProperties(Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolElasticityProfile elasticityProfile, Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupProperties containerGroupProperties, Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.StandbyPool.StandbyContainerGroupPoolRuntimeViewData StandbyContainerGroupPoolRuntimeViewData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolRuntimeViewProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary> instanceCountSummary = null, Azure.ResourceManager.StandbyPool.Models.PoolStatus status = null, Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? provisioningState = default(Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState?), Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolPrediction prediction = null) { throw null; }
+        public static Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary> instanceCountSummary = null, Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus status = null, Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? provisioningState = default(Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState?), Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolPrediction prediction = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary> instanceCountSummary, Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.StandbyPool.StandbyVirtualMachineData StandbyVirtualMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineProperties properties = null) { throw null; }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public static Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolPrediction StandbyVirtualMachinePoolPrediction(System.Collections.Generic.IEnumerable<long> forecastValuesInstancesRequestedCount = null, System.DateTimeOffset forecastStartOn = default(System.DateTimeOffset), string forecastInfo = null) { throw null; }
         public static Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolProperties StandbyVirtualMachinePoolProperties(Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolElasticityProfile elasticityProfile = null, Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineState virtualMachineState = default(Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineState), Azure.Core.ResourceIdentifier attachedVirtualMachineScaleSetId = null, Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? provisioningState = default(Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.StandbyPool.StandbyVirtualMachinePoolRuntimeViewData StandbyVirtualMachinePoolRuntimeViewData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolRuntimeViewProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineInstanceCountSummary> instanceCountSummary = null, Azure.ResourceManager.StandbyPool.Models.PoolStatus status = null, Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? provisioningState = default(Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState?), Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolPrediction prediction = null) { throw null; }
+        public static Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineInstanceCountSummary> instanceCountSummary = null, Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus status = null, Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? provisioningState = default(Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState?), Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolPrediction prediction = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineProperties StandbyVirtualMachineProperties(Azure.Core.ResourceIdentifier virtualMachineResourceId = null, Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? provisioningState = default(Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState?)) { throw null; }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         internal ContainerGroupInstanceCountSummary() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StandbyPool.Models.PoolResourceStateCount> InstanceCountsByState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StandbyPool.Models.PoolContainerGroupStateCount> InstanceCountsByStateUpdated { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StandbyPool.Models.PoolContainerGroupStateCount> StandbyContainerGroupInstanceCountsByState { get { throw null; } }
         public long? Zone { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -331,24 +331,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HealthStateCode : System.IEquatable<Azure.ResourceManager.StandbyPool.Models.HealthStateCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HealthStateCode(string value) { throw null; }
-        public static Azure.ResourceManager.StandbyPool.Models.HealthStateCode Degraded { get { throw null; } }
-        public static Azure.ResourceManager.StandbyPool.Models.HealthStateCode Healthy { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StandbyPool.Models.HealthStateCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StandbyPool.Models.HealthStateCode left, Azure.ResourceManager.StandbyPool.Models.HealthStateCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StandbyPool.Models.HealthStateCode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StandbyPool.Models.HealthStateCode left, Azure.ResourceManager.StandbyPool.Models.HealthStateCode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PoolContainerGroupState : System.IEquatable<Azure.ResourceManager.StandbyPool.Models.PoolContainerGroupState>
@@ -394,18 +376,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.PoolResourceStateCount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.PoolResourceStateCount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PoolStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.PoolStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.PoolStatus>
-    {
-        internal PoolStatus() { }
-        public Azure.ResourceManager.StandbyPool.Models.HealthStateCode Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.StandbyPool.Models.PoolStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.PoolStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.PoolStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.StandbyPool.Models.PoolStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.PoolStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.PoolStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.PoolStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PoolVirtualMachineState : System.IEquatable<Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineState>
     {
@@ -441,6 +411,24 @@ namespace Azure.ResourceManager.StandbyPool.Models
         Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineStateCount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineStateCount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineStateCount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineStateCount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StanbyPoolHealthStateCode : System.IEquatable<Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StanbyPoolHealthStateCode(string value) { throw null; }
+        public static Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode Degraded { get { throw null; } }
+        public static Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode Healthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode left, Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode left, Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StandbyContainerGroupPoolElasticityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolElasticityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolElasticityProfile>
     {
@@ -499,7 +487,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary> InstanceCountSummary { get { throw null; } }
         public Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolPrediction Prediction { get { throw null; } }
         public Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.StandbyPool.Models.PoolStatus Status { get { throw null; } }
+        public Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus Status { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolRuntimeViewProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolRuntimeViewProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolRuntimeViewProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -544,6 +532,18 @@ namespace Azure.ResourceManager.StandbyPool.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StandbyPoolStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus>
+    {
+        internal StandbyPoolStatus() { }
+        public Azure.ResourceManager.StandbyPool.Models.StanbyPoolHealthStateCode Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StandbyProvisioningState : System.IEquatable<Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState>
     {
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         internal StandbyVirtualMachineInstanceCountSummary() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StandbyPool.Models.PoolResourceStateCount> InstanceCountsByState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineStateCount> InstanceCountsByStateUpdated { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineStateCount> StandbyVirtualMachineInstanceCountsByState { get { throw null; } }
         public long? Zone { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineInstanceCountSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineInstanceCountSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachineInstanceCountSummary> InstanceCountSummary { get { throw null; } }
         public Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolPrediction Prediction { get { throw null; } }
         public Azure.ResourceManager.StandbyPool.Models.StandbyProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.StandbyPool.Models.PoolStatus Status { get { throw null; } }
+        public Azure.ResourceManager.StandbyPool.Models.StandbyPoolStatus Status { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolRuntimeViewProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolRuntimeViewProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StandbyPool.Models.StandbyVirtualMachinePoolRuntimeViewProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
