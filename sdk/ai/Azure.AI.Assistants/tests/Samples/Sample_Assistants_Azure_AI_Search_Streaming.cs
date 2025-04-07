@@ -21,27 +21,14 @@ public partial class Sample_Assistants_Azure_AI_Search_Streaming : SamplesBase<A
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
+        var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID")
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var connectionID = TestEnvironment.AI_SEARCH_CONNECTION_ID;
 #endif
         #endregion
         #region Snippet:AssistantsAzureAISearchStreamingExample_CreateTool_Async
-#if SNIPPET
-        ListConnectionsResponse connections = await projectClient.GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
-
-        if (connections?.Value == null || connections.Value.Count == 0)
-        {
-            throw new InvalidOperationException("No connections found for the Azure AI Search.");
-        }
-
-        ConnectionResponse connection = connections.Value[0];
-
-        var connectionID = connection.Id;
-#else
-        var connectionID = TestEnvironment.AI_SEARCH_CONNECTION_ID;
-#endif
         AISearchIndexResource indexList = new(connectionID, "sample_index")
         {
             QueryType = AzureAISearchQueryType.VectorSemanticHybrid
@@ -113,25 +100,13 @@ public partial class Sample_Assistants_Azure_AI_Search_Streaming : SamplesBase<A
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
+        var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID")
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-#endif
-        #region Snippet:AssistantsAzureAISearchStreamingExample_CreateTool
-#if SNIPPET
-        ListConnectionsResponse connections = projectClient.GetConnectionsClient().GetConnections(ConnectionType.AzureAISearch);
-
-        if (connections?.Value == null || connections.Value.Count == 0)
-        {
-            throw new InvalidOperationException("No connections found for the Azure AI Search.");
-        }
-
-        ConnectionResponse connection = connections.Value[0];
-        var connectionID = connection.Id;
-#else
         var connectionID = TestEnvironment.AI_SEARCH_CONNECTION_ID;
 #endif
+        #region Snippet:AssistantsAzureAISearchStreamingExample_CreateTool
         AISearchIndexResource indexList = new(connectionID, "sample_index")
         {
             QueryType = AzureAISearchQueryType.VectorSemanticHybrid

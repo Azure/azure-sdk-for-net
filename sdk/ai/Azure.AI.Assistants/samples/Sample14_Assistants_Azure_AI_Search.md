@@ -8,26 +8,17 @@ Search requires an existing Azure AI Search Index. For more information and setu
 guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 In this example we will use the existing Azure AI Search Index as a tool for an assistant.
 
-1. First we need to create an assistant and project client and read the environment variables, which will be used in the next steps.
+1. First we need to create an assistant and read the environment variables, which will be used in the next steps.
 ```C# Snippet:AssistantsAzureAISearchExample_CreateProjectClient
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
+var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID")
 ```
 
-2. Create an assistant with `AzureAISearchToolDefinition` and `ToolResources` with the only member `AzureAISearchResource` to be able to perform search. We will use `ConnectionsClient` to find the Azure AI Search resource.
+2. Create an assistant with `AzureAISearchToolDefinition` and `ToolResources` with the only member `AzureAISearchResource` to be able to perform search. We will use `connectionID` to get the Azure AI Search resource.
 
 Synchronous sample:
 ```C# Snippet:AssistantsCreateAgentWithAzureAISearchTool_Sync
-ListConnectionsResponse connections = projectClient.GetConnectionsClient().GetConnections(ConnectionType.AzureAISearch);
-
-if (connections?.Value == null || connections.Value.Count == 0)
-{
-    throw new InvalidOperationException("No connections found for the Azure AI Search.");
-}
-
-ConnectionResponse connection = connections.Value[0];
-var connectionID = connection.Id;
 AISearchIndexResource indexList = new(connectionID, "sample_index")
 {
     QueryType = AzureAISearchQueryType.VectorSemanticHybrid
@@ -52,16 +43,6 @@ Assistant assistant = client.CreateAssistant(
 
 Asynchronous sample:
 ```C# Snippet:AssistantsCreateAgentWithAzureAISearchTool
-ListConnectionsResponse connections = await projectClient.GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
-
-if (connections?.Value == null || connections.Value.Count == 0)
-{
-    throw new InvalidOperationException("No connections found for the Azure AI Search.");
-}
-
-ConnectionResponse connection = connections.Value[0];
-
-var connectionID = connection.Id;
 AISearchIndexResource indexList = new(connectionID, "sample_index")
 {
     QueryType = AzureAISearchQueryType.VectorSemanticHybrid

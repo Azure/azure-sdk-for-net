@@ -317,8 +317,6 @@ To enable your Assistant to perform search through Bing search API, you use `Bin
 
 Here is an example:
 ```C# Snippet:AssistantsBingGroundingAsync_GetConnection
-ConnectionResponse bingConnection = await projectClient.GetConnectionsClient().GetConnectionAsync(bingConnectionName);
-var connectionId = bingConnection.Id;
 ToolConnectionList connectionList = new()
 {
     ConnectionList = { new ToolConnection(connectionId) }
@@ -343,16 +341,6 @@ Search requires an existing Azure AI Search Index. For more information and setu
 guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 
 ```C# Snippet:AssistantsCreateAgentWithAzureAISearchTool
-ListConnectionsResponse connections = await projectClient.GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
-
-if (connections?.Value == null || connections.Value.Count == 0)
-{
-    throw new InvalidOperationException("No connections found for the Azure AI Search.");
-}
-
-ConnectionResponse connection = connections.Value[0];
-
-var connectionID = connection.Id;
 AISearchIndexResource indexList = new(connectionID, "sample_index")
 {
     QueryType = AzureAISearchQueryType.VectorSemanticHybrid

@@ -21,22 +21,15 @@ public partial class Sample_Assistants_Bing_Grounding : SamplesBase<AIAssistants
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var bingConnectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_NAME");
-        var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
+        var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONECTION_ID");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var connectionId = TestEnvironment.BING_CONECTION_ID;
 #endif
-
         AssistantsClient assistantClient = new(connectionString, new DefaultAzureCredential());
         #endregion
         #region Snippet:AssistantsBingGroundingAsync_GetConnection
-#if SNIPPET
-        ConnectionResponse bingConnection = await projectClient.GetConnectionsClient().GetConnectionAsync(bingConnectionName);
-        var connectionId = bingConnection.Id;
-#else
-        var connectionId = TestEnvironment.BING_CONECTION_ID;
-#endif
         ToolConnectionList connectionList = new()
         {
             ConnectionList = { new ToolConnection(connectionId) }
@@ -123,23 +116,14 @@ public partial class Sample_Assistants_Bing_Grounding : SamplesBase<AIAssistants
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var bingConnectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_NAME");
-        var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
+        var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONECTION_ID");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var bingConnectionName = TestEnvironment.BINGCONNECTIONNAME;
-#endif
-
-        AssistantsClient assistantClient = new(connectionString, new DefaultAzureCredential());
-        #region Snippet:AssistantsBingGrounding_GetConnection
-#if SNIPPET
-        ConnectionResponse bingConnection = projectClient.GetConnectionsClient().GetConnection(bingConnectionName);
-        var connectionId = bingConnection.Id;
-#else
         var connectionId = TestEnvironment.BING_CONECTION_ID;
 #endif
-
+        AssistantsClient assistantClient = new(connectionString, new DefaultAzureCredential());
+        #region Snippet:AssistantsBingGrounding_GetConnection
         ToolConnectionList connectionList = new()
         {
             ConnectionList = { new ToolConnection(connectionId) }

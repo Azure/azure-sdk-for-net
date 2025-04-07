@@ -1,24 +1,19 @@
 # Sample for use of an assistant with Bing grounding in Azure.AI.Assistants.
 
 To enable your Assistant to perform search through Bing search API, you use `BingGroundingToolDefinition` along with a connection.
-1. First we need to create an assistant and project client and read the environment variables, which will be used in the next steps.
+1. First we need to create an assistant and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:AssistantsBingGrounding_CreateProject
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-var bingConnectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_NAME");
-var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
-
+var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONECTION_ID");
 AssistantsClient assistantClient = new(connectionString, new DefaultAzureCredential());
 ```
 
-2. Next we will get the bing connection by name using connection client. This connection will be used to initialize the `BingGroundingToolDefinition`.
+2. We will use the Bing connection ID to initialize the `BingGroundingToolDefinition`.
 
 Synchronous sample:
 ```C# Snippet:AssistantsBingGrounding_GetConnection
-ConnectionResponse bingConnection = projectClient.GetConnectionsClient().GetConnection(bingConnectionName);
-var connectionId = bingConnection.Id;
-
 ToolConnectionList connectionList = new()
 {
     ConnectionList = { new ToolConnection(connectionId) }
@@ -28,8 +23,6 @@ BingGroundingToolDefinition bingGroundingTool = new(connectionList);
 
 Asynchronous sample:
 ```C# Snippet:AssistantsBingGroundingAsync_GetConnection
-ConnectionResponse bingConnection = await projectClient.GetConnectionsClient().GetConnectionAsync(bingConnectionName);
-var connectionId = bingConnection.Id;
 ToolConnectionList connectionList = new()
 {
     ConnectionList = { new ToolConnection(connectionId) }
