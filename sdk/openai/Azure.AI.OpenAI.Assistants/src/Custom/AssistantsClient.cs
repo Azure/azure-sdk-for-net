@@ -536,6 +536,34 @@ public partial class AssistantsClient
         return Response.FromValue(PageableList<ThreadRun>.Create(baseResponse.Value), baseResponse.GetRawResponse());
     }
 
+    /// <summary> Uploads a file for use by other operations. </summary>
+    /// <param name="data"> The file data (not filename) to upload. </param>
+    /// <param name="purpose"> The intended purpose of the file. </param>
+    /// <param name="filename"> A filename to associate with the uploaded data. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+    public virtual async Task<Response<OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(data, nameof(data));
+
+        UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+        return await UploadFileAsync(uploadFileRequest, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary> Uploads a file for use by other operations. </summary>
+    /// <param name="data"> The file data (not filename) to upload. </param>
+    /// <param name="purpose"> The intended purpose of the file. </param>
+    /// <param name="filename"> A filename to associate with the uploaded data. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+    public virtual Response<OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(data, nameof(data));
+
+        UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+        return UploadFile(uploadFileRequest, cancellationToken);
+    }
+
     /*
      * CUSTOM CODE DESCRIPTION:
      *
