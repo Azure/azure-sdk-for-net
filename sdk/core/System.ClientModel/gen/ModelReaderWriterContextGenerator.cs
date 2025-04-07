@@ -467,7 +467,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         foreach (var baseItem in classDeclaration.BaseList.Types)
         {
             var baseTypeSymbol = semanticModel.GetSymbolInfo(baseItem.Type).Symbol as INamedTypeSymbol;
-            if (baseTypeSymbol is null)
+            if (baseTypeSymbol is null || baseTypeSymbol.TypeKind != TypeKind.Interface)
             {
                 continue;
             }
@@ -476,9 +476,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             {
                 return persistableSymbol;
             }
-
-            if (baseTypeSymbol.TypeKind != TypeKind.Interface)
-                continue;
 
             foreach (var interfaceSymbol in baseTypeSymbol.AllInterfaces)
             {
