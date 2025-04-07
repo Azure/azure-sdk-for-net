@@ -22,7 +22,7 @@ public partial class Sample_Assistants_Azure_AI_Search : SamplesBase<AIAssistant
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID")
+        var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
@@ -131,7 +131,7 @@ public partial class Sample_Assistants_Azure_AI_Search : SamplesBase<AIAssistant
 #if SNIPPET
         var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID")
+        var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;

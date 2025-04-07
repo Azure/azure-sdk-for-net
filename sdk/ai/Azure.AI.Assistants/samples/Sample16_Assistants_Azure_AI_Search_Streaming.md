@@ -12,7 +12,7 @@ In this example we will use the existing Azure AI Search Index as a tool for an 
 ```C# Snippet:AssistantsAzureAISearchStreamingExample_CreateProjectClient
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID")
+var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID");
 ```
 
 2. Create an assistant with `AzureAISearchToolDefinition` and `ToolResources` with the only member `AzureAISearchResource` to be able to perform search. We will use `connectionID` to get the Azure AI Search resource.
