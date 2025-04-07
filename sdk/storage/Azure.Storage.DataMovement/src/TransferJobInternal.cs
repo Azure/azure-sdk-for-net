@@ -420,6 +420,7 @@ namespace Azure.Storage.DataMovement
 
                     try
                     {
+                        // we are currently not preserving directory-to-directory transfer
                         await subContainer.CreateIfNotExistsAsync(_cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
