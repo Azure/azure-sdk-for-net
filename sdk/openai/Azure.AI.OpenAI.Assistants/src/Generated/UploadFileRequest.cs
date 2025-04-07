@@ -12,7 +12,7 @@ using System.IO;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The UploadFileRequest. </summary>
-    internal partial class UploadFileRequest
+    public partial class UploadFileRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
