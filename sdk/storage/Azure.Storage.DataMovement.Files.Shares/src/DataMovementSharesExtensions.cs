@@ -94,12 +94,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             return new()
             {
-                FileAttributes = (options?._isFileAttributesSet ?? false)
-                    ? options?.FileAttributes
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
-                        ? (NtfsFileAttributes?)fileAttributes
-                        : default,
-                FilePermissionKey = permissionKeyValue,
+                FileAttributes = options?.Nfs == true
+                    ? default
+                    : (options?._isFileAttributesSet ?? false)
+                        ? options?.FileAttributes
+                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
+                            ? (NtfsFileAttributes?)fileAttributes
+                            : default,
+                FilePermissionKey = options?.Nfs == true
+                    ? default
+                    : permissionKeyValue,
                 FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
                     ? options?.FileCreatedOn
                     : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
@@ -110,11 +114,36 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
                         ? (DateTimeOffset?)fileLastWrittenOn
                         : default,
-                FileChangedOn = (options?._isFileChangedOnSet ?? false)
-                    ? options?.FileChangedOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
-                        ? (DateTimeOffset?)fileChangedOn
-                        : default,
+                FileChangedOn = options?.Nfs == true
+                    ? default
+                    : (options?._isFileChangedOnSet ?? false)
+                        ? options?.FileChangedOn
+                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
+                            ? (DateTimeOffset?)fileChangedOn
+                            : default,
+            };
+        }
+
+        public static FilePosixProperties GetFilePosixProperties(
+            this ShareFileStorageResourceOptions options,
+            NfsFileMode destinationFileMode,
+            string destinationOwner,
+            string destinationGroup,
+            NfsFileType? destinationFileType,
+            long? destinationLinkCount)
+        {
+            if (options?.Nfs != true)
+            {
+                return new();
+            }
+
+            return new()
+            {
+                Owner = destinationOwner,
+                Group = destinationGroup,
+                FileMode = destinationFileMode,
+                FileType = destinationFileType,
+                LinkCount = destinationLinkCount
             };
         }
 
@@ -124,11 +153,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             return new()
             {
-                FileAttributes = (options?._isFileAttributesSet ?? false)
-                    ? options?.FileAttributes
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
-                        ? (NtfsFileAttributes?)fileAttributes
-                        : default,
+                FileAttributes = options?.Nfs == true
+                    ? default
+                    : (options?._isFileAttributesSet ?? false)
+                        ? options?.FileAttributes
+                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
+                            ? (NtfsFileAttributes?)fileAttributes
+                            : default,
                 FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
                     ? options?.FileCreatedOn
                     : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
@@ -139,11 +170,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
                         ? (DateTimeOffset?)fileLastWrittenOn
                         : default,
-                FileChangedOn = (options?._isFileChangedOnSet ?? false)
-                    ? options?.FileChangedOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
-                        ? (DateTimeOffset?)fileChangedOn
-                        : default,
+                FileChangedOn = options?.Nfs == true
+                    ? default
+                    : (options?._isFileChangedOnSet ?? false)
+                        ? options?.FileChangedOn
+                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
+                            ? (DateTimeOffset?)fileChangedOn
+                            : default,
             };
         }
 
@@ -237,6 +270,26 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.CacheControl, fileProperties.CacheControl);
             }
+            if (fileProperties.PosixProperties.Owner != default)
+            {
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.Owner, fileProperties.PosixProperties.Owner);
+            }
+            if (fileProperties.PosixProperties.Group != default)
+            {
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.Group, fileProperties.PosixProperties.Group);
+            }
+            if (fileProperties.PosixProperties.FileMode != default)
+            {
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileMode, fileProperties.PosixProperties.FileMode);
+            }
+            if (fileProperties.PosixProperties.FileType != default)
+            {
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileType, fileProperties.PosixProperties.FileType);
+            }
+            if (fileProperties.PosixProperties.LinkCount != default)
+            {
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.LinkCount, fileProperties.PosixProperties.LinkCount);
+            }
             return new StorageResourceItemProperties()
             {
                 ResourceLength = fileProperties.ContentLength,
@@ -309,6 +362,26 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (existingProperties.ResourceLength == default)
             {
                 existingProperties.ResourceLength = fileProperties.ContentLength;
+            }
+            if (fileProperties.PosixProperties.Owner != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.Owner, fileProperties.PosixProperties.Owner);
+            }
+            if (fileProperties.PosixProperties.Group != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.Group, fileProperties.PosixProperties.Group);
+            }
+            if (fileProperties.PosixProperties.FileMode != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileMode, fileProperties.PosixProperties.FileMode);
+            }
+            if (fileProperties.PosixProperties.FileType != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileType, fileProperties.PosixProperties.FileType);
+            }
+            if (fileProperties.PosixProperties.LinkCount != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.LinkCount, fileProperties.PosixProperties.LinkCount);
             }
         }
 

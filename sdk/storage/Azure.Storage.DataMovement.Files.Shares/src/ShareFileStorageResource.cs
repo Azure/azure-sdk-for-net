@@ -38,6 +38,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal string _destinationPermissionKey;
 
+        internal NfsFileMode _destinationFileMode;
+
+        internal string _destinationOwner;
+
+        internal string _destinationGroup;
+
+        internal NfsFileType? _destinationFileType;
+
+        internal long? _destinationLinkCount;
+
         public ShareFileStorageResource(
             ShareFileClient fileClient,
             ShareFileStorageResourceOptions options = default)
@@ -82,18 +92,27 @@ namespace Azure.Storage.DataMovement.Files.Shares
             IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
             string filePermission = _options?.GetFilePermission(properties?.RawProperties);
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
+            FilePosixProperties posixProperties = _options?.GetFilePosixProperties(
+                _destinationFileMode, _destinationOwner, _destinationGroup, _destinationFileType, _destinationLinkCount);
+
             // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
             if ((properties == null || properties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
             {
                 smbProperties.FileAttributes = default;
             }
 
+            ShareFileCreateOptions options = new ShareFileCreateOptions()
+            {
+                HttpHeaders = httpHeaders,
+                Metadata = metadata,
+                FilePermission = new() { Permission = filePermission },
+                SmbProperties = smbProperties,
+                PosixProperties = posixProperties
+            };
+
             await ShareFileClient.CreateAsync(
                     maxSize: maxSize,
-                    httpHeaders: httpHeaders,
-                    metadata: metadata,
-                    smbProperties: smbProperties,
-                    filePermission: filePermission,
+                    options: options,
                     conditions: _options?.DestinationConditions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -112,6 +131,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
+            FilePosixProperties posixProperties = _options?.GetFilePosixProperties(
+                _destinationFileMode, _destinationOwner, _destinationGroup, _destinationFileType, _destinationLinkCount);
             // Call Set Properties
             // if transfer is not empty and original File Attribute contains ReadOnly
             // or if FileChangedOn is to be preserved or manually set
@@ -123,6 +144,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 {
                     HttpHeaders = httpHeaders,
                     SmbProperties = smbProperties,
+                    PosixProperties = posixProperties
                 },
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -288,6 +310,23 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     {
                         _destinationPermissionKey = destinationPermissionKey;
                     }
+
+                    // set NFS permissions
+                    _destinationOwner = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Owner, out object owner) == true
+                        ? (string)owner
+                        : default;
+                    _destinationGroup = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Group, out object group) == true
+                        ? (string)group
+                        : default;
+                    _destinationFileMode = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
+                        ? (NfsFileMode)fileMode
+                        : default;
+                    _destinationFileType = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileType, out object fileType) == true
+                        ? (NfsFileType?)fileType
+                        : default;
+                    _destinationLinkCount = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LinkCount, out object linkCount) == true
+                        ? (long?)linkCount
+                        : default;
                 }
             }
         }
