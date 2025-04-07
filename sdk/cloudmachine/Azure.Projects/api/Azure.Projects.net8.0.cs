@@ -27,16 +27,6 @@ namespace Azure.Projects
     {
         public static Azure.Data.AppConfiguration.ConfigurationClient GetConfigurationClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
     }
-    public static partial class AzureAIProjectsExtensions
-    {
-        public static Azure.AI.Projects.AgentsClient GetAgentsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.AI.Projects.EvaluationsClient GetEvaluationsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.Search.Documents.SearchClient GetSearchClient(this System.ClientModel.Primitives.ConnectionProvider workspace, string indexName) { throw null; }
-        public static Azure.Search.Documents.Indexes.SearchIndexClient GetSearchIndexClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-        public static Azure.Search.Documents.Indexes.SearchIndexerClient GetSearchIndexerClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-    }
     public static partial class BlobExtensions
     {
         public static Azure.Storage.Blobs.BlobContainerClient GetBlobContainerClient(this System.ClientModel.Primitives.ConnectionProvider provider, string containerName = "default") { throw null; }
@@ -54,10 +44,10 @@ namespace Azure.Projects
         public System.Threading.Tasks.Task SendJsonAsync(object serializable) { throw null; }
         public void WhenMessageReceived(System.Action<string> received) { }
     }
-    public partial class OfxProjectClient : Azure.Projects.ProjectClient
+    public partial class OfxClient : Azure.Projects.ProjectClient
     {
-        public OfxProjectClient() { }
-        public OfxProjectClient(string projectId, System.ClientModel.Primitives.ConnectionProvider connections) { }
+        public OfxClient() { }
+        public OfxClient(string projectId, System.ClientModel.Primitives.ConnectionProvider connections) { }
         public Azure.Projects.MessagingServices Messaging { get { throw null; } }
         public Azure.Projects.StorageServices Storage { get { throw null; } }
     }
@@ -124,23 +114,5 @@ namespace Azure.Projects
         public System.Threading.Tasks.Task<string> UploadJsonAsync(object serializable, string name = null, bool overwrite = false) { throw null; }
         public void WhenUploaded(System.Action<Azure.Projects.StorageFile> function) { }
         public void WhenUploaded(System.Action<System.BinaryData> function) { }
-    }
-}
-namespace Azure.Projects.Foundry
-{
-    public partial class AIFoundryClient : System.ClientModel.Primitives.ConnectionProvider
-    {
-        protected AIFoundryClient() { }
-        public AIFoundryClient(string connectionString, Azure.Core.TokenCredential credential = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public System.ClientModel.Primitives.ConnectionCollection Connections { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
     }
 }

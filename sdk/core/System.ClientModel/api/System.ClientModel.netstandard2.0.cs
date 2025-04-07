@@ -234,6 +234,11 @@ namespace System.ClientModel.Primitives
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
     }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true)]
+    public partial class ModelReaderWriterBuildableAttribute : System.Attribute
+    {
+        public ModelReaderWriterBuildableAttribute(System.Type type) { }
+    }
     public abstract partial class ModelReaderWriterContext
     {
         protected ModelReaderWriterContext() { }
@@ -252,13 +257,11 @@ namespace System.ClientModel.Primitives
     {
         protected ModelReaderWriterTypeBuilder() { }
         protected abstract System.Type BuilderType { get; }
-        protected virtual bool IsCollection { get { throw null; } }
         protected virtual System.Type? ItemType { get { throw null; } }
         protected virtual void AddItem(object collection, object? item) { }
         protected virtual void AddKeyValuePair(object collection, string key, object? item) { }
         protected abstract object CreateInstance();
-        public object CreateObject() { throw null; }
-        protected internal virtual System.Collections.IEnumerable? GetItems(object obj) { throw null; }
+        protected virtual System.Collections.IEnumerable? GetItems(object obj) { throw null; }
         protected virtual object ToCollection(object builder) { throw null; }
     }
     public abstract partial class OperationResult

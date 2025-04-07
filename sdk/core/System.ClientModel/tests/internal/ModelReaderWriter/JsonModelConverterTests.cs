@@ -141,7 +141,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             options.Converters.Add(converter);
             var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelBuilder found for PersistableModel.", ex!.Message);
+            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for PersistableModel.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
         }
 
         [Test]
