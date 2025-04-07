@@ -44,11 +44,7 @@ parameters:
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
-  - name: ShouldPublish
-    value: $[or(and(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.Reason'], 'IndividualCI')), eq('${{ parameters.ShouldPublish }}', 'true'))]
-  - name: PublishPublic
-    value: $[or(and(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.Reason'], 'IndividualCI')), eq('${{ parameters.PublishPublic }}', 'true'))]
-
+  
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
