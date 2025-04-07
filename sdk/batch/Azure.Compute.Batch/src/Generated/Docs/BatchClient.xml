@@ -3317,7 +3317,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response<GetCertificateResponse> response = await client.GetCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
+Response<BatchCertificate> response = await client.GetCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
 ]]></code></example>
     </member>
     <member name="GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
@@ -3328,7 +3328,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response<GetCertificateResponse> response = client.GetCertificate("sha1", "0123456789abcdef0123456789abcdef01234567");
+Response<BatchCertificate> response = client.GetCertificate("sha1", "0123456789abcdef0123456789abcdef01234567");
 ]]></code></example>
     </member>
     <member name="GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
@@ -3344,6 +3344,7 @@ Response response = await client.GetCertificateAsync("sha1", "0123456789abcdef01
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("thumbprint").ToString());
 Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("data").ToString());
 ]]></code></example>
     </member>
     <member name="GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
@@ -3359,6 +3360,7 @@ Response response = client.GetCertificate("sha1", "0123456789abcdef0123456789abc
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("thumbprint").ToString());
 Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("data").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteJobScheduleAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">

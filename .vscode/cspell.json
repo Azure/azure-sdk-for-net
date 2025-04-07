@@ -353,7 +353,11 @@
         "cbor",
         "ccfs",
         "cose",
-        "scitt"
+        "Jwks",
+        "PHDR",
+        "PKIX",
+        "scitt",
+        "tstr"
       ]
     },
     {
@@ -781,6 +785,32 @@
         "Hhmm",
         "Hhmmss",
         "Hhmms"
+      ]
+    },
+    {
+      "filename": "**/sdk/migrationassessment/**/*.cs",
+      "words": [
+        "Paas",
+        "Reasonings",
+        "Vcpu",
+        "Hadr",
+        "Mbps",
+        "MSAZR",
+        "MSAZRDE",
+        "MSAZRUSGOV",
+        "MSMCAZR",
+        "Dadsv",
+        "Dasv",
+        "Ddsv",
+        "Eadsv",
+        "Easv",
+        "Ebdsv",
+        "Ebsv",
+        "Edsv",
+        "Mdsv",
+        "Idms",
+        "Recieved",
+        "Cluter"
       ]
     },
     {

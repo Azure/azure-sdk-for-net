@@ -3158,14 +3158,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual async Task<Response<GetCertificateResponse>> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchCertificate>> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCertificateAsync(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context).ConfigureAwait(false);
-            return Response.FromValue(GetCertificateResponse.FromResponse(response), response);
+            return Response.FromValue(BatchCertificate.FromResponse(response), response);
         }
 
         /// <summary> Gets information about the specified Certificate. </summary>
@@ -3182,14 +3182,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Response<GetCertificateResponse> GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        public virtual Response<BatchCertificate> GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCertificate(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context);
-            return Response.FromValue(GetCertificateResponse.FromResponse(response), response);
+            return Response.FromValue(BatchCertificate.FromResponse(response), response);
         }
 
         /// <summary>

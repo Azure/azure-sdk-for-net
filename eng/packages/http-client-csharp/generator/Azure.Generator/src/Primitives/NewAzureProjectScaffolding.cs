@@ -30,7 +30,7 @@ namespace Azure.Generator.Primitives
                 GenerateDocumentationFile = true,
             };
 
-            foreach (var packages in _azureDependencyPackages)
+            foreach (var packages in AzureClientGenerator.Instance.TypeFactory.AzureDependencyPackages)
             {
                 builder.PackageReferences.Add(packages);
             }
@@ -119,19 +119,5 @@ namespace Azure.Generator.Primitives
         {
             return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, pathSegmentCount))}{RelativeCoreSegment}{fileName}";
         }
-
-        private static readonly IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> _azureDependencyPackages =
-            AzureClientGenerator.Instance.IsAzureArm.Value == true
-            ? [
-                new("Azure.Core"),
-                new("Azure.ResourceManager"),
-                new("System.ClientModel"),
-                new("System.Text.Json")
-            ]
-            : [
-                new("Azure.Core"),
-                new("System.ClientModel"),
-                new("System.Text.Json")
-            ];
     }
 }
