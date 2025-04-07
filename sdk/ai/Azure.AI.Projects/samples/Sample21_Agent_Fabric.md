@@ -6,7 +6,7 @@ To enable your Agent to perform search against a Fabric resource, you use `Micro
 ```C# Snippet:Fabric_CreateProject
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-var fabricConnectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_NAME");
+var fabricConnectionName = System.Environment.GetEnvironmentVariable("FABRIC_CONNECTION_NAME");
 
 var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
 
@@ -24,7 +24,7 @@ ToolConnectionList connectionList = new()
 {
     ConnectionList = { new ToolConnection(connectionId) }
 };
-MicrosoftFabricToolDefinition fabricGroundingTool = new(connectionList);
+MicrosoftFabricToolDefinition fabricTool = new(connectionList);
 ```
 
 Asynchronous sample:
@@ -69,7 +69,7 @@ AgentThread thread = agentClient.CreateThread();
 ThreadMessage message = agentClient.CreateMessage(
     thread.Id,
     MessageRole.User,
-    "How does wikipedia explain Euler's Identity?");
+    "What are the top 3 weather events with highest property damage?");
 
 // Run the agent
 ThreadRun run = agentClient.CreateRun(thread, agent);
@@ -95,7 +95,7 @@ AgentThread thread = await agentClient.CreateThreadAsync();
 ThreadMessage message = await agentClient.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
-    "How does wikipedia explain Euler's Identity?");
+    "What are the top 3 weather events with highest property damage?");
 
 // Run the agent
 ThreadRun run = await agentClient.CreateRunAsync(thread, agent);
