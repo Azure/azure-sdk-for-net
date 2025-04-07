@@ -13,5 +13,6 @@ namespace Azure.AI.Projects.Tests
         public string STORAGE_QUEUE_URI => GetRecordedVariable("STORAGE_QUEUE_URI");
         public string AZURE_BLOB_URI => GetRecordedVariable("AZURE_BLOB_URI");
         public string FABRICCONNECTIONNAME => GetRecordedVariable("FABRIC_CONNECTION_NAME");
+        public string SHAREPOINTCONNECTIONNAME => GetRecordedVariable("SHAREPOINT_CONNECTION_NAME");
     }
 }
