@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetVersionAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVersionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response<DatasetVersion> response = await client.GetVersionAsync("<name>", "<version>");
+]]></code>
+This sample shows how to call GetVersionAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response<DatasetVersion> response = await client.GetVersionAsync("<name>", "<version>");
+]]></code></example>
+    </member>
+    <member name="GetVersion(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVersion.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response<DatasetVersion> response = client.GetVersion("<name>", "<version>");
+]]></code>
+This sample shows how to call GetVersion with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response<DatasetVersion> response = client.GetVersion("<name>", "<version>");
+]]></code></example>
+    </member>
+    <member name="GetVersionAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVersionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetVersionAsync("<name>", "<version>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+]]></code>
+This sample shows how to call GetVersionAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetVersionAsync("<name>", "<version>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("stage").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVersion(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVersion and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetVersion("<name>", "<version>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+]]></code>
+This sample shows how to call GetVersion with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetVersion("<name>", "<version>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("stage").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteVersionAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteVersionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.DeleteVersionAsync("<name>", "<version>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteVersionAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.DeleteVersionAsync("<name>", "<version>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteVersion(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteVersion.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.DeleteVersion("<name>", "<version>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteVersion with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.DeleteVersion("<name>", "<version>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CreateAsync(string,DatasetVersion,CancellationToken)">
+      <example>
+This sample shows how to call CreateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+DatasetVersion body = new FileDatasetVersion("<datasetUri>", "<openAIPurpose>");
+Response<DatasetVersion> response = await client.CreateAsync("<name>", body);
+]]></code>
+This sample shows how to call CreateAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+DatasetVersion body = new FileDatasetVersion("<datasetUri>", "<openAIPurpose>")
+{
+    Stage = "<stage>",
+    Description = "<description>",
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Response<DatasetVersion> response = await client.CreateAsync("<name>", body);
+]]></code></example>
+    </member>
+    <member name="Create(string,DatasetVersion,CancellationToken)">
+      <example>
+This sample shows how to call Create.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+DatasetVersion body = new FileDatasetVersion("<datasetUri>", "<openAIPurpose>");
+Response<DatasetVersion> response = client.Create("<name>", body);
+]]></code>
+This sample shows how to call Create with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+DatasetVersion body = new FileDatasetVersion("<datasetUri>", "<openAIPurpose>")
+{
+    Stage = "<stage>",
+    Description = "<description>",
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Response<DatasetVersion> response = client.Create("<name>", body);
+]]></code></example>
+    </member>
+    <member name="CreateAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    type = "uri_file",
+    openAIPurpose = "<openAIPurpose>",
+    datasetUri = "<datasetUri>",
+});
+Response response = await client.CreateAsync("<name>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+]]></code>
+This sample shows how to call CreateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    type = "uri_file",
+    openAIPurpose = "<openAIPurpose>",
+    datasetUri = "<datasetUri>",
+    stage = "<stage>",
+    description = "<description>",
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Response response = await client.CreateAsync("<name>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("stage").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="Create(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Create and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    type = "uri_file",
+    openAIPurpose = "<openAIPurpose>",
+    datasetUri = "<datasetUri>",
+});
+Response response = client.Create("<name>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+]]></code>
+This sample shows how to call Create with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    type = "uri_file",
+    openAIPurpose = "<openAIPurpose>",
+    datasetUri = "<datasetUri>",
+    stage = "<stage>",
+    description = "<description>",
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Response response = client.Create("<name>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("stage").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVersionAsync(string,string,DatasetVersion,CancellationToken)">
+      <example>
+This sample shows how to call CreateVersionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+DatasetVersion body = new FileDatasetVersion("<datasetUri>", "<openAIPurpose>");
+Response<DatasetVersion> response = await client.CreateVersionAsync("<name>", "<version>", body);
+]]></code>
+This sample shows how to call CreateVersionAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+DatasetVersion body = new FileDatasetVersion("<datasetUri>", "<openAIPurpose>")
+{
+    Stage = "<stage>",
+    Description = "<description>",
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Response<DatasetVersion> response = await client.CreateVersionAsync("<name>", "<version>", body);
+]]></code></example>
+    </member>
+    <member name="CreateVersion(string,string,DatasetVersion,CancellationToken)">
+      <example>
+This sample shows how to call CreateVersion.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+DatasetVersion body = new FileDatasetVersion("<datasetUri>", "<openAIPurpose>");
+Response<DatasetVersion> response = client.CreateVersion("<name>", "<version>", body);
+]]></code>
+This sample shows how to call CreateVersion with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+DatasetVersion body = new FileDatasetVersion("<datasetUri>", "<openAIPurpose>")
+{
+    Stage = "<stage>",
+    Description = "<description>",
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Response<DatasetVersion> response = client.CreateVersion("<name>", "<version>", body);
+]]></code></example>
+    </member>
+    <member name="CreateVersionAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVersionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    type = "uri_file",
+    openAIPurpose = "<openAIPurpose>",
+    datasetUri = "<datasetUri>",
+});
+Response response = await client.CreateVersionAsync("<name>", "<version>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+]]></code>
+This sample shows how to call CreateVersionAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    type = "uri_file",
+    openAIPurpose = "<openAIPurpose>",
+    datasetUri = "<datasetUri>",
+    stage = "<stage>",
+    description = "<description>",
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Response response = await client.CreateVersionAsync("<name>", "<version>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("stage").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVersion(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVersion and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    type = "uri_file",
+    openAIPurpose = "<openAIPurpose>",
+    datasetUri = "<datasetUri>",
+});
+Response response = client.CreateVersion("<name>", "<version>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+]]></code>
+This sample shows how to call CreateVersion with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    type = "uri_file",
+    openAIPurpose = "<openAIPurpose>",
+    datasetUri = "<datasetUri>",
+    stage = "<stage>",
+    description = "<description>",
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Response response = client.CreateVersion("<name>", "<version>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("datasetUri").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("stage").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="StartPendingUploadAsync(string,string,PendingUploadRequest,CancellationToken)">
+      <example>
+This sample shows how to call StartPendingUploadAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+PendingUploadRequest body = new PendingUploadRequest();
+Response<PendingUploadResponse> response = await client.StartPendingUploadAsync("<name>", "<version>", body);
+]]></code>
+This sample shows how to call StartPendingUploadAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+PendingUploadRequest body = new PendingUploadRequest
+{
+    PendingUploadId = "<pendingUploadId>",
+    ConnectionName = "<connectionName>",
+};
+Response<PendingUploadResponse> response = await client.StartPendingUploadAsync("<name>", "<version>", body);
+]]></code></example>
+    </member>
+    <member name="StartPendingUpload(string,string,PendingUploadRequest,CancellationToken)">
+      <example>
+This sample shows how to call StartPendingUpload.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+PendingUploadRequest body = new PendingUploadRequest();
+Response<PendingUploadResponse> response = client.StartPendingUpload("<name>", "<version>", body);
+]]></code>
+This sample shows how to call StartPendingUpload with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+PendingUploadRequest body = new PendingUploadRequest
+{
+    PendingUploadId = "<pendingUploadId>",
+    ConnectionName = "<connectionName>",
+};
+Response<PendingUploadResponse> response = client.StartPendingUpload("<name>", "<version>", body);
+]]></code></example>
+    </member>
+    <member name="StartPendingUploadAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call StartPendingUploadAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    pendingUploadType = "TemporaryBlobReference",
+});
+Response response = await client.StartPendingUploadAsync("<name>", "<version>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("blobUri").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("storageAccountArmId").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("sasToken").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadId").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadType").ToString());
+]]></code>
+This sample shows how to call StartPendingUploadAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    pendingUploadId = "<pendingUploadId>",
+    connectionName = "<connectionName>",
+    pendingUploadType = "TemporaryBlobReference",
+});
+Response response = await client.StartPendingUploadAsync("<name>", "<version>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("blobUri").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("storageAccountArmId").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("sasToken").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadId").ToString());
+Console.WriteLine(result.GetProperty("datasetVersion").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadType").ToString());
+]]></code></example>
+    </member>
+    <member name="StartPendingUpload(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call StartPendingUpload and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    pendingUploadType = "TemporaryBlobReference",
+});
+Response response = client.StartPendingUpload("<name>", "<version>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("blobUri").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("storageAccountArmId").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("sasToken").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadId").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadType").ToString());
+]]></code>
+This sample shows how to call StartPendingUpload with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    pendingUploadId = "<pendingUploadId>",
+    connectionName = "<connectionName>",
+    pendingUploadType = "TemporaryBlobReference",
+});
+Response response = client.StartPendingUpload("<name>", "<version>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("blobUri").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("storageAccountArmId").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("sasToken").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadId").ToString());
+Console.WriteLine(result.GetProperty("datasetVersion").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadType").ToString());
+]]></code></example>
+    </member>
+    <member name="StartPendingUploadAutoIncrementAsync(string,PendingUploadType,string,string,CancellationToken)">
+      <example>
+This sample shows how to call StartPendingUploadAutoIncrementAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response<PendingUploadResponse> response = await client.StartPendingUploadAutoIncrementAsync("<name>", PendingUploadType.TemporaryBlobReference);
+]]></code>
+This sample shows how to call StartPendingUploadAutoIncrementAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response<PendingUploadResponse> response = await client.StartPendingUploadAutoIncrementAsync("<name>", PendingUploadType.TemporaryBlobReference, pendingUploadId: "<pendingUploadId>", connectionName: "<connectionName>");
+]]></code></example>
+    </member>
+    <member name="StartPendingUploadAutoIncrement(string,PendingUploadType,string,string,CancellationToken)">
+      <example>
+This sample shows how to call StartPendingUploadAutoIncrement.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response<PendingUploadResponse> response = client.StartPendingUploadAutoIncrement("<name>", PendingUploadType.TemporaryBlobReference);
+]]></code>
+This sample shows how to call StartPendingUploadAutoIncrement with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+Response<PendingUploadResponse> response = client.StartPendingUploadAutoIncrement("<name>", PendingUploadType.TemporaryBlobReference, pendingUploadId: "<pendingUploadId>", connectionName: "<connectionName>");
+]]></code></example>
+    </member>
+    <member name="StartPendingUploadAutoIncrementAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call StartPendingUploadAutoIncrementAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    pendingUploadType = "TemporaryBlobReference",
+});
+Response response = await client.StartPendingUploadAutoIncrementAsync("<name>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("blobUri").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("storageAccountArmId").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("sasToken").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadId").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadType").ToString());
+]]></code>
+This sample shows how to call StartPendingUploadAutoIncrementAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    pendingUploadId = "<pendingUploadId>",
+    connectionName = "<connectionName>",
+    pendingUploadType = "TemporaryBlobReference",
+});
+Response response = await client.StartPendingUploadAutoIncrementAsync("<name>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("blobUri").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("storageAccountArmId").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("sasToken").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadId").ToString());
+Console.WriteLine(result.GetProperty("datasetVersion").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadType").ToString());
+]]></code></example>
+    </member>
+    <member name="StartPendingUploadAutoIncrement(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call StartPendingUploadAutoIncrement and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    pendingUploadType = "TemporaryBlobReference",
+});
+Response response = client.StartPendingUploadAutoIncrement("<name>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("blobUri").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("storageAccountArmId").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("sasToken").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadId").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadType").ToString());
+]]></code>
+This sample shows how to call StartPendingUploadAutoIncrement with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    pendingUploadId = "<pendingUploadId>",
+    connectionName = "<connectionName>",
+    pendingUploadType = "TemporaryBlobReference",
+});
+Response response = client.StartPendingUploadAutoIncrement("<name>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("blobUri").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("storageAccountArmId").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("sasToken").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("blobReferenceForConsumption").GetProperty("credential").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadId").ToString());
+Console.WriteLine(result.GetProperty("datasetVersion").ToString());
+Console.WriteLine(result.GetProperty("pendingUploadType").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVersionsAsync(string,int?,string,string,ListViewType?,CancellationToken)">
+      <example>
+This sample shows how to call GetVersionsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (DatasetVersion item in client.GetVersionsAsync("<name>"))
+{
+}
+]]></code>
+This sample shows how to call GetVersionsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (DatasetVersion item in client.GetVersionsAsync("<name>", maxCount: 1234, skip: "<skip>", tags: "<tags>", listViewType: ListViewType.ActiveOnly))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetVersions(string,int?,string,string,ListViewType?,CancellationToken)">
+      <example>
+This sample shows how to call GetVersions.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+foreach (DatasetVersion item in client.GetVersions("<name>"))
+{
+}
+]]></code>
+This sample shows how to call GetVersions with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+foreach (DatasetVersion item in client.GetVersions("<name>", maxCount: 1234, skip: "<skip>", tags: "<tags>", listViewType: ListViewType.ActiveOnly))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetVersionsAsync(string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVersionsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetVersionsAsync("<name>", null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("datasetUri").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+}
+]]></code>
+This sample shows how to call GetVersionsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetVersionsAsync("<name>", 1234, "<skip>", "<tags>", "ActiveOnly", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("datasetUri").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("isReference").ToString());
+    Console.WriteLine(result.GetProperty("stage").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetVersions(string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVersions and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetVersions("<name>", null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("datasetUri").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+}
+]]></code>
+This sample shows how to call GetVersions with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetVersions("<name>", 1234, "<skip>", "<tags>", "ActiveOnly", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("datasetUri").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("isReference").ToString());
+    Console.WriteLine(result.GetProperty("stage").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLatestsAsync(int?,string,string,ListViewType?,CancellationToken)">
+      <example>
+This sample shows how to call GetLatestsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (DatasetVersion item in client.GetLatestsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetLatestsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (DatasetVersion item in client.GetLatestsAsync(maxCount: 1234, skip: "<skip>", tags: "<tags>", listViewType: ListViewType.ActiveOnly))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetLatests(int?,string,string,ListViewType?,CancellationToken)">
+      <example>
+This sample shows how to call GetLatests.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+foreach (DatasetVersion item in client.GetLatests())
+{
+}
+]]></code>
+This sample shows how to call GetLatests with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+foreach (DatasetVersion item in client.GetLatests(maxCount: 1234, skip: "<skip>", tags: "<tags>", listViewType: ListViewType.ActiveOnly))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetLatestsAsync(int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetLatestsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetLatestsAsync(null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("datasetUri").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+}
+]]></code>
+This sample shows how to call GetLatestsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetLatestsAsync(1234, "<skip>", "<tags>", "ActiveOnly", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("datasetUri").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("isReference").ToString());
+    Console.WriteLine(result.GetProperty("stage").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLatests(int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetLatests and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetLatests(null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("datasetUri").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+}
+]]></code>
+This sample shows how to call GetLatests with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetLatests(1234, "<skip>", "<tags>", "ActiveOnly", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("datasetUri").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("isReference").ToString());
+    Console.WriteLine(result.GetProperty("stage").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

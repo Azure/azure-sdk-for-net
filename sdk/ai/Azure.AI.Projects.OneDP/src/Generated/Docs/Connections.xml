@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetConnectionAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetConnectionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+Response<Connection> response = await client.GetConnectionAsync("<connectionName>");
+]]></code>
+This sample shows how to call GetConnectionAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+Response<Connection> response = await client.GetConnectionAsync("<connectionName>");
+]]></code></example>
+    </member>
+    <member name="GetConnection(string,CancellationToken)">
+      <example>
+This sample shows how to call GetConnection.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+Response<Connection> response = client.GetConnection("<connectionName>");
+]]></code>
+This sample shows how to call GetConnection with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+Response<Connection> response = client.GetConnection("<connectionName>");
+]]></code></example>
+    </member>
+    <member name="GetConnectionAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetConnectionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetConnectionAsync("<connectionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetConnectionAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetConnectionAsync("<connectionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetConnection(string,RequestContext)">
+      <example>
+This sample shows how to call GetConnection and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetConnection("<connectionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetConnection with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetConnection("<connectionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetConnectionsAsync(ConnectionType?,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetConnectionsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (Connection item in client.GetConnectionsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetConnectionsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (Connection item in client.GetConnectionsAsync(connectionType: ConnectionType.AzureOpenAI, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetConnections(ConnectionType?,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetConnections.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+foreach (Connection item in client.GetConnections())
+{
+}
+]]></code>
+This sample shows how to call GetConnections with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+foreach (Connection item in client.GetConnections(connectionType: ConnectionType.AzureOpenAI, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetConnectionsAsync(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetConnectionsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetConnectionsAsync(null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+}
+]]></code>
+This sample shows how to call GetConnectionsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetConnectionsAsync("AzureOpenAI", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetConnections(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetConnections and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetConnections(null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+}
+]]></code>
+This sample shows how to call GetConnections with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetConnections("AzureOpenAI", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

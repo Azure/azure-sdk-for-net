@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetDeploymentAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetDeploymentAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+Response<Deployment> response = await client.GetDeploymentAsync("<name>");
+]]></code>
+This sample shows how to call GetDeploymentAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+Response<Deployment> response = await client.GetDeploymentAsync("<name>");
+]]></code></example>
+    </member>
+    <member name="GetDeployment(string,CancellationToken)">
+      <example>
+This sample shows how to call GetDeployment.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+Response<Deployment> response = client.GetDeployment("<name>");
+]]></code>
+This sample shows how to call GetDeployment with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+Response<Deployment> response = client.GetDeployment("<name>");
+]]></code></example>
+    </member>
+    <member name="GetDeploymentAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetDeploymentAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetDeploymentAsync("<name>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call GetDeploymentAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+Response response = await client.GetDeploymentAsync("<name>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDeployment(string,RequestContext)">
+      <example>
+This sample shows how to call GetDeployment and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetDeployment("<name>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call GetDeployment with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+Response response = client.GetDeployment("<name>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDeploymentsAsync(string,string,bool?,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetDeploymentsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (Deployment item in client.GetDeploymentsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetDeploymentsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (Deployment item in client.GetDeploymentsAsync(modelPublisher: "<modelPublisher>", modelName: "<modelName>", includeConnectionModels: true, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetDeployments(string,string,bool?,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetDeployments.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+foreach (Deployment item in client.GetDeployments())
+{
+}
+]]></code>
+This sample shows how to call GetDeployments with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+foreach (Deployment item in client.GetDeployments(modelPublisher: "<modelPublisher>", modelName: "<modelName>", includeConnectionModels: true, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetDeploymentsAsync(string,string,bool?,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetDeploymentsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetDeploymentsAsync(null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+This sample shows how to call GetDeploymentsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+await foreach (BinaryData item in client.GetDeploymentsAsync("<modelPublisher>", "<modelName>", true, 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetDeployments(string,string,bool?,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetDeployments and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetDeployments(null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+This sample shows how to call GetDeployments with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-01-preview");
+
+foreach (BinaryData item in client.GetDeployments("<modelPublisher>", "<modelName>", true, 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>
