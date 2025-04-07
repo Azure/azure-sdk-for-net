@@ -12,7 +12,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override List<TypeValidation> TypeValidations => [AssertDictionary];
 
-        private static void AssertDictionary(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        private static void AssertDictionary(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.ContainsKey($"Dictionary<string, {type}>"));
             var firstType = dict[$"Dictionary<string, {type}>"];

@@ -441,7 +441,14 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine(indent, $"protected override Type BuilderType => typeof({modelInfo.Type.Name});");
                 builder.AppendLine();
 
-                builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.Name}();");
+                if (modelInfo.PersistableModelProxy is not null)
+                {
+                    builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.PersistableModelProxy.Name}();");
+                }
+                else
+                {
+                    builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.Name}();");
+                }
 
                 indent--;
                 builder.AppendLine(indent, "}");

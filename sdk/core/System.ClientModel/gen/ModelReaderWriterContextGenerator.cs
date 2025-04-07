@@ -186,11 +186,17 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                     return null;
                 }
 
+                var proxy = GetProxyType(typeSymbol);
+
+                if (typeSymbol.IsAbstract && proxy is null)
+                    return null; // Skip abstract types without a proxy
+
                 return new TypeBuilderSpec()
                 {
                     Modifier = symbol.DeclaredAccessibility.ToString().ToLowerInvariant(),
                     Type = type,
-                    Kind = data.SymbolToKindCache.Get(typeSymbol)
+                    Kind = data.SymbolToKindCache.Get(typeSymbol),
+                    PersistableModelProxy = proxy is null ? null : TypeRef.FromINamedTypeSymbol(proxy, data.SymbolToKindCache)
                 };
             })
             .Where(spec => spec is not null)
@@ -219,6 +225,19 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
     /// Instrumentation helper for unit tests.
     /// </summary>
     internal Action<ModelReaderWriterContextGenerationSpec>? OnSourceEmitting { get; init; }
+
+    public static INamedTypeSymbol? GetProxyType(ITypeSymbol typeSymbol)
+    {
+        var persistableModelProxyAttribute = typeSymbol.GetAttributes()
+            .FirstOrDefault(attr => attr.AttributeClass?.Name == "PersistableModelProxyAttribute");
+
+        if (persistableModelProxyAttribute == null || persistableModelProxyAttribute.ConstructorArguments.Length == 0)
+            return null;
+
+        var proxyTypeArg = persistableModelProxyAttribute.ConstructorArguments[0];
+
+        return proxyTypeArg.Value as INamedTypeSymbol;
+    }
 
     private AttributeInfo GetAttributeInfo(AttributeSyntax? attribute, SemanticModel semanticModel)
     {
@@ -457,6 +476,9 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             {
                 return persistableSymbol;
             }
+
+            if (baseTypeSymbol.TypeKind != TypeKind.Interface)
+                continue;
 
             foreach (var interfaceSymbol in baseTypeSymbol.AllInterfaces)
             {
