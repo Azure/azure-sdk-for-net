@@ -8,7 +8,11 @@
 
 ### Bugs Fixed
 
+- Fixed behavior in the `UpdateCheckpointAsync` method of `EventProcessorClient` to properly await the call to the checkpoint store.  Previously, this was not awaited, causing the OTel span to open and close almost immediately and skip reporting any errors observed.
+
 ### Other Changes
+
+- Enhanced retry logic to consider additional cases for web socket-based failures.  In many cases, a `WebSocketException` is triggered which wraps a `SocketException` with the details for the specific network conditions.  Retry decisions are now based on the internal exception, if present, to ensure retries are correctly applied.
 
 ## 5.12.0-beta.2 (2025-02-11)
 

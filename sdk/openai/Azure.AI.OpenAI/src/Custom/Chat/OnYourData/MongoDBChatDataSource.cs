@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("MongoDBChatDataSource")]
+[CodeGenType("MongoDBChatDataSource")]
 [Experimental("AOAI001")]
 #if AZURE_OPENAI_GA
 [EditorBrowsable(EditorBrowsableState.Never)]
@@ -106,7 +106,7 @@ public partial class MongoDBChatDataSource : ChatDataSource
     /// <summary>
     /// Creates a new instance of <see cref="MongoDBChatDataSource"/>.
     /// </summary>
-    public MongoDBChatDataSource() : base(type: "mongo_db", serializedAdditionalRawData: null)
+    public MongoDBChatDataSource() : base(type: "mongo_db", additionalBinaryDataProperties: null)
     {
         InternalParameters = new();
     }
@@ -131,11 +131,11 @@ public partial class MongoDBChatDataSource : ChatDataSource
 
     /// <summary> Initializes a new instance of <see cref="MongoDBChatDataSource"/>. </summary>
     /// <param name="type"></param>
-    /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal MongoDBChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalMongoDBChatDataSourceParameters internalParameters)
-        : base(type, serializedAdditionalRawData)
+    internal MongoDBChatDataSource(string type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalMongoDBChatDataSourceParameters internalParameters)
+        : base(type, additionalBinaryDataProperties)
     {
         InternalParameters = internalParameters;
     }

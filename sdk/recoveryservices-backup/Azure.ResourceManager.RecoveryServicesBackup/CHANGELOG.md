@@ -4,16 +4,22 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
-Fix an issue that the `IaasComputeVmProtectedItem` can't handle empty `resourceId`. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47381
-
 ### Other Changes
+
+## 1.2.1 (2025-03-11)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Bugs Fixed
+
+Fix an issue that the `IaasComputeVmProtectedItem` can't handle empty `resourceId`. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47381
 
 ## 1.2.0 (2024-01-03)
 

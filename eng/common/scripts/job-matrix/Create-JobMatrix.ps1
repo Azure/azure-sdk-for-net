@@ -15,6 +15,8 @@ param (
     [Parameter(Mandatory=$False)][array] $Filters,
     [Parameter(Mandatory=$False)][array] $Replace,
     [Parameter(Mandatory=$False)][array] $NonSparseParameters,
+    # Use for local generation/debugging when env: values are set in a matrix
+    [Parameter(Mandatory=$False)][switch] $SkipEnvironmentVariables,
     [Parameter()][switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
@@ -34,7 +36,8 @@ $Filters = $Filters | Where-Object { $_ }
     -displayNameFilter $DisplayNameFilter `
     -filters $Filters `
     -replace $Replace `
-    -nonSparseParameters $NonSparseParameters
+    -nonSparseParameters $NonSparseParameters `
+    -skipEnvironmentVariables:$SkipEnvironmentVariables
 
 $serialized = SerializePipelineMatrix $matrix
 
