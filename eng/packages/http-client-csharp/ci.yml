@@ -44,7 +44,7 @@ parameters:
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
-  
+
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
@@ -63,7 +63,7 @@ extends:
            PublishPublic: ${{ parameters.PublishPublic }}
            PublishDependsOnTest: ${{ parameters.PublishPublic }}
       ${{ else }}: # All automatic runs publish, but only CI of main goes public
-        PublishPublic: true
+        ShouldPublish: true
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/head/main')) }}
       RegenerationJobCount: 5
