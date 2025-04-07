@@ -2,7 +2,8 @@
 ## 1.4.1-beta.2 (2025-04-01)
 
 ### Features Added
-- Added user defined functions feature
+- Added user defined functions feature.
+- Added tags parameter for CreateLedgerEntry endpoint.
 
 ## 1.4.1-beta.1 (2025-01-27)
 

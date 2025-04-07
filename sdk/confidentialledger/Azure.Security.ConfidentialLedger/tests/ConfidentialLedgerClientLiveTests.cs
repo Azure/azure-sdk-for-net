@@ -326,7 +326,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             // Deploy Empty JS Bundle to remove JS App
             programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
-            result = await Client.CreateUserDefinedEndpointAsync("{\"metadata\": {\"endpoints\": {}}, \"modules\": []}");
+            result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
         }
 
@@ -394,7 +394,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRole3";
+            string roleName = "TestRole";
 
             // Add Custom Role
             var rolesParam = new RolesParam
@@ -433,7 +433,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public async Task UserDefinedFunctionTest()
         {
             // Delete UDF
-            Response result = await Client.CreateUserDefinedEndpointAsync("{\"metadata\": {\"endpoints\": {}}, \"modules\": []}");
+            string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
+            Response result = await Client.CreateUserDefinedEndpointAsync("{ \"metadata\": { \"endpoints\": { } }, \"modules\": [] }");
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             string functionId = "myFunction";
