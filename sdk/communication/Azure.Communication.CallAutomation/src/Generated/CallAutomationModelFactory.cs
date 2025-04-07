@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.CallAutomation.Models.Events;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -124,6 +125,16 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Events.StartRecordingFailedInternal"/>. </summary>
+        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="correlationId"> Correlation Id for event to call correlation. </param>
+        /// <param name="recordingId"> The call recording Id. </param>
+        /// <returns> A new <see cref="Models.Events.StartRecordingFailedInternal"/> instance for mocking. </returns>
+        public static StartRecordingFailedInternal StartRecordingFailedInternal(string callConnectionId = null, string correlationId = null, string recordingId = null)
+        {
+            return new StartRecordingFailedInternal(callConnectionId, correlationId, recordingId);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>

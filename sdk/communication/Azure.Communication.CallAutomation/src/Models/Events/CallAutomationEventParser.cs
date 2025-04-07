@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Communication.CallAutomation.Models.Events;
 using Azure.Messaging;
 
 namespace Azure.Communication.CallAutomation
@@ -108,6 +109,8 @@ namespace Azure.Communication.CallAutomation
                     return CallTransferFailed.Deserialize(eventData);
                 case nameof(ParticipantsUpdated):
                     return ParticipantsUpdated.Deserialize(eventData);
+                case nameof(StartRecordingFailed):
+                    return StartRecordingFailed.Deserialize(eventData);
                 case nameof(RecordingStateChanged):
                     return RecordingStateChanged.Deserialize(eventData);
                 case nameof(PlayCompleted):

@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal(CallLocatorSerializer.Serialize(options.CallLocator))
+                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
@@ -64,14 +64,14 @@ namespace Azure.Communication.CallAutomation
                     PauseOnStart = options.PauseOnStart
                 };
 
-               /* if (options.CallLocator != null)
+                if (options.CallLocator != null)
                 {
                     request.CallLocator = CallLocatorSerializer.Serialize(options.CallLocator);
                 }
                 else if (options.CallConnectionId != null)
                 {
                     request.CallConnectionId = options.CallConnectionId;
-                }*/
+                }
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal(CallLocatorSerializer.Serialize(options.CallLocator))
+                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
@@ -134,7 +134,7 @@ namespace Azure.Communication.CallAutomation
                     RecordingFormatType = options.RecordingFormat,
                     PauseOnStart = options.PauseOnStart
                 };
-/*
+
                 if (options.CallLocator != null)
                 {
                     request.CallLocator = CallLocatorSerializer.Serialize(options.CallLocator);
@@ -142,7 +142,7 @@ namespace Azure.Communication.CallAutomation
                 else if (options.CallConnectionId != null)
                 {
                     request.CallConnectionId = options.CallConnectionId;
-                }*/
+                }
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
