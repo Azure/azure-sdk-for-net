@@ -179,7 +179,6 @@
     "westus",
     "Wmem",
     "xunit",
-    "Vlatest",
   ],
   "overrides": [
     {
@@ -198,7 +197,8 @@
     {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
-        "Ubinary"
+        "Ubinary",
+        "Vlatest"
       ]
     },
     {
