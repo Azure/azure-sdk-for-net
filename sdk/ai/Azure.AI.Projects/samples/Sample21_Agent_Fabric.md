@@ -1,7 +1,7 @@
-# Sample for use of an agent with Fabric tool in Azure.AI.Projects.
+# Sample for use of an Agent with Fabric tool in Azure.AI.Projects.
 
 To enable your Agent to perform search against a Fabric resource, you use `MicrosoftFabricToolDefinition` along with a connection.
-1. First we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First we need to create an Agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Fabric_CreateProject
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
@@ -39,7 +39,7 @@ ToolConnectionList connectionList = new()
 MicrosoftFabricToolDefinition fabricTool = new(connectionList);
 ```
 
-3. We will use the `MicrosoftFabricToolDefinition` during the agent initialization.
+3. We will use the `MicrosoftFabricToolDefinition` during the Agent initialization.
 
 Synchronous sample:
 ```C# Snippet:Fabric_CreateAgent
@@ -59,7 +59,7 @@ Agent agent = await agentClient.CreateAgentAsync(
    tools: [ fabricTool ]);
 ```
 
-4. Now we will create the thread, add the message , containing a question for agent and start the run.
+4. Now we will create the thread, add the message containing a question for the Agent and start the run.
 
 Synchronous sample:
 ```C# Snippet:Fabric_CreateThreadMessage
@@ -113,7 +113,7 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 
-5. Print the agent messages to console in chronological order.
+5. Print the Agent messages to console in chronological order.
 
 Synchronous sample:
 ```C# Snippet:Fabric_Print
@@ -187,7 +187,7 @@ foreach (ThreadMessage threadMessage in messages)
 }
 ```
 
-6. Clean up resources by deleting thread and agent.
+6. Clean up resources by deleting the thread and the Agent.
 
 Synchronous sample:
 ```C# Snippet:FabricCleanup
