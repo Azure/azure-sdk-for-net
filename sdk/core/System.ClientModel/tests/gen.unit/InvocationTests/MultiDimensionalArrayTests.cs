@@ -14,23 +14,16 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string InitializeObject => "new {0} {{ }}";
 
-        private void AssertMultiDimensionalArray(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        private void AssertMultiDimensionalArray(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.ContainsKey($"{type}[,]"));
-            var arrayJsonModel = dict[$"{type}[,]"];
-            Assert.AreEqual($"{type}[,]", arrayJsonModel.Type.Name);
-            if (type == JsonModel)
-            {
-                Assert.AreEqual("TestProject", arrayJsonModel.Type.Namespace);
-            }
-            else
-            {
-                Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", arrayJsonModel.Type.Namespace);
-            }
-            Assert.IsNotNull(arrayJsonModel.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.MultiDimensionalArray, arrayJsonModel.Kind);
+            var arrayModel = dict[$"{type}[,]"];
+            Assert.AreEqual($"{type}[,]", arrayModel.Type.Name);
+            Assert.AreEqual(expectedNamespace, arrayModel.Type.Namespace);
+            Assert.IsNotNull(arrayModel.Type.ItemType);
+            Assert.AreEqual(TypeBuilderKind.MultiDimensionalArray, arrayModel.Kind);
 
-            var genericArgument = arrayJsonModel.Type.ItemType!;
+            var genericArgument = arrayModel.Type.ItemType!;
             modelValidator(genericArgument);
         }
     }

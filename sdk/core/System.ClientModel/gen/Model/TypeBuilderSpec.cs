@@ -8,4 +8,5 @@ internal sealed record TypeBuilderSpec
     required public TypeRef Type { get; init; }
     required public string Modifier { get; init; }
     required public TypeBuilderKind Kind { get; init; }
+    required public TypeRef? PersistableModelProxy { get; init; }
 }

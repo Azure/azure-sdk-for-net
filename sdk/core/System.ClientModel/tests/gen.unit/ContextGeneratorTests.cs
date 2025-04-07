@@ -14,6 +14,51 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
     public class ContextGeneratorTests
     {
         [Test]
+        public void AbstractWithNoAttributeIsSkipped()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class Caller
+    {
+        public void Call()
+        {
+            ModelReaderWriter.Read(BinaryData.Empty, typeof(JsonModel), ModelReaderWriterOptions.Json, LocalContext.Default);
+        }
+    }
+
+    public abstract class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownJsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownJsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    internal class UnknownJsonModel : JsonModel {}
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation);
+
+            Assert.IsNotNull(result.ContextFile);
+            Assert.AreEqual("LocalContext", result.ContextFile!.Type.Name);
+            Assert.AreEqual("TestProject", result.ContextFile.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.ContextFile!.Modifier);
+            Assert.AreEqual(0, result.ContextFile.TypeBuilders.Count);
+            Assert.AreEqual(0, result.ContextFile.ReferencedContexts.Count);
+        }
+
+        [Test]
         public void InvalidAssemblyName()
         {
             string source =
@@ -427,7 +472,7 @@ namespace TestProject
             Assert.AreEqual(2, result.ContextFile.TypeBuilders.Count);
 
             var dict = result.ContextFile.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
-            ListTests.AssertList(InvocationTestBase.JsonModel, (jsonModel) => InvocationTestBase.AssertJsonModel(jsonModel), dict);
+            ListTests.AssertList(InvocationTestBase.JsonModel, "System.Collections.Generic", (jsonModel) => InvocationTestBase.AssertJsonModel(jsonModel), dict);
 
             Assert.IsTrue(dict.ContainsKey(InvocationTestBase.JsonModel));
             var item = dict[InvocationTestBase.JsonModel];

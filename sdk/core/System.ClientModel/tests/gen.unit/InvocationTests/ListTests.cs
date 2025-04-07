@@ -12,7 +12,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string TypeStringFormat => "List<{0}>";
 
-        internal static void AssertList(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        internal static void AssertList(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.ContainsKey($"List<{type}>"));
             var listJsonModel = dict[$"List<{type}>"];
