@@ -180,5 +180,5 @@ TempTypeSpecFiles/
 
 # Common toolchain intermediate files
 temp
-/testEnvironments.json
 /sdk/hdinsight/Azure.ResourceManager.HDInsight/packages/MSTest.TestFramework.2.2.10
+/testEnvironments.json
