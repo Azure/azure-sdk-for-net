@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupInstanceCountSummary"/>. </summary>
         /// <param name="zone"> The zone that the provided counts are in. It will not have a value if zones are not enabled. </param>
-        /// <param name="instanceCountsByStateUpdated"> The count of pooled container groups in each state for the given zone. </param>
+        /// <param name="standbyContainerGroupInstanceCountsByState"> The count of pooled container groups in each state for the given zone. </param>
         /// <returns> A new <see cref="Models.ContainerGroupInstanceCountSummary"/> instance for mocking. </returns>
-        public static ContainerGroupInstanceCountSummary ContainerGroupInstanceCountSummary(long? zone = null, IEnumerable<PoolContainerGroupStateCount> instanceCountsByStateUpdated = null)
+        public static ContainerGroupInstanceCountSummary ContainerGroupInstanceCountSummary(long? zone = null, IEnumerable<PoolContainerGroupStateCount> standbyContainerGroupInstanceCountsByState = null)
         {
-            instanceCountsByStateUpdated ??= new List<PoolContainerGroupStateCount>();
+            standbyContainerGroupInstanceCountsByState ??= new List<PoolContainerGroupStateCount>();
 
-            return new ContainerGroupInstanceCountSummary(zone, instanceCountsByStateUpdated?.ToList(), serializedAdditionalRawData: null);
+            return new ContainerGroupInstanceCountSummary(zone, standbyContainerGroupInstanceCountsByState?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PoolContainerGroupStateCount"/>. </summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="code"> Displays the healthy state of the StandbyPool. </param>
         /// <param name="message"> Displays the StandbyPool health state details. </param>
         /// <returns> A new <see cref="Models.StandbyPoolStatus"/> instance for mocking. </returns>
-        public static StandbyPoolStatus PoolStatus(StanbyPoolHealthStateCode code = default, string message = null)
+        public static StandbyPoolStatus StandbyPoolStatus(StandbyPoolHealthStateCode code = default, string message = null)
         {
             return new StandbyPoolStatus(code, message, serializedAdditionalRawData: null);
         }
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachineInstanceCountSummary"/>. </summary>
         /// <param name="zone"> The zone that the provided counts are in. It will not have a value if zones are not enabled on the attached VMSS. </param>
-        /// <param name="instanceCountsByStateUpdated"> The count of pooled virtual machines in each state for the given zone. </param>
+        /// <param name="standbyVirtualMachineInstanceCountsByState"> The count of pooled virtual machines in each state for the given zone. </param>
         /// <returns> A new <see cref="Models.StandbyVirtualMachineInstanceCountSummary"/> instance for mocking. </returns>
-        public static StandbyVirtualMachineInstanceCountSummary StandbyVirtualMachineInstanceCountSummary(long? zone = null, IEnumerable<PoolVirtualMachineStateCount> instanceCountsByStateUpdated = null)
+        public static StandbyVirtualMachineInstanceCountSummary StandbyVirtualMachineInstanceCountSummary(long? zone = null, IEnumerable<PoolVirtualMachineStateCount> standbyVirtualMachineInstanceCountsByState = null)
         {
-            instanceCountsByStateUpdated ??= new List<PoolVirtualMachineStateCount>();
+            standbyVirtualMachineInstanceCountsByState ??= new List<PoolVirtualMachineStateCount>();
 
-            return new StandbyVirtualMachineInstanceCountSummary(zone, instanceCountsByStateUpdated?.ToList(), serializedAdditionalRawData: null);
+            return new StandbyVirtualMachineInstanceCountSummary(zone, standbyVirtualMachineInstanceCountsByState?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PoolVirtualMachineStateCount"/>. </summary>

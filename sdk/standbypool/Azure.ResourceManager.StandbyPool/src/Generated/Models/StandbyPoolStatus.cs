@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <item>
         /// <term>BinaryData.FromString("\"foo\"")</term>
         /// <description>Creates a payload of "foo".</description>
-        /// </item>     
+        /// </item>
         /// <item>
         /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
         /// <description>Creates a payload of { "key": "value" }.</description>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Initializes a new instance of <see cref="StandbyPoolStatus"/>. </summary>
         /// <param name="code"> Displays the healthy state of the StandbyPool. </param>
-        internal StandbyPoolStatus(StanbyPoolHealthStateCode code)
+        internal StandbyPoolStatus(StandbyPoolHealthStateCode code)
         {
             Code = code;
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="code"> Displays the healthy state of the StandbyPool. </param>
         /// <param name="message"> Displays the StandbyPool health state details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyPoolStatus(StanbyPoolHealthStateCode code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyPoolStatus(StandbyPoolHealthStateCode code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         }
 
         /// <summary> Displays the healthy state of the StandbyPool. </summary>
-        public StanbyPoolHealthStateCode Code { get; }
+        public StandbyPoolHealthStateCode Code { get; }
         /// <summary> Displays the StandbyPool health state details. </summary>
         public string Message { get; }
     }

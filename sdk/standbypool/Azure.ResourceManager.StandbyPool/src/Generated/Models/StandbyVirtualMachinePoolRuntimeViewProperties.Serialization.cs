@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    status = StandbyPoolStatus.DeserializePoolStatus(property.Value, options);
+                    status = StandbyPoolStatus.DeserializeStandbyPoolStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

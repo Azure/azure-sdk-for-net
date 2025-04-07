@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePoolStatus(document.RootElement, options);
+            return DeserializeStandbyPoolStatus(document.RootElement, options);
         }
 
-        internal static StandbyPoolStatus DeserializePoolStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StandbyPoolStatus DeserializeStandbyPoolStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            StanbyPoolHealthStateCode code = default;
+            StandbyPoolHealthStateCode code = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = new StanbyPoolHealthStateCode(property.Value.GetString());
+                    code = new StandbyPoolHealthStateCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePoolStatus(document.RootElement, options);
+                        return DeserializeStandbyPoolStatus(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StandbyPoolStatus)} does not support reading '{options.Format}' format.");
