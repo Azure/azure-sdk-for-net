@@ -6,9 +6,9 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Identity Broker;$(PackageCommonTags)</PackageTags>
-    <TargetFrameworks Condition="$([MSBuild]::IsWindows())">$(RequiredTargetFrameworks);net462;net8.0</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsMacOS())">$(RequiredTargetFrameworks);net8.0</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsLinux()) ">$(RequiredTargetFrameworks);net8.0</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Windows'))">$(RequiredTargetFrameworks);net462;net8.0</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('OSX'))">$(RequiredTargetFrameworks);net8.0</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Linux'))">$(RequiredTargetFrameworks);net8.0</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
