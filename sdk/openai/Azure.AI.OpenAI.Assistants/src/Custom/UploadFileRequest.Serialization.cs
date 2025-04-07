@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants;
 
-internal partial class UploadFileRequest : IUtf8JsonSerializable
+public partial class UploadFileRequest : IUtf8JsonSerializable
 {
     /*
      * CUSTOM CODE DESCRIPTION:

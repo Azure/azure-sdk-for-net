@@ -532,15 +532,15 @@ namespace Azure.AI.Vision.Face
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Face.LargePersonGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Face.LargeFaceList"/>. </summary>
         /// <param name="name"> User defined name, maximum length is 128. </param>
         /// <param name="userData"> Optional user defined data. Length should not exceed 16K. </param>
         /// <param name="recognitionModel"> Name of recognition model. Recognition model is used when the face features are extracted and associated with detected faceIds. </param>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
-        /// <returns> A new <see cref="Face.LargePersonGroup"/> instance for mocking. </returns>
-        public static LargePersonGroup LargePersonGroup(string name = null, string userData = null, FaceRecognitionModel? recognitionModel = null, string largePersonGroupId = null)
+        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
+        /// <returns> A new <see cref="Face.LargeFaceList"/> instance for mocking. </returns>
+        public static LargeFaceList LargeFaceList(string name = null, string userData = null, FaceRecognitionModel? recognitionModel = null, string largeFaceListId = null)
         {
-            return new LargePersonGroup(name, userData, recognitionModel, largePersonGroupId, serializedAdditionalRawData: null);
+            return new LargeFaceList(name, userData, recognitionModel, largeFaceListId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Face.FaceTrainingResult"/>. </summary>
@@ -559,6 +559,34 @@ namespace Azure.AI.Vision.Face
                 lastSuccessfulTrainingDateTime,
                 message,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Face.AddFaceResult"/>. </summary>
+        /// <param name="persistedFaceId"> Persisted Face ID of the added face, which is persisted and will not expire. Different from faceId which is created in "Detect" and will expire in 24 hours after the detection call. </param>
+        /// <returns> A new <see cref="Face.AddFaceResult"/> instance for mocking. </returns>
+        public static AddFaceResult AddFaceResult(Guid persistedFaceId = default)
+        {
+            return new AddFaceResult(persistedFaceId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Face.LargeFaceListFace"/>. </summary>
+        /// <param name="persistedFaceId"> Face ID of the face. </param>
+        /// <param name="userData"> User-provided data attached to the face. The length limit is 1K. </param>
+        /// <returns> A new <see cref="Face.LargeFaceListFace"/> instance for mocking. </returns>
+        public static LargeFaceListFace LargeFaceListFace(Guid persistedFaceId = default, string userData = null)
+        {
+            return new LargeFaceListFace(persistedFaceId, userData, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Face.LargePersonGroup"/>. </summary>
+        /// <param name="name"> User defined name, maximum length is 128. </param>
+        /// <param name="userData"> Optional user defined data. Length should not exceed 16K. </param>
+        /// <param name="recognitionModel"> Name of recognition model. Recognition model is used when the face features are extracted and associated with detected faceIds. </param>
+        /// <param name="largePersonGroupId"> ID of the container. </param>
+        /// <returns> A new <see cref="Face.LargePersonGroup"/> instance for mocking. </returns>
+        public static LargePersonGroup LargePersonGroup(string name = null, string userData = null, FaceRecognitionModel? recognitionModel = null, string largePersonGroupId = null)
+        {
+            return new LargePersonGroup(name, userData, recognitionModel, largePersonGroupId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Face.CreatePersonResult"/>. </summary>
@@ -582,14 +610,6 @@ namespace Azure.AI.Vision.Face
             return new LargePersonGroupPerson(personId, name, userData, persistedFaceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Face.AddFaceResult"/>. </summary>
-        /// <param name="persistedFaceId"> Persisted Face ID of the added face, which is persisted and will not expire. Different from faceId which is created in "Detect" and will expire in 24 hours after the detection call. </param>
-        /// <returns> A new <see cref="Face.AddFaceResult"/> instance for mocking. </returns>
-        public static AddFaceResult AddFaceResult(Guid persistedFaceId = default)
-        {
-            return new AddFaceResult(persistedFaceId, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Face.LargePersonGroupPersonFace"/>. </summary>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="userData"> User-provided data attached to the face. The length limit is 1K. </param>
@@ -597,26 +617,6 @@ namespace Azure.AI.Vision.Face
         public static LargePersonGroupPersonFace LargePersonGroupPersonFace(Guid persistedFaceId = default, string userData = null)
         {
             return new LargePersonGroupPersonFace(persistedFaceId, userData, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Face.LargeFaceList"/>. </summary>
-        /// <param name="name"> User defined name, maximum length is 128. </param>
-        /// <param name="userData"> Optional user defined data. Length should not exceed 16K. </param>
-        /// <param name="recognitionModel"> Name of recognition model. Recognition model is used when the face features are extracted and associated with detected faceIds. </param>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
-        /// <returns> A new <see cref="Face.LargeFaceList"/> instance for mocking. </returns>
-        public static LargeFaceList LargeFaceList(string name = null, string userData = null, FaceRecognitionModel? recognitionModel = null, string largeFaceListId = null)
-        {
-            return new LargeFaceList(name, userData, recognitionModel, largeFaceListId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Face.LargeFaceListFace"/>. </summary>
-        /// <param name="persistedFaceId"> Face ID of the face. </param>
-        /// <param name="userData"> User-provided data attached to the face. The length limit is 1K. </param>
-        /// <returns> A new <see cref="Face.LargeFaceListFace"/> instance for mocking. </returns>
-        public static LargeFaceListFace LargeFaceListFace(Guid persistedFaceId = default, string userData = null)
-        {
-            return new LargeFaceListFace(persistedFaceId, userData, serializedAdditionalRawData: null);
         }
     }
 }
