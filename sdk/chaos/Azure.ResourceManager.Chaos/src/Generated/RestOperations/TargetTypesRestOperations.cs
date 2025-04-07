@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ChaosTargetTypeData value = default;
+                        ChaosTargetMetadataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ChaosTargetTypeData.DeserializeChaosTargetTypeData(document.RootElement);
+                        value = ChaosTargetMetadataData.DeserializeChaosTargetMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ChaosTargetTypeData value = default;
+                        ChaosTargetMetadataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ChaosTargetTypeData.DeserializeChaosTargetTypeData(document.RootElement);
+                        value = ChaosTargetMetadataData.DeserializeChaosTargetMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         TargetTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TargetTypeListResult.DeserializeTargetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,103 +215,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         TargetTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TargetTypeListResult.DeserializeTargetTypeListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, string continuationToken)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Chaos/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/targetTypes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string continuationToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Chaos/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/targetTypes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a list of Target Type resources for given location. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TargetTypeListResult>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, location, continuationToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TargetTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TargetTypeListResult.DeserializeTargetTypeListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a list of Target Type resources for given location. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TargetTypeListResult> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, location, continuationToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TargetTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TargetTypeListResult.DeserializeTargetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

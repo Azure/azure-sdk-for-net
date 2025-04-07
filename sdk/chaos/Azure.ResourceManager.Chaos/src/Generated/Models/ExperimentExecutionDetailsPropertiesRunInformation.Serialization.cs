@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExperimentExecutionDetailsPropertiesRunInformation(document.RootElement, options);
                     }
                 default:

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos.Tests
 
         protected async Task Initialize()
         {
-            this.Location = new AzureLocation("centraluseuap");
+            this.Location = new AzureLocation(TestEnvironment.Location);
             this.VmssId = this.CreateVmssId();
             this.VmssName = string.Format(TestConstants.VmssNameFormat, TestEnvironment.Location, this.VmssId);
             this.SubscriptionResource = await this.Client.GetDefaultSubscriptionAsync();

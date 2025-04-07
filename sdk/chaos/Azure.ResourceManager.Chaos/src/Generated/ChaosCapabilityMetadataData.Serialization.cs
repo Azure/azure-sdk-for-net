@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Chaos
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeChaosCapabilityTypeData(document.RootElement, options);
+                        return DeserializeChaosCapabilityMetadataData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ChaosCapabilityMetadataData)} does not support reading '{options.Format}' format.");

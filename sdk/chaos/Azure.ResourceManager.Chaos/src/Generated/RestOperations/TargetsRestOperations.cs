@@ -36,126 +36,6 @@ namespace Azure.ResourceManager.Chaos
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string continuationToken)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath(parentProviderNamespace, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(parentResourceType, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(parentResourceName, true);
-            uri.AppendPath("/providers/Microsoft.Chaos/targets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string continuationToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath(parentProviderNamespace, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(parentResourceType, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(parentResourceName, true);
-            uri.AppendPath("/providers/Microsoft.Chaos/targets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a list of Target resources that extend a tracked regional resource. </summary>
-        /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
-        /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
-        /// <param name="parentResourceType"> String that represents a resource type. </param>
-        /// <param name="parentResourceName"> String that represents a resource name. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TargetListResult>> ListAsync(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
-            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, continuationToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TargetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TargetListResult.DeserializeTargetListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a list of Target resources that extend a tracked regional resource. </summary>
-        /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
-        /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
-        /// <param name="parentResourceType"> String that represents a resource type. </param>
-        /// <param name="parentResourceName"> String that represents a resource name. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TargetListResult> List(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
-            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, continuationToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TargetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TargetListResult.DeserializeTargetListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName)
         {
             var uri = new RawRequestUriBuilder();
@@ -355,7 +235,7 @@ namespace Azure.ResourceManager.Chaos
                 case 201:
                     {
                         ChaosTargetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChaosTargetData.DeserializeChaosTargetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +273,7 @@ namespace Azure.ResourceManager.Chaos
                 case 201:
                     {
                         ChaosTargetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChaosTargetData.DeserializeChaosTargetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -587,7 +467,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         TargetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TargetListResult.DeserializeTargetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -621,7 +501,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         TargetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TargetListResult.DeserializeTargetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

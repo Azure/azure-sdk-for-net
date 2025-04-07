@@ -51,12 +51,6 @@ namespace Azure.ResourceManager.Chaos
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetData"/>. </summary>
-        public ChaosTargetData()
-        {
-            Properties = new ChangeTrackingDictionary<string, BinaryData>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ChaosTargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,6 +63,11 @@ namespace Azure.ResourceManager.Chaos
             Properties = properties;
             Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChaosTargetData"/> for deserialization. </summary>
+        internal ChaosTargetData()
+        {
         }
 
         /// <summary>

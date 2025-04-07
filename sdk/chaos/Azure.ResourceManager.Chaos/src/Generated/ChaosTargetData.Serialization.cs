@@ -36,29 +36,26 @@ namespace Azure.ResourceManager.Chaos
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            foreach (var item in Properties)
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
+                    writer.WriteNullValue();
+                    continue;
+                }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
-                writer.WriteEndObject();
+#endif
             }
+            writer.WriteEndObject();
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -98,10 +95,6 @@ namespace Azure.ResourceManager.Chaos
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -161,7 +154,7 @@ namespace Azure.ResourceManager.Chaos
                 name,
                 type,
                 systemData,
-                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                properties,
                 location,
                 serializedAdditionalRawData);
         }

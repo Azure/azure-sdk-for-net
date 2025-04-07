@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ChaosCapabilityData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChaosCapabilityData.DeserializeChaosCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ChaosCapabilityData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChaosCapabilityData.DeserializeChaosCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Chaos
                 case 201:
                     {
                         ChaosCapabilityData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChaosCapabilityData.DeserializeChaosCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Chaos
                 case 201:
                     {
                         ChaosCapabilityData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChaosCapabilityData.DeserializeChaosCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         CapabilityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CapabilityListResult.DeserializeCapabilityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         CapabilityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CapabilityListResult.DeserializeCapabilityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         CapabilityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CapabilityListResult.DeserializeCapabilityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         CapabilityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CapabilityListResult.DeserializeCapabilityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

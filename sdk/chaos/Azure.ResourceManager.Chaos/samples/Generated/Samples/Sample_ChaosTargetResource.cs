@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -79,6 +80,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        [Obsolete]
         public async Task Update_CreateUpdateATargetThatExtendsAVirtualMachineResource()
         {
             // Generated from example definition: 2025-01-01/Targets_CreateOrUpdate.json
@@ -101,10 +103,7 @@ namespace Azure.ResourceManager.Chaos.Samples
             ChaosTargetResource chaosTarget = client.GetChaosTargetResource(chaosTargetResourceId);
 
             // invoke the operation
-            ChaosTargetData data = new ChaosTargetData
-            {
-                Properties = { },
-            };
+            ChaosTargetData data = new ChaosTargetData(new Dictionary<string, BinaryData>());
             ArmOperation<ChaosTargetResource> lro = await chaosTarget.UpdateAsync(WaitUntil.Completed, data);
             ChaosTargetResource result = lro.Value;
 
