@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- `DefaultAzureCredential` now includes silent authentication via the authentication broker on Windows if the `Azure.Identity.Broker` NuGet package is referenced. This allows for a more seamless authentication experience when using the `DefaultAzureCredential` in Windows environments. Setting the `ExcludeBrokerAuthentication` property on `DefaultAzureCredentialOptions` can be disable this feature.
+- `DefaultAzureCredential` now includes silent authentication via the authentication broker on Windows if the `Azure.Identity.Broker` NuGet package is referenced. This allows for a more seamless authentication experience when using the `DefaultAzureCredential` in Windows environments. Setting the `ExcludeBrokerCredential` property on `DefaultAzureCredentialOptions` disables this feature.
 
 ### Breaking Changes
 

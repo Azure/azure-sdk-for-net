@@ -261,7 +261,7 @@ namespace Azure.Identity
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
 
         /// <summary>
-        /// Specifies broker authentication will be attempted as part of the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// Specifies whether broker authentication, via <see cref="InteractiveBrowserCredential"/>, will be attempted as part of the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Note that the broker authentication flow will only be attempted if the application has a reference to the Azure.Identity.Broker package.
         /// </summary>
         public bool ExcludeBrokerCredential { get; set; }
