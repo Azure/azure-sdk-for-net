@@ -18,7 +18,8 @@ namespace Azure.Storage.DataMovement
     internal class ConcurrencyTuner
     {
         internal static ResourceMonitor _resourceMonitor;
-        internal int _maxConcurrency;
+        private int _concurrencyUpperLimit = DataMovementConstants.ConcurrencyTuner.ConcurrencyUpperLimit;
+        internal int _maxConcurrency = DataMovementConstants.ConcurrencyTuner.ConcurrencyUpperLimit;
         internal int _finalReason;
         internal int _finalConcurrency;
         internal SemaphoreSlim _lockFinal;
@@ -27,8 +28,6 @@ namespace Azure.Storage.DataMovement
         internal ThroughputMonitor ThroughputMonitor { get; }
 
         private IProcessor<Func<Task>> _chunkProcessor;
-
-        private int _concurrencyUpperLimit = 1_000_000;
 
         public int MaxConcurrency
         {
@@ -80,8 +79,8 @@ namespace Azure.Storage.DataMovement
             int numOfReductions = 0;
             ConcurrencyTunerState lastReason = ConcurrencyTunerState.ConcurrencyReasonNone;
 
-            var prevThroughput = 0.0M;
-            var currThroughput = ThroughputMonitor.Throughput;
+            decimal prevThroughput = ThroughputMonitor.Throughput;
+            decimal currThroughput;
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -91,7 +90,7 @@ namespace Azure.Storage.DataMovement
                 {
                     multiplier = DataMovementConstants.ConcurrencyTuner.StandardMultiplier;
                 }
-                atMax = IsAtMaxConcurrency(multiplier, concurrency);
+                atMax = IsAtMaxConcurrency(concurrency);
 
                 if (atMax)
                 {
@@ -109,7 +108,7 @@ namespace Azure.Storage.DataMovement
                 currThroughput = ThroughputMonitor.Throughput;
 
                 if (
-                    ( atMax && (currThroughput > desiredNewThroughput || probeHigherRegardless) ) ||
+                    ( atMax && (currThroughput >= desiredNewThroughput || probeHigherRegardless) ) ||
                     dontBackoffRegardless
                 )
                 {
@@ -155,12 +154,6 @@ namespace Azure.Storage.DataMovement
                 State = lastReason,
                 Concurrency = (int)concurrency
             });
-
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-            //    await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonFinished, cancellationToken).ConfigureAwait(false);
-            //    currThroughput = ThroughputMonitor.Throughput;
-            //}
         }
 
         private static decimal AdjustMultiplier(decimal multiplier)
@@ -266,7 +259,8 @@ namespace Azure.Storage.DataMovement
         #region
         private static decimal CalculateDesiredThroughput(decimal lastThroughput, decimal multiplier)
         {
-            decimal desiredSpeedIncrease = lastThroughput * (multiplier - 1) * (decimal)DataMovementConstants.ConcurrencyTuner.FudgeFactor;
+            lastThroughput = Math.Max(lastThroughput, 1);
+            decimal desiredSpeedIncrease = lastThroughput * (1 - multiplier) * (decimal)DataMovementConstants.ConcurrencyTuner.FudgeFactor;
             return lastThroughput + desiredSpeedIncrease;
         }
 
@@ -275,23 +269,33 @@ namespace Azure.Storage.DataMovement
             concurrency = (double)((decimal)concurrency *multiplier);
         }
 
+        /// <summary>
+        /// Decreases the multiplier based on the current concurrency.
+        /// Math.Max(_max
+        /// </summary>
+        /// <param name="concurrency">The current concurrency level.</param>
+        /// <param name="multiplier">The multiplier to be adjusted.</param>
         private void DecreaseMultiplier(double concurrency, ref decimal multiplier)
         {
-            multiplier = (decimal)(_maxConcurrency / concurrency);
+            decimal newMultiplier = (decimal)(_maxConcurrency / concurrency);
+
+            multiplier = Math.Max(newMultiplier, 0.1M);
+
+            // Gradually reduce the multiplier to avoid drastic drops
+            multiplier = 1 + (multiplier - 2) / DataMovementConstants.ConcurrencyTuner.SlowdownFactor;
         }
 
         /// <summary>
         /// Determines if the current concurrency has reached the maximum allowed concurrency.
         /// </summary>
-        /// <param name="multiplier">The multiplier used to adjust concurrency.</param>
         /// <param name="concurrency">The current concurrency level.</param>
         /// <returns>True if the current concurrency has reached or exceeded the maximum allowed concurrency; otherwise, false.</returns>
         /// <remarks>
-        /// The method checks if the product of <paramref name="concurrency"/> and <paramref name="multiplier"/> exceeds the maximum allowed concurrency, which is <see cref="_maxConcurrency"/>.
+        /// The method checks if the product of <paramref name="concurrency"/> exceeds the maximum allowed concurrency, which is <see cref="_maxConcurrency"/>.
         /// </remarks>
-        private bool IsAtMaxConcurrency(decimal multiplier, double concurrency)
+        private bool IsAtMaxConcurrency(double concurrency)
         {
-            return (concurrency * (double)multiplier) > _concurrencyUpperLimit;
+            return concurrency >= _concurrencyUpperLimit;
         }
 
         /// <summary>

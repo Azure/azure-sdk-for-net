@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task ConcurrencyTuner_InitialConcurrencyShouldGoUp()
+        public async Task ConcurrencyTuner_InitialConcurrencyShouldGoDownFromMax()
         {
             // Arrange
             var throughputMonitor = new MockThroughputMonitor(10_000);
@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement.Tests
             //var chunkProcessorProperty = typeof(ConcurrencyTuner).GetField("_chunkProcessor", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             //var reflectedChunkProcessor = (IProcessor<Func<Task>>)chunkProcessorProperty.GetValue(tuner);
 
-            Assert.Less(chunkProcessor.MaxConcurrentProcessing, 100_000);
+            Assert.Less(chunkProcessor.MaxConcurrentProcessing, DataMovementConstants.ConcurrencyTuner.ConcurrencyUpperLimit);
             Assert.Greater(chunkProcessor.MaxConcurrentProcessing, 0, "Concurrency not greater than 0");
         }
 

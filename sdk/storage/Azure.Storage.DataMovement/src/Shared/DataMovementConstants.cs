@@ -34,6 +34,7 @@ namespace Azure.Storage.DataMovement
             internal const int SlowdownFactor = 5;
             internal const double MinMulitplier = 1.19; // really this is 1.2, but use a little less to make the floating point comparisons robust
             internal const double FudgeFactor = 0.2;
+            internal static int ConcurrencyUpperLimit = Environment.ProcessorCount * 32;
         }
 
         internal static class TransferManagerOptions
