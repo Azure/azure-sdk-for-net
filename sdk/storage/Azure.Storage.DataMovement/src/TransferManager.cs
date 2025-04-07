@@ -133,12 +133,7 @@ namespace Azure.Storage.DataMovement
 
             _concurrencyTuner = new ConcurrencyTuner(
                 new ThroughputMonitor(),
-                _chunksProcessor,
-                DataMovementConstants.TransferManagerOptions.MonitoringInterval,
-                DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
-                DataMovementConstants.TransferManagerOptions.InitialConcurrency,
-                DataMovementConstants.TransferManagerOptions.MaxConcurrency,
-                DataMovementConstants.TransferManagerOptions.MaxCpuUsage
+                _chunksProcessor
                 );
             _transferOptions = new TransferOptions();
             _transferOptions.ProgressHandlerOptions = new TransferProgressHandlerOptions();

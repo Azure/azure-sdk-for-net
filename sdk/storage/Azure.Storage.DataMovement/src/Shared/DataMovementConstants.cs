@@ -27,6 +27,7 @@ namespace Azure.Storage.DataMovement
 
         internal static class ConcurrencyTuner
         {
+            // These are from AzCopy
             internal const int StandardMultiplier = 2;
             internal const int BoostedMultiplier = StandardMultiplier * 2;
             internal const int TopOfBoostZone = 256; // boosted multiplier applies up to this many connections
@@ -38,11 +39,6 @@ namespace Azure.Storage.DataMovement
         internal static class TransferManagerOptions
         {
             internal static TransferErrorMode ErrorMode = TransferErrorMode.StopOnAnyFailure;
-            internal const int InitialConcurrency = 1;
-            internal static int MaxConcurrency = Environment.ProcessorCount * 8;
-            internal const double MaxMemoryUsage = double.MaxValue;
-            internal const float MaxCpuUsage = 1.0F;
-            internal static TimeSpan MonitoringInterval = TimeSpan.FromSeconds(1);
         }
 
         /// <summary>
