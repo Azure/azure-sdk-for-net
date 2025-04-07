@@ -44,6 +44,10 @@ parameters:
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
+  - name: ShouldPublish
+    value: $[or(and(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.Reason'], 'IndividualCI')), eq('${{ parameters.ShouldPublish }}', 'true'))]
+  - name: PublishPublic
+    value: $[or(and(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.Reason'], 'IndividualCI')), eq('${{ parameters.PublishPublic }}', 'true'))]
 
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
@@ -54,9 +58,9 @@ extends:
     BuildPrereleaseVersion: ${{ parameters.BuildPrereleaseVersion }}
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-      ShouldPublish: ${{ parameters.ShouldPublish }}
-      PublishPublic: ${{ parameters.PublishPublic }}
-      PublishDependsOnTest: ${{ parameters.PublishPublic }}
+      ShouldPublish: ${{ variables.ShouldPublish }}
+      PublishPublic: ${{ variables.PublishPublic }}
+      PublishDependsOnTest: ${{ variables.PublishPublic }}
       ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
       RegenerationJobCount: 5
       MinimumPerJob: 10
