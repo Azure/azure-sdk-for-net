@@ -199,6 +199,7 @@ extends:
 
           - pwsh: |
               tsp-client generate-config-files '$(buildArtifactsPath)/lock-files/package.json' --output-dir '$(Build.ArtifactStagingDirectory)' 
+              --emitter-package-json-path  ${{ parameters.EmitterPackageJsonPath }}
               --overrides '$(buildArtifactsPath)/overrides.json'
             displayName: Generate emitter-package.json file
 
