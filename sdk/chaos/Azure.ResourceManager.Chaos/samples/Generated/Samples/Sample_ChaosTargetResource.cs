@@ -80,7 +80,6 @@ namespace Azure.ResourceManager.Chaos.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        [Obsolete]
         public async Task Update_CreateUpdateATargetThatExtendsAVirtualMachineResource()
         {
             // Generated from example definition: 2025-01-01/Targets_CreateOrUpdate.json
