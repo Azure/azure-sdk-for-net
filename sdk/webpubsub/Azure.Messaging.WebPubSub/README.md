@@ -161,6 +161,23 @@ var client = new WebPubSubServiceClient(connectionString, "some_hub");
 client.RemoveConnectionFromAllGroups("some_connection");
 ```
 
+#### List connections in group
+Synchronous version:
+```C# Snippet:WebPubSubListConnectionsInGroup
+foreach (WebPubSubGroupMember member in client.ListConnectionsInGroup("groupName"))
+{
+    Console.WriteLine($"ConnectionId: {member.ConnectionId}, UserId: {member.UserId}");
+}
+```
+
+Asynchronous version:
+```C# Snippet:WebPubSubListConnectionsInGroupAsync
+await foreach (WebPubSubGroupMember member in client.ListConnectionsInGroupAsync("groupName"))
+{
+    Console.WriteLine($"ConnectionId: {member.ConnectionId}, UserId: {member.UserId}");
+}
+```
+
 ## Troubleshooting
 
 ### Setting up console logging

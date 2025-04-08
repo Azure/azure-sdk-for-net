@@ -14,6 +14,7 @@
 
 ### Features Added
 - Added support for SocketIO when generating ClientAccessURI
+- Added method `serviceClient.ListConnectionsInGroup` and `serviceClient.ListConnectionsInGroupAsync`.`
 
 ## 1.4.0 (2024-07-31)
 
