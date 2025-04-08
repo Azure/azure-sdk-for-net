@@ -211,13 +211,7 @@ extends:
                 --output-dir '$(Build.ArtifactStagingDirectory)' 
                 --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
               }
-            displayName: Generate emitter-package.json file
-
-          - pwsh: |
-              tsp-client generate-lock-file 
-              --output-dir '$(Build.ArtifactStagingDirectory)' 
-              --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
-            displayName: Generate emitter-package-lock.json file  
+            displayName: Generate emitter-package.json and emitter-package-lock files
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:
