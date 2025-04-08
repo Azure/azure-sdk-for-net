@@ -795,6 +795,7 @@ internal static partial class MockExtensions
     public static void VerifyTransferManagerCtorInvocations<T>(this Mock<IProcessor<T>> processor)
     {
         processor.VerifySet(p => p.Process = It.IsNotNull<ProcessAsync<T>>(), Times.Once());
+        processor.VerifySet(p => p.MaxConcurrentProcessing = It.IsAny<int>(), Times.AtMostOnce);
     }
 
     #region StorageResource calls TransferManager processing stages
