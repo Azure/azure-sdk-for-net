@@ -194,17 +194,29 @@ extends:
                 MainPublisher: ESRPRELPACMANTEST
 
           - pwsh: |
-              npm install -g @azure-tools/tsp-client@latest
+              npm install -g @azure-tools/typespec-client-generator-cli@latest
             displayName: Install tsp-client
 
           - pwsh: |
-              tsp-client generate-config-files '$(buildArtifactsPath)/lock-files/package.json' --output-dir '$(Build.ArtifactStagingDirectory)' 
-              --emitter-package-json-path  ${{ parameters.EmitterPackageJsonPath }}
-              --overrides '$(buildArtifactsPath)/overrides.json'
+              if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
+                Write-Host "Using overrides.json to generate emitter-package.json"
+                tsp-client generate-config-files 
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' 
+                --output-dir '$(Build.ArtifactStagingDirectory)' 
+                --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
+                --overrides '$(buildArtifactsPath)/overrides.json'
+              } else {
+                tsp-client generate-config-files 
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' 
+                --output-dir '$(Build.ArtifactStagingDirectory)' 
+                --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
+              }
             displayName: Generate emitter-package.json file
 
           - pwsh: |
-              tsp-client generate-lock-file --output-dir '$(Build.ArtifactStagingDirectory)' --emitter-package-json-path  ${{ parameters.EmitterPackageJsonPath }}
+              tsp-client generate-lock-file 
+              --output-dir '$(Build.ArtifactStagingDirectory)' 
+              --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
             displayName: Generate emitter-package-lock.json file  
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
