@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.2 (2025-04-08)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added extensions to `System.Diagnostics.Activity` and `System.Diagnostics.ActivitySource` to simplify instrumentation of client libraries
 
 ## 1.4.0-beta.1 (2025-03-06)
 
