@@ -614,7 +614,7 @@
 # ServiceOwners:                                                   @Lighthouse-Azure
 
 # PRLabel: %Maps
-/sdk/maps/                                                         @dubiety
+/sdk/maps/                                                         @dubiety @andykao1213
 # ServiceLabel: %Maps
 # ServiceOwners:                                                   @dubiety
 
