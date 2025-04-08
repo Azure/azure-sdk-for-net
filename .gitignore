@@ -165,7 +165,6 @@ pingme.txt
 dist/
 node_modules/
 eng/packages/**/*.tgz
-package-lock.json
 
 # MSBuild binary log files
 msbuild.binlog
