@@ -1,14 +1,10 @@
 # Release History
 
-## 5.17.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 5.16.6 (2025-04-08)
 
 ### Other Changes
+
+- Bump dependency on `Azure.Messaging.ServiceBus` to 7.19.0
 
 ## 5.16.5 (2025-03-14)
 
