@@ -51,7 +51,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         private readonly string _defaultOwner = "0";
         private readonly string _defaultGroup = "0";
         private readonly string _defaultMode = "0664";
-        private readonly string _defaultFileType = "Regular";
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
 
         public ShareFileStartTransferCopyTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
@@ -706,7 +705,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string sourceOwner = "345";
             string sourceGroup = "123";
             string sourceFileMode = "1777";
-            string sourceFileType = "Regular";
             ShareFileCreateOptions sharefileCreateOptions = new ShareFileCreateOptions()
             {
                 SmbProperties = new FileSmbProperties()
@@ -719,7 +717,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     Owner = sourceOwner,
                     Group = sourceGroup,
                     FileMode = NfsFileMode.ParseOctalFileMode(sourceFileMode),
-                    FileType = new NfsFileType(sourceFileType),
                 }
             };
 
@@ -772,7 +769,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(sourceOwner, destinationProperties.PosixProperties.Owner);
                 Assert.AreEqual(sourceGroup, destinationProperties.PosixProperties.Group);
                 Assert.AreEqual(sourceFileMode, destinationProperties.PosixProperties.FileMode.ToOctalFileMode());
-                Assert.AreEqual(sourceFileType, destinationProperties.PosixProperties.FileType.ToString());
             }
             else
             {
@@ -781,7 +777,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(_defaultOwner, destinationProperties.PosixProperties.Owner);
                 Assert.AreEqual(_defaultGroup, destinationProperties.PosixProperties.Group);
                 Assert.AreEqual(_defaultMode, destinationProperties.PosixProperties.FileMode.ToOctalFileMode());
-                Assert.AreEqual(_defaultFileType, destinationProperties.PosixProperties.FileType.ToString());
             }
         }
     }

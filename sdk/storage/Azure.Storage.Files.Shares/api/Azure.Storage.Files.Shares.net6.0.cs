@@ -506,9 +506,9 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public FilePosixProperties() { }
         public Azure.Storage.Files.Shares.Models.NfsFileMode FileMode { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.NfsFileType? FileType { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.NfsFileType? FileType { get { throw null; } }
         public string Group { get { throw null; } set { } }
-        public long? LinkCount { get { throw null; } set { } }
+        public long? LinkCount { get { throw null; } }
         public string Owner { get { throw null; } set { } }
     }
     public partial class FileSmbProperties

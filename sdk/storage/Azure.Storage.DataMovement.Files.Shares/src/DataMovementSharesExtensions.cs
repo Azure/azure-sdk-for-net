@@ -137,14 +137,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 return new();
             }
 
-            return new()
-            {
-                Owner = destinationOwner,
-                Group = destinationGroup,
-                FileMode = destinationFileMode,
-                FileType = destinationFileType,
-                LinkCount = destinationLinkCount
-            };
+            return FilesModelFactory.FilePosixProperties(
+                destinationFileMode, destinationOwner, destinationGroup, destinationFileType ?? NfsFileType.Regular, destinationLinkCount);
         }
 
         public static FileSmbProperties GetFileSmbProperties(

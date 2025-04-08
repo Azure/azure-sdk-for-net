@@ -33,12 +33,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Optional, only applicable to files. The type of the file. The default value is <see cref="NfsFileType.Regular"/>.
         /// </summary>
-        public NfsFileType? FileType { get; set; }
+        public NfsFileType? FileType { get; internal set; }
 
         /// <summary>
         /// The link count of the file or directory.
         /// </summary>
-        public long? LinkCount { get; set; }
+        public long? LinkCount { get; internal set; }
     }
 
     /// <summary>

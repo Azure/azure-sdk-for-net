@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string filePermission = _options?.GetFilePermission(properties?.RawProperties);
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
             FilePosixProperties posixProperties = _options?.GetFilePosixProperties(
-                _destinationFileMode, _destinationOwner, _destinationGroup, _destinationFileType, _destinationLinkCount);
+                _destinationFileMode, _destinationOwner, _destinationGroup, NfsFileType.Regular, _destinationLinkCount);
 
             // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
             if ((properties == null || properties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
