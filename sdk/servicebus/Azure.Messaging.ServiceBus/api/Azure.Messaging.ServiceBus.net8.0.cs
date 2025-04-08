@@ -134,6 +134,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusClientOptions
     {
         public ServiceBusClientOptions() { }
+        public System.Net.Security.RemoteCertificateValidationCallback CertificateValidationCallback { get { throw null; } set { } }
         public System.TimeSpan ConnectionIdleTimeout { get { throw null; } set { } }
         public System.Uri CustomEndpointAddress { get { throw null; } set { } }
         public bool EnableCrossEntityTransactions { get { throw null; } set { } }
