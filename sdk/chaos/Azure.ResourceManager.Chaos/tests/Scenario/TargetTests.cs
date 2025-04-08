@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Chaos.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var data = new ChaosTargetData();
             var targetCollection = this.ResourceGroupResource.GetChaosTargets(
                 TestConstants.ComputeNamespace,
                 TestConstants.VmssResourceName,
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             var createUpdateTargetResponse = await targetCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 TestConstants.VmssTargetName,
-                new ChaosTargetData());
+                new ChaosTargetData(new Core.ResourceIdentifier("test"), "targetName", new Core.ResourceType(TestConstants.ComputeNamespace + "/" + TestConstants.VmssResourceName), new ResourceManager.Models.SystemData(), new Dictionary<string, BinaryData>(), new Core.AzureLocation("eastus"), new Dictionary<string, BinaryData>()));
             Assert.AreEqual(200, createUpdateTargetResponse.GetRawResponse().Status);
         }
 
