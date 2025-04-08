@@ -67,6 +67,10 @@ parameters:
   type: object
   default: []
 
+- name: EmitterPackageJsonPath
+  type: string
+  default: ""
+
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
@@ -189,26 +193,18 @@ extends:
                 ServiceEndpointUrl: https://api.esrp.microsoft.com
                 MainPublisher: ESRPRELPACMANTEST
 
-          - task: PowerShell@2
-            displayName: Create emitter-package.json
-            inputs:
-              pwsh: true
-              filePath: ./eng/common/scripts/typespec/New-EmitterPackageJson.ps1
-              arguments: >
-                -PackageJsonPath '$(buildArtifactsPath)/lock-files/package.json'
-                -OverridesPath '$(buildArtifactsPath)/overrides.json'
-                -OutputDirectory '$(Build.ArtifactStagingDirectory)'
-              workingDirectory: $(Build.SourcesDirectory)
+          - pwsh: |
+              npm install -g @azure-tools/tsp-client@latest
+            displayName: Install tsp-client
 
-          - task: PowerShell@2
-            displayName: Create emitter-package-lock.json
-            inputs:
-              pwsh: true
-              filePath: ./eng/common/scripts/typespec/New-EmitterPackageLock.ps1
-              arguments: >
-                -EmitterPackageJsonPath '$(Build.ArtifactStagingDirectory)/emitter-package.json'
-                -OutputDirectory '$(Build.ArtifactStagingDirectory)'
-              workingDirectory: $(Build.SourcesDirectory)
+          - pwsh: |
+              tsp-client generate-config-files '$(buildArtifactsPath)/lock-files/package.json' --output-dir '$(Build.ArtifactStagingDirectory)' 
+              --overrides '$(buildArtifactsPath)/overrides.json'
+            displayName: Generate emitter-package.json file
+
+          - pwsh: |
+              tsp-client generate-lock-file --output-dir '$(Build.ArtifactStagingDirectory)' --emitter-package-json-path  ${{ parameters.EmitterPackageJsonPath }}
+            displayName: Generate emitter-package-lock.json file  
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:
