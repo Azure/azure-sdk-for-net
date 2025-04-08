@@ -9,6 +9,7 @@
     <IncludeSamples Condition="'$(IncludeSamples)' == ''">true</IncludeSamples>
     <IncludePerf Condition="'$(IncludePerf)' == ''">true</IncludePerf>
     <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
+    <IncludeSourceGeneration Condition="'$(IncludeSourceGeneration)' == ''">false</IncludeSourceGeneration>
     <IncludeIntegrationTests Condition="'$(IncludeIntegrationTests)' == ''">true</IncludeIntegrationTests>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
@@ -50,6 +51,7 @@
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" />
     <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
+    <SourceGenerationProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\gen\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(PerfProjects);@(StressProjects)" />
     <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
     <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
@@ -57,6 +59,7 @@
     <ProjectReference Include="@(StressProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeStress)' == 'true'" />
     <ProjectReference Include="@(SampleApplications)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
     <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
+    <ProjectReference Include="@(SourceGenerationProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSourceGeneration)' == 'true'" />
   </ItemGroup>
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
@@ -64,6 +67,7 @@
 
   <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(EnableOverrideExclusions)' != ''">
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
+    <SourceGenerationProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\gen\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
     <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
@@ -79,6 +83,7 @@
     <ProjectReference Remove="@(SrcProjects)" Condition="'$(IncludeSrc)' == 'false'" />
     <ProjectReference Remove="@(IntegrationTestProjects)" Condition="'$(IncludeIntegrationTests)' == 'false'" />
     <ProjectReference Remove="@(SharedProjects)" Condition="'$(IncludeSrc)' == 'false'" />
+    <ProjectReference Remove="@(SourceGenerationProjects)" Condition="'$(IncludeSourceGeneration)' == 'false'" />
   </ItemGroup>
 
   <!-- Remove all projects except the ones included by the SDKType filter -->
