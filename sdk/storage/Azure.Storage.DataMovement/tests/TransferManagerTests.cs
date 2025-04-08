@@ -148,9 +148,9 @@ public class TransferManagerTests
                 srcResource.Object,
                 dstResource.Object,
                 new()
-                {
-                    InitialTransferSize = chunkSize,
-                    MaximumTransferChunkSize = chunkSize,
+            {
+                InitialTransferSize = chunkSize,
+                MaximumTransferChunkSize = chunkSize,
                 });
             Assert.That(transfer.HasCompleted, Is.False);
             transfers.Add(transfer);
@@ -273,9 +273,9 @@ public class TransferManagerTests
                 srcResource.Object,
                 dstResource.Object,
                 new()
-                {
-                    InitialTransferSize = chunkSize,
-                    MaximumTransferChunkSize = chunkSize,
+            {
+                InitialTransferSize = chunkSize,
+                MaximumTransferChunkSize = chunkSize,
                 });
             transfers.Add((transfer, GetItemCountFromContainerIndex(i), srcResource, dstResource));
 
@@ -613,6 +613,47 @@ public class TransferManagerTests
             statuses.Add(status.DeepCopy());
             return true;
         });
+
+    [Test]
+    public async Task TransferManager_ThroughputMonitorTest()
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer,
+            default);
+
+        int numFiles = 3;
+        Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
+        Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
+        (srcResource, dstResource).BasicSetup(srcUri, dstUri, numFiles);
+
+        // Don't pass options to test default options
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
+
+        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(1), "Failed to step through jobs queue.");
+        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numFiles), "Failed to step through parts queue.");
+        await ProcessChunksAssert(chunksProcessor, 1, numFiles, numFiles);
+
+        Assert.That(transfer.Status.HasCompletedSuccessfully);
+
+        // Use reflection to access the private _conncurrencyTuner field
+        var concurrencyTunerField = typeof(TransferManager).GetField("_concurrencyTuner", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        var concurrencyTuner = (ConcurrencyTuner)concurrencyTunerField.GetValue(transferManager);
+
+        // Assert the throughput monitor values
+        Assert.AreEqual(concurrencyTuner.ThroughputMonitor.TotalBytesTransferred, 3072, "Throughput not equal to 2048");
+        Assert.Greater(concurrencyTuner.ThroughputMonitor.Throughput, 0, "Thoughput not greater than 0");
+    }
 }
 
 internal static partial class MockExtensions
@@ -754,6 +795,7 @@ internal static partial class MockExtensions
     public static void VerifyTransferManagerCtorInvocations<T>(this Mock<IProcessor<T>> processor)
     {
         processor.VerifySet(p => p.Process = It.IsNotNull<ProcessAsync<T>>(), Times.Once());
+        processor.VerifySet(p => p.MaxConcurrentProcessing = It.IsAny<int>(), Times.AtMostOnce);
     }
 
     #region StorageResource calls TransferManager processing stages
