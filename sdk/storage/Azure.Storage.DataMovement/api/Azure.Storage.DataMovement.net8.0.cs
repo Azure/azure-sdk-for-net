@@ -213,7 +213,11 @@ namespace Azure.Storage.DataMovement
         public Azure.Storage.DataMovement.TransferCheckpointStoreOptions CheckpointStoreOptions { get { throw null; } set { } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Storage.DataMovement.TransferErrorMode ErrorMode { get { throw null; } set { } }
+        public int InitialConcurrency { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
+        public float? MaximumCpuUsage { get { throw null; } set { } }
+        public double? MaximumMemoryUsage { get { throw null; } set { } }
+        public System.TimeSpan? MonitoringInterval { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Storage.DataMovement.StorageResourceProvider> ProvidersForResuming { get { throw null; } set { } }
     }
     public partial class TransferOperation
