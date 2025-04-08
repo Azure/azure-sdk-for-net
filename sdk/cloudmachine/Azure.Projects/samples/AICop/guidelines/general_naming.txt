@@ -1,0 +1,12 @@
+﻿PascalCasing is a casing style where each word in an identifier starts with a capital letter.
+camelCasing is a casing style where the first word is all lowercase and subsequent words have an initial capital letter.
+For the purpose of this document, the term "acronym" refers to a collection of initial letters, e.g. HTML. 
+For the purpose of this document, the term "abbreviation" refers to shortening of a word, e.g. Max.
+The following are naming and casing guidelines for .NET APIs:
+
+MUST NOT use underscores in any .NET APIs.
+MUST use PascalCasing for namespace, type, and member names.
+MUST use camelCasing for parameter names.
+SHOULD use PascalCasing or camelCasing for acronyms more than two characters long, e.g. HtmlButton or htmlButton.
+SHOULD use all upper case for acronyms of two characters.
+DO NOT use abbreviations, except for explicitly specified here: Max, Min.

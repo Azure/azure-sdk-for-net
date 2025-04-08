@@ -1,0 +1,5 @@
+﻿DO prefix namespace names with a company name to prevent namespaces from different companies from having the same name.
+AVOID very deep namespace hierarchies. Such hierarchies are difficult to browse because the user has to backtrack often.
+AVOID having too many namespaces.
+DO NOT define types without specifying their namespaces.
+

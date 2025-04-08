@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAgent", "Azure.Proje
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAgent", "Azure.Projects\samples\WebAgent\WebAgent.csproj", "{8C8BC224-773F-8B2C-84D7-E0737AA2EDBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aicop", "Azure.Projects\samples\AICop\aicop.csproj", "{59503B76-2570-613E-27DD-4288ABEF5673}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,6 +108,10 @@ Global
 		{8C8BC224-773F-8B2C-84D7-E0737AA2EDBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C8BC224-773F-8B2C-84D7-E0737AA2EDBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C8BC224-773F-8B2C-84D7-E0737AA2EDBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59503B76-2570-613E-27DD-4288ABEF5673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59503B76-2570-613E-27DD-4288ABEF5673}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59503B76-2570-613E-27DD-4288ABEF5673}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59503B76-2570-613E-27DD-4288ABEF5673}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
