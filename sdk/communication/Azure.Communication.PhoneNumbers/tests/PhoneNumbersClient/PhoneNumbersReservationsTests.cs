@@ -221,7 +221,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
             var reservationBeforeAdd = CopyReservation(_initialReservationState!);
-            reservationBeforeAdd.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+            reservationBeforeAdd.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = await client.CreateOrUpdateReservationAsync(reservationBeforeAdd).ConfigureAwait(false);
             var reservationAfterAdd = reservationResponse.Value;
@@ -236,7 +236,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // Now remove the reserved number
             var phoneNumberIdToRemove = phoneNumberToReserve.Id;
             var reservationBeforeRemove = CopyReservation(reservationAfterAdd);
-            reservationBeforeRemove.PhoneNumbers[phoneNumberIdToRemove] = null;
+            reservationBeforeRemove.RemovePhoneNumber(phoneNumberIdToRemove);
 
             reservationResponse = await client.CreateOrUpdateReservationAsync(reservationBeforeRemove).ConfigureAwait(false);
             var reservationAfterRemove = reservationResponse.Value;
@@ -263,7 +263,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
             var reservationBeforeAdd = CopyReservation(_initialReservationState!);
-            reservationBeforeAdd.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+            reservationBeforeAdd.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = client.CreateOrUpdateReservation(reservationBeforeAdd);
             var reservationAfterAdd = reservationResponse.Value;
@@ -278,7 +278,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // Now remove the reserved number
             var phoneNumberIdToRemove = phoneNumberToReserve.Id;
             var reservationBeforeRemove = CopyReservation(reservationAfterAdd);
-            reservationBeforeRemove.PhoneNumbers[phoneNumberIdToRemove] = null;
+            reservationBeforeRemove.RemovePhoneNumber(phoneNumberIdToRemove);
 
             reservationResponse = client.CreateOrUpdateReservation(reservationBeforeRemove);
             var reservationAfterRemove = reservationResponse.Value;
@@ -342,7 +342,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var reservationId = GetReservationId();
             var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
-            reservation.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+            reservation.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = await client.CreateOrUpdateReservationAsync(reservation).ConfigureAwait(false);
 
@@ -383,7 +383,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var reservationId = GetReservationId();
             var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
-            reservation.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+            reservation.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = client.CreateOrUpdateReservation(reservation);
 
@@ -419,7 +419,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var reservationId = GetReservationId();
             var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
-            reservation.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+            reservation.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = await client.CreateOrUpdateReservationAsync(reservation).ConfigureAwait(false);
 
@@ -468,7 +468,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var phoneNumberToReserve = availablePhoneNumbers.First();
             var reservationId = GetReservationId();
             var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
-            reservation.PhoneNumbers.Add(phoneNumberToReserve.Id, phoneNumberToReserve);
+            reservation.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = client.CreateOrUpdateReservation(reservation);
 
