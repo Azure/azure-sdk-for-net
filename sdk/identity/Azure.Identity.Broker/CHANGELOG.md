@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.3.0-beta.2 (2025-04-08)
 
 ### Other Changes
+
+- Support for dynamic addition of the broker authentication to `DefaultAzureCredential` has been added. This allows the broker authentication to be used as part of the default credential chain by only adding a reference to this package to your application.
 
 ## 1.3.0-beta.1 (2025-03-11)
 

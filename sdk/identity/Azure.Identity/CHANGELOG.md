@@ -1,12 +1,10 @@
 # Release History
 
-## 1.14.0-beta.3 (Unreleased)
+## 1.14.0-beta.3 (2025-04-08)
 
 ### Features Added
 
 - `DefaultAzureCredential` now includes silent authentication via the authentication broker on Windows if the `Azure.Identity.Broker` NuGet package is referenced. This allows for a more seamless authentication experience when using the `DefaultAzureCredential` in Windows environments. Setting the `ExcludeBrokerCredential` property on `DefaultAzureCredentialOptions` disables this feature.
-
-### Breaking Changes
 
 ### Bugs Fixed
 - `DefaultAzureCredential` no longer sends a probe request on each call to `GetToken`. It now only happens on the first call.
