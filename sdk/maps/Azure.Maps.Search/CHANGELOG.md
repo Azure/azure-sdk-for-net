@@ -2,7 +2,7 @@
 
 ## 2.0.0-beta.5 (Unreleased)
 
-### Breaking Changes
+### Features Added
 
 - Support Search API `2025-01-01`. Support `StreetName` and `StreetNumber` in `Address` class and remove unused types
 
