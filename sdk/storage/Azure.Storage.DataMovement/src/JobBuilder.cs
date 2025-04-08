@@ -49,6 +49,7 @@ internal class JobBuilder
         ITransferCheckpointer checkpointer,
         string transferId,
         bool resumeJob,
+        ThroughputMonitor throughputMonitor,
         CancellationToken cancellationToken)
     {
         JobBuilder.ValidateTransferOptions(transferOptions);
@@ -67,6 +68,7 @@ internal class JobBuilder
                 checkpointer,
                 transferOperation,
                 resumeJob,
+                throughputMonitor,
                 cancellationToken).ConfigureAwait(false);
         }
         // Container transfer
@@ -80,6 +82,7 @@ internal class JobBuilder
                 checkpointer,
                 transferOperation,
                 resumeJob,
+                throughputMonitor,
                 cancellationToken).ConfigureAwait(false);
         }
         // Invalid transfer
@@ -98,6 +101,7 @@ internal class JobBuilder
         ITransferCheckpointer checkpointer,
         TransferOperation transferOperation,
         bool resumeJob,
+        ThroughputMonitor throughputMonitor,
         CancellationToken cancellationToken)
     {
         TransferJobInternal.CreateJobPartSingleAsync single;
@@ -136,7 +140,8 @@ internal class JobBuilder
             checkpointer: checkpointer,
             errorHandling: _errorHandling,
             arrayPool: _arrayPool,
-            clientDiagnostics: ClientDiagnostics);
+            clientDiagnostics: ClientDiagnostics,
+            throughputMonitor: throughputMonitor);
 
         int jobPartCount = await checkpointer.GetCurrentJobPartCountAsync(
                 transferId: transferOperation.Id,
@@ -161,6 +166,7 @@ internal class JobBuilder
         ITransferCheckpointer checkpointer,
         TransferOperation transferOperation,
         bool resumeJob,
+        ThroughputMonitor throughputMonitor,
         CancellationToken cancellationToken)
     {
         TransferJobInternal.CreateJobPartSingleAsync single;
@@ -199,7 +205,8 @@ internal class JobBuilder
             checkpointer: checkpointer,
             errorHandling: _errorHandling,
             arrayPool: _arrayPool,
-            clientDiagnostics: ClientDiagnostics);
+            clientDiagnostics: ClientDiagnostics,
+            throughputMonitor: throughputMonitor);
 
         if (resumeJob)
         {

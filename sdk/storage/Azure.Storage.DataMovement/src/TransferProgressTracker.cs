@@ -27,6 +27,7 @@ namespace Azure.Storage.DataMovement
         private readonly TransferProgressHandlerOptions _options;
 
         private IProcessor<ProgressEventArgs> _progressProcessor;
+        private ThroughputMonitor _throughputMonitor;
         private long _completedCount = 0;
         private long _skippedCount = 0;
         private long _failedCount = 0;
@@ -34,15 +35,17 @@ namespace Azure.Storage.DataMovement
         private long _queuedCount = 0;
         private long _bytesTransferred = 0;
 
-        public TransferProgressTracker(TransferProgressHandlerOptions options)
+        public TransferProgressTracker(ThroughputMonitor throughputMonitor, TransferProgressHandlerOptions options)
         {
+            _throughputMonitor = throughputMonitor;
             _options = options;
             _progressProcessor = ChannelProcessing.NewProcessor<ProgressEventArgs>(readers: 1);
             _progressProcessor.Process = ProcessProgressEvent;
         }
 
-        internal TransferProgressTracker(IProcessor<ProgressEventArgs> progressProcessor, TransferProgressHandlerOptions options)
+        internal TransferProgressTracker(ThroughputMonitor throughputMonitor, IProcessor<ProgressEventArgs> progressProcessor, TransferProgressHandlerOptions options)
         {
+            _throughputMonitor = throughputMonitor;
             _options = options;
             _progressProcessor = progressProcessor;
             _progressProcessor.Process = ProcessProgressEvent;
@@ -105,6 +108,7 @@ namespace Azure.Storage.DataMovement
 
         public async ValueTask IncrementBytesTransferredAsync(long bytesTransferred, CancellationToken cancellationToken)
         {
+            await _throughputMonitor.QueueBytesTransferredAsync(bytesTransferred, cancellationToken).ConfigureAwait(false);
             if (_options?.TrackBytesTransferred == true)
             {
                 await QueueProgressEvent(new ProgressEventArgs()
