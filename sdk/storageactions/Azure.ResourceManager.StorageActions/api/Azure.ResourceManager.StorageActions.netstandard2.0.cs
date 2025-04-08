@@ -332,16 +332,29 @@ namespace Azure.ResourceManager.StorageActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum StorageTaskProvisioningState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageTaskProvisioningState : System.IEquatable<Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState>
     {
-        ValidateSubscriptionQuotaBegin = 0,
-        ValidateSubscriptionQuotaEnd = 1,
-        Accepted = 2,
-        Creating = 3,
-        Succeeded = 4,
-        Deleting = 5,
-        Canceled = 6,
-        Failed = 7,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageTaskProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState ValidateSubscriptionQuotaBegin { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState ValidateSubscriptionQuotaEnd { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState left, Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState left, Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StorageTaskReportInstance : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance>
     {
