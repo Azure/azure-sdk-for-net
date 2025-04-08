@@ -22,10 +22,10 @@ Thank you to our developer community members who helped to make the Event Hubs c
   - `PartitionProperties.LastEnqueuedOffset`
 
   Obsoleted method overloads:
-  - EventPosition.FromOffset
-  - EventHubsModelFactory.EventData
-  - BlobCheckpointStore.UpdateCheckpointAsync
-  - EventProcessorClient.UpdateCheckpointAsync
+  - `EventPosition.FromOffset`
+  - `EventHubsModelFactory.EventData`
+  - `BlobCheckpointStore.UpdateCheckpointAsync`
+  - `EventProcessorClient.UpdateCheckpointAsync`
 
 ### Bugs Fixed
 
