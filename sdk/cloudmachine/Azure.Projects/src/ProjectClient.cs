@@ -40,7 +40,7 @@ public partial class ProjectClient : ConnectionProvider
     /// <param name="projectId"></param>
     /// <param name="connections"></param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ProjectClient(string projectId, ConnectionProvider connections)
+    public ProjectClient(string projectId, ConnectionProvider connections = default)
     {
         if (connections == null)
         {

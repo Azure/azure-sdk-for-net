@@ -1,3 +1,0 @@
-﻿MUST start namespace names with "Azure", e.g. Azure.Storage, Azure.Messaging.
-
-
