@@ -1,5 +1,15 @@
 # Release History
 
+## 6.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 6.5.0 (2025-04-08)
 
 ### Features Added
