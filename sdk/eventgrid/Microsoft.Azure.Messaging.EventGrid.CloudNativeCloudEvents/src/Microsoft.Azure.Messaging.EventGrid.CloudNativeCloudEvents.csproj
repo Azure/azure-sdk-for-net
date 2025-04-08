@@ -19,7 +19,5 @@
     <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="CloudNative.CloudEvents" />
     <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces"/>
-		<PackageReference Include="Azure.Core"/>
   </ItemGroup>
 </Project>

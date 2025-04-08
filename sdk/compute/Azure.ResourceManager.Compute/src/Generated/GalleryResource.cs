@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Compute
 
         private readonly ClientDiagnostics _galleryClientDiagnostics;
         private readonly GalleriesRestOperations _galleryRestClient;
-        private readonly ClientDiagnostics _gallerySharingProfileClientDiagnostics;
-        private readonly GallerySharingProfileRestOperations _gallerySharingProfileRestClient;
         private readonly ClientDiagnostics _softDeletedResourceClientDiagnostics;
         private readonly SoftDeletedResourceRestOperations _softDeletedResourceRestClient;
+        private readonly ClientDiagnostics _gallerySharingProfileClientDiagnostics;
+        private readonly GallerySharingProfileRestOperations _gallerySharingProfileRestClient;
         private readonly GalleryData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute
             _galleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string galleryApiVersion);
             _galleryRestClient = new GalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, galleryApiVersion);
-            _gallerySharingProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _softDeletedResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _softDeletedResourceRestClient = new SoftDeletedResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _gallerySharingProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,75 +97,6 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of GalleryApplicationResources in the Gallery. </summary>
-        /// <returns> An object representing collection of GalleryApplicationResources and their operations over a GalleryApplicationResource. </returns>
-        public virtual GalleryApplicationCollection GetGalleryApplications()
-        {
-            return GetCachedClient(client => new GalleryApplicationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves information about a gallery Application Definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryApplications_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryApplicationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GalleryApplicationResource>> GetGalleryApplicationAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
-        {
-            return await GetGalleryApplications().GetAsync(galleryApplicationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about a gallery Application Definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryApplications_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryApplicationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GalleryApplicationResource> GetGalleryApplication(string galleryApplicationName, CancellationToken cancellationToken = default)
-        {
-            return GetGalleryApplications().Get(galleryApplicationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of GalleryImageResources in the Gallery. </summary>
@@ -235,6 +166,75 @@ namespace Azure.ResourceManager.Compute
         public virtual Response<GalleryImageResource> GetGalleryImage(string galleryImageName, CancellationToken cancellationToken = default)
         {
             return GetGalleryImages().Get(galleryImageName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GalleryApplicationResources in the Gallery. </summary>
+        /// <returns> An object representing collection of GalleryApplicationResources and their operations over a GalleryApplicationResource. </returns>
+        public virtual GalleryApplicationCollection GetGalleryApplications()
+        {
+            return GetCachedClient(client => new GalleryApplicationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves information about a gallery Application Definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GalleryApplicationResource>> GetGalleryApplicationAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
+        {
+            return await GetGalleryApplications().GetAsync(galleryApplicationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves information about a gallery Application Definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GalleryApplicationResource> GetGalleryApplication(string galleryApplicationName, CancellationToken cancellationToken = default)
+        {
+            return GetGalleryApplications().Get(galleryApplicationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of GalleryInVmAccessControlProfileResources in the Gallery. </summary>
@@ -567,6 +567,72 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
+        /// List soft-deleted resources of an artifact in the gallery, such as soft-deleted gallery image version of an image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/softDeletedArtifactTypes/{artifactType}/artifacts/{artifactName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftDeletedResource_ListByArtifactName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactType"> The type of the artifact to be listed, such as gallery image version. </param>
+        /// <param name="artifactName"> The artifact name to be listed. If artifact type is Images, then the artifact name should be the gallery image name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="GallerySoftDeletedResourceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GallerySoftDeletedResourceDetails> GetSoftDeletedResourcesByArtifactNameAsync(string artifactType, string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softDeletedResourceRestClient.CreateListByArtifactNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softDeletedResourceRestClient.CreateListByArtifactNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GallerySoftDeletedResourceDetails.DeserializeGallerySoftDeletedResourceDetails(e), _softDeletedResourceClientDiagnostics, Pipeline, "GalleryResource.GetSoftDeletedResourcesByArtifactName", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List soft-deleted resources of an artifact in the gallery, such as soft-deleted gallery image version of an image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/softDeletedArtifactTypes/{artifactType}/artifacts/{artifactName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftDeletedResource_ListByArtifactName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactType"> The type of the artifact to be listed, such as gallery image version. </param>
+        /// <param name="artifactName"> The artifact name to be listed. If artifact type is Images, then the artifact name should be the gallery image name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
+        /// <returns> A collection of <see cref="GallerySoftDeletedResourceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GallerySoftDeletedResourceDetails> GetSoftDeletedResourcesByArtifactName(string artifactType, string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softDeletedResourceRestClient.CreateListByArtifactNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softDeletedResourceRestClient.CreateListByArtifactNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GallerySoftDeletedResourceDetails.DeserializeGallerySoftDeletedResourceDetails(e), _softDeletedResourceClientDiagnostics, Pipeline, "GalleryResource.GetSoftDeletedResourcesByArtifactName", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Update sharing profile of a gallery.
         /// <list type="bullet">
         /// <item>
@@ -648,72 +714,6 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List soft-deleted resources of an artifact in the gallery, such as soft-deleted gallery image version of an image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/softdeletedartifacttypes/{artifactType}/artifacts/{artifactName}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftDeletedResource_ListByArtifactName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="artifactType"> The type of the artifact to be listed, such as gallery image version. </param>
-        /// <param name="artifactName"> The artifact name to be listed. If artifact type is Images, then the artifact name should be the gallery image name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="GallerySoftDeletedResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GallerySoftDeletedResourceDetails> GetSoftDeletedResourcesByArtifactNameAsync(string artifactType, string artifactName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
-            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _softDeletedResourceRestClient.CreateListByArtifactNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softDeletedResourceRestClient.CreateListByArtifactNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GallerySoftDeletedResourceDetails.DeserializeGallerySoftDeletedResourceDetails(e), _softDeletedResourceClientDiagnostics, Pipeline, "GalleryResource.GetSoftDeletedResourcesByArtifactName", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List soft-deleted resources of an artifact in the gallery, such as soft-deleted gallery image version of an image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/softdeletedartifacttypes/{artifactType}/artifacts/{artifactName}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftDeletedResource_ListByArtifactName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="artifactType"> The type of the artifact to be listed, such as gallery image version. </param>
-        /// <param name="artifactName"> The artifact name to be listed. If artifact type is Images, then the artifact name should be the gallery image name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
-        /// <returns> A collection of <see cref="GallerySoftDeletedResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GallerySoftDeletedResourceDetails> GetSoftDeletedResourcesByArtifactName(string artifactType, string artifactName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
-            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _softDeletedResourceRestClient.CreateListByArtifactNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softDeletedResourceRestClient.CreateListByArtifactNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GallerySoftDeletedResourceDetails.DeserializeGallerySoftDeletedResourceDetails(e), _softDeletedResourceClientDiagnostics, Pipeline, "GalleryResource.GetSoftDeletedResourcesByArtifactName", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

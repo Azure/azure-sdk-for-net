@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The PassName. </summary>
+    /// <summary> The pass name. Currently, the only allowable value is OobeSystem. </summary>
     public readonly partial struct PassName : IEquatable<PassName>
     {
         private readonly string _value;
