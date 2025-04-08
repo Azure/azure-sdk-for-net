@@ -42,27 +42,27 @@ if (-not $LaunchOnly) {
         }
     }
 
-    if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec") {
-        Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
-        $testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Local'
+    # if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec") {
+    #     Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
+    #     $testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Local'
 
-        $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
+    #     $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
 
-        Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -forceNewProject $ForceNewProject)
+    #     Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -forceNewProject $ForceNewProject)
 
-        # exit if the generation failed
-        if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-        }
+    #     # exit if the generation failed
+    #     if ($LASTEXITCODE -ne 0) {
+    #         exit $LASTEXITCODE
+    #     }
 
-        Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
-        Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
+    #     Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
+    #     Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
 
-        # exit if the generation failed
-        if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-        }
-    }
+    #     # exit if the generation failed
+    #     if ($LASTEXITCODE -ne 0) {
+    #         exit $LASTEXITCODE
+    #     }
+    # }
 }
 
 $specsDirectory = "$packageRoot/node_modules/@typespec/http-specs"

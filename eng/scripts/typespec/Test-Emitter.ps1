@@ -26,23 +26,25 @@ function Build-Emitter {
 
         if ($UnitTests) {
             # test the emitter
-            Invoke-LoggedCommand "pnpm run prettier" -GroupOutput -ErrorAction Continue
+            Invoke-LoggedCommand "npm run prettier" -GroupOutput -ErrorAction Continue
             if ($LastExitCode) {
                 $errors += "Prettier failed"
             }
 
-            Invoke-LoggedCommand "pnpm run lint" -GroupOutput -ErrorAction Continue
+            Invoke-LoggedCommand "npm run lint" -GroupOutput -ErrorAction Continue
             if ($LastExitCode) {
                 $errors += "Lint failed"
             }
 
-            Invoke-LoggedCommand "pnpm run build" -GroupOutput
-            Invoke-LoggedCommand "pnpm run test:emitter" -GroupOutput -ErrorAction Continue
+            Invoke-LoggedCommand "npm install @types/node --save-dev" -GroupOutput
+            Invoke-LoggedCommand "npm run build:emitter" -GroupOutput
+            Invoke-LoggedCommand "npm run test:emitter" -GroupOutput -ErrorAction Continue
             if ($LastExitCode) {
                 $errors += "Emitter tests failed"
             }
 
-            Invoke-LoggedCommand "pnpm run test:generator" -GroupOutput -ErrorAction Continue
+            Invoke-LoggedCommand "npm run build:generator" -GroupOutput
+            Invoke-LoggedCommand "npm run test:generator" -GroupOutput -ErrorAction Continue
             if ($LastExitCode) {
                 $errors += "Generator tests failed"
             }

@@ -23,7 +23,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/590cfd2a-581c-4dcb-a12e-6568ce786175/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvNTkwY2ZkMmEtNTgxYy00ZGNiLWExMmUtNjU2OGNlNzg2MTc1L2J1aWxkSWQvNDcxNDAxNy9hcnRpZmFjdE5hbWUvYnVpbGRfYXJ0aWZhY3Rz0/content?format=file&subPath=%2Fpackages%2Fazure-typespec-http-client-csharp-1.0.0-alpha.20250402.1.tgz"
+    "@azure-typespec/http-client-csharp": "file:../http-client-csharp"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.10",
