@@ -5,6 +5,9 @@
 ### Features Added
 
 - Added extensions to `System.Diagnostics.Activity` and `System.Diagnostics.ActivitySource` to simplify instrumentation of client libraries
+- Added new overloads to `System.ClientModel.ModelReaderWriter` which take in a new 
+[ModelReaderWriterContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md)
+which allows reading and writing of collections of `IPersistableModel<>`.  In addition any calls to the new overloads are AOT compatible.
 
 ## 1.4.0-beta.1 (2025-03-06)
 
