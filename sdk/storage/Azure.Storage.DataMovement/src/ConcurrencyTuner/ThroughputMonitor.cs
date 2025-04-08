@@ -8,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class ThroughputMonitor : IAsyncDisposable
+    /// <summary>
+    /// Monitors the throughput of data transfer operations.
+    /// </summary>
+    public class ThroughputMonitor : IAsyncDisposable
     {
         private long _totalBytesTransferred;
         private Stopwatch _stopwatch = new Stopwatch();
         private bool _isStopwatchRunning = false;
 
         private IProcessor<long> _bytesTransferredProcessor;
+        /// <summary>
+        /// Returns Bytes transferred to the operation
+        /// </summary>
         public long TotalBytesTransferred { get => _totalBytesTransferred; }
 
         /// <summary>
@@ -35,15 +41,24 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public long TimeElapsedInMilliseconds {
+        public long TimeElapsedInMilliseconds
+        {
             get => _stopwatch.ElapsedMilliseconds;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThroughputMonitor"/> class.
+        /// </summary>
         public ThroughputMonitor() : this
             (
                 ChannelProcessing.NewProcessor<long>(readers: 1)
-            ){ }
+            )
+        { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThroughputMonitor"/> class with a specified processor.
+        /// </summary>
+        /// <param name="bytesTransferredProcessor">The processor to use for processing bytes transferred.</param>
         internal ThroughputMonitor(IProcessor<long> bytesTransferredProcessor)
         {
             _bytesTransferredProcessor = bytesTransferredProcessor;
@@ -54,7 +69,7 @@ namespace Azure.Storage.DataMovement
         /// Processes the bytes transferred asynchronously.
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
-        /// <param name="_">A token to monitor for cancellation requests. This is here to implment the interface, but does not do anything</param>
+        /// <param name="_">A token to monitor for cancellation requests. This is here to implement the interface, but does not do anything</param>
         private Task ProcessBytesTransferredAsync(long bytesTransferred, CancellationToken _)
         {
             if (!_isStopwatchRunning)
@@ -71,13 +86,17 @@ namespace Azure.Storage.DataMovement
         /// Enqueues the number of bytes transferred to be processed asynchronously.
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
-        /// <param name="_">A token to monitor for cancellation requests. This is implmented to just comply with the interface</param>
+        /// <param name="_">A token to monitor for cancellation requests. This is implemented to just comply with the interface</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async ValueTask QueueBytesTransferredAsync(long bytesTransferred, CancellationToken _)
         {
             await _bytesTransferredProcessor.QueueAsync(bytesTransferred, CancellationToken.None).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Disposes the resources used by the <see cref="ThroughputMonitor"/> class asynchronously.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous dispose operation.</returns>
         public ValueTask DisposeAsync()
         {
             throw new NotImplementedException();

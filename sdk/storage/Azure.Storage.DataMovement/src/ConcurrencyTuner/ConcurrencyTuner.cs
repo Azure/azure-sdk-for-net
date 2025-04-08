@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
     ///
     /// The worker should only start when we have any traffic.
     /// </summary>
-    internal class ConcurrencyTuner
+    public class ConcurrencyTuner
     {
         internal static ResourceMonitor _resourceMonitor;
         private int _concurrencyUpperLimit = DataMovementConstants.ConcurrencyTuner.ConcurrencyUpperLimit;
@@ -25,10 +25,16 @@ namespace Azure.Storage.DataMovement
         internal SemaphoreSlim _lockFinal;
         internal IProcessor<ConcurrencyRecommendation> _concurrencyRecommendations;
 
-        internal ThroughputMonitor ThroughputMonitor { get; }
+        /// <summary>
+        /// Thoughtput monitor returns throughput in Bytes per measure
+        /// </summary>
+        public ThroughputMonitor ThroughputMonitor { get; }
 
         private IProcessor<Func<Task>> _chunkProcessor;
 
+        /// <summary>
+        /// Gets the maximum concurrency level.
+        /// </summary>
         public int MaxConcurrency
         {
             get => _maxConcurrency;
