@@ -15,13 +15,16 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
         private void AssertReadOnlyMemory(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.ContainsKey($"ReadOnlyMemory<{type}>"));
-            var arrayJsonModel = dict[$"ReadOnlyMemory<{type}>"];
-            Assert.AreEqual($"ReadOnlyMemory<{type}>", arrayJsonModel.Type.Name);
-            Assert.AreEqual("System", arrayJsonModel.Type.Namespace);
-            Assert.IsNotNull(arrayJsonModel.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.ReadOnlyMemory, arrayJsonModel.Kind);
+            var romJsonModel = dict[$"ReadOnlyMemory<{type}>"];
+            Assert.AreEqual($"ReadOnlyMemory<{type}>", romJsonModel.Type.Name);
+            Assert.AreEqual("System", romJsonModel.Type.Namespace);
+            Assert.IsNotNull(romJsonModel.Type.ItemType);
+            Assert.AreEqual(TypeBuilderKind.ReadOnlyMemory, romJsonModel.Kind);
+            Assert.AreEqual($"ReadOnlyMemory_{type}_", romJsonModel.Type.TypeCaseName);
+            Assert.AreEqual($"readOnlyMemory_{type}_", romJsonModel.Type.CamelCaseName);
+            Assert.AreEqual(0, romJsonModel.Type.ArrayRank);
 
-            var genericArgument = arrayJsonModel.Type.ItemType!;
+            var genericArgument = romJsonModel.Type.ItemType!;
             modelValidator(genericArgument);
         }
     }

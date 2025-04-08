@@ -20,6 +20,9 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual("System.Collections.Generic", listJsonModel.Type.Namespace);
             Assert.IsNotNull(listJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.IList, listJsonModel.Kind);
+            Assert.AreEqual($"List_{type}_", listJsonModel.Type.TypeCaseName);
+            Assert.AreEqual($"list_{type}_", listJsonModel.Type.CamelCaseName);
+            Assert.AreEqual(0, listJsonModel.Type.ArrayRank);
 
             var genericArgument = listJsonModel.Type.ItemType!;
             modelValidator(genericArgument);

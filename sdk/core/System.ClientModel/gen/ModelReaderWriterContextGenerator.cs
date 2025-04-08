@@ -54,34 +54,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         // Find all types that inherit from ModelReaderWriterContext from dependencies
         var referencedTypes = context.CompilationProvider
-            .Select((compilation, _) =>
-            {
-                var targetBaseType = compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
-
-                if (targetBaseType is null)
-                {
-                    return ImmutableArray<INamedTypeSymbol>.Empty;
-                }
-
-                List<INamedTypeSymbol> matchingTypes = [];
-
-                foreach (var reference in compilation.References)
-                {
-                    var symbol = compilation.GetAssemblyOrModuleSymbol(reference) as IAssemblySymbol;
-                    if (symbol is null)
-                        continue;
-
-                    foreach (var type in GetAllTypes(symbol.GlobalNamespace))
-                    {
-                        if (type.TypeKind == TypeKind.Class && type.DeclaredAccessibility == Accessibility.Public && type.InheritsFrom(targetBaseType))
-                        {
-                            matchingTypes.Add(type);
-                        }
-                    }
-                }
-
-                return matchingTypes.ToImmutableArray();
-            });
+            .Select((compilation, _) => GetContextsFromDependencies(compilation));
 
         // Collect all types used in invocations to ModelReaderWriter.Read in the syntax tree
         var methodInvocations = context.SyntaxProvider
@@ -138,6 +111,35 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             .Select((data, _) => (data.Left.Left.Left.Left, data.Left.Left.Left.Right, data.Left.Left.Right, data.Left.Right, data.Right));
 
         context.RegisterSourceOutput(combined, ReportDiagnosticAndEmitSource);
+    }
+
+    private static ImmutableArray<INamedTypeSymbol> GetContextsFromDependencies(Compilation compilation)
+    {
+        var targetBaseType = compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
+
+        if (targetBaseType is null)
+        {
+            return ImmutableArray<INamedTypeSymbol>.Empty;
+        }
+
+        List<INamedTypeSymbol> matchingTypes = [];
+
+        foreach (var reference in compilation.References)
+        {
+            var symbol = compilation.GetAssemblyOrModuleSymbol(reference) as IAssemblySymbol;
+            if (symbol is null)
+                continue;
+
+            foreach (var type in GetAllTypes(symbol.GlobalNamespace))
+            {
+                if (type.TypeKind == TypeKind.Class && type.DeclaredAccessibility == Accessibility.Public && type.InheritsFrom(targetBaseType))
+                {
+                    matchingTypes.Add(type);
+                }
+            }
+        }
+
+        return matchingTypes.ToImmutableArray();
     }
 
     private void ReportDiagnosticAndEmitSource(

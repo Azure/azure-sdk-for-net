@@ -20,11 +20,17 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual("System.Collections.Generic", listListJsonModel.Type.Namespace);
             Assert.IsNotNull(listListJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.IList, listListJsonModel.Kind);
+            Assert.AreEqual(0, listListJsonModel.Type.ArrayRank);
+            Assert.AreEqual($"List_List_{type}_", listListJsonModel.Type.TypeCaseName);
+            Assert.AreEqual($"list_List_{type}_", listListJsonModel.Type.CamelCaseName);
 
             var genericArgument = listListJsonModel.Type.ItemType!;
             Assert.AreEqual($"List<{type}>", genericArgument.Name);
             Assert.AreEqual("System.Collections.Generic", genericArgument.Namespace);
             Assert.IsNotNull(genericArgument.ItemType);
+            Assert.AreEqual(0, genericArgument.ArrayRank);
+            Assert.AreEqual($"List_{type}_", genericArgument.TypeCaseName);
+            Assert.AreEqual($"list_{type}_", genericArgument.CamelCaseName);
 
             var innerGenericArgument = genericArgument.ItemType!;
             modelValidator(innerGenericArgument);

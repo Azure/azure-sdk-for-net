@@ -22,11 +22,17 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual(expectedNamespace, arrayModel.Type.Namespace);
             Assert.IsNotNull(arrayModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.Array, arrayModel.Kind);
+            Assert.AreEqual(1, arrayModel.Type.ArrayRank);
+            Assert.AreEqual($"{type}_Array_Array_", arrayModel.Type.TypeCaseName);
+            Assert.AreEqual($"{char.ToLower(type[0])}{type.Substring(1)}_Array_Array_", arrayModel.Type.CamelCaseName);
 
             var genericArgument = arrayModel.Type.ItemType!;
             Assert.AreEqual($"{type}[]", genericArgument.Name);
             Assert.AreEqual(expectedNamespace, genericArgument.Namespace);
             Assert.IsNotNull(genericArgument.ItemType);
+            Assert.AreEqual(1, genericArgument.ArrayRank);
+            Assert.AreEqual($"{type}_Array_", genericArgument.TypeCaseName);
+            Assert.AreEqual($"{char.ToLower(type[0])}{type.Substring(1)}_Array_", genericArgument.CamelCaseName);
 
             var genericArgument2 = genericArgument.ItemType!;
             modelValidator(genericArgument2);

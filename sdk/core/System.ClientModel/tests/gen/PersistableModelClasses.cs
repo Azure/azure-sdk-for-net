@@ -34,3 +34,23 @@ namespace System.ClientModel.SourceGeneration.Tests
         PersistableModel IPersistableModel<PersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new PersistableModel();
     }
 }
+
+namespace System.ClientModel.SourceGeneration.Tests.SubNamespace
+{
+#pragma warning disable SA1402 // File may only contain a single type
+    internal class JsonModel : IJsonModel<JsonModel>
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+        }
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}

@@ -14,6 +14,62 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
     public class ContextGeneratorTests
     {
         [Test]
+        public void TwoModelsSameNameDifferentNamespaces()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+
+namespace TestProject2
+{
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation);
+
+            Assert.IsNotNull(result.ContextFile);
+            Assert.AreEqual("LocalContext", result.ContextFile!.Type.Name);
+            Assert.AreEqual("TestProject", result.ContextFile.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.ContextFile!.Modifier);
+            Assert.AreEqual(2, result.ContextFile.TypeBuilders.Count);
+            Assert.AreEqual(0, result.ContextFile.ReferencedContexts.Count);
+
+            var dict = result.ContextFile.TypeBuilders.ToDictionary(t => $"{t.Type.Namespace}.{t.Type.Name}", t => t);
+            Assert.IsTrue(dict.ContainsKey("TestProject.JsonModel"));
+            Assert.IsTrue(dict.ContainsKey("TestProject2.JsonModel"));
+            var jsonModel = dict["TestProject.JsonModel"];
+            InvocationTestBase.AssertJsonModel(jsonModel.Type);
+            var jsonModel2 = dict["TestProject2.JsonModel"];
+            InvocationTestBase.AssertJsonModel(jsonModel2.Type, "TestProject2");
+        }
+
+        [Test]
         public void AbstractWithNoAttributeIsSkipped()
         {
             string source =

@@ -416,6 +416,9 @@ $$"""
         {
             Assert.AreEqual("JsonModel", jsonModel.Name);
             Assert.AreEqual(expectedNamespace, jsonModel.Namespace);
+            Assert.AreEqual("JsonModel_", jsonModel.TypeCaseName);
+            Assert.AreEqual("jsonModel_", jsonModel.CamelCaseName);
+            Assert.AreEqual(0, jsonModel.ArrayRank);
             Assert.IsNull(jsonModel.ItemType);
         }
 
@@ -423,6 +426,9 @@ $$"""
         {
             Assert.AreEqual("LocalBaseModel", localBaseModel.Name);
             Assert.AreEqual("TestProject", localBaseModel.Namespace);
+            Assert.AreEqual("LocalBaseModel_", localBaseModel.TypeCaseName);
+            Assert.AreEqual("localBaseModel_", localBaseModel.CamelCaseName);
+            Assert.AreEqual(0, localBaseModel.ArrayRank);
             Assert.IsNull(localBaseModel.ItemType);
         }
 
@@ -430,6 +436,9 @@ $$"""
         {
             Assert.AreEqual("UnknownLocalBaseModel", unknownLocalBaseModel.Name);
             Assert.AreEqual("TestProject", unknownLocalBaseModel.Namespace);
+            Assert.AreEqual("UnknownLocalBaseModel_", unknownLocalBaseModel.TypeCaseName);
+            Assert.AreEqual("unknownLocalBaseModel_", unknownLocalBaseModel.CamelCaseName);
+            Assert.AreEqual(0, unknownLocalBaseModel.ArrayRank);
             Assert.IsNull(unknownLocalBaseModel.ItemType);
         }
 
@@ -437,6 +446,9 @@ $$"""
         {
             Assert.AreEqual("BaseModel", baseModel.Name);
             Assert.AreEqual("System.ClientModel.Tests.Client.ModelReaderWriterTests.Models", baseModel.Namespace);
+            Assert.AreEqual("BaseModel_", baseModel.TypeCaseName);
+            Assert.AreEqual("baseModel_", baseModel.CamelCaseName);
+            Assert.AreEqual(0, baseModel.ArrayRank);
             Assert.IsNull(baseModel.ItemType);
         }
 
@@ -444,6 +456,9 @@ $$"""
         {
             Assert.AreEqual("AvailabilitySetData", aset.Name);
             Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", aset.Namespace);
+            Assert.AreEqual("AvailabilitySetData_", aset.TypeCaseName);
+            Assert.AreEqual("availabilitySetData_", aset.CamelCaseName);
+            Assert.AreEqual(0, aset.ArrayRank);
             Assert.IsNull(aset.ItemType);
         }
 

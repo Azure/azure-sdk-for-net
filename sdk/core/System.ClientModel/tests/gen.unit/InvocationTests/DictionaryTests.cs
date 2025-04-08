@@ -20,6 +20,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual("System.Collections.Generic", firstType.Type.Namespace);
             Assert.IsNotNull(firstType.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.IDictionary, firstType.Kind);
+            Assert.AreEqual($"Dictionary_string_{type}_", firstType.Type.TypeCaseName);
+            Assert.AreEqual($"dictionary_string_{type}_", firstType.Type.CamelCaseName);
 
             var genericArgument = firstType.Type.ItemType!;
             modelValidator(genericArgument);

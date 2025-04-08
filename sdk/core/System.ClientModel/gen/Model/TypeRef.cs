@@ -22,6 +22,12 @@ internal sealed class TypeRef : IEquatable<TypeRef>
     public string Assembly { get; }
     public int ArrayRank { get; }
 
+    private string? _typeCaseName;
+    public string TypeCaseName => _typeCaseName ??= Name.ToIdentifier(false);
+
+    private string? _camelCaseName;
+    public string CamelCaseName => _camelCaseName ??= TypeCaseName.ToCamelCase();
+
     internal static TypeRef FromINamedTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache)
     {
         if (symbol is INamedTypeSymbol namedTypeSymbol)
