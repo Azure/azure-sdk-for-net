@@ -11,7 +11,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
 {
     public class TestHelper
     {
-        public void SetupTestingLoadTestResource(LoadTestAdministrationClient loadTestAdministrationClient, string testId)
+        public void SetupLoadTest(LoadTestAdministrationClient loadTestAdministrationClient, string testId)
         {
             loadTestAdministrationClient.CreateOrUpdateTest(
                 testId,
@@ -36,7 +36,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                 );
         }
 
-        public async Task SetupTestingLoadTestResourceAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testId)
+        public async Task SetupLoadTestAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testId)
         {
             await loadTestAdministrationClient.CreateOrUpdateTestAsync(
                 testId,
@@ -81,19 +81,19 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
 
         public async Task SetupLoadTestResourceAndTestScriptAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string filename)
         {
-            await SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, testId);
+            await SetupLoadTestAsync(loadTestAdministrationClient, testId);
             await SetupTestScriptAsync(loadTestAdministrationClient, testId, filename, waitUntil: WaitUntil.Completed);
         }
 
         public void SetupLoadTestResourceAndTestScript(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string filename)
         {
-            SetupTestingLoadTestResource(loadTestAdministrationClient, testId);
+            SetupLoadTest(loadTestAdministrationClient, testId);
             SetupTestScript(loadTestAdministrationClient, testId, filename, WaitUntil.Completed);
         }
 
         public async Task SetupTestRunWithLoadTestAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string filename, LoadTestRunClient loadTestRunClient, string testRunId, WaitUntil waitUntil)
         {
-            await SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, testId);
+            await SetupLoadTestAsync(loadTestAdministrationClient, testId);
             await SetupTestScriptAsync(loadTestAdministrationClient, testId, filename, waitUntil: WaitUntil.Completed);
             await loadTestRunClient.BeginTestRunAsync(waitUntil, testRunId, RequestContent.Create(
                     new
@@ -106,7 +106,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
 
         public void SetupTestRunWithLoadTest(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string filename, LoadTestRunClient loadTestRunClient, string testRunId, WaitUntil waitUntil)
         {
-            SetupTestingLoadTestResource(loadTestAdministrationClient, testId);
+            SetupLoadTest(loadTestAdministrationClient, testId);
             SetupTestScript(loadTestAdministrationClient, testId, filename, waitUntil: WaitUntil.Completed);
             loadTestRunClient.BeginTestRun(waitUntil, testRunId, RequestContent.Create(
                     new

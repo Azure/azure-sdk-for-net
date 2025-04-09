@@ -45,7 +45,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             try
             {
-                TestProfileRunResultOperation operation = await loadTestRunClient.BeginTestProfileRunAsync(WaitUntil.Started, testProfileRunId, RequestContent.Create(data));
+                var operation = await loadTestRunClient.BeginTestProfileRunAsync(WaitUntil.Started, testProfileRunId, RequestContent.Create(data));
 
                 // get initial response
                 Response initialResponse = operation.GetRawResponse();

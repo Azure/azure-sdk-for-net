@@ -44,7 +44,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             try
             {
-                TestProfileRunResultOperation operation = loadTestRunClient.BeginTestProfileRun(WaitUntil.Started, testProfileRunId, RequestContent.Create(data));
+                var operation = loadTestRunClient.BeginTestProfileRun(WaitUntil.Started, testProfileRunId, RequestContent.Create(data));
 
                 // get initial response
                 Response initialResponse = operation.GetRawResponse();

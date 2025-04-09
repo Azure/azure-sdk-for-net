@@ -104,7 +104,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual TestProfileRunResultOperation BeginTestProfileRun(WaitUntil waitUntil, string testProfileRunId, RequestContent content, TimeSpan? timeSpan = null, RequestContext context = null)
+        public virtual Operation<BinaryData> BeginTestProfileRun(WaitUntil waitUntil, string testProfileRunId, RequestContent content, TimeSpan? timeSpan = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
             Argument.AssertNotNull(content, nameof(content));
@@ -144,7 +144,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual async Task<TestProfileRunResultOperation> BeginTestProfileRunAsync(WaitUntil waitUntil, string testProfileRunId, RequestContent content, TimeSpan? timeSpan = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> BeginTestProfileRunAsync(WaitUntil waitUntil, string testProfileRunId, RequestContent content, TimeSpan? timeSpan = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
             Argument.AssertNotNull(content, nameof(content));
@@ -376,7 +376,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Generated/Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(String,String,String,String,RequestContent,String,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content = null, string aggregation = null, string interval = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(metricName, nameof(metricName));
@@ -393,7 +393,7 @@ namespace Azure.Developer.LoadTesting
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
 
-        /// <summary> List the metric values for a load     test run. </summary>
+        /// <summary> List the metric values for a load test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
@@ -407,7 +407,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Generated/Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetrics(String,String,String,String,RequestContent,String,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content = null, string aggregation = null, string interval = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(metricName, nameof(metricName));

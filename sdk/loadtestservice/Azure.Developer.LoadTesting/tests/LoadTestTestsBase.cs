@@ -31,13 +31,28 @@ namespace Azure.Developer.LoadTesting.Tests
         internal const string SKIP_DELETE_TEST_RUN = "SkipDeleteTestRun";
         internal TestRunResultOperation _testRunOperation;
 
+        internal const string REQUIRES_LOAD_TEST = "RequiresLoadTest";
+        internal const string REQUIRES_TEST_FILE = "RequiresTestFile";
+
+        internal bool RequiresLoadTest()
+        {
+            var categories = CurrentContext.Test.Properties["Category"];
+            return categories != null && categories.Contains(REQUIRES_LOAD_TEST);
+        }
+
+        internal bool RequiresTestFile()
+        {
+            var categories = CurrentContext.Test.Properties["Category"];
+            return categories != null && categories.Contains(REQUIRES_TEST_FILE);
+        }
+
         internal bool CheckForSkipSetUp()
         {
             var categories = CurrentContext.Test.Properties["Category"];
             return categories != null && categories.Contains(SKIP_SET_UP);
         }
 
-        internal bool CheckForSkipTearDown()
+        internal bool SkipTearDown()
         {
             var categories = CurrentContext.Test.Properties["Category"];
             return categories != null && categories.Contains(SKIP_TEAR_DOWN);
