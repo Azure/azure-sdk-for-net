@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (2025-03-01)
+## 1.1.0 (2025-05-10)
 
 ### Features Added
 - Support for Zonal deployments of Container Group Standby Pools.
