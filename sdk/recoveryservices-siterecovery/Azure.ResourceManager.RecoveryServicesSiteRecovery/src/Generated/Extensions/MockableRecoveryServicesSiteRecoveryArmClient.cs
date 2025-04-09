@@ -191,6 +191,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier" /> to create a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/> object. </returns>
+        public virtual VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(ResourceIdentifier id)
+        {
+            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.ValidateResourceId(id);
+            return new VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> object. </returns>
+        public virtual VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(ResourceIdentifier id)
+        {
+            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource.ValidateResourceId(id);
+            return new VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ClusterRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ClusterRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="ClusterRecoveryPointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterRecoveryPointResource"/> object. </returns>
+        public virtual ClusterRecoveryPointResource GetClusterRecoveryPointResource(ResourceIdentifier id)
+        {
+            ClusterRecoveryPointResource.ValidateResourceId(id);
+            return new ClusterRecoveryPointResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ProtectionContainerMappingResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProtectionContainerMappingResource.CreateResourceIdentifier" /> to create a <see cref="ProtectionContainerMappingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

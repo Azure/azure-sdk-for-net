@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            IReadOnlyList<SiteRecoveryInnerHealthError> innerHealthErrors = default;
+            IList<SiteRecoveryInnerHealthError> innerHealthErrors = default;
             string errorSource = default;
             string errorType = default;
             string errorLevel = default;
