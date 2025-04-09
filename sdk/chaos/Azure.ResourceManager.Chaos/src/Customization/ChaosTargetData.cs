@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="properties"> The properties of the target resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This constructor no longer works in all API versions.", false)]
         public ChaosTargetData(IDictionary<string, BinaryData> properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
