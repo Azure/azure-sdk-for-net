@@ -14,6 +14,12 @@ namespace Azure.Storage.DataMovement
     public class StorageResourceContainerProperties
     {
         /// <summary>
+        /// The type of the Storage Resource.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string ProviderId { get; set; }
+
+        /// <summary>
         /// The HTTP ETag of the Storage Resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

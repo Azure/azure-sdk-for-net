@@ -153,16 +153,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             return new()
             {
-                FileAttributes = (options?._isFileAttributesSet ?? false)
-                    ? options?.FileAttributes
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
-                        ? (NtfsFileAttributes?)fileAttributes
-                        : default,
-                FilePermissionKey = (options?.FilePermissions ?? false)
-                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, out object permissionKeyObject) == true
-                        ? (string)permissionKeyObject
-                        : default
-                    : default,
+                FileAttributes = options?.Nfs == true
+                    ? default
+                    : (options?._isFileAttributesSet ?? false)
+                        ? options?.FileAttributes
+                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
+                            ? (NtfsFileAttributes?)fileAttributes
+                            : default,
                 FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
                     ? options?.FileCreatedOn
                     : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
@@ -173,12 +170,56 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
                         ? (DateTimeOffset?)fileLastWrittenOn
                         : default,
-                FileChangedOn = (options?._isFileChangedOnSet ?? false)
-                    ? options?.FileChangedOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
-                        ? (DateTimeOffset?)fileChangedOn
-                        : default,
+                FileChangedOn = options?.Nfs == true
+                    ? default
+                    : (options?._isFileChangedOnSet ?? false)
+                        ? options?.FileChangedOn
+                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
+                            ? (DateTimeOffset?)fileChangedOn
+                            : default,
             };
+        }
+
+        public static FilePosixProperties GetFilePosixProperties(
+            this ShareFileStorageResourceOptions options,
+            StorageResourceContainerProperties properties)
+        {
+            if (options?.Nfs != true)
+            {
+                return new();
+            }
+
+            NfsFileMode FileMode = (options?.FilePermissions ?? false)
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
+                        ? (NfsFileMode)fileMode
+                        : default
+                    : default;
+            string Owner = (options?.FilePermissions ?? false)
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Owner, out object owner) == true
+                        ? (string)owner
+                        : default
+                    : default;
+            string Group = (options?.FilePermissions ?? false)
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Group, out object group) == true
+                        ? (string)group
+                        : default
+                    : default;
+            NfsFileType? FileType = (options?.FilePermissions ?? false)
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileType, out object fileType) == true
+                        ? (NfsFileType?)fileType
+                        : default
+                    : default;
+            long? LinkCount = (options?.FilePermissions ?? false)
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LinkCount, out object linkCount) == true
+                        ? (long?)linkCount
+                        : default
+                    : default;
+            return FilesModelFactory.FilePosixProperties(
+                fileMode: FileMode,
+                owner: Owner,
+                group: Group,
+                fileType: FileType ?? default,
+                linkCount: LinkCount);
         }
 
         internal static ShareFileUploadRangeOptions ToShareFileUploadRangeOptions(

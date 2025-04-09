@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override string ProviderId => "share";
 
-        internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options = default)
+        internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
             ShareDirectoryClient = shareDirectoryClient;
             ResourceOptions = options ?? new ShareFileStorageResourceOptions();
@@ -118,6 +118,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<ShareDirectoryProperties> response = await ShareDirectoryClient.GetPropertiesAsync(
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+            ResourceProperties.ProviderId = ProviderId;
             if (ResourceProperties != default)
             {
                 ResourceProperties.AddToStorageResourceItemProperties(response.Value);
@@ -133,15 +134,21 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceContainerProperties sourceProperties,
             CancellationToken cancellationToken = default)
         {
-            // todo: look into this more
             IDictionary<string, string> metadata = ResourceOptions?.GetFileMetadata(sourceProperties?.RawProperties);
             string filePermission = ResourceOptions?.GetFilePermission(sourceProperties?.RawProperties);
             FileSmbProperties smbProperties = ResourceOptions?.GetFileSmbProperties(sourceProperties);
+            FilePosixProperties filePosixProperties = ResourceOptions?.GetFilePosixProperties(sourceProperties);
+
+            ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
+            {
+                Metadata = metadata,
+                SmbProperties = smbProperties,
+                FilePermission = new() { Permission = filePermission },
+                PosixProperties = filePosixProperties
+            };
 
             await ShareDirectoryClient.CreateIfNotExistsAsync(
-                metadata: default,
-                smbProperties: default,
-                filePermission: default,
+                options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
