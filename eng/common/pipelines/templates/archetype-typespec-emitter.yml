@@ -198,6 +198,7 @@ extends:
             displayName: Install tsp-client
 
           - pwsh: |
+              $env:GIT_DISCOVERY_ACROSS_FILESYSTEM = "1"
               if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files 
