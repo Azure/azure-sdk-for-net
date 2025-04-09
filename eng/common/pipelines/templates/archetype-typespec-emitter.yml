@@ -194,23 +194,21 @@ extends:
                 MainPublisher: ESRPRELPACMANTEST
 
           - pwsh: |
-              npm install @azure-tools/typespec-client-generator-cli@latest
+              npm install -g @azure-tools/typespec-client-generator-cli@latest
             displayName: Install tsp-client
-            workingDirectory: $(Build.SourcesDirectory)
 
           - pwsh: |
-              $env:GIT_DISCOVERY_ACROSS_FILESYSTEM = "1"
               if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
-                npx tsp-client generate-config-files `
+                tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --output-dir '$(Build.ArtifactStagingDirectory)' `
+                --output-dir '$(buildArtifactsPath)' `
                 --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}' `
                 --overrides '$(buildArtifactsPath)/overrides.json'
               } else {
-                npx tsp-client generate-config-files `
+                tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --output-dir '$(Build.ArtifactStagingDirectory)' `
+                --output-dir '$(buildArtifactsPath)' `
                 --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
