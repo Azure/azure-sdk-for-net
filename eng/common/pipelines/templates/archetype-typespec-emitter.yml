@@ -196,6 +196,7 @@ extends:
           - pwsh: |
               npm install -g @azure-tools/typespec-client-generator-cli@latest
             displayName: Install tsp-client
+            workingDirectory: $(buildArtifactsPath)
 
           - pwsh: |
               $env:GIT_DISCOVERY_ACROSS_FILESYSTEM = "1"
