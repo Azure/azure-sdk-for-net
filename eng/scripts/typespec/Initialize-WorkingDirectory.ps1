@@ -45,7 +45,7 @@ try {
         Invoke-LoggedCommand "npm ci"
     }
 
-    # Invoke-LoggedCommand "npm ls -a" -GroupOutput
+    Invoke-LoggedCommand "npm ls -a" -GroupOutput
 
     $artifactStagingDirectory = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
     if ($artifactStagingDirectory -and !$BuildArtifactsPath) {

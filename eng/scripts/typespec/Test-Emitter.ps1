@@ -26,15 +26,15 @@ function Build-Emitter {
 
         if ($UnitTests) {
             # test the emitter
-            # Invoke-LoggedCommand "npm run prettier" -GroupOutput -ErrorAction Continue
-            # if ($LastExitCode) {
-            #     $errors += "Prettier failed"
-            # }
+            Invoke-LoggedCommand "npm run prettier" -GroupOutput -ErrorAction Continue
+            if ($LastExitCode) {
+                $errors += "Prettier failed"
+            }
 
-            # Invoke-LoggedCommand "npm run lint" -GroupOutput -ErrorAction Continue
-            # if ($LastExitCode) {
-            #     $errors += "Lint failed"
-            # }
+            Invoke-LoggedCommand "npm run lint" -GroupOutput -ErrorAction Continue
+            if ($LastExitCode) {
+                $errors += "Lint failed"
+            }
 
             Invoke-LoggedCommand "npm install @types/node --save-dev" -GroupOutput
             Invoke-LoggedCommand "npm run build:emitter" -GroupOutput
