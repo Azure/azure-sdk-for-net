@@ -23,7 +23,7 @@ public class ClientCacheTests
         }
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<ClientCacheKey, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
@@ -42,7 +42,7 @@ public class ClientCacheTests
         }
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<ClientCacheKey, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(50, clients!.Count, "Cache should not have cleaned up when under the limit.");
@@ -66,21 +66,21 @@ public class ClientCacheTests
         clientCache.GetClient(() => new object(), "client1");
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<ClientCacheKey, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
 
         // Ensure that recently accessed clients are still in the cache.
-        Assert.IsTrue(clients.ContainsKey((typeof(object), "client0")), "Most recently accessed client 'client0' should be in the cache.");
-        Assert.IsTrue(clients.ContainsKey((typeof(object), "client1")), "Most recently accessed client 'client1' should be in the cache.");
+        Assert.IsTrue(clients.ContainsKey(new ClientCacheKey(typeof(object), "client0", null)), "Most recently accessed client 'client0' should be in the cache.");
+        Assert.IsTrue(clients.ContainsKey(new ClientCacheKey(typeof(object), "client1", null)), "Most recently accessed client 'client1' should be in the cache.");
 
         // Based on the LRU policy, after adding 110 items then re-accessing "client0" and "client1",
         // the evicted keys are those that were least recently used.
         // Keys "client2" through "client11" should have been evicted.
         for (int i = 2; i < 12; i++)
         {
-            Assert.IsFalse(clients.ContainsKey((typeof(object), $"client{i}")),
+            Assert.IsFalse(clients.ContainsKey(new ClientCacheKey(typeof(object), $"client{i}", null)),
                 $"Least recently used client 'client{i}' should have been removed.");
         }
     }
@@ -104,18 +104,18 @@ public class ClientCacheTests
         clientCache.GetClient(() => new object(), "client102");
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<ClientCacheKey, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
 
         // Ensure that recently accessed clients are still in the cache.
-        Assert.IsTrue(clients.ContainsKey((typeof(object), "client0")), "Most recently accessed client 'client0' should be in the cache.");
-        Assert.IsTrue(clients.ContainsKey((typeof(object), "client1")), "Most recently accessed client 'client1' should be in the cache.");
+        Assert.IsTrue(clients.ContainsKey(new ClientCacheKey(typeof(object), "client0", null)), "Most recently accessed client 'client0' should be in the cache.");
+        Assert.IsTrue(clients.ContainsKey(new ClientCacheKey(typeof(object), "client1", null)), "Most recently accessed client 'client1' should be in the cache.");
 
         // Keys "client2" through "client3" should have been evicted.
-        Assert.IsFalse(clients.ContainsKey((typeof(object), $"client2")));
-        Assert.IsFalse(clients.ContainsKey((typeof(object), $"client3")));
+        Assert.IsFalse(clients.ContainsKey(new ClientCacheKey(typeof(object), "client2", null)));
+        Assert.IsFalse(clients.ContainsKey(new ClientCacheKey(typeof(object), "client3", null)));
     }
 
     [Test]
@@ -135,7 +135,7 @@ public class ClientCacheTests
         }
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<ClientCacheKey, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.IsTrue(disposableClient.IsDisposed, "Disposable client was not disposed correctly.");
@@ -154,32 +154,32 @@ public class ClientCacheTests
         clientCache.GetClient(() => client2, "client2");
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<ClientCacheKey, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
-        Assert.IsTrue(clients!.ContainsKey((typeof(object), "client1")), "Client1 should be in the cache.");
-        Assert.IsTrue(clients!.ContainsKey((typeof(object), "client2")), "Client2 should be in the cache.");
+        Assert.IsTrue(clients!.ContainsKey(new ClientCacheKey(typeof(object), "client1", null)), "Client1 should be in the cache.");
+        Assert.IsTrue(clients!.ContainsKey(new ClientCacheKey(typeof(object), "client2", null)), "Client2 should be in the cache.");
     }
 
     [Test]
     public void ClientCacheShouldRespectMaxCacheSize()
     {
-        var cache = new ClientCache(maxSize: 3);
+        var clientCache = new ClientCache(maxSize: 3);
 
         // Insert 3 clients
-        cache.GetClient(() => new DummyClient("A"), "A");
-        cache.GetClient(() => new DummyClient("B"), "B");
-        cache.GetClient(() => new DummyClient("C"), "C");
+        clientCache.GetClient(() => new DummyClient("A"), "A");
+        clientCache.GetClient(() => new DummyClient("B"), "B");
+        clientCache.GetClient(() => new DummyClient("C"), "C");
 
         // Access client A to mark it as most recently used
-        cache.GetClient<DummyClient>(() => throw new Exception("Should not recreate A"), "A");
+        clientCache.GetClient<DummyClient>(() => throw new Exception("Should not recreate A"), "A");
 
         // Add a new client D to trigger eviction
-        cache.GetClient(() => new DummyClient("D"), "D");
+        clientCache.GetClient(() => new DummyClient("D"), "D");
 
         // A should still be in the cache (was recently used), so this should not call the factory
         var wasRecreated = false;
-        cache.GetClient(() =>
+        clientCache.GetClient(() =>
         {
             wasRecreated = true;
             return new DummyClient("A");
@@ -188,17 +188,44 @@ public class ClientCacheTests
         Assert.False(wasRecreated, "Client A was unexpectedly recreated");
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(cache) as Dictionary<(Type, string), ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as IDictionary<ClientCacheKey, ClientEntry>;
 
         Assert.IsNotNull(clients, "_clients dictionary should not be null");
 
-        var keys = clients!.Keys.Select(k => k.Item2).ToList();
+        var keys = clients!.Keys.Select(k => k.Id).ToList();
 
         // Verify that the cache contains the expected clients
         CollectionAssert.AreEquivalent(new[] { "A", "C", "D" }, keys, "Cache should contain A, C, and D");
 
         // Ensure B was evicted as it was the least recently used
         Assert.IsFalse(keys.Contains("B"), "Client B should have been evicted.");
+    }
+
+    [Test]
+    public void CacheShouldHandleDifferentOptionsSeparately()
+    {
+        var clientCache = new ClientCache();
+
+        // Define two different options
+        var options1 = new ClientPipelineOptions();
+        var options2 = new ClientPipelineOptions();
+
+        // Create and retrieve a client with options1
+        clientCache.GetClient(() => new DummyClient("A"), "abc", options1); // Miss
+        var client1 = clientCache.GetClient(() => new DummyClient("A"), "abc", options1); // Hit ✅
+
+        // Create and retrieve a client with options2 (should be a separate entry)
+        var client2 = clientCache.GetClient(() => new DummyClient("A"), "abc", options2); // Miss ✅
+
+        // Assert that the two clients are distinct objects
+        Assert.AreNotSame(client1, client2, "Clients should be distinct when options are different.");
+
+        var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
+        var clients = clientsField?.GetValue(clientCache) as IDictionary<ClientCacheKey, ClientEntry>;
+
+        // Assert that both clients are in the cache with the expected keys
+        Assert.IsTrue(clients!.ContainsKey(new ClientCacheKey(typeof(DummyClient), "abc", options1)), "Client with options1 should be in the cache.");
+        Assert.IsTrue(clients!.ContainsKey(new ClientCacheKey(typeof(DummyClient), "abc", options2)), "Client with options2 should be in the cache.");
     }
 }
 
