@@ -24,9 +24,6 @@ namespace Azure.AI.Projects
 
         internal string Version { get; }
 
-        /// <summary> The size of the client cache. </summary>
-        public int ClientCacheSize { get; set; }
-
         /// <summary> Initializes new instance of AIProjectClientOptions. </summary>
         public AIProjectClientOptions(ServiceVersion version = LatestVersion)
         {
