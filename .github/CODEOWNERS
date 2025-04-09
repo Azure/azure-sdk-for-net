@@ -499,7 +499,7 @@
 # ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Event Grid
-/sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft @jsquire @m-redding
+/sdk/eventgrid/                                                    @JoshLove-msft @jsquire @m-redding
 
 # PRLabel: %Event Grid %Functions
 /sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/       @jsquire @JoshLove-msft
@@ -512,7 +512,7 @@
 /sdk/eventhub/                                                     @jsquire @m-redding
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @JoshLove-msft @jsquire
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @m-redding @jsquire @jeo02
 
 # PRLabel: %Event Hubs
 /sdk/eventhub/Microsoft.Azure.EventHubs/                           @serkantkaraca @sjkwak
@@ -614,7 +614,8 @@
 # ServiceOwners:                                                   @Lighthouse-Azure
 
 # PRLabel: %Maps
-/sdk/maps/                                                         @dubiety
+/sdk/maps/                                                         @dubiety @andykao1213
+
 # ServiceLabel: %Maps
 # ServiceOwners:                                                   @dubiety
 
@@ -681,10 +682,10 @@
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
 
 # PRLabel: %Mixed Reality
-/sdk/mixedreality/                                                 @crtreasu @rgarcia @JoshLove-msft
+/sdk/mixedreality/                                                 @crtreasu @rgarcia
 
 # PRLabel: %Mixed Reality
-/sdk/objectanchors/                                                @crtreasu @rgarcia @JoshLove-msft
+/sdk/objectanchors/                                                @crtreasu @rgarcia
 
 # PRLabel: %Remote Rendering
 /sdk/remoterendering/                                              @FlorianBorn71 @MichaelZp0 @ChristopherManthei
@@ -732,7 +733,7 @@
 # ServiceOwners:                                                   @netwatchsuppgithub
 
 # PRLabel: %Network - DNS
-/sdk/dns/                                                         @dnssuppgithub
+/sdk/dns/                                                          @dnssuppgithub
 
 # ServiceLabel: %Network - DNS
 # ServiceOwnerS:                                                   @dnssuppgithub
@@ -780,10 +781,10 @@
 # ServiceOwners:                                                   @sunilagarwal @lfittl-msft @sr-msft @niklarin
 
 # PRLabel: %Provisioning
-/sdk/provisioning/                                                 @JoshLove-msft @tg-msft @christothes @KrzysztofCwalina
+/sdk/provisioning/                                                 @ArthurMa1978 @ArcturusZhang
 
 # ServiceLabel: %Provisioning
-# AzureSdkOwners:                                                  @JoshLove-msft
+# AzureSdkOwners:                                                  @ArthurMa1978
 
 # PRLabel: %Quantum
 /sdk/quantum/Azure.Quantum.Jobs/                                   @xfield
@@ -822,27 +823,24 @@
 # ServiceOwners:                                                   @amirkeren
 
 # PRLabel: %Search
-/sdk/search/                                                       @ShivangiReja @kinelski @tg-msft @Azure/azsdk-search
+/sdk/search/                                                       @ShivangiReja @kinelski @Azure/azsdk-search
 
 # ServiceLabel: %Search
 # AzureSdkOwners:                                                  @ShivangiReja
 # ServiceOwners:                                                   @arv100kri @bleroy @tjacobhi
 
 # PRLabel: %Service Bus
-/sdk/servicebus/                                                   @JoshLove-msft @jsquire @m-redding
+/sdk/servicebus/                                                   @jeo02 @jsquire @m-redding
 
 # PRLabel: %Service Bus %Functions
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @JoshLove-msft @jsquire
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @m-redding @jsquire @jeo02
 
 # ServiceLabel: %Service Bus
-# AzureSdkOwners:                                                  @JoshLove-msft
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @shankarsama @EldertGrootenboer
 
-# ServiceLabel: %Service Fabric
-# ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
-
 # PRLabel: %Schema Registry
-/sdk/schemaregistry/                                               @jsquire @JoshLove-msft @m-redding
+/sdk/schemaregistry/                                               @jsquire @m-redding
 
 # ServiceLabel: %Schema Registry
 # AzureSdkOwners:                                                  @m-redding
@@ -994,12 +992,6 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
-# PRLabel: %DevOps - Infrastructure
-/sdk/devopsinfrastructure/Azure.ResourceManager.*/                 @oolaoluwa
-
-# ServiceLabel: %DevOps - Infrastructure
-# ServiceOwners:                                                   @oolaoluwa
-
 # PRLabel: %Elastic
 /sdk/elastic/Azure.ResourceManager.Elastic/                        @ArthurMa1978
 
@@ -1042,12 +1034,6 @@
 # PRLabel: %Network - Mobile
 /sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArcturusZhang @ArthurMa1978
 
-# PRLabel: %Network - DNS Private Resolver
-/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
-
-# ServiceLabel: %Network - DNS Private Resolver %Mgmt
-# ServiceOwners:                                                   @jamesvoongms @jotrivet
-
 # PRLabel: %New Relic
 /sdk/newrelicobservability/Azure.ResourceManager.*/                @vipray-ms
 
@@ -1078,14 +1064,20 @@
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
-# PRLabel: %Secret Store Extension
-/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @locomotiveviaduct
+# (Remove this when uncommenting path) PRLabel: %Secret Store Extension
+#/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @locomotiveviaduct
 
 # ServiceLabel: %Secret Store Extension %Mgmt
 # ServiceOwners:                                                   @cjoprey @locomotiveviaduct
 
 # PRLabel: %Self Help
 /sdk/selfhelp/Azure.ResourceManager.*/                             @ArcturusZhang @ArthurMa1978
+
+# PRLabel: %Service Fabric
+/sdk/servicefabric/Azure.ResourceManager.*/                       @QingChenmsft @vaishnavk @juhacket
+
+# ServiceLabel: %Service Fabric
+# ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @ArcturusZhang @ArthurMa1978
@@ -1119,13 +1111,16 @@
 # ######## Code Generation ########
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire
+
+#PRLabel: %CodeGen %Mgmt
+/eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ServiceLabel: %CodeGen
 # AzureSdkOwners:                                                  @JoshLove-msft
 
-#PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
+# ServiceLabel: %CodeGen %Mgmt
+# AzureSdkOwners:                                                  @live1206 @ArcturusZhang
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
