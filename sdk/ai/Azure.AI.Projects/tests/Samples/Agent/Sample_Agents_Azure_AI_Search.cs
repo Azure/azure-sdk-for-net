@@ -40,14 +40,16 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
 
         ConnectionResponse connection = connections.Value[0];
 
-        AISearchIndexResource indexList = new(connection.Id, "sample_index");
-        indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
-        ToolResources searchResource = new ToolResources
+        AzureAISearchResource searchResource = new(
+            connection.Id,
+            "sample_index",
+            5,
+            "category eq 'sleeping bag'",
+            AzureAISearchQueryType.Simple
+        );
+        ToolResources toolResource = new ToolResources
         {
-            AzureAISearch = new AzureAISearchResource
-            {
-                IndexList = { indexList }
-            }
+            AzureAISearch = searchResource
         };
 
         AgentsClient agentClient = projectClient.GetAgentsClient();
@@ -57,7 +59,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: [ new AzureAISearchToolDefinition() ],
-           toolResources: searchResource);
+           toolResources: toolResource);
         #endregion
         #region Snippet:AzureAISearchExample_CreateRun
         // Create thread for communication
@@ -155,14 +157,16 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
 
         ConnectionResponse connection = connections.Value[0];
 
-        AISearchIndexResource indexList = new(connection.Id, "sample_index");
-        indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
-        ToolResources searchResource = new ToolResources
+        AzureAISearchResource searchResource = new(
+            connection.Id,
+            "sample_index",
+            5,
+            "category eq 'sleeping bag'",
+            AzureAISearchQueryType.Simple
+        );
+        ToolResources toolResource = new ToolResources
         {
-            AzureAISearch = new AzureAISearchResource
-            {
-                IndexList = { indexList }
-            }
+            AzureAISearch = searchResource
         };
 
         AgentsClient agentClient = projectClient.GetAgentsClient();
@@ -172,7 +176,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: [new AzureAISearchToolDefinition()],
-           toolResources: searchResource);
+           toolResources: toolResource);
         #endregion
         #region Snippet:AzureAISearchExample_CreateRun_Sync
         // Create thread for communication
