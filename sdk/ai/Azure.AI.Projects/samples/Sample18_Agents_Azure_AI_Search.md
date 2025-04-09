@@ -35,7 +35,7 @@ AzureAISearchResource searchResource = new(
     "category eq 'sleeping bag'",
     AzureAISearchQueryType.Simple
 );
-ToolResources toolResource = new ToolResources
+ToolResources toolResource = new()
 {
     AzureAISearch = searchResource
 };
@@ -68,7 +68,7 @@ AzureAISearchResource searchResource = new(
     "category eq 'sleeping bag'",
     AzureAISearchQueryType.Simple
 );
-ToolResources toolResource = new ToolResources
+ToolResources toolResource = new()
 {
     AzureAISearch = searchResource
 };

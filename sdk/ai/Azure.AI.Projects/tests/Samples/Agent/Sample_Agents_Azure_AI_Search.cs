@@ -5,10 +5,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Collections.Generic;
 using NUnit.Framework.Internal;
 using System.Threading;
 
@@ -47,7 +45,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
             "category eq 'sleeping bag'",
             AzureAISearchQueryType.Simple
         );
-        ToolResources toolResource = new ToolResources
+        ToolResources toolResource = new()
         {
             AzureAISearch = searchResource
         };
@@ -164,7 +162,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
             "category eq 'sleeping bag'",
             AzureAISearchQueryType.Simple
         );
-        ToolResources toolResource = new ToolResources
+        ToolResources toolResource = new()
         {
             AzureAISearch = searchResource
         };

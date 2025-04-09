@@ -27,7 +27,7 @@ OpenApiToolDefinition openapiTool = new(
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(File.ReadAllBytes(file_path)),
     auth: oaiAuth,
-    defaultParams: new List<String>{"format"}
+    defaultParams: ["format"]
 );
 
 Agent agent = client.CreateAgent(
@@ -46,7 +46,7 @@ OpenApiToolDefinition openapiTool = new(
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(File.ReadAllBytes(file_path)),
     auth: oaiAuth,
-    defaultParams: new List<String>{"format"}
+    defaultParams: ["format"]
 );
 
 Agent agent = await client.CreateAgentAsync(
