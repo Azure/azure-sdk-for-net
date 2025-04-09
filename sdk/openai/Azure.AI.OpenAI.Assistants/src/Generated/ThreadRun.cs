@@ -57,18 +57,25 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="tools">
         /// The overridden enabled tools used for this assistant thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="FunctionToolDefinition"/>.
         /// </param>
-        /// <param name="fileIds"> A list of attached file IDs, ordered by creation date in ascending order. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="expiresAt"> The Unix timestamp, in seconds, representing when this item expires. </param>
         /// <param name="startedAt"> The Unix timestamp, in seconds, representing when this item was started. </param>
         /// <param name="completedAt"> The Unix timestamp, in seconds, representing when this completed. </param>
         /// <param name="cancelledAt"> The Unix timestamp, in seconds, representing when this was cancelled. </param>
         /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
+        /// <param name="incompleteDetails"> Details on why the run is incomplete. Will be `null` if the run is not incomplete. </param>
+        /// <param name="usage"> Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.). </param>
+        /// <param name="maxPromptTokens"> The maximum number of prompt tokens specified to have been used over the course of the run. </param>
+        /// <param name="maxCompletionTokens"> The maximum number of completion tokens specified to have been used over the course of the run. </param>
+        /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
+        /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
+        /// <param name="parallelToolCalls"> Whether to enable parallel function calling during tool use. </param>
+        /// <param name="responseFormat"> The response format of the tool calls used in this run. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="assistantId"/>, <paramref name="model"/>, <paramref name="instructions"/>, <paramref name="tools"/> or <paramref name="fileIds"/> is null. </exception>
-        internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="assistantId"/>, <paramref name="model"/>, <paramref name="instructions"/> or <paramref name="tools"/> is null. </exception>
+        internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails? incompleteDetails, RunCompletionUsage usage, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, bool parallelToolCalls, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(threadId, nameof(threadId));
@@ -76,7 +83,6 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNull(model, nameof(model));
             Argument.AssertNotNull(instructions, nameof(instructions));
             Argument.AssertNotNull(tools, nameof(tools));
-            Argument.AssertNotNull(fileIds, nameof(fileIds));
 
             Id = id;
             ThreadId = threadId;
@@ -86,13 +92,20 @@ namespace Azure.AI.OpenAI.Assistants
             Model = model;
             Instructions = instructions;
             Tools = tools.ToList();
-            FileIds = fileIds.ToList();
             CreatedAt = createdAt;
             ExpiresAt = expiresAt;
             StartedAt = startedAt;
             CompletedAt = completedAt;
             CancelledAt = cancelledAt;
             FailedAt = failedAt;
+            IncompleteDetails = incompleteDetails;
+            Usage = usage;
+            MaxPromptTokens = maxPromptTokens;
+            MaxCompletionTokens = maxCompletionTokens;
+            TruncationStrategy = truncationStrategy;
+            ToolChoice = toolChoice;
+            ParallelToolCalls = parallelToolCalls;
+            ResponseFormat = responseFormat;
             Metadata = metadata;
         }
 
@@ -113,18 +126,27 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="tools">
         /// The overridden enabled tools used for this assistant thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="FunctionToolDefinition"/>.
         /// </param>
-        /// <param name="fileIds"> A list of attached file IDs, ordered by creation date in ascending order. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="expiresAt"> The Unix timestamp, in seconds, representing when this item expires. </param>
         /// <param name="startedAt"> The Unix timestamp, in seconds, representing when this item was started. </param>
         /// <param name="completedAt"> The Unix timestamp, in seconds, representing when this completed. </param>
         /// <param name="cancelledAt"> The Unix timestamp, in seconds, representing when this was cancelled. </param>
         /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
+        /// <param name="incompleteDetails"> Details on why the run is incomplete. Will be `null` if the run is not incomplete. </param>
+        /// <param name="usage"> Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.). </param>
+        /// <param name="temperature"> The sampling temperature used for this run. If not set, defaults to 1. </param>
+        /// <param name="topP"> The nucleus sampling value used for this run. If not set, defaults to 1. </param>
+        /// <param name="maxPromptTokens"> The maximum number of prompt tokens specified to have been used over the course of the run. </param>
+        /// <param name="maxCompletionTokens"> The maximum number of completion tokens specified to have been used over the course of the run. </param>
+        /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
+        /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
+        /// <param name="parallelToolCalls"> Whether to enable parallel function calling during tool use. </param>
+        /// <param name="responseFormat"> The response format of the tool calls used in this run. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<ToolDefinition> tools, IReadOnlyList<string> fileIds, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails? incompleteDetails, RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, bool parallelToolCalls, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Object = @object;
@@ -136,13 +158,22 @@ namespace Azure.AI.OpenAI.Assistants
             Model = model;
             Instructions = instructions;
             Tools = tools;
-            FileIds = fileIds;
             CreatedAt = createdAt;
             ExpiresAt = expiresAt;
             StartedAt = startedAt;
             CompletedAt = completedAt;
             CancelledAt = cancelledAt;
             FailedAt = failedAt;
+            IncompleteDetails = incompleteDetails;
+            Usage = usage;
+            Temperature = temperature;
+            TopP = topP;
+            MaxPromptTokens = maxPromptTokens;
+            MaxCompletionTokens = maxCompletionTokens;
+            TruncationStrategy = truncationStrategy;
+            ToolChoice = toolChoice;
+            ParallelToolCalls = parallelToolCalls;
+            ResponseFormat = responseFormat;
             Metadata = metadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -176,11 +207,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// The overridden enabled tools used for this assistant thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="FunctionToolDefinition"/>.
         /// </summary>
         public IReadOnlyList<ToolDefinition> Tools { get; }
-        /// <summary> A list of attached file IDs, ordered by creation date in ascending order. </summary>
-        public IReadOnlyList<string> FileIds { get; }
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
         public DateTimeOffset CreatedAt { get; }
         /// <summary> The Unix timestamp, in seconds, representing when this item expires. </summary>
@@ -193,6 +222,112 @@ namespace Azure.AI.OpenAI.Assistants
         public DateTimeOffset? CancelledAt { get; }
         /// <summary> The Unix timestamp, in seconds, representing when this failed. </summary>
         public DateTimeOffset? FailedAt { get; }
+        /// <summary> Details on why the run is incomplete. Will be `null` if the run is not incomplete. </summary>
+        public IncompleteRunDetails? IncompleteDetails { get; }
+        /// <summary> Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.). </summary>
+        public RunCompletionUsage Usage { get; }
+        /// <summary> The sampling temperature used for this run. If not set, defaults to 1. </summary>
+        public float? Temperature { get; }
+        /// <summary> The nucleus sampling value used for this run. If not set, defaults to 1. </summary>
+        public float? TopP { get; }
+        /// <summary> The maximum number of prompt tokens specified to have been used over the course of the run. </summary>
+        public int? MaxPromptTokens { get; }
+        /// <summary> The maximum number of completion tokens specified to have been used over the course of the run. </summary>
+        public int? MaxCompletionTokens { get; }
+        /// <summary> The strategy to use for dropping messages as the context windows moves forward. </summary>
+        public TruncationObject TruncationStrategy { get; }
+        /// <summary>
+        /// Controls whether or not and which tool is called by the model.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description><see cref="string"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="AssistantsApiToolChoiceOptionMode"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="AssistantsNamedToolChoice"/></description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData ToolChoice { get; }
+        /// <summary> Whether to enable parallel function calling during tool use. </summary>
+        public bool ParallelToolCalls { get; }
+        /// <summary>
+        /// The response format of the tool calls used in this run.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description><see cref="string"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="AssistantsApiResponseFormatMode"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="AssistantsApiResponseFormat"/></description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData ResponseFormat { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }

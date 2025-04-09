@@ -16,10 +16,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="UnknownMessageTextAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
-        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageTextAnnotation(string type, string text, int startIndex, int endIndex, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, text, startIndex, endIndex, serializedAdditionalRawData)
+        internal UnknownMessageTextAnnotation(string type, string text, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, text, serializedAdditionalRawData)
         {
         }
 

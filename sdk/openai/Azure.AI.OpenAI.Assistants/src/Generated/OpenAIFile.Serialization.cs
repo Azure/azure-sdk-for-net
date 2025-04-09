@@ -46,6 +46,16 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("purpose"u8);
             writer.WriteStringValue(Purpose.ToString());
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(StatusDetails))
+            {
+                writer.WritePropertyName("status_details"u8);
+                writer.WriteStringValue(StatusDetails);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +99,8 @@ namespace Azure.AI.OpenAI.Assistants
             string filename = default;
             DateTimeOffset createdAt = default;
             OpenAIFilePurpose purpose = default;
+            FileState? status = default;
+            string statusDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,6 +135,20 @@ namespace Azure.AI.OpenAI.Assistants
                     purpose = new OpenAIFilePurpose(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new FileState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status_details"u8))
+                {
+                    statusDetails = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -136,6 +162,8 @@ namespace Azure.AI.OpenAI.Assistants
                 filename,
                 createdAt,
                 purpose,
+                status,
+                statusDetails,
                 serializedAdditionalRawData);
         }
 

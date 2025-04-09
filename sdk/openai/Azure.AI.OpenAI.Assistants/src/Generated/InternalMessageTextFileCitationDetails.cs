@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="fileId"> The ID of the file associated with this citation. </param>
         /// <param name="quote"> The specific quote cited in the associated file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="quote"/> is null. </exception>
-        internal InternalMessageTextFileCitationDetails(string fileId, string quote)
+        public InternalMessageTextFileCitationDetails(string fileId, string quote)
         {
             Argument.AssertNotNull(fileId, nameof(fileId));
             Argument.AssertNotNull(quote, nameof(quote));
@@ -75,8 +75,8 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> The ID of the file associated with this citation. </summary>
-        public string FileId { get; }
+        public string FileId { get; set; }
         /// <summary> The specific quote cited in the associated file. </summary>
-        public string Quote { get; }
+        public string Quote { get; set; }
     }
 }

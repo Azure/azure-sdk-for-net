@@ -40,6 +40,15 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStringValue(Object);
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
+            if (ToolResources != null)
+            {
+                writer.WritePropertyName("tool_resources"u8);
+                writer.WriteObjectValue(ToolResources, options);
+            }
+            else
+            {
+                writer.WriteNull("tool_resources");
+            }
             if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -95,6 +104,7 @@ namespace Azure.AI.OpenAI.Assistants
             string id = default;
             string @object = default;
             DateTimeOffset createdAt = default;
+            ToolResources toolResources = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -113,6 +123,16 @@ namespace Azure.AI.OpenAI.Assistants
                 if (property.NameEquals("created_at"u8))
                 {
                     createdAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    continue;
+                }
+                if (property.NameEquals("tool_resources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        toolResources = null;
+                        continue;
+                    }
+                    toolResources = ToolResources.DeserializeToolResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -136,7 +156,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssistantThread(id, @object, createdAt, metadata, serializedAdditionalRawData);
+            return new AssistantThread(
+                id,
+                @object,
+                createdAt,
+                toolResources,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssistantThread>.Write(ModelReaderWriterOptions options)

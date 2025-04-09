@@ -15,11 +15,9 @@ namespace Azure.AI.OpenAI.Assistants
     {
         /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/>. </summary>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
-        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
         /// <param name="internalDetails"> A URL for the file that's generated when the assistant used the code_interpreter tool to generate a file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="internalDetails"/> is null. </exception>
-        internal MessageTextFilePathAnnotation(string text, int startIndex, int endIndex, InternalMessageTextFilePathDetails internalDetails) : base(text, startIndex, endIndex)
+        public MessageTextFilePathAnnotation(string text, InternalMessageTextFilePathDetails internalDetails) : base(text)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(internalDetails, nameof(internalDetails));
@@ -31,18 +29,24 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
-        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails"> A URL for the file that's generated when the assistant used the code_interpreter tool to generate a file. </param>
-        internal MessageTextFilePathAnnotation(string type, string text, int startIndex, int endIndex, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalMessageTextFilePathDetails internalDetails) : base(type, text, startIndex, endIndex, serializedAdditionalRawData)
+        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
+        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        internal MessageTextFilePathAnnotation(string type, string text, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalMessageTextFilePathDetails internalDetails, int? startIndex, int? endIndex) : base(type, text, serializedAdditionalRawData)
         {
             InternalDetails = internalDetails;
+            StartIndex = startIndex;
+            EndIndex = endIndex;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/> for deserialization. </summary>
         internal MessageTextFilePathAnnotation()
         {
         }
+        /// <summary> The first text index associated with this text annotation. </summary>
+        public int? StartIndex { get; set; }
+        /// <summary> The last text index associated with this text annotation. </summary>
+        public int? EndIndex { get; set; }
     }
 }

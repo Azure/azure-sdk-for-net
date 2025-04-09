@@ -81,7 +81,7 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string value = default;
-            IReadOnlyList<MessageTextAnnotation> annotations = default;
+            IList<MessageTextAnnotation> annotations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

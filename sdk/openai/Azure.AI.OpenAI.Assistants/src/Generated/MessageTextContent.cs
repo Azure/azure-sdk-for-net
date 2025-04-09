@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="MessageTextContent"/>. </summary>
         /// <param name="internalDetails"> The text and associated annotations for this thread message content item. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="internalDetails"/> is null. </exception>
-        internal MessageTextContent(InternalMessageTextDetails internalDetails)
+        public MessageTextContent(InternalMessageTextDetails internalDetails)
         {
             Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 

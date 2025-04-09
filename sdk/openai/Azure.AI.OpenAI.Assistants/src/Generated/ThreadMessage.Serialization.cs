@@ -42,6 +42,35 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("thread_id"u8);
             writer.WriteStringValue(ThreadId);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (IncompleteDetails != null)
+            {
+                writer.WritePropertyName("incomplete_details"u8);
+                writer.WriteObjectValue(IncompleteDetails, options);
+            }
+            else
+            {
+                writer.WriteNull("incomplete_details");
+            }
+            if (CompletedAt != null)
+            {
+                writer.WritePropertyName("completed_at"u8);
+                writer.WriteNumberValue(CompletedAt.Value, "U");
+            }
+            else
+            {
+                writer.WriteNull("completed_at");
+            }
+            if (IncompleteAt != null)
+            {
+                writer.WritePropertyName("incomplete_at"u8);
+                writer.WriteNumberValue(IncompleteAt.Value, "U");
+            }
+            else
+            {
+                writer.WriteNull("incomplete_at");
+            }
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("content"u8);
@@ -51,23 +80,38 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(AssistantId))
+            if (AssistantId != null)
             {
                 writer.WritePropertyName("assistant_id"u8);
                 writer.WriteStringValue(AssistantId);
             }
-            if (Optional.IsDefined(RunId))
+            else
+            {
+                writer.WriteNull("assistant_id");
+            }
+            if (RunId != null)
             {
                 writer.WritePropertyName("run_id"u8);
                 writer.WriteStringValue(RunId);
             }
-            writer.WritePropertyName("file_ids"u8);
-            writer.WriteStartArray();
-            foreach (var item in FileIds)
+            else
             {
-                writer.WriteStringValue(item);
+                writer.WriteNull("run_id");
             }
-            writer.WriteEndArray();
+            if (Attachments != null && Optional.IsCollectionDefined(Attachments))
+            {
+                writer.WritePropertyName("attachments"u8);
+                writer.WriteStartArray();
+                foreach (var item in Attachments)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("attachments");
+            }
             if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -124,12 +168,16 @@ namespace Azure.AI.OpenAI.Assistants
             string @object = default;
             DateTimeOffset createdAt = default;
             string threadId = default;
+            MessageStatus status = default;
+            MessageIncompleteDetails incompleteDetails = default;
+            DateTimeOffset? completedAt = default;
+            DateTimeOffset? incompleteAt = default;
             MessageRole role = default;
-            IReadOnlyList<MessageContent> content = default;
+            IList<MessageContent> content = default;
             string assistantId = default;
             string runId = default;
-            IReadOnlyList<string> fileIds = default;
-            IReadOnlyDictionary<string, string> metadata = default;
+            IList<MessageAttachment> attachments = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,6 +202,41 @@ namespace Azure.AI.OpenAI.Assistants
                     threadId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("status"u8))
+                {
+                    status = new MessageStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("incomplete_details"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        incompleteDetails = null;
+                        continue;
+                    }
+                    incompleteDetails = MessageIncompleteDetails.DeserializeMessageIncompleteDetails(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("completed_at"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        completedAt = null;
+                        continue;
+                    }
+                    completedAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    continue;
+                }
+                if (property.NameEquals("incomplete_at"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        incompleteAt = null;
+                        continue;
+                    }
+                    incompleteAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    continue;
+                }
                 if (property.NameEquals("role"u8))
                 {
                     role = new MessageRole(property.Value.GetString());
@@ -171,22 +254,37 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 if (property.NameEquals("assistant_id"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        assistantId = null;
+                        continue;
+                    }
                     assistantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("run_id"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        runId = null;
+                        continue;
+                    }
                     runId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("file_ids"u8))
+                if (property.NameEquals("attachments"u8))
                 {
-                    List<string> array = new List<string>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        attachments = new ChangeTrackingList<MessageAttachment>();
+                        continue;
+                    }
+                    List<MessageAttachment> array = new List<MessageAttachment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(MessageAttachment.DeserializeMessageAttachment(item, options));
                     }
-                    fileIds = array;
+                    attachments = array;
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -215,11 +313,15 @@ namespace Azure.AI.OpenAI.Assistants
                 @object,
                 createdAt,
                 threadId,
+                status,
+                incompleteDetails,
+                completedAt,
+                incompleteAt,
                 role,
                 content,
                 assistantId,
                 runId,
-                fileIds,
+                attachments,
                 metadata,
                 serializedAdditionalRawData);
         }

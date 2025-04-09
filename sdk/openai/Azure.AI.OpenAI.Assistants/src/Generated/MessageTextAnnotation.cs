@@ -51,30 +51,22 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="MessageTextAnnotation"/>. </summary>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
-        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        protected MessageTextAnnotation(string text, int startIndex, int endIndex)
+        protected MessageTextAnnotation(string text)
         {
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            StartIndex = startIndex;
-            EndIndex = endIndex;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTextAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
-        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTextAnnotation(string type, string text, int startIndex, int endIndex, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageTextAnnotation(string type, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Text = text;
-            StartIndex = startIndex;
-            EndIndex = endIndex;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,10 +78,6 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> The object type. </summary>
         internal string Type { get; set; }
         /// <summary> The textual content associated with this text annotation item. </summary>
-        public string Text { get; }
-        /// <summary> The first text index associated with this text annotation. </summary>
-        public int StartIndex { get; }
-        /// <summary> The last text index associated with this text annotation. </summary>
-        public int EndIndex { get; }
+        public string Text { get; set; }
     }
 }

@@ -38,7 +38,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new assistant. </summary>
-        /// <param name="body"> Body parameter. </param>
+        /// <param name="body"> The request details to use when creating a new assistant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<Assistant>> CreateAssistantAsync(AssistantCreationOptions body, CancellationToken cancellationToken = default)
@@ -52,7 +52,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new assistant. </summary>
-        /// <param name="body"> Body parameter. </param>
+        /// <param name="body"> The request details to use when creating a new assistant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<Assistant> CreateAssistant(AssistantCreationOptions body, CancellationToken cancellationToken = default)
@@ -135,7 +135,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         internal virtual async Task<Response<InternalOpenAIPageableListOfAssistant>> InternalGetAssistantsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
@@ -148,7 +148,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         internal virtual Response<InternalOpenAIPageableListOfAssistant> InternalGetAssistants(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
@@ -175,7 +175,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -213,7 +213,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -331,7 +331,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Modifies an existing assistant. </summary>
         /// <param name="assistantId"> The ID of the assistant to modify. </param>
-        /// <param name="body"> Body parameter. </param>
+        /// <param name="body"> The request details to use when modifying an existing assistant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -348,7 +348,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Modifies an existing assistant. </summary>
         /// <param name="assistantId"> The ID of the assistant to modify. </param>
-        /// <param name="body"> Body parameter. </param>
+        /// <param name="body"> The request details to use when modifying an existing assistant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -541,462 +541,8 @@ namespace Azure.AI.OpenAI.Assistants
             }
         }
 
-        /// <summary> Attaches a previously uploaded file to an assistant for use by tools that can read files. </summary>
-        /// <param name="assistantId"> The ID of the assistant to attach the file to. </param>
-        /// <param name="fileId"> The ID of the previously uploaded file to attach. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AssistantFile>> LinkAssistantFileAsync(string assistantId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(fileId, nameof(fileId));
-
-            CreateAssistantFileRequest createAssistantFileRequest = new CreateAssistantFileRequest(fileId, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await LinkAssistantFileAsync(assistantId, createAssistantFileRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(AssistantFile.FromResponse(response), response);
-        }
-
-        /// <summary> Attaches a previously uploaded file to an assistant for use by tools that can read files. </summary>
-        /// <param name="assistantId"> The ID of the assistant to attach the file to. </param>
-        /// <param name="fileId"> The ID of the previously uploaded file to attach. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AssistantFile> LinkAssistantFile(string assistantId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(fileId, nameof(fileId));
-
-            CreateAssistantFileRequest createAssistantFileRequest = new CreateAssistantFileRequest(fileId, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = LinkAssistantFile(assistantId, createAssistantFileRequest.ToRequestContent(), context);
-            return Response.FromValue(AssistantFile.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Attaches a previously uploaded file to an assistant for use by tools that can read files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant to attach the file to. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> LinkAssistantFileAsync(string assistantId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.LinkAssistantFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateLinkAssistantFileRequest(assistantId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Attaches a previously uploaded file to an assistant for use by tools that can read files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant to attach the file to. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response LinkAssistantFile(string assistantId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.LinkAssistantFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateLinkAssistantFileRequest(assistantId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a list of files attached to a specific assistant, as used by tools that can read files. </summary>
-        /// <param name="assistantId"> The ID of the assistant to retrieve the list of attached files for. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfAssistantFile>> InternalGetAssistantFilesAsync(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalGetAssistantFilesAsync(assistantId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfAssistantFile.FromResponse(response), response);
-        }
-
-        /// <summary> Gets a list of files attached to a specific assistant, as used by tools that can read files. </summary>
-        /// <param name="assistantId"> The ID of the assistant to retrieve the list of attached files for. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfAssistantFile> InternalGetAssistantFiles(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalGetAssistantFiles(assistantId, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfAssistantFile.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of files attached to a specific assistant, as used by tools that can read files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalGetAssistantFilesAsync(string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant to retrieve the list of attached files for. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalGetAssistantFilesAsync(string assistantId, int? limit, string order, string after, string before, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetAssistantFiles");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetAssistantFilesRequest(assistantId, limit, order, after, before, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of files attached to a specific assistant, as used by tools that can read files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalGetAssistantFiles(string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant to retrieve the list of attached files for. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalGetAssistantFiles(string assistantId, int? limit, string order, string after, string before, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetAssistantFiles");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetAssistantFilesRequest(assistantId, limit, order, after, before, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves a file attached to an assistant. </summary>
-        /// <param name="assistantId"> The ID of the assistant associated with the attached file. </param>
-        /// <param name="fileId"> The ID of the file to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AssistantFile>> GetAssistantFileAsync(string assistantId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAssistantFileAsync(assistantId, fileId, context).ConfigureAwait(false);
-            return Response.FromValue(AssistantFile.FromResponse(response), response);
-        }
-
-        /// <summary> Retrieves a file attached to an assistant. </summary>
-        /// <param name="assistantId"> The ID of the assistant associated with the attached file. </param>
-        /// <param name="fileId"> The ID of the file to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AssistantFile> GetAssistantFile(string assistantId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAssistantFile(assistantId, fileId, context);
-            return Response.FromValue(AssistantFile.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves a file attached to an assistant.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant associated with the attached file. </param>
-        /// <param name="fileId"> The ID of the file to retrieve. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetAssistantFileAsync(string assistantId, string fileId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistantFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAssistantFileRequest(assistantId, fileId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves a file attached to an assistant.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant associated with the attached file. </param>
-        /// <param name="fileId"> The ID of the file to retrieve. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetAssistantFile(string assistantId, string fileId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistantFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAssistantFileRequest(assistantId, fileId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unlinks a previously attached file from an assistant, rendering it unavailable for use by tools that can read
-        /// files.
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant from which the specified file should be unlinked. </param>
-        /// <param name="fileId"> The ID of the file to unlink from the specified assistant. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalAssistantFileDeletionStatus>> InternalUnlinkAssistantFileAsync(string assistantId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalUnlinkAssistantFileAsync(assistantId, fileId, context).ConfigureAwait(false);
-            return Response.FromValue(InternalAssistantFileDeletionStatus.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// Unlinks a previously attached file from an assistant, rendering it unavailable for use by tools that can read
-        /// files.
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant from which the specified file should be unlinked. </param>
-        /// <param name="fileId"> The ID of the file to unlink from the specified assistant. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalAssistantFileDeletionStatus> InternalUnlinkAssistantFile(string assistantId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalUnlinkAssistantFile(assistantId, fileId, context);
-            return Response.FromValue(InternalAssistantFileDeletionStatus.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Unlinks a previously attached file from an assistant, rendering it unavailable for use by tools that can read
-        /// files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalUnlinkAssistantFileAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant from which the specified file should be unlinked. </param>
-        /// <param name="fileId"> The ID of the file to unlink from the specified assistant. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalUnlinkAssistantFileAsync(string assistantId, string fileId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalUnlinkAssistantFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalUnlinkAssistantFileRequest(assistantId, fileId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Unlinks a previously attached file from an assistant, rendering it unavailable for use by tools that can read
-        /// files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalUnlinkAssistantFile(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> The ID of the assistant from which the specified file should be unlinked. </param>
-        /// <param name="fileId"> The ID of the file to unlink from the specified assistant. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalUnlinkAssistantFile(string assistantId, string fileId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalUnlinkAssistantFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalUnlinkAssistantFileRequest(assistantId, fileId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Creates a new thread. Threads contain messages and can be run by assistants. </summary>
-        /// <param name="body"> Body parameter. </param>
+        /// <param name="body"> The details used to create a new assistant thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<AssistantThread>> CreateThreadAsync(AssistantThreadCreationOptions body, CancellationToken cancellationToken = default)
@@ -1010,7 +556,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new thread. Threads contain messages and can be run by assistants. </summary>
-        /// <param name="body"> Body parameter. </param>
+        /// <param name="body"> The details used to create a new assistant thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<AssistantThread> CreateThread(AssistantThreadCreationOptions body, CancellationToken cancellationToken = default)
@@ -1187,33 +733,35 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Modifies an existing thread. </summary>
         /// <param name="threadId"> The ID of the thread to modify. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="body"> The details used to update an existing assistant thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AssistantThread>> UpdateThreadAsync(string threadId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssistantThread>> UpdateThreadAsync(string threadId, UpdateAssistantThreadOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(body, nameof(body));
 
-            UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateThreadAsync(threadId, updateThreadRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await UpdateThreadAsync(threadId, content, context).ConfigureAwait(false);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
         }
 
         /// <summary> Modifies an existing thread. </summary>
         /// <param name="threadId"> The ID of the thread to modify. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="body"> The details used to update an existing assistant thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AssistantThread> UpdateThread(string threadId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<AssistantThread> UpdateThread(string threadId, UpdateAssistantThreadOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(body, nameof(body));
 
-            UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateThread(threadId, updateThreadRequest.ToRequestContent(), context);
+            Response response = UpdateThread(threadId, content, context);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
         }
 
@@ -1397,41 +945,35 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Creates a new message on a specified thread. </summary>
         /// <param name="threadId"> The ID of the thread to create the new message on. </param>
-        /// <param name="role"> The role to associate with the new message. </param>
-        /// <param name="content"> The textual content for the new message. </param>
-        /// <param name="fileIds"> A list of up to 10 file IDs to associate with the message, as used by tools like 'code_interpreter' or 'retrieval' that can read files. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="body"> A single message within an assistant thread, as provided during that thread's creation for its initial state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, ThreadMessageOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateMessageAsync(threadId, createMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateMessageAsync(threadId, content, context).ConfigureAwait(false);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
         /// <summary> Creates a new message on a specified thread. </summary>
         /// <param name="threadId"> The ID of the thread to create the new message on. </param>
-        /// <param name="role"> The role to associate with the new message. </param>
-        /// <param name="content"> The textual content for the new message. </param>
-        /// <param name="fileIds"> A list of up to 10 file IDs to associate with the message, as used by tools like 'code_interpreter' or 'retrieval' that can read files. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="body"> A single message within an assistant thread, as provided during that thread's creation for its initial state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadMessage> CreateMessage(string threadId, ThreadMessageOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateMessage(threadId, createMessageRequest.ToRequestContent(), context);
+            Response response = CreateMessage(threadId, content, context);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
@@ -1509,37 +1051,39 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>
         /// <param name="threadId"> The ID of the thread to list messages from. </param>
+        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfThreadMessage>> InternalGetMessagesAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<InternalOpenAIPageableListOfThreadMessage>> InternalGetMessagesAsync(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalGetMessagesAsync(threadId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
+            Response response = await InternalGetMessagesAsync(threadId, runId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
             return Response.FromValue(InternalOpenAIPageableListOfThreadMessage.FromResponse(response), response);
         }
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>
         /// <param name="threadId"> The ID of the thread to list messages from. </param>
+        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfThreadMessage> InternalGetMessages(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<InternalOpenAIPageableListOfThreadMessage> InternalGetMessages(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalGetMessages(threadId, limit, order?.ToString(), after, before, context);
+            Response response = InternalGetMessages(threadId, runId, limit, order?.ToString(), after, before, context);
             return Response.FromValue(InternalOpenAIPageableListOfThreadMessage.FromResponse(response), response);
         }
 
@@ -1553,22 +1097,23 @@ namespace Azure.AI.OpenAI.Assistants
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalGetMessagesAsync(string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalGetMessagesAsync(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> The ID of the thread to list messages from. </param>
+        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalGetMessagesAsync(string threadId, int? limit, string order, string after, string before, RequestContext context)
+        internal virtual async Task<Response> InternalGetMessagesAsync(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
@@ -1576,7 +1121,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalGetMessagesRequest(threadId, limit, order, after, before, context);
+                using HttpMessage message = CreateInternalGetMessagesRequest(threadId, runId, limit, order, after, before, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1596,22 +1141,23 @@ namespace Azure.AI.OpenAI.Assistants
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalGetMessages(string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalGetMessages(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> The ID of the thread to list messages from. </param>
+        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalGetMessages(string threadId, int? limit, string order, string after, string before, RequestContext context)
+        internal virtual Response InternalGetMessages(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
@@ -1619,7 +1165,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalGetMessagesRequest(threadId, limit, order, after, before, context);
+                using HttpMessage message = CreateInternalGetMessagesRequest(threadId, runId, limit, order, after, before, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1845,279 +1391,39 @@ namespace Azure.AI.OpenAI.Assistants
             }
         }
 
-        /// <summary> Gets a list of previously uploaded files associated with a message from a thread. </summary>
-        /// <param name="threadId"> The ID of the thread containing the message to list files from. </param>
-        /// <param name="messageId"> The ID of the message to list files from. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfMessageFile>> InternalGetMessageFilesAsync(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalGetMessageFilesAsync(threadId, messageId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfMessageFile.FromResponse(response), response);
-        }
-
-        /// <summary> Gets a list of previously uploaded files associated with a message from a thread. </summary>
-        /// <param name="threadId"> The ID of the thread containing the message to list files from. </param>
-        /// <param name="messageId"> The ID of the message to list files from. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfMessageFile> InternalGetMessageFiles(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalGetMessageFiles(threadId, messageId, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfMessageFile.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of previously uploaded files associated with a message from a thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalGetMessageFilesAsync(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> The ID of the thread containing the message to list files from. </param>
-        /// <param name="messageId"> The ID of the message to list files from. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalGetMessageFilesAsync(string threadId, string messageId, int? limit, string order, string after, string before, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetMessageFiles");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetMessageFilesRequest(threadId, messageId, limit, order, after, before, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of previously uploaded files associated with a message from a thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalGetMessageFiles(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> The ID of the thread containing the message to list files from. </param>
-        /// <param name="messageId"> The ID of the message to list files from. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalGetMessageFiles(string threadId, string messageId, int? limit, string order, string after, string before, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.InternalGetMessageFiles");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetMessageFilesRequest(threadId, messageId, limit, order, after, before, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets information about a file attachment to a message within a thread. </summary>
-        /// <param name="threadId"> The ID of the thread containing the message to get information from. </param>
-        /// <param name="messageId"> The ID of the message to get information from. </param>
-        /// <param name="fileId"> The ID of the file to get information about. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MessageFile>> GetMessageFileAsync(string threadId, string messageId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetMessageFileAsync(threadId, messageId, fileId, context).ConfigureAwait(false);
-            return Response.FromValue(MessageFile.FromResponse(response), response);
-        }
-
-        /// <summary> Gets information about a file attachment to a message within a thread. </summary>
-        /// <param name="threadId"> The ID of the thread containing the message to get information from. </param>
-        /// <param name="messageId"> The ID of the message to get information from. </param>
-        /// <param name="fileId"> The ID of the file to get information about. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MessageFile> GetMessageFile(string threadId, string messageId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetMessageFile(threadId, messageId, fileId, context);
-            return Response.FromValue(MessageFile.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets information about a file attachment to a message within a thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> The ID of the thread containing the message to get information from. </param>
-        /// <param name="messageId"> The ID of the message to get information from. </param>
-        /// <param name="fileId"> The ID of the file to get information about. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetMessageFileAsync(string threadId, string messageId, string fileId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessageFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetMessageFileRequest(threadId, messageId, fileId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets information about a file attachment to a message within a thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> The ID of the thread containing the message to get information from. </param>
-        /// <param name="messageId"> The ID of the message to get information from. </param>
-        /// <param name="fileId"> The ID of the file to get information about. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetMessageFile(string threadId, string messageId, string fileId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessageFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetMessageFileRequest(threadId, messageId, fileId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Creates a new run for an assistant thread. </summary>
         /// <param name="threadId"> The ID of the thread to run. </param>
-        /// <param name="createRunOptions"> The details for the run to create. </param>
+        /// <param name="body"> The details used when creating a new run of an assistant thread. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="createRunOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, CreateRunOptions createRunOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, CreateRunOptions body, IEnumerable<RunIncludes> runInclude = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(createRunOptions, nameof(createRunOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = createRunOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateRunAsync(threadId, content, context).ConfigureAwait(false);
+            Response response = await CreateRunAsync(threadId, content, runInclude, context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Creates a new run for an assistant thread. </summary>
         /// <param name="threadId"> The ID of the thread to run. </param>
-        /// <param name="createRunOptions"> The details for the run to create. </param>
+        /// <param name="body"> The details used when creating a new run of an assistant thread. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="createRunOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadRun> CreateRun(string threadId, CreateRunOptions createRunOptions, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> CreateRun(string threadId, CreateRunOptions body, IEnumerable<RunIncludes> runInclude = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(createRunOptions, nameof(createRunOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = createRunOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateRun(threadId, content, context);
+            Response response = CreateRun(threadId, content, runInclude, context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
@@ -2133,12 +1439,13 @@ namespace Azure.AI.OpenAI.Assistants
         /// </summary>
         /// <param name="threadId"> The ID of the thread to run. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateRunAsync(string threadId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> CreateRunAsync(string threadId, RequestContent content, IEnumerable<RunIncludes> runInclude = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
@@ -2147,7 +1454,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRunRequest(threadId, content, context);
+                using HttpMessage message = CreateCreateRunRequest(threadId, content, runInclude, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2169,12 +1476,13 @@ namespace Azure.AI.OpenAI.Assistants
         /// </summary>
         /// <param name="threadId"> The ID of the thread to run. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CreateRun(string threadId, RequestContent content, RequestContext context = null)
+        internal virtual Response CreateRun(string threadId, RequestContent content, IEnumerable<RunIncludes> runInclude = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
@@ -2183,7 +1491,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRunRequest(threadId, content, context);
+                using HttpMessage message = CreateCreateRunRequest(threadId, content, runInclude, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2198,7 +1506,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2216,7 +1524,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2248,7 +1556,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2291,7 +1599,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2534,17 +1842,18 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run that requires tool outputs. </param>
-        /// <param name="toolOutputs"> The list of tool outputs requested by tool calls from the specified run. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="stream"> If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), null);
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SubmitToolOutputsToRunAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
@@ -2553,17 +1862,18 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run that requires tool outputs. </param>
-        /// <param name="toolOutputs"> The list of tool outputs requested by tool calls from the specified run. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="stream"> If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), null);
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = SubmitToolOutputsToRun(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
@@ -2750,7 +2060,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new assistant thread and immediately starts a run using that new thread. </summary>
-        /// <param name="body"> Body parameter. </param>
+        /// <param name="body"> The details used when creating and immediately running a new assistant thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(CreateAndRunThreadOptions body, CancellationToken cancellationToken = default)
@@ -2764,7 +2074,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new assistant thread and immediately starts a run using that new thread. </summary>
-        /// <param name="body"> Body parameter. </param>
+        /// <param name="body"> The details used when creating and immediately running a new assistant thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<ThreadRun> CreateThreadAndRun(CreateAndRunThreadOptions body, CancellationToken cancellationToken = default)
@@ -2847,17 +2157,18 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the specific run to retrieve the step from. </param>
         /// <param name="stepId"> The ID of the step to retrieve information about. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, IEnumerable<RunIncludes> runInclude = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetRunStepAsync(threadId, runId, stepId, context).ConfigureAwait(false);
+            Response response = await GetRunStepAsync(threadId, runId, stepId, runInclude, context).ConfigureAwait(false);
             return Response.FromValue(RunStep.FromResponse(response), response);
         }
 
@@ -2865,17 +2176,18 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the specific run to retrieve the step from. </param>
         /// <param name="stepId"> The ID of the step to retrieve information about. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<RunStep> GetRunStep(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
+        public virtual Response<RunStep> GetRunStep(string threadId, string runId, string stepId, IEnumerable<RunIncludes> runInclude = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetRunStep(threadId, runId, stepId, context);
+            Response response = GetRunStep(threadId, runId, stepId, runInclude, context);
             return Response.FromValue(RunStep.FromResponse(response), response);
         }
 
@@ -2892,12 +2204,13 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the specific run to retrieve the step from. </param>
         /// <param name="stepId"> The ID of the step to retrieve information about. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetRunStepAsync(string threadId, string runId, string stepId, RequestContext context)
+        internal virtual async Task<Response> GetRunStepAsync(string threadId, string runId, string stepId, IEnumerable<RunIncludes> runInclude, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -2907,7 +2220,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRunStepRequest(threadId, runId, stepId, context);
+                using HttpMessage message = CreateGetRunStepRequest(threadId, runId, stepId, runInclude, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2930,12 +2243,13 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the specific run to retrieve the step from. </param>
         /// <param name="stepId"> The ID of the step to retrieve information about. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetRunStep(string threadId, string runId, string stepId, RequestContext context)
+        internal virtual Response GetRunStep(string threadId, string runId, string stepId, IEnumerable<RunIncludes> runInclude, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -2945,7 +2259,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRunStepRequest(threadId, runId, stepId, context);
+                using HttpMessage message = CreateGetRunStepRequest(threadId, runId, stepId, runInclude, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2958,40 +2272,42 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Gets a list of run steps from a thread run. </summary>
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run to list steps from. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfRunStep>> InternalGetRunStepsAsync(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<InternalOpenAIPageableListOfRunStep>> InternalGetRunStepsAsync(string threadId, string runId, IEnumerable<RunIncludes> runInclude = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalGetRunStepsAsync(threadId, runId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
+            Response response = await InternalGetRunStepsAsync(threadId, runId, runInclude, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
             return Response.FromValue(InternalOpenAIPageableListOfRunStep.FromResponse(response), response);
         }
 
         /// <summary> Gets a list of run steps from a thread run. </summary>
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run to list steps from. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfRunStep> InternalGetRunSteps(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<InternalOpenAIPageableListOfRunStep> InternalGetRunSteps(string threadId, string runId, IEnumerable<RunIncludes> runInclude = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalGetRunSteps(threadId, runId, limit, order?.ToString(), after, before, context);
+            Response response = InternalGetRunSteps(threadId, runId, runInclude, limit, order?.ToString(), after, before, context);
             return Response.FromValue(InternalOpenAIPageableListOfRunStep.FromResponse(response), response);
         }
 
@@ -3005,23 +2321,24 @@ namespace Azure.AI.OpenAI.Assistants
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalGetRunStepsAsync(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalGetRunStepsAsync(string,string,IEnumerable{RunIncludes},int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run to list steps from. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalGetRunStepsAsync(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
+        internal virtual async Task<Response> InternalGetRunStepsAsync(string threadId, string runId, IEnumerable<RunIncludes> runInclude, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -3030,7 +2347,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalGetRunStepsRequest(threadId, runId, limit, order, after, before, context);
+                using HttpMessage message = CreateInternalGetRunStepsRequest(threadId, runId, runInclude, limit, order, after, before, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3050,23 +2367,24 @@ namespace Azure.AI.OpenAI.Assistants
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalGetRunSteps(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalGetRunSteps(string,string,IEnumerable{RunIncludes},int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run to list steps from. </param>
+        /// <param name="runInclude"> A list of additional fields to include in the response. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalGetRunSteps(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
+        internal virtual Response InternalGetRunSteps(string threadId, string runId, IEnumerable<RunIncludes> runInclude, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -3075,7 +2393,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalGetRunStepsRequest(threadId, runId, limit, order, after, before, context);
+                using HttpMessage message = CreateInternalGetRunStepsRequest(threadId, runId, runInclude, limit, order, after, before, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3120,7 +2438,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="purpose"> A value that, when provided, limits list results to files matching the corresponding purpose. Allowed values: "fine-tune" | "fine-tune-results" | "assistants" | "assistants_output". </param>
+        /// <param name="purpose"> A value that, when provided, limits list results to files matching the corresponding purpose. Allowed values: "fine-tune" | "fine-tune-results" | "assistants" | "assistants_output" | "batch" | "batch_output" | "vision". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -3155,7 +2473,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="purpose"> A value that, when provided, limits list results to files matching the corresponding purpose. Allowed values: "fine-tune" | "fine-tune-results" | "assistants" | "assistants_output". </param>
+        /// <param name="purpose"> A value that, when provided, limits list results to files matching the corresponding purpose. Allowed values: "fine-tune" | "fine-tune-results" | "assistants" | "assistants_output" | "batch" | "batch_output" | "vision". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -3176,7 +2494,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="file"> The file data (not filename) to upload. </param>
+        /// <param name="file"> The file data to upload and its purpose. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
         public virtual async Task<Response<OpenAIFile>> UploadFileAsync(UploadFileRequest file, CancellationToken cancellationToken = default)
@@ -3190,7 +2508,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="file"> The file data (not filename) to upload. </param>
+        /// <param name="file"> The file data to upload and its purpose. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
         public virtual Response<OpenAIFile> UploadFile(UploadFileRequest file, CancellationToken cancellationToken = default)
@@ -3567,6 +2885,1744 @@ namespace Azure.AI.OpenAI.Assistants
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Returns a list of vector stores. </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OpenAIPageableListOfVectorStore>> GetVectorStoresAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetVectorStoresAsync(limit, order?.ToString(), after, before, context).ConfigureAwait(false);
+            return Response.FromValue(OpenAIPageableListOfVectorStore.FromResponse(response), response);
+        }
+
+        /// <summary> Returns a list of vector stores. </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OpenAIPageableListOfVectorStore> GetVectorStores(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetVectorStores(limit, order?.ToString(), after, before, context);
+            return Response.FromValue(OpenAIPageableListOfVectorStore.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of vector stores.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetVectorStoresAsync(int? limit, string order, string after, string before, RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStores");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoresRequest(limit, order, after, before, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of vector stores.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetVectorStores(int? limit, string order, string after, string before, RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStores");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoresRequest(limit, order, after, before, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a vector store. </summary>
+        /// <param name="body"> Request object for creating a vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<VectorStore>> CreateVectorStoreAsync(VectorStoreOptions body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateVectorStoreAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary> Creates a vector store. </summary>
+        /// <param name="body"> Request object for creating a vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<VectorStore> CreateVectorStore(VectorStoreOptions body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateVectorStore(content, context);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a vector store.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> CreateVectorStoreAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateVectorStoreRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a vector store.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response CreateVectorStore(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateVectorStoreRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns the vector store object matching the specified ID. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStore>> GetVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetVectorStoreAsync(vectorStoreId, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary> Returns the vector store object matching the specified ID. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStore> GetVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetVectorStore(vectorStoreId, context);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the vector store object matching the specified ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to retrieve. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetVectorStoreAsync(string vectorStoreId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreRequest(vectorStoreId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the vector store object matching the specified ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to retrieve. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetVectorStore(string vectorStoreId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreRequest(vectorStoreId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The ID of the vector store to modify. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to modify. </param>
+        /// <param name="body"> Request object for updating a vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStore>> ModifyVectorStoreAsync(string vectorStoreId, VectorStoreUpdateOptions body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await ModifyVectorStoreAsync(vectorStoreId, content, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary> The ID of the vector store to modify. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to modify. </param>
+        /// <param name="body"> Request object for updating a vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStore> ModifyVectorStore(string vectorStoreId, VectorStoreUpdateOptions body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = ModifyVectorStore(vectorStoreId, content, context);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] The ID of the vector store to modify.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to modify. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> ModifyVectorStoreAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateModifyVectorStoreRequest(vectorStoreId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The ID of the vector store to modify.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to modify. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response ModifyVectorStore(string vectorStoreId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateModifyVectorStoreRequest(vectorStoreId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the vector store object matching the specified ID. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStoreDeletionStatus>> DeleteVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DeleteVectorStoreAsync(vectorStoreId, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStoreDeletionStatus.FromResponse(response), response);
+        }
+
+        /// <summary> Deletes the vector store object matching the specified ID. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStoreDeletionStatus> DeleteVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DeleteVectorStore(vectorStoreId, context);
+            return Response.FromValue(VectorStoreDeletionStatus.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes the vector store object matching the specified ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to delete. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> DeleteVectorStoreAsync(string vectorStoreId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteVectorStoreRequest(vectorStoreId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes the vector store object matching the specified ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store to delete. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response DeleteVectorStore(string vectorStoreId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteVectorStoreRequest(vectorStoreId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns a list of vector store files. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the files belong to. </param>
+        /// <param name="filter"> Filter by file status. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OpenAIPageableListOfVectorStoreFile>> GetVectorStoreFilesAsync(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetVectorStoreFilesAsync(vectorStoreId, filter?.ToString(), limit, order?.ToString(), after, before, context).ConfigureAwait(false);
+            return Response.FromValue(OpenAIPageableListOfVectorStoreFile.FromResponse(response), response);
+        }
+
+        /// <summary> Returns a list of vector store files. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the files belong to. </param>
+        /// <param name="filter"> Filter by file status. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OpenAIPageableListOfVectorStoreFile> GetVectorStoreFiles(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetVectorStoreFiles(vectorStoreId, filter?.ToString(), limit, order?.ToString(), after, before, context);
+            return Response.FromValue(OpenAIPageableListOfVectorStoreFile.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of vector store files.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the files belong to. </param>
+        /// <param name="filter"> Filter by file status. Allowed values: "in_progress" | "completed" | "failed" | "cancelled". </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetVectorStoreFilesAsync(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStoreFiles");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of vector store files.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the files belong to. </param>
+        /// <param name="filter"> Filter by file status. Allowed values: "in_progress" | "completed" | "failed" | "cancelled". </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetVectorStoreFiles(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStoreFiles");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store for which to create a File. </param>
+        /// <param name="fileId"> A File ID that the vector store should use. Useful for tools like `file_search` that can access files. </param>
+        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(fileId, nameof(fileId));
+
+            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, chunkingStrategy, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateVectorStoreFileAsync(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(VectorStoreFile.FromResponse(response), response);
+        }
+
+        /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store for which to create a File. </param>
+        /// <param name="fileId"> A File ID that the vector store should use. Useful for tools like `file_search` that can access files. </param>
+        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(fileId, nameof(fileId));
+
+            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, chunkingStrategy, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateVectorStoreFile(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context);
+            return Response.FromValue(VectorStoreFile.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a vector store file by attaching a file to a vector store.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store for which to create a File. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> CreateVectorStoreFileAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateVectorStoreFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateVectorStoreFileRequest(vectorStoreId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a vector store file by attaching a file to a vector store.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store for which to create a File. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response CreateVectorStoreFile(string vectorStoreId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateVectorStoreFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateVectorStoreFileRequest(vectorStoreId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves a vector store file. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file belongs to. </param>
+        /// <param name="fileId"> The ID of the file being retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStoreFile>> GetVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetVectorStoreFileAsync(vectorStoreId, fileId, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStoreFile.FromResponse(response), response);
+        }
+
+        /// <summary> Retrieves a vector store file. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file belongs to. </param>
+        /// <param name="fileId"> The ID of the file being retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStoreFile> GetVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetVectorStoreFile(vectorStoreId, fileId, context);
+            return Response.FromValue(VectorStoreFile.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a vector store file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file belongs to. </param>
+        /// <param name="fileId"> The ID of the file being retrieved. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStoreFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreFileRequest(vectorStoreId, fileId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a vector store file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file belongs to. </param>
+        /// <param name="fileId"> The ID of the file being retrieved. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStoreFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreFileRequest(vectorStoreId, fileId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a vector store file. This will remove the file from the vector store but the file itself will not be deleted.
+        /// To delete the file, use the delete file endpoint.
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file belongs to. </param>
+        /// <param name="fileId"> The ID of the file to delete its relationship to the vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStoreFileDeletionStatus>> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DeleteVectorStoreFileAsync(vectorStoreId, fileId, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStoreFileDeletionStatus.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Delete a vector store file. This will remove the file from the vector store but the file itself will not be deleted.
+        /// To delete the file, use the delete file endpoint.
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file belongs to. </param>
+        /// <param name="fileId"> The ID of the file to delete its relationship to the vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStoreFileDeletionStatus> DeleteVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DeleteVectorStoreFile(vectorStoreId, fileId, context);
+            return Response.FromValue(VectorStoreFileDeletionStatus.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete a vector store file. This will remove the file from the vector store but the file itself will not be deleted.
+        /// To delete the file, use the delete file endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file belongs to. </param>
+        /// <param name="fileId"> The ID of the file to delete its relationship to the vector store. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteVectorStoreFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete a vector store file. This will remove the file from the vector store but the file itself will not be deleted.
+        /// To delete the file, use the delete file endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file belongs to. </param>
+        /// <param name="fileId"> The ID of the file to delete its relationship to the vector store. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response DeleteVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteVectorStoreFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a vector store file batch. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store for which to create a File Batch. </param>
+        /// <param name="fileIds"> A list of File IDs that the vector store should use. Useful for tools like `file_search` that can access files. </param>
+        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileIds"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, IEnumerable<string> fileIds, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(fileIds, nameof(fileIds));
+
+            CreateVectorStoreFileBatchRequest createVectorStoreFileBatchRequest = new CreateVectorStoreFileBatchRequest(fileIds.ToList(), chunkingStrategy, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateVectorStoreFileBatchAsync(vectorStoreId, createVectorStoreFileBatchRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
+        }
+
+        /// <summary> Create a vector store file batch. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store for which to create a File Batch. </param>
+        /// <param name="fileIds"> A list of File IDs that the vector store should use. Useful for tools like `file_search` that can access files. </param>
+        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileIds"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, IEnumerable<string> fileIds, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(fileIds, nameof(fileIds));
+
+            CreateVectorStoreFileBatchRequest createVectorStoreFileBatchRequest = new CreateVectorStoreFileBatchRequest(fileIds.ToList(), chunkingStrategy, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateVectorStoreFileBatch(vectorStoreId, createVectorStoreFileBatchRequest.ToRequestContent(), context);
+            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a vector store file batch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store for which to create a File Batch. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> CreateVectorStoreFileBatchAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateVectorStoreFileBatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a vector store file batch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store for which to create a File Batch. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response CreateVectorStoreFileBatch(string vectorStoreId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateVectorStoreFileBatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieve a vector store file batch. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch being retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStoreFileBatch>> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetVectorStoreFileBatchAsync(vectorStoreId, batchId, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
+        }
+
+        /// <summary> Retrieve a vector store file batch. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch being retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStoreFileBatch> GetVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetVectorStoreFileBatch(vectorStoreId, batchId, context);
+            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a vector store file batch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch being retrieved. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStoreFileBatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a vector store file batch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch being retrieved. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetVectorStoreFileBatch(string vectorStoreId, string batchId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStoreFileBatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch to cancel. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStoreFileBatch>> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CancelVectorStoreFileBatchAsync(vectorStoreId, batchId, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
+        }
+
+        /// <summary> Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch to cancel. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStoreFileBatch> CancelVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CancelVectorStoreFileBatch(vectorStoreId, batchId, context);
+            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch to cancel. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CancelVectorStoreFileBatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch to cancel. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response CancelVectorStoreFileBatch(string vectorStoreId, string batchId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CancelVectorStoreFileBatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns a list of vector store files in a batch. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch that the files belong to. </param>
+        /// <param name="filter"> Filter by file status. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OpenAIPageableListOfVectorStoreFile>> GetVectorStoreFileBatchFilesAsync(string vectorStoreId, string batchId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetVectorStoreFileBatchFilesAsync(vectorStoreId, batchId, filter?.ToString(), limit, order?.ToString(), after, before, context).ConfigureAwait(false);
+            return Response.FromValue(OpenAIPageableListOfVectorStoreFile.FromResponse(response), response);
+        }
+
+        /// <summary> Returns a list of vector store files in a batch. </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch that the files belong to. </param>
+        /// <param name="filter"> Filter by file status. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OpenAIPageableListOfVectorStoreFile> GetVectorStoreFileBatchFiles(string vectorStoreId, string batchId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetVectorStoreFileBatchFiles(vectorStoreId, batchId, filter?.ToString(), limit, order?.ToString(), after, before, context);
+            return Response.FromValue(OpenAIPageableListOfVectorStoreFile.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of vector store files in a batch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch that the files belong to. </param>
+        /// <param name="filter"> Filter by file status. Allowed values: "in_progress" | "completed" | "failed" | "cancelled". </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetVectorStoreFileBatchFilesAsync(string vectorStoreId, string batchId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStoreFileBatchFiles");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreFileBatchFilesRequest(vectorStoreId, batchId, filter, limit, order, after, before, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of vector store files in a batch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file batch belongs to. </param>
+        /// <param name="batchId"> The ID of the file batch that the files belong to. </param>
+        /// <param name="filter"> Filter by file status. Allowed values: "in_progress" | "completed" | "failed" | "cancelled". </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetVectorStoreFileBatchFiles(string vectorStoreId, string batchId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetVectorStoreFileBatchFiles");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreFileBatchFilesRequest(vectorStoreId, batchId, filter, limit, order, after, before, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateInternalGetMessagesRequest(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/messages", false);
+            if (runId != null)
+            {
+                uri.AppendQuery("runId", runId, true);
+            }
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateRunRequest(string threadId, RequestContent content, IEnumerable<RunIncludes> runInclude, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/runs", false);
+            if (runInclude != null && !(runInclude is ChangeTrackingList<RunIncludes> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("include[]", runInclude, ",", true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetRunStepRequest(string threadId, string runId, string stepId, IEnumerable<RunIncludes> runInclude, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/steps/", false);
+            uri.AppendPath(stepId, true);
+            if (runInclude != null && !(runInclude is ChangeTrackingList<RunIncludes> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("include[]", runInclude, ",", true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateInternalGetRunStepsRequest(string threadId, string runId, IEnumerable<RunIncludes> runInclude, int? limit, string order, string after, string before, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/steps", false);
+            if (runInclude != null && !(runInclude is ChangeTrackingList<RunIncludes> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("include[]", runInclude, ",", true);
+            }
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetVectorStoresRequest(int? limit, string order, string after, string before, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateVectorStoreRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetVectorStoreRequest(string vectorStoreId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateModifyVectorStoreRequest(string vectorStoreId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteVectorStoreRequest(string vectorStoreId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetVectorStoreFilesRequest(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            uri.AppendPath("/files", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateVectorStoreFileRequest(string vectorStoreId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            uri.AppendPath("/files", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetVectorStoreFileRequest(string vectorStoreId, string fileId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteVectorStoreFileRequest(string vectorStoreId, string fileId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateVectorStoreFileBatchRequest(string vectorStoreId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            uri.AppendPath("/file_batches", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetVectorStoreFileBatchRequest(string vectorStoreId, string batchId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            uri.AppendPath("/file_batches/", false);
+            uri.AppendPath(batchId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCancelVectorStoreFileBatchRequest(string vectorStoreId, string batchId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            uri.AppendPath("/file_batches/", false);
+            uri.AppendPath(batchId, true);
+            uri.AppendPath("/cancel", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetVectorStoreFileBatchFilesRequest(string vectorStoreId, string batchId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            uri.AppendPath("/file_batches/", false);
+            uri.AppendPath(batchId, true);
+            uri.AppendPath("/files", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         private static RequestContext DefaultRequestContext = new RequestContext();
