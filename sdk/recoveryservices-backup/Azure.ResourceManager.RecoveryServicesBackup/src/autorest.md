@@ -143,6 +143,10 @@ rename-mapping:
   AzureWorkloadSQLRecoveryPointExtendedInfo: WorkloadSqlRecoveryPointExtendedInfo
   AzureWorkloadSQLRestoreRequest: WorkloadSqlRestoreContent
   AzureWorkloadSQLRestoreWithRehydrateRequest: WorkloadSqlRestoreWithRehydrateContent
+  AzureWorkloadSAPAsePointInTimeRecoveryPoint: WorkloadSapAsePointInTimeRecoveryPoint
+  AzureWorkloadSAPAsePointInTimeRestoreRequest: WorkloadSapAsePointInTimeRestoreContent
+  AzureWorkloadSAPAseRecoveryPoint: WorkloadSapAseRecoveryPoint
+  AzureWorkloadSAPAseRestoreRequest: WorkloadSapAseRestoreContent
   BackupRequest: BackupContent
   BackupRequestResource: TriggerBackupContent
   BackupStatusResponse: BackupStatusResult

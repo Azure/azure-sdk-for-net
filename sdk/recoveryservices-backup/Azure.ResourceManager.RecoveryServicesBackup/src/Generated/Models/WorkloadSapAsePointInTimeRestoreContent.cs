@@ -11,20 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// AzureWorkload SAP Ase-specific restore.
-    /// Please note <see cref="AzureWorkloadSapAseRestoreRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureWorkloadSapAsePointInTimeRestoreRequest"/>.
-    /// </summary>
-    public partial class AzureWorkloadSapAseRestoreRequest : WorkloadRestoreContent
+    /// <summary> AzureWorkload SAP Ase-specific restore. Specifically for PointInTime/Log restore. </summary>
+    public partial class WorkloadSapAsePointInTimeRestoreContent : WorkloadSapAseRestoreContent
     {
-        /// <summary> Initializes a new instance of <see cref="AzureWorkloadSapAseRestoreRequest"/>. </summary>
-        public AzureWorkloadSapAseRestoreRequest()
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapAsePointInTimeRestoreContent"/>. </summary>
+        public WorkloadSapAsePointInTimeRestoreContent()
         {
-            ObjectType = "AzureWorkloadSAPAseRestoreRequest";
+            ObjectType = "AzureWorkloadSAPAsePointInTimeRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureWorkloadSapAseRestoreRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapAsePointInTimeRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -46,9 +42,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// This is the complete ARM Id of the target VM
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
         /// </param>
-        internal AzureWorkloadSapAseRestoreRequest(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetResourceGroupName, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, SnapshotRestoreContent snapshotRestoreParameters, ResourceIdentifier targetVirtualMachineId) : base(objectType, resourceGuardOperationRequests, serializedAdditionalRawData, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetResourceGroupName, userAssignedManagedIdentityDetails, snapshotRestoreParameters, targetVirtualMachineId)
+        /// <param name="pointInTime"> PointInTime value. </param>
+        internal WorkloadSapAsePointInTimeRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetResourceGroupName, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, SnapshotRestoreContent snapshotRestoreParameters, ResourceIdentifier targetVirtualMachineId, DateTimeOffset? pointInTime) : base(objectType, resourceGuardOperationRequests, serializedAdditionalRawData, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetResourceGroupName, userAssignedManagedIdentityDetails, snapshotRestoreParameters, targetVirtualMachineId)
         {
-            ObjectType = objectType ?? "AzureWorkloadSAPAseRestoreRequest";
+            PointInTime = pointInTime;
+            ObjectType = objectType ?? "AzureWorkloadSAPAsePointInTimeRestoreRequest";
         }
+
+        /// <summary> PointInTime value. </summary>
+        public DateTimeOffset? PointInTime { get; set; }
     }
 }

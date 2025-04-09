@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary>
     /// AzureWorkload-specific restore.
     /// Please note <see cref="WorkloadRestoreContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="WorkloadPointInTimeRestoreContent"/>, <see cref="AzureWorkloadSapAsePointInTimeRestoreRequest"/>, <see cref="AzureWorkloadSapAseRestoreRequest"/>, <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSapHanaRestoreContent"/>, <see cref="WorkloadSapHanaRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlPointInTimeRestoreContent"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlRestoreContent"/> and <see cref="WorkloadSqlRestoreWithRehydrateContent"/>.
+    /// The available derived classes include <see cref="WorkloadPointInTimeRestoreContent"/>, <see cref="WorkloadSapAsePointInTimeRestoreContent"/>, <see cref="WorkloadSapAseRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSapHanaRestoreContent"/>, <see cref="WorkloadSapHanaRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlPointInTimeRestoreContent"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlRestoreContent"/> and <see cref="WorkloadSqlRestoreWithRehydrateContent"/>.
     /// </summary>
     public partial class WorkloadRestoreContent : RestoreContent
     {

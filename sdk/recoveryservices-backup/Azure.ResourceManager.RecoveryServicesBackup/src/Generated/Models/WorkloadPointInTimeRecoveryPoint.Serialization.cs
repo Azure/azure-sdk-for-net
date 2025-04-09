@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureWorkloadSAPAsePointInTimeRecoveryPoint": return AzureWorkloadSapAsePointInTimeRecoveryPoint.DeserializeAzureWorkloadSapAsePointInTimeRecoveryPoint(element, options);
+                    case "AzureWorkloadSAPAsePointInTimeRecoveryPoint": return WorkloadSapAsePointInTimeRecoveryPoint.DeserializeWorkloadSapAsePointInTimeRecoveryPoint(element, options);
                     case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint": return WorkloadSapHanaPointInTimeRecoveryPoint.DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(element, options);
                 }
             }

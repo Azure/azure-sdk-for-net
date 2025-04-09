@@ -11,15 +11,15 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> SAPAse specific recoverypoint, specifically encapsulates full/diff recoverypoints. </summary>
-    public partial class AzureWorkloadSapAseRecoveryPoint : WorkloadRecoveryPoint
+    public partial class WorkloadSapAseRecoveryPoint : WorkloadRecoveryPoint
     {
-        /// <summary> Initializes a new instance of <see cref="AzureWorkloadSapAseRecoveryPoint"/>. </summary>
-        public AzureWorkloadSapAseRecoveryPoint()
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapAseRecoveryPoint"/>. </summary>
+        public WorkloadSapAseRecoveryPoint()
         {
             ObjectType = "AzureWorkloadSAPAseRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureWorkloadSapAseRecoveryPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapAseRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        internal AzureWorkloadSapAseRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, serializedAdditionalRawData, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
+        internal WorkloadSapAseRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, serializedAdditionalRawData, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
         {
             ObjectType = objectType ?? "AzureWorkloadSAPAseRecoveryPoint";
         }

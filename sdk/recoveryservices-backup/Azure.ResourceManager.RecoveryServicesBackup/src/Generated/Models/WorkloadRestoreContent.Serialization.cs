@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureWorkloadPointInTimeRestoreRequest": return WorkloadPointInTimeRestoreContent.DeserializeWorkloadPointInTimeRestoreContent(element, options);
-                    case "AzureWorkloadSAPAsePointInTimeRestoreRequest": return AzureWorkloadSapAsePointInTimeRestoreRequest.DeserializeAzureWorkloadSapAsePointInTimeRestoreRequest(element, options);
-                    case "AzureWorkloadSAPAseRestoreRequest": return AzureWorkloadSapAseRestoreRequest.DeserializeAzureWorkloadSapAseRestoreRequest(element, options);
+                    case "AzureWorkloadSAPAsePointInTimeRestoreRequest": return WorkloadSapAsePointInTimeRestoreContent.DeserializeWorkloadSapAsePointInTimeRestoreContent(element, options);
+                    case "AzureWorkloadSAPAseRestoreRequest": return WorkloadSapAseRestoreContent.DeserializeWorkloadSapAseRestoreContent(element, options);
                     case "AzureWorkloadSAPHanaPointInTimeRestoreRequest": return WorkloadSapHanaPointInTimeRestoreContent.DeserializeWorkloadSapHanaPointInTimeRestoreContent(element, options);
                     case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest": return WorkloadSapHanaPointInTimeRestoreWithRehydrateContent.DeserializeWorkloadSapHanaPointInTimeRestoreWithRehydrateContent(element, options);
                     case "AzureWorkloadSAPHanaRestoreRequest": return WorkloadSapHanaRestoreContent.DeserializeWorkloadSapHanaRestoreContent(element, options);

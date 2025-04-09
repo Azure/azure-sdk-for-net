@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class AzureWorkloadSapAsePointInTimeRecoveryPoint : IUtf8JsonSerializable, IJsonModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>
+    public partial class WorkloadSapAseRecoveryPoint : IUtf8JsonSerializable, IJsonModel<WorkloadSapAseRecoveryPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadSapAseRecoveryPoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkloadSapAseRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,28 +28,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureWorkloadSapAsePointInTimeRecoveryPoint)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        AzureWorkloadSapAsePointInTimeRecoveryPoint IJsonModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WorkloadSapAseRecoveryPoint IJsonModel<WorkloadSapAseRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureWorkloadSapAsePointInTimeRecoveryPoint)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureWorkloadSapAsePointInTimeRecoveryPoint(document.RootElement, options);
+            return DeserializeWorkloadSapAseRecoveryPoint(document.RootElement, options);
         }
 
-        internal static AzureWorkloadSapAsePointInTimeRecoveryPoint DeserializeAzureWorkloadSapAsePointInTimeRecoveryPoint(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WorkloadSapAseRecoveryPoint DeserializeWorkloadSapAseRecoveryPoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            IList<PointInTimeRange> timeRanges = default;
             DateTimeOffset? recoveryPointTimeInUTC = default;
             RestorePointType? type = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
@@ -68,20 +67,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeRanges"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PointInTimeRange> array = new List<PointInTimeRange>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PointInTimeRange.DeserializePointInTimeRange(item, options));
-                    }
-                    timeRanges = array;
-                    continue;
-                }
                 if (property.NameEquals("recoveryPointTimeInUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -148,46 +133,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureWorkloadSapAsePointInTimeRecoveryPoint(
+            return new WorkloadSapAseRecoveryPoint(
                 objectType,
                 serializedAdditionalRawData,
                 recoveryPointTimeInUTC,
                 type,
                 recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
                 recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),
-                recoveryPointProperties,
-                timeRanges ?? new ChangeTrackingList<PointInTimeRange>());
+                recoveryPointProperties);
         }
 
-        BinaryData IPersistableModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WorkloadSapAseRecoveryPoint>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureWorkloadSapAsePointInTimeRecoveryPoint)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureWorkloadSapAsePointInTimeRecoveryPoint IPersistableModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WorkloadSapAseRecoveryPoint IPersistableModel<WorkloadSapAseRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureWorkloadSapAsePointInTimeRecoveryPoint(document.RootElement, options);
+                        return DeserializeWorkloadSapAseRecoveryPoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureWorkloadSapAsePointInTimeRecoveryPoint)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureWorkloadSapAsePointInTimeRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkloadSapAseRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
