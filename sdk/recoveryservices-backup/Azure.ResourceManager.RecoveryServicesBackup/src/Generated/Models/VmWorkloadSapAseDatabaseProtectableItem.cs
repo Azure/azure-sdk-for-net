@@ -11,15 +11,15 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure VM workload-specific protectable item representing SAP ASE Database. </summary>
-    public partial class AzureVmWorkloadSapAseDatabaseProtectableItem : VmWorkloadProtectableItem
+    public partial class VmWorkloadSapAseDatabaseProtectableItem : VmWorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of <see cref="AzureVmWorkloadSapAseDatabaseProtectableItem"/>. </summary>
-        public AzureVmWorkloadSapAseDatabaseProtectableItem()
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapAseDatabaseProtectableItem"/>. </summary>
+        public VmWorkloadSapAseDatabaseProtectableItem()
         {
             ProtectableItemType = "SAPAseDatabase";
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureVmWorkloadSapAseDatabaseProtectableItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapAseDatabaseProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
         /// <param name="isProtectable"> Indicates if item is protectable. </param>
-        internal AzureVmWorkloadSapAseDatabaseProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, isProtectable)
+        internal VmWorkloadSapAseDatabaseProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, isProtectable)
         {
             ProtectableItemType = protectableItemType ?? "SAPAseDatabase";
         }

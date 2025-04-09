@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class AzureVmWorkloadSapAseDatabaseProtectableItem : IUtf8JsonSerializable, IJsonModel<AzureVmWorkloadSapAseDatabaseProtectableItem>
+    public partial class VmWorkloadSapAseDatabaseProtectableItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSapAseDatabaseProtectableItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureVmWorkloadSapAseDatabaseProtectableItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSapAseDatabaseProtectableItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AzureVmWorkloadSapAseDatabaseProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VmWorkloadSapAseDatabaseProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,28 +28,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapAseDatabaseProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapAseDatabaseProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureVmWorkloadSapAseDatabaseProtectableItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectableItem)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        AzureVmWorkloadSapAseDatabaseProtectableItem IJsonModel<AzureVmWorkloadSapAseDatabaseProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VmWorkloadSapAseDatabaseProtectableItem IJsonModel<VmWorkloadSapAseDatabaseProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapAseDatabaseProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapAseDatabaseProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureVmWorkloadSapAseDatabaseProtectableItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectableItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureVmWorkloadSapAseDatabaseProtectableItem(document.RootElement, options);
+            return DeserializeVmWorkloadSapAseDatabaseProtectableItem(document.RootElement, options);
         }
 
-        internal static AzureVmWorkloadSapAseDatabaseProtectableItem DeserializeAzureVmWorkloadSapAseDatabaseProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VmWorkloadSapAseDatabaseProtectableItem DeserializeVmWorkloadSapAseDatabaseProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureVmWorkloadSapAseDatabaseProtectableItem(
+            return new VmWorkloadSapAseDatabaseProtectableItem(
                 backupManagementType,
                 workloadType,
                 protectableItemType,
@@ -197,35 +197,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 isProtectable);
         }
 
-        BinaryData IPersistableModel<AzureVmWorkloadSapAseDatabaseProtectableItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VmWorkloadSapAseDatabaseProtectableItem>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapAseDatabaseProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapAseDatabaseProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureVmWorkloadSapAseDatabaseProtectableItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectableItem)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureVmWorkloadSapAseDatabaseProtectableItem IPersistableModel<AzureVmWorkloadSapAseDatabaseProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VmWorkloadSapAseDatabaseProtectableItem IPersistableModel<VmWorkloadSapAseDatabaseProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapAseDatabaseProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapAseDatabaseProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureVmWorkloadSapAseDatabaseProtectableItem(document.RootElement, options);
+                        return DeserializeVmWorkloadSapAseDatabaseProtectableItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureVmWorkloadSapAseDatabaseProtectableItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectableItem)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureVmWorkloadSapAseDatabaseProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VmWorkloadSapAseDatabaseProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
