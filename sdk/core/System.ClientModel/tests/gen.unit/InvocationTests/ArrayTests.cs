@@ -14,23 +14,16 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string InitializeObject => "new {0} {{ }}";
 
-        internal static void AssertArray(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        internal static void AssertArray(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.ContainsKey($"{type}[]"));
             var arrayJsonModel = dict[$"{type}[]"];
             Assert.AreEqual($"{type}[]", arrayJsonModel.Type.Name);
-            if (type == JsonModel)
-            {
-                Assert.AreEqual("TestProject", arrayJsonModel.Type.Namespace);
-            }
-            else
-            {
-                Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", arrayJsonModel.Type.Namespace);
-            }
-            Assert.AreEqual(1, arrayJsonModel.Type.GenericArguments.Count);
+            Assert.AreEqual(expectedNamespace, arrayJsonModel.Type.Namespace);
+            Assert.IsNotNull(arrayJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.Array, arrayJsonModel.Kind);
 
-            var genericArgument = arrayJsonModel.Type.GenericArguments[0];
+            var genericArgument = arrayJsonModel.Type.ItemType!;
             modelValidator(genericArgument);
         }
     }

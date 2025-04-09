@@ -19,7 +19,7 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
-    public partial class LocalContext : ModelReaderWriterContext
+    {{modifier}} partial class LocalContext : ModelReaderWriterContext
     {
     }
 
@@ -39,7 +39,8 @@ namespace TestProject
 
             Assert.IsNotNull(result.ContextFile);
             Assert.AreEqual("LocalContext", result.ContextFile!.Type.Name);
-            Assert.AreEqual("TestProject", result.ContextFile!.Type.Namespace);
+            Assert.AreEqual("TestProject", result.ContextFile.Type.Namespace);
+            Assert.AreEqual(modifier, result.ContextFile.Modifier);
             Assert.AreEqual(0, result.Diagnostics.Length);
 
             Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
@@ -59,7 +60,7 @@ using System.Text.Json;
 
 namespace TestProject
 {
-    public partial class LocalContext : ModelReaderWriterContext
+    {{modifier}} partial class LocalContext : ModelReaderWriterContext
     {
     }
 
@@ -85,7 +86,8 @@ namespace TestProject
 
             Assert.IsNotNull(result.ContextFile);
             Assert.AreEqual("LocalContext", result.ContextFile!.Type.Name);
-            Assert.AreEqual("TestProject", result.ContextFile!.Type.Namespace);
+            Assert.AreEqual("TestProject", result.ContextFile.Type.Namespace);
+            Assert.AreEqual(modifier, result.ContextFile.Modifier);
             Assert.AreEqual(0, result.Diagnostics.Length);
 
             Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
@@ -125,13 +127,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.ContextFile);
-            Assert.AreEqual("TestAssemblyContext", result.ContextFile!.Type.Name);
-            Assert.AreEqual("TestAssembly", result.ContextFile!.Type.Namespace);
-
-            Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
-            Assert.AreEqual("JsonModel", result.ContextFile.TypeBuilders[0].Type.Name);
-            Assert.AreEqual(modifier, result.ContextFile.TypeBuilders[0].Modifier);
+            Assert.IsNull(result.ContextFile);
         }
 
         [TestCase("public")]
@@ -159,13 +155,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.ContextFile);
-            Assert.AreEqual("TestAssemblyContext", result.ContextFile!.Type.Name);
-            Assert.AreEqual("TestAssembly", result.ContextFile!.Type.Namespace);
-
-            Assert.AreEqual(1, result.ContextFile.TypeBuilders.Count);
-            Assert.AreEqual("PersistableModel", result.ContextFile.TypeBuilders[0].Type.Name);
-            Assert.AreEqual(modifier, result.ContextFile.TypeBuilders[0].Modifier);
+            Assert.IsNull(result.ContextFile);
         }
     }
 }
