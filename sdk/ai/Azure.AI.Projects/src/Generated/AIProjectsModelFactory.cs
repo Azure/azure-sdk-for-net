@@ -14,176 +14,6 @@ namespace Azure.AI.Projects
     /// <summary> Model factory for models. </summary>
     public static partial class AIProjectsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Projects.Evaluation"/>. </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
-        /// <param name="data">
-        /// Data for evaluation.
-        /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
-        /// </param>
-        /// <param name="target"> Evaluation target specifying the model config and parameters. </param>
-        /// <param name="displayName"> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </param>
-        /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
-        /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="status"> Status of the evaluation. It is set by service and is read-only. </param>
-        /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
-        /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
-        /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
-        /// <returns> A new <see cref="Projects.Evaluation"/> instance for mocking. </returns>
-        public static Evaluation Evaluation(string id = null, InputData data = null, EvaluationTarget target = null, string displayName = null, string description = null, SystemData systemData = null, string status = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            properties ??= new Dictionary<string, string>();
-            evaluators ??= new Dictionary<string, EvaluatorConfiguration>();
-
-            return new Evaluation(
-                id,
-                data,
-                target,
-                displayName,
-                description,
-                systemData,
-                status,
-                tags,
-                properties,
-                evaluators,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.SystemData"/>. </summary>
-        /// <param name="createdAt"> The timestamp the resource was created at. </param>
-        /// <param name="createdBy"> The identity that created the resource. </param>
-        /// <param name="createdByType"> The identity type that created the resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        /// <returns> A new <see cref="Projects.SystemData"/> instance for mocking. </returns>
-        public static SystemData SystemData(DateTimeOffset? createdAt = null, string createdBy = null, string createdByType = null, DateTimeOffset? lastModifiedAt = null)
-        {
-            return new SystemData(createdAt, createdBy, createdByType, lastModifiedAt, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.EvaluationSchedule"/>. </summary>
-        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
-        /// <param name="data"> Data for evaluation. </param>
-        /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
-        /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning State of the evaluation. It is set by service and is read-only. </param>
-        /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
-        /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
-        /// <param name="isEnabled"> Enabled status of the evaluation. It is set by service and is read-only. </param>
-        /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
-        /// <param name="trigger">
-        /// Trigger for the evaluation.
-        /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
-        /// </param>
-        /// <returns> A new <see cref="Projects.EvaluationSchedule"/> instance for mocking. </returns>
-        public static EvaluationSchedule EvaluationSchedule(string name = null, ApplicationInsightsConfiguration data = null, string description = null, SystemData systemData = null, string provisioningState = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, string isEnabled = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Trigger trigger = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            properties ??= new Dictionary<string, string>();
-            evaluators ??= new Dictionary<string, EvaluatorConfiguration>();
-
-            return new EvaluationSchedule(
-                name,
-                data,
-                description,
-                systemData,
-                provisioningState,
-                tags,
-                properties,
-                isEnabled,
-                evaluators,
-                trigger,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.GetWorkspaceResponse"/>. </summary>
-        /// <param name="id"> A unique identifier for the resource. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="properties"> The properties of the resource. </param>
-        /// <returns> A new <see cref="Projects.GetWorkspaceResponse"/> instance for mocking. </returns>
-        public static GetWorkspaceResponse GetWorkspaceResponse(string id = null, string name = null, WorkspaceProperties properties = null)
-        {
-            return new GetWorkspaceResponse(id, name, properties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.WorkspaceProperties"/>. </summary>
-        /// <param name="applicationInsights"> Authentication type of the connection target. </param>
-        /// <returns> A new <see cref="Projects.WorkspaceProperties"/> instance for mocking. </returns>
-        public static WorkspaceProperties WorkspaceProperties(string applicationInsights = null)
-        {
-            return new WorkspaceProperties(applicationInsights, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.ListConnectionsResponse"/>. </summary>
-        /// <param name="value"> A list of connection list secrets. </param>
-        /// <returns> A new <see cref="Projects.ListConnectionsResponse"/> instance for mocking. </returns>
-        public static ListConnectionsResponse ListConnectionsResponse(IEnumerable<ConnectionResponse> value = null)
-        {
-            value ??= new List<ConnectionResponse>();
-
-            return new ListConnectionsResponse(value?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.ConnectionResponse"/>. </summary>
-        /// <param name="id"> A unique identifier for the connection. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="properties">
-        /// The properties of the resource
-        /// Please note <see cref="Projects.ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Projects.ConnectionPropertiesApiKeyAuth"/>, <see cref="Projects.InternalConnectionPropertiesCustomAuth"/> and <see cref="Projects.InternalConnectionPropertiesNoAuth"/>.
-        /// </param>
-        /// <returns> A new <see cref="Projects.ConnectionResponse"/> instance for mocking. </returns>
-        public static ConnectionResponse ConnectionResponse(string id = null, string name = null, ConnectionProperties properties = null)
-        {
-            return new ConnectionResponse(id, name, properties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.ConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"> The connection URL to be used for this service. </param>
-        /// <returns> A new <see cref="Projects.ConnectionProperties"/> instance for mocking. </returns>
-        public static ConnectionProperties ConnectionProperties(ConnectionType category = default, string target = null)
-        {
-            return new UnknownInternalConnectionProperties(default, category, target, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.ConnectionPropertiesApiKeyAuth"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"> The connection URL to be used for this service. </param>
-        /// <param name="credentials"> Credentials will only be present for authType=ApiKey. </param>
-        /// <returns> A new <see cref="Projects.ConnectionPropertiesApiKeyAuth"/> instance for mocking. </returns>
-        public static ConnectionPropertiesApiKeyAuth ConnectionPropertiesApiKeyAuth(ConnectionType category = default, string target = null, CredentialsApiKeyAuth credentials = null)
-        {
-            return new ConnectionPropertiesApiKeyAuth(AuthenticationType.ApiKey, category, target, serializedAdditionalRawData: null, credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.CredentialsApiKeyAuth"/>. </summary>
-        /// <param name="key"> The API key. </param>
-        /// <returns> A new <see cref="Projects.CredentialsApiKeyAuth"/> instance for mocking. </returns>
-        public static CredentialsApiKeyAuth CredentialsApiKeyAuth(string key = null)
-        {
-            return new CredentialsApiKeyAuth(key, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.InternalConnectionPropertiesCustomAuth"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"> The connection URL to be used for this service. </param>
-        /// <returns> A new <see cref="Projects.InternalConnectionPropertiesCustomAuth"/> instance for mocking. </returns>
-        public static InternalConnectionPropertiesCustomAuth InternalConnectionPropertiesCustomAuth(ConnectionType category = default, string target = null)
-        {
-            return new InternalConnectionPropertiesCustomAuth(AuthenticationType.Custom, category, target, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Projects.InternalConnectionPropertiesNoAuth"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"> The connection URL to be used for this service. </param>
-        /// <returns> A new <see cref="Projects.InternalConnectionPropertiesNoAuth"/> instance for mocking. </returns>
-        public static InternalConnectionPropertiesNoAuth InternalConnectionPropertiesNoAuth(ConnectionType category = default, string target = null)
-        {
-            return new InternalConnectionPropertiesNoAuth(AuthenticationType.None, category, target, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Projects.AzureFunctionBinding"/>. </summary>
         /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
         /// <param name="storageQueue"> Storage queue. </param>
@@ -325,7 +155,7 @@ namespace Azure.AI.Projects
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Projects.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Projects.RunStepAzureAISearchToolCall"/>, <see cref="Projects.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Projects.RunStepMicrosoftFabricToolCall"/>, <see cref="Projects.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="Projects.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Projects.RunStepAzureAISearchToolCall"/>, <see cref="Projects.RunStepCustomSearchToolCall"/>, <see cref="Projects.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Projects.RunStepMicrosoftFabricToolCall"/>, <see cref="Projects.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="Projects.RunStepOpenAPIToolCall"/> and <see cref="Projects.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Projects.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -452,6 +282,28 @@ namespace Azure.AI.Projects
             microsoftFabric ??= new Dictionary<string, string>();
 
             return new RunStepMicrosoftFabricToolCall("fabric_dataagent", id, serializedAdditionalRawData: null, microsoftFabric);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.RunStepCustomSearchToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="bingCustomSearch"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Projects.RunStepCustomSearchToolCall"/> instance for mocking. </returns>
+        public static RunStepCustomSearchToolCall RunStepCustomSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
+        {
+            bingCustomSearch ??= new Dictionary<string, string>();
+
+            return new RunStepCustomSearchToolCall("bing_custom_search", id, serializedAdditionalRawData: null, bingCustomSearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.RunStepOpenAPIToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="openAPI"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Projects.RunStepOpenAPIToolCall"/> instance for mocking. </returns>
+        public static RunStepOpenAPIToolCall RunStepOpenAPIToolCall(string id = null, IReadOnlyDictionary<string, string> openAPI = null)
+        {
+            openAPI ??= new Dictionary<string, string>();
+
+            return new RunStepOpenAPIToolCall("openapi", id, serializedAdditionalRawData: null, openAPI);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.RunStepError"/>. </summary>
@@ -656,6 +508,176 @@ namespace Azure.AI.Projects
                 vectorStoreId,
                 status,
                 fileCounts,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.GetWorkspaceResponse"/>. </summary>
+        /// <param name="id"> A unique identifier for the resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <returns> A new <see cref="Projects.GetWorkspaceResponse"/> instance for mocking. </returns>
+        public static GetWorkspaceResponse GetWorkspaceResponse(string id = null, string name = null, WorkspaceProperties properties = null)
+        {
+            return new GetWorkspaceResponse(id, name, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.WorkspaceProperties"/>. </summary>
+        /// <param name="applicationInsights"> Authentication type of the connection target. </param>
+        /// <returns> A new <see cref="Projects.WorkspaceProperties"/> instance for mocking. </returns>
+        public static WorkspaceProperties WorkspaceProperties(string applicationInsights = null)
+        {
+            return new WorkspaceProperties(applicationInsights, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.ListConnectionsResponse"/>. </summary>
+        /// <param name="value"> A list of connection list secrets. </param>
+        /// <returns> A new <see cref="Projects.ListConnectionsResponse"/> instance for mocking. </returns>
+        public static ListConnectionsResponse ListConnectionsResponse(IEnumerable<ConnectionResponse> value = null)
+        {
+            value ??= new List<ConnectionResponse>();
+
+            return new ListConnectionsResponse(value?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.ConnectionResponse"/>. </summary>
+        /// <param name="id"> A unique identifier for the connection. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="properties">
+        /// The properties of the resource
+        /// Please note <see cref="Projects.ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Projects.ConnectionPropertiesApiKeyAuth"/>, <see cref="Projects.InternalConnectionPropertiesCustomAuth"/> and <see cref="Projects.InternalConnectionPropertiesNoAuth"/>.
+        /// </param>
+        /// <returns> A new <see cref="Projects.ConnectionResponse"/> instance for mocking. </returns>
+        public static ConnectionResponse ConnectionResponse(string id = null, string name = null, ConnectionProperties properties = null)
+        {
+            return new ConnectionResponse(id, name, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.ConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <returns> A new <see cref="Projects.ConnectionProperties"/> instance for mocking. </returns>
+        public static ConnectionProperties ConnectionProperties(ConnectionType category = default, string target = null)
+        {
+            return new UnknownInternalConnectionProperties(default, category, target, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.ConnectionPropertiesApiKeyAuth"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <param name="credentials"> Credentials will only be present for authType=ApiKey. </param>
+        /// <returns> A new <see cref="Projects.ConnectionPropertiesApiKeyAuth"/> instance for mocking. </returns>
+        public static ConnectionPropertiesApiKeyAuth ConnectionPropertiesApiKeyAuth(ConnectionType category = default, string target = null, CredentialsApiKeyAuth credentials = null)
+        {
+            return new ConnectionPropertiesApiKeyAuth(AuthenticationType.ApiKey, category, target, serializedAdditionalRawData: null, credentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.CredentialsApiKeyAuth"/>. </summary>
+        /// <param name="key"> The API key. </param>
+        /// <returns> A new <see cref="Projects.CredentialsApiKeyAuth"/> instance for mocking. </returns>
+        public static CredentialsApiKeyAuth CredentialsApiKeyAuth(string key = null)
+        {
+            return new CredentialsApiKeyAuth(key, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.InternalConnectionPropertiesCustomAuth"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <returns> A new <see cref="Projects.InternalConnectionPropertiesCustomAuth"/> instance for mocking. </returns>
+        public static InternalConnectionPropertiesCustomAuth InternalConnectionPropertiesCustomAuth(ConnectionType category = default, string target = null)
+        {
+            return new InternalConnectionPropertiesCustomAuth(AuthenticationType.Custom, category, target, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.InternalConnectionPropertiesNoAuth"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <returns> A new <see cref="Projects.InternalConnectionPropertiesNoAuth"/> instance for mocking. </returns>
+        public static InternalConnectionPropertiesNoAuth InternalConnectionPropertiesNoAuth(ConnectionType category = default, string target = null)
+        {
+            return new InternalConnectionPropertiesNoAuth(AuthenticationType.None, category, target, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.Evaluation"/>. </summary>
+        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="data">
+        /// Data for evaluation.
+        /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
+        /// </param>
+        /// <param name="target"> Evaluation target specifying the model config and parameters. </param>
+        /// <param name="displayName"> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </param>
+        /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
+        /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="status"> Status of the evaluation. It is set by service and is read-only. </param>
+        /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
+        /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
+        /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
+        /// <returns> A new <see cref="Projects.Evaluation"/> instance for mocking. </returns>
+        public static Evaluation Evaluation(string id = null, InputData data = null, EvaluationTarget target = null, string displayName = null, string description = null, SystemData systemData = null, string status = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            properties ??= new Dictionary<string, string>();
+            evaluators ??= new Dictionary<string, EvaluatorConfiguration>();
+
+            return new Evaluation(
+                id,
+                data,
+                target,
+                displayName,
+                description,
+                systemData,
+                status,
+                tags,
+                properties,
+                evaluators,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.SystemData"/>. </summary>
+        /// <param name="createdAt"> The timestamp the resource was created at. </param>
+        /// <param name="createdBy"> The identity that created the resource. </param>
+        /// <param name="createdByType"> The identity type that created the resource. </param>
+        /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
+        /// <returns> A new <see cref="Projects.SystemData"/> instance for mocking. </returns>
+        public static SystemData SystemData(DateTimeOffset? createdAt = null, string createdBy = null, string createdByType = null, DateTimeOffset? lastModifiedAt = null)
+        {
+            return new SystemData(createdAt, createdBy, createdByType, lastModifiedAt, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.EvaluationSchedule"/>. </summary>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
+        /// <param name="data"> Data for evaluation. </param>
+        /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
+        /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning State of the evaluation. It is set by service and is read-only. </param>
+        /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
+        /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
+        /// <param name="isEnabled"> Enabled status of the evaluation. It is set by service and is read-only. </param>
+        /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
+        /// <param name="trigger">
+        /// Trigger for the evaluation.
+        /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
+        /// </param>
+        /// <returns> A new <see cref="Projects.EvaluationSchedule"/> instance for mocking. </returns>
+        public static EvaluationSchedule EvaluationSchedule(string name = null, ApplicationInsightsConfiguration data = null, string description = null, SystemData systemData = null, string provisioningState = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, string isEnabled = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Trigger trigger = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            properties ??= new Dictionary<string, string>();
+            evaluators ??= new Dictionary<string, EvaluatorConfiguration>();
+
+            return new EvaluationSchedule(
+                name,
+                data,
+                description,
+                systemData,
+                provisioningState,
+                tags,
+                properties,
+                isEnabled,
+                evaluators,
+                trigger,
                 serializedAdditionalRawData: null);
         }
 
