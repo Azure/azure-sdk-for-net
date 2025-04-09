@@ -1,6 +1,94 @@
-# System.ClientModel-based client logging samples
+# Diagnostics in System.ClientModel-based clients
 
-## Introduction
+Instrumentation is an essential part of developing client libraries. System.ClientModel leverages existing .NET observability APIs and tools to provide building blocks that are tailored to client-specific needs.
+
+## Distributed tracing
+
+### Enable distributed tracing in a client (experimental)
+
+Clients built on System.ClientModel will most likely be instrumented for distributed tracing using OpenTelemetry. They will produce activities in each client method call. In .NET, OpenTelemetry relies on `ActivitySource` to collect distributed information. See the [OpenTelemetry guide](https://opentelemetry.io/docs/languages/dotnet/getting-started/#instrumentation) for more information about collection and exporting pipelines.
+
+You can enabled experimental distributed traces for a library by doing the following:
+
+```csharp
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracerProviderBuilder => tracerProviderBuilder
+        .AddSource("Experimental.{root library namespace}.{client name}.*")
+        .AddOtlpExporter())
+```
+
+### Adding distributed tracing instrumentation to service clients
+
+System.ClientModel provides extension methods on System.Diagnostics.Activity and System.Diagnostics.ActivitySource for library authors to use to create distributed tracing spans in each public method call. See [Add distributed tracing instrumentation](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs) for more information about Activity and ActivitySource and how to further customize telemetry using them.
+
+The following sample shows an example of instrumenting a service client implementation.
+
+```C# Snippet:OpenTelemetryInClient
+public class SampleClient
+{
+    private readonly Uri _endpoint;
+    private readonly ApiKeyCredential _credential;
+    private readonly ClientPipeline _pipeline;
+    private readonly SampleClientOptions _sampleClientOptions;
+
+    // Each client should have a static ActivitySource named after the full name
+    // of the client.
+    // Most of the time, tracing should start as experimental.
+    internal static ActivitySource ActivitySource { get; } = new($"Experimental.{typeof(MapsClient).FullName!}");
+
+    public SampleClient(Uri endpoint, ApiKeyCredential credential, SampleClientOptions? options = default)
+    {
+        options ??= new SampleClientOptions();
+        _sampleClientOptions = options;
+
+        _endpoint = endpoint;
+        _credential = credential;
+        ApiKeyAuthenticationPolicy authenticationPolicy = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(credential);
+
+        _pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+    }
+
+    public ClientResult<SampleResource> UpdateResource(SampleResource resource)
+    {
+        // Attempt to create and start an Activity for this operation.
+        // StartClientActivity does nothing and returns null if distributed tracing was
+        // disabled by the consuming application or if there are not any active listeners.
+        using Activity? activity = ActivitySource.StartClientActivity(_sampleClientOptions, $"{nameof(SampleClient)}.{nameof(UpdateResource)}");
+
+        try
+        {
+            using PipelineMessage message = _pipeline.CreateMessage();
+            PipelineRequest request = message.Request;
+            request.Method = "PATCH";
+            request.Uri = new Uri($"https://www.example.com/update?id={resource.Id}");
+            request.Headers.Add("Accept", "application/json");
+            request.Content = BinaryContent.Create(resource);
+
+            _pipeline.Send(message);
+
+            PipelineResponse response = message.Response!;
+            if (response.IsError)
+            {
+                throw new ClientResultException(response);
+            }
+            SampleResource updated = ModelReaderWriter.Read<SampleResource>(response.Content)!;
+            return ClientResult.FromValue(updated, response);
+        }
+        catch (Exception ex)
+        {
+            // Catch any exceptions and update the activity. Then re-throw the exception.
+            activity?.MarkFailed(ex);
+            throw;
+        }
+    }
+}
+```
+
+
+## Logging
 
 Clients built on `System.ClientModel` emit log messages by default. These log messages include information about HTTP message requests and responses, retries, exceptions thrown in the transport, and delays in receiving responses.
 

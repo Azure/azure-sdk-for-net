@@ -48,6 +48,7 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
+    EmitterPackageJsonPath: /eng/azure-typespec-emitter-package.json
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src
@@ -65,7 +66,7 @@ extends:
       ${{ else }}: # All automatic runs publish, but only CI of main goes public
         ShouldPublish: true
         PublishDependsOnTest: false
-        PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/head/main')) }}
+        PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
       RegenerationJobCount: 5
       MinimumPerJob: 10
       OnlyGenerateTypespec: true

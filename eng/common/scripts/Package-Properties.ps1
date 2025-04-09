@@ -115,11 +115,28 @@ class PackageProps {
         return $null
     }
 
-    [PSCustomObject]GetCIYmlForArtifact() {
+    [System.IO.FileInfo[]]ResolveCIFolderPath() {
         $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
-
         $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
-        $ciFiles = @(Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File)
+        $ciFiles = @()
+
+        # if this path exists, then we should look in it for the ci.yml files and return nothing if nothing is found
+        if (Test-Path $ciFolderPath){
+            $ciFiles = @(Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File)
+        }
+        # if not, we should at least try to resolve the eng/ folder to fall back and see if that's where the path exists
+        else {
+            $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "eng" $this.ServiceDirectory)
+            if (Test-Path $ciFolderPath) {
+                $ciFiles = @(Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File)
+            }
+        }
+
+        return $ciFiles
+    }
+
+    [PSCustomObject]GetCIYmlForArtifact() {
+        $ciFiles = @($this.ResolveCIFolderPath())
         $ciArtifactResult = $null
         $soleCIYml = ($ciFiles.Count -eq 1)
 
