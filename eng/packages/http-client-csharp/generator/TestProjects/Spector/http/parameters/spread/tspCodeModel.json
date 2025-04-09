@@ -7,10 +7,11 @@
   {
    "$id": "2",
    "kind": "model",
-   "name": "SpreadAsRequestBodyRequest",
-   "namespace": "Parameters.Spread.Alias",
-   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.Request.anonymous",
-   "usage": "Spread,Json",
+   "name": "BodyParameter",
+   "namespace": "Parameters.Spread.Model",
+   "crossLanguageDefinitionId": "Parameters.Spread.Model.BodyParameter",
+   "usage": "Input,Spread,Json",
+   "doc": "This is a simple model.",
    "decorators": [],
    "properties": [
     {
@@ -30,7 +31,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.name",
+     "crossLanguageDefinitionId": "Parameters.Spread.Model.BodyParameter.name",
      "serializationOptions": {
       "$id": "5",
       "json": {
@@ -44,17 +45,17 @@
   {
    "$id": "7",
    "kind": "model",
-   "name": "SpreadParameterWithInnerModelRequest",
+   "name": "SpreadCompositeRequestMixRequest",
    "namespace": "",
-   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.Request.anonymous",
+   "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
    "properties": [
     {
      "$id": "8",
      "kind": "property",
-     "name": "name",
-     "serializedName": "name",
+     "name": "prop",
+     "serializedName": "prop",
      "type": {
       "$id": "9",
       "kind": "string",
@@ -67,12 +68,12 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "spreadParameterWithInnerModel.Request.anonymous.name",
+     "crossLanguageDefinitionId": "spreadCompositeRequestMix.Request.anonymous.prop",
      "serializationOptions": {
       "$id": "10",
       "json": {
        "$id": "11",
-       "name": "name"
+       "name": "prop"
       }
      }
     }
@@ -81,9 +82,9 @@
   {
    "$id": "12",
    "kind": "model",
-   "name": "SpreadAsRequestParameterRequest",
-   "namespace": "",
-   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.Request.anonymous",
+   "name": "SpreadAsRequestBodyRequest",
+   "namespace": "Parameters.Spread.Alias",
+   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
    "properties": [
@@ -104,7 +105,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "spreadAsRequestParameter.Request.anonymous.name",
+     "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.name",
      "serializationOptions": {
       "$id": "15",
       "json": {
@@ -118,18 +119,17 @@
   {
    "$id": "17",
    "kind": "model",
-   "name": "SpreadWithMultipleParametersRequest",
+   "name": "SpreadParameterWithInnerModelRequest",
    "namespace": "",
-   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.Request.anonymous",
+   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
    "properties": [
     {
      "$id": "18",
      "kind": "property",
-     "name": "requiredString",
-     "serializedName": "requiredString",
-     "doc": "required string",
+     "name": "name",
+     "serializedName": "name",
      "type": {
       "$id": "19",
       "kind": "string",
@@ -142,23 +142,98 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "spreadWithMultipleParameters.Request.anonymous.requiredString",
+     "crossLanguageDefinitionId": "spreadParameterWithInnerModel.Request.anonymous.name",
      "serializationOptions": {
       "$id": "20",
       "json": {
        "$id": "21",
+       "name": "name"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$id": "22",
+   "kind": "model",
+   "name": "SpreadAsRequestParameterRequest",
+   "namespace": "",
+   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.Request.anonymous",
+   "usage": "Spread,Json",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "23",
+     "kind": "property",
+     "name": "name",
+     "serializedName": "name",
+     "type": {
+      "$id": "24",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "spreadAsRequestParameter.Request.anonymous.name",
+     "serializationOptions": {
+      "$id": "25",
+      "json": {
+       "$id": "26",
+       "name": "name"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$id": "27",
+   "kind": "model",
+   "name": "SpreadWithMultipleParametersRequest",
+   "namespace": "",
+   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.Request.anonymous",
+   "usage": "Spread,Json",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "28",
+     "kind": "property",
+     "name": "requiredString",
+     "serializedName": "requiredString",
+     "doc": "required string",
+     "type": {
+      "$id": "29",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "spreadWithMultipleParameters.Request.anonymous.requiredString",
+     "serializationOptions": {
+      "$id": "30",
+      "json": {
+       "$id": "31",
        "name": "requiredString"
       }
      }
     },
     {
-     "$id": "22",
+     "$id": "32",
      "kind": "property",
      "name": "optionalInt",
      "serializedName": "optionalInt",
      "doc": "optional int",
      "type": {
-      "$id": "23",
+      "$id": "33",
       "kind": "int32",
       "name": "int32",
       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -171,25 +246,25 @@
      "decorators": [],
      "crossLanguageDefinitionId": "spreadWithMultipleParameters.Request.anonymous.optionalInt",
      "serializationOptions": {
-      "$id": "24",
+      "$id": "34",
       "json": {
-       "$id": "25",
+       "$id": "35",
        "name": "optionalInt"
       }
      }
     },
     {
-     "$id": "26",
+     "$id": "36",
      "kind": "property",
      "name": "requiredIntList",
      "serializedName": "requiredIntList",
      "doc": "required int",
      "type": {
-      "$id": "27",
+      "$id": "37",
       "kind": "array",
       "name": "Array",
       "valueType": {
-       "$id": "28",
+       "$id": "38",
        "kind": "int32",
        "name": "int32",
        "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -205,25 +280,25 @@
      "decorators": [],
      "crossLanguageDefinitionId": "spreadWithMultipleParameters.Request.anonymous.requiredIntList",
      "serializationOptions": {
-      "$id": "29",
+      "$id": "39",
       "json": {
-       "$id": "30",
+       "$id": "40",
        "name": "requiredIntList"
       }
      }
     },
     {
-     "$id": "31",
+     "$id": "41",
      "kind": "property",
      "name": "optionalStringList",
      "serializedName": "optionalStringList",
      "doc": "optional string",
      "type": {
-      "$id": "32",
+      "$id": "42",
       "kind": "array",
-      "name": "Array",
+      "name": "Array1",
       "valueType": {
-       "$id": "33",
+       "$id": "43",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
@@ -239,9 +314,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "spreadWithMultipleParameters.Request.anonymous.optionalStringList",
      "serializationOptions": {
-      "$id": "34",
+      "$id": "44",
       "json": {
-       "$id": "35",
+       "$id": "45",
        "name": "optionalStringList"
       }
      }
@@ -249,7 +324,7 @@
    ]
   },
   {
-   "$id": "36",
+   "$id": "46",
    "kind": "model",
    "name": "SpreadParameterWithInnerAliasRequest",
    "namespace": "",
@@ -258,13 +333,13 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "37",
+     "$id": "47",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "doc": "name of the Thing",
      "type": {
-      "$id": "38",
+      "$id": "48",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -277,21 +352,21 @@
      "decorators": [],
      "crossLanguageDefinitionId": "spreadParameterWithInnerAlias.Request.anonymous.name",
      "serializationOptions": {
-      "$id": "39",
+      "$id": "49",
       "json": {
-       "$id": "40",
+       "$id": "50",
        "name": "name"
       }
      }
     },
     {
-     "$id": "41",
+     "$id": "51",
      "kind": "property",
      "name": "age",
      "serializedName": "age",
      "doc": "age of the Thing",
      "type": {
-      "$id": "42",
+      "$id": "52",
       "kind": "int32",
       "name": "int32",
       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -304,85 +379,10 @@
      "decorators": [],
      "crossLanguageDefinitionId": "spreadParameterWithInnerAlias.Request.anonymous.age",
      "serializationOptions": {
-      "$id": "43",
-      "json": {
-       "$id": "44",
-       "name": "age"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "45",
-   "kind": "model",
-   "name": "BodyParameter",
-   "namespace": "Parameters.Spread.Model",
-   "crossLanguageDefinitionId": "Parameters.Spread.Model.BodyParameter",
-   "usage": "Input,Spread,Json",
-   "doc": "This is a simple model.",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "46",
-     "kind": "property",
-     "name": "name",
-     "serializedName": "name",
-     "type": {
-      "$id": "47",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Parameters.Spread.Model.BodyParameter.name",
-     "serializationOptions": {
-      "$id": "48",
-      "json": {
-       "$id": "49",
-       "name": "name"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "50",
-   "kind": "model",
-   "name": "SpreadCompositeRequestMixRequest",
-   "namespace": "",
-   "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.Request.anonymous",
-   "usage": "Spread,Json",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "51",
-     "kind": "property",
-     "name": "prop",
-     "serializedName": "prop",
-     "type": {
-      "$id": "52",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "spreadCompositeRequestMix.Request.anonymous.prop",
-     "serializationOptions": {
       "$id": "53",
       "json": {
        "$id": "54",
-       "name": "prop"
+       "name": "age"
       }
      }
     }
@@ -478,7 +478,7 @@
          "name": "bodyParameter",
          "nameInRequest": "bodyParameter",
          "type": {
-          "$ref": "45"
+          "$ref": "2"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -552,7 +552,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "45"
+          "$ref": "2"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -736,7 +736,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "45"
+          "$ref": "2"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -852,7 +852,7 @@
          "name": "spreadCompositeRequestMixRequest",
          "nameInRequest": "spreadCompositeRequestMixRequest",
          "type": {
-          "$ref": "50"
+          "$ref": "7"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -972,7 +972,7 @@
          "name": "spreadAsRequestBodyRequest",
          "nameInRequest": "spreadAsRequestBodyRequest",
          "type": {
-          "$ref": "2"
+          "$ref": "12"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1088,7 +1088,7 @@
          "name": "spreadParameterWithInnerModelRequest",
          "nameInRequest": "spreadParameterWithInnerModelRequest",
          "type": {
-          "$ref": "7"
+          "$ref": "17"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1204,7 +1204,7 @@
          "name": "spreadAsRequestParameterRequest",
          "nameInRequest": "spreadAsRequestParameterRequest",
          "type": {
-          "$ref": "12"
+          "$ref": "22"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1320,7 +1320,7 @@
          "name": "spreadWithMultipleParametersRequest",
          "nameInRequest": "spreadWithMultipleParametersRequest",
          "type": {
-          "$ref": "17"
+          "$ref": "27"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1437,7 +1437,7 @@
          "name": "spreadParameterWithInnerAliasRequest",
          "nameInRequest": "spreadParameterWithInnerAliasRequest",
          "type": {
-          "$ref": "36"
+          "$ref": "46"
          },
          "location": "Body",
          "isApiVersion": false,

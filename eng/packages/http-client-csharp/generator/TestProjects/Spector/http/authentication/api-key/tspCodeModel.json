@@ -10,7 +10,7 @@
    "name": "InvalidAuth",
    "namespace": "Authentication.ApiKey",
    "crossLanguageDefinitionId": "Authentication.ApiKey.InvalidAuth",
-   "usage": "Error,Json,Exception",
+   "usage": "Json,Exception",
    "decorators": [],
    "properties": [
     {

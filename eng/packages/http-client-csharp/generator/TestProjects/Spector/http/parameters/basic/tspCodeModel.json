@@ -7,10 +7,11 @@
   {
    "$id": "2",
    "kind": "model",
-   "name": "SimpleRequest",
-   "namespace": "Parameters.Basic.ImplicitBody",
-   "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous",
-   "usage": "Spread,Json",
+   "name": "User",
+   "namespace": "Parameters.Basic.ExplicitBody",
+   "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User",
+   "usage": "Input,Json",
+   "doc": "This is a simple model.",
    "decorators": [],
    "properties": [
     {
@@ -30,7 +31,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.name",
+     "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User.name",
      "serializationOptions": {
       "$id": "5",
       "json": {
@@ -44,11 +45,10 @@
   {
    "$id": "7",
    "kind": "model",
-   "name": "User",
-   "namespace": "Parameters.Basic.ExplicitBody",
-   "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User",
-   "usage": "Input,Json",
-   "doc": "This is a simple model.",
+   "name": "SimpleRequest",
+   "namespace": "Parameters.Basic.ImplicitBody",
+   "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous",
+   "usage": "Spread,Json",
    "decorators": [],
    "properties": [
     {
@@ -68,7 +68,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User.name",
+     "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.name",
      "serializationOptions": {
       "$id": "10",
       "json": {
@@ -169,7 +169,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "7"
+          "$ref": "2"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -289,7 +289,7 @@
          "name": "simpleRequest",
          "nameInRequest": "simpleRequest",
          "type": {
-          "$ref": "2"
+          "$ref": "7"
          },
          "location": "Body",
          "isApiVersion": false,

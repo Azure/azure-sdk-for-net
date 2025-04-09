@@ -7,11 +7,11 @@
   {
    "$id": "2",
    "kind": "model",
-   "name": "CollectionsStringProperty",
+   "name": "StringProperty",
    "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with collection string properties",
+   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
    "decorators": [],
    "properties": [
     {
@@ -32,7 +32,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.requiredProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.requiredProperty",
      "serializationOptions": {
       "$id": "5",
       "json": {
@@ -52,16 +52,9 @@
       "kind": "nullable",
       "type": {
        "$id": "9",
-       "kind": "array",
-       "name": "Array",
-       "valueType": {
-        "$id": "10",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-       },
-       "crossLanguageDefinitionId": "TypeSpec.Array",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
        "decorators": []
       },
       "namespace": ""
@@ -71,11 +64,11 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.nullableProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.nullableProperty",
      "serializationOptions": {
-      "$id": "11",
+      "$id": "10",
       "json": {
-       "$id": "12",
+       "$id": "11",
        "name": "nullableProperty"
       }
      }
@@ -83,23 +76,23 @@
    ]
   },
   {
-   "$id": "13",
+   "$id": "12",
    "kind": "model",
-   "name": "CollectionsModelProperty",
+   "name": "BytesProperty",
    "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with collection models properties",
+   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
    "decorators": [],
    "properties": [
     {
-     "$id": "14",
+     "$id": "13",
      "kind": "property",
      "name": "requiredProperty",
      "serializedName": "requiredProperty",
      "doc": "Required property",
      "type": {
-      "$id": "15",
+      "$id": "14",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -110,68 +103,30 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.requiredProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.requiredProperty",
      "serializationOptions": {
-      "$id": "16",
+      "$id": "15",
       "json": {
-       "$id": "17",
+       "$id": "16",
        "name": "requiredProperty"
       }
      }
     },
     {
-     "$id": "18",
+     "$id": "17",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "19",
+      "$id": "18",
       "kind": "nullable",
       "type": {
-       "$id": "20",
-       "kind": "array",
-       "name": "ArrayInnerModel",
-       "valueType": {
-        "$id": "21",
-        "kind": "model",
-        "name": "InnerModel",
-        "namespace": "Type.Property.Nullable",
-        "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel",
-        "usage": "Input,Output,JsonMergePatch,Json",
-        "doc": "Inner model used in collections model property",
-        "decorators": [],
-        "properties": [
-         {
-          "$id": "22",
-          "kind": "property",
-          "name": "property",
-          "serializedName": "property",
-          "doc": "Inner model property",
-          "type": {
-           "$id": "23",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "optional": false,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel.property",
-          "serializationOptions": {
-           "$id": "24",
-           "json": {
-            "$id": "25",
-            "name": "property"
-           }
-          }
-         }
-        ]
-       },
-       "crossLanguageDefinitionId": "TypeSpec.Array",
+       "$id": "19",
+       "kind": "bytes",
+       "name": "bytes",
+       "encode": "base64",
+       "crossLanguageDefinitionId": "TypeSpec.bytes",
        "decorators": []
       },
       "namespace": ""
@@ -181,11 +136,11 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.nullableProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.nullableProperty",
      "serializationOptions": {
-      "$id": "26",
+      "$id": "20",
       "json": {
-       "$id": "27",
+       "$id": "21",
        "name": "nullableProperty"
       }
      }
@@ -193,10 +148,165 @@
    ]
   },
   {
-   "$ref": "21"
+   "$id": "22",
+   "kind": "model",
+   "name": "DatetimeProperty",
+   "namespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty",
+   "usage": "Input,Output,JsonMergePatch,Json",
+   "doc": "Model with a datetime property",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "23",
+     "kind": "property",
+     "name": "requiredProperty",
+     "serializedName": "requiredProperty",
+     "doc": "Required property",
+     "type": {
+      "$id": "24",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "25",
+      "json": {
+       "$id": "26",
+       "name": "requiredProperty"
+      }
+     }
+    },
+    {
+     "$id": "27",
+     "kind": "property",
+     "name": "nullableProperty",
+     "serializedName": "nullableProperty",
+     "doc": "Property",
+     "type": {
+      "$id": "28",
+      "kind": "nullable",
+      "type": {
+       "$id": "29",
+       "kind": "utcDateTime",
+       "name": "utcDateTime",
+       "encode": "rfc3339",
+       "wireType": {
+        "$id": "30",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+       "decorators": []
+      },
+      "namespace": ""
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "31",
+      "json": {
+       "$id": "32",
+       "name": "nullableProperty"
+      }
+     }
+    }
+   ]
   },
   {
-   "$id": "28",
+   "$id": "33",
+   "kind": "model",
+   "name": "DurationProperty",
+   "namespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty",
+   "usage": "Input,Output,JsonMergePatch,Json",
+   "doc": "Model with a duration property",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "34",
+     "kind": "property",
+     "name": "requiredProperty",
+     "serializedName": "requiredProperty",
+     "doc": "Required property",
+     "type": {
+      "$id": "35",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "36",
+      "json": {
+       "$id": "37",
+       "name": "requiredProperty"
+      }
+     }
+    },
+    {
+     "$id": "38",
+     "kind": "property",
+     "name": "nullableProperty",
+     "serializedName": "nullableProperty",
+     "doc": "Property",
+     "type": {
+      "$id": "39",
+      "kind": "nullable",
+      "type": {
+       "$id": "40",
+       "kind": "duration",
+       "name": "duration",
+       "encode": "ISO8601",
+       "wireType": {
+        "$id": "41",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "crossLanguageDefinitionId": "TypeSpec.duration",
+       "decorators": []
+      },
+      "namespace": ""
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "42",
+      "json": {
+       "$id": "43",
+       "name": "nullableProperty"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$id": "44",
    "kind": "model",
    "name": "CollectionsByteProperty",
    "namespace": "Type.Property.Nullable",
@@ -206,13 +316,13 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "29",
+     "$id": "45",
      "kind": "property",
      "name": "requiredProperty",
      "serializedName": "requiredProperty",
      "doc": "Required property",
      "type": {
-      "$id": "30",
+      "$id": "46",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -225,28 +335,28 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty.requiredProperty",
      "serializationOptions": {
-      "$id": "31",
+      "$id": "47",
       "json": {
-       "$id": "32",
+       "$id": "48",
        "name": "requiredProperty"
       }
      }
     },
     {
-     "$id": "33",
+     "$id": "49",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "34",
+      "$id": "50",
       "kind": "nullable",
       "type": {
-       "$id": "35",
+       "$id": "51",
        "kind": "array",
        "name": "Array",
        "valueType": {
-        "$id": "36",
+        "$id": "52",
         "kind": "bytes",
         "name": "bytes",
         "encode": "base64",
@@ -265,153 +375,186 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty.nullableProperty",
      "serializationOptions": {
-      "$id": "37",
-      "json": {
-       "$id": "38",
-       "name": "nullableProperty"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "39",
-   "kind": "model",
-   "name": "DurationProperty",
-   "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty",
-   "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with a duration property",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "40",
-     "kind": "property",
-     "name": "requiredProperty",
-     "serializedName": "requiredProperty",
-     "doc": "Required property",
-     "type": {
-      "$id": "41",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.requiredProperty",
-     "serializationOptions": {
-      "$id": "42",
-      "json": {
-       "$id": "43",
-       "name": "requiredProperty"
-      }
-     }
-    },
-    {
-     "$id": "44",
-     "kind": "property",
-     "name": "nullableProperty",
-     "serializedName": "nullableProperty",
-     "doc": "Property",
-     "type": {
-      "$id": "45",
-      "kind": "nullable",
-      "type": {
-       "$id": "46",
-       "kind": "duration",
-       "name": "duration",
-       "encode": "ISO8601",
-       "wireType": {
-        "$id": "47",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-       },
-       "crossLanguageDefinitionId": "TypeSpec.duration",
-       "decorators": []
-      },
-      "namespace": ""
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.nullableProperty",
-     "serializationOptions": {
-      "$id": "48",
-      "json": {
-       "$id": "49",
-       "name": "nullableProperty"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "50",
-   "kind": "model",
-   "name": "DatetimeProperty",
-   "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty",
-   "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with a datetime property",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "51",
-     "kind": "property",
-     "name": "requiredProperty",
-     "serializedName": "requiredProperty",
-     "doc": "Required property",
-     "type": {
-      "$id": "52",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.requiredProperty",
-     "serializationOptions": {
       "$id": "53",
       "json": {
        "$id": "54",
+       "name": "nullableProperty"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$id": "55",
+   "kind": "model",
+   "name": "CollectionsModelProperty",
+   "namespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty",
+   "usage": "Input,Output,JsonMergePatch,Json",
+   "doc": "Model with collection models properties",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "56",
+     "kind": "property",
+     "name": "requiredProperty",
+     "serializedName": "requiredProperty",
+     "doc": "Required property",
+     "type": {
+      "$id": "57",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "58",
+      "json": {
+       "$id": "59",
        "name": "requiredProperty"
       }
      }
     },
     {
-     "$id": "55",
+     "$id": "60",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "56",
+      "$id": "61",
       "kind": "nullable",
       "type": {
-       "$id": "57",
-       "kind": "utcDateTime",
-       "name": "utcDateTime",
-       "encode": "rfc3339",
-       "wireType": {
-        "$id": "58",
+       "$id": "62",
+       "kind": "array",
+       "name": "ArrayInnerModel",
+       "valueType": {
+        "$id": "63",
+        "kind": "model",
+        "name": "InnerModel",
+        "namespace": "Type.Property.Nullable",
+        "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel",
+        "usage": "Input,Output,JsonMergePatch,Json",
+        "doc": "Inner model used in collections model property",
+        "decorators": [],
+        "properties": [
+         {
+          "$id": "64",
+          "kind": "property",
+          "name": "property",
+          "serializedName": "property",
+          "doc": "Inner model property",
+          "type": {
+           "$id": "65",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel.property",
+          "serializationOptions": {
+           "$id": "66",
+           "json": {
+            "$id": "67",
+            "name": "property"
+           }
+          }
+         }
+        ]
+       },
+       "crossLanguageDefinitionId": "TypeSpec.Array",
+       "decorators": []
+      },
+      "namespace": ""
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "68",
+      "json": {
+       "$id": "69",
+       "name": "nullableProperty"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$ref": "63"
+  },
+  {
+   "$id": "70",
+   "kind": "model",
+   "name": "CollectionsStringProperty",
+   "namespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty",
+   "usage": "Input,Output,JsonMergePatch,Json",
+   "doc": "Model with collection string properties",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "71",
+     "kind": "property",
+     "name": "requiredProperty",
+     "serializedName": "requiredProperty",
+     "doc": "Required property",
+     "type": {
+      "$id": "72",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "73",
+      "json": {
+       "$id": "74",
+       "name": "requiredProperty"
+      }
+     }
+    },
+    {
+     "$id": "75",
+     "kind": "property",
+     "name": "nullableProperty",
+     "serializedName": "nullableProperty",
+     "doc": "Property",
+     "type": {
+      "$id": "76",
+      "kind": "nullable",
+      "type": {
+       "$id": "77",
+       "kind": "array",
+       "name": "Array1",
+       "valueType": {
+        "$id": "78",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
        },
-       "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+       "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
       },
       "namespace": ""
@@ -421,150 +564,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.nullableProperty",
-     "serializationOptions": {
-      "$id": "59",
-      "json": {
-       "$id": "60",
-       "name": "nullableProperty"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "61",
-   "kind": "model",
-   "name": "BytesProperty",
-   "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty",
-   "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "62",
-     "kind": "property",
-     "name": "requiredProperty",
-     "serializedName": "requiredProperty",
-     "doc": "Required property",
-     "type": {
-      "$id": "63",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.requiredProperty",
-     "serializationOptions": {
-      "$id": "64",
-      "json": {
-       "$id": "65",
-       "name": "requiredProperty"
-      }
-     }
-    },
-    {
-     "$id": "66",
-     "kind": "property",
-     "name": "nullableProperty",
-     "serializedName": "nullableProperty",
-     "doc": "Property",
-     "type": {
-      "$id": "67",
-      "kind": "nullable",
-      "type": {
-       "$id": "68",
-       "kind": "bytes",
-       "name": "bytes",
-       "encode": "base64",
-       "crossLanguageDefinitionId": "TypeSpec.bytes",
-       "decorators": []
-      },
-      "namespace": ""
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.nullableProperty",
-     "serializationOptions": {
-      "$id": "69",
-      "json": {
-       "$id": "70",
-       "name": "nullableProperty"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "71",
-   "kind": "model",
-   "name": "StringProperty",
-   "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty",
-   "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "72",
-     "kind": "property",
-     "name": "requiredProperty",
-     "serializedName": "requiredProperty",
-     "doc": "Required property",
-     "type": {
-      "$id": "73",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.requiredProperty",
-     "serializationOptions": {
-      "$id": "74",
-      "json": {
-       "$id": "75",
-       "name": "requiredProperty"
-      }
-     }
-    },
-    {
-     "$id": "76",
-     "kind": "property",
-     "name": "nullableProperty",
-     "serializedName": "nullableProperty",
-     "doc": "Property",
-     "type": {
-      "$id": "77",
-      "kind": "nullable",
-      "type": {
-       "$id": "78",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string",
-       "decorators": []
-      },
-      "namespace": ""
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.nullableProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.nullableProperty",
      "serializationOptions": {
       "$id": "79",
       "json": {
@@ -668,7 +668,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "71"
+          "$ref": "2"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -728,7 +728,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "71"
+          "$ref": "2"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -786,7 +786,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "71"
+          "$ref": "2"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -861,7 +861,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "71"
+          "$ref": "2"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -984,7 +984,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "61"
+          "$ref": "12"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -1044,7 +1044,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "61"
+          "$ref": "12"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -1102,7 +1102,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "61"
+          "$ref": "12"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1177,7 +1177,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "61"
+          "$ref": "12"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1300,7 +1300,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "50"
+          "$ref": "22"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -1360,7 +1360,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "50"
+          "$ref": "22"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -1418,7 +1418,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "50"
+          "$ref": "22"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1493,7 +1493,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "50"
+          "$ref": "22"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1616,7 +1616,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "39"
+          "$ref": "33"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -1676,7 +1676,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "39"
+          "$ref": "33"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -1734,7 +1734,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "39"
+          "$ref": "33"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1809,7 +1809,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "39"
+          "$ref": "33"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1932,7 +1932,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "28"
+          "$ref": "44"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -1992,7 +1992,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "28"
+          "$ref": "44"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -2050,7 +2050,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "28"
+          "$ref": "44"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -2125,7 +2125,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "28"
+          "$ref": "44"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -2248,7 +2248,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "13"
+          "$ref": "55"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -2308,7 +2308,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "13"
+          "$ref": "55"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -2366,7 +2366,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "13"
+          "$ref": "55"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -2441,7 +2441,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "13"
+          "$ref": "55"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -2564,7 +2564,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "2"
+          "$ref": "70"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -2624,7 +2624,7 @@
           200
          ],
          "bodyType": {
-          "$ref": "2"
+          "$ref": "70"
          },
          "headers": [],
          "isErrorResponse": false,
@@ -2682,7 +2682,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "2"
+          "$ref": "70"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -2757,7 +2757,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "2"
+          "$ref": "70"
          },
          "location": "Body",
          "isApiVersion": false,

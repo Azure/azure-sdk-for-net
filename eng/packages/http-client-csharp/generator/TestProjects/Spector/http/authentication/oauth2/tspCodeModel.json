@@ -10,7 +10,7 @@
    "name": "InvalidAuth",
    "namespace": "Authentication.OAuth2",
    "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth",
-   "usage": "Error,Json,Exception",
+   "usage": "Json,Exception",
    "decorators": [],
    "properties": [
     {

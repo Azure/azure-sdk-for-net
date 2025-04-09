@@ -23,6 +23,7 @@ function Invoke($command, $executePath=$repoRoot)
 function Get-TspCommand {
     param (
         [string]$specFile,
+        [string]$emitterDir,
         [string]$generationDir,
         [bool]$generateStub = $false,
         [string]$apiVersion = $null,
@@ -30,7 +31,7 @@ function Get-TspCommand {
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp"
-    $command += " --emit @azure-typespec/http-client-csharp"
+    $command += " --emit $emitterDir"
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
@@ -55,6 +56,7 @@ function Get-TspCommand {
 function Get-Mgmt-TspCommand {
     param (
         [string]$specFile,
+        [string]$emitterDir,
         [string]$generationDir,
         [bool]$generateStub = $false,
         [string]$apiVersion = $null,
@@ -62,7 +64,7 @@ function Get-Mgmt-TspCommand {
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp-mgmt"
-    $command += " --emit @azure-typespec/http-client-csharp-mgmt"
+    $command += " --emit $emitterDir"
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
