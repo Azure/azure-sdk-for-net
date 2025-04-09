@@ -460,11 +460,11 @@ namespace Azure.AI.Projects
     }
     public partial class AIProjectClient : System.ClientModel.Primitives.ConnectionProvider
     {
-        protected AIProjectClient() { }
-        public AIProjectClient(string connectionString, Azure.Core.TokenCredential credential = null) { }
-        public AIProjectClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
-        public AIProjectClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
-        public AIProjectClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
+        protected AIProjectClient() : base (default(int)) { }
+        public AIProjectClient(string connectionString, Azure.Core.TokenCredential credential = null) : base (default(int)) { }
+        public AIProjectClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
+        public AIProjectClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) : base (default(int)) { }
+        public AIProjectClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.AI.Projects.AgentsClient GetAgentsClient(string apiVersion = "2024-07-01-preview") { throw null; }
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
@@ -476,6 +476,7 @@ namespace Azure.AI.Projects
     public partial class AIProjectClientOptions : Azure.Core.ClientOptions
     {
         public AIProjectClientOptions(Azure.AI.Projects.AIProjectClientOptions.ServiceVersion version = Azure.AI.Projects.AIProjectClientOptions.ServiceVersion.V2024_07_01_Preview) { }
+        public int ClientCacheSize { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2024_07_01_Preview = 1,
