@@ -1126,7 +1126,7 @@
 # AzureSdkOwners:                                                  @JoshLove-msft
 
 # ServiceLabel: %CodeGen %Mgmt
-# AzureSdkOwners:                                                  @live1206 @ArcturusZhang
+# AzureSdkOwners:                                                  @live1206 @ArcturusZhang @ArthurMa1978
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
