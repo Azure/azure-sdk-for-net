@@ -1,14 +1,17 @@
 # Release History
 
-## 4.8.0-beta.1 (Unreleased)
+## 4.8.0-beta.1 (2025-04-08)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added Hmac algorithms in `SignatureAlgorithm`
+- Added CkmAesKeyWrap algorithm in `EncryptionAlgorithm`
+- Added Attestation property for Keys in Managed HSM Key Vaults.
+- New `GetKeyAttestation` operation to get the public part of a stored key along with its attestation blob.
 
 ### Other Changes
+
+- The default service version is now "7.6-preview.2".
 
 ## 4.7.0 (2024-10-14)
 

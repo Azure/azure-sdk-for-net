@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Azure.Projects.Provisioning simplifies declarative resource provisioning in .NET.</Description>
@@ -20,7 +20,6 @@
     <PackageReference Include="Azure.Provisioning.EventGrid" />
     <PackageReference Include="Azure.Provisioning.AppService" />
     <PackageReference Include="Azure.Provisioning.AppConfiguration" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
   </ItemGroup>
 
   <ItemGroup>

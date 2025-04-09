@@ -6,14 +6,47 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Communication.ProgrammableConnectivity
 {
     /// <summary> Model factory for models. </summary>
     public static partial class CommunicationProgrammableConnectivityModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.DeviceLocationVerificationResult"/>. </summary>
+        /// <param name="verificationResult"> True if the location is in the specified area, False otherwise. </param>
+        /// <returns> A new <see cref="ProgrammableConnectivity.DeviceLocationVerificationResult"/> instance for mocking. </returns>
+        public static DeviceLocationVerificationResult DeviceLocationVerificationResult(bool verificationResult = default)
+        {
+            return new DeviceLocationVerificationResult(verificationResult, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.NetworkRetrievalResult"/>. </summary>
+        /// <param name="networkCode"> The identifier for the network. This can be used as the networkIdentifier for the service APIs. </param>
+        /// <returns> A new <see cref="ProgrammableConnectivity.NetworkRetrievalResult"/> instance for mocking. </returns>
+        public static NetworkRetrievalResult NetworkRetrievalResult(string networkCode = null)
+        {
+            return new NetworkRetrievalResult(networkCode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.NumberVerificationWithoutCodeContent"/>. </summary>
+        /// <param name="networkIdentifier"> Identifier for the network to query for this device. </param>
+        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
+        /// <param name="hashedPhoneNumber"> Hashed phone number. SHA-256 (in hexadecimal representation) of the mobile phone number in **E.164 format (starting with country code)**. Optionally prefixed with '+'. </param>
+        /// <param name="redirectUri"> Redirect URI to backend application. </param>
+        /// <returns> A new <see cref="ProgrammableConnectivity.NumberVerificationWithoutCodeContent"/> instance for mocking. </returns>
+        public static NumberVerificationWithoutCodeContent NumberVerificationWithoutCodeContent(NetworkIdentifier networkIdentifier = null, string phoneNumber = null, string hashedPhoneNumber = null, Uri redirectUri = null)
+        {
+            return new NumberVerificationWithoutCodeContent(networkIdentifier, phoneNumber, hashedPhoneNumber, redirectUri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.NumberVerificationResult"/>. </summary>
+        /// <param name="verificationResult"> True if number if the phone number matches the device, False otherwise. </param>
+        /// <returns> A new <see cref="ProgrammableConnectivity.NumberVerificationResult"/> instance for mocking. </returns>
+        public static NumberVerificationResult NumberVerificationResult(bool verificationResult = default)
+        {
+            return new NumberVerificationResult(verificationResult, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.SimSwapRetrievalContent"/>. </summary>
         /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
         /// <param name="networkIdentifier"> Network to query for this device. </param>
@@ -47,41 +80,6 @@ namespace Azure.Communication.ProgrammableConnectivity
         public static SimSwapVerificationResult SimSwapVerificationResult(bool verificationResult = default)
         {
             return new SimSwapVerificationResult(verificationResult, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.NumberVerificationWithoutCodeContent"/>. </summary>
-        /// <param name="networkIdentifier"> Identifier for the network to query for this device. </param>
-        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
-        /// <param name="hashedPhoneNumber"> Hashed phone number. SHA-256 (in hexadecimal representation) of the mobile phone number in **E.164 format (starting with country code)**. Optionally prefixed with '+'. </param>
-        /// <param name="redirectUri"> Redirect URI to backend application. </param>
-        /// <returns> A new <see cref="ProgrammableConnectivity.NumberVerificationWithoutCodeContent"/> instance for mocking. </returns>
-        public static NumberVerificationWithoutCodeContent NumberVerificationWithoutCodeContent(NetworkIdentifier networkIdentifier = null, string phoneNumber = null, string hashedPhoneNumber = null, Uri redirectUri = null)
-        {
-            return new NumberVerificationWithoutCodeContent(networkIdentifier, phoneNumber, hashedPhoneNumber, redirectUri, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.NumberVerificationResult"/>. </summary>
-        /// <param name="verificationResult"> True if number if the phone number matches the device, False otherwise. </param>
-        /// <returns> A new <see cref="ProgrammableConnectivity.NumberVerificationResult"/> instance for mocking. </returns>
-        public static NumberVerificationResult NumberVerificationResult(bool verificationResult = default)
-        {
-            return new NumberVerificationResult(verificationResult, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.NetworkRetrievalResult"/>. </summary>
-        /// <param name="networkCode"> The identifier for the network. This can be used as the networkIdentifier for the service APIs. </param>
-        /// <returns> A new <see cref="ProgrammableConnectivity.NetworkRetrievalResult"/> instance for mocking. </returns>
-        public static NetworkRetrievalResult NetworkRetrievalResult(string networkCode = null)
-        {
-            return new NetworkRetrievalResult(networkCode, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.DeviceLocationVerificationResult"/>. </summary>
-        /// <param name="verificationResult"> True if the location is in the specified area, False otherwise. </param>
-        /// <returns> A new <see cref="ProgrammableConnectivity.DeviceLocationVerificationResult"/> instance for mocking. </returns>
-        public static DeviceLocationVerificationResult DeviceLocationVerificationResult(bool verificationResult = default)
-        {
-            return new DeviceLocationVerificationResult(verificationResult, serializedAdditionalRawData: null);
         }
     }
 }
