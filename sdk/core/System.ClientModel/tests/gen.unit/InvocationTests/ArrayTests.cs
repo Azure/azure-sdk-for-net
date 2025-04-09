@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 
 namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
@@ -15,20 +14,23 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string InitializeObject => "new {0} {{ }}";
 
-        internal static void AssertArray(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        internal static void AssertArray(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"{type}[]"));
-            var arrayJsonModel = dict[$"{type}[]"];
-            Assert.AreEqual($"{type}[]", arrayJsonModel.Type.Name);
-            Assert.AreEqual(expectedNamespace, arrayJsonModel.Type.Namespace);
-            Assert.IsNotNull(arrayJsonModel.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.Array, arrayJsonModel.Kind);
-            Assert.AreEqual(1, arrayJsonModel.Type.ArrayRank);
-            Assert.AreEqual($"{type}_Array_", arrayJsonModel.Type.TypeCaseName);
-            Assert.AreEqual($"{char.ToLower(type[0])}{type.Substring(1)}_Array_", arrayJsonModel.Type.CamelCaseName);
+            Assert.IsTrue(dict.ContainsKey($"{expectation.TypeName}[]"));
+            var arrayModel = dict[$"{expectation.TypeName}[]"];
+            Assert.AreEqual($"{expectation.TypeName}[]", arrayModel.Type.Name);
+            Assert.AreEqual(expectation.Namespace, arrayModel.Type.Namespace);
+            Assert.IsNotNull(arrayModel.Type.ItemType);
+            Assert.AreEqual(TypeBuilderKind.Array, arrayModel.Kind);
+            Assert.AreEqual(1, arrayModel.Type.ArrayRank);
+            Assert.AreEqual($"{expectation.TypeName}_Array_", arrayModel.Type.TypeCaseName);
+            Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_", arrayModel.Type.CamelCaseName);
+            Assert.AreEqual(expectation.Context, arrayModel.ContextType);
 
-            var genericArgument = arrayJsonModel.Type.ItemType!;
-            modelValidator(genericArgument);
+            var itemModel = dict[expectation.TypeName];
+            Assert.IsNotNull(itemModel);
+            Assert.AreEqual(itemModel.Type, arrayModel.Type.ItemType);
+            expectation.ModelValidation(itemModel);
         }
     }
 }

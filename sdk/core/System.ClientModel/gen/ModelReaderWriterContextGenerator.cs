@@ -167,8 +167,9 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         string assemblyName = data.Assembly.Name;
         var contextType = new TypeRef(contextSymbol.Name, contextSymbol.ContainingNamespace.ToDisplayString(), contextSymbol.ContainingAssembly.ToDisplayString());
 
-        var referencedContexts = data.ReferencedContexts.Select(refContext
-            => new TypeRef(refContext.Name, refContext.ContainingNamespace.ToDisplayString(), refContext.ContainingAssembly.ToDisplayString()));
+        var referencedContexts = data.ReferencedContexts.ToImmutableDictionary(
+            refContext => refContext.ContainingAssembly.ToDisplayString(),
+            refContext => new TypeRef(refContext.Name, refContext.ContainingNamespace.ToDisplayString(), refContext.ContainingAssembly.ToDisplayString()));
 
         var builders = data.TypeBuilders
             .SelectMany(typeSymbol => GetRecursiveGenericTypes(typeSymbol, data.SymbolToKindCache))
@@ -183,7 +184,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                 var type = TypeRef.FromINamedTypeSymbol(typeSymbol, data.SymbolToKindCache);
                 var itemType = type.GetInnerItemType();
 
-                if (!itemType.IsSameAssembly(contextType) && !referencedContexts.Any(refContext => itemType.IsSameAssembly(refContext)))
+                if (!itemType.IsSameAssembly(contextType) && !referencedContexts.ContainsKey(itemType.Assembly))
                 {
                     return null;
                 }
@@ -195,10 +196,11 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
                 return new TypeBuilderSpec()
                 {
-                    Modifier = symbol.DeclaredAccessibility.ToString().ToLowerInvariant(),
+                    Modifier = "internal",
                     Type = type,
                     Kind = data.SymbolToKindCache.Get(typeSymbol),
-                    PersistableModelProxy = proxy is null ? null : TypeRef.FromINamedTypeSymbol(proxy, data.SymbolToKindCache)
+                    PersistableModelProxy = proxy is null ? null : TypeRef.FromINamedTypeSymbol(proxy, data.SymbolToKindCache),
+                    ContextType = referencedContexts.ContainsKey(type.Assembly) ? referencedContexts[type.Assembly] : contextType,
                 };
             })
             .Where(spec => spec is not null)
@@ -215,7 +217,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             Type = contextType,
             Modifier = contextSymbol.DeclaredAccessibility.ToString().ToLowerInvariant(),
             TypeBuilders = new ImmutableEquatableArray<TypeBuilderSpec>(typeGenerationSpecs),
-            ReferencedContexts = new ImmutableEquatableArray<TypeRef>(referencedContexts),
+            ReferencedContexts = new ImmutableEquatableArray<TypeRef>(referencedContexts.Values),
         };
 
         OnSourceEmitting?.Invoke(contextGenerationSpec);

@@ -14,7 +14,6 @@ internal sealed partial class ModelReaderWriterContextGenerator
     {
         internal void Emit(ModelReaderWriterContextGenerationSpec contextGenerationSpec)
         {
-            Dictionary<string, TypeRef> referenceContextLookup = contextGenerationSpec.ReferencedContexts.ToDictionary(x => x.Assembly, x => x);
             Dictionary<string, int> nameCounts = [];
 
             foreach (var typeRef in contextGenerationSpec.GetAllTypeRefs())
@@ -31,17 +30,16 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 }
             }
 
-            EmitContextClass(contextGenerationSpec, referenceContextLookup, dupeTypes);
+            EmitContextClass(contextGenerationSpec, dupeTypes);
 
             foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
             {
-                EmitTypeBuilder(modelInfo, contextGenerationSpec.Type, referenceContextLookup);
+                EmitTypeBuilder(modelInfo, contextGenerationSpec.Type);
             }
         }
 
         private void EmitContextClass(
             ModelReaderWriterContextGenerationSpec contextGenerationSpec,
-            Dictionary<string, TypeRef> referenceContextLookup,
             HashSet<TypeRef> dupeTypes)
         {
             var contextName = contextGenerationSpec.Type.Name;
@@ -106,7 +104,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                         camelCase = $"_{modelInfo.Type.CamelCaseName}Builder";
                     }
 
-                    if (ShouldGenerateAsLocal(contextGenerationSpec, referenceContextLookup, modelInfo))
+                    if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
                     {
                         builder.Append(typeCase);
                         builder.Append(" ");
@@ -144,13 +142,13 @@ internal sealed partial class ModelReaderWriterContextGenerator
                     }
 
                     builder.Append(indent, $"_typeBuilderFactories.Add(typeof({typeofName}), () => {camelCase} ??=");
-                    if (ShouldGenerateAsLocal(contextGenerationSpec, referenceContextLookup, modelInfo))
+                    if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
                     {
                         builder.AppendLine(" new());");
                     }
                     else
                     {
-                        builder.AppendLine($" s_{referenceContextLookup[modelInfo.Type.Assembly].CamelCaseName}Library.GetTypeBuilder(typeof({typeofName})));");
+                        builder.AppendLine($" s_{modelInfo.ContextType.CamelCaseName}Library.GetTypeBuilder(typeof({typeofName})));");
                     }
                 }
                 builder.AppendLine();
@@ -226,18 +224,14 @@ internal sealed partial class ModelReaderWriterContextGenerator
             }
         }
 
-        private static bool ShouldGenerateAsLocal(ModelReaderWriterContextGenerationSpec contextGenerationSpec, Dictionary<string, TypeRef> referenceContextLookup, TypeBuilderSpec modelInfo)
+        private static bool ShouldGenerateAsLocal(ModelReaderWriterContextGenerationSpec contextGenerationSpec, TypeBuilderSpec modelInfo)
         {
             return modelInfo.Kind == TypeBuilderKind.Array ||
                 modelInfo.Kind == TypeBuilderKind.MultiDimensionalArray ||
-                !referenceContextLookup.ContainsKey(modelInfo.Type.Assembly) ||
-                contextGenerationSpec.Type.IsSameAssembly(modelInfo.Type);
+                contextGenerationSpec.Type.Equals(modelInfo.ContextType);
         }
 
-        private void EmitTypeBuilder(
-            TypeBuilderSpec modelInfo,
-            TypeRef context,
-            Dictionary<string, TypeRef> referenceContextLookup)
+        private void EmitTypeBuilder(TypeBuilderSpec modelInfo, TypeRef context)
         {
             var indent = 0;
             var builder = new StringBuilder();
@@ -261,19 +255,19 @@ internal sealed partial class ModelReaderWriterContextGenerator
                     EmitPersistableModelBuilder(indent, builder, modelInfo, context);
                     break;
                 case TypeBuilderKind.IList:
-                    EmitListBuilder(indent, builder, modelInfo, context, referenceContextLookup);
+                    EmitListBuilder(indent, builder, modelInfo, context);
                     break;
                 case TypeBuilderKind.IDictionary:
-                    EmitDictionaryBuilder(indent, builder, modelInfo, context, referenceContextLookup);
+                    EmitDictionaryBuilder(indent, builder, modelInfo, context);
                     break;
                 case TypeBuilderKind.Array:
-                    EmitArrayBuilder(indent, builder, modelInfo, context, referenceContextLookup);
+                    EmitArrayBuilder(indent, builder, modelInfo, context);
                     break;
                 case TypeBuilderKind.MultiDimensionalArray:
-                    EmitMultiDimensionalArrayBuilder(indent, builder, modelInfo, context, referenceContextLookup);
+                    EmitMultiDimensionalArrayBuilder(indent, builder, modelInfo, context);
                     break;
                 case TypeBuilderKind.ReadOnlyMemory:
-                    EmitReadOnlyMemoryBuilder(indent, builder, modelInfo, context, referenceContextLookup);
+                    EmitReadOnlyMemoryBuilder(indent, builder, modelInfo, context);
                     break;
                 default:
                     break;
@@ -314,8 +308,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             int indent,
             StringBuilder builder,
             TypeBuilderSpec modelInfo,
-            TypeRef context,
-            Dictionary<string, TypeRef> referenceContextLookup)
+            TypeRef context)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");
@@ -369,8 +362,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             int indent,
             StringBuilder builder,
             TypeBuilderSpec modelInfo,
-            TypeRef context,
-            Dictionary<string, TypeRef> referenceContextLookup)
+            TypeRef context)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");
@@ -435,8 +427,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             int indent,
             StringBuilder builder,
             TypeBuilderSpec modelInfo,
-            TypeRef context,
-            Dictionary<string, TypeRef> referenceContextLookup)
+            TypeRef context)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");
@@ -471,8 +462,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             int indent,
             StringBuilder builder,
             TypeBuilderSpec modelInfo,
-            TypeRef context,
-            Dictionary<string, TypeRef> referenceContextLookup)
+            TypeRef context)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");
@@ -501,8 +491,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             int indent,
             StringBuilder builder,
             TypeBuilderSpec modelInfo,
-            TypeRef context,
-            Dictionary<string, TypeRef> referenceContextLookup)
+            TypeRef context)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");

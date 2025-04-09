@@ -12,28 +12,41 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override List<TypeValidation> TypeValidations => [AssertListOfList, ListTests.AssertList];
 
-        internal static void AssertListOfList(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        internal static void AssertListOfList(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"List<List<{type}>>"));
-            var listListJsonModel = dict[$"List<List<{type}>>"];
-            Assert.AreEqual($"List<List<{type}>>", listListJsonModel.Type.Name);
+            Assert.IsTrue(dict.ContainsKey($"List<List<{expectation.TypeName}>>"));
+            var listListJsonModel = dict[$"List<List<{expectation.TypeName}>>"];
+            Assert.AreEqual($"List<List<{expectation.TypeName}>>", listListJsonModel.Type.Name);
             Assert.AreEqual("System.Collections.Generic", listListJsonModel.Type.Namespace);
             Assert.IsNotNull(listListJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.IList, listListJsonModel.Kind);
             Assert.AreEqual(0, listListJsonModel.Type.ArrayRank);
-            Assert.AreEqual($"List_List_{type}_", listListJsonModel.Type.TypeCaseName);
-            Assert.AreEqual($"list_List_{type}_", listListJsonModel.Type.CamelCaseName);
+            Assert.AreEqual($"List_List_{expectation.TypeName}_", listListJsonModel.Type.TypeCaseName);
+            Assert.AreEqual($"list_List_{expectation.TypeName}_", listListJsonModel.Type.CamelCaseName);
+            Assert.AreEqual(s_localContext, listListJsonModel.ContextType);
 
             var genericArgument = listListJsonModel.Type.ItemType!;
-            Assert.AreEqual($"List<{type}>", genericArgument.Name);
+            Assert.AreEqual($"List<{expectation.TypeName}>", genericArgument.Name);
             Assert.AreEqual("System.Collections.Generic", genericArgument.Namespace);
             Assert.IsNotNull(genericArgument.ItemType);
             Assert.AreEqual(0, genericArgument.ArrayRank);
-            Assert.AreEqual($"List_{type}_", genericArgument.TypeCaseName);
-            Assert.AreEqual($"list_{type}_", genericArgument.CamelCaseName);
+            Assert.AreEqual($"List_{expectation.TypeName}_", genericArgument.TypeCaseName);
+            Assert.AreEqual($"list_{expectation.TypeName}_", genericArgument.CamelCaseName);
 
-            var innerGenericArgument = genericArgument.ItemType!;
-            modelValidator(innerGenericArgument);
+            var listModel = dict[$"List<{expectation.TypeName}>"];
+            Assert.AreEqual($"List<{expectation.TypeName}>", listModel.Type.Name);
+            Assert.AreEqual("System.Collections.Generic", listModel.Type.Namespace);
+            Assert.IsNotNull(listModel.Type.ItemType);
+            Assert.AreEqual(TypeBuilderKind.IList, listModel.Kind);
+            Assert.AreEqual(0, listModel.Type.ArrayRank);
+            Assert.AreEqual($"List_{expectation.TypeName}_", listModel.Type.TypeCaseName);
+            Assert.AreEqual($"list_{expectation.TypeName}_", listModel.Type.CamelCaseName);
+            Assert.AreEqual(s_localContext, listModel.ContextType);
+
+            var itemModel = dict[expectation.TypeName];
+            Assert.IsNotNull(itemModel);
+            Assert.AreEqual(itemModel.Type, listModel.Type.ItemType);
+            expectation.ModelValidation(itemModel);
         }
     }
 }

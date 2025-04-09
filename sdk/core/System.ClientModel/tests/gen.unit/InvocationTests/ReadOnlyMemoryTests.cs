@@ -12,20 +12,23 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override List<TypeValidation> TypeValidations => [AssertReadOnlyMemory];
 
-        private void AssertReadOnlyMemory(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        private void AssertReadOnlyMemory(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"ReadOnlyMemory<{type}>"));
-            var romJsonModel = dict[$"ReadOnlyMemory<{type}>"];
-            Assert.AreEqual($"ReadOnlyMemory<{type}>", romJsonModel.Type.Name);
+            Assert.IsTrue(dict.ContainsKey($"ReadOnlyMemory<{expectation.TypeName}>"));
+            var romJsonModel = dict[$"ReadOnlyMemory<{expectation.TypeName}>"];
+            Assert.AreEqual($"ReadOnlyMemory<{expectation.TypeName}>", romJsonModel.Type.Name);
             Assert.AreEqual("System", romJsonModel.Type.Namespace);
             Assert.IsNotNull(romJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.ReadOnlyMemory, romJsonModel.Kind);
-            Assert.AreEqual($"ReadOnlyMemory_{type}_", romJsonModel.Type.TypeCaseName);
-            Assert.AreEqual($"readOnlyMemory_{type}_", romJsonModel.Type.CamelCaseName);
+            Assert.AreEqual($"ReadOnlyMemory_{expectation.TypeName}_", romJsonModel.Type.TypeCaseName);
+            Assert.AreEqual($"readOnlyMemory_{expectation.TypeName}_", romJsonModel.Type.CamelCaseName);
             Assert.AreEqual(0, romJsonModel.Type.ArrayRank);
+            Assert.AreEqual(s_localContext, romJsonModel.ContextType);
 
-            var genericArgument = romJsonModel.Type.ItemType!;
-            modelValidator(genericArgument);
+            var itemModel = dict[expectation.TypeName];
+            Assert.IsNotNull(itemModel);
+            Assert.AreEqual(itemModel.Type, romJsonModel.Type.ItemType);
+            expectation.ModelValidation(itemModel);
         }
     }
 }

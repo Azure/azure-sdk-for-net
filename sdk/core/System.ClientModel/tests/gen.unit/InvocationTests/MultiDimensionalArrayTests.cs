@@ -14,20 +14,23 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string InitializeObject => "new {0} {{ }}";
 
-        private void AssertMultiDimensionalArray(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        private void AssertMultiDimensionalArray(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"{type}[,]"));
-            var arrayModel = dict[$"{type}[,]"];
-            Assert.AreEqual($"{type}[,]", arrayModel.Type.Name);
-            Assert.AreEqual(expectedNamespace, arrayModel.Type.Namespace);
+            Assert.IsTrue(dict.ContainsKey($"{expectation.TypeName}[,]"));
+            var arrayModel = dict[$"{expectation.TypeName}[,]"];
+            Assert.AreEqual($"{expectation.TypeName}[,]", arrayModel.Type.Name);
+            Assert.AreEqual(expectation.Namespace, arrayModel.Type.Namespace);
             Assert.IsNotNull(arrayModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.MultiDimensionalArray, arrayModel.Kind);
             Assert.AreEqual(2, arrayModel.Type.ArrayRank);
-            Assert.AreEqual($"{type}_Array_d1_", arrayModel.Type.TypeCaseName);
-            Assert.AreEqual($"{char.ToLower(type[0])}{type.Substring(1)}_Array_d1_", arrayModel.Type.CamelCaseName);
+            Assert.AreEqual($"{expectation.TypeName}_Array_d1_", arrayModel.Type.TypeCaseName);
+            Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_d1_", arrayModel.Type.CamelCaseName);
+            Assert.AreEqual(expectation.Context, arrayModel.ContextType);
 
-            var genericArgument = arrayModel.Type.ItemType!;
-            modelValidator(genericArgument);
+            var itemModel = dict[expectation.TypeName];
+            Assert.IsNotNull(itemModel);
+            Assert.AreEqual(itemModel.Type, arrayModel.Type.ItemType);
+            expectation.ModelValidation(itemModel);
         }
     }
 }

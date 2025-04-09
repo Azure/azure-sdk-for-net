@@ -16,7 +16,52 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
         internal const string AvailabilitySetData = "AvailabilitySetData";
         internal const string BaseModel = "BaseModel";
         internal const string LocalBaseModel = "LocalBaseModel";
-        internal delegate void TypeValidation(string type, string expectedNamespace, Action<TypeRef> modelValidation, Dictionary<string, TypeBuilderSpec> dict);
+        internal delegate void TypeValidation(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict);
+
+        internal readonly struct ModelExpectation
+        {
+            public ModelExpectation(
+                string type,
+                string ns,
+                Action<TypeBuilderSpec> modelValidation,
+                TypeRef context)
+            {
+                TypeName = type;
+                Namespace = ns;
+                ModelValidation = modelValidation;
+                Context = context;
+            }
+            public string TypeName { get; }
+            public string Namespace { get; }
+            public Action<TypeBuilderSpec> ModelValidation { get; }
+            public TypeRef Context { get; }
+        }
+
+        internal static readonly TypeRef s_localContext = new("LocalContext", "TestProject", "");
+
+        internal static readonly Dictionary<string, ModelExpectation> s_modelExpectations = new()
+        {
+            { JsonModel, new(
+                JsonModel,
+                "TestProject",
+                AssertJsonModelBuilder,
+                s_localContext) },
+            { AvailabilitySetData, new(
+                AvailabilitySetData,
+                "System.ClientModel.Tests.Client.Models.ResourceManager.Compute",
+                AssertAvailabilitySetDataBuilder,
+                new TypeRef("TestClientModelReaderWriterContext", "System.ClientModel.Tests.ModelReaderWriterTests", "")) },
+            { BaseModel, new(
+                BaseModel,
+                "System.ClientModel.Tests.Client.ModelReaderWriterTests.Models",
+                AssertBaseModelBuilder,
+                new TypeRef("TestClientModelReaderWriterContext", "System.ClientModel.Tests.ModelReaderWriterTests", "")) },
+            { LocalBaseModel, new(
+                LocalBaseModel,
+                "TestProject",
+                AssertLocalBaseModelBuilder,
+                s_localContext) }
+        };
 
         public static readonly IEnumerable<string> Types =
         [
@@ -38,6 +83,14 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             { BaseModel, AssertBaseModel },
             { AvailabilitySetData, AssertAvailabilitySetData },
             { LocalBaseModel, AssertLocalBaseModel }
+        };
+
+        private static readonly Dictionary<string, Action<TypeBuilderSpec>> s_builderValidators = new()
+        {
+            { JsonModel, AssertJsonModelBuilder },
+            { BaseModel, AssertBaseModelBuilder },
+            { AvailabilitySetData, AssertAvailabilitySetDataBuilder },
+            { LocalBaseModel, AssertLocalBaseModelBuilder }
         };
 
         private static readonly Dictionary<string, string> s_modelNamespaces = new()
@@ -287,19 +340,19 @@ $$"""
 
             if (!contextAdded)
             {
-                Assert.IsNull(result.ContextFile);
+                Assert.IsNull(result.GenerationSpec);
             }
             else
             {
-                Assert.IsNotNull(result.ContextFile);
-                Assert.AreEqual("LocalContext", result.ContextFile!.Type.Name);
-                Assert.AreEqual("TestProject", result.ContextFile.Type.Namespace);
-                Assert.AreEqual("public", result.ContextFile.Modifier);
+                Assert.IsNotNull(result.GenerationSpec);
+                Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+                Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+                Assert.AreEqual("public", result.GenerationSpec.Modifier);
 
                 //if the persistable is from a dependency, it won't be added to the context builders
                 if (!shouldBeFound && type != JsonModel && type != LocalBaseModel)
                 {
-                    Assert.AreEqual(0, result.ContextFile.TypeBuilders.Count);
+                    Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
                     return; // early exit if not found
                 }
 
@@ -307,12 +360,12 @@ $$"""
                 if (type == LocalBaseModel)
                     expectedBuilders++; //need to count both the base and derived class for LocalBaseModel
 
-                Assert.AreEqual(expectedBuilders, result.ContextFile.TypeBuilders.Count);
-                var dict = result.ContextFile.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
+                Assert.AreEqual(expectedBuilders, result.GenerationSpec.TypeBuilders.Count);
+                var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
 
                 Assert.IsTrue(dict.ContainsKey(type));
-                var modelValidator = s_modelValidators[type];
-                modelValidator(dict[type].Type);
+                var builderValidator = s_builderValidators[type];
+                builderValidator(dict[type]);
 
                 if (type == LocalBaseModel)
                 {
@@ -324,7 +377,7 @@ $$"""
                 {
                     foreach (var validation in validations)
                     {
-                        validation(type, s_modelNamespaces[type], modelValidator, dict);
+                        validation(s_modelExpectations[type], dict);
                     }
                 }
             }
@@ -410,6 +463,42 @@ $$"""
         }
     }
 """;
+        }
+
+        private static void AssertJsonModelBuilder(TypeBuilderSpec jsonModel)
+        {
+            Assert.AreEqual("internal", jsonModel.Modifier);
+            Assert.IsNull(jsonModel.PersistableModelProxy);
+            AssertJsonModel(jsonModel.Type);
+            Assert.AreEqual(TypeBuilderKind.IPersistableModel, jsonModel.Kind);
+            Assert.AreEqual(s_modelExpectations[jsonModel.Type.Name].Context, jsonModel.ContextType);
+        }
+
+        private static void AssertBaseModelBuilder(TypeBuilderSpec baseModel)
+        {
+            Assert.AreEqual("internal", baseModel.Modifier);
+            Assert.IsNotNull(baseModel.PersistableModelProxy);
+            AssertBaseModel(baseModel.Type);
+            Assert.AreEqual(TypeBuilderKind.IPersistableModel, baseModel.Kind);
+            Assert.AreEqual(s_modelExpectations[baseModel.Type.Name].Context, baseModel.ContextType);
+        }
+
+        private static void AssertAvailabilitySetDataBuilder(TypeBuilderSpec availabilitySetData)
+        {
+            Assert.AreEqual("internal", availabilitySetData.Modifier);
+            Assert.IsNull(availabilitySetData.PersistableModelProxy);
+            AssertAvailabilitySetData(availabilitySetData.Type);
+            Assert.AreEqual(TypeBuilderKind.IPersistableModel, availabilitySetData.Kind);
+            Assert.AreEqual(s_modelExpectations[availabilitySetData.Type.Name].Context, availabilitySetData.ContextType);
+        }
+
+        private static void AssertLocalBaseModelBuilder(TypeBuilderSpec localBaseModel)
+        {
+            Assert.AreEqual("internal", localBaseModel.Modifier);
+            Assert.IsNotNull(localBaseModel.PersistableModelProxy);
+            AssertLocalBaseModel(localBaseModel.Type);
+            Assert.AreEqual(TypeBuilderKind.IPersistableModel, localBaseModel.Kind);
+            Assert.AreEqual(s_modelExpectations[localBaseModel.Type.Name].Context, localBaseModel.ContextType);
         }
 
         internal static void AssertJsonModel(TypeRef jsonModel, string expectedNamespace = "TestProject")
