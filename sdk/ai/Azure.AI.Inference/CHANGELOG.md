@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
 ## 1.0.0-beta.4 (2025-03-18)
 
 ### Features Added
