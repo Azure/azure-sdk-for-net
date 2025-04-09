@@ -141,6 +141,11 @@ namespace Azure.Security.KeyVault.Keys
         public KeyReleasePolicy ReleasePolicy { get; set; }
 
         /// <summary>
+        /// Gets the <see cref="KeyAttestation"/> object containing the attestation policy.
+        /// </summary>
+        public KeyAttestation Attestation { get => _attributes.Attestation; }
+
+        /// <summary>
         /// Parses the key identifier into the <see cref="VaultUri"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
         /// </summary>
         /// <param name="id">The key vault object identifier.</param>

@@ -7,7 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
+#if SOURCE_GENERATOR
+namespace System.ClientModel.SourceGeneration.Tests
+#else
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
+#endif
 {
     public class ModelX : BaseModel, IJsonModel<ModelX>
     {

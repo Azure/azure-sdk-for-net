@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The installation state of the packet core.
-    /// Serialized Name: InstallationState
-    /// </summary>
+    /// <summary> The installation state of the packet core. </summary>
     public readonly partial struct MobileNetworkInstallationState : IEquatable<MobileNetworkInstallationState>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string RollingBackValue = "RollingBack";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// The packet core is uninstalled.
-        /// Serialized Name: InstallationState.Uninstalled
-        /// </summary>
+        /// <summary> The packet core is uninstalled. </summary>
         public static MobileNetworkInstallationState Uninstalled { get; } = new MobileNetworkInstallationState(UninstalledValue);
-        /// <summary>
-        /// The packet core is installing.
-        /// Serialized Name: InstallationState.Installing
-        /// </summary>
+        /// <summary> The packet core is installing. </summary>
         public static MobileNetworkInstallationState Installing { get; } = new MobileNetworkInstallationState(InstallingValue);
-        /// <summary>
-        /// The packet core is installed.
-        /// Serialized Name: InstallationState.Installed
-        /// </summary>
+        /// <summary> The packet core is installed. </summary>
         public static MobileNetworkInstallationState Installed { get; } = new MobileNetworkInstallationState(InstalledValue);
-        /// <summary>
-        /// The packet core is updating its configuration.
-        /// Serialized Name: InstallationState.Updating
-        /// </summary>
+        /// <summary> The packet core is updating its configuration. </summary>
         public static MobileNetworkInstallationState Updating { get; } = new MobileNetworkInstallationState(UpdatingValue);
-        /// <summary>
-        /// The packet core is upgrading to a different software version.
-        /// Serialized Name: InstallationState.Upgrading
-        /// </summary>
+        /// <summary> The packet core is upgrading to a different software version. </summary>
         public static MobileNetworkInstallationState Upgrading { get; } = new MobileNetworkInstallationState(UpgradingValue);
-        /// <summary>
-        /// The packet core is uninstalling.
-        /// Serialized Name: InstallationState.Uninstalling
-        /// </summary>
+        /// <summary> The packet core is uninstalling. </summary>
         public static MobileNetworkInstallationState Uninstalling { get; } = new MobileNetworkInstallationState(UninstallingValue);
-        /// <summary>
-        /// The packet core is reinstalling.
-        /// Serialized Name: InstallationState.Reinstalling
-        /// </summary>
+        /// <summary> The packet core is reinstalling. </summary>
         public static MobileNetworkInstallationState Reinstalling { get; } = new MobileNetworkInstallationState(ReinstallingValue);
-        /// <summary>
-        /// The packet core is rolling back to its previous version.
-        /// Serialized Name: InstallationState.RollingBack
-        /// </summary>
+        /// <summary> The packet core is rolling back to its previous version. </summary>
         public static MobileNetworkInstallationState RollingBack { get; } = new MobileNetworkInstallationState(RollingBackValue);
-        /// <summary>
-        /// The packet core is in failed state.
-        /// Serialized Name: InstallationState.Failed
-        /// </summary>
+        /// <summary> The packet core is in failed state. </summary>
         public static MobileNetworkInstallationState Failed { get; } = new MobileNetworkInstallationState(FailedValue);
         /// <summary> Determines if two <see cref="MobileNetworkInstallationState"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkInstallationState left, MobileNetworkInstallationState right) => left.Equals(right);

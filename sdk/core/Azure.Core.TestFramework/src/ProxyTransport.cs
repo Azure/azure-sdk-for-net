@@ -100,7 +100,9 @@ namespace Azure.Core.TestFramework
 
                 if (_isWebRequestTransport)
                 {
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
                     ServicePointManager.ServerCertificateValidationCallback -= _serverCertificateCustomValidationCallback;
+#pragma warning restore SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
                 }
             }
         }
@@ -192,7 +194,9 @@ namespace Azure.Core.TestFramework
 
             if (_isWebRequestTransport)
             {
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
                 ServicePointManager.ServerCertificateValidationCallback += _serverCertificateCustomValidationCallback;
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
             }
         }
     }

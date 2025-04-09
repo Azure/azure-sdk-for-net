@@ -53,12 +53,22 @@ $deletedFiles = Get-ChangedFiles -DiffPath $TargetPath -DiffFilterType "D"
 if ($changedFiles) {
   $changedServices = Get-ChangedServices -ChangedFiles $changedFiles
 }
+else {
+  # ensure we default this to an empty array if not set
+  $changedFiles = @()
+}
 
 # ExcludePaths is an object array with the default of [] which evaluates to null.
 # If the value is null, set it to empty list to ensure that the empty list is
 # stored in the json
 if (-not $ExcludePaths) {
   $ExcludePaths = @()
+}
+if (-not $deletedFiles) {
+  $deletedFiles = @()
+}
+if (-not $changedServices) {
+  $changedServices = @()
 }
 $result = [PSCustomObject]@{
   "ChangedFiles"    = $changedFiles

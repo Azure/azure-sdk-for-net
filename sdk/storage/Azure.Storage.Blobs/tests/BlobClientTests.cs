@@ -1020,7 +1020,11 @@ namespace Azure.Storage.Blobs.Test
 
                 var buffer = new byte[count];
                 stream.Seek(i, SeekOrigin.Begin);
+#if NET6_0_OR_GREATER
+                await stream.ReadExactlyAsync(buffer, 0, count);
+#else
                 await stream.ReadAsync(buffer, 0, count);
+#endif
 
                 TestHelper.AssertSequenceEqual(
                     buffer,

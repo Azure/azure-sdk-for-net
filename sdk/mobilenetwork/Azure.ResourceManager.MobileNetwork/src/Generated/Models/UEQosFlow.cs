@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// QoS Flow
-    /// Serialized Name: UeQOSFlow
-    /// </summary>
+    /// <summary> QoS Flow. </summary>
     public partial class UEQosFlow
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UEQosFlow"/>. </summary>
-        /// <param name="qfi">
-        /// Qos Flow Identifier
-        /// Serialized Name: UeQOSFlow.qfi
-        /// </param>
-        /// <param name="fiveqi">
-        /// 5G QoS Identifier.
-        /// Serialized Name: UeQOSFlow.fiveqi
-        /// </param>
+        /// <param name="qfi"> Qos Flow Identifier. </param>
+        /// <param name="fiveqi"> 5G QoS Identifier. </param>
         public UEQosFlow(int qfi, int fiveqi)
         {
             Qfi = qfi;
@@ -64,30 +55,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UEQosFlow"/>. </summary>
-        /// <param name="qfi">
-        /// Qos Flow Identifier
-        /// Serialized Name: UeQOSFlow.qfi
-        /// </param>
-        /// <param name="fiveqi">
-        /// 5G QoS Identifier.
-        /// Serialized Name: UeQOSFlow.fiveqi
-        /// </param>
-        /// <param name="uplinkGbrUplink">
-        /// Uplink bit rate.
-        /// Serialized Name: UeQOSFlow.gbr.uplink
-        /// </param>
-        /// <param name="downlinkGbrDownlink">
-        /// Downlink bit rate.
-        /// Serialized Name: UeQOSFlow.gbr.downlink
-        /// </param>
-        /// <param name="uplinkMbrUplink">
-        /// Uplink bit rate.
-        /// Serialized Name: UeQOSFlow.mbr.uplink
-        /// </param>
-        /// <param name="downlinkMbrDownlink">
-        /// Downlink bit rate.
-        /// Serialized Name: UeQOSFlow.mbr.downlink
-        /// </param>
+        /// <param name="qfi"> Qos Flow Identifier. </param>
+        /// <param name="fiveqi"> 5G QoS Identifier. </param>
+        /// <param name="uplinkGbrUplink"> Uplink bit rate. </param>
+        /// <param name="downlinkGbrDownlink"> Downlink bit rate. </param>
+        /// <param name="uplinkMbrUplink"> Uplink bit rate. </param>
+        /// <param name="downlinkMbrDownlink"> Downlink bit rate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UEQosFlow(int qfi, int fiveqi, string uplinkGbrUplink, string downlinkGbrDownlink, string uplinkMbrUplink, string downlinkMbrDownlink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -105,40 +78,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// Qos Flow Identifier
-        /// Serialized Name: UeQOSFlow.qfi
-        /// </summary>
+        /// <summary> Qos Flow Identifier. </summary>
         [WirePath("qfi")]
         public int Qfi { get; set; }
-        /// <summary>
-        /// 5G QoS Identifier.
-        /// Serialized Name: UeQOSFlow.fiveqi
-        /// </summary>
+        /// <summary> 5G QoS Identifier. </summary>
         [WirePath("fiveqi")]
         public int Fiveqi { get; set; }
-        /// <summary>
-        /// Uplink bit rate.
-        /// Serialized Name: UeQOSFlow.gbr.uplink
-        /// </summary>
+        /// <summary> Uplink bit rate. </summary>
         [WirePath("gbr.uplink")]
         public string UplinkGbrUplink { get; set; }
-        /// <summary>
-        /// Downlink bit rate.
-        /// Serialized Name: UeQOSFlow.gbr.downlink
-        /// </summary>
+        /// <summary> Downlink bit rate. </summary>
         [WirePath("gbr.downlink")]
         public string DownlinkGbrDownlink { get; set; }
-        /// <summary>
-        /// Uplink bit rate.
-        /// Serialized Name: UeQOSFlow.mbr.uplink
-        /// </summary>
+        /// <summary> Uplink bit rate. </summary>
         [WirePath("mbr.uplink")]
         public string UplinkMbrUplink { get; set; }
-        /// <summary>
-        /// Downlink bit rate.
-        /// Serialized Name: UeQOSFlow.mbr.downlink
-        /// </summary>
+        /// <summary> Downlink bit rate. </summary>
         [WirePath("mbr.downlink")]
         public string DownlinkMbrDownlink { get; set; }
     }

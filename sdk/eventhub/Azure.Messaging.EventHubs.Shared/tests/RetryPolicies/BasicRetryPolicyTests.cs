@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
 using Moq;
@@ -30,6 +31,9 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new SocketException((int)SocketError.ConnectionReset) };
             yield return new object[] { new IOException() };
             yield return new object[] { new UnauthorizedAccessException() };
+
+            // WebSocketException should use the inner exception as the decision point.
+            yield return new object[] { new WebSocketException("dummy", new EventHubsException(true, null)) };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 
@@ -62,6 +66,9 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new ObjectDisposedException("dummy") };
             yield return new object[] { new SocketException((int)SocketError.HostNotFound) };
             yield return new object[] { new SocketException((int)SocketError.HostUnreachable) };
+
+            // WebSocketException should use the inner exception as the decision point.
+            yield return new object[] { new WebSocketException("dummy", new EventHubsException(false, null)) };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 
@@ -96,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(2)]
         [TestCase(10)]
         [TestCase(100)]
-        public void CalulateTryTimeoutRespectsOptions(int attemptCount)
+        public void CalculateTryTimeoutRespectsOptions(int attemptCount)
         {
             var timeout = TimeSpan.FromSeconds(5);
             var options = new EventHubsRetryOptions { TryTimeout = timeout };
@@ -255,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CalculateRetryDelayDoesNotTrottleGeneralExceptions()
+        public void CalculateRetryDelayDoesNotThrottleGeneralExceptions()
         {
             var delaySeconds = 1;
             var exception = new EventHubsException(true, "dummy", EventHubsException.FailureReason.GeneralError);

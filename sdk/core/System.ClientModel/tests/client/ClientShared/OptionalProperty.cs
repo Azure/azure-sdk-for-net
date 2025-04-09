@@ -99,6 +99,7 @@ internal static class OptionalProperty
     }
 }
 
+#if !SOURCE_GENERATOR
 public readonly struct OptionalProperty<T>
 {
     public OptionalProperty(T? value) : this()
@@ -113,3 +114,4 @@ public readonly struct OptionalProperty<T>
     public static implicit operator OptionalProperty<T>(T? value) => new OptionalProperty<T>(value);
     public static implicit operator T?(OptionalProperty<T> optional) => optional.Value;
 }
+#endif

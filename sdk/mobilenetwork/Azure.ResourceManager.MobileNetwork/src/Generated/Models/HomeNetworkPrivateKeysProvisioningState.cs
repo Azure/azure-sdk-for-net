@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The provisioning state of the private keys for SUPI concealment.
-    /// Serialized Name: HomeNetworkPrivateKeysProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state of the private keys for SUPI concealment. </summary>
     public readonly partial struct HomeNetworkPrivateKeysProvisioningState : IEquatable<HomeNetworkPrivateKeysProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string ProvisionedValue = "Provisioned";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Provisioning of the private keys for SUPI concealment has not been attempted.
-        /// Serialized Name: HomeNetworkPrivateKeysProvisioningState.NotProvisioned
-        /// </summary>
+        /// <summary> Provisioning of the private keys for SUPI concealment has not been attempted. </summary>
         public static HomeNetworkPrivateKeysProvisioningState NotProvisioned { get; } = new HomeNetworkPrivateKeysProvisioningState(NotProvisionedValue);
-        /// <summary>
-        /// The private keys for SUPI concealment are successfully provisioned.
-        /// Serialized Name: HomeNetworkPrivateKeysProvisioningState.Provisioned
-        /// </summary>
+        /// <summary> The private keys for SUPI concealment are successfully provisioned. </summary>
         public static HomeNetworkPrivateKeysProvisioningState Provisioned { get; } = new HomeNetworkPrivateKeysProvisioningState(ProvisionedValue);
-        /// <summary>
-        /// Provisioning of the private keys for SUPI concealment has failed.
-        /// Serialized Name: HomeNetworkPrivateKeysProvisioningState.Failed
-        /// </summary>
+        /// <summary> Provisioning of the private keys for SUPI concealment has failed. </summary>
         public static HomeNetworkPrivateKeysProvisioningState Failed { get; } = new HomeNetworkPrivateKeysProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="HomeNetworkPrivateKeysProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HomeNetworkPrivateKeysProvisioningState left, HomeNetworkPrivateKeysProvisioningState right) => left.Equals(right);

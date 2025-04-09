@@ -24,6 +24,7 @@ public class ClientPipelineOptions
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
     private ClientLoggingOptions? _loggingOptions;
+    private bool? _enabledDistributedTracing;
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -114,6 +115,21 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _loggingOptions = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets whether distributed tracing should be enabled. If <c>null</c>, this
+    /// value will be treated as <c>true</c>. The default is <c>null</c>.
+    /// </summary>
+    public bool? EnableDistributedTracing
+    {
+        get => _enabledDistributedTracing;
+        set
+        {
+            AssertNotFrozen();
+
+            _enabledDistributedTracing = value;
         }
     }
 

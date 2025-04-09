@@ -48,6 +48,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Initializes a new instance of <see cref="SearchResultValue"/>. </summary>
         internal SearchResultValue()
         {
+            Endorsement = new ChangeTrackingList<string>();
             Classification = new ChangeTrackingList<string>();
             Label = new ChangeTrackingList<string>();
             Term = new ChangeTrackingList<TermSearchResultValue>();
@@ -94,7 +95,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchResultValue(float? searchScore, SearchHighlights searchHighlights, string objectType, long? createTime, long? updateTime, string id, string name, string qualifiedName, string entityType, string description, string endorsement, string owner, IReadOnlyList<string> classification, IReadOnlyList<string> label, IReadOnlyList<TermSearchResultValue> term, IReadOnlyList<ContactSearchResultValue> contact, IReadOnlyList<string> assetType, string glossaryType, string glossary, string termStatus, IReadOnlyList<string> termTemplate, string longDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchResultValue(float? searchScore, SearchHighlights searchHighlights, string objectType, long? createTime, long? updateTime, string id, string name, string qualifiedName, string entityType, string description, IReadOnlyList<string> endorsement, string owner, IReadOnlyList<string> classification, IReadOnlyList<string> label, IReadOnlyList<TermSearchResultValue> term, IReadOnlyList<ContactSearchResultValue> contact, IReadOnlyList<string> assetType, string glossaryType, string glossary, string termStatus, IReadOnlyList<string> termTemplate, string longDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SearchScore = searchScore;
             SearchHighlights = searchHighlights;
@@ -153,7 +154,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The description of the asset. </summary>
         public string Description { get; }
         /// <summary> The endorsement of the asset. </summary>
-        public string Endorsement { get; }
+        public IReadOnlyList<string> Endorsement { get; }
         /// <summary> The owner of the record. </summary>
         public string Owner { get; }
         /// <summary> The classifications of the record. </summary>

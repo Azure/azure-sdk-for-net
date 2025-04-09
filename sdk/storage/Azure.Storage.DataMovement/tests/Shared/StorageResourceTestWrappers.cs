@@ -37,7 +37,7 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
         : func();
 
     #region Passthru
-    public override Uri Uri => ThrowOr(_inner.Uri);
+    public override Uri Uri => _inner.Uri;
 
     public override string ProviderId => ThrowOr(_inner.ProviderId);
 
@@ -48,6 +48,8 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
     protected internal override long MaxSupportedSingleTransferSize => ThrowOr(_inner.MaxSupportedSingleTransferSize);
 
     protected internal override long MaxSupportedChunkSize => ThrowOr(_inner.MaxSupportedChunkSize);
+
+    protected internal override int MaxSupportedChunkCount => ThrowOr(_inner.MaxSupportedChunkCount);
 
     protected internal override long? Length => ThrowOr(_inner.Length);
 

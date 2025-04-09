@@ -67,7 +67,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static Vector4 FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVector4(document.RootElement);
         }
 

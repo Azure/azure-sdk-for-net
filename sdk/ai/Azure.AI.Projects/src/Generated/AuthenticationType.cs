@@ -16,6 +16,8 @@ namespace Azure.AI.Projects
         EntraId,
         /// <summary> Shared Access Signature (SAS) authentication. </summary>
         SAS,
+        /// <summary> Custom authentication. </summary>
+        Custom,
         /// <summary> No authentication. </summary>
         None
     }

@@ -1,27 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.OpenAI.Files;
+using OpenAI.Batch;
+using OpenAI.Chat;
+using OpenAI.Files;
+using OpenAI.TestFramework;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Files;
-using Azure.AI.OpenAI.Tests.Models;
-using Azure.AI.OpenAI.Tests.Utils;
-using Azure.AI.OpenAI.Tests.Utils.Config;
-using OpenAI.Batch;
-using OpenAI.Chat;
-using OpenAI.Embeddings;
-using OpenAI.Files;
-using OpenAI.TestFramework;
-using OpenAI.TestFramework.Mocks;
-using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -30,16 +22,25 @@ namespace Azure.AI.OpenAI.Tests;
 public class BatchTests : AoaiTestBase<BatchClient>
 {
     public BatchTests(bool isAsync) : base(isAsync)
-    { }
+    {
+    }
 
     [Test]
     [Category("Smoke")]
     public void CanCreateClient() => Assert.That(GetTestClient(), Is.InstanceOf<BatchClient>());
 
     [RecordedTest]
-    public async Task CanUploadFileForBatch()
+#if !AZURE_OPENAI_GA
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_01_Preview)]
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_12_01_Preview)]
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2025_01_01_Preview)]
+#else
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_21)]
+#endif
+    [TestCase(null)]
+    public async Task CanUploadFileForBatch(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        BatchClient batchClient = GetTestClient();
+        BatchClient batchClient = GetTestClient(GetTestClientOptions(version));
         OpenAIFileClient fileClient = GetTestClientFrom<OpenAIFileClient>(batchClient);
 
         OpenAIFile newFile = await fileClient.UploadFileAsync(
@@ -48,26 +49,31 @@ public class BatchTests : AoaiTestBase<BatchClient>
             FileUploadPurpose.Batch);
         Validate(newFile);
 
-        AzureOpenAIFileStatus azureStatus = newFile.Status.ToAzureOpenAIFileStatus();
-        Assert.That(azureStatus, Is.EqualTo(AzureOpenAIFileStatus.Pending));
+        // In contrast to fine-tuning, files uploaded for batch will immediately enter -- and remain -- in a
+        // 'processed' state. Validation is performed via the batch client directly.
+        AzureOpenAIFileStatus azureStatus = newFile.GetAzureOpenAIFileStatus();
+        Assert.That(azureStatus, Is.EqualTo(AzureOpenAIFileStatus.Processed));
 
-        TimeSpan filePollingInterval = Recording!.Mode == RecordedTestMode.Playback ? TimeSpan.FromMilliseconds(1) : TimeSpan.FromSeconds(5);
-
-        for (int i = 0; i < 10 && azureStatus == AzureOpenAIFileStatus.Pending; i++)
-        {
-            await Task.Delay(filePollingInterval);
-            newFile = await fileClient.GetFileAsync(newFile.Id);
-            azureStatus = newFile.Status.ToAzureOpenAIFileStatus();
-        }
-
-        Assert.That(azureStatus, Is.EqualTo(AzureOpenAIFileStatus.Error));
-        Assert.That(newFile.StatusDetails, Does.Contain("valid json"));
+        string createdFileId = newFile.Id;
+        newFile = await fileClient.GetFileAsync(createdFileId);
+        Validate(newFile);
+        Assert.That(newFile.Id, Is.EqualTo(createdFileId));
+        Assert.That(newFile.GetAzureOpenAIFileStatus(), Is.EqualTo(AzureOpenAIFileStatus.Processed));
     }
 
     [RecordedTest]
-    public async Task CanCancelBatch()
+#if !AZURE_OPENAI_GA
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_01_Preview)]
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_12_01_Preview)]
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2025_01_01_Preview)]
+#else
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_21)]
+#endif
+    // [TestCase(null)]
+    [Category("LongRunning")] // observed live runtime up to 5 minutes
+    public async Task CanCancelBatch(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        BatchClient batchClient = GetTestClient();
+        BatchClient batchClient = GetTestClient(GetTestClientOptions(version));
         OpenAIFileClient fileClient = GetTestClientFrom<OpenAIFileClient>(batchClient);
         string deploymentName = TestConfig.GetConfig<BatchClient>()!.Deployment!;
 
@@ -112,10 +118,19 @@ public class BatchTests : AoaiTestBase<BatchClient>
     }
 
     [RecordedTest]
+#if !AZURE_OPENAI_GA
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_01_Preview)]
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_12_01_Preview)]
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2025_01_01_Preview)]
+#else
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_21)]
+#endif
+    [TestCase(null)]
+    [Ignore("Disabled pending revisited long-running test recording strategy")]
     [Category("LongRunning")] // observed live runtime typically varies from 6 - 15 minutes
-    public async Task SimpleBatchCompletionsTest()
+    public async Task SimpleBatchCompletionsTest(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        BatchClient batchClient = GetTestClient();
+        BatchClient batchClient = GetTestClient(GetTestClientOptions(version));
         OpenAIFileClient fileClient = GetTestClientFrom<OpenAIFileClient>(batchClient);
         string deploymentName = TestConfig.GetConfig<BatchClient>()!.Deployment!;
 
@@ -205,6 +220,11 @@ public class BatchTests : AoaiTestBase<BatchClient>
             Assert.That(batchCompletion.Content[0].Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
             Assert.That(batchCompletion.Content[0].Text, Is.Not.Null.Or.Empty);
         }
+    }
+
+    private TestClientOptions GetTestClientOptions(AzureOpenAIClientOptions.ServiceVersion? version)
+    {
+        return version is null ? new TestClientOptions() : new TestClientOptions(version.Value);
     }
 
     private List<T> GetVerifiedBatchOutputsOf<T>(

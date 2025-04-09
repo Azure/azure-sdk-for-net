@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Interface properties
-    /// Serialized Name: InterfaceProperties
-    /// </summary>
+    /// <summary> Interface properties. </summary>
     public partial class MobileNetworkInterfaceProperties
     {
         /// <summary>
@@ -56,34 +53,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkInterfaceProperties"/>. </summary>
-        /// <param name="name">
-        /// The logical name for this interface. This should match one of the interfaces configured on your Azure Stack Edge device.
-        /// Serialized Name: InterfaceProperties.name
-        /// </param>
-        /// <param name="ipv4Address">
-        /// The IPv4 address.
-        /// Serialized Name: InterfaceProperties.ipv4Address
-        /// </param>
-        /// <param name="ipv4Subnet">
-        /// The IPv4 subnet.
-        /// Serialized Name: InterfaceProperties.ipv4Subnet
-        /// </param>
-        /// <param name="ipv4Gateway">
-        /// The default IPv4 gateway (router).
-        /// Serialized Name: InterfaceProperties.ipv4Gateway
-        /// </param>
-        /// <param name="vlanId">
-        /// VLAN identifier of the network interface. Example: 501.
-        /// Serialized Name: InterfaceProperties.vlanId
-        /// </param>
-        /// <param name="ipv4AddressList">
-        /// The list of IPv4 addresses, for a multi-node system.
-        /// Serialized Name: InterfaceProperties.ipv4AddressList
-        /// </param>
-        /// <param name="bfdIPv4Endpoints">
-        /// The IPv4 addresses of the endpoints to send BFD probes to.
-        /// Serialized Name: InterfaceProperties.bfdIpv4Endpoints
-        /// </param>
+        /// <param name="name"> The logical name for this interface. This should match one of the interfaces configured on your Azure Stack Edge device. </param>
+        /// <param name="ipv4Address"> The IPv4 address. </param>
+        /// <param name="ipv4Subnet"> The IPv4 subnet. </param>
+        /// <param name="ipv4Gateway"> The default IPv4 gateway (router). </param>
+        /// <param name="vlanId"> VLAN identifier of the network interface. Example: 501. </param>
+        /// <param name="ipv4AddressList"> The list of IPv4 addresses, for a multi-node system. </param>
+        /// <param name="bfdIPv4Endpoints"> The IPv4 addresses of the endpoints to send BFD probes to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkInterfaceProperties(string name, string ipv4Address, string ipv4Subnet, string ipv4Gateway, int? vlanId, IList<string> ipv4AddressList, IList<string> bfdIPv4Endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -97,46 +73,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The logical name for this interface. This should match one of the interfaces configured on your Azure Stack Edge device.
-        /// Serialized Name: InterfaceProperties.name
-        /// </summary>
+        /// <summary> The logical name for this interface. This should match one of the interfaces configured on your Azure Stack Edge device. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// The IPv4 address.
-        /// Serialized Name: InterfaceProperties.ipv4Address
-        /// </summary>
+        /// <summary> The IPv4 address. </summary>
         [WirePath("ipv4Address")]
         public string IPv4Address { get; set; }
-        /// <summary>
-        /// The IPv4 subnet.
-        /// Serialized Name: InterfaceProperties.ipv4Subnet
-        /// </summary>
+        /// <summary> The IPv4 subnet. </summary>
         [WirePath("ipv4Subnet")]
         public string IPv4Subnet { get; set; }
-        /// <summary>
-        /// The default IPv4 gateway (router).
-        /// Serialized Name: InterfaceProperties.ipv4Gateway
-        /// </summary>
+        /// <summary> The default IPv4 gateway (router). </summary>
         [WirePath("ipv4Gateway")]
         public string IPv4Gateway { get; set; }
-        /// <summary>
-        /// VLAN identifier of the network interface. Example: 501.
-        /// Serialized Name: InterfaceProperties.vlanId
-        /// </summary>
+        /// <summary> VLAN identifier of the network interface. Example: 501. </summary>
         [WirePath("vlanId")]
         public int? VlanId { get; set; }
-        /// <summary>
-        /// The list of IPv4 addresses, for a multi-node system.
-        /// Serialized Name: InterfaceProperties.ipv4AddressList
-        /// </summary>
+        /// <summary> The list of IPv4 addresses, for a multi-node system. </summary>
         [WirePath("ipv4AddressList")]
         public IList<string> IPv4AddressList { get; }
-        /// <summary>
-        /// The IPv4 addresses of the endpoints to send BFD probes to.
-        /// Serialized Name: InterfaceProperties.bfdIpv4Endpoints
-        /// </summary>
+        /// <summary> The IPv4 addresses of the endpoints to send BFD probes to. </summary>
         [WirePath("bfdIpv4Endpoints")]
         public IList<string> BfdIPv4Endpoints { get; }
     }

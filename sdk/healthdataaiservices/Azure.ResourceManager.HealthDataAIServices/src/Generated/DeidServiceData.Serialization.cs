@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeidServiceData(document.RootElement, options);
                     }
                 default:

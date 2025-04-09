@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.37 (Unreleased)
+## 0.1.0-preview.38 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.37 (2025-03-20)
+
+### Features Added
+
+- Added the following types for 3rd-party Authentication support: `AuthenticationTokenProvider`, `GetTokenOptions`, `AccessToken`, and `OAuth2BearerTokenAuthenticationPolicy`.
 
 ## 0.1.0-preview.36 (2024-10-03)
 

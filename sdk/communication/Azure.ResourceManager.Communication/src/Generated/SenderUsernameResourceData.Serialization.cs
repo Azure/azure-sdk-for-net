@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Communication
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSenderUsernameResourceData(document.RootElement, options);
                     }
                 default:

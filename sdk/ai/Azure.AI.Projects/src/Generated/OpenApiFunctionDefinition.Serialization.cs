@@ -45,13 +45,23 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Spec);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Spec))
+            using (JsonDocument document = JsonDocument.Parse(Spec, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
             writer.WritePropertyName("auth"u8);
             writer.WriteObjectValue(Auth, options);
+            if (Optional.IsCollectionDefined(DefaultParams))
+            {
+                writer.WritePropertyName("default_params"u8);
+                writer.WriteStartArray();
+                foreach (var item in DefaultParams)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,7 +70,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -93,6 +103,7 @@ namespace Azure.AI.Projects
             string description = default;
             BinaryData spec = default;
             OpenApiAuthDetails auth = default;
+            IList<string> defaultParams = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,13 +128,33 @@ namespace Azure.AI.Projects
                     auth = OpenApiAuthDetails.DeserializeOpenApiAuthDetails(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("default_params"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    defaultParams = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OpenApiFunctionDefinition(name, description, spec, auth, serializedAdditionalRawData);
+            return new OpenApiFunctionDefinition(
+                name,
+                description,
+                spec,
+                auth,
+                defaultParams ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenApiFunctionDefinition>.Write(ModelReaderWriterOptions options)
@@ -147,7 +178,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOpenApiFunctionDefinition(document.RootElement, options);
                     }
                 default:
@@ -161,7 +192,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static OpenApiFunctionDefinition FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeOpenApiFunctionDefinition(document.RootElement);
         }
 

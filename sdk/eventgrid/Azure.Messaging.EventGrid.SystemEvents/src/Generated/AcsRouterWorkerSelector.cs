@@ -46,21 +46,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerSelector"/>. </summary>
-        /// <param name="labelOperator"> Router Job Worker Selector Label Operator. </param>
         /// <param name="labelValue"> Router Job Worker Selector Value. </param>
         /// <param name="timeToLive"> Router Job Worker Selector Time to Live in Seconds. </param>
-        /// <param name="selectorState"> Router Job Worker Selector State. </param>
-        /// <param name="expirationTime"> Router Job Worker Selector Expiration Time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labelValue"/> is null. </exception>
-        internal AcsRouterWorkerSelector(AcsRouterLabelOperator labelOperator, BinaryData labelValue, double timeToLive, AcsRouterWorkerSelectorState selectorState, DateTimeOffset expirationTime)
+        internal AcsRouterWorkerSelector(BinaryData labelValue, double timeToLive)
         {
             Argument.AssertNotNull(labelValue, nameof(labelValue));
 
-            LabelOperator = labelOperator;
             LabelValue = labelValue;
             TimeToLive = timeToLive;
-            SelectorState = selectorState;
-            ExpirationTime = expirationTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerSelector"/>. </summary>
@@ -71,7 +65,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="selectorState"> Router Job Worker Selector State. </param>
         /// <param name="expirationTime"> Router Job Worker Selector Expiration Time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterWorkerSelector(string key, AcsRouterLabelOperator labelOperator, BinaryData labelValue, double timeToLive, AcsRouterWorkerSelectorState selectorState, DateTimeOffset expirationTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcsRouterWorkerSelector(string key, AcsRouterLabelOperator? labelOperator, BinaryData labelValue, double timeToLive, AcsRouterWorkerSelectorState? selectorState, DateTimeOffset? expirationTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             LabelOperator = labelOperator;
@@ -90,7 +84,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Router Job Worker Selector Key. </summary>
         public string Key { get; }
         /// <summary> Router Job Worker Selector Label Operator. </summary>
-        public AcsRouterLabelOperator LabelOperator { get; }
+        public AcsRouterLabelOperator? LabelOperator { get; }
         /// <summary>
         /// Router Job Worker Selector Value
         /// <para>
@@ -125,8 +119,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Router Job Worker Selector Time to Live in Seconds. </summary>
         public double TimeToLive { get; }
         /// <summary> Router Job Worker Selector State. </summary>
-        public AcsRouterWorkerSelectorState SelectorState { get; }
+        public AcsRouterWorkerSelectorState? SelectorState { get; }
         /// <summary> Router Job Worker Selector Expiration Time. </summary>
-        public DateTimeOffset ExpirationTime { get; }
+        public DateTimeOffset? ExpirationTime { get; }
     }
 }

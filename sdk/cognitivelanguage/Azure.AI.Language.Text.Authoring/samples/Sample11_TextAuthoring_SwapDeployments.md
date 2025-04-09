@@ -9,9 +9,8 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Swap Deployments Synchronously
@@ -20,15 +19,18 @@ To swap deployments, call SwapDeployments on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample11_TextAuthoring_SwapDeployments
 string projectName = "LoanAgreements";
-var swapDetails = new SwapDeploymentsDetails(
-    firstDeploymentName: "DeploymentA",
-    secondDeploymentName: "DeploymentB"
+string firstDeploymentName = "DeploymentA";
+string secondDeploymentName = "DeploymentB";
+TextAuthoringProject porjectClient = client.GetProject(projectName);
+
+var swapDetails = new TextAuthoringSwapDeploymentsDetails(
+    firstDeploymentName: firstDeploymentName,
+    secondDeploymentName: secondDeploymentName
     );
 
-Operation operation = authoringClient.SwapDeployments(
+Operation operation = porjectClient.SwapDeployments(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
-    body: swapDetails
+    details: swapDetails
 );
 
 Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");

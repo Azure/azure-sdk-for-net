@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The type used for update operations of the PipelineGroup. </summary>
-    public partial class PipelineGroupPatch
+    /// <summary> A pipeline group definition. </summary>
+    public partial class PipelineGroupPatch : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,46 +51,26 @@ namespace Azure.ResourceManager.Monitor.Models
         public PipelineGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Receivers = new ChangeTrackingList<PipelineGroupReceiver>();
-            Processors = new ChangeTrackingList<PipelineGroupProcessor>();
-            Exporters = new ChangeTrackingList<PipelineGroupExporter>();
-            NetworkingConfigurations = new ChangeTrackingList<PipelineGroupNetworkingConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PipelineGroupPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="replicas"> Defines the amount of replicas of the pipeline group instance. </param>
-        /// <param name="receivers"> The receivers specified for a pipeline group instance. </param>
-        /// <param name="processors"> The processors specified for a pipeline group instance. </param>
-        /// <param name="exporters"> The exporters specified for a pipeline group instance. </param>
-        /// <param name="service"> The service section for a given pipeline group instance. </param>
-        /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupPatch(IDictionary<string, string> tags, int? replicas, IList<PipelineGroupReceiver> receivers, IList<PipelineGroupProcessor> processors, IList<PipelineGroupExporter> exporters, PipelineGroupService service, IList<PipelineGroupNetworkingConfiguration> networkingConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PipelineGroupPropertiesUpdate properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Tags = tags;
-            Replicas = replicas;
-            Receivers = receivers;
-            Processors = processors;
-            Exporters = exporters;
-            Service = service;
-            NetworkingConfigurations = networkingConfigurations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public PipelineGroupPropertiesUpdate Properties { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Defines the amount of replicas of the pipeline group instance. </summary>
-        public int? Replicas { get; set; }
-        /// <summary> The receivers specified for a pipeline group instance. </summary>
-        public IList<PipelineGroupReceiver> Receivers { get; }
-        /// <summary> The processors specified for a pipeline group instance. </summary>
-        public IList<PipelineGroupProcessor> Processors { get; }
-        /// <summary> The exporters specified for a pipeline group instance. </summary>
-        public IList<PipelineGroupExporter> Exporters { get; }
-        /// <summary> The service section for a given pipeline group instance. </summary>
-        public PipelineGroupService Service { get; set; }
-        /// <summary> Networking configurations for the pipeline group instance. </summary>
-        public IList<PipelineGroupNetworkingConfiguration> NetworkingConfigurations { get; }
     }
 }

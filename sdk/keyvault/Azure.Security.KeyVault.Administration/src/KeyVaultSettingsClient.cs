@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,8 +17,8 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultSettingsClient
     {
+        private readonly KeyVaultRestClient _restClient;
         private readonly ClientDiagnostics _diagnostics;
-        private readonly SettingsRestClient _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultSettingsClient"/> class for the specified vault.
@@ -44,13 +45,9 @@ namespace Azure.Security.KeyVault.Administration
             VaultUri = vaultUri;
 
             options ??= new KeyVaultAdministrationClientOptions();
-            string apiVersion = options.GetVersionString();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
-
-            _diagnostics = new ClientDiagnostics(options);
-            _restClient = new SettingsRestClient(_diagnostics, pipeline, apiVersion);
+            _diagnostics = new ClientDiagnostics(options, true);
+            _restClient = new KeyVaultRestClient(vaultUri, credential, options);
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultBackupClient"/> class for mocking.
@@ -80,7 +77,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return _restClient.GetSetting(VaultUri.AbsoluteUri, name, cancellationToken);
+                return _restClient.GetSetting(name, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -106,7 +103,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return await _restClient.GetSettingAsync(VaultUri.AbsoluteUri, name, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetSettingAsync(name, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -127,7 +124,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return _restClient.GetSettings(VaultUri.AbsoluteUri, cancellationToken);
+                return _restClient.GetSettings(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -148,7 +145,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return await _restClient.GetSettingsAsync(VaultUri.AbsoluteUri, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetSettingsAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -172,7 +169,13 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return _restClient.UpdateSetting(VaultUri.AbsoluteUri, setting.Name, setting.Value.ToString(), cancellationToken);
+                Response response = _restClient.UpdateSetting(setting.Name, setting.ToRequestContent());
+
+                KeyVaultSetting updatedSetting = default;
+                using var document = JsonDocument.Parse(response.ContentStream, default);
+                updatedSetting = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
+
+                return Response.FromValue(updatedSetting, response);
             }
             catch (Exception ex)
             {
@@ -196,7 +199,13 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return await _restClient.UpdateSettingAsync(VaultUri.AbsoluteUri, setting.Name, setting.Value.ToString(), cancellationToken).ConfigureAwait(false);
+                Response response = await _restClient.UpdateSettingAsync(setting.Name, setting.ToRequestContent()).ConfigureAwait(false);
+
+                KeyVaultSetting updatedSetting = default;
+                using var document = await JsonDocument.ParseAsync(response.ContentStream, default).ConfigureAwait(false);
+                updatedSetting = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
+
+                return Response.FromValue(updatedSetting, response);
             }
             catch (Exception ex)
             {

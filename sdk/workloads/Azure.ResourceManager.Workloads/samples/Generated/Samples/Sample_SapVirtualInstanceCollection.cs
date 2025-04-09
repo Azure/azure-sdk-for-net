@@ -118,7 +118,7 @@ NetworkInterfaceName = "ascsnic",
 OSDiskName = "ascsosdisk",
 DataDiskNames =
 {
-["default"] = {"ascsdisk0"}
+["default"] = new string[]{"ascsdisk0"}
 },
 }},
                         },
@@ -135,7 +135,7 @@ NetworkInterfaceName = "appnic0",
 OSDiskName = "app0osdisk",
 DataDiskNames =
 {
-["default"] = {"app0disk0"}
+["default"] = new string[]{"app0disk0"}
 },
 }, new VirtualMachineResourceNames
 {
@@ -148,7 +148,7 @@ NetworkInterfaceName = "appnic1",
 OSDiskName = "app1osdisk",
 DataDiskNames =
 {
-["default"] = {"app1disk0"}
+["default"] = new string[]{"app1disk0"}
 },
 }},
                             AvailabilitySetName = "appAvSet",
@@ -166,10 +166,10 @@ NetworkInterfaceName = "dbnic",
 OSDiskName = "dbosdisk",
 DataDiskNames =
 {
-["hanaData"] = {"hanadata0", "hanadata1"},
-["hanaLog"] = {"hanalog0", "hanalog1", "hanalog2"},
-["hanaShared"] = {"hanashared0", "hanashared1"},
-["usrSap"] = {"usrsap0"}
+["hanaData"] = new string[]{"hanadata0", "hanadata1"},
+["hanaLog"] = new string[]{"hanalog0", "hanalog1", "hanalog2"},
+["hanaShared"] = new string[]{"hanashared0", "hanashared1"},
+["usrSap"] = new string[]{"usrsap0"}
 },
 }},
                         },
@@ -330,7 +330,7 @@ NetworkInterfaceName = "appnic0",
 OSDiskName = "app0osdisk",
 DataDiskNames =
 {
-["default"] = {"app0disk0"}
+["default"] = new string[]{"app0disk0"}
 },
 }, new VirtualMachineResourceNames
 {
@@ -343,7 +343,7 @@ NetworkInterfaceName = "appnic1",
 OSDiskName = "app1osdisk",
 DataDiskNames =
 {
-["default"] = {"app1disk0"}
+["default"] = new string[]{"app1disk0"}
 },
 }},
                             AvailabilitySetName = "appAvSet",
@@ -361,10 +361,10 @@ NetworkInterfaceName = "dbprnic",
 OSDiskName = "dbprosdisk",
 DataDiskNames =
 {
-["hanaData"] = {"hanadatapr0", "hanadatapr1"},
-["hanaLog"] = {"hanalogpr0", "hanalogpr1", "hanalogpr2"},
-["hanaShared"] = {"hanasharedpr0", "hanasharedpr1"},
-["usrSap"] = {"usrsappr0"}
+["hanaData"] = new string[]{"hanadatapr0", "hanadatapr1"},
+["hanaLog"] = new string[]{"hanalogpr0", "hanalogpr1", "hanalogpr2"},
+["hanaShared"] = new string[]{"hanasharedpr0", "hanasharedpr1"},
+["usrSap"] = new string[]{"usrsappr0"}
 },
 }, new VirtualMachineResourceNames
 {
@@ -377,10 +377,10 @@ NetworkInterfaceName = "dbsrnic",
 OSDiskName = "dbsrosdisk",
 DataDiskNames =
 {
-["hanaData"] = {"hanadatasr0", "hanadatasr1"},
-["hanaLog"] = {"hanalogsr0", "hanalogsr1", "hanalogsr2"},
-["hanaShared"] = {"hanasharedsr0", "hanasharedsr1"},
-["usrSap"] = {"usrsapsr0"}
+["hanaData"] = new string[]{"hanadatasr0", "hanadatasr1"},
+["hanaLog"] = new string[]{"hanalogsr0", "hanalogsr1", "hanalogsr2"},
+["hanaShared"] = new string[]{"hanasharedsr0", "hanasharedsr1"},
+["usrSap"] = new string[]{"usrsapsr0"}
 },
 }},
                             AvailabilitySetName = "dbAvSet",
@@ -548,7 +548,7 @@ NetworkInterfaceName = "appnic0",
 OSDiskName = "app0osdisk",
 DataDiskNames =
 {
-["default"] = {"app0disk0"}
+["default"] = new string[]{"app0disk0"}
 },
 }, new VirtualMachineResourceNames
 {
@@ -561,7 +561,7 @@ NetworkInterfaceName = "appnic1",
 OSDiskName = "app1osdisk",
 DataDiskNames =
 {
-["default"] = {"app1disk0"}
+["default"] = new string[]{"app1disk0"}
 },
 }},
                         },
@@ -578,10 +578,10 @@ NetworkInterfaceName = "dbprnic",
 OSDiskName = "dbprosdisk",
 DataDiskNames =
 {
-["hanaData"] = {"hanadatapr0", "hanadatapr1"},
-["hanaLog"] = {"hanalogpr0", "hanalogpr1", "hanalogpr2"},
-["hanaShared"] = {"hanasharedpr0", "hanasharedpr1"},
-["usrSap"] = {"usrsappr0"}
+["hanaData"] = new string[]{"hanadatapr0", "hanadatapr1"},
+["hanaLog"] = new string[]{"hanalogpr0", "hanalogpr1", "hanalogpr2"},
+["hanaShared"] = new string[]{"hanasharedpr0", "hanasharedpr1"},
+["usrSap"] = new string[]{"usrsappr0"}
 },
 }, new VirtualMachineResourceNames
 {
@@ -594,10 +594,10 @@ NetworkInterfaceName = "dbsrnic",
 OSDiskName = "dbsrosdisk",
 DataDiskNames =
 {
-["hanaData"] = {"hanadatasr0", "hanadatasr1"},
-["hanaLog"] = {"hanalogsr0", "hanalogsr1", "hanalogsr2"},
-["hanaShared"] = {"hanasharedsr0", "hanasharedsr1"},
-["usrSap"] = {"usrsapsr0"}
+["hanaData"] = new string[]{"hanadatasr0", "hanadatasr1"},
+["hanaLog"] = new string[]{"hanalogsr0", "hanalogsr1", "hanalogsr2"},
+["hanaShared"] = new string[]{"hanasharedsr0", "hanasharedsr1"},
+["usrSap"] = new string[]{"usrsapsr0"}
 },
 }},
                             LoadBalancer = new LoadBalancerResourceNames

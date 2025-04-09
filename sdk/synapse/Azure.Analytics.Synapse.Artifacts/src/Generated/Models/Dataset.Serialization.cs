@@ -131,11 +131,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element);
                     case "HttpFile": return HttpDataset.DeserializeHttpDataset(element);
                     case "HubspotObject": return HubspotObjectDataset.DeserializeHubspotObjectDataset(element);
+                    case "Iceberg": return IcebergDataset.DeserializeIcebergDataset(element);
                     case "ImpalaObject": return ImpalaObjectDataset.DeserializeImpalaObjectDataset(element);
                     case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element);
                     case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element);
                     case "Json": return JsonDataset.DeserializeJsonDataset(element);
-                    case "LakeHouseTable": return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element);
+                    case "LakehouseTable": return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element);
                     case "MagentoObject": return MagentoObjectDataset.DeserializeMagentoObjectDataset(element);
                     case "MariaDBTable": return MariaDBTableDataset.DeserializeMariaDBTableDataset(element);
                     case "MarketoObject": return MarketoObjectDataset.DeserializeMarketoObjectDataset(element);
@@ -199,7 +200,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static Dataset FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDataset(document.RootElement);
         }
 

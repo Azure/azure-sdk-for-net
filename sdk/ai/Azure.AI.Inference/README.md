@@ -25,7 +25,7 @@ With some minor adjustments, this client library can also be configured to do in
 * An [Azure subscription](https://azure.microsoft.com/free).
 * An [AI Model from the catalog](https://ai.azure.com/explore/models) deployed through Azure AI Foundry.
 * To construct the client library, you will need to pass in the endpoint URL. The endpoint URL has the form `https://your-host-name.your-azure-region.inference.ai.azure.com`, where `your-host-name` is your unique model deployment host name and `your-azure-region` is the Azure region where the model is deployed (e.g. `eastus2`).
-* Depending on your model deployment and authentication preference, you either need a key to authenticate against the service, or Entra ID credentials. The key is a 32-character string.
+* Depending on your model deployment and authentication preference, you either need a key to authenticate against the service, or Entra ID credentials.
 
 ### Install the package
 

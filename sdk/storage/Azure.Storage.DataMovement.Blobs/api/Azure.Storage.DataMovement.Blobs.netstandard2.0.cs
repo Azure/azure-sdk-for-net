@@ -24,6 +24,7 @@ namespace Azure.Storage.DataMovement.Blobs
     }
     public partial class BlobsStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
+        public BlobsStorageResourceProvider() { }
         public BlobsStorageResourceProvider(Azure.AzureSasCredential credential) { }
         public BlobsStorageResourceProvider(Azure.Core.TokenCredential credential) { }
         public BlobsStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }

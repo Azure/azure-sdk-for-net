@@ -6,9 +6,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace EventGridSourceGenerator
+namespace Azure.EventGrid.Messaging.SourceGeneration
 {
     internal class SourceVisitor : SymbolVisitor
     {

@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(document.RootElement, options);
                     }
                 default:

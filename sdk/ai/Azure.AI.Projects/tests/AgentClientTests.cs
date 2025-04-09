@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Security;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -26,6 +27,7 @@ namespace Azure.AI.Projects.Tests
         private const string TEMP_DIR = "cs_e2e_temp_dir";
 
         private const string FILE_UPLOAD_CONSTRAINT = "The file is being uploaded as a multipart multipart/form-data, which cannot be recorded.";
+        private const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
 
         public AgentClientTests(bool isAsync) : base(isAsync) {
             TestDiagnostics = false;
@@ -45,11 +47,33 @@ namespace Azure.AI.Projects.Tests
             Batch,
             File
         }
+
+        // We have to create this enum because AzureAISearchQueryType.Simple actually return a new object,
+        // which cannot be used in TestCase
+        public enum AzureAISearchQueryTypeEnum
+        {
+            Simple,
+            Semantic,
+            Vector,
+            VectorSimpleHybrid,
+            VectorSemanticHybrid
+        }
+
+        public Dictionary<AzureAISearchQueryTypeEnum, AzureAISearchQueryType> SearchQueryTypes = new()
+        {
+            { AzureAISearchQueryTypeEnum.Simple, AzureAISearchQueryType.Simple },
+            { AzureAISearchQueryTypeEnum.Semantic, AzureAISearchQueryType.Semantic },
+            { AzureAISearchQueryTypeEnum.Vector, AzureAISearchQueryType.Vector },
+            { AzureAISearchQueryTypeEnum.VectorSimpleHybrid, AzureAISearchQueryType.VectorSimpleHybrid },
+            { AzureAISearchQueryTypeEnum.VectorSemanticHybrid, AzureAISearchQueryType.VectorSemanticHybrid }
+        };
         #endregion
 
         [RecordedTest]
-        [TestCase(ArgumentType.Metadata)]
-        [TestCase(ArgumentType.Bytes)]
+        //Failing in CI due to no playback found
+        //https://dev.azure.com/azure-sdk/public/_build/results?buildId=4622315&view=logs&j=91fc166b-5adf-5829-8c48-947d370143f5&t=b0549744-0856-5f62-f0ed-ab5057788140&l=1029
+        //[TestCase(ArgumentType.Metadata)]
+        //[TestCase(ArgumentType.Bytes)]
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreateAgent(ArgumentType argType)
         {
@@ -610,23 +634,31 @@ namespace Azure.AI.Projects.Tests
                 || toolRun.Status == RunStatus.InProgress
                 || toolRun.Status == RunStatus.RequiresAction);
             Assert.True(functionCalled);
-            Assert.AreEqual(toolRun.Status, RunStatus.Completed);
+            Assert.AreEqual(RunStatus.Completed, toolRun.Status, message: toolRun.LastError?.Message);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
         }
 
         [RecordedTest]
-        [TestCase(VecrorStoreTestType.JustVectorStore, true)]
-        [TestCase(VecrorStoreTestType.Batch, true)]
-        [TestCase(VecrorStoreTestType.File, true)]
-        [TestCase(VecrorStoreTestType.JustVectorStore, false)]
-        [TestCase(VecrorStoreTestType.Batch, false)]
-        [TestCase(VecrorStoreTestType.File, false)]
-        public async Task TestCreateVectorStore(VecrorStoreTestType testType, bool useFileSource)
+        [TestCase(VecrorStoreTestType.JustVectorStore, true, false)]
+        [TestCase(VecrorStoreTestType.Batch, true, false)]
+        [TestCase(VecrorStoreTestType.File, true, false)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, false, false)]
+        [TestCase(VecrorStoreTestType.Batch, false, false)]
+        [TestCase(VecrorStoreTestType.File, false, false)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, true, true)]
+        [TestCase(VecrorStoreTestType.Batch, true, true)]
+        [TestCase(VecrorStoreTestType.File, true, true)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, false, true)]
+        [TestCase(VecrorStoreTestType.Batch, false, true)]
+        [TestCase(VecrorStoreTestType.File, false, true)]
+        public async Task TestCreateVectorStore(VecrorStoreTestType testType, bool useFileSource, bool useStreaming)
         {
             if (useFileSource && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
+            if (useStreaming && !IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             AgentsClient client = GetClient();
             VectorStore vectorStore;
 
@@ -693,11 +725,29 @@ namespace Azure.AI.Projects.Tests
                 role: MessageRole.User,
                 content: "What does the attachment say?"
             ));
-            ThreadRun fileSearchRun = await client.CreateThreadAndRunAsync(
-                assistantId: agent.Id,
-                thread: threadOp
-            );
-            fileSearchRun = await WaitForRun(client, fileSearchRun);
+            ThreadRun fileSearchRun = default;
+            if (useStreaming)
+            {
+                AgentThread thread = await client.CreateThreadAsync(messages: [new ThreadMessageOptions(
+                    role: MessageRole.User,
+                    content: "What does the attachment say?"
+                )]);
+                await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+                {
+                    if (streamingUpdate is RunUpdate runUpdate)
+                        fileSearchRun = runUpdate.Value;
+                }
+                Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status, fileSearchRun.LastError?.ToString());
+            }
+            else
+            {
+                fileSearchRun = await client.CreateThreadAndRunAsync(
+                    assistantId: agent.Id,
+                    thread: threadOp
+                );
+                fileSearchRun = await WaitForRun(client, fileSearchRun);
+            }
+            Assert.IsNotNull(fileSearchRun);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             // Check list, get and delete operations.
@@ -892,7 +942,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestIncludeFileSearchContent(bool useStream, bool includeContent)
         {
             if (useStream && !IsAsync)
-                Assert.Inconclusive("The test framework does not support iteration of stream in Sync mode.");
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             AgentsClient client = GetClient();
             VectorStoreDataSource vectorStoreDataSource = new(
                     assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
@@ -973,9 +1023,10 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
-        [Ignore("Azure function call is not supported in all regions yet.")]
         public async Task TestAzureFunctionCall()
         {
+            // Note: This test was recorded in westus region as for now
+            // 2025-02-05 it is not supported in test region (East US 2)
             AzureFunctionToolDefinition azureFnTool = new(
                 name: "foo",
                 description: "Get answers from the foo bot.",
@@ -1032,9 +1083,10 @@ namespace Azure.AI.Projects.Tests
             await WaitForRun(client, run);
             PageableList<ThreadMessage> afterRunMessages = await client.GetMessagesAsync(thread.Id);
 
+            Assert.Greater(afterRunMessages.Count(), 1);
+            bool foundResponse = false;
             foreach (ThreadMessage msg in afterRunMessages)
             {
-                bool foundResponse = false;
                 foreach (MessageContent contentItem in msg.ContentItems)
                 {
                     if (contentItem is MessageTextContent textItem)
@@ -1046,8 +1098,8 @@ namespace Azure.AI.Projects.Tests
                         }
                     }
                 }
-                Assert.True(foundResponse);
             }
+            Assert.True(foundResponse);
         }
 
         [RecordedTest]
@@ -1126,6 +1178,167 @@ namespace Azure.AI.Projects.Tests
                 }
             }
             Assert.True(foundId);
+        }
+
+        [RecordedTest]
+        [TestCase(AzureAISearchQueryTypeEnum.Simple)]
+        [TestCase(AzureAISearchQueryTypeEnum.Semantic)]
+        [TestCase(AzureAISearchQueryTypeEnum.Vector)]
+        [TestCase(AzureAISearchQueryTypeEnum.VectorSimpleHybrid)]
+        [TestCase(AzureAISearchQueryTypeEnum.VectorSemanticHybrid)]
+        public async Task TestAzureAiSearch(AzureAISearchQueryTypeEnum queryType)
+        {
+            AgentsClient client = GetClient();
+            ListConnectionsResponse connections = await GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
+
+            ConnectionResponse connection = connections.Value[0];
+
+            AISearchIndexResource indexList = new(connection.Id, "sample_index");
+            indexList.QueryType = SearchQueryTypes[queryType];
+            ToolResources searchResource = new()
+            {
+                AzureAISearch = new AzureAISearchResource
+                {
+                    IndexList = { indexList }
+                }
+            };
+
+            Agent agent = await client.CreateAgentAsync(
+                model: "gpt-4",
+                name: AGENT_NAME,
+                instructions: "You are a helpful assistant.",
+                tools: [new AzureAISearchToolDefinition()],
+                toolResources: searchResource);
+
+            // Create thread for communication
+            AgentThread thread = await client.CreateThreadAsync();
+
+            // Create message to thread
+            await client.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "What is the temperature rating of the cozynights sleeping bag?");
+            Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
+
+            do
+            {
+                await Task.Delay(TimeSpan.FromMilliseconds(500));
+                runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+            }
+            while (runResponse.Value.Status == RunStatus.Queued
+                || runResponse.Value.Status == RunStatus.InProgress);
+
+            Assert.AreEqual(
+                RunStatus.Completed,
+                runResponse.Value.Status,
+                runResponse.Value.LastError?.Message);
+            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+                threadId: thread.Id,
+                order: ListSortOrder.Ascending
+            );
+
+            // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
+            foreach (ThreadMessage threadMessage in messages)
+            {
+                Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+                foreach (MessageContent contentItem in threadMessage.ContentItems)
+                {
+                    if (contentItem is MessageTextContent textItem)
+                    {
+                        // We need to annotate only Agent messages.
+                        if (threadMessage.Role == MessageRole.Agent && textItem.Annotations.Count > 0)
+                        {
+                            string annotatedText = textItem.Text;
+                            foreach (MessageTextAnnotation annotation in textItem.Annotations)
+                            {
+                                if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                                {
+                                    annotatedText = annotatedText.Replace(
+                                        urlAnnotation.Text,
+                                        $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                                }
+                            }
+                            Console.Write(annotatedText);
+                        }
+                        else
+                        {
+                            Console.Write(textItem.Text);
+                        }
+                    }
+                    else if (contentItem is MessageImageFileContent imageFileItem)
+                    {
+                        Console.Write($"<image from ID: {imageFileItem.FileId}");
+                    }
+                    Console.WriteLine();
+                }
+            }
+        }
+
+        [RecordedTest]
+        [TestCase(AzureAISearchQueryTypeEnum.Simple)]
+        [TestCase(AzureAISearchQueryTypeEnum.Semantic)]
+        [TestCase(AzureAISearchQueryTypeEnum.Vector)]
+        [TestCase(AzureAISearchQueryTypeEnum.VectorSimpleHybrid)]
+        [TestCase(AzureAISearchQueryTypeEnum.VectorSemanticHybrid)]
+        public async Task TestAzureAiSearchStreaming(AzureAISearchQueryTypeEnum queryType)
+        {
+            if (!IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
+            AgentsClient client = GetClient();
+            ListConnectionsResponse connections = await GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
+
+            ConnectionResponse connection = connections.Value[0];
+
+            AISearchIndexResource indexList = new(connection.Id, "sample_index");
+            indexList.QueryType = SearchQueryTypes[queryType];
+            ToolResources searchResource = new()
+            {
+                AzureAISearch = new AzureAISearchResource
+                {
+                    IndexList = { indexList }
+                }
+            };
+
+            Agent agent = await client.CreateAgentAsync(
+                model: "gpt-4",
+                name: AGENT_NAME,
+                instructions: "You are a helpful assistant.",
+                tools: [new AzureAISearchToolDefinition()],
+                toolResources: searchResource);
+
+            // Create thread for communication
+            AgentThread thread = await client.CreateThreadAsync();
+
+            // Create message to thread
+            await client.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "What is the temperature rating of the cozynights sleeping bag?");
+            await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+            {
+                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+                {
+                    Console.WriteLine("--- Run started! ---");
+                }
+                else if (streamingUpdate is MessageContentUpdate contentUpdate)
+                {
+                    if (contentUpdate.TextAnnotation != null)
+                    {
+                        Console.Write($" [see {contentUpdate.TextAnnotation.Title}] ({contentUpdate.TextAnnotation.Url})");
+                    }
+                    else
+                    {
+                        //Detect the reference placeholder and skip it. Instead we will print the actual reference.
+                        if (contentUpdate.Text[0] != (char)12304 || contentUpdate.Text[contentUpdate.Text.Length - 1] != (char)12305)
+                            Console.Write(contentUpdate.Text);
+                    }
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("--- Run completed! ---");
+                }
+            }
         }
 
         #region Helpers
@@ -1227,7 +1440,7 @@ namespace Azure.AI.Projects.Tests
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress
                 || run.Status == RunStatus.RequiresAction);
-            Assert.AreEqual(RunStatus.Completed, run.Status);
+            Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.Message?.ToString());
             return run;
         }
 
@@ -1252,6 +1465,29 @@ namespace Azure.AI.Projects.Tests
             }
             while (agentsResp.HasMore);
             return count;
+        }
+
+        private ConnectionsClient GetConnectionsClient()
+        {
+            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            // If we are in the Playback, do not ask for authentication.
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return InstrumentClient(new ConnectionsClient(connectionString, new MockCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+            }
+            // For local testing if you are using non default account
+            // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
+            // also provide the PATH variable.
+            // This path should allow launching az command.
+            var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
+            if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
+            {
+                return InstrumentClient(new ConnectionsClient(connectionString, new AzureCliCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+            }
+            else
+            {
+                return InstrumentClient(new ConnectionsClient(connectionString, new DefaultAzureCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+            }
         }
         #endregion
         #region Cleanup

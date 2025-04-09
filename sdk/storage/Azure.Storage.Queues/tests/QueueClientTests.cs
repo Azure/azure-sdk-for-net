@@ -107,6 +107,26 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            var queueName = "queueName";
+
+            QueueClient queue = new QueueClient(connectionString.ToString(true), queueName);
+
+            Assert.AreEqual(queueName, queue.Name);
+            Assert.AreEqual(accountName, queue.AccountName);
+        }
+
         [RecordedTest]
         public void Ctor_Uri()
         {
@@ -132,6 +152,22 @@ namespace Azure.Storage.Queues.Test
             TestHelper.AssertExpectedException(
                 () => new QueueClient(uri, tokenCredential),
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var queueName = "queueName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var queueEndpoint = new Uri($"https://customdomain/{queueName}");
+
+            QueueClient queueClient = new QueueClient(queueEndpoint, credentials);
+
+            Assert.AreEqual(accountName, queueClient.AccountName);
+            Assert.AreEqual(queueName, queueClient.Name);
         }
 
         [RecordedTest]
@@ -715,6 +751,19 @@ namespace Azure.Storage.Queues.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.GetAccessPolicyAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task GetSetAccessPolicyAsync_OAuth()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_OAuth();
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            // Act
+            Response<IEnumerable<QueueSignedIdentifier>> response = await test.Queue.GetAccessPolicyAsync();
+            await test.Queue.SetAccessPolicyAsync(permissions: response.Value);
         }
 
         [RecordedTest]

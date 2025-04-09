@@ -21,8 +21,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string content = default;
+            string messageId = default;
             AcsMessageChannelKind? channelType = default;
+            string messageType = default;
             AcsMessageMediaContent media = default;
+            AcsMessageReactionContent reaction = default;
             AcsMessageContext context = default;
             AcsMessageButtonContent button = default;
             AcsMessageInteractiveContent interactive = default;
@@ -37,6 +40,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     content = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("messageId"u8))
+                {
+                    messageId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("channelType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -46,6 +54,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     channelType = new AcsMessageChannelKind(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("messageType"u8))
+                {
+                    messageType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("media"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -53,6 +66,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         continue;
                     }
                     media = AcsMessageMediaContent.DeserializeAcsMessageMediaContent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("reaction"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reaction = AcsMessageReactionContent.DeserializeAcsMessageReactionContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("context"u8))
@@ -117,8 +139,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 receivedTimestamp,
                 error,
                 content,
+                messageId,
                 channelType,
+                messageType,
                 media,
+                reaction,
                 context,
                 button,
                 interactive);
@@ -128,7 +153,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsMessageReceivedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsMessageReceivedEventData(document.RootElement);
         }
 

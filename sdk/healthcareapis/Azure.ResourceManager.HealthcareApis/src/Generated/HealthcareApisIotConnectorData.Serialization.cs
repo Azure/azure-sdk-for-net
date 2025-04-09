@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthcareApisIotConnectorData(document.RootElement, options);
                     }
                 default:

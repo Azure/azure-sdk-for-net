@@ -46,9 +46,9 @@ namespace Azure.Communication.ProgrammableConnectivity
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkIdentifier"/>. </summary>
-        /// <param name="identifierType"> The type of identifier for the network. one of: 'IPv4', 'IPv6', 'NetworkCode'. </param>
+        /// <param name="identifierType"> The type of identifier for the network. one of: 'IPv4', 'IPv6', 'MSISDN', 'NetworkCode'. </param>
         /// <param name="identifier">
-        /// The network identifier, based on the identifierType: an IPv4 address, and IPv6 address, or a Network Code.
+        /// The network identifier, based on the identifierType: an IPv4 address, an IPv6 address, an MSISDN, or a Network Code.
         /// A Network Code may be obtained from APC documentation or from the APC /Network:retrieve endpoint.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifierType"/> or <paramref name="identifier"/> is null. </exception>
@@ -62,9 +62,9 @@ namespace Azure.Communication.ProgrammableConnectivity
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkIdentifier"/>. </summary>
-        /// <param name="identifierType"> The type of identifier for the network. one of: 'IPv4', 'IPv6', 'NetworkCode'. </param>
+        /// <param name="identifierType"> The type of identifier for the network. one of: 'IPv4', 'IPv6', 'MSISDN', 'NetworkCode'. </param>
         /// <param name="identifier">
-        /// The network identifier, based on the identifierType: an IPv4 address, and IPv6 address, or a Network Code.
+        /// The network identifier, based on the identifierType: an IPv4 address, an IPv6 address, an MSISDN, or a Network Code.
         /// A Network Code may be obtained from APC documentation or from the APC /Network:retrieve endpoint.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -80,10 +80,10 @@ namespace Azure.Communication.ProgrammableConnectivity
         {
         }
 
-        /// <summary> The type of identifier for the network. one of: 'IPv4', 'IPv6', 'NetworkCode'. </summary>
+        /// <summary> The type of identifier for the network. one of: 'IPv4', 'IPv6', 'MSISDN', 'NetworkCode'. </summary>
         public string IdentifierType { get; }
         /// <summary>
-        /// The network identifier, based on the identifierType: an IPv4 address, and IPv6 address, or a Network Code.
+        /// The network identifier, based on the identifierType: an IPv4 address, an IPv6 address, an MSISDN, or a Network Code.
         /// A Network Code may be obtained from APC documentation or from the APC /Network:retrieve endpoint.
         /// </summary>
         public string Identifier { get; }

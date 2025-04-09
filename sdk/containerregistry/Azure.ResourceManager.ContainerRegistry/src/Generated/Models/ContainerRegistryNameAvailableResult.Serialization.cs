@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 throw new FormatException($"The model {nameof(ContainerRegistryNameAvailableResult)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(AvailableLoginServerName))
+            {
+                writer.WritePropertyName("availableLoginServerName"u8);
+                writer.WriteStringValue(AvailableLoginServerName);
+            }
             if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
@@ -58,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
+            string availableLoginServerName = default;
             bool? nameAvailable = default;
             string reason = default;
             string message = default;
@@ -94,6 +100,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("availableLoginServerName"u8))
+                {
+                    availableLoginServerName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("nameAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -119,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerRegistryNameAvailableResult(nameAvailable, reason, message, serializedAdditionalRawData);
+            return new ContainerRegistryNameAvailableResult(availableLoginServerName, nameAvailable, reason, message, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -132,6 +143,29 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailableLoginServerName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  availableLoginServerName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AvailableLoginServerName))
+                {
+                    builder.Append("  availableLoginServerName: ");
+                    if (AvailableLoginServerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AvailableLoginServerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AvailableLoginServerName}'");
+                    }
+                }
+            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNameAvailable), out propertyOverride);
             if (hasPropertyOverride)
@@ -222,7 +256,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerRegistryNameAvailableResult(document.RootElement, options);
                     }
                 default:

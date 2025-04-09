@@ -70,7 +70,7 @@ namespace Azure.Communication
             }
         }
 
-        private static CommunicationIdentifierModelKind GetKind(CommunicationIdentifierModel identifier)
+        internal static CommunicationIdentifierModelKind GetKind(CommunicationIdentifierModel identifier)
         {
             if (identifier.CommunicationUser is not null)
             {
@@ -95,7 +95,7 @@ namespace Azure.Communication
             return CommunicationIdentifierModelKind.Unknown;
         }
 
-        private static CommunicationCloudEnvironment Deserialize(CommunicationCloudEnvironmentModel cloud)
+        internal static CommunicationCloudEnvironment Deserialize(CommunicationCloudEnvironmentModel cloud)
         {
             if (cloud == CommunicationCloudEnvironmentModel.Public)
                 return CommunicationCloudEnvironment.Public;
@@ -144,7 +144,7 @@ namespace Azure.Communication
                 _ => throw new NotSupportedException(),
             };
 
-        private static CommunicationCloudEnvironmentModel Serialize(CommunicationCloudEnvironment cloud)
+        internal static CommunicationCloudEnvironmentModel Serialize(CommunicationCloudEnvironment cloud)
         {
             if (cloud == CommunicationCloudEnvironment.Public)
                 return CommunicationCloudEnvironmentModel.Public;
@@ -156,10 +156,10 @@ namespace Azure.Communication
             return new CommunicationCloudEnvironmentModel(cloud.ToString());
         }
 
-        private static T AssertNotNull<T>(T value, string name, string type) where T : class
+        internal static T AssertNotNull<T>(T value, string name, string type) where T : class
             => value ?? throw new JsonException($"Property '{name}' is required for identifier of type `{type}`.");
 
-        private static T AssertNotNull<T>(T? value, string name, string type) where T : struct
+        internal static T AssertNotNull<T>(T? value, string name, string type) where T : struct
         {
             if (value is null)
                 throw new JsonException($"Property '{name}' is required for identifier of type `{type}`.");

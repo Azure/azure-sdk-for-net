@@ -250,7 +250,6 @@ public class ClientLoggingOptions
 
     internal PipelineMessageSanitizer GetPipelineMessageSanitizer()
     {
-        Console.WriteLine($"Allowed header names:{_allowedHeaderNames}");
         if (HeaderListIsDefault && QueryParameterListIsDefault)
         {
             return s_defaultSanitizer;

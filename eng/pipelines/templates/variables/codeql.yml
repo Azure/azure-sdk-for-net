@@ -1,0 +1,3 @@
+variables:
+  Codeql.Enabled: true
+  Codeql.SkipTaskAutoInjection: false

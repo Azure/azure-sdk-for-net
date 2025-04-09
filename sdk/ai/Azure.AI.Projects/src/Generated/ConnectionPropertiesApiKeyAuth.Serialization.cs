@@ -79,7 +79,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString().ToConnectionType();
+                    category = new ConnectionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("target"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectionPropertiesApiKeyAuth(document.RootElement, options);
                     }
                 default:
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ConnectionPropertiesApiKeyAuth FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeConnectionPropertiesApiKeyAuth(document.RootElement);
         }
 

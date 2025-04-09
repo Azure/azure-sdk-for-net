@@ -136,7 +136,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 TrackBytesTransferred = trackBytes
             }
                 ;
-            transferOptions.CreationPreference = createMode;
+            transferOptions.CreationMode = createMode;
 
             TransferOperation transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTime));

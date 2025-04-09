@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Azure.AI.OpenAI" />
+    <PackageReference Include="Azure.Provisioning.Deployment" />
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.Projects.Provisioning.csproj" />
+    <ProjectReference Include="..\..\Azure.Projects.AI\src\Azure.Projects.AI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data/*" CopyToOutputDirectory="Always" />
+    <None Update="appsettings.json" CopyToOutputDirectory="Always" />
+    <None Update="Data\blobsObservable.bicep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

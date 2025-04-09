@@ -63,6 +63,7 @@ namespace Azure.AI.Projects
             Name = name;
             Spec = spec;
             Auth = auth;
+            DefaultParams = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinition"/>. </summary>
@@ -74,13 +75,15 @@ namespace Azure.AI.Projects
         /// Please note <see cref="OpenApiAuthDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenApiAnonymousAuthDetails"/>, <see cref="OpenApiConnectionAuthDetails"/> and <see cref="OpenApiManagedAuthDetails"/>.
         /// </param>
+        /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth, IList<string> defaultParams, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
             Spec = spec;
             Auth = auth;
+            DefaultParams = defaultParams;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -130,5 +133,7 @@ namespace Azure.AI.Projects
         /// The available derived classes include <see cref="OpenApiAnonymousAuthDetails"/>, <see cref="OpenApiConnectionAuthDetails"/> and <see cref="OpenApiManagedAuthDetails"/>.
         /// </summary>
         public OpenApiAuthDetails Auth { get; set; }
+        /// <summary> List of OpenAPI spec parameters that will use user-provided defaults. </summary>
+        public IList<string> DefaultParams { get; }
     }
 }

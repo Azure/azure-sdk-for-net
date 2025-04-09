@@ -1,6 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Type.Model.Usage",
-  "library-name": "Type.Model.Usage",
-  "use-model-reader-writer": true
+  "package-name": "Type.Model.Usage"
 }

@@ -35,6 +35,39 @@ var options = new ServiceBusClientOptions
 ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential(), options);
 ```
 
+### Influencing SSL certificate validation
+
+For some environments using a proxy or custom gateway for routing traffic to Service Bus, a certificate not trusted by the root certificate authorities may be issued. This can often be a self-signed certificate from the gateway or one issued by a company's internal certificate authority.
+
+By default, these certificates are not trusted by the Service Bus client library and the connection will be refused. To enable these scenarios, a [RemoteCertificateValidationCallback](https://learn.microsoft.com/dotnet/api/system.net.security.remotecertificatevalidationcallback) can be registered to provide custom validation logic for remote certificates. This allows an application to override the default trust decision and assert responsibility for accepting or rejecting the certificate.
+
+```C# Snippet:ServiceBusConfigureRemoteCertificateValidationCallback
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+DefaultAzureCredential credential = new();
+
+static bool ValidateServerCertificate(
+      object sender,
+      X509Certificate certificate,
+      X509Chain chain,
+      SslPolicyErrors sslPolicyErrors)
+{
+    if ((sslPolicyErrors == SslPolicyErrors.None)
+        || (certificate.Issuer == "My Company CA"))
+    {
+        return true;
+    }
+
+    // Do not allow communication with unauthorized servers.
+
+    return false;
+}
+
+ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
+{
+    CertificateValidationCallback = ValidateServerCertificate
+});
+```
+
 ## Customizing the retry options
 
 The retry options are used to configure the retry policy for all operations when communicating with the service. The default values are shown below, but they can be customized to fit your scenario.

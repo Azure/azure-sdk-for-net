@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.3.3 (2025-03-14)
+
+### Other Changes
+
+- Updating .NET runtime dependencies to the 6.x line, the Azure extensions to 1.8.0, and the latest dependencies for the Functions host.
+
 ## 1.3.2 (2024-06-13)
 
 ### Other Changes

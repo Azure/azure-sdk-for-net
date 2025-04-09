@@ -2,6 +2,7 @@ parameters:
   PackageName: ''
   PackageNames: ''
   ServiceDirectory: ''
+  TagSeparator: '_'
   TestPipeline: false
 
 steps:
@@ -16,4 +17,5 @@ steps:
           -BuildID $(Build.BuildId)
           -PackageNames '${{ coalesce(parameters.PackageName, parameters.PackageNames) }}'
           -ServiceDirectory '${{ parameters.ServiceDirectory }}'
+          -TagSeparator '${{ parameters.TagSeparator }}'
         pwsh: true

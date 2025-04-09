@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorList.DeserializeHealthMonitorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorList.DeserializeHealthMonitorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorData.DeserializeHealthMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorData.DeserializeHealthMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorStateChangeList.DeserializeHealthMonitorStateChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorStateChangeList.DeserializeHealthMonitorStateChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorList.DeserializeHealthMonitorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorList.DeserializeHealthMonitorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorStateChangeList.DeserializeHealthMonitorStateChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorStateChangeList.DeserializeHealthMonitorStateChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

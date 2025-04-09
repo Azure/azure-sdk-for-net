@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Response for packet core control planes API service call.
-    /// Serialized Name: PacketCoreControlPlaneListResult
-    /// </summary>
+    /// <summary> Response for packet core control planes API service call. </summary>
     internal partial class PacketCoreControlPlaneListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneListResult"/>. </summary>
-        /// <param name="value">
-        /// A list of packet core control planes in a resource group.
-        /// Serialized Name: PacketCoreControlPlaneListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: PacketCoreControlPlaneListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of packet core control planes in a resource group. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PacketCoreControlPlaneListResult(IReadOnlyList<PacketCoreControlPlaneData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of packet core control planes in a resource group.
-        /// Serialized Name: PacketCoreControlPlaneListResult.value
-        /// </summary>
+        /// <summary> A list of packet core control planes in a resource group. </summary>
         public IReadOnlyList<PacketCoreControlPlaneData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: PacketCoreControlPlaneListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

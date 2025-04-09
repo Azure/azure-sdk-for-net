@@ -871,7 +871,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteMatrixResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteMatrixResult.DeserializeRouteMatrixResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1015,7 +1015,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteMatrixResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteMatrixResult.DeserializeRouteMatrixResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1455,7 +1455,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirections value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteDirections.DeserializeRouteDirections(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1705,7 +1705,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirections value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteDirections.DeserializeRouteDirections(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2160,7 +2160,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirections value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteDirections.DeserializeRouteDirections(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2421,7 +2421,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirections value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteDirections.DeserializeRouteDirections(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2785,7 +2785,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteRangeResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteRangeResult.DeserializeRouteRangeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2995,7 +2995,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteRangeResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteRangeResult.DeserializeRouteRangeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3778,7 +3778,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirectionsBatchResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteDirectionsBatchResult.DeserializeRouteDirectionsBatchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3896,7 +3896,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirectionsBatchResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteDirectionsBatchResult.DeserializeRouteDirectionsBatchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

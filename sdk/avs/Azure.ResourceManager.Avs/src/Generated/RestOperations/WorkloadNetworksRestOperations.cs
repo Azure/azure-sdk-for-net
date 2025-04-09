@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkList.DeserializeWorkloadNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkList.DeserializeWorkloadNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkData.DeserializeWorkloadNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkData.DeserializeWorkloadNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDhcpList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkDhcpList.DeserializeWorkloadNetworkDhcpList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDhcpList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkDhcpList.DeserializeWorkloadNetworkDhcpList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDhcpData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDhcpData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsServicesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkDnsServicesList.DeserializeWorkloadNetworkDnsServicesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsServicesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkDnsServicesList.DeserializeWorkloadNetworkDnsServicesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1268,7 +1268,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsZonesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkDnsZonesList.DeserializeWorkloadNetworkDnsZonesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1297,7 +1297,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsZonesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkDnsZonesList.DeserializeWorkloadNetworkDnsZonesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1366,7 +1366,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsZoneData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkDnsZoneData.DeserializeWorkloadNetworkDnsZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1399,7 +1399,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsZoneData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkDnsZoneData.DeserializeWorkloadNetworkDnsZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1760,7 +1760,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkGatewayList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkGatewayList.DeserializeWorkloadNetworkGatewayList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1789,7 +1789,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkGatewayList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkGatewayList.DeserializeWorkloadNetworkGatewayList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1858,7 +1858,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkGatewayData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1891,7 +1891,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkGatewayData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1958,7 +1958,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPortMirroringList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkPortMirroringList.DeserializeWorkloadNetworkPortMirroringList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1987,7 +1987,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPortMirroringList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkPortMirroringList.DeserializeWorkloadNetworkPortMirroringList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2056,7 +2056,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPortMirroringProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPortMirroringProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2450,7 +2450,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPublicIPsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkPublicIPsList.DeserializeWorkloadNetworkPublicIPsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2479,7 +2479,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPublicIPsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkPublicIPsList.DeserializeWorkloadNetworkPublicIPsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2548,7 +2548,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPublicIPData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2581,7 +2581,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPublicIPData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2842,7 +2842,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkSegmentsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkSegmentsList.DeserializeWorkloadNetworkSegmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2871,7 +2871,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkSegmentsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkSegmentsList.DeserializeWorkloadNetworkSegmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2940,7 +2940,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkSegmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2973,7 +2973,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkSegmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3334,7 +3334,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVirtualMachinesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkVirtualMachinesList.DeserializeWorkloadNetworkVirtualMachinesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3363,7 +3363,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVirtualMachinesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkVirtualMachinesList.DeserializeWorkloadNetworkVirtualMachinesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3432,7 +3432,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVirtualMachineData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkVirtualMachineData.DeserializeWorkloadNetworkVirtualMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3465,7 +3465,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVirtualMachineData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkVirtualMachineData.DeserializeWorkloadNetworkVirtualMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3532,7 +3532,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVmGroupsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkVmGroupsList.DeserializeWorkloadNetworkVmGroupsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3561,7 +3561,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVmGroupsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkVmGroupsList.DeserializeWorkloadNetworkVmGroupsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3630,7 +3630,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVmGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3663,7 +3663,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVmGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4012,7 +4012,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkList.DeserializeWorkloadNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4043,7 +4043,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkList.DeserializeWorkloadNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4096,7 +4096,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDhcpList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkDhcpList.DeserializeWorkloadNetworkDhcpList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4127,7 +4127,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDhcpList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkDhcpList.DeserializeWorkloadNetworkDhcpList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4180,7 +4180,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsServicesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkDnsServicesList.DeserializeWorkloadNetworkDnsServicesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4211,7 +4211,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsServicesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkDnsServicesList.DeserializeWorkloadNetworkDnsServicesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4264,7 +4264,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsZonesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkDnsZonesList.DeserializeWorkloadNetworkDnsZonesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4295,7 +4295,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkDnsZonesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkDnsZonesList.DeserializeWorkloadNetworkDnsZonesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4348,7 +4348,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkGatewayList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkGatewayList.DeserializeWorkloadNetworkGatewayList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4379,7 +4379,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkGatewayList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkGatewayList.DeserializeWorkloadNetworkGatewayList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4432,7 +4432,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPortMirroringList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkPortMirroringList.DeserializeWorkloadNetworkPortMirroringList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4463,7 +4463,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPortMirroringList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkPortMirroringList.DeserializeWorkloadNetworkPortMirroringList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4516,7 +4516,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPublicIPsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkPublicIPsList.DeserializeWorkloadNetworkPublicIPsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4547,7 +4547,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkPublicIPsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkPublicIPsList.DeserializeWorkloadNetworkPublicIPsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4600,7 +4600,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkSegmentsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkSegmentsList.DeserializeWorkloadNetworkSegmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4631,7 +4631,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkSegmentsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkSegmentsList.DeserializeWorkloadNetworkSegmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4684,7 +4684,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVirtualMachinesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkVirtualMachinesList.DeserializeWorkloadNetworkVirtualMachinesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4715,7 +4715,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVirtualMachinesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkVirtualMachinesList.DeserializeWorkloadNetworkVirtualMachinesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4768,7 +4768,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVmGroupsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadNetworkVmGroupsList.DeserializeWorkloadNetworkVmGroupsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4799,7 +4799,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         WorkloadNetworkVmGroupsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadNetworkVmGroupsList.DeserializeWorkloadNetworkVmGroupsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

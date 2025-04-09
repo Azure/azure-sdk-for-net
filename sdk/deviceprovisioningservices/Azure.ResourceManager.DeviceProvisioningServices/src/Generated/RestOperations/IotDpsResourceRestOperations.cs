@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         ProvisioningServiceDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProvisioningServiceDescriptionListResult.DeserializeProvisioningServiceDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         ProvisioningServiceDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProvisioningServiceDescriptionListResult.DeserializeProvisioningServiceDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         ProvisioningServiceDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProvisioningServiceDescriptionListResult.DeserializeProvisioningServiceDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         ProvisioningServiceDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProvisioningServiceDescriptionListResult.DeserializeProvisioningServiceDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         IotDpsSkuDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotDpsSkuDefinitionListResult.DeserializeIotDpsSkuDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         IotDpsSkuDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotDpsSkuDefinitionListResult.DeserializeIotDpsSkuDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceProvisioningServicesNameAvailabilityResult.DeserializeDeviceProvisioningServicesNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceProvisioningServicesNameAvailabilityResult.DeserializeDeviceProvisioningServicesNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesSharedAccessKey value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesSharedAccessKey value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         PrivateLinkResources value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateLinkResources.DeserializePrivateLinkResources(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         PrivateLinkResources value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateLinkResources.DeserializePrivateLinkResources(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesPrivateLinkResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesPrivateLinkResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         IReadOnlyList<DeviceProvisioningServicesPrivateEndpointConnectionData> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<DeviceProvisioningServicesPrivateEndpointConnectionData> array = new List<DeviceProvisioningServicesPrivateEndpointConnectionData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         IReadOnlyList<DeviceProvisioningServicesPrivateEndpointConnectionData> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<DeviceProvisioningServicesPrivateEndpointConnectionData> array = new List<DeviceProvisioningServicesPrivateEndpointConnectionData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesPrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesPrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1583,7 +1583,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         ProvisioningServiceDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProvisioningServiceDescriptionListResult.DeserializeProvisioningServiceDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1610,7 +1610,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         ProvisioningServiceDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProvisioningServiceDescriptionListResult.DeserializeProvisioningServiceDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         ProvisioningServiceDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProvisioningServiceDescriptionListResult.DeserializeProvisioningServiceDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1690,7 +1690,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         ProvisioningServiceDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProvisioningServiceDescriptionListResult.DeserializeProvisioningServiceDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1743,7 +1743,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         IotDpsSkuDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotDpsSkuDefinitionListResult.DeserializeIotDpsSkuDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1774,7 +1774,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         IotDpsSkuDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotDpsSkuDefinitionListResult.DeserializeIotDpsSkuDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1827,7 +1827,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1858,7 +1858,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

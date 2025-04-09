@@ -2,39 +2,38 @@
 
 This sample demonstrates how to import a project using the `Azure.AI.Language.Conversations.Authoring` SDK. You can define the project's metadata and assets to import it into the system.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Import a Project
 
-To import a project, call ImportAsync on the AnalyzeConversationAuthoring client.
+To import a project, call ImportAsync on the ConversationAuthoringProject client, which returns an Operation object that tracks the progress and completion of the import operation..
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportAsync
 string projectName = "MyImportedProjectAsync";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-var projectMetadata = new CreateProjectDetails(
+ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
     projectKind: "Conversation",
-    projectName: projectName,
     language: "en"
 )
 {
-    Settings = new ProjectSettings(0.7F),
+    Settings = new ConversationAuthoringProjectSettings(0.7F),
     Multilingual = true,
     Description = "Trying out CLU with assets"
 };
 
-var projectAssets = new ConversationExportedProjectAssets();
+ConversationExportedProjectAsset projectAssets = new ConversationExportedProjectAsset();
 
 projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
 projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
@@ -65,7 +64,7 @@ projectAssets.Utterances.Add(new ConversationExportedUtterance(
     Dataset = "dataset1"
 });
 
-var exportedProject = new ExportedProject(
+ConversationAuthoringExportedProject exportedProject = new ConversationAuthoringExportedProject(
     projectFileVersion: "2023-10-01",
     stringIndexType: StringIndexType.Utf16CodeUnit,
     metadata: projectMetadata
@@ -74,18 +73,15 @@ var exportedProject = new ExportedProject(
     Assets = projectAssets
 };
 
-Operation operation = await authoringClient.ImportAsync(
+Operation operation = await projectClient.ImportAsync(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
-    body: exportedProject,
-    exportedProjectFormat: ExportedProjectFormat.Conversation
+    exportedProject: exportedProject,
+    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
 
  // Extract the operation-location header
-string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
 ```
-
-To import a project, call ImportAsync on the AnalyzeConversationAuthoring client, which returns an Operation object that tracks the progress and completion of the import operation.

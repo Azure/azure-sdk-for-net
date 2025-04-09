@@ -27,20 +27,20 @@ namespace Azure.AI.Inference
         private const string TextGenerationValue = "text_generation";
         private const string ImageEmbeddingsValue = "image_embeddings";
         private const string AudioGenerationValue = "audio_generation";
-        private const string ChatValue = "chat";
+        private const string ChatCompletionValue = "chat_completion";
 
-        /// <summary> Embeddings. </summary>
+        /// <summary> A model capable of generating embeddings from a text. </summary>
         public static ModelType Embeddings { get; } = new ModelType(EmbeddingsValue);
-        /// <summary> Image generation. </summary>
+        /// <summary> A model capable of generating images from an image and text description. </summary>
         public static ModelType ImageGeneration { get; } = new ModelType(ImageGenerationValue);
-        /// <summary> Text generation. </summary>
+        /// <summary> A text generation model. </summary>
         public static ModelType TextGeneration { get; } = new ModelType(TextGenerationValue);
-        /// <summary> Image embeddings. </summary>
+        /// <summary> A model capable of generating embeddings from an image. </summary>
         public static ModelType ImageEmbeddings { get; } = new ModelType(ImageEmbeddingsValue);
-        /// <summary> Audio generation. </summary>
+        /// <summary> A text-to-audio generative model. </summary>
         public static ModelType AudioGeneration { get; } = new ModelType(AudioGenerationValue);
-        /// <summary> Chat completions. </summary>
-        public static ModelType Chat { get; } = new ModelType(ChatValue);
+        /// <summary> A model capable of taking chat-formatted messages and generate responses. </summary>
+        public static ModelType ChatCompletion { get; } = new ModelType(ChatCompletionValue);
         /// <summary> Determines if two <see cref="ModelType"/> values are the same. </summary>
         public static bool operator ==(ModelType left, ModelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ModelType"/> values are not the same. </summary>

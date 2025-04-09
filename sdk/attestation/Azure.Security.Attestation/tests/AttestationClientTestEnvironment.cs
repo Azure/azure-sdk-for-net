@@ -19,16 +19,26 @@ namespace Azure.Security.Attestation.Tests
 
         public string SharedAttestationUrl => "https://shared" + LocationShortName + "." + LocationShortName + ".test.attest.azure.net";
 
+#if NET9_0_OR_GREATER
+        public X509Certificate2 PolicyCertificate0 => X509CertificateLoader.LoadCertificate(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE0")));
+        public X509Certificate2 PolicyCertificate1 => X509CertificateLoader.LoadCertificate(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE1")));
+        public X509Certificate2 PolicyCertificate2 => X509CertificateLoader.LoadCertificate(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE2")));
+#else
         public X509Certificate2 PolicyCertificate0 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE0")));
         public X509Certificate2 PolicyCertificate1 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE1")));
         public X509Certificate2 PolicyCertificate2 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE2")));
+#endif
 
         public RSA PolicySigningKey0 => GetRSACryptoServiceProvider("SERIALIZEDPOLICYSIGNINGKEY0");
         public RSA PolicySigningKey1 => GetRSACryptoServiceProvider("SERIALIZEDPOLICYSIGNINGKEY1");
         public RSA PolicySigningKey2 => GetRSACryptoServiceProvider("SERIALIZEDPOLICYSIGNINGKEY2");
 
         // Policy management keys.
+#if NET9_0_OR_GREATER
+        public X509Certificate2 PolicyManagementCertificate => X509CertificateLoader.LoadCertificate(Convert.FromBase64String(GetRecordedVariable("ISOLATEDSIGNINGCERTIFICATE")));
+#else
         public X509Certificate2 PolicyManagementCertificate => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("ISOLATEDSIGNINGCERTIFICATE")));
+#endif
         public RSA PolicyManagementKey => GetRSACryptoServiceProvider("SERIALIZEDISOLATEDSIGNINGKEY");
         public string LocationShortName => GetRecordedVariable("LOCATIONSHORTNAME");
 

@@ -82,6 +82,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     exporterOptions.Credential ??= credential;
                 }
 
+                sp.EnsureNoUseAzureMonitorExporterRegistrations();
+
                 builder.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
                     new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
@@ -142,6 +144,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // Options should take precedence.
                     exporterOptions.Credential ??= credential;
                 }
+
+                sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 return new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions))
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta };
@@ -238,6 +242,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // Options should take precedence.
                     exporterOptions.Credential ??= credential;
                 }
+
+                sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
                 return new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(exporterOptions));

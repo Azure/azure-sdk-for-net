@@ -1,18 +1,24 @@
 # Release History
 
-## 1.1.2-beta.2 (Unreleased)
+## 1.1.2-beta.3 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
-- [Issue#30952](https://github.com/Azure/azure-sdk-for-net/issues/30952) fixed, add operation: `MoveCollections_Delete` back.
-
 ### Other Changes
+
+## 1.1.2-beta.2 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Bugs Fixed
+
+- [Issue#30952](https://github.com/Azure/azure-sdk-for-net/issues/30952) fixed, add operation: `MoveCollections_Delete` back.
 
 ## 1.1.2-beta.1 (2024-02-22)
 

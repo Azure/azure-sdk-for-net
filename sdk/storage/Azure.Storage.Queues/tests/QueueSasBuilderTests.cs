@@ -235,6 +235,45 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
+        [RecordedTest]
+        public async Task SasCredentialRequiresUriWithoutSasError_RedactedSasUri()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            QueueSasBuilder queueSasBuilder = new QueueSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                QueueName = test.Queue.Name
+            };
+
+            queueSasBuilder.SetPermissions(
+                rawPermissions: "raup",
+                normalize: true);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+
+            QueueUriBuilder queueUriBuilder = new QueueUriBuilder(test.Queue.Uri)
+            {
+                Sas = queueSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            Uri sasUri = queueUriBuilder.ToUri();
+
+            UriBuilder uriBuilder = new UriBuilder(sasUri);
+            uriBuilder.Query = "[REDACTED]";
+            string redactedUri = uriBuilder.Uri.ToString();
+
+            ArgumentException ex = Errors.SasCredentialRequiresUriWithoutSas<QueueUriBuilder>(sasUri);
+
+            // Assert
+            Assert.IsTrue(ex.Message.Contains(redactedUri));
+            Assert.IsFalse(ex.Message.Contains("st="));
+            Assert.IsFalse(ex.Message.Contains("se="));
+            Assert.IsFalse(ex.Message.Contains("sig="));
+        }
+
         private QueueSasBuilder BuildQueueSasBuilder(TestConstants constants, string queueName)
         {
             var queueSasBuilder = new QueueSasBuilder

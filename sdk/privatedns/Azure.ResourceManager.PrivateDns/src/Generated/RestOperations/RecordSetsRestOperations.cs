@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 201:
                     {
                         PrivateDnsRecordData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateDnsRecordData.DeserializePrivateDnsRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 201:
                     {
                         PrivateDnsRecordData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateDnsRecordData.DeserializePrivateDnsRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateDnsRecordData.DeserializePrivateDnsRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateDnsRecordData.DeserializePrivateDnsRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateDnsRecordData.DeserializePrivateDnsRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateDnsRecordData.DeserializePrivateDnsRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateDnsRecordListResult.DeserializePrivateDnsRecordListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateDnsRecordListResult.DeserializePrivateDnsRecordListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateDnsRecordListResult.DeserializePrivateDnsRecordListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateDnsRecordListResult.DeserializePrivateDnsRecordListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateDnsRecordListResult.DeserializePrivateDnsRecordListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateDnsRecordListResult.DeserializePrivateDnsRecordListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateDnsRecordListResult.DeserializePrivateDnsRecordListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         PrivateDnsRecordListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateDnsRecordListResult.DeserializePrivateDnsRecordListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

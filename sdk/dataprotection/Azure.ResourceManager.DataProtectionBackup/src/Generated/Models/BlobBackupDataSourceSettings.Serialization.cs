@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBlobBackupDataSourceSettings(document.RootElement, options);
                     }
                 default:

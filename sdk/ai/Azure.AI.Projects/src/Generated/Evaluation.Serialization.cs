@@ -41,6 +41,11 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("data"u8);
             writer.WriteObjectValue(Data, options);
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                writer.WriteObjectValue(Target, options);
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -99,7 +104,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -130,6 +135,7 @@ namespace Azure.AI.Projects
             }
             string id = default;
             InputData data = default;
+            EvaluationTarget target = default;
             string displayName = default;
             string description = default;
             SystemData systemData = default;
@@ -149,6 +155,15 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("data"u8))
                 {
                     data = InputData.DeserializeInputData(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    target = EvaluationTarget.DeserializeEvaluationTarget(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -222,6 +237,7 @@ namespace Azure.AI.Projects
             return new Evaluation(
                 id,
                 data,
+                target,
                 displayName,
                 description,
                 systemData,
@@ -253,7 +269,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEvaluation(document.RootElement, options);
                     }
                 default:
@@ -267,7 +283,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static Evaluation FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEvaluation(document.RootElement);
         }
 

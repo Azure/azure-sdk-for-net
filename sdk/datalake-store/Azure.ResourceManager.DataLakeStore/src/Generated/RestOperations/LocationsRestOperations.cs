@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreCapabilityInformation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreCapabilityInformation.DeserializeDataLakeStoreCapabilityInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreCapabilityInformation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreCapabilityInformation.DeserializeDataLakeStoreCapabilityInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreUsageListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreUsageListResult.DeserializeDataLakeStoreUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreUsageListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreUsageListResult.DeserializeDataLakeStoreUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

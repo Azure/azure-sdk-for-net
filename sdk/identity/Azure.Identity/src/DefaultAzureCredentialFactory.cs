@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -62,10 +64,12 @@ namespace Azure.Identity
                 chain.Add(CreateVisualStudioCredential());
             }
 
+#pragma warning disable CS0618 // Type or member is obsolete
             if (!Options.ExcludeVisualStudioCodeCredential)
             {
                 chain.Add(CreateVisualStudioCodeCredential());
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             if (!Options.ExcludeAzureCliCredential)
             {
@@ -85,6 +89,11 @@ namespace Azure.Identity
             if (!Options.ExcludeInteractiveBrowserCredential)
             {
                 chain.Add(CreateInteractiveBrowserCredential());
+            }
+
+            if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
+            {
+                chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
             }
 
             if (chain.Count == 0)
@@ -180,6 +189,23 @@ namespace Azure.Identity
                 Pipeline);
         }
 
+        public TokenCredential CreateBrokerAuthenticationCredential(InteractiveBrowserCredentialOptions brokerOptions)
+        {
+            var options = Options.Clone<DevelopmentBrokerOptions>();
+            ((IMsalSettablePublicClientInitializerOptions)options).BeforeBuildClient = ((IMsalSettablePublicClientInitializerOptions)brokerOptions).BeforeBuildClient;
+
+            options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
+
+            options.TenantId = Options.InteractiveBrowserTenantId;
+            options.IsChainedCredential = true;
+
+            return new InteractiveBrowserCredential(
+                Options.InteractiveBrowserTenantId,
+                Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId,
+                options,
+                Pipeline);
+        }
+
         public virtual TokenCredential CreateAzureDeveloperCliCredential()
         {
             var options = Options.Clone<AzureDeveloperCliCredentialOptions>();
@@ -212,11 +238,13 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateVisualStudioCodeCredential()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var options = Options.Clone<VisualStudioCodeCredentialOptions>();
             options.TenantId = Options.VisualStudioCodeTenantId;
             options.IsChainedCredential = true;
 
             return new VisualStudioCodeCredential(options, Pipeline, default, default, default);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public virtual TokenCredential CreateAzurePowerShellCredential()
@@ -227,6 +255,44 @@ namespace Azure.Identity
             options.IsChainedCredential = true;
 
             return new AzurePowerShellCredential(options, Pipeline, default);
+        }
+
+        /// <summary>
+        /// Creates a DevelopmentBrokerOptions instance if the Azure.Identity.Broker assembly is loaded.
+        /// This is used to enable broker authentication for development purposes.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        [UnconditionalSuppressMessage("Trimming", "IL2026",
+    Justification = "Assembly.Load is used for optional functionality. If the assembly is trimmed, the catch block handles it gracefully.")]
+        [UnconditionalSuppressMessage("Trimming", "IL2072",
+    Justification = "Loading Azure.Identity.Broker assembly is optional, method handles missing assembly gracefully")]
+        internal static bool TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options)
+        {
+            options = null;
+            try
+            {
+                // Check if the Azure.Identity.Broker assembly is loaded
+                Assembly brokerAssembly;
+                brokerAssembly = Assembly.Load("Azure.Identity.Broker");
+
+                if (brokerAssembly != null)
+                {
+                    // Get the DevelopmentBrokerOptions type
+                    var optionsType = brokerAssembly.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions");
+                    if (optionsType != null)
+                    {
+                        // Create an instance using the parameterless constructor
+                        options = (InteractiveBrowserCredentialOptions)Activator.CreateInstance(optionsType);
+                    }
+                }
+
+                return options != null;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

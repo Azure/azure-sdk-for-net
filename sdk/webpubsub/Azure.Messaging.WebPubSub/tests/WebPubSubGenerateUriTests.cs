@@ -30,10 +30,22 @@ namespace Azure.Messaging.WebPubSub.Tests
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
             var expectedUriPrefix = $"ws://localhost:8080{clientUriPrefix}/hubs/hub?access_token=";
             // Synchronize
-            Assert.True(serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), default, default, default, clientType, default).ToString().StartsWith(expectedUriPrefix));
+            Uri sUri = serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), default, default, default, clientType, default);
+            var token = HttpUtility.ParseQueryString(sUri.Query).Get("access_token");
+            Assert.NotNull(token);
+            JwtSecurityToken jwt = s_jwtTokenHandler.ReadJwtToken(token);
+            var aud = jwt.Claims.FirstOrDefault(s => s.Type == "aud")?.Value;
+            Assert.AreEqual($"http://localhost:8080{clientUriPrefix}/hubs/hub", aud);
+            Assert.True(sUri.ToString().StartsWith(expectedUriPrefix));
             Assert.True(serviceClient.GetClientAccessUri(DateTimeOffset.UtcNow.AddMinutes(1), default, default, default, clientType, default).ToString().StartsWith(expectedUriPrefix));
             // Asynchronize
-            Assert.True((await serviceClient.GetClientAccessUriAsync(TimeSpan.FromMinutes(1), default, default, default, clientType, default)).ToString().StartsWith(expectedUriPrefix));
+            Uri asyncUri = await serviceClient.GetClientAccessUriAsync(TimeSpan.FromMinutes(1), default, default, default, clientType, default);
+            var asyncToken = HttpUtility.ParseQueryString(asyncUri.Query).Get("access_token");
+            Assert.NotNull(asyncToken);
+            JwtSecurityToken asyncJwt = s_jwtTokenHandler.ReadJwtToken(asyncToken);
+            var asyncAud = asyncJwt.Claims.FirstOrDefault(s => s.Type == "aud")?.Value;
+            Assert.AreEqual($"http://localhost:8080{clientUriPrefix}/hubs/hub", asyncAud);
+            Assert.True(asyncUri.ToString().StartsWith(expectedUriPrefix));
             Assert.True((await serviceClient.GetClientAccessUriAsync(DateTimeOffset.Now, default, default, default, clientType, default)).ToString().StartsWith(expectedUriPrefix));
         }
 

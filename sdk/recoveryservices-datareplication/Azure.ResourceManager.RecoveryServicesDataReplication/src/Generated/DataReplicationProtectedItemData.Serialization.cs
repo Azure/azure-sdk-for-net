@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataReplicationProtectedItemData(document.RootElement, options);
                     }
                 default:

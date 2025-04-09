@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         private const string BValue = "B";
+        private const string CValue = "C";
 
         /// <summary> B. </summary>
         public static ManagedHsmSkuFamily B { get; } = new ManagedHsmSkuFamily(BValue);
+        /// <summary> C. </summary>
+        public static ManagedHsmSkuFamily C { get; } = new ManagedHsmSkuFamily(CValue);
         /// <summary> Determines if two <see cref="ManagedHsmSkuFamily"/> values are the same. </summary>
         public static bool operator ==(ManagedHsmSkuFamily left, ManagedHsmSkuFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmSkuFamily"/> values are not the same. </summary>

@@ -53,6 +53,12 @@ namespace Azure.AI.Inference.Tests.Samples
                 Assert.That(chatUpdate, Is.Not.Null);
 
                 Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
+                if (chatUpdate.Id == "")
+                {
+                    Assert.That(chatUpdate.ContentUpdate, Is.Null.Or.Empty);
+                    continue;
+                }
+
                 Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
                 Assert.That(chatUpdate.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
 

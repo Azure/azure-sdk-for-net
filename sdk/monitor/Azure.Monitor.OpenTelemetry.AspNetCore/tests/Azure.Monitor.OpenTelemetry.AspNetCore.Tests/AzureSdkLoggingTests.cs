@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if NET6_0_OR_GREATER
+#if NET
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -80,6 +80,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             serviceCollection.TryAddSingleton<Microsoft.Extensions.Azure.AzureEventSourceLogForwarder>();
 
             using var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            await StartHostedServicesAsync(serviceProvider);
 
             var logForwarder = serviceProvider.GetRequiredService<Microsoft.Extensions.Azure.AzureEventSourceLogForwarder>();
             Assert.NotNull(logForwarder);

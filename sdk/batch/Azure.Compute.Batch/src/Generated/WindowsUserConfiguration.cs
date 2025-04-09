@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="WindowsUserConfiguration"/>. </summary>
-        /// <param name="loginMode"> The login mode for the user. The default value for VirtualMachineConfiguration Pools is 'batch'. </param>
+        /// <param name="loginMode"> The login mode for the user. The default is 'batch'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WindowsUserConfiguration(LoginMode? loginMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,7 @@ namespace Azure.Compute.Batch
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The login mode for the user. The default value for VirtualMachineConfiguration Pools is 'batch'. </summary>
+        /// <summary> The login mode for the user. The default is 'batch'. </summary>
         public LoginMode? LoginMode { get; set; }
     }
 }

@@ -8,22 +8,28 @@ namespace Azure.AI.OpenAI.Files;
 [Experimental("AOAI001")]
 internal partial class AzureOpenAIFileCollection : OpenAIFileCollection
 {
-    internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; }
+    internal new IDictionary<string, BinaryData> SerializedAdditionalRawData { get; }
         = new ChangeTrackingDictionary<string, BinaryData>();
 
-    internal InternalListFilesResponseObject Object { get; }
+    internal string Object { get; } = "list";
 
     internal AzureOpenAIFileCollection()
         : this(
               new ChangeTrackingList<AzureOpenAIFile>(),
-              InternalListFilesResponseObject.List,
+              "list",
+              firstId: null,
+              lastId: null,
+              hasMore: false,
               new ChangeTrackingDictionary<string, BinaryData>())
     { }
 
     internal AzureOpenAIFileCollection(
         IEnumerable<AzureOpenAIFile> files,
-        InternalListFilesResponseObject @object,
-        IDictionary<string, BinaryData> serializedAdditionalRawData)
-            : base(files.Cast<OpenAIFile>().ToList(), @object, serializedAdditionalRawData)
+        string @object,
+        string firstId,
+        string lastId,
+        bool hasMore,
+        IDictionary<string, BinaryData> additionalBinaryDataProperties)
+            : base(files.Cast<OpenAIFile>().ToList(), @object, firstId, lastId, hasMore, additionalBinaryDataProperties)
     { }
 }

@@ -38,3 +38,5 @@ extends:
     Iterations: ${{ parameters.Iterations }}
     Profile: ${{ parameters.Profile }}
     AdditionalArguments: ${{ parameters.AdditionalArguments }}
+    EnvVars:
+      AZURE_AUTHORITY_HOST: $(AZURE_STORAGE_BLOBS_AZURE_AUTHORITY_HOST)

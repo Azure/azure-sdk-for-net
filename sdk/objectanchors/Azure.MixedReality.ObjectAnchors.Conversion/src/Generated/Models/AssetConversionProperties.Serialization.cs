@@ -159,7 +159,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AssetConversionProperties FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAssetConversionProperties(document.RootElement);
         }
 

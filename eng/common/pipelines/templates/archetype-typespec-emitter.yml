@@ -67,6 +67,10 @@ parameters:
   type: object
   default: []
 
+- name: EmitterPackageJsonPath
+  type: string
+  default: ""
+
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
@@ -172,14 +176,15 @@ extends:
 
           - ${{ if parameters.PublishPublic }}:
             # publish to npmjs.org using ESRP
-            - task: EsrpRelease@7
+            - task: EsrpRelease@9
               inputs:
                 displayName: Publish to npmjs.org
-                ConnectedServiceName: Azure SDK Engineering System
+                ConnectedServiceName: Azure SDK PME Managed Identity
                 ClientId: 5f81938c-2544-4f1f-9251-dd9de5b8a81b
-                KeyVaultName: AzureSDKEngKeyVault
-                AuthCertName: azure-sdk-esrp-release-auth-certificate
-                SignCertName: azure-sdk-esrp-release-sign-certificate
+                DomainTenantId: 975f013f-7f24-47e8-a7d3-abc4752bf346
+                UseManagedIdentity: true
+                KeyVaultName: kv-azuresdk-codesign
+                SignCertName: azure-sdk-esrp-release-certificate
                 Intent: PackageDistribution
                 ContentType: npm
                 FolderLocation: $(buildArtifactsPath)/packages
@@ -187,28 +192,26 @@ extends:
                 Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
                 ServiceEndpointUrl: https://api.esrp.microsoft.com
                 MainPublisher: ESRPRELPACMANTEST
-                DomainTenantId: 72f988bf-86f1-41af-91ab-2d7cd011db47
 
-          - task: PowerShell@2
-            displayName: Create emitter-package.json
-            inputs:
-              pwsh: true
-              filePath: ./eng/common/scripts/typespec/New-EmitterPackageJson.ps1
-              arguments: >
-                -PackageJsonPath '$(buildArtifactsPath)/lock-files/package.json'
-                -OverridesPath '$(buildArtifactsPath)/overrides.json'
-                -OutputDirectory '$(Build.ArtifactStagingDirectory)'
-              workingDirectory: $(Build.SourcesDirectory)
+          - pwsh: |
+              npm install -g @azure-tools/typespec-client-generator-cli@latest
+            displayName: Install tsp-client
 
-          - task: PowerShell@2
-            displayName: Create emitter-package-lock.json
-            inputs:
-              pwsh: true
-              filePath: ./eng/common/scripts/typespec/New-EmitterPackageLock.ps1
-              arguments: >
-                -EmitterPackageJsonPath '$(Build.ArtifactStagingDirectory)/emitter-package.json'
-                -OutputDirectory '$(Build.ArtifactStagingDirectory)'
-              workingDirectory: $(Build.SourcesDirectory)
+          - pwsh: |
+              if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
+                Write-Host "Using overrides.json to generate emitter-package.json"
+                tsp-client generate-config-files 
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' 
+                --output-dir '$(Build.ArtifactStagingDirectory)' 
+                --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
+                --overrides '$(buildArtifactsPath)/overrides.json'
+              } else {
+                tsp-client generate-config-files 
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' 
+                --output-dir '$(Build.ArtifactStagingDirectory)' 
+                --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
+              }
+            displayName: Generate emitter-package.json and emitter-package-lock files
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:

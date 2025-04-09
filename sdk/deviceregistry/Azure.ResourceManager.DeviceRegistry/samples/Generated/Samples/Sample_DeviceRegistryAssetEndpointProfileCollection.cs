@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAssetEndpointProfile()
         {
-            // Generated from example definition: 2024-09-01-preview/Create_AssetEndpointProfile.json
+            // Generated from example definition: 2024-11-01/Create_AssetEndpointProfile.json
             // this example is just showing the usage of "AssetEndpointProfile_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAssetEndpointProfileWithDiscoveredAepRef()
         {
-            // Generated from example definition: 2024-09-01-preview/Create_AssetEndpointProfile_With_DiscoveredAepRef.json
+            // Generated from example definition: 2024-11-01/Create_AssetEndpointProfile_With_DiscoveredAepRef.json
             // this example is just showing the usage of "AssetEndpointProfile_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAssetEndpointProfile()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile.json
+            // Generated from example definition: 2024-11-01/Get_AssetEndpointProfile.json
             // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAssetEndpointProfileWithSyncStatus()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile_With_SyncStatus.json
+            // Generated from example definition: 2024-11-01/Get_AssetEndpointProfile_With_SyncStatus.json
             // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAssetEndpointProfilesResourceGroup()
         {
-            // Generated from example definition: 2024-09-01-preview/List_AssetEndpointProfiles_ResourceGroup.json
+            // Generated from example definition: 2024-11-01/List_AssetEndpointProfiles_ResourceGroup.json
             // this example is just showing the usage of "AssetEndpointProfile_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAssetEndpointProfile()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile.json
+            // Generated from example definition: 2024-11-01/Get_AssetEndpointProfile.json
             // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAssetEndpointProfileWithSyncStatus()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile_With_SyncStatus.json
+            // Generated from example definition: 2024-11-01/Get_AssetEndpointProfile_With_SyncStatus.json
             // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAssetEndpointProfile()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile.json
+            // Generated from example definition: 2024-11-01/Get_AssetEndpointProfile.json
             // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAssetEndpointProfileWithSyncStatus()
         {
-            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile_With_SyncStatus.json
+            // Generated from example definition: 2024-11-01/Get_AssetEndpointProfile_With_SyncStatus.json
             // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -4,7 +4,6 @@
 using System;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
-using Azure.AI.Language.Text.Authoring.Models;
 using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -20,19 +19,18 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample10_TextAuthoring_DeployProject
             string projectName = "LoanAgreements";
             string deploymentName = "DeploymentName";
-            var deploymentDetails = new CreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
+            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
-            Operation operation = authoringClient.DeployProject(
+            var deploymentDetails = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
+
+            Operation operation = deploymentClient.DeployProject(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                deploymentName: deploymentName,
-                body: deploymentDetails
+                details: deploymentDetails
             );
 
             Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");

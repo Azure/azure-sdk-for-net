@@ -6,7 +6,7 @@
     <Version>5.17.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <!--Since we are adding a new target for net6.0, we need to temporarily condition on netstandard-->
-    <ApiCompatVersion>5.16.4</ApiCompatVersion>
+    <ApiCompatVersion>5.16.6</ApiCompatVersion>
     <NoWarn>$(NoWarn);CS1591;SA1636;AZC0007;AZC0015</NoWarn>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>

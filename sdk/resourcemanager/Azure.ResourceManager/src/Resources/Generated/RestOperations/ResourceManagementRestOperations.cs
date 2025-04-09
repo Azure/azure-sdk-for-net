@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceNameValidationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceNameValidationResult.DeserializeResourceNameValidationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceNameValidationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceNameValidationResult.DeserializeResourceNameValidationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

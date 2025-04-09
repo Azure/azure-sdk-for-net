@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
-[CodeGenModel("AzureContentFilterSeverityResult")]
+[CodeGenType("AzureContentFilterSeverityResult")]
 public partial class ContentFilterSeverityResult
 {
     [CodeGenMember("Severity")]

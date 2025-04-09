@@ -35,8 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("jobStatus"u8);
-            writer.WriteStringValue(JobStatus.ToString());
+            if (Optional.IsDefined(JobStatus))
+            {
+                writer.WritePropertyName("jobStatus"u8);
+                writer.WriteStringValue(JobStatus.Value.ToString());
+            }
             if (Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
@@ -54,8 +57,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("scheduledOn"u8);
-            writer.WriteStringValue(ScheduledOn, "O");
+            if (Optional.IsDefined(ScheduledOn))
+            {
+                writer.WritePropertyName("scheduledOn"u8);
+                writer.WriteStringValue(ScheduledOn.Value, "O");
+            }
             writer.WritePropertyName("unavailableForMatching"u8);
             writer.WriteBooleanValue(UnavailableForMatching);
         }
@@ -80,11 +86,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            AcsRouterJobStatus jobStatus = default;
+            AcsRouterJobStatus? jobStatus = default;
             string classificationPolicyId = default;
             int? priority = default;
             IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors = default;
-            DateTimeOffset scheduledOn = default;
+            DateTimeOffset? scheduledOn = default;
             bool unavailableForMatching = default;
             string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
@@ -98,6 +104,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("jobStatus"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     jobStatus = new AcsRouterJobStatus(property.Value.GetString());
                     continue;
                 }
@@ -127,6 +137,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("scheduledOn"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     scheduledOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -218,7 +232,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsRouterJobReceivedEventData(document.RootElement, options);
                     }
                 default:
@@ -232,7 +246,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsRouterJobReceivedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsRouterJobReceivedEventData(document.RootElement);
         }
 

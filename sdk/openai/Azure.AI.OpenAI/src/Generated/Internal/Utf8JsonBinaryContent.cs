@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.OpenAI
 {
-    internal class Utf8JsonBinaryContent : BinaryContent
+    internal partial class Utf8JsonBinaryContent : BinaryContent
     {
         private readonly MemoryStream _stream;
         private readonly BinaryContent _content;
@@ -22,6 +22,7 @@ namespace Azure.AI.OpenAI
             JsonWriter = new Utf8JsonWriter(_stream);
         }
 
+        /// <summary> Gets the JsonWriter. </summary>
         public Utf8JsonWriter JsonWriter { get; }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)

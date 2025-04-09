@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCosmosDBPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationProviderOperationsMetadataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationProviderOperationsMetadataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationProviderOperationsMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationProviderOperationsMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationProviderOperationsMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         AuthorizationProviderOperationsMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

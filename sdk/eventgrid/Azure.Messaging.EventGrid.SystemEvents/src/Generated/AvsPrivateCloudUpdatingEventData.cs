@@ -14,14 +14,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AvsPrivateCloudUpdatingEventData : AvsPrivateCloudEventData
     {
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudUpdatingEventData"/>. </summary>
-        internal AvsPrivateCloudUpdatingEventData()
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        internal AvsPrivateCloudUpdatingEventData(string operationId) : base(operationId)
         {
+            Argument.AssertNotNull(operationId, nameof(operationId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudUpdatingEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AvsPrivateCloudUpdatingEventData(string operationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(operationId, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudUpdatingEventData"/> for deserialization. </summary>
+        internal AvsPrivateCloudUpdatingEventData()
         {
         }
     }

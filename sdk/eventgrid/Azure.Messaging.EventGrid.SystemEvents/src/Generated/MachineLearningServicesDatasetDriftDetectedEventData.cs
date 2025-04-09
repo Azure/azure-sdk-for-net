@@ -46,12 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
-        /// <param name="startTime"> The start time of the target dataset time series that resulted in drift detection. </param>
-        /// <param name="endTime"> The end time of the target dataset time series that resulted in drift detection. </param>
-        internal MachineLearningServicesDatasetDriftDetectedEventData(DateTimeOffset startTime, DateTimeOffset endTime)
+        internal MachineLearningServicesDatasetDriftDetectedEventData()
         {
-            StartTime = startTime;
-            EndTime = endTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
@@ -64,7 +60,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="startTime"> The start time of the target dataset time series that resulted in drift detection. </param>
         /// <param name="endTime"> The end time of the target dataset time series that resulted in drift detection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId, double? driftCoefficient, DateTimeOffset startTime, DateTimeOffset endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId, double? driftCoefficient, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataDriftId = dataDriftId;
             DataDriftName = dataDriftName;
@@ -75,11 +71,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             StartTime = startTime;
             EndTime = endTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/> for deserialization. </summary>
-        internal MachineLearningServicesDatasetDriftDetectedEventData()
-        {
         }
 
         /// <summary> The ID of the data drift monitor that triggered the event. </summary>
@@ -95,8 +86,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The coefficient result that triggered the event. </summary>
         public double? DriftCoefficient { get; }
         /// <summary> The start time of the target dataset time series that resulted in drift detection. </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset? StartTime { get; }
         /// <summary> The end time of the target dataset time series that resulted in drift detection. </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset? EndTime { get; }
     }
 }

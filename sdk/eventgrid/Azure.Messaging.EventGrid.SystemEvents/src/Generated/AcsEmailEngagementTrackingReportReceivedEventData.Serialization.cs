@@ -49,8 +49,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            writer.WritePropertyName("userActionTimeStamp"u8);
-            writer.WriteStringValue(UserActionTimestamp, "O");
+            if (Optional.IsDefined(UserActionTimestamp))
+            {
+                writer.WritePropertyName("userActionTimestamp"u8);
+                writer.WriteStringValue(UserActionTimestamp.Value, "O");
+            }
             if (Optional.IsDefined(EngagementContext))
             {
                 writer.WritePropertyName("engagementContext"u8);
@@ -61,8 +64,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("userAgent"u8);
                 writer.WriteStringValue(UserAgent);
             }
-            writer.WritePropertyName("engagementType"u8);
-            writer.WriteStringValue(Engagement.ToString());
+            if (Optional.IsDefined(Engagement))
+            {
+                writer.WritePropertyName("engagementType"u8);
+                writer.WriteStringValue(Engagement.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,7 +77,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,10 +109,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string sender = default;
             string recipient = default;
             string messageId = default;
-            DateTimeOffset userActionTimeStamp = default;
+            DateTimeOffset? userActionTimestamp = default;
             string engagementContext = default;
             string userAgent = default;
-            AcsUserEngagement engagementType = default;
+            AcsUserEngagement? engagementType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,9 +132,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userActionTimeStamp"u8))
+                if (property.NameEquals("userActionTimestamp"u8))
                 {
-                    userActionTimeStamp = property.Value.GetDateTimeOffset("O");
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userActionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("engagementContext"u8))
@@ -143,6 +153,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("engagementType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     engagementType = new AcsUserEngagement(property.Value.GetString());
                     continue;
                 }
@@ -156,7 +170,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 sender,
                 recipient,
                 messageId,
-                userActionTimeStamp,
+                userActionTimestamp,
                 engagementContext,
                 userAgent,
                 engagementType,
@@ -184,7 +198,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement, options);
                     }
                 default:
@@ -198,7 +212,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcsEmailEngagementTrackingReportReceivedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement);
         }
 

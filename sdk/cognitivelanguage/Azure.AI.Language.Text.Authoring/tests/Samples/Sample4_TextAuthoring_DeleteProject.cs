@@ -19,15 +19,14 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample4_TextAuthoring_DeleteProject
             string projectName = "ProjectToDelete";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
-            Operation operation = authoringClient.DeleteProject(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName
+            Operation operation = projectClient.DeleteProject(
+                waitUntil: WaitUntil.Completed
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

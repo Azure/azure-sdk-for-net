@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         PaginatedComputeResourcesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaginatedComputeResourcesList.DeserializePaginatedComputeResourcesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         PaginatedComputeResourcesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaginatedComputeResourcesList.DeserializePaginatedComputeResourcesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningComputeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningComputeData.DeserializeMachineLearningComputeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningComputeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningComputeData.DeserializeMachineLearningComputeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         AmlComputeNodesInformation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AmlComputeNodesInformation.DeserializeAmlComputeNodesInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         AmlComputeNodesInformation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AmlComputeNodesInformation.DeserializeAmlComputeNodesInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningComputeSecrets value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningComputeSecrets.DeserializeMachineLearningComputeSecrets(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningComputeSecrets value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningComputeSecrets.DeserializeMachineLearningComputeSecrets(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         PaginatedComputeResourcesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaginatedComputeResourcesList.DeserializePaginatedComputeResourcesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         PaginatedComputeResourcesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaginatedComputeResourcesList.DeserializePaginatedComputeResourcesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1152,7 +1152,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         AmlComputeNodesInformation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AmlComputeNodesInformation.DeserializeAmlComputeNodesInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         AmlComputeNodesInformation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AmlComputeNodesInformation.DeserializeAmlComputeNodesInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("AzureCosmosDBChatDataSource")]
+[CodeGenType("AzureCosmosDBChatDataSource")]
 [Experimental("AOAI001")]
 public partial class CosmosChatDataSource : ChatDataSource
 {
@@ -101,7 +101,7 @@ public partial class CosmosChatDataSource : ChatDataSource
     /// <summary>
     /// Initializes a new instance of <see cref="CosmosChatDataSource"/>.
     /// </summary>
-    public CosmosChatDataSource() : base(type: "azure_cosmos_db", serializedAdditionalRawData: null)
+    public CosmosChatDataSource() : base(type: "azure_cosmos_db", additionalBinaryDataProperties: null)
     {
         InternalParameters = new();
     }
@@ -118,11 +118,11 @@ public partial class CosmosChatDataSource : ChatDataSource
 
     /// <summary> Initializes a new instance of <see cref="CosmosChatDataSource"/>. </summary>
     /// <param name="type"></param>
-    /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal CosmosChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalAzureCosmosDBChatDataSourceParameters internalParameters)
-        : base(type, serializedAdditionalRawData)
+    internal CosmosChatDataSource(string type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalAzureCosmosDBChatDataSourceParameters internalParameters)
+        : base(type, additionalBinaryDataProperties)
     {
         InternalParameters = internalParameters;
     }

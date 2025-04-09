@@ -3,20 +3,18 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using OpenAI;
 using OpenAI.Assistants;
 using OpenAI.Files;
 using OpenAI.TestFramework;
 using OpenAI.TestFramework.Utils;
 using OpenAI.VectorStores;
+using System;
+using System.ClientModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -184,18 +182,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Validate(assistant);
 
-        Stopwatch stopwatch = Stopwatch.StartNew();
-        void Print(string message) => Console.WriteLine($"[{stopwatch.ElapsedMilliseconds,6}] {message}");
-
-        Print(" >>> Beginning call ... ");
-
         ThreadCreationOptions thirdOpt = new()
         {
             InitialMessages = { new(MessageRole.User, ["What should I wear outside right now?"]), },
         };
         AsyncCollectionResult<StreamingUpdate> asyncResults = client.CreateThreadAndRunStreamingAsync(assistant.Id, thirdOpt);
-
-        Print(" >>> Starting enumeration ...");
 
         ThreadRun run = null;
 
@@ -205,25 +196,19 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             List<ToolOutput> toolOutputs = new();
             await foreach (StreamingUpdate update in asyncResults)
             {
-                string message = update.UpdateKind.ToString();
-
                 if (update is RunUpdate runUpdate)
                 {
-                    message += $" run_id:{runUpdate.Value.Id}";
                     run = runUpdate.Value;
                 }
                 if (update is RequiredActionUpdate requiredActionUpdate)
                 {
                     Assert.That(requiredActionUpdate.FunctionName, Is.EqualTo(getWeatherTool.FunctionName));
                     Assert.That(requiredActionUpdate.GetThreadRun().Status, Is.EqualTo(RunStatus.RequiresAction));
-                    message += $" {requiredActionUpdate.FunctionName}";
                     toolOutputs.Add(new(requiredActionUpdate.ToolCallId, "warm and sunny"));
                 }
                 if (update is MessageContentUpdate contentUpdate)
                 {
-                    message += $" {contentUpdate.Text}";
                 }
-                Print(message);
             }
             if (toolOutputs.Count > 0)
             {
@@ -471,7 +456,6 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 AdditionalInstructions = "Call provided tools when appropriate.",
             });
         Validate(run);
-        Console.WriteLine($" Run status right after creation: {run.Status}");
 
         // TODO FIXME: The underlying OpenAI code doesn't consider the "requires_action" status to be terminal even though it is.
         //             Work around this here
@@ -607,11 +591,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             numThreads++;
             foreach (MessageContent content in message.Content)
             {
-                Console.WriteLine(content.Text);
                 hasCake |= content.Text?.ToLowerInvariant().Contains("cake") == true;
                 foreach (TextAnnotation annotation in content.TextAnnotations)
                 {
-                    Console.WriteLine($"  --> From file: {annotation.InputFileId}, replacement: {annotation.TextToReplace}");
+                    Assert.That(annotation.InputFileId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(annotation.TextToReplace, Is.Not.Null.And.Not.Empty);
                 }
             }
         }
@@ -670,9 +654,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     }
 
     private static readonly DateTimeOffset s_2024 = new(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
-    private static FunctionToolDefinition s_getFoodForDayOfWeekTool = new()
+    private static FunctionToolDefinition s_getFoodForDayOfWeekTool = new("get_favorite_food_for_day_of_week")
     {
-        FunctionName = "get_favorite_food_for_day_of_week",
         Description = "gets the user's favorite food for a given day of the week, like Tuesday",
         Parameters = BinaryData.FromObjectAsJson(new
         {

@@ -68,13 +68,13 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         SparkJobDefinitionResource IOperationSource<SparkJobDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
         }
 
         async ValueTask<SparkJobDefinitionResource> IOperationSource<SparkJobDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
         }
     }

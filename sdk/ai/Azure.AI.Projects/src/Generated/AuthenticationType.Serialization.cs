@@ -16,6 +16,7 @@ namespace Azure.AI.Projects
             AuthenticationType.ApiKey => "ApiKey",
             AuthenticationType.EntraId => "AAD",
             AuthenticationType.SAS => "SAS",
+            AuthenticationType.Custom => "CustomKeys",
             AuthenticationType.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthenticationType value.")
         };
@@ -25,6 +26,7 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ApiKey")) return AuthenticationType.ApiKey;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAD")) return AuthenticationType.EntraId;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SAS")) return AuthenticationType.SAS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomKeys")) return AuthenticationType.Custom;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return AuthenticationType.None;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthenticationType value.");
         }

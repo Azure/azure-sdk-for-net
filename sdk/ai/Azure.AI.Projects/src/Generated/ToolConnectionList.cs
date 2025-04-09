@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> A set of connection resources currently used by either the `bing_grounding`, `fabric_aiskill`, or `sharepoint_grounding` tools. </summary>
+    /// <summary> A set of connection resources currently used by either the `bing_grounding`, `fabric_dataagent`, or `sharepoint_grounding` tools. </summary>
     public partial class ToolConnectionList
     {
         /// <summary>

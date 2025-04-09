@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationNameAvailabilityResult.DeserializeCommunicationNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationNameAvailabilityResult.DeserializeCommunicationNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         LinkedNotificationHub value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkedNotificationHub.DeserializeLinkedNotificationHub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         LinkedNotificationHub value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkedNotificationHub.DeserializeLinkedNotificationHub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationServiceResourceList.DeserializeCommunicationServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationServiceResourceList.DeserializeCommunicationServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationServiceResourceList.DeserializeCommunicationServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationServiceResourceList.DeserializeCommunicationServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationServiceKeys.DeserializeCommunicationServiceKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationServiceKeys.DeserializeCommunicationServiceKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationServiceKeys.DeserializeCommunicationServiceKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationServiceKeys.DeserializeCommunicationServiceKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationServiceResourceList.DeserializeCommunicationServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationServiceResourceList.DeserializeCommunicationServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationServiceResourceList.DeserializeCommunicationServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationServiceResourceList.DeserializeCommunicationServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

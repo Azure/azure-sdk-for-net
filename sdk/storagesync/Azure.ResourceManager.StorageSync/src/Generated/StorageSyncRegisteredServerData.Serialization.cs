@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageSync
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ServerCertificate);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ServerCertificate))
+                using (JsonDocument document = JsonDocument.Parse(ServerCertificate, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageSyncRegisteredServerData(document.RootElement, options);
                     }
                 default:

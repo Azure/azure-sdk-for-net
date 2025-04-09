@@ -25,34 +25,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the attached data network resource.
-        /// Serialized Name: AttachedDataNetwork.properties.provisioningState
-        /// </param>
-        /// <param name="userPlaneDataInterface">
-        /// The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface.
-        /// Serialized Name: AttachedDataNetwork.properties.userPlaneDataInterface
-        /// </param>
-        /// <param name="dnsAddresses">
-        /// The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array.
-        /// Serialized Name: AttachedDataNetwork.properties.dnsAddresses
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the attached data network resource. </param>
+        /// <param name="userPlaneDataInterface"> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
+        /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </param>
         /// <param name="naptConfiguration">
         /// The network address and port translation (NAPT) configuration.
         /// If this is not specified, the attached data network will use a default NAPT configuration with NAPT enabled.
-        /// Serialized Name: AttachedDataNetwork.properties.naptConfiguration
         /// </param>
         /// <param name="userEquipmentAddressPoolPrefix">
         /// The user equipment (UE) address pool prefixes for the attached data network from which the packet core instance will dynamically assign IP addresses to UEs.
         /// The packet core instance assigns an IP address to a UE when the UE sets up a PDU session.
         ///  You must define at least one of userEquipmentAddressPoolPrefix and userEquipmentStaticAddressPoolPrefix. If you define both, they must be of the same size.
-        /// Serialized Name: AttachedDataNetwork.properties.userEquipmentAddressPoolPrefix
         /// </param>
         /// <param name="userEquipmentStaticAddressPoolPrefix">
         /// The user equipment (UE) address pool prefixes for the attached data network from which the packet core instance will assign static IP addresses to UEs.
         /// The packet core instance assigns an IP address to a UE when the UE sets up a PDU session. The static IP address for a specific UE is set in StaticIPConfiguration on the corresponding SIM resource.
         /// At least one of userEquipmentAddressPoolPrefix and userEquipmentStaticAddressPoolPrefix must be defined. If both are defined, they must be of the same size.
-        /// Serialized Name: AttachedDataNetwork.properties.userEquipmentStaticAddressPoolPrefix
         /// </param>
         /// <returns> A new <see cref="MobileNetwork.MobileAttachedDataNetworkData"/> instance for mocking. </returns>
         public static MobileAttachedDataNetworkData MobileAttachedDataNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkInterfaceProperties userPlaneDataInterface = null, IEnumerable<string> dnsAddresses = null, NaptConfiguration naptConfiguration = null, IEnumerable<string> userEquipmentAddressPoolPrefix = null, IEnumerable<string> userEquipmentStaticAddressPoolPrefix = null)
@@ -85,14 +73,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the data network resource.
-        /// Serialized Name: DataNetwork.properties.provisioningState
-        /// </param>
-        /// <param name="description">
-        /// An optional description for this data network.
-        /// Serialized Name: DataNetwork.properties.description
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the data network resource. </param>
+        /// <param name="description"> An optional description for this data network. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileDataNetworkData"/> instance for mocking. </returns>
         public static MobileDataNetworkData MobileDataNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, string description = null)
         {
@@ -115,18 +97,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the diagnostics package resource.
-        /// Serialized Name: DiagnosticsPackage.properties.provisioningState
-        /// </param>
-        /// <param name="status">
-        /// The status of the diagnostics package collection.
-        /// Serialized Name: DiagnosticsPackage.properties.status
-        /// </param>
-        /// <param name="reason">
-        /// The reason for the current state of the diagnostics package collection.
-        /// Serialized Name: DiagnosticsPackage.properties.reason
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the diagnostics package resource. </param>
+        /// <param name="status"> The status of the diagnostics package collection. </param>
+        /// <param name="reason"> The reason for the current state of the diagnostics package collection. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkDiagnosticsPackageData"/> instance for mocking. </returns>
         public static MobileNetworkDiagnosticsPackageData MobileNetworkDiagnosticsPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkDiagnosticsPackageStatus? status = null, string reason = null)
         {
@@ -148,26 +121,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity used to retrieve any private keys used for SUPI concealment from Azure key vault.
-        /// Serialized Name: MobileNetwork.identity
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the mobile network resource.
-        /// Serialized Name: MobileNetwork.properties.provisioningState
-        /// </param>
-        /// <param name="publicLandMobileNetworkIdentifier">
-        /// The unique public land mobile network identifier for the network. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence.
-        /// Serialized Name: MobileNetwork.properties.publicLandMobileNetworkIdentifier
-        /// </param>
-        /// <param name="publicLandMobileNetworks">
-        /// A list of public land mobile networks including their identifiers. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence.
-        /// Serialized Name: MobileNetwork.properties.publicLandMobileNetworks
-        /// </param>
-        /// <param name="serviceKey">
-        /// The mobile network resource identifier
-        /// Serialized Name: MobileNetwork.properties.serviceKey
-        /// </param>
+        /// <param name="identity"> The identity used to retrieve any private keys used for SUPI concealment from Azure key vault. </param>
+        /// <param name="provisioningState"> The provisioning state of the mobile network resource. </param>
+        /// <param name="publicLandMobileNetworkIdentifier"> The unique public land mobile network identifier for the network. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence. </param>
+        /// <param name="publicLandMobileNetworks"> A list of public land mobile networks including their identifiers. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence. </param>
+        /// <param name="serviceKey"> The mobile network resource identifier. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkData"/> instance for mocking. </returns>
         public static MobileNetworkData MobileNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity identity = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkPlmnId publicLandMobileNetworkIdentifier = null, IEnumerable<PublicLandMobileNetwork> publicLandMobileNetworks = null, string serviceKey = null)
         {
@@ -196,22 +154,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="userAssignedIdentity">
-        /// The identity used to retrieve the encryption key from Azure key vault.
-        /// Serialized Name: SimGroup.identity
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the SIM group resource.
-        /// Serialized Name: SimGroup.properties.provisioningState
-        /// </param>
-        /// <param name="keyUri">
-        /// A key to encrypt the SIM data that belongs to this SIM group.
-        /// Serialized Name: SimGroup.properties.encryptionKey
-        /// </param>
-        /// <param name="mobileNetworkId">
-        /// Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group.
-        /// Serialized Name: SimGroup.properties.mobileNetwork
-        /// </param>
+        /// <param name="userAssignedIdentity"> The identity used to retrieve the encryption key from Azure key vault. </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM group resource. </param>
+        /// <param name="keyUri"> A key to encrypt the SIM data that belongs to this SIM group. </param>
+        /// <param name="mobileNetworkId"> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkSimGroupData"/> instance for mocking. </returns>
         public static MobileNetworkSimGroupData MobileNetworkSimGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, MobileNetworkProvisioningState? provisioningState = null, Uri keyUri = null, ResourceIdentifier mobileNetworkId = null)
         {
@@ -236,42 +182,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the packet capture session resource.
-        /// Serialized Name: PacketCapture.properties.provisioningState
-        /// </param>
-        /// <param name="status">
-        /// The status of the packet capture session.
-        /// Serialized Name: PacketCapture.properties.status
-        /// </param>
-        /// <param name="reason">
-        /// The reason the current packet capture session state.
-        /// Serialized Name: PacketCapture.properties.reason
-        /// </param>
-        /// <param name="captureStartOn">
-        /// The start time of the packet capture session.
-        /// Serialized Name: PacketCapture.properties.captureStartTime
-        /// </param>
-        /// <param name="networkInterfaces">
-        /// List of network interfaces to capture on.
-        /// Serialized Name: PacketCapture.properties.networkInterfaces
-        /// </param>
-        /// <param name="bytesToCapturePerPacket">
-        /// Number of bytes captured per packet, the remaining bytes are truncated. The default "0" means the entire packet is captured.
-        /// Serialized Name: PacketCapture.properties.bytesToCapturePerPacket
-        /// </param>
-        /// <param name="totalBytesPerSession">
-        /// Maximum size of the capture output.
-        /// Serialized Name: PacketCapture.properties.totalBytesPerSession
-        /// </param>
-        /// <param name="timeLimitInSeconds">
-        /// Maximum duration of the capture session in seconds.
-        /// Serialized Name: PacketCapture.properties.timeLimitInSeconds
-        /// </param>
-        /// <param name="outputFiles">
-        /// The list of output files of a packet capture session.
-        /// Serialized Name: PacketCapture.properties.outputFiles
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the packet capture session resource. </param>
+        /// <param name="status"> The status of the packet capture session. </param>
+        /// <param name="reason"> The reason the current packet capture session state. </param>
+        /// <param name="captureStartOn"> The start time of the packet capture session. </param>
+        /// <param name="networkInterfaces"> List of network interfaces to capture on. </param>
+        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. The default "0" means the entire packet is captured. </param>
+        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
+        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
+        /// <param name="outputFiles"> The list of output files of a packet capture session. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkPacketCaptureData"/> instance for mocking. </returns>
         public static MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkPacketCaptureStatus? status = null, string reason = null, DateTimeOffset? captureStartOn = null, IEnumerable<string> networkInterfaces = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, IEnumerable<string> outputFiles = null)
         {
@@ -296,42 +215,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AsyncOperationStatus"/>. </summary>
-        /// <param name="id">
-        /// Fully qualified ID for the async operation.
-        /// Serialized Name: AsyncOperationStatus.id
-        /// </param>
-        /// <param name="name">
-        /// Name of the async operation.
-        /// Serialized Name: AsyncOperationStatus.name
-        /// </param>
-        /// <param name="status">
-        /// The operation status.
-        /// Serialized Name: AsyncOperationStatus.status
-        /// </param>
-        /// <param name="resourceId">
-        /// Fully qualified ID for the resource that this async operation status relates to.
-        /// Serialized Name: AsyncOperationStatus.resourceId
-        /// </param>
-        /// <param name="startOn">
-        /// The start time of the operation.
-        /// Serialized Name: AsyncOperationStatus.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time of the operation.
-        /// Serialized Name: AsyncOperationStatus.endTime
-        /// </param>
-        /// <param name="percentComplete">
-        /// Percentage of the operation that is complete.
-        /// Serialized Name: AsyncOperationStatus.percentComplete
-        /// </param>
-        /// <param name="properties">
-        /// Properties returned by the resource provider on a successful operation
-        /// Serialized Name: AsyncOperationStatus.properties
-        /// </param>
-        /// <param name="error">
-        /// If present, details of the operation error.
-        /// Serialized Name: AsyncOperationStatus.error
-        /// </param>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> The operation status. </param>
+        /// <param name="resourceId"> Fully qualified ID for the resource that this async operation status relates to. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="percentComplete"> Percentage of the operation that is complete. </param>
+        /// <param name="properties"> Properties returned by the resource provider on a successful operation. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
         /// <returns> A new <see cref="Models.AsyncOperationStatus"/> instance for mocking. </returns>
         public static AsyncOperationStatus AsyncOperationStatus(string id = null, string name = null, string status = null, string resourceId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, BinaryData properties = null, ResponseError error = null)
         {
@@ -355,86 +247,26 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="userAssignedIdentity">
-        /// The identity used to retrieve the ingress certificate from Azure key vault.
-        /// Serialized Name: PacketCoreControlPlane.identity
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the packet core control plane resource.
-        /// Serialized Name: PacketCoreControlPlane.properties.provisioningState
-        /// </param>
-        /// <param name="installation">
-        /// The installation state of the packet core control plane resource.
-        /// Serialized Name: PacketCoreControlPlane.properties.installation
-        /// </param>
-        /// <param name="sites">
-        /// Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane.
-        /// Serialized Name: PacketCoreControlPlane.properties.sites
-        /// </param>
-        /// <param name="platform">
-        /// The platform where the packet core is deployed.
-        /// Serialized Name: PacketCoreControlPlane.properties.platform
-        /// </param>
-        /// <param name="coreNetworkTechnology">
-        /// The core network technology generation (5G core or EPC / 4G core).
-        /// Serialized Name: PacketCoreControlPlane.properties.coreNetworkTechnology
-        /// </param>
-        /// <param name="version">
-        /// The desired version of the packet core software.
-        /// Serialized Name: PacketCoreControlPlane.properties.version
-        /// </param>
-        /// <param name="installedVersion">
-        /// The currently installed version of the packet core software.
-        /// Serialized Name: PacketCoreControlPlane.properties.installedVersion
-        /// </param>
-        /// <param name="rollbackVersion">
-        /// The previous version of the packet core software that was deployed. Used when performing the rollback action.
-        /// Serialized Name: PacketCoreControlPlane.properties.rollbackVersion
-        /// </param>
-        /// <param name="controlPlaneAccessInterface">
-        /// The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface.
-        /// Serialized Name: PacketCoreControlPlane.properties.controlPlaneAccessInterface
-        /// </param>
-        /// <param name="controlPlaneAccessVirtualIPv4Addresses">
-        /// The virtual IP address(es) for the control plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to anycast traffic for this address to the control plane access interfaces on the active and standby nodes. In non-HA system this list should be omitted or empty.
-        /// Serialized Name: PacketCoreControlPlane.properties.controlPlaneAccessVirtualIpv4Addresses
-        /// </param>
-        /// <param name="sku">
-        /// The SKU defining the throughput and SIM allowances for this packet core control plane deployment.
-        /// Serialized Name: PacketCoreControlPlane.properties.sku
-        /// </param>
-        /// <param name="ueMtu">
-        /// The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation.
-        /// Serialized Name: PacketCoreControlPlane.properties.ueMtu
-        /// </param>
-        /// <param name="localDiagnosticsAccess">
-        /// The kubernetes ingress configuration to control access to packet core diagnostics over local APIs.
-        /// Serialized Name: PacketCoreControlPlane.properties.localDiagnosticsAccess
-        /// </param>
-        /// <param name="diagnosticsUploadStorageAccountContainerUri">
-        /// Configuration for uploading packet core diagnostics
-        /// Serialized Name: PacketCoreControlPlane.properties.diagnosticsUpload
-        /// </param>
-        /// <param name="eventHub">
-        /// Configuration for sending packet core events to an Azure Event Hub.
-        /// Serialized Name: PacketCoreControlPlane.properties.eventHub
-        /// </param>
-        /// <param name="signaling">
-        /// Signaling configuration for the packet core.
-        /// Serialized Name: PacketCoreControlPlane.properties.signaling
-        /// </param>
-        /// <param name="interopSettings">
-        /// Settings to allow interoperability with third party components e.g. RANs and UEs.
-        /// Serialized Name: PacketCoreControlPlane.properties.interopSettings
-        /// </param>
-        /// <param name="homeNetworkPrivateKeysProvisioningState">
-        /// The provisioning state of the secret containing private keys and keyIds for SUPI concealment.
-        /// Serialized Name: PacketCoreControlPlane.properties.homeNetworkPrivateKeysProvisioning
-        /// </param>
-        /// <param name="allowSupportTelemetryAccess">
-        /// The user consent configuration for the packet core.
-        /// Serialized Name: PacketCoreControlPlane.properties.userConsent
-        /// </param>
+        /// <param name="userAssignedIdentity"> The identity used to retrieve the ingress certificate from Azure key vault. </param>
+        /// <param name="provisioningState"> The provisioning state of the packet core control plane resource. </param>
+        /// <param name="installation"> The installation state of the packet core control plane resource. </param>
+        /// <param name="sites"> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </param>
+        /// <param name="platform"> The platform where the packet core is deployed. </param>
+        /// <param name="coreNetworkTechnology"> The core network technology generation (5G core or EPC / 4G core). </param>
+        /// <param name="version"> The desired version of the packet core software. </param>
+        /// <param name="installedVersion"> The currently installed version of the packet core software. </param>
+        /// <param name="rollbackVersion"> The previous version of the packet core software that was deployed. Used when performing the rollback action. </param>
+        /// <param name="controlPlaneAccessInterface"> The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface. </param>
+        /// <param name="controlPlaneAccessVirtualIPv4Addresses"> The virtual IP address(es) for the control plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to anycast traffic for this address to the control plane access interfaces on the active and standby nodes. In non-HA system this list should be omitted or empty. </param>
+        /// <param name="sku"> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </param>
+        /// <param name="ueMtu"> The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation. </param>
+        /// <param name="localDiagnosticsAccess"> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </param>
+        /// <param name="diagnosticsUploadStorageAccountContainerUri"> Configuration for uploading packet core diagnostics. </param>
+        /// <param name="eventHub"> Configuration for sending packet core events to an Azure Event Hub. </param>
+        /// <param name="signaling"> Signaling configuration for the packet core. </param>
+        /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
+        /// <param name="homeNetworkPrivateKeysProvisioningState"> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </param>
+        /// <param name="allowSupportTelemetryAccess"> The user consent configuration for the packet core. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreControlPlaneData"/> instance for mocking. </returns>
         public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkInstallation installation = null, IEnumerable<WritableSubResource> sites = null, MobileNetworkPlatformConfiguration platform = null, MobileNetworkCoreNetworkType? coreNetworkTechnology = null, string version = null, string installedVersion = null, string rollbackVersion = null, MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, MobileNetworkBillingSku sku = default, int? ueMtu = null, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, Uri diagnosticsUploadStorageAccountContainerUri = null, MobileNetworkEventHubConfiguration eventHub = null, PacketCoreSignalingConfiguration signaling = null, BinaryData interopSettings = null, HomeNetworkPrivateKeysProvisioningState? homeNetworkPrivateKeysProvisioningState = null, bool? allowSupportTelemetryAccess = null)
         {
@@ -473,26 +305,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkInstallation"/>. </summary>
-        /// <param name="desiredState">
-        /// The desired installation state
-        /// Serialized Name: Installation.desiredState
-        /// </param>
-        /// <param name="state">
-        /// Installation state
-        /// Serialized Name: Installation.state
-        /// </param>
-        /// <param name="reinstallRequired">
-        /// Whether a reinstall of the packet core is required to pick up the latest configuration changes.
-        /// Serialized Name: Installation.reinstallRequired
-        /// </param>
-        /// <param name="reasons">
-        /// Reason(s) for the current installation state of the packet core.
-        /// Serialized Name: Installation.reasons
-        /// </param>
-        /// <param name="operationId">
-        /// A reference to an in-progress installation operation
-        /// Serialized Name: Installation.operation
-        /// </param>
+        /// <param name="desiredState"> The desired installation state. </param>
+        /// <param name="state"> Installation state. </param>
+        /// <param name="reinstallRequired"> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </param>
+        /// <param name="reasons"> Reason(s) for the current installation state of the packet core. </param>
+        /// <param name="operationId"> A reference to an in-progress installation operation. </param>
         /// <returns> A new <see cref="Models.MobileNetworkInstallation"/> instance for mocking. </returns>
         public static MobileNetworkInstallation MobileNetworkInstallation(DesiredInstallationState? desiredState = null, MobileNetworkInstallationState? state = null, MobileNetworkReinstallRequired? reinstallRequired = null, IEnumerable<MobileNetworkInstallationReason> reasons = null, ResourceIdentifier operationId = null)
         {
@@ -508,30 +325,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkPlatformConfiguration"/>. </summary>
-        /// <param name="platformType">
-        /// The platform type where packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.type
-        /// </param>
-        /// <param name="azureStackEdgeDeviceId">
-        /// The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified.
-        /// Serialized Name: PlatformConfiguration.azureStackEdgeDevice
-        /// </param>
-        /// <param name="azureStackEdgeDevices">
-        /// The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list.
-        /// Serialized Name: PlatformConfiguration.azureStackEdgeDevices
-        /// </param>
-        /// <param name="azureStackHciClusterId">
-        /// The Azure Stack HCI cluster where the packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.azureStackHciCluster
-        /// </param>
-        /// <param name="connectedClusterId">
-        /// Azure Arc connected cluster where the packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.connectedCluster
-        /// </param>
-        /// <param name="customLocationId">
-        /// Azure Arc custom location where the packet core is deployed.
-        /// Serialized Name: PlatformConfiguration.customLocation
-        /// </param>
+        /// <param name="platformType"> The platform type where packet core is deployed. </param>
+        /// <param name="azureStackEdgeDeviceId"> The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified. </param>
+        /// <param name="azureStackEdgeDevices"> The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list. </param>
+        /// <param name="azureStackHciClusterId"> The Azure Stack HCI cluster where the packet core is deployed. </param>
+        /// <param name="connectedClusterId"> Azure Arc connected cluster where the packet core is deployed. </param>
+        /// <param name="customLocationId"> Azure Arc custom location where the packet core is deployed. </param>
         /// <returns> A new <see cref="Models.MobileNetworkPlatformConfiguration"/> instance for mocking. </returns>
         public static MobileNetworkPlatformConfiguration MobileNetworkPlatformConfiguration(MobileNetworkPlatformType platformType = default, ResourceIdentifier azureStackEdgeDeviceId = null, IEnumerable<WritableSubResource> azureStackEdgeDevices = null, ResourceIdentifier azureStackHciClusterId = null, ResourceIdentifier connectedClusterId = null, ResourceIdentifier customLocationId = null)
         {
@@ -548,14 +347,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkHttpsServerCertificate"/>. </summary>
-        /// <param name="certificateUri">
-        /// The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress.
-        /// Serialized Name: HttpsServerCertificate.certificateUrl
-        /// </param>
-        /// <param name="provisioning">
-        /// The provisioning state of the certificate.
-        /// Serialized Name: HttpsServerCertificate.provisioning
-        /// </param>
+        /// <param name="certificateUri"> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </param>
+        /// <param name="provisioning"> The provisioning state of the certificate. </param>
         /// <returns> A new <see cref="Models.MobileNetworkHttpsServerCertificate"/> instance for mocking. </returns>
         public static MobileNetworkHttpsServerCertificate MobileNetworkHttpsServerCertificate(Uri certificateUri = null, MobileNetworkCertificateProvisioning provisioning = null)
         {
@@ -563,14 +356,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkCertificateProvisioning"/>. </summary>
-        /// <param name="state">
-        /// The certificate's provisioning state
-        /// Serialized Name: CertificateProvisioning.state
-        /// </param>
-        /// <param name="reason">
-        /// Reason for certificate provisioning failure.
-        /// Serialized Name: CertificateProvisioning.reason
-        /// </param>
+        /// <param name="state"> The certificate's provisioning state. </param>
+        /// <param name="reason"> Reason for certificate provisioning failure. </param>
         /// <returns> A new <see cref="Models.MobileNetworkCertificateProvisioning"/> instance for mocking. </returns>
         public static MobileNetworkCertificateProvisioning MobileNetworkCertificateProvisioning(CertificateProvisioningState? state = null, string reason = null)
         {
@@ -582,18 +369,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="controlPlaneAccessRoutes">
-        /// A list of IPv4 routes.
-        /// Serialized Name: RoutingInfoModel.properties.controlPlaneAccessRoutes
-        /// </param>
-        /// <param name="userPlaneAccessRoutes">
-        /// A list of IPv4 routes.
-        /// Serialized Name: RoutingInfoModel.properties.userPlaneAccessRoutes
-        /// </param>
-        /// <param name="userPlaneDataRoutes">
-        /// A list of attached data networks and their IPv4 routes.
-        /// Serialized Name: RoutingInfoModel.properties.userPlaneDataRoutes
-        /// </param>
+        /// <param name="controlPlaneAccessRoutes"> A list of IPv4 routes. </param>
+        /// <param name="userPlaneAccessRoutes"> A list of IPv4 routes. </param>
+        /// <param name="userPlaneDataRoutes"> A list of attached data networks and their IPv4 routes. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkRoutingInfoData"/> instance for mocking. </returns>
         public static MobileNetworkRoutingInfoData MobileNetworkRoutingInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<MobileNetworkIPv4Route> controlPlaneAccessRoutes = null, IEnumerable<MobileNetworkIPv4Route> userPlaneAccessRoutes = null, IEnumerable<UserPlaneDataRoutesItem> userPlaneDataRoutes = null)
         {
@@ -617,14 +395,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the packet core control plane version resource.
-        /// Serialized Name: PacketCoreControlPlaneVersion.properties.provisioningState
-        /// </param>
-        /// <param name="platforms">
-        /// Platform specific packet core control plane version properties.
-        /// Serialized Name: PacketCoreControlPlaneVersion.properties.platforms
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the packet core control plane version resource. </param>
+        /// <param name="platforms"> Platform specific packet core control plane version properties. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreControlPlaneVersionData"/> instance for mocking. </returns>
         public static PacketCoreControlPlaneVersionData PacketCoreControlPlaneVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, IEnumerable<MobileNetworkPlatform> platforms = null)
         {
@@ -647,18 +419,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the packet core data plane resource.
-        /// Serialized Name: PacketCoreDataPlane.properties.provisioningState
-        /// </param>
-        /// <param name="userPlaneAccessInterface">
-        /// The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface.
-        /// Serialized Name: PacketCoreDataPlane.properties.userPlaneAccessInterface
-        /// </param>
-        /// <param name="userPlaneAccessVirtualIPv4Addresses">
-        /// The virtual IP address(es) for the user plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to forward traffic for this address to the control plane access interface on the active or standby node. In non-HA system this list should be omitted or empty.
-        /// Serialized Name: PacketCoreDataPlane.properties.userPlaneAccessVirtualIpv4Addresses
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the packet core data plane resource. </param>
+        /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
+        /// <param name="userPlaneAccessVirtualIPv4Addresses"> The virtual IP address(es) for the user plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to forward traffic for this address to the control plane access interface on the active or standby node. In non-HA system this list should be omitted or empty. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreDataPlaneData"/> instance for mocking. </returns>
         public static PacketCoreDataPlaneData PacketCoreDataPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkInterfaceProperties userPlaneAccessInterface = null, IEnumerable<string> userPlaneAccessVirtualIPv4Addresses = null)
         {
@@ -685,22 +448,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the service resource.
-        /// Serialized Name: Service.properties.provisioningState
-        /// </param>
-        /// <param name="servicePrecedence">
-        /// A precedence value that is used to decide between services when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all services configured in the mobile network.
-        /// Serialized Name: Service.properties.servicePrecedence
-        /// </param>
-        /// <param name="serviceQosPolicy">
-        /// The QoS policy to use for packets matching this service. This can be overridden for particular flows using the ruleQosPolicy field in a PccRuleConfiguration. If this field is null then the UE's SIM policy will define the QoS settings.
-        /// Serialized Name: Service.properties.serviceQosPolicy
-        /// </param>
-        /// <param name="pccRules">
-        /// The set of data flow policy rules that make up this service.
-        /// Serialized Name: Service.properties.pccRules
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the service resource. </param>
+        /// <param name="servicePrecedence"> A precedence value that is used to decide between services when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all services configured in the mobile network. </param>
+        /// <param name="serviceQosPolicy"> The QoS policy to use for packets matching this service. This can be overridden for particular flows using the ruleQosPolicy field in a PccRuleConfiguration. If this field is null then the UE's SIM policy will define the QoS settings. </param>
+        /// <param name="pccRules"> The set of data flow policy rules that make up this service. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkServiceData"/> instance for mocking. </returns>
         public static MobileNetworkServiceData MobileNetworkServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, int servicePrecedence = default, MobileNetworkQosPolicy serviceQosPolicy = null, IEnumerable<PccRuleConfiguration> pccRules = null)
         {
@@ -726,54 +477,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the SIM resource.
-        /// Serialized Name: Sim.properties.provisioningState
-        /// </param>
-        /// <param name="simState">
-        /// The state of the SIM resource.
-        /// Serialized Name: Sim.properties.simState
-        /// </param>
-        /// <param name="siteProvisioningState">
-        /// A dictionary of sites to the provisioning state of this SIM on that site.
-        /// Serialized Name: Sim.properties.siteProvisioningState
-        /// </param>
-        /// <param name="internationalMobileSubscriberIdentity">
-        /// The international mobile subscriber identity (IMSI) for the SIM.
-        /// Serialized Name: Sim.properties.internationalMobileSubscriberIdentity
-        /// </param>
-        /// <param name="integratedCircuitCardIdentifier">
-        /// The integrated circuit card ID (ICCID) for the SIM.
-        /// Serialized Name: Sim.properties.integratedCircuitCardIdentifier
-        /// </param>
-        /// <param name="deviceType">
-        /// An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value.
-        /// Serialized Name: Sim.properties.deviceType
-        /// </param>
-        /// <param name="simPolicyId">
-        /// The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM.
-        /// Serialized Name: Sim.properties.simPolicy
-        /// </param>
-        /// <param name="staticIPConfiguration">
-        /// A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}.
-        /// Serialized Name: Sim.properties.staticIpConfiguration
-        /// </param>
-        /// <param name="vendorName">
-        /// The name of the SIM vendor who provided this SIM, if any.
-        /// Serialized Name: Sim.properties.vendorName
-        /// </param>
-        /// <param name="vendorKeyFingerprint">
-        /// The public key fingerprint of the SIM vendor who provided this SIM, if any.
-        /// Serialized Name: Sim.properties.vendorKeyFingerprint
-        /// </param>
-        /// <param name="authenticationKey">
-        /// The Ki value for the SIM.
-        /// Serialized Name: Sim.properties.authenticationKey
-        /// </param>
-        /// <param name="operatorKeyCode">
-        /// The Opc value for the SIM.
-        /// Serialized Name: Sim.properties.operatorKeyCode
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM resource. </param>
+        /// <param name="simState"> The state of the SIM resource. </param>
+        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
+        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
+        /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="simPolicyId"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
+        /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
+        /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="authenticationKey"> The Ki value for the SIM. </param>
+        /// <param name="operatorKeyCode"> The Opc value for the SIM. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkSimData"/> instance for mocking. </returns>
         public static MobileNetworkSimData MobileNetworkSimData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkSimState? simState = null, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, ResourceIdentifier simPolicyId = null, IEnumerable<SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string authenticationKey = null, string operatorKeyCode = null)
         {
@@ -801,58 +516,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SimNameAndProperties"/>. </summary>
-        /// <param name="name">
-        /// The name of the SIM.
-        /// Serialized Name: SimNameAndProperties.name
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the SIM resource.
-        /// Serialized Name: SimNameAndProperties.properties.provisioningState
-        /// </param>
-        /// <param name="simState">
-        /// The state of the SIM resource.
-        /// Serialized Name: SimNameAndProperties.properties.simState
-        /// </param>
-        /// <param name="siteProvisioningState">
-        /// A dictionary of sites to the provisioning state of this SIM on that site.
-        /// Serialized Name: SimNameAndProperties.properties.siteProvisioningState
-        /// </param>
-        /// <param name="internationalMobileSubscriberIdentity">
-        /// The international mobile subscriber identity (IMSI) for the SIM.
-        /// Serialized Name: SimNameAndProperties.properties.internationalMobileSubscriberIdentity
-        /// </param>
-        /// <param name="integratedCircuitCardIdentifier">
-        /// The integrated circuit card ID (ICCID) for the SIM.
-        /// Serialized Name: SimNameAndProperties.properties.integratedCircuitCardIdentifier
-        /// </param>
-        /// <param name="deviceType">
-        /// An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value.
-        /// Serialized Name: SimNameAndProperties.properties.deviceType
-        /// </param>
-        /// <param name="simPolicyId">
-        /// The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM.
-        /// Serialized Name: SimNameAndProperties.properties.simPolicy
-        /// </param>
-        /// <param name="staticIPConfiguration">
-        /// A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}.
-        /// Serialized Name: SimNameAndProperties.properties.staticIpConfiguration
-        /// </param>
-        /// <param name="vendorName">
-        /// The name of the SIM vendor who provided this SIM, if any.
-        /// Serialized Name: SimNameAndProperties.properties.vendorName
-        /// </param>
-        /// <param name="vendorKeyFingerprint">
-        /// The public key fingerprint of the SIM vendor who provided this SIM, if any.
-        /// Serialized Name: SimNameAndProperties.properties.vendorKeyFingerprint
-        /// </param>
-        /// <param name="authenticationKey">
-        /// The Ki value for the SIM.
-        /// Serialized Name: SimNameAndProperties.properties.authenticationKey
-        /// </param>
-        /// <param name="operatorKeyCode">
-        /// The Opc value for the SIM.
-        /// Serialized Name: SimNameAndProperties.properties.operatorKeyCode
-        /// </param>
+        /// <param name="name"> The name of the SIM. </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM resource. </param>
+        /// <param name="simState"> The state of the SIM resource. </param>
+        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
+        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
+        /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="simPolicyId"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
+        /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
+        /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="authenticationKey"> The Ki value for the SIM. </param>
+        /// <param name="operatorKeyCode"> The Opc value for the SIM. </param>
         /// <returns> A new <see cref="Models.SimNameAndProperties"/> instance for mocking. </returns>
         public static SimNameAndProperties SimNameAndProperties(string name = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkSimState? simState = null, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, ResourceIdentifier simPolicyId = null, IEnumerable<SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string authenticationKey = null, string operatorKeyCode = null)
         {
@@ -877,54 +553,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SimNameAndEncryptedProperties"/>. </summary>
-        /// <param name="name">
-        /// The name of the SIM.
-        /// Serialized Name: SimNameAndEncryptedProperties.name
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the SIM resource.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.provisioningState
-        /// </param>
-        /// <param name="simState">
-        /// The state of the SIM resource.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.simState
-        /// </param>
-        /// <param name="siteProvisioningState">
-        /// A dictionary of sites to the provisioning state of this SIM on that site.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.siteProvisioningState
-        /// </param>
-        /// <param name="internationalMobileSubscriberIdentity">
-        /// The international mobile subscriber identity (IMSI) for the SIM.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.internationalMobileSubscriberIdentity
-        /// </param>
-        /// <param name="integratedCircuitCardIdentifier">
-        /// The integrated circuit card ID (ICCID) for the SIM.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.integratedCircuitCardIdentifier
-        /// </param>
-        /// <param name="deviceType">
-        /// An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.deviceType
-        /// </param>
-        /// <param name="simPolicyId">
-        /// The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.simPolicy
-        /// </param>
-        /// <param name="staticIPConfiguration">
-        /// A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.staticIpConfiguration
-        /// </param>
-        /// <param name="vendorName">
-        /// The name of the SIM vendor who provided this SIM, if any.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.vendorName
-        /// </param>
-        /// <param name="vendorKeyFingerprint">
-        /// The public key fingerprint of the SIM vendor who provided this SIM, if any.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.vendorKeyFingerprint
-        /// </param>
-        /// <param name="encryptedCredentials">
-        /// The encrypted SIM credentials.
-        /// Serialized Name: SimNameAndEncryptedProperties.properties.encryptedCredentials
-        /// </param>
+        /// <param name="name"> The name of the SIM. </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM resource. </param>
+        /// <param name="simState"> The state of the SIM resource. </param>
+        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
+        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
+        /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="simPolicyId"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
+        /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
+        /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="encryptedCredentials"> The encrypted SIM credentials. </param>
         /// <returns> A new <see cref="Models.SimNameAndEncryptedProperties"/> instance for mocking. </returns>
         public static SimNameAndEncryptedProperties SimNameAndEncryptedProperties(string name = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkSimState? simState = null, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, ResourceIdentifier simPolicyId = null, IEnumerable<SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string encryptedCredentials = null)
         {
@@ -954,34 +594,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the SIM policy resource.
-        /// Serialized Name: SimPolicy.properties.provisioningState
-        /// </param>
-        /// <param name="siteProvisioningState">
-        /// A dictionary of sites to the provisioning state of this SIM policy on that site.
-        /// Serialized Name: SimPolicy.properties.siteProvisioningState
-        /// </param>
-        /// <param name="ueAmbr">
-        /// Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR.
-        /// Serialized Name: SimPolicy.properties.ueAmbr
-        /// </param>
-        /// <param name="defaultSliceId">
-        /// The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy.
-        /// Serialized Name: SimPolicy.properties.defaultSlice
-        /// </param>
-        /// <param name="rfspIndex">
-        /// RAT/Frequency Selection Priority Index, defined in 3GPP TS 36.413. This is an optional setting and by default is unspecified.
-        /// Serialized Name: SimPolicy.properties.rfspIndex
-        /// </param>
-        /// <param name="registrationTimer">
-        /// UE periodic registration update timer (5G) or UE periodic tracking area update timer (4G), in seconds.
-        /// Serialized Name: SimPolicy.properties.registrationTimer
-        /// </param>
-        /// <param name="sliceConfigurations">
-        /// The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item.
-        /// Serialized Name: SimPolicy.properties.sliceConfigurations
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM policy resource. </param>
+        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM policy on that site. </param>
+        /// <param name="ueAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR. </param>
+        /// <param name="defaultSliceId"> The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy. </param>
+        /// <param name="rfspIndex"> RAT/Frequency Selection Priority Index, defined in 3GPP TS 36.413. This is an optional setting and by default is unspecified. </param>
+        /// <param name="registrationTimer"> UE periodic registration update timer (5G) or UE periodic tracking area update timer (4G), in seconds. </param>
+        /// <param name="sliceConfigurations"> The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkSimPolicyData"/> instance for mocking. </returns>
         public static MobileNetworkSimPolicyData MobileNetworkSimPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = null, Ambr ueAmbr = null, ResourceIdentifier defaultSliceId = null, int? rfspIndex = null, int? registrationTimer = null, IEnumerable<MobileNetworkSliceConfiguration> sliceConfigurations = null)
         {
@@ -1013,14 +632,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the site resource.
-        /// Serialized Name: Site.properties.provisioningState
-        /// </param>
-        /// <param name="networkFunctions">
-        /// An array of IDs of the network functions deployed in the site. Deleting the site will delete any network functions that are deployed in the site.
-        /// Serialized Name: Site.properties.networkFunctions
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the site resource. </param>
+        /// <param name="networkFunctions"> An array of IDs of the network functions deployed in the site. Deleting the site will delete any network functions that are deployed in the site. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkSiteData"/> instance for mocking. </returns>
         public static MobileNetworkSiteData MobileNetworkSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, IEnumerable<SubResource> networkFunctions = null)
         {
@@ -1046,18 +659,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the network slice resource.
-        /// Serialized Name: Slice.properties.provisioningState
-        /// </param>
-        /// <param name="snssai">
-        /// Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network.
-        /// Serialized Name: Slice.properties.snssai
-        /// </param>
-        /// <param name="description">
-        /// An optional description for this network slice.
-        /// Serialized Name: Slice.properties.description
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the network slice resource. </param>
+        /// <param name="snssai"> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </param>
+        /// <param name="description"> An optional description for this network slice. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkSliceData"/> instance for mocking. </returns>
         public static MobileNetworkSliceData MobileNetworkSliceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, Snssai snssai = null, string description = null)
         {
@@ -1083,7 +687,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Extended UE Information Properties.
-        /// Serialized Name: ExtendedUeInfo.properties
         /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
         /// </param>
@@ -1104,19 +707,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="ratType">
-        /// RAT Type
-        /// Serialized Name: UeInfo.properties.ratType
-        /// </param>
-        /// <param name="ueState">
-        /// State of the UE.
-        /// Serialized Name: UeInfo.properties.ueState
-        /// </param>
-        /// <param name="ueIPAddresses"> Serialized Name: UeInfo.properties.ueIpAddresses. </param>
-        /// <param name="lastReadOn">
-        /// The timestamp of last list UEs call to the packet core (UTC).
-        /// Serialized Name: UeInfo.properties.lastReadAt
-        /// </param>
+        /// <param name="ratType"> RAT Type. </param>
+        /// <param name="ueState"> State of the UE. </param>
+        /// <param name="ueIPAddresses"></param>
+        /// <param name="lastReadOn"> The timestamp of last list UEs call to the packet core (UTC). </param>
         /// <returns> A new <see cref="Models.UEInfo"/> instance for mocking. </returns>
         public static UEInfo UEInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RatType ratType = default, UEState ueState = default, IEnumerable<DnnIPPair> ueIPAddresses = null, DateTimeOffset? lastReadOn = null)
         {

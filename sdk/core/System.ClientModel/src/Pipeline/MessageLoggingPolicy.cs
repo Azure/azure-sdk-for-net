@@ -149,8 +149,16 @@ public class MessageLoggingPolicy : PipelinePolicy
                 }
                 else
                 {
-                    responseBytes = new byte[_maxLength];
-                    response.ContentStream.Read(responseBytes, 0, _maxLength);
+                    using var memoryStream = new MaxLengthStream(_maxLength);
+                    if (async)
+                    {
+                        await response.ContentStream.CopyToAsync(memoryStream).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response.ContentStream.CopyTo(memoryStream);
+                    }
+                    responseBytes = memoryStream.ToArray();
                     response.ContentStream.Seek(0, SeekOrigin.Begin);
                 }
 
