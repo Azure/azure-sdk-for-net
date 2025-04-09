@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/consumption/ci.mgmt.yml
-    - sdk/consumption/Azure.ResourceManager.Consumption/
+    - sdk/consumption/ci.mgmt.yml
+    - sdk/consumption/Azure.ResourceManager.Consumption/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

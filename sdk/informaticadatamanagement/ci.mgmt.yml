@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/informaticadatamanagement/ci.mgmt.yml
-    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement/
+    - sdk/informaticadatamanagement/ci.mgmt.yml
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/selfhelp/ci.mgmt.yml
-    - sdk/selfhelp/Azure.ResourceManager.SelfHelp/
+    - sdk/selfhelp/ci.mgmt.yml
+    - sdk/selfhelp/Azure.ResourceManager.SelfHelp/
+
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

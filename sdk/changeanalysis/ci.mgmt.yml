@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/changeanalysis/ci.mgmt.yml
-    - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis/
+    - sdk/changeanalysis/ci.mgmt.yml
+    - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/keyvault/ci.mgmt.yml
-    - sdk/keyvault/Azure.ResourceManager.KeyVault/
+    - sdk/keyvault/ci.mgmt.yml
+    - sdk/keyvault/Azure.ResourceManager.KeyVault/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

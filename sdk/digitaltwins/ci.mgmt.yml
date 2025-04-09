@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/digitaltwins/ci.mgmt.yml
-    - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins/
+    - sdk/digitaltwins/ci.mgmt.yml
+    - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

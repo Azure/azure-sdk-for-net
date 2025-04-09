@@ -11,8 +11,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/sqlmanagement/ci.mgmt.yml
-    - sdk/sqlmanagement/Azure.ResourceManager.Sql/
+    - sdk/sqlmanagement/ci.mgmt.yml
+    - sdk/sqlmanagement/Azure.ResourceManager.Sql/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

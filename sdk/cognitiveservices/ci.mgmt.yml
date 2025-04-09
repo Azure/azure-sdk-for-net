@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/cognitiveservices/ci.mgmt.yml
-    - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/
+    - sdk/cognitiveservices/ci.mgmt.yml
+    - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/graphservices/ci.mgmt.yml
-    - sdk/graphservices/Azure.ResourceManager.GraphServices/
+    - sdk/graphservices/ci.mgmt.yml
+    - sdk/graphservices/Azure.ResourceManager.GraphServices/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

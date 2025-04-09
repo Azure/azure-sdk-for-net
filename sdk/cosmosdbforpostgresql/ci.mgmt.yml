@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/cosmosdbforpostgresql/ci.mgmt.yml
-    - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql/
+    - sdk/cosmosdbforpostgresql/ci.mgmt.yml
+    - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

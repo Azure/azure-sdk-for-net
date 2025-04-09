@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/oracle/ci.mgmt.yml
-    - sdk/oracle/Azure.ResourceManager.OracleDatabase/
+    - sdk/oracle/ci.mgmt.yml
+    - sdk/oracle/Azure.ResourceManager.OracleDatabase/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

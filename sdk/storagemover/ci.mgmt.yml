@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/storagemover/ci.mgmt.yml
-    - sdk/storagemover/Azure.ResourceManager.StorageMover/
+    - sdk/storagemover/ci.mgmt.yml
+    - sdk/storagemover/Azure.ResourceManager.StorageMover/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

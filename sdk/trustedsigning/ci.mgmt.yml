@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/trustedsigning/ci.mgmt.yml
-    - sdk/trustedsigning/Azure.ResourceManager.TrustedSigning/
+    - sdk/trustedsigning/ci.mgmt.yml
+    - sdk/trustedsigning/Azure.ResourceManager.TrustedSigning/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hybridconnectivity/ci.mgmt.yml
-    - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity/
+    - sdk/hybridconnectivity/ci.mgmt.yml
+    - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

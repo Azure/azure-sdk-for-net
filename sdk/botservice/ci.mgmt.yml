@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/botservice/ci.mgmt.yml
-    - sdk/botservice/Azure.ResourceManager.BotService/
+    - sdk/botservice/ci.mgmt.yml
+    - sdk/botservice/Azure.ResourceManager.BotService/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/managednetworkfabric/ci.mgmt.yml
-    - sdk/managednetworkfabric/Azure.ResourceManager.ManagedNetworkFabric/
+    - sdk/managednetworkfabric/ci.mgmt.yml
+    - sdk/managednetworkfabric/Azure.ResourceManager.ManagedNetworkFabric/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

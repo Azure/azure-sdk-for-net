@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/nginx/ci.mgmt.yml
-    - sdk/nginx/Azure.ResourceManager.Nginx/
+    - sdk/nginx/ci.mgmt.yml
+    - sdk/nginx/Azure.ResourceManager.Nginx/
+
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

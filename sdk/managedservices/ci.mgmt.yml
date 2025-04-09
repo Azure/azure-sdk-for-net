@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/managedservices/ci.mgmt.yml
-    - sdk/managedservices/Azure.ResourceManager.ManagedServices/
+    - sdk/managedservices/ci.mgmt.yml
+    - sdk/managedservices/Azure.ResourceManager.ManagedServices/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

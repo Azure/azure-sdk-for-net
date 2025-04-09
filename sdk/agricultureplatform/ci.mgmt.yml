@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/agricultureplatform/ci.mgmt.yml
-    - sdk/agricultureplatform/Azure.ResourceManager.AgriculturePlatform/
+    - sdk/agricultureplatform/ci.mgmt.yml
+    - sdk/agricultureplatform/Azure.ResourceManager.AgriculturePlatform/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

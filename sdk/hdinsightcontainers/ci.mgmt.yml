@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hdinsightcontainers/ci.mgmt.yml
-    - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers/
+    - sdk/hdinsightcontainers/ci.mgmt.yml
+    - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

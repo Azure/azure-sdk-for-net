@@ -9,8 +9,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/webpubsub/ci.mgmt.yml
-    - sdk/webpubsub/Azure.ResourceManager.WebPubSub/
+    - sdk/webpubsub/ci.mgmt.yml
+    - sdk/webpubsub/Azure.ResourceManager.WebPubSub/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

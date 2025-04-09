@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/datalake-store/ci.mgmt.yml
-    - sdk/datalake-store/Azure.ResourceManager.DataLakeStore/
+    - sdk/datalake-store/ci.mgmt.yml
+    - sdk/datalake-store/Azure.ResourceManager.DataLakeStore/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

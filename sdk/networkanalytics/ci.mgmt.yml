@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/networkanalytics/ci.mgmt.yml
-    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics/
+    - sdk/networkanalytics/ci.mgmt.yml
+    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/chaos/ci.mgmt.yml
-    - sdk/chaos/Azure.ResourceManager.Chaos/
+    - sdk/chaos/ci.mgmt.yml
+    - sdk/chaos/Azure.ResourceManager.Chaos/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

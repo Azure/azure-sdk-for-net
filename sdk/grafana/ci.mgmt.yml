@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/grafana/ci.mgmt.yml
-    - sdk/grafana/Azure.ResourceManager.Grafana/
+    - sdk/grafana/ci.mgmt.yml
+    - sdk/grafana/Azure.ResourceManager.Grafana/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -11,8 +11,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/monitor/ci.mgmt.yml
-    - sdk/monitor/Azure.ResourceManager.Monitor/
+    - sdk/monitor/ci.mgmt.yml
+    - sdk/monitor/Azure.ResourceManager.Monitor/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

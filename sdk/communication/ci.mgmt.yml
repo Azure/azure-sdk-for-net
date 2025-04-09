@@ -9,8 +9,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/communication/ci.mgmt.yml
-    - sdk/communication/Azure.ResourceManager.Communication/
+    - sdk/communication/ci.mgmt.yml
+    - sdk/communication/Azure.ResourceManager.Communication/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

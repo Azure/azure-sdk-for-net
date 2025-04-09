@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/healthcareapis/ci.mgmt.yml
-    - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis/
+    - sdk/healthcareapis/ci.mgmt.yml
+    - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

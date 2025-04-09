@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/newrelicobservability/ci.mgmt.yml
-    - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability/
+    - sdk/newrelicobservability/ci.mgmt.yml
+    - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

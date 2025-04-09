@@ -11,8 +11,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/costmanagement/ci.mgmt.yml
-    - sdk/costmanagement/Azure.ResourceManager.CostManagement/
+    - sdk/costmanagement/ci.mgmt.yml
+    - sdk/costmanagement/Azure.ResourceManager.CostManagement/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

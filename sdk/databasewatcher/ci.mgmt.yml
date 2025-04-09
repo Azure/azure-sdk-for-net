@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/databasewatcher/ci.mgmt.yml
-    - sdk/databasewatcher/Azure.ResourceManager.DatabaseWatcher/
+    - sdk/databasewatcher/ci.mgmt.yml
+    - sdk/databasewatcher/Azure.ResourceManager.DatabaseWatcher/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/edgezones/ci.mgmt.yml
-    - sdk/edgezones/Azure.ResourceManager.EdgeZones/
+    - sdk/edgezones/ci.mgmt.yml
+    - sdk/edgezones/Azure.ResourceManager.EdgeZones/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

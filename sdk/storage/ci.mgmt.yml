@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/storage/ci.mgmt.yml
-    - sdk/storage/Azure.ResourceManager.Storage/
+    - sdk/storage/ci.mgmt.yml
+    - sdk/storage/Azure.ResourceManager.Storage/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

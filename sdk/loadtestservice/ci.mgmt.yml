@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/loadtestservice/ci.mgmt.yml
-    - sdk/loadtestservice/Azure.ResourceManager.LoadTesting/
+    - sdk/loadtestservice/ci.mgmt.yml
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTesting/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

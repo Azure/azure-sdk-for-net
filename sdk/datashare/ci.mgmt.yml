@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/datashare/ci.mgmt.yml
-    - sdk/datashare/Azure.ResourceManager.DataShare/
+    - sdk/datashare/ci.mgmt.yml
+    - sdk/datashare/Azure.ResourceManager.DataShare/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -11,8 +11,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/dns/ci.mgmt.yml
-    - sdk/dns/Azure.ResourceManager.Dns/
+    - sdk/dns/ci.mgmt.yml
+    - sdk/dns/Azure.ResourceManager.Dns/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/dataprotection/ci.mgmt.yml
-    - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup/
+    - sdk/dataprotection/ci.mgmt.yml
+    - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/marketplace/ci.mgmt.yml
-    - sdk/marketplace/Azure.ResourceManager.Marketplace/
+    - sdk/marketplace/ci.mgmt.yml
+    - sdk/marketplace/Azure.ResourceManager.Marketplace/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

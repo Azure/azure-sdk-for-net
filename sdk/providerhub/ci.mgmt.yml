@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/providerhub/ci.mgmt.yml
-    - sdk/providerhub/Azure.ResourceManager.ProviderHub/
+    - sdk/providerhub/ci.mgmt.yml
+    - sdk/providerhub/Azure.ResourceManager.ProviderHub/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

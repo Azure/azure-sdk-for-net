@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/securitydevops/ci.mgmt.yml
-    - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps/
+    - sdk/securitydevops/ci.mgmt.yml
+    - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

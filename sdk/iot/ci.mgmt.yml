@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/iot/ci.mgmt.yml
-    - sdk/iot/Azure.ResourceManager.IotFirmwareDefense/
+    - sdk/iot/ci.mgmt.yml
+    - sdk/iot/Azure.ResourceManager.IotFirmwareDefense/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

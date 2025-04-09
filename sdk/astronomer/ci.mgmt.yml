@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/astronomer/ci.mgmt.yml
-    - sdk/astronomer/Azure.ResourceManager.Astro/
+    - sdk/astronomer/ci.mgmt.yml
+    - sdk/astronomer/Azure.ResourceManager.Astro/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

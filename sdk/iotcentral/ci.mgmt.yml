@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/iotcentral/ci.mgmt.yml
-    - sdk/iotcentral/Azure.ResourceManager.IotCentral/
+    - sdk/iotcentral/ci.mgmt.yml
+    - sdk/iotcentral/Azure.ResourceManager.IotCentral/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

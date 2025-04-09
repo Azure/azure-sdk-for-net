@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/mediaservices/ci.mgmt.yml
-    - sdk/mediaservices/Azure.ResourceManager.Media/
+    - sdk/mediaservices/ci.mgmt.yml
+    - sdk/mediaservices/Azure.ResourceManager.Media/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

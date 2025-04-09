@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/fleet/ci.mgmt.yml
-    - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet/
+    - sdk/fleet/ci.mgmt.yml
+    - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
