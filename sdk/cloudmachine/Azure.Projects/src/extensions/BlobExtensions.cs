@@ -19,18 +19,18 @@ public static class BlobExtensions
     /// <summary>
     /// Creates a <see cref="BlobContainerClient"/> for the project.
     /// </summary>
-    /// <param name="project"></param>
+    /// <param name="provider"></param>
     /// <param name="containerName"></param>
     /// <returns></returns>
-    public static  BlobContainerClient GetBlobContainerClient(this ProjectClient project, string containerName = "default")
+    public static  BlobContainerClient GetBlobContainerClient(this ConnectionProvider provider, string containerName = "default")
     {
         string id = $"{typeof(BlobContainerClient).FullName}@{containerName}";
-        BlobContainerClient client = project.Subclients.GetClient(() =>
-            CreateClient(project, containerName), id);
+        BlobContainerClient client = provider.Subclients.GetClient(() =>
+            CreateClient(provider, containerName), id);
         return client;
     }
 
-    private static BlobContainerClient CreateClient(ProjectClient project, string containerName)
+    private static BlobContainerClient CreateClient(ConnectionProvider project, string containerName)
     {
         string id = $"{typeof(BlobContainerClient).FullName}@{containerName}";
         ClientConnection connection = project.GetConnection(id);

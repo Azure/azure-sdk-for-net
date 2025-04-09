@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
@@ -14,10 +15,16 @@ namespace Azure.AI.Projects.Tests;
 public class Sample_Search : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
+    [SyncOnly]
     public void Search()
     {
+        #region Snippet:ExtensionsSearch
+#if SNIPPET
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+#else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        AIProjectClient client = new AIProjectClient(connectionString);
+#endif
+        AIProjectClient client = new(connectionString);
         SearchClient searchClient = client.GetSearchClient("index");
 
         SearchResults<SearchDocument> response = searchClient.Search<SearchDocument>("luxury hotel");
@@ -28,6 +35,31 @@ public class Sample_Search : SamplesBase<AIProjectsTestEnvironment>
             string name = (string)doc["HotelName"];
             Console.WriteLine($"{id}: {name}");
         }
+        #endregion
+    }
+
+    [Test]
+    [AsyncOnly]
+    public async Task SearchAsync()
+    {
+        #region Snippet:ExtensionsSearchAsync
+#if SNIPPET
+        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+#else
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+#endif
+        AIProjectClient client = new(connectionString);
+        SearchClient searchClient = client.GetSearchClient("index");
+
+        SearchResults<SearchDocument> response = await searchClient.SearchAsync<SearchDocument>("luxury hotel");
+        await foreach (SearchResult<SearchDocument> result in response.GetResultsAsync())
+        {
+            SearchDocument doc = result.Document;
+            string id = (string)doc["HotelId"];
+            string name = (string)doc["HotelName"];
+            Console.WriteLine($"{id}: {name}");
+        }
+        #endregion
     }
 
     [Test]
