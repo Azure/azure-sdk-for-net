@@ -47,6 +47,26 @@ namespace Azure.AI.Projects.Tests
             Batch,
             File
         }
+
+        // We have to create this enum because AzureAISearchQueryType.Simple actually return a new object,
+        // which cannot be used in TestCase
+        public enum AzureAISearchQueryTypeEnum
+        {
+            Simple,
+            Semantic,
+            Vector,
+            VectorSimpleHybrid,
+            VectorSemanticHybrid
+        }
+
+        public Dictionary<AzureAISearchQueryTypeEnum, AzureAISearchQueryType> SearchQueryTypes = new()
+        {
+            { AzureAISearchQueryTypeEnum.Simple, AzureAISearchQueryType.Simple },
+            { AzureAISearchQueryTypeEnum.Semantic, AzureAISearchQueryType.Semantic },
+            { AzureAISearchQueryTypeEnum.Vector, AzureAISearchQueryType.Vector },
+            { AzureAISearchQueryTypeEnum.VectorSimpleHybrid, AzureAISearchQueryType.VectorSimpleHybrid },
+            { AzureAISearchQueryTypeEnum.VectorSemanticHybrid, AzureAISearchQueryType.VectorSemanticHybrid }
+        };
         #endregion
 
         [RecordedTest]
@@ -1161,18 +1181,25 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
-        public async Task TestAzureAiSearch()
+        [TestCase(AzureAISearchQueryTypeEnum.Simple)]
+        [TestCase(AzureAISearchQueryTypeEnum.Semantic)]
+        [TestCase(AzureAISearchQueryTypeEnum.Vector)]
+        [TestCase(AzureAISearchQueryTypeEnum.VectorSimpleHybrid)]
+        [TestCase(AzureAISearchQueryTypeEnum.VectorSemanticHybrid)]
+        public async Task TestAzureAiSearch(AzureAISearchQueryTypeEnum queryType)
         {
             AgentsClient client = GetClient();
             ListConnectionsResponse connections = await GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
 
             ConnectionResponse connection = connections.Value[0];
 
+            AISearchIndexResource indexList = new(connection.Id, "sample_index");
+            indexList.QueryType = SearchQueryTypes[queryType];
             ToolResources searchResource = new()
             {
                 AzureAISearch = new AzureAISearchResource
                 {
-                    IndexList = { new AISearchIndexResource(connection.Id, "sample_index") }
+                    IndexList = { indexList }
                 }
             };
 
@@ -1248,7 +1275,12 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
-        public async Task TestAzureAiSearchStreaming()
+        [TestCase(AzureAISearchQueryTypeEnum.Simple)]
+        [TestCase(AzureAISearchQueryTypeEnum.Semantic)]
+        [TestCase(AzureAISearchQueryTypeEnum.Vector)]
+        [TestCase(AzureAISearchQueryTypeEnum.VectorSimpleHybrid)]
+        [TestCase(AzureAISearchQueryTypeEnum.VectorSemanticHybrid)]
+        public async Task TestAzureAiSearchStreaming(AzureAISearchQueryTypeEnum queryType)
         {
             if (!IsAsync)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
@@ -1257,11 +1289,13 @@ namespace Azure.AI.Projects.Tests
 
             ConnectionResponse connection = connections.Value[0];
 
+            AISearchIndexResource indexList = new(connection.Id, "sample_index");
+            indexList.QueryType = SearchQueryTypes[queryType];
             ToolResources searchResource = new()
             {
                 AzureAISearch = new AzureAISearchResource
                 {
-                    IndexList = { new AISearchIndexResource(connection.Id, "sample_index") }
+                    IndexList = { indexList }
                 }
             };
 

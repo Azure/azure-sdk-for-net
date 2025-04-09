@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
