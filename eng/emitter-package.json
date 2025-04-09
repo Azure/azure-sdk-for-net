@@ -1,7 +1,7 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-tools/typespec-csharp": "0.2.0-beta.20250407.1"
+    "@azure-tools/typespec-csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/@azure-tools/typespec-csharp/-/typespec-csharp-0.2.0-alpha.20250408.2.tgz"
   },
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.54.0",
@@ -16,8 +16,11 @@
     "@typespec/openapi": "1.0.0-rc.0",
     "@typespec/rest": "0.68.0",
     "@typespec/sse": "0.68.0",
-    "@typespec/streams": "0.68",
+    "@typespec/streams": "0.68.0",
     "@typespec/versioning": "0.68.0",
     "@typespec/xml": "0.68.0"
+  },
+  "overrides": {
+    "@autorest/csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/@autorest/csharp/-/csharp-3.0.0-alpha.20250408.2.tgz"
   }
 }
