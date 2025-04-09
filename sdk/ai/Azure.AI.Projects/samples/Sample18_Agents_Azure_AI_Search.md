@@ -143,7 +143,7 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 
-4. In our search we have used an index containing "embedding", "token", "url" and also "title" fields. This allowed us to get reference title and url. In the code below, we iterate messages in chronological order and replace the reference placeholders by url and title.
+4. In our search we have used an index containing "embedding", "token", "category" and also "title" fields. This allowed us to get reference title and url. In the code below, we iterate messages in chronological order and replace the reference placeholders by url and title.
 
 Synchronous sample:
 ```C# Snippet:PopulateReferencesAgentWithAzureAISearchTool_Sync
