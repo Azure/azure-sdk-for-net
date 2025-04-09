@@ -28,11 +28,13 @@ if (connections?.Value == null || connections.Value.Count == 0)
 
 ConnectionResponse connection = connections.Value[0];
 
+AISearchIndexResource indexList = new(connection.Id, "sample_index");
+indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
 ToolResources searchResource = new ToolResources
 {
     AzureAISearch = new AzureAISearchResource
     {
-        IndexList = { new AISearchIndexResource(connection.Id, "sample_index") }
+        IndexList = { indexList }
     }
 };
 
@@ -57,11 +59,13 @@ if (connections?.Value == null || connections.Value.Count == 0)
 
 ConnectionResponse connection = connections.Value[0];
 
+AISearchIndexResource indexList = new(connection.Id, "sample_index");
+indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
 ToolResources searchResource = new()
 {
     AzureAISearch = new AzureAISearchResource
     {
-        IndexList = { new AISearchIndexResource(connection.Id, "sample_index") }
+        IndexList = { indexList }
     }
 };
 
