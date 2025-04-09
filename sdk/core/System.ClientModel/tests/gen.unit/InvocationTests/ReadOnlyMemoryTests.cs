@@ -12,7 +12,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override List<TypeValidation> TypeValidations => [AssertReadOnlyMemory];
 
-        private void AssertReadOnlyMemory(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        private void AssertReadOnlyMemory(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.ContainsKey($"ReadOnlyMemory<{type}>"));
             var arrayJsonModel = dict[$"ReadOnlyMemory<{type}>"];
