@@ -114,6 +114,8 @@ namespace AgentSampleApp
                     }
                 }
             }
+
+            agentsClient.DeleteAgent(agent.AgentId);
         }
 
         public static async Task RunPersistentAgentUsingThreadAsync()
@@ -177,6 +179,8 @@ namespace AgentSampleApp
                     }
                 }
             }
+
+            agentsClient.DeleteAgent(agent.AgentId);
         }
     }
 }
