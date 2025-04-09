@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class CreateConversationRequest : IUtf8JsonSerializable, IJsonModel<CreateConversationRequest>
+    internal partial class CreateConversationRequest1 : IUtf8JsonSerializable, IJsonModel<CreateConversationRequest1>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateConversationRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateConversationRequest1>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CreateConversationRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CreateConversationRequest1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateConversationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateConversationRequest1>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateConversationRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateConversationRequest1)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("conversation"u8);
@@ -58,19 +58,19 @@ namespace Azure.Communication.Messages
             }
         }
 
-        CreateConversationRequest IJsonModel<CreateConversationRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CreateConversationRequest1 IJsonModel<CreateConversationRequest1>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateConversationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateConversationRequest1>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateConversationRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateConversationRequest1)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateConversationRequest(document.RootElement, options);
+            return DeserializeCreateConversationRequest1(document.RootElement, options);
         }
 
-        internal static CreateConversationRequest DeserializeCreateConversationRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CreateConversationRequest1 DeserializeCreateConversationRequest1(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,46 +104,46 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CreateConversationRequest(conversation, initialMessage, serializedAdditionalRawData);
+            return new CreateConversationRequest1(conversation, initialMessage, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CreateConversationRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CreateConversationRequest1>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateConversationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateConversationRequest1>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreateConversationRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateConversationRequest1)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CreateConversationRequest IPersistableModel<CreateConversationRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CreateConversationRequest1 IPersistableModel<CreateConversationRequest1>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateConversationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateConversationRequest1>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCreateConversationRequest(document.RootElement, options);
+                        return DeserializeCreateConversationRequest1(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateConversationRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateConversationRequest1)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CreateConversationRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CreateConversationRequest1>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CreateConversationRequest FromResponse(Response response)
+        internal static CreateConversationRequest1 FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCreateConversationRequest(document.RootElement);
+            return DeserializeCreateConversationRequest1(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

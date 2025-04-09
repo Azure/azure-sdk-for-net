@@ -52,9 +52,9 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(conversation, nameof(conversation));
 
-            CreateConversationRequest createConversationRequest = new CreateConversationRequest(conversation, initialMessage, null);
+            CreateConversationRequest1 createConversationRequest1 = new CreateConversationRequest1(conversation, initialMessage, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateConversationAsync(createConversationRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateConversationAsync(createConversationRequest1.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(CommunicationConversation.FromResponse(response), response);
         }
 
@@ -68,9 +68,9 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(conversation, nameof(conversation));
 
-            CreateConversationRequest createConversationRequest = new CreateConversationRequest(conversation, initialMessage, null);
+            CreateConversationRequest1 createConversationRequest1 = new CreateConversationRequest1(conversation, initialMessage, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateConversation(createConversationRequest.ToRequestContent(), context);
+            Response response = CreateConversation(createConversationRequest1.ToRequestContent(), context);
             return Response.FromValue(CommunicationConversation.FromResponse(response), response);
         }
 

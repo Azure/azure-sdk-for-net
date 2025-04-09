@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The CreateConversationRequest. </summary>
-    internal partial class CreateConversationRequest
+    /// <summary> The CreateConversationRequest1. </summary>
+    internal partial class CreateConversationRequest1
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,29 @@ namespace Azure.Communication.Messages
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest1"/>. </summary>
         /// <param name="conversation"> The conversation details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversation"/> is null. </exception>
-        internal CreateConversationRequest(CommunicationConversation conversation)
+        internal CreateConversationRequest1(CommunicationConversation conversation)
         {
             Argument.AssertNotNull(conversation, nameof(conversation));
 
             Conversation = conversation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest1"/>. </summary>
         /// <param name="conversation"> The conversation details. </param>
         /// <param name="initialMessage"> An intial message within the conversation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateConversationRequest(CommunicationConversation conversation, ConversationMessage initialMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateConversationRequest1(CommunicationConversation conversation, ConversationMessage initialMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Conversation = conversation;
             InitialMessage = initialMessage;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest"/> for deserialization. </summary>
-        internal CreateConversationRequest()
+        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest1"/> for deserialization. </summary>
+        internal CreateConversationRequest1()
         {
         }
 
