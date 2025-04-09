@@ -93,41 +93,6 @@ public class ClientCache
     }
 }
 
-[Fact]
-    public void ClientCache_Respects_MaxCacheSize()
-    {
-        // Arrange: Create a cache with a small max size
-        int maxSize = 3;
-        var cache = new ClientCache(maxSize);
-
-        int createCount = 0;
-        Func<DummyClient> factory = () =>
-        {
-            createCount++;
-            return new DummyClient();
-        };
-
-        // Act: Add more clients than the cache size allows
-        for (int i = 0; i < 5; i++)
-        {
-            cache.GetClient(factory, $"client-{i}");
-        }
-
-        // Assert: Only maxSize clients should remain in the cache
-        // Since we can't directly inspect _clients, re-access clients and count how many were re-created
-        for (int i = 0; i < 5; i++)
-        {
-            cache.GetClient(factory, $"client-{i}");
-        }
-
-        // The original 5 created, and at most 3 of them are reused. So up to 2 are re-created
-        // Meaning createCount should be between 5 (if all were reused) and 7 (if 2 were evicted and re-added)
-        Assert.True(createCount > maxSize, "Some clients should have been evicted and re-created.");
-        Assert.True(createCount <= 5 + (5 - maxSize), "Too many clients were re-created, cache size not enforced.");
-    }
-
-    private class DummyClient { }
-
 /// <summary>
 /// Represents a cached client and its last-used timestamp.
 /// </summary>
