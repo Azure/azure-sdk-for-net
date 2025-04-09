@@ -341,16 +341,16 @@ Search requires an existing Azure AI Search Index. For more information and setu
 guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 
 ```C# Snippet:AssistantsCreateAgentWithAzureAISearchTool
-AISearchIndexResource indexList = new(connectionID, "sample_index")
+AzureAISearchResource searchResource = new(
+    connectionID,
+    "sample_index",
+    5,
+    "category eq 'sleeping bag'",
+    AzureAISearchQueryType.Simple
+);
+ToolResources toolResource = new()
 {
-    QueryType = AzureAISearchQueryType.VectorSemanticHybrid
-};
-ToolResources searchResource = new ToolResources
-{
-    AzureAISearch = new AzureAISearchResource
-    {
-        IndexList = { indexList }
-    }
+    AzureAISearch = searchResource
 };
 
 AssistantsClient client = new(connectionString, new DefaultAzureCredential());
@@ -360,7 +360,7 @@ Assistant assistant = await client.CreateAssistantAsync(
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
    tools: [ new AzureAISearchToolDefinition() ],
-   toolResources: searchResource);
+   toolResources: toolResource);
 ```
 
 If the assistant has found the relevant information in the index, the reference
@@ -830,7 +830,8 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-    auth: oaiAuth
+    auth: oaiAuth,
+    defaultParams: [ "format" ]
 );
 
 Assistant assistant = await client.CreateAssistantAsync(

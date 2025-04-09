@@ -4,11 +4,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
@@ -47,7 +47,8 @@ public partial class Sample_Assistants_OpenAPI : SamplesBase<AIAssistantsTestEnv
             name: "get_weather",
             description: "Retrieve weather information for a location",
             spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-            auth: oaiAuth
+            auth: oaiAuth,
+            defaultParams: [ "format" ]
         );
 
         Assistant assistant = await client.CreateAssistantAsync(
@@ -130,7 +131,8 @@ public partial class Sample_Assistants_OpenAPI : SamplesBase<AIAssistantsTestEnv
             name: "get_weather",
             description: "Retrieve weather information for a location",
             spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-            auth: oaiAuth
+            auth: oaiAuth,
+            defaultParams: ["format"]
         );
 
         Assistant assistant = client.CreateAssistant(

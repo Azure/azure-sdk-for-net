@@ -599,6 +599,7 @@ namespace Azure.AI.Assistants
     public partial class AzureAISearchResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.AzureAISearchResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.AzureAISearchResource>
     {
         public AzureAISearchResource() { }
+        public AzureAISearchResource(string indexConnectionId, string indexName, int topK = 5, string filter = "", Azure.AI.Assistants.AzureAISearchQueryType? queryType = default(Azure.AI.Assistants.AzureAISearchQueryType?)) { }
         public System.Collections.Generic.IList<Azure.AI.Assistants.AISearchIndexResource> IndexList { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Assistants.AzureAISearchResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.AzureAISearchResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1427,7 +1428,7 @@ namespace Azure.AI.Assistants
     public partial class OpenApiToolDefinition : Azure.AI.Assistants.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.OpenApiToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.OpenApiToolDefinition>
     {
         public OpenApiToolDefinition(Azure.AI.Assistants.OpenApiFunctionDefinition openapi) { }
-        public OpenApiToolDefinition(string name, string description, System.BinaryData spec, Azure.AI.Assistants.OpenApiAuthDetails auth) { }
+        public OpenApiToolDefinition(string name, string description, System.BinaryData spec, Azure.AI.Assistants.OpenApiAuthDetails auth, System.Collections.Generic.IList<string> defaultParams = null) { }
         public Azure.AI.Assistants.OpenApiFunctionDefinition Openapi { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Assistants.OpenApiToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.OpenApiToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

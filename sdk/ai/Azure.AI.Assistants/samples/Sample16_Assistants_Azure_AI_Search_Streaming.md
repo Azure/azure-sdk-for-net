@@ -19,16 +19,16 @@ var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTIO
 
 Synchronous sample:
 ```C# Snippet:AssistantsAzureAISearchStreamingExample_CreateTool
-AISearchIndexResource indexList = new(connectionID, "sample_index")
+AzureAISearchResource searchResource = new(
+    connectionID,
+    "sample_index",
+    5,
+    "category eq 'sleeping bag'",
+    AzureAISearchQueryType.Simple
+);
+ToolResources toolResource = new()
 {
-    QueryType = AzureAISearchQueryType.VectorSemanticHybrid
-};
-ToolResources searchResource = new ToolResources
-{
-    AzureAISearch = new AzureAISearchResource
-    {
-        IndexList = { indexList }
-    }
+    AzureAISearch = searchResource
 };
 
 AssistantsClient client = new(connectionString, new DefaultAzureCredential());
@@ -38,21 +38,21 @@ Assistant assistant = client.CreateAssistant(
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
    tools: [new AzureAISearchToolDefinition()],
-   toolResources: searchResource);
+   toolResources: toolResource);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AssistantsAzureAISearchStreamingExample_CreateTool_Async
-AISearchIndexResource indexList = new(connectionID, "sample_index")
+AzureAISearchResource searchResource = new(
+    connectionID,
+    "sample_index",
+    5,
+    "category eq 'sleeping bag'",
+    AzureAISearchQueryType.Simple
+);
+ToolResources toolResource = new()
 {
-    QueryType = AzureAISearchQueryType.VectorSemanticHybrid
-};
-ToolResources searchResource = new ToolResources
-{
-    AzureAISearch = new AzureAISearchResource
-    {
-        IndexList = { indexList }
-    }
+    AzureAISearch = searchResource
 };
 
 AssistantsClient client = new(connectionString, new DefaultAzureCredential());
@@ -62,7 +62,7 @@ Assistant assistant = await client.CreateAssistantAsync(
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
    tools: [ new AzureAISearchToolDefinition() ],
-   toolResources: searchResource);
+   toolResources: toolResource);
 ```
 
 3. Now we will create a `ThreadRun`.
@@ -91,7 +91,7 @@ ThreadMessage message = await client.CreateMessageAsync(
     "What is the temperature rating of the cozynights sleeping bag?");
 ```
 
-4. In our search we have used an index containing "embedding", "token", "url" and also "title" fields. This allowed us to get reference title and url. In the code below we are reading and printing out the stream output. We skip the reference placeholder, because the following message update will return the actual reference, which will be printed to the output.
+4. In our search we have used an index containing "embedding", "token", "category" and also "title" fields. This allowed us to get reference title and url. In the code below, we iterate messages in chronological order and replace the reference placeholders by url and title.
 
 Synchronous sample:
 ```C# Snippet:AssistantsAzureAISearchStreamingExample_PrintMessages

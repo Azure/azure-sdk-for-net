@@ -26,7 +26,8 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-    auth: oaiAuth
+    auth: oaiAuth,
+    defaultParams: ["format"]
 );
 
 Assistant assistant = client.CreateAssistant(
@@ -44,7 +45,8 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-    auth: oaiAuth
+    auth: oaiAuth,
+    defaultParams: [ "format" ]
 );
 
 Assistant assistant = await client.CreateAssistantAsync(

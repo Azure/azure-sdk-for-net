@@ -29,16 +29,16 @@ public partial class Sample_Assistants_Azure_AI_Search_Streaming : SamplesBase<A
 #endif
         #endregion
         #region Snippet:AssistantsAzureAISearchStreamingExample_CreateTool_Async
-        AISearchIndexResource indexList = new(connectionID, "sample_index")
+        AzureAISearchResource searchResource = new(
+            connectionID,
+            "sample_index",
+            5,
+            "category eq 'sleeping bag'",
+            AzureAISearchQueryType.Simple
+        );
+        ToolResources toolResource = new()
         {
-            QueryType = AzureAISearchQueryType.VectorSemanticHybrid
-        };
-        ToolResources searchResource = new ToolResources
-        {
-            AzureAISearch = new AzureAISearchResource
-            {
-                IndexList = { indexList }
-            }
+            AzureAISearch = searchResource
         };
 
         AssistantsClient client = new(connectionString, new DefaultAzureCredential());
@@ -48,7 +48,7 @@ public partial class Sample_Assistants_Azure_AI_Search_Streaming : SamplesBase<A
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: [ new AzureAISearchToolDefinition() ],
-           toolResources: searchResource);
+           toolResources: toolResource);
         #endregion
         #region Snippet:AssistantsAzureAISearchStreamingExample_CreateThread_Async
         // Create thread for communication
@@ -107,16 +107,16 @@ public partial class Sample_Assistants_Azure_AI_Search_Streaming : SamplesBase<A
         var connectionID = TestEnvironment.AI_SEARCH_CONNECTION_ID;
 #endif
         #region Snippet:AssistantsAzureAISearchStreamingExample_CreateTool
-        AISearchIndexResource indexList = new(connectionID, "sample_index")
+        AzureAISearchResource searchResource = new(
+            connectionID,
+            "sample_index",
+            5,
+            "category eq 'sleeping bag'",
+            AzureAISearchQueryType.Simple
+        );
+        ToolResources toolResource = new()
         {
-            QueryType = AzureAISearchQueryType.VectorSemanticHybrid
-        };
-        ToolResources searchResource = new ToolResources
-        {
-            AzureAISearch = new AzureAISearchResource
-            {
-                IndexList = { indexList }
-            }
+            AzureAISearch = searchResource
         };
 
         AssistantsClient client = new(connectionString, new DefaultAzureCredential());
@@ -126,7 +126,7 @@ public partial class Sample_Assistants_Azure_AI_Search_Streaming : SamplesBase<A
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: [new AzureAISearchToolDefinition()],
-           toolResources: searchResource);
+           toolResources: toolResource);
         #endregion
         #region Snippet:AssistantsAzureAISearchStreamingExample_CreateThread
         // Create thread for communication
