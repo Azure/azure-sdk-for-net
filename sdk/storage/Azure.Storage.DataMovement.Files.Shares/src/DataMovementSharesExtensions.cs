@@ -94,48 +94,36 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             return new()
             {
-                FileAttributes = (options?.Nfs ?? false)
+                FileAttributes = (options?.IsNfs ?? false)
                     ? default
-                    : options?.FileAttributesIfSetOrDefault()
-                        ?? (properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
-                            ? (NtfsFileAttributes?)fileAttributes
-                            : default),
-                FilePermissionKey = (options?.Nfs ?? false)
+                    : GetPropertyValue<NtfsFileAttributes>(
+                        options?._isFileAttributesSet ?? false,
+                        options?.FileAttributes,
+                        properties?.RawProperties,
+                        DataMovementConstants.ResourceProperties.FileAttributes),
+                FilePermissionKey = (options?.IsNfs ?? false)
                     ? default
                     : permissionKeyValue,
-                FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
-                    ? options?.FileCreatedOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
-                        ? (DateTimeOffset?)fileCreatedOn
-                        : default,
-                FileLastWrittenOn = (options?._isFileLastWrittenOnSet ?? false)
-                    ? options?.FileLastWrittenOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
-                        ? (DateTimeOffset?)fileLastWrittenOn
-                        : default,
-                FileChangedOn = (options?.Nfs ?? false)
+                FileCreatedOn = GetPropertyValue<DateTimeOffset>(
+                    options?._isFileCreatedOnSet ?? false,
+                    options?.FileCreatedOn,
+                    properties?.RawProperties,
+                    DataMovementConstants.ResourceProperties.CreationTime
+                ),
+                FileLastWrittenOn = GetPropertyValue<DateTimeOffset>(
+                    options?._isFileLastWrittenOnSet ?? false,
+                    options?.FileLastWrittenOn,
+                    properties?.RawProperties,
+                    DataMovementConstants.ResourceProperties.LastWrittenOn
+                ),
+                FileChangedOn = (options?.IsNfs ?? false)
                     ? default
-                    : options?.FileChangedOnIfSetOrDefault()
-                        ?? (properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
-                            ? (DateTimeOffset?)fileChangedOn
-                            : default)
+                    : GetPropertyValue<DateTimeOffset>(
+                        options?._isFileChangedOnSet ?? false,
+                        options?.FileChangedOn,
+                        properties?.RawProperties,
+                        DataMovementConstants.ResourceProperties.ChangedOnTime)
             };
-        }
-
-        public static FilePosixProperties GetFilePosixProperties(
-            this ShareFileStorageResourceOptions options,
-            NfsFileMode destinationFileMode,
-            string destinationOwner,
-            string destinationGroup,
-            NfsFileType? destinationFileType,
-            long? destinationLinkCount)
-        {
-            if (options?.Nfs ?? false)
-            {
-                return FilesModelFactory.FilePosixProperties(
-                    destinationFileMode, destinationOwner, destinationGroup, destinationFileType ?? default, destinationLinkCount);
-            }
-            return new();
         }
 
         public static FileSmbProperties GetFileSmbProperties(
@@ -144,49 +132,92 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             return new()
             {
-                FileAttributes = (options?.Nfs ?? false)
+                FileAttributes = (options?.IsNfs ?? false)
                     ? default
-                    : options?.FileAttributesIfSetOrDefault()
-                        ?? (properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
-                            ? (NtfsFileAttributes?)fileAttributes
-                            : default),
-                FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
-                    ? options?.FileCreatedOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
-                        ? (DateTimeOffset?)fileCreatedOn
-                        : default,
-                FileLastWrittenOn = (options?._isFileLastWrittenOnSet ?? false)
-                    ? options?.FileLastWrittenOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
-                        ? (DateTimeOffset?)fileLastWrittenOn
-                        : default,
-                FileChangedOn = (options?.Nfs ?? false)
+                    : GetPropertyValue<NtfsFileAttributes>(
+                        options?._isFileAttributesSet ?? false,
+                        options?.FileAttributes,
+                        properties?.RawProperties,
+                        DataMovementConstants.ResourceProperties.FileAttributes),
+                FileCreatedOn = GetPropertyValue<DateTimeOffset>(
+                    options?._isFileCreatedOnSet ?? false,
+                    options?.FileCreatedOn,
+                    properties?.RawProperties,
+                    DataMovementConstants.ResourceProperties.CreationTime
+                ),
+                FileLastWrittenOn = GetPropertyValue<DateTimeOffset>(
+                    options?._isFileLastWrittenOnSet ?? false,
+                    options?.FileLastWrittenOn,
+                    properties?.RawProperties,
+                    DataMovementConstants.ResourceProperties.LastWrittenOn
+                ),
+                FileChangedOn = (options?.IsNfs ?? false)
                     ? default
-                    : options?.FileChangedOnIfSetOrDefault()
-                        ?? (properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
-                            ? (DateTimeOffset?)fileChangedOn
-                            : default)
+                    : GetPropertyValue<DateTimeOffset>(
+                        options?._isFileChangedOnSet ?? false,
+                        options?.FileChangedOn,
+                        properties?.RawProperties,
+                        DataMovementConstants.ResourceProperties.ChangedOnTime)
             };
         }
 
-        public static NtfsFileAttributes? FileAttributesIfSetOrDefault(
-            this ShareFileStorageResourceOptions options)
+        private static T? GetPropertyValue<T>(
+            bool isOptionSet,
+            T? optionValue,
+            IDictionary<string, object> rawProperties,
+            string propertyKey) where T : struct
         {
-            if (options?._isFileAttributesSet ?? false)
+            if (isOptionSet)
             {
-                return options?.FileAttributes;
+                return optionValue;
             }
-            return default;
+
+            return rawProperties != null &&
+                   rawProperties.TryGetValue(propertyKey, out object value) &&
+                   value is T typedValue
+                   ? typedValue
+                   : default;
         }
 
-        public static DateTimeOffset? FileChangedOnIfSetOrDefault(
-            this ShareFileStorageResourceOptions options)
+        public static FilePosixProperties GetFilePosixProperties(
+            this ShareFileStorageResourceOptions options,
+            StorageResourceItemProperties sourceProperties)
         {
-            if (options?._isFileChangedOnSet ?? false)
+            if (options?.IsNfs ?? false)
             {
-                return options?.FileChangedOn;
+                // Only set NFS permissions if Copy transfer and FilePermissions is on.
+                bool setPermissions = (!sourceProperties?.IsLocal ?? false) && (options?.FilePermissions ?? false);
+
+                NfsFileMode FileMode = setPermissions
+                    ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
+                        ? (NfsFileMode)fileMode
+                        : default
+                    : default;
+                string Owner = setPermissions
+                    ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Owner, out object owner) == true
+                        ? (string)owner
+                        : default
+                    : default;
+                string Group = setPermissions
+                    ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Group, out object group) == true
+                        ? (string)group
+                        : default
+                    : default;
+                NfsFileType? FileType = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileType, out object fileType) == true
+                    ? (NfsFileType?)fileType
+                    : default;
+                long? LinkCount = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LinkCount, out object linkCount) == true
+                    ? (long?)linkCount
+                    : default;
+
+                return FilesModelFactory.FilePosixProperties(
+                    fileMode: FileMode,
+                    owner: Owner,
+                    group: Group,
+                    fileType: FileType ?? NfsFileType.Regular,
+                    linkCount: LinkCount);
             }
-            return default;
+            return new();
         }
 
         internal static ShareFileUploadRangeOptions ToShareFileUploadRangeOptions(

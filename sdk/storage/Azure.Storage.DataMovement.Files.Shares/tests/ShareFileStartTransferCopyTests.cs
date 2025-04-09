@@ -728,14 +728,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 createResource: true,
                 options: sharefileCreateOptions);
             StorageResourceItem sourceResource = new ShareFileStorageResource(sourceClient,
-                new ShareFileStorageResourceOptions() { Nfs = true });
+                new ShareFileStorageResourceOptions() { IsNfs = true });
 
             // Create destination file
             ShareFileClient destinationClient = await CreateFileClientWithNFSAsync(
                 container: destination.Container,
                 createResource: false);
             StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient,
-                new ShareFileStorageResourceOptions() { Nfs = true, FilePermissions = filePermissions });
+                new ShareFileStorageResourceOptions() { IsNfs = true, FilePermissions = filePermissions });
 
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);

@@ -14,6 +14,12 @@ namespace Azure.Storage.DataMovement
     public class StorageResourceItemProperties
     {
         /// <summary>
+        /// Whether the file is local.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? IsLocal { get; set; }
+
+        /// <summary>
         /// The length of the resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

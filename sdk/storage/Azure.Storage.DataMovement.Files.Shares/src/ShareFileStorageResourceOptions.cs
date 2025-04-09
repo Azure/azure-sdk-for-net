@@ -51,7 +51,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// By default this value is set to false.
         /// Applies to copy, upload, and download transfers.
         /// </summary>
-        public bool Nfs { get; set; } = false;
+        public bool IsNfs { get; set; } = false;
 
         /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.
