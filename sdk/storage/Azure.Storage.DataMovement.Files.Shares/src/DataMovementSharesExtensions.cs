@@ -94,14 +94,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             return new()
             {
-                FileAttributes = options?.Nfs == true
+                FileAttributes = (options?.Nfs ?? false)
                     ? default
-                    : (options?._isFileAttributesSet ?? false)
-                        ? options?.FileAttributes
-                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
+                    : options?.FileAttributesIfSetOrDefault()
+                        ?? (properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
                             ? (NtfsFileAttributes?)fileAttributes
-                            : default,
-                FilePermissionKey = options?.Nfs == true
+                            : default),
+                FilePermissionKey = (options?.Nfs ?? false)
                     ? default
                     : permissionKeyValue,
                 FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
@@ -114,13 +113,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
                         ? (DateTimeOffset?)fileLastWrittenOn
                         : default,
-                FileChangedOn = options?.Nfs == true
+                FileChangedOn = (options?.Nfs ?? false)
                     ? default
-                    : (options?._isFileChangedOnSet ?? false)
-                        ? options?.FileChangedOn
-                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
+                    : options?.FileChangedOnIfSetOrDefault()
+                        ?? (properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
                             ? (DateTimeOffset?)fileChangedOn
-                            : default,
+                            : default)
             };
         }
 
@@ -132,13 +130,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
             NfsFileType? destinationFileType,
             long? destinationLinkCount)
         {
-            if (options?.Nfs != true)
+            if (options?.Nfs ?? false)
             {
-                return new();
+                return FilesModelFactory.FilePosixProperties(
+                    destinationFileMode, destinationOwner, destinationGroup, destinationFileType ?? default, destinationLinkCount);
             }
-
-            return FilesModelFactory.FilePosixProperties(
-                destinationFileMode, destinationOwner, destinationGroup, destinationFileType ?? NfsFileType.Regular, destinationLinkCount);
+            return new();
         }
 
         public static FileSmbProperties GetFileSmbProperties(
@@ -147,13 +144,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             return new()
             {
-                FileAttributes = options?.Nfs == true
+                FileAttributes = (options?.Nfs ?? false)
                     ? default
-                    : (options?._isFileAttributesSet ?? false)
-                        ? options?.FileAttributes
-                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
+                    : options?.FileAttributesIfSetOrDefault()
+                        ?? (properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
                             ? (NtfsFileAttributes?)fileAttributes
-                            : default,
+                            : default),
                 FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
                     ? options?.FileCreatedOn
                     : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
@@ -164,14 +160,33 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
                         ? (DateTimeOffset?)fileLastWrittenOn
                         : default,
-                FileChangedOn = options?.Nfs == true
+                FileChangedOn = (options?.Nfs ?? false)
                     ? default
-                    : (options?._isFileChangedOnSet ?? false)
-                        ? options?.FileChangedOn
-                        : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
+                    : options?.FileChangedOnIfSetOrDefault()
+                        ?? (properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
                             ? (DateTimeOffset?)fileChangedOn
-                            : default,
+                            : default)
             };
+        }
+
+        public static NtfsFileAttributes? FileAttributesIfSetOrDefault(
+            this ShareFileStorageResourceOptions options)
+        {
+            if (options?._isFileAttributesSet ?? false)
+            {
+                return options?.FileAttributes;
+            }
+            return default;
+        }
+
+        public static DateTimeOffset? FileChangedOnIfSetOrDefault(
+            this ShareFileStorageResourceOptions options)
+        {
+            if (options?._isFileChangedOnSet ?? false)
+            {
+                return options?.FileChangedOn;
+            }
+            return default;
         }
 
         internal static ShareFileUploadRangeOptions ToShareFileUploadRangeOptions(
