@@ -6,48 +6,49 @@
 #nullable disable
 
 using System;
+using Azure.Communication.CallAutomation;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication
 {
-    /// <summary> The TeamsExtensionUserIdentifierModel. </summary>
+    /// <summary> A Microsoft Teams Phone user who is using a Communication Services resource to extend their Teams Phone set up. </summary>
     internal partial class TeamsExtensionUserIdentifierModel
     {
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionUserIdentifierModel"/>. </summary>
-        /// <param name="userId"></param>
-        /// <param name="resourceId"></param>
-        /// <param name="tenantId"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/>, <paramref name="resourceId"/> or <paramref name="tenantId"/> is null. </exception>
-        internal TeamsExtensionUserIdentifierModel(string userId, string resourceId, string tenantId)
+        /// <param name="userId"> The Id of the Microsoft Teams Extension user, i.e. the Entra ID object Id of the user. </param>
+        /// <param name="tenantId"> The tenant Id of the Microsoft Teams Extension user. </param>
+        /// <param name="resourceId"> The Communication Services resource Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/>, <paramref name="tenantId"/> or <paramref name="resourceId"/> is null. </exception>
+        public TeamsExtensionUserIdentifierModel(string userId, string tenantId, string resourceId)
         {
             Argument.AssertNotNull(userId, nameof(userId));
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(tenantId, nameof(tenantId));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             UserId = userId;
-            ResourceId = resourceId;
             TenantId = tenantId;
+            ResourceId = resourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionUserIdentifierModel"/>. </summary>
-        /// <param name="userId"></param>
-        /// <param name="resourceId"></param>
-        /// <param name="tenantId"></param>
-        /// <param name="cloud"> The cloud that the identifier belongs to. </param>
-        internal TeamsExtensionUserIdentifierModel(string userId, string resourceId, string tenantId, CommunicationCloudEnvironmentModel? cloud)
+        /// <param name="userId"> The Id of the Microsoft Teams Extension user, i.e. the Entra ID object Id of the user. </param>
+        /// <param name="tenantId"> The tenant Id of the Microsoft Teams Extension user. </param>
+        /// <param name="resourceId"> The Communication Services resource Id. </param>
+        /// <param name="cloud"> The cloud that the Microsoft Teams Extension user belongs to. By default 'public' if missing. </param>
+        internal TeamsExtensionUserIdentifierModel(string userId, string tenantId, string resourceId, CommunicationCloudEnvironmentModel? cloud)
         {
             UserId = userId;
-            ResourceId = resourceId;
             TenantId = tenantId;
+            ResourceId = resourceId;
             Cloud = cloud;
         }
 
-        /// <summary> Gets the user id. </summary>
-        public string UserId { get; }
-        /// <summary> Gets the resource id. </summary>
-        public string ResourceId { get; }
-        /// <summary> Gets the tenant id. </summary>
-        public string TenantId { get; }
-        /// <summary> The cloud that the identifier belongs to. </summary>
-        public CommunicationCloudEnvironmentModel? Cloud { get; }
+        /// <summary> The Id of the Microsoft Teams Extension user, i.e. the Entra ID object Id of the user. </summary>
+        public string UserId { get; set; }
+        /// <summary> The tenant Id of the Microsoft Teams Extension user. </summary>
+        public string TenantId { get; set; }
+        /// <summary> The Communication Services resource Id. </summary>
+        public string ResourceId { get; set; }
+        /// <summary> The cloud that the Microsoft Teams Extension user belongs to. By default 'public' if missing. </summary>
+        public CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }
