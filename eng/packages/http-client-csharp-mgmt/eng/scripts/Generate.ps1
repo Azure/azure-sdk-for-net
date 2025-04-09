@@ -6,9 +6,9 @@ param(
     [switch]$ForceNewProject = $false
 )
 
-Import-Module "$PSScriptRoot../../../http-client-csharp/Generation.psm1" -DisableNameChecking -Force;
+Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
 
-$mgmtPackageRoot = Resolve-Path (Join-Path $packageRoot '..' 'http-client-csharp-mgmt')
+$mgmtPackageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 Write-Host "Mgmt Package root: $packageRoot" -ForegroundColor Cyan
 $mgmtSolutionDir = Join-Path $mgmtPackageRoot 'generator'
 
