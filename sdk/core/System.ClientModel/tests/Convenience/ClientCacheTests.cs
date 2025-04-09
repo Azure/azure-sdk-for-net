@@ -164,7 +164,7 @@ public class ClientCacheTests
     [Test]
     public void ClientCacheShouldRespectMaxCacheSize()
     {
-        var cache = new ClientCache(maxCacheSize: 3);
+        var cache = new ClientCache(maxSize: 3);
 
         // Insert 3 clients
         cache.GetClient(() => new DummyClient("A"), "A");

@@ -17,15 +17,15 @@ public class ClientCache
     private readonly Dictionary<(Type, string), ClientEntry> _clients = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 
-    private readonly int _maxCacheSize;
+    private readonly int _maxSize;
 
     /// <summary>
     /// Initializes the ClientCache with a configurable cache size.
     /// </summary>
-    /// <param name="maxCacheSize">The maximum number of clients to store in the cache.</param>
-    public ClientCache(int maxCacheSize = 100)
+    /// <param name="maxSize">The maximum number of clients to store in the cache.</param>
+    public ClientCache(int maxSize = 100)
     {
-        _maxCacheSize = maxCacheSize;
+        _maxSize = maxSize;
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class ClientCache
             _clients[key] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
             // After insertion, if cache exceeds the limit, perform cleanup.
-            if (_clients.Count > _maxCacheSize)
+            if (_clients.Count > _maxSize)
             {
                 Cleanup();
             }
@@ -72,7 +72,7 @@ public class ClientCache
     /// </summary>
     private void Cleanup()
     {
-        int excess = _clients.Count - _maxCacheSize;
+        int excess = _clients.Count - _maxSize;
         if (excess <= 0)
         {
             return;
