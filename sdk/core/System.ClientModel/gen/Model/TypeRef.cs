@@ -28,7 +28,7 @@ internal sealed class TypeRef : IEquatable<TypeRef>
     private string? _camelCaseName;
     public string CamelCaseName => _camelCaseName ??= TypeCaseName.ToCamelCase();
 
-    internal static TypeRef FromINamedTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache)
+    internal static TypeRef FromTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache)
     {
         if (symbol is INamedTypeSymbol namedTypeSymbol)
         {
@@ -38,11 +38,11 @@ internal sealed class TypeRef : IEquatable<TypeRef>
                 symbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat),
                 symbol.ContainingNamespace.ToDisplayString(),
                 symbol.ContainingAssembly.ToDisplayString(),
-                itemSymbol is null ? null : FromINamedTypeSymbol(itemSymbol, symbolToKindCache));
+                itemSymbol is null ? null : FromTypeSymbol(itemSymbol, symbolToKindCache));
         }
         else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
         {
-            var elementType = FromINamedTypeSymbol(arrayTypeSymbol.ElementType, symbolToKindCache);
+            var elementType = FromTypeSymbol(arrayTypeSymbol.ElementType, symbolToKindCache);
             return new TypeRef(
                 arrayTypeSymbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat).RemoveAsterisks(),
                 elementType.Namespace,

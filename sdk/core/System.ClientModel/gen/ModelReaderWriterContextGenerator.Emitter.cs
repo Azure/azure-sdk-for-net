@@ -255,19 +255,19 @@ internal sealed partial class ModelReaderWriterContextGenerator
                     EmitPersistableModelBuilder(indent, builder, modelInfo, context);
                     break;
                 case TypeBuilderKind.IList:
-                    EmitListBuilder(indent, builder, modelInfo, context);
+                    EmitListBuilder(indent, builder, modelInfo);
                     break;
                 case TypeBuilderKind.IDictionary:
-                    EmitDictionaryBuilder(indent, builder, modelInfo, context);
+                    EmitDictionaryBuilder(indent, builder, modelInfo);
                     break;
                 case TypeBuilderKind.Array:
-                    EmitArrayBuilder(indent, builder, modelInfo, context);
+                    EmitArrayBuilder(indent, builder, modelInfo);
                     break;
                 case TypeBuilderKind.MultiDimensionalArray:
-                    EmitMultiDimensionalArrayBuilder(indent, builder, modelInfo, context);
+                    EmitMultiDimensionalArrayBuilder(indent, builder, modelInfo);
                     break;
                 case TypeBuilderKind.ReadOnlyMemory:
-                    EmitReadOnlyMemoryBuilder(indent, builder, modelInfo, context);
+                    EmitReadOnlyMemoryBuilder(indent, builder, modelInfo);
                     break;
                 default:
                     break;
@@ -301,14 +301,17 @@ internal sealed partial class ModelReaderWriterContextGenerator
             }
             HashSet<TypeRef> visited = [];
             AddNamespaces(namespaces, modelInfo.Type, visited);
+            if (modelInfo.PersistableModelProxy is not null)
+            {
+                AddNamespaces(namespaces, modelInfo.PersistableModelProxy, visited);
+            }
             return namespaces;
         }
 
         private static void EmitReadOnlyMemoryBuilder(
             int indent,
             StringBuilder builder,
-            TypeBuilderSpec modelInfo,
-            TypeRef context)
+            TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");
@@ -361,8 +364,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         private static void EmitMultiDimensionalArrayBuilder(
             int indent,
             StringBuilder builder,
-            TypeBuilderSpec modelInfo,
-            TypeRef context)
+            TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");
@@ -426,8 +428,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         private static void EmitArrayBuilder(
             int indent,
             StringBuilder builder,
-            TypeBuilderSpec modelInfo,
-            TypeRef context)
+            TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");
@@ -461,8 +462,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         private static void EmitDictionaryBuilder(
             int indent,
             StringBuilder builder,
-            TypeBuilderSpec modelInfo,
-            TypeRef context)
+            TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");
@@ -490,8 +490,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         private static void EmitListBuilder(
             int indent,
             StringBuilder builder,
-            TypeBuilderSpec modelInfo,
-            TypeRef context)
+            TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");

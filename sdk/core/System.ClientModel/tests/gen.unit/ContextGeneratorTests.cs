@@ -15,6 +15,121 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
     public class ContextGeneratorTests
     {
         [Test]
+        public void NonAbstractWithProxyAndNoCtorShouldWork()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class Caller
+    {
+        public void Call()
+        {
+            ModelReaderWriter.Read(BinaryData.Empty, typeof(JsonModel), ModelReaderWriterOptions.Json, LocalContext.Default);
+        }
+    }
+
+    [PersistableModelProxy(typeof(UnknownJsonModel))]
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        protected JsonModel() { }
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownJsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownJsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    internal class UnknownJsonModel : JsonModel {}
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+
+            var jsonModel = result.GenerationSpec.TypeBuilders[0];
+            Assert.AreEqual("internal", jsonModel.Modifier);
+            AssertJsonModel(jsonModel.Type);
+            Assert.AreEqual(TypeBuilderKind.IPersistableModel, jsonModel.Kind);
+            Assert.AreEqual(s_modelExpectations[jsonModel.Type.Name].Context, jsonModel.ContextType);
+            Assert.IsNotNull(jsonModel.PersistableModelProxy);
+            var unknownJsonModel = jsonModel.PersistableModelProxy;
+            Assert.AreEqual("UnknownJsonModel", unknownJsonModel!.Name);
+            Assert.AreEqual("TestProject", unknownJsonModel.Namespace);
+        }
+
+        [TestCase("private", true)]
+        [TestCase("protected", true)]
+        [TestCase("public", false)]
+        [TestCase("internal", false)]
+        [TestCase("private protected", true)]
+        [TestCase("protected internal", false)]
+        public void PersistableModelHasNoEmptyCtor(string modifier, bool expectedDiag)
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext
+    {
+    }
+
+    public class PersistableModel : IPersistableModel<PersistableModel>
+    {
+        {{modifier}} PersistableModel() { }
+
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+
+        PersistableModel IPersistableModel<PersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new PersistableModel();
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+
+            if (expectedDiag)
+            {
+                Assert.AreEqual(1, result.Diagnostics.Length);
+                Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.TypeMustHaveParameterlessConstructor.Id, result.Diagnostics[0].Id);
+
+                Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
+            }
+            else
+            {
+                Assert.AreEqual(0, result.Diagnostics.Length);
+
+                Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
+                Assert.AreEqual("PersistableModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
+                Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[0].Modifier);
+            }
+        }
+
+        [Test]
         public void TwoModelsSameNameDifferentNamespaces()
         {
             string source =
@@ -109,7 +224,8 @@ namespace TestProject
             Assert.IsNotNull(result.GenerationSpec);
             Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
             Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual(1, result.Diagnostics.Length);
+            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.AbstractTypeWithoutProxy.Id, result.Diagnostics[0].Id);
             Assert.AreEqual("public", result.GenerationSpec!.Modifier);
             Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
             Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);

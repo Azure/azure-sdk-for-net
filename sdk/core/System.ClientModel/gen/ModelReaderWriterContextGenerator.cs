@@ -152,7 +152,10 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
     {
         if (data.Contexts.Length > 1)
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.MultipleContextsNotSupported, Location.None));
+            context.ReportDiagnostic(Diagnostic.Create(
+                DiagnosticDescriptors.MultipleContextsNotSupported,
+                data.Contexts[0]?.Locations.First(),
+                data.Contexts.Skip(1).Where(s => s is not null).Select(s => s!.Locations.First())));
             return;
         }
 
@@ -181,8 +184,14 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                 if (symbol is not ITypeSymbol typeSymbol)
                     return null;
 
-                var type = TypeRef.FromINamedTypeSymbol(typeSymbol, data.SymbolToKindCache);
+                var type = TypeRef.FromTypeSymbol(typeSymbol, data.SymbolToKindCache);
                 var itemType = type.GetInnerItemType();
+
+                if (!HasAccessibleParameterlessConstructor(typeSymbol, data.SymbolToKindCache) && itemType.IsSameAssembly(contextType))
+                {
+                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.TypeMustHaveParameterlessConstructor, typeSymbol.Locations.FirstOrDefault(), type.Name));
+                    return null;
+                }
 
                 if (!itemType.IsSameAssembly(contextType) && !referencedContexts.ContainsKey(itemType.Assembly))
                 {
@@ -192,14 +201,17 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                 var proxy = GetProxyType(typeSymbol);
 
                 if (typeSymbol.IsAbstract && proxy is null)
-                    return null; // Skip abstract types without a proxy
+                {
+                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.AbstractTypeWithoutProxy, typeSymbol.Locations.FirstOrDefault(), type.Name));
+                    return null;
+                }
 
                 return new TypeBuilderSpec()
                 {
                     Modifier = "internal",
                     Type = type,
                     Kind = data.SymbolToKindCache.Get(typeSymbol),
-                    PersistableModelProxy = proxy is null ? null : TypeRef.FromINamedTypeSymbol(proxy, data.SymbolToKindCache),
+                    PersistableModelProxy = proxy is null ? null : TypeRef.FromTypeSymbol(proxy, data.SymbolToKindCache),
                     ContextType = referencedContexts.ContainsKey(type.Assembly) ? referencedContexts[type.Assembly] : contextType,
                 };
             })
@@ -229,6 +241,30 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
     /// Instrumentation helper for unit tests.
     /// </summary>
     internal Action<ModelReaderWriterContextGenerationSpec>? OnSourceEmitting { get; init; }
+
+    public static bool HasAccessibleParameterlessConstructor(ITypeSymbol typeSymbol, TypeSymbolKindCache cache)
+    {
+        ITypeSymbol GetInnerItemType(ITypeSymbol symbol)
+        {
+            var itemType = symbol.GetItemSymbol(cache);
+            return itemType is null ? symbol : GetInnerItemType(itemType);
+        }
+
+        var itemType = GetInnerItemType(typeSymbol);
+
+        if (itemType.IsAbstract || GetProxyType(itemType) is not null)
+            return true; // DiagnosticDescriptors.AbstractTypeWithoutProxy will catch this
+
+        if (itemType is not INamedTypeSymbol namedType)
+            return false;
+
+        return namedType.Constructors.Any(ctor =>
+            !ctor.IsStatic &&
+            ctor.Parameters.Length == 0 &&
+            (ctor.DeclaredAccessibility == Accessibility.Public ||
+            ctor.DeclaredAccessibility == Accessibility.Internal ||
+            ctor.DeclaredAccessibility == Accessibility.ProtectedOrInternal));
+    }
 
     public static INamedTypeSymbol? GetProxyType(ITypeSymbol typeSymbol)
     {

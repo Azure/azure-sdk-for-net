@@ -465,7 +465,7 @@ $$"""
 """;
         }
 
-        private static void AssertJsonModelBuilder(TypeBuilderSpec jsonModel)
+        internal static void AssertJsonModelBuilder(TypeBuilderSpec jsonModel)
         {
             Assert.AreEqual("internal", jsonModel.Modifier);
             Assert.IsNull(jsonModel.PersistableModelProxy);
