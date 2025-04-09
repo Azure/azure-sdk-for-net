@@ -57,6 +57,7 @@ namespace Azure.Storage.DataMovement
 
             // Passing no cancellation token. Leaving open possibility to pass token in the future
             StartConcurrencyTuner();
+            Debug.WriteLine("Concurrency Tuner Started");
             _concurrencyRecommendations.Process = ProcessConcurrencyRecommendationsAsync;
         }
 

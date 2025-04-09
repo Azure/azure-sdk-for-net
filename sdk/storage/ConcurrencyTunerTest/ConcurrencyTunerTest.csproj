@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.13.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Azure.Storage.DataMovement.Blobs\src\Azure.Storage.DataMovement.Blobs.csproj" />
   </ItemGroup>
 

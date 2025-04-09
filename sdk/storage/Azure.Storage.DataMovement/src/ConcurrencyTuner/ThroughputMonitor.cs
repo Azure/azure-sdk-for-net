@@ -41,6 +41,9 @@ namespace Azure.Storage.DataMovement
             }
         }
 
+        /// <summary>
+        /// Gets the time elapsed in milliseconds since the monitor started.
+        /// </summary>
         public long TimeElapsedInMilliseconds
         {
             get => _stopwatch.ElapsedMilliseconds;
