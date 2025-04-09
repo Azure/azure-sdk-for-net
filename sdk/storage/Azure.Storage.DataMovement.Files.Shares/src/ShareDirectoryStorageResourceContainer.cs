@@ -25,10 +25,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override string ProviderId => "share";
 
-        internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
+        internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options = default)
         {
             ShareDirectoryClient = shareDirectoryClient;
-            ResourceOptions = options;
+            ResourceOptions = options ?? new ShareFileStorageResourceOptions();
         }
 
         protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
