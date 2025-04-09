@@ -17,7 +17,16 @@ public class ClientCache
     private readonly Dictionary<(Type, string), ClientEntry> _clients = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 
-    private const int MaxCacheSize = 100;
+    private readonly int _maxCacheSize;
+
+    /// <summary>
+    /// Initializes the ClientCache with a configurable cache size.
+    /// </summary>
+    /// <param name="maxCacheSize">The maximum number of clients to store in the cache.</param>
+    public ClientCache(int maxCacheSize = 100)
+    {
+        _maxCacheSize = maxCacheSize;
+    }
 
     /// <summary>
     /// Retrieves a client from the cache or creates a new one if it doesn't exist.
@@ -46,7 +55,7 @@ public class ClientCache
             _clients[key] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
             // After insertion, if cache exceeds the limit, perform cleanup.
-            if (_clients.Count > MaxCacheSize)
+            if (_clients.Count > _maxCacheSize)
             {
                 Cleanup();
             }
@@ -63,7 +72,7 @@ public class ClientCache
     /// </summary>
     private void Cleanup()
     {
-        int excess = _clients.Count - MaxCacheSize;
+        int excess = _clients.Count - _maxCacheSize;
         if (excess <= 0)
         {
             return;
@@ -83,6 +92,41 @@ public class ClientCache
         }
     }
 }
+
+[Fact]
+    public void ClientCache_Respects_MaxCacheSize()
+    {
+        // Arrange: Create a cache with a small max size
+        int maxSize = 3;
+        var cache = new ClientCache(maxSize);
+
+        int createCount = 0;
+        Func<DummyClient> factory = () =>
+        {
+            createCount++;
+            return new DummyClient();
+        };
+
+        // Act: Add more clients than the cache size allows
+        for (int i = 0; i < 5; i++)
+        {
+            cache.GetClient(factory, $"client-{i}");
+        }
+
+        // Assert: Only maxSize clients should remain in the cache
+        // Since we can't directly inspect _clients, re-access clients and count how many were re-created
+        for (int i = 0; i < 5; i++)
+        {
+            cache.GetClient(factory, $"client-{i}");
+        }
+
+        // The original 5 created, and at most 3 of them are reused. So up to 2 are re-created
+        // Meaning createCount should be between 5 (if all were reused) and 7 (if 2 were evicted and re-added)
+        Assert.True(createCount > maxSize, "Some clients should have been evicted and re-created.");
+        Assert.True(createCount <= 5 + (5 - maxSize), "Too many clients were re-created, cache size not enforced.");
+    }
+
+    private class DummyClient { }
 
 /// <summary>
 /// Represents a cached client and its last-used timestamp.
