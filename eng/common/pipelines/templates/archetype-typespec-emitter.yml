@@ -203,13 +203,13 @@ extends:
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
-                --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}' `
+                --emitter-package-json-path "$(Build.SourcesDirectory)/${{ parameters.EmitterPackageJsonPath }}" `
                 --overrides '$(buildArtifactsPath)/overrides.json'
               } else {
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
-                --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
+                --emitter-package-json-path "$(Build.SourcesDirectory)/${{ parameters.EmitterPackageJsonPath }}"
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
             workingDirectory: $(Build.SourcesDirectory)
