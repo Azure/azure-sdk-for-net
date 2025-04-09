@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Projects.OneDP
 {
@@ -47,62 +46,26 @@ namespace Azure.AI.Projects.OneDP
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StreamRequest"/>. </summary>
-        /// <param name="input">
-        /// The list of input messages for the run.
-        /// Please note <see cref="ChatMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AgentMessage"/>, <see cref="DeveloperMessage"/>, <see cref="SystemMessage"/>, <see cref="ToolMessage"/> and <see cref="UserMessage"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        internal StreamRequest(IEnumerable<ChatMessage> input)
+        /// <param name="options"> The options for the agent completing the run. </param>
+        /// <param name="inputs"> The inputs for the run. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="inputs"/> is null. </exception>
+        internal StreamRequest(AgentConfigurationOptions options, RunInputs inputs)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            Instructions = new ChangeTrackingList<DeveloperMessage>();
-            Tools = new ChangeTrackingList<AgentToolDefinition>();
-            Input = input.ToList();
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Options = options;
+            Inputs = inputs;
         }
 
         /// <summary> Initializes a new instance of <see cref="StreamRequest"/>. </summary>
-        /// <param name="agentModel">
-        /// The model definition for this agent. This is optional (not needed) when doing a run using persistent agent.
-        /// Please note <see cref="OneDP.AgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAgentModel"/> and <see cref="OpenAIAgentModel"/>.
-        /// </param>
-        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
-        /// <param name="tools">
-        /// A list of tool definitions available to the agent.
-        /// Please note <see cref="AgentToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
-        /// </param>
-        /// <param name="toolChoice">
-        /// How the agent should choose among provided tools.
-        /// Please note <see cref="ToolChoiceBehavior"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoToolChoiceBehavior"/>, <see cref="NoneToolChoiceBehavior"/> and <see cref="RequiredToolChoiceBehavior"/>.
-        /// </param>
-        /// <param name="agentId"> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </param>
-        /// <param name="input">
-        /// The list of input messages for the run.
-        /// Please note <see cref="ChatMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AgentMessage"/>, <see cref="DeveloperMessage"/>, <see cref="SystemMessage"/>, <see cref="ToolMessage"/> and <see cref="UserMessage"/>.
-        /// </param>
-        /// <param name="threadId"> Optional identifier for an existing conversation thread. </param>
-        /// <param name="metadata"> Optional metadata associated with the run request. </param>
-        /// <param name="truncationStrategy"> Strategy for truncating messages when input exceeds model limits. </param>
-        /// <param name="userId"> Identifier for the user making the request. </param>
+        /// <param name="options"> The options for the agent completing the run. </param>
+        /// <param name="inputs"> The inputs for the run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StreamRequest(AgentModel agentModel, IReadOnlyList<DeveloperMessage> instructions, IReadOnlyList<AgentToolDefinition> tools, ToolChoiceBehavior toolChoice, string agentId, IReadOnlyList<ChatMessage> input, string threadId, IReadOnlyDictionary<string, string> metadata, TruncationStrategy truncationStrategy, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StreamRequest(AgentConfigurationOptions options, RunInputs inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AgentModel = agentModel;
-            Instructions = instructions;
-            Tools = tools;
-            ToolChoice = toolChoice;
-            AgentId = agentId;
-            Input = input;
-            ThreadId = threadId;
-            Metadata = metadata;
-            TruncationStrategy = truncationStrategy;
-            UserId = userId;
+            Options = options;
+            Inputs = inputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -111,41 +74,9 @@ namespace Azure.AI.Projects.OneDP
         {
         }
 
-        /// <summary>
-        /// The model definition for this agent. This is optional (not needed) when doing a run using persistent agent.
-        /// Please note <see cref="OneDP.AgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAgentModel"/> and <see cref="OpenAIAgentModel"/>.
-        /// </summary>
-        public AgentModel AgentModel { get; }
-        /// <summary> Instructions provided to guide how this agent operates. </summary>
-        public IReadOnlyList<DeveloperMessage> Instructions { get; }
-        /// <summary>
-        /// A list of tool definitions available to the agent.
-        /// Please note <see cref="AgentToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
-        /// </summary>
-        public IReadOnlyList<AgentToolDefinition> Tools { get; }
-        /// <summary>
-        /// How the agent should choose among provided tools.
-        /// Please note <see cref="ToolChoiceBehavior"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoToolChoiceBehavior"/>, <see cref="NoneToolChoiceBehavior"/> and <see cref="RequiredToolChoiceBehavior"/>.
-        /// </summary>
-        public ToolChoiceBehavior ToolChoice { get; }
-        /// <summary> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </summary>
-        public string AgentId { get; }
-        /// <summary>
-        /// The list of input messages for the run.
-        /// Please note <see cref="ChatMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AgentMessage"/>, <see cref="DeveloperMessage"/>, <see cref="SystemMessage"/>, <see cref="ToolMessage"/> and <see cref="UserMessage"/>.
-        /// </summary>
-        public IReadOnlyList<ChatMessage> Input { get; }
-        /// <summary> Optional identifier for an existing conversation thread. </summary>
-        public string ThreadId { get; }
-        /// <summary> Optional metadata associated with the run request. </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
-        /// <summary> Strategy for truncating messages when input exceeds model limits. </summary>
-        public TruncationStrategy TruncationStrategy { get; }
-        /// <summary> Identifier for the user making the request. </summary>
-        public string UserId { get; }
+        /// <summary> The options for the agent completing the run. </summary>
+        public AgentConfigurationOptions Options { get; }
+        /// <summary> The inputs for the run. </summary>
+        public RunInputs Inputs { get; }
     }
 }

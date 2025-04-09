@@ -34,74 +34,10 @@ namespace Azure.AI.Projects.OneDP
                 throw new FormatException($"The model {nameof(RunRequest)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(AgentModel))
-            {
-                writer.WritePropertyName("agentModel"u8);
-                writer.WriteObjectValue(AgentModel, options);
-            }
-            if (Optional.IsCollectionDefined(Instructions))
-            {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Instructions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Tools))
-            {
-                writer.WritePropertyName("tools"u8);
-                writer.WriteStartArray();
-                foreach (var item in Tools)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ToolChoice))
-            {
-                writer.WritePropertyName("toolChoice"u8);
-                writer.WriteObjectValue(ToolChoice, options);
-            }
-            if (Optional.IsDefined(AgentId))
-            {
-                writer.WritePropertyName("agentId"u8);
-                writer.WriteStringValue(AgentId);
-            }
-            writer.WritePropertyName("input"u8);
-            writer.WriteStartArray();
-            foreach (var item in Input)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(ThreadId))
-            {
-                writer.WritePropertyName("threadId"u8);
-                writer.WriteStringValue(ThreadId);
-            }
-            if (Optional.IsCollectionDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(TruncationStrategy))
-            {
-                writer.WritePropertyName("truncationStrategy"u8);
-                writer.WriteObjectValue(TruncationStrategy, options);
-            }
-            if (Optional.IsDefined(UserId))
-            {
-                writer.WritePropertyName("userId"u8);
-                writer.WriteStringValue(UserId);
-            }
+            writer.WritePropertyName("options"u8);
+            writer.WriteObjectValue(Options, options);
+            writer.WritePropertyName("inputs"u8);
+            writer.WriteObjectValue(Inputs, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -139,112 +75,20 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            AgentModel agentModel = default;
-            IReadOnlyList<DeveloperMessage> instructions = default;
-            IReadOnlyList<AgentToolDefinition> tools = default;
-            ToolChoiceBehavior toolChoice = default;
-            string agentId = default;
-            IReadOnlyList<ChatMessage> input = default;
-            string threadId = default;
-            IReadOnlyDictionary<string, string> metadata = default;
-            TruncationStrategy truncationStrategy = default;
-            string userId = default;
+            AgentConfigurationOptions options0 = default;
+            RunInputs inputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agentModel"u8))
+                if (property.NameEquals("options"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentModel = AgentModel.DeserializeAgentModel(property.Value, options);
+                    options0 = AgentConfigurationOptions.DeserializeAgentConfigurationOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("instructions"u8))
+                if (property.NameEquals("inputs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DeveloperMessage> array = new List<DeveloperMessage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DeveloperMessage.DeserializeDeveloperMessage(item, options));
-                    }
-                    instructions = array;
-                    continue;
-                }
-                if (property.NameEquals("tools"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AgentToolDefinition> array = new List<AgentToolDefinition>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AgentToolDefinition.DeserializeAgentToolDefinition(item, options));
-                    }
-                    tools = array;
-                    continue;
-                }
-                if (property.NameEquals("toolChoice"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    toolChoice = ToolChoiceBehavior.DeserializeToolChoiceBehavior(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("agentId"u8))
-                {
-                    agentId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("input"u8))
-                {
-                    List<ChatMessage> array = new List<ChatMessage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ChatMessage.DeserializeChatMessage(item, options));
-                    }
-                    input = array;
-                    continue;
-                }
-                if (property.NameEquals("threadId"u8))
-                {
-                    threadId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("metadata"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    metadata = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("truncationStrategy"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    truncationStrategy = TruncationStrategy.DeserializeTruncationStrategy(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("userId"u8))
-                {
-                    userId = property.Value.GetString();
+                    inputs = RunInputs.DeserializeRunInputs(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -253,18 +97,7 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunRequest(
-                agentModel,
-                instructions ?? new ChangeTrackingList<DeveloperMessage>(),
-                tools ?? new ChangeTrackingList<AgentToolDefinition>(),
-                toolChoice,
-                agentId,
-                input,
-                threadId,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                truncationStrategy,
-                userId,
-                serializedAdditionalRawData);
+            return new RunRequest(options0, inputs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunRequest>.Write(ModelReaderWriterOptions options)

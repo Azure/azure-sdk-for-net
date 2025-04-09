@@ -113,14 +113,14 @@ namespace Azure.AI.Projects.OneDP
             return new Threads(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of Agents. </summary>
+        /// <summary> Initializes a new instance of AgentsClient. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Agents GetAgentsClient(string apiVersion = "2025-05-01-preview")
+        public virtual AgentsClient GetAgentsClient(string apiVersion = "2025-05-01-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Agents(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+            return new AgentsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
         }
 
         /// <summary> Initializes a new instance of Connections. </summary>

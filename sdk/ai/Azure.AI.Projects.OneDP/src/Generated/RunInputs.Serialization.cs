@@ -62,10 +62,10 @@ namespace Azure.AI.Projects.OneDP
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TruncationStrategy))
+            if (Optional.IsDefined(Options))
             {
-                writer.WritePropertyName("truncationStrategy"u8);
-                writer.WriteObjectValue(TruncationStrategy, options);
+                writer.WritePropertyName("options"u8);
+                writer.WriteObjectValue(Options, options);
             }
             if (Optional.IsDefined(UserId))
             {
@@ -110,10 +110,10 @@ namespace Azure.AI.Projects.OneDP
                 return null;
             }
             string agentId = default;
-            IReadOnlyList<ChatMessage> input = default;
+            IList<ChatMessage> input = default;
             string threadId = default;
-            IReadOnlyDictionary<string, string> metadata = default;
-            TruncationStrategy truncationStrategy = default;
+            IDictionary<string, string> metadata = default;
+            RunOptions options0 = default;
             string userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -153,13 +153,13 @@ namespace Azure.AI.Projects.OneDP
                     metadata = dictionary;
                     continue;
                 }
-                if (property.NameEquals("truncationStrategy"u8))
+                if (property.NameEquals("options"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    truncationStrategy = TruncationStrategy.DeserializeTruncationStrategy(property.Value, options);
+                    options0 = RunOptions.DeserializeRunOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userId"u8))
@@ -178,7 +178,7 @@ namespace Azure.AI.Projects.OneDP
                 input,
                 threadId,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                truncationStrategy,
+                options0,
                 userId,
                 serializedAdditionalRawData);
         }

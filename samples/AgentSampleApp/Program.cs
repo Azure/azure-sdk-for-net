@@ -40,16 +40,14 @@ namespace AgentSampleApp
                 }
             };
 
+            AgentConfigurationOptions agentConfigurationOptions = new AgentConfigurationOptions();
+            agentConfigurationOptions.AgentModel = new AzureAgentModel("gpt-4o");
+            agentConfigurationOptions.Instructions = "You're a helpful assistant.";
+
+            RunInputs inputs = new RunInputs(inputMessages);
             Response<Run> runResponse = await agentsClient.RunAsync(
-                agentModel: new AzureAgentModel("gpt-4o"),
-                instructions: new List<DeveloperMessage>
-                {
-                    new DeveloperMessage(new List<AIContent>
-                    {
-                        new TextContent("You're a helpful assistant.")
-                    })
-                },
-                input: inputMessages
+                options: agentConfigurationOptions,
+                inputs: inputs
             );
 
             foreach (ChatMessage chatMsg in runResponse.Value.RunOutputs.Messages)
@@ -78,19 +76,16 @@ namespace AgentSampleApp
             );
 
             var agentsClient = aiProjectClient.GetAgentsClient();
-            var agent = await agentsClient.CreateAgentAsync(
-                name: "PersistentAgent",
-                agentModel: new AzureAgentModel("gpt-4o"),
-                instructions: new List<DeveloperMessage>
-                {
-                    new DeveloperMessage(new List<AIContent>
-                    {
-                        new TextContent("You're a helpful assistant.")
-                    })
-                }
-            );
 
-            string agentId = "MyPersistedAgent"; // Replace with your actual agent ID
+            AgentConfigurationOptions agentConfigurationOptions = new AgentConfigurationOptions();
+            agentConfigurationOptions.AgentModel = new AzureAgentModel("gpt-4o");
+            agentConfigurationOptions.Instructions = "You're a helpful assistant.";
+
+            AgentCreationOptions agentCreationOptions = new AgentCreationOptions("PersistentAgent", agentConfigurationOptions);
+
+            var agentResponse = await agentsClient.CreateAgentAsync(agentCreationOptions);
+            var agent = agentResponse.Value;
+
             var inputMessages = new List<ChatMessage>
             {
                 new UserMessage(new List<AIContent>
@@ -101,10 +96,12 @@ namespace AgentSampleApp
                     AuthorName = "Unknown"
                 }
             };
+            RunInputs inputs = new RunInputs(inputMessages);
+            inputs.AgentId = agent.AgentId;
 
             Response<Run> runResponse = await agentsClient.RunAsync(
-                input: inputMessages,
-                agentId: agentId
+                new AgentConfigurationOptions(),
+                inputs: inputs
             );
 
             foreach (ChatMessage chatMsg in runResponse.Value.RunOutputs.Messages)
@@ -133,17 +130,13 @@ namespace AgentSampleApp
             );
 
             var agentsClient = aiProjectClient.GetAgentsClient();
-            var agentResponse = await agentsClient.CreateAgentAsync(
-                name: "PersistentAgent",
-                agentModel: new AzureAgentModel("gpt-4o"),
-                instructions: new List<DeveloperMessage>
-                {
-                    new DeveloperMessage(new List<AIContent>
-                    {
-                        new TextContent("You're a helpful assistant.")
-                    })
-                }
-            );
+
+            AgentConfigurationOptions agentConfigurationOptions = new AgentConfigurationOptions();
+            agentConfigurationOptions.AgentModel = new AzureAgentModel("gpt-4o");
+            agentConfigurationOptions.Instructions = "You're a helpful assistant.";
+            AgentCreationOptions agentCreationOptions = new AgentCreationOptions("PersistentAgent", agentConfigurationOptions);
+
+            var agentResponse = await agentsClient.CreateAgentAsync(agentCreationOptions);
             var agent = agentResponse.Value;
 
             var inputMessages = new List<ChatMessage>
@@ -156,9 +149,10 @@ namespace AgentSampleApp
                     AuthorName = "Unknown"
                 }
             };
+            RunInputs inputs = new RunInputs(inputMessages);
+            inputs.AgentId = agent.AgentId;
 
             var threadsClient = aiProjectClient.GetThreadsClient();
-
             var initialMessage = new UserMessage(new List<AIContent>
             {
                 new TextContent("Tell me a joke")
@@ -166,13 +160,11 @@ namespace AgentSampleApp
             {
                 AuthorName = "User"
             };
-
             Response<Thread> threadResponse = await threadsClient.CreateThreadAsync(new List<ChatMessage> { initialMessage });
-
+            inputs.ThreadId = threadResponse.Value.ThreadId;
             Response<Run> runResponse = await agentsClient.RunAsync(
-                input: inputMessages,
-                agentId: agent.AgentId,
-                threadId: threadResponse.Value.ThreadId
+                new AgentConfigurationOptions(),
+                inputs: inputs
             );
 
             foreach (ChatMessage chatMsg in runResponse.Value.RunOutputs.Messages)

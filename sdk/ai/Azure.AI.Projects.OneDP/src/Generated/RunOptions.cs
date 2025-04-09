@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> The CreateAgentRequest. </summary>
-    internal partial class CreateAgentRequest
+    /// <summary> Represents advanced options for controlling agent runs. </summary>
+    public partial class RunOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,21 @@ namespace Azure.AI.Projects.OneDP
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentRequest"/>. </summary>
-        /// <param name="options"> The options for agent creation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        internal CreateAgentRequest(AgentCreationOptions options)
+        /// <summary> Initializes a new instance of <see cref="RunOptions"/>. </summary>
+        public RunOptions()
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            Options = options;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentRequest"/>. </summary>
-        /// <param name="options"> The options for agent creation. </param>
+        /// <summary> Initializes a new instance of <see cref="RunOptions"/>. </summary>
+        /// <param name="truncationStrategy"> Strategy for truncating messages when input exceeds model limits. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateAgentRequest(AgentCreationOptions options, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunOptions(TruncationStrategy truncationStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Options = options;
+            TruncationStrategy = truncationStrategy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentRequest"/> for deserialization. </summary>
-        internal CreateAgentRequest()
-        {
-        }
-
-        /// <summary> The options for agent creation. </summary>
-        public AgentCreationOptions Options { get; }
+        /// <summary> Strategy for truncating messages when input exceeds model limits. </summary>
+        public TruncationStrategy TruncationStrategy { get; set; }
     }
 }

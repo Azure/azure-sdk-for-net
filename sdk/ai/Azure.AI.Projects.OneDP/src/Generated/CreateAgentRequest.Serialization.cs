@@ -34,38 +34,8 @@ namespace Azure.AI.Projects.OneDP
                 throw new FormatException($"The model {nameof(CreateAgentRequest)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(AgentModel))
-            {
-                writer.WritePropertyName("agentModel"u8);
-                writer.WriteObjectValue(AgentModel, options);
-            }
-            if (Optional.IsCollectionDefined(Instructions))
-            {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Instructions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Tools))
-            {
-                writer.WritePropertyName("tools"u8);
-                writer.WriteStartArray();
-                foreach (var item in Tools)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ToolChoice))
-            {
-                writer.WritePropertyName("toolChoice"u8);
-                writer.WriteObjectValue(ToolChoice, options);
-            }
+            writer.WritePropertyName("options"u8);
+            writer.WriteObjectValue(Options, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,64 +73,14 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            string name = default;
-            AgentModel agentModel = default;
-            IReadOnlyList<DeveloperMessage> instructions = default;
-            IReadOnlyList<AgentToolDefinition> tools = default;
-            ToolChoiceBehavior toolChoice = default;
+            AgentCreationOptions options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("options"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("agentModel"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentModel = AgentModel.DeserializeAgentModel(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("instructions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DeveloperMessage> array = new List<DeveloperMessage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DeveloperMessage.DeserializeDeveloperMessage(item, options));
-                    }
-                    instructions = array;
-                    continue;
-                }
-                if (property.NameEquals("tools"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AgentToolDefinition> array = new List<AgentToolDefinition>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AgentToolDefinition.DeserializeAgentToolDefinition(item, options));
-                    }
-                    tools = array;
-                    continue;
-                }
-                if (property.NameEquals("toolChoice"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    toolChoice = ToolChoiceBehavior.DeserializeToolChoiceBehavior(property.Value, options);
+                    options0 = AgentCreationOptions.DeserializeAgentCreationOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,13 +89,7 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CreateAgentRequest(
-                name,
-                agentModel,
-                instructions ?? new ChangeTrackingList<DeveloperMessage>(),
-                tools ?? new ChangeTrackingList<AgentToolDefinition>(),
-                toolChoice,
-                serializedAdditionalRawData);
+            return new CreateAgentRequest(options0, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateAgentRequest>.Write(ModelReaderWriterOptions options)

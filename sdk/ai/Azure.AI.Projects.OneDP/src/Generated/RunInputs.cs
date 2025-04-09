@@ -53,7 +53,7 @@ namespace Azure.AI.Projects.OneDP
         /// The available derived classes include <see cref="AgentMessage"/>, <see cref="DeveloperMessage"/>, <see cref="SystemMessage"/>, <see cref="ToolMessage"/> and <see cref="UserMessage"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        internal RunInputs(IEnumerable<ChatMessage> input)
+        public RunInputs(IEnumerable<ChatMessage> input)
         {
             Argument.AssertNotNull(input, nameof(input));
 
@@ -70,16 +70,16 @@ namespace Azure.AI.Projects.OneDP
         /// </param>
         /// <param name="threadId"> Optional identifier for an existing conversation thread. </param>
         /// <param name="metadata"> Optional metadata associated with the run request. </param>
-        /// <param name="truncationStrategy"> Strategy for truncating messages when input exceeds model limits. </param>
+        /// <param name="options"> Optional configuration for run generation. </param>
         /// <param name="userId"> Identifier for the user making the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RunInputs(string agentId, IReadOnlyList<ChatMessage> input, string threadId, IReadOnlyDictionary<string, string> metadata, TruncationStrategy truncationStrategy, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunInputs(string agentId, IList<ChatMessage> input, string threadId, IDictionary<string, string> metadata, RunOptions options, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgentId = agentId;
             Input = input;
             ThreadId = threadId;
             Metadata = metadata;
-            TruncationStrategy = truncationStrategy;
+            Options = options;
             UserId = userId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -90,20 +90,20 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </summary>
-        public string AgentId { get; }
+        public string AgentId { get; set; }
         /// <summary>
         /// The list of input messages for the run.
         /// Please note <see cref="ChatMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AgentMessage"/>, <see cref="DeveloperMessage"/>, <see cref="SystemMessage"/>, <see cref="ToolMessage"/> and <see cref="UserMessage"/>.
         /// </summary>
-        public IReadOnlyList<ChatMessage> Input { get; }
+        public IList<ChatMessage> Input { get; }
         /// <summary> Optional identifier for an existing conversation thread. </summary>
-        public string ThreadId { get; }
+        public string ThreadId { get; set; }
         /// <summary> Optional metadata associated with the run request. </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
-        /// <summary> Strategy for truncating messages when input exceeds model limits. </summary>
-        public TruncationStrategy TruncationStrategy { get; }
+        public IDictionary<string, string> Metadata { get; }
+        /// <summary> Optional configuration for run generation. </summary>
+        public RunOptions Options { get; set; }
         /// <summary> Identifier for the user making the request. </summary>
-        public string UserId { get; }
+        public string UserId { get; set; }
     }
 }

@@ -7,15 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
+using Azure.AI.Projects.OneDP;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     // Data plane generated sub-client.
     /// <summary>
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.OneDP
     /// Includes standard resource operations + custom collection-level
     /// and instance-level actions (complete, stream).
     /// </summary>
-    public partial class Agents
+    public partial class AgentsClient
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -42,19 +42,19 @@ namespace Azure.AI.Projects.OneDP
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Agents for mocking. </summary>
-        protected Agents()
+        /// <summary> Initializes a new instance of AgentsClient for mocking. </summary>
+        protected AgentsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Agents. </summary>
+        /// <summary> Initializes a new instance of AgentsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Agents(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal AgentsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -65,50 +65,30 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> Creates a new Agent resource and returns it. </summary>
-        /// <param name="name"> The name of the agent; used for display purposes and sent to the LLM to identify the agent. </param>
-        /// <param name="agentModel"> The model definition for this agent. This is optional (not needed) when doing a run using persistent agent. </param>
-        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
-        /// <param name="tools"> A list of tool definitions available to the agent. </param>
-        /// <param name="toolChoice"> How the agent should choose among provided tools. </param>
+        /// <param name="options"> The options for agent creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateAgentAsync(string,AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)']/*" />
-        public virtual async Task<Response<Agent>> CreateAgentAsync(string name, AgentModel agentModel = null, IEnumerable<DeveloperMessage> instructions = null, IEnumerable<AgentToolDefinition> tools = null, ToolChoiceBehavior toolChoice = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='CreateAgentAsync(AgentCreationOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<Agent>> CreateAgentAsync(AgentCreationOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(options, nameof(options));
 
-            CreateAgentRequest createAgentRequest = new CreateAgentRequest(
-                name,
-                agentModel,
-                instructions?.ToList() as IReadOnlyList<DeveloperMessage> ?? new ChangeTrackingList<DeveloperMessage>(),
-                tools?.ToList() as IReadOnlyList<AgentToolDefinition> ?? new ChangeTrackingList<AgentToolDefinition>(),
-                toolChoice,
-                null);
+            CreateAgentRequest createAgentRequest = new CreateAgentRequest(options, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateAgentAsync(createAgentRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(Agent.FromResponse(response), response);
         }
 
         /// <summary> Creates a new Agent resource and returns it. </summary>
-        /// <param name="name"> The name of the agent; used for display purposes and sent to the LLM to identify the agent. </param>
-        /// <param name="agentModel"> The model definition for this agent. This is optional (not needed) when doing a run using persistent agent. </param>
-        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
-        /// <param name="tools"> A list of tool definitions available to the agent. </param>
-        /// <param name="toolChoice"> How the agent should choose among provided tools. </param>
+        /// <param name="options"> The options for agent creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateAgent(string,AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)']/*" />
-        public virtual Response<Agent> CreateAgent(string name, AgentModel agentModel = null, IEnumerable<DeveloperMessage> instructions = null, IEnumerable<AgentToolDefinition> tools = null, ToolChoiceBehavior toolChoice = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='CreateAgent(AgentCreationOptions,CancellationToken)']/*" />
+        public virtual Response<Agent> CreateAgent(AgentCreationOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(options, nameof(options));
 
-            CreateAgentRequest createAgentRequest = new CreateAgentRequest(
-                name,
-                agentModel,
-                instructions?.ToList() as IReadOnlyList<DeveloperMessage> ?? new ChangeTrackingList<DeveloperMessage>(),
-                tools?.ToList() as IReadOnlyList<AgentToolDefinition> ?? new ChangeTrackingList<AgentToolDefinition>(),
-                toolChoice,
-                null);
+            CreateAgentRequest createAgentRequest = new CreateAgentRequest(options, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateAgent(createAgentRequest.ToRequestContent(), context);
             return Response.FromValue(Agent.FromResponse(response), response);
@@ -124,7 +104,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAgentAsync(string,AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAgentAsync(AgentCreationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -134,12 +114,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateAgentAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='CreateAgentAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAgentAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.CreateAgent");
             scope.Start();
             try
             {
@@ -163,7 +143,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAgent(string,AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAgent(AgentCreationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -173,12 +153,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateAgent(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='CreateAgent(RequestContent,RequestContext)']/*" />
         public virtual Response CreateAgent(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.CreateAgent");
             scope.Start();
             try
             {
@@ -197,7 +177,7 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetAgentAsync(string,CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetAgentAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<Agent>> GetAgentAsync(string agentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
@@ -212,7 +192,7 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetAgent(string,CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetAgent(string,CancellationToken)']/*" />
         public virtual Response<Agent> GetAgent(string agentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
@@ -243,12 +223,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetAgentAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetAgentAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetAgentAsync(string agentId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetAgent");
             scope.Start();
             try
             {
@@ -283,12 +263,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetAgent(string,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetAgent(string,RequestContext)']/*" />
         public virtual Response GetAgent(string agentId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetAgent");
             scope.Start();
             try
             {
@@ -308,7 +288,7 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UpdateAgentAsync(string,Agent,CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='UpdateAgentAsync(string,Agent,CancellationToken)']/*" />
         public virtual async Task<Response<Agent>> UpdateAgentAsync(string agentId, Agent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
@@ -326,7 +306,7 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UpdateAgent(string,Agent,CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='UpdateAgent(string,Agent,CancellationToken)']/*" />
         public virtual Response<Agent> UpdateAgent(string agentId, Agent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
@@ -360,13 +340,13 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UpdateAgentAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='UpdateAgentAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAgentAsync(string agentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.UpdateAgent");
             scope.Start();
             try
             {
@@ -402,13 +382,13 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UpdateAgent(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='UpdateAgent(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateAgent(string agentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.UpdateAgent");
             scope.Start();
             try
             {
@@ -439,12 +419,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='DeleteAgentAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='DeleteAgentAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAgentAsync(string agentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.DeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.DeleteAgent");
             scope.Start();
             try
             {
@@ -475,12 +455,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='DeleteAgent(string,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='DeleteAgent(string,RequestContext)']/*" />
         public virtual Response DeleteAgent(string agentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.DeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.DeleteAgent");
             scope.Start();
             try
             {
@@ -496,7 +476,7 @@ namespace Azure.AI.Projects.OneDP
 
         /// <summary> Lists all Agents, returning an array of Agent objects. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetAgentsAsync(CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetAgentsAsync(CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<Agent>>> GetAgentsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -514,7 +494,7 @@ namespace Azure.AI.Projects.OneDP
 
         /// <summary> Lists all Agents, returning an array of Agent objects. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetAgents(CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetAgents(CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<Agent>> GetAgents(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -548,10 +528,10 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetAgentsAsync(RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetAgentsAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetAgentsAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetAgents");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetAgents");
             scope.Start();
             try
             {
@@ -583,10 +563,10 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetAgents(RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetAgents(RequestContext)']/*" />
         public virtual Response GetAgents(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetAgents");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetAgents");
             scope.Start();
             try
             {
@@ -601,70 +581,34 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> Creates and waits for a run to finish, returning the completed Run (including its outputs). </summary>
-        /// <param name="input"> The list of input messages for the run. </param>
-        /// <param name="agentModel"> The model definition for this agent. This is optional (not needed) when doing a run using persistent agent. </param>
-        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
-        /// <param name="tools"> A list of tool definitions available to the agent. </param>
-        /// <param name="toolChoice"> How the agent should choose among provided tools. </param>
-        /// <param name="agentId"> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </param>
-        /// <param name="threadId"> Optional identifier for an existing conversation thread. </param>
-        /// <param name="metadata"> Optional metadata associated with the run request. </param>
-        /// <param name="truncationStrategy"> Strategy for truncating messages when input exceeds model limits. </param>
-        /// <param name="userId"> Identifier for the user making the request. </param>
+        /// <param name="options"> The options for the agent completing the run. </param>
+        /// <param name="inputs"> The inputs for the run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='RunAsync(IEnumerable{ChatMessage},AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,string,string,IReadOnlyDictionary{string,string},TruncationStrategy,string,CancellationToken)']/*" />
-        public virtual async Task<Response<Run>> RunAsync(IEnumerable<ChatMessage> input, AgentModel agentModel = null, IEnumerable<DeveloperMessage> instructions = null, IEnumerable<AgentToolDefinition> tools = null, ToolChoiceBehavior toolChoice = null, string agentId = null, string threadId = null, IReadOnlyDictionary<string, string> metadata = null, TruncationStrategy truncationStrategy = null, string userId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="inputs"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='RunAsync(AgentConfigurationOptions,RunInputs,CancellationToken)']/*" />
+        public virtual async Task<Response<Run>> RunAsync(AgentConfigurationOptions options, RunInputs inputs, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            RunRequest runRequest = new RunRequest(
-                agentModel,
-                instructions?.ToList() as IReadOnlyList<DeveloperMessage> ?? new ChangeTrackingList<DeveloperMessage>(),
-                tools?.ToList() as IReadOnlyList<AgentToolDefinition> ?? new ChangeTrackingList<AgentToolDefinition>(),
-                toolChoice,
-                agentId,
-                input.ToList(),
-                threadId,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                truncationStrategy,
-                userId,
-                null);
+            RunRequest runRequest = new RunRequest(options, inputs, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RunAsync(runRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(OneDP.Run.FromResponse(response), response);
         }
 
         /// <summary> Creates and waits for a run to finish, returning the completed Run (including its outputs). </summary>
-        /// <param name="input"> The list of input messages for the run. </param>
-        /// <param name="agentModel"> The model definition for this agent. This is optional (not needed) when doing a run using persistent agent. </param>
-        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
-        /// <param name="tools"> A list of tool definitions available to the agent. </param>
-        /// <param name="toolChoice"> How the agent should choose among provided tools. </param>
-        /// <param name="agentId"> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </param>
-        /// <param name="threadId"> Optional identifier for an existing conversation thread. </param>
-        /// <param name="metadata"> Optional metadata associated with the run request. </param>
-        /// <param name="truncationStrategy"> Strategy for truncating messages when input exceeds model limits. </param>
-        /// <param name="userId"> Identifier for the user making the request. </param>
+        /// <param name="options"> The options for the agent completing the run. </param>
+        /// <param name="inputs"> The inputs for the run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='Run(IEnumerable{ChatMessage},AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,string,string,IReadOnlyDictionary{string,string},TruncationStrategy,string,CancellationToken)']/*" />
-        public virtual Response<Run> Run(IEnumerable<ChatMessage> input, AgentModel agentModel = null, IEnumerable<DeveloperMessage> instructions = null, IEnumerable<AgentToolDefinition> tools = null, ToolChoiceBehavior toolChoice = null, string agentId = null, string threadId = null, IReadOnlyDictionary<string, string> metadata = null, TruncationStrategy truncationStrategy = null, string userId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="inputs"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='Run(AgentConfigurationOptions,RunInputs,CancellationToken)']/*" />
+        public virtual Response<Run> Run(AgentConfigurationOptions options, RunInputs inputs, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            RunRequest runRequest = new RunRequest(
-                agentModel,
-                instructions?.ToList() as IReadOnlyList<DeveloperMessage> ?? new ChangeTrackingList<DeveloperMessage>(),
-                tools?.ToList() as IReadOnlyList<AgentToolDefinition> ?? new ChangeTrackingList<AgentToolDefinition>(),
-                toolChoice,
-                agentId,
-                input.ToList(),
-                threadId,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                truncationStrategy,
-                userId,
-                null);
+            RunRequest runRequest = new RunRequest(options, inputs, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Run(runRequest.ToRequestContent(), context);
             return Response.FromValue(OneDP.Run.FromResponse(response), response);
@@ -680,7 +624,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RunAsync(IEnumerable{ChatMessage},AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,string,string,IReadOnlyDictionary{string,string},TruncationStrategy,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RunAsync(AgentConfigurationOptions,RunInputs,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -690,12 +634,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='RunAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='RunAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RunAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.Run");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.Run");
             scope.Start();
             try
             {
@@ -719,7 +663,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Run(IEnumerable{ChatMessage},AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,string,string,IReadOnlyDictionary{string,string},TruncationStrategy,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Run(AgentConfigurationOptions,RunInputs,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -729,12 +673,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='Run(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='Run(RequestContent,RequestContext)']/*" />
         public virtual Response Run(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.Run");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.Run");
             scope.Start();
             try
             {
@@ -749,70 +693,34 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> The most basic operation. </summary>
-        /// <param name="input"> The list of input messages for the run. </param>
-        /// <param name="agentModel"> The model definition for this agent. This is optional (not needed) when doing a run using persistent agent. </param>
-        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
-        /// <param name="tools"> A list of tool definitions available to the agent. </param>
-        /// <param name="toolChoice"> How the agent should choose among provided tools. </param>
-        /// <param name="agentId"> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </param>
-        /// <param name="threadId"> Optional identifier for an existing conversation thread. </param>
-        /// <param name="metadata"> Optional metadata associated with the run request. </param>
-        /// <param name="truncationStrategy"> Strategy for truncating messages when input exceeds model limits. </param>
-        /// <param name="userId"> Identifier for the user making the request. </param>
+        /// <param name="options"> The options for the agent completing the run. </param>
+        /// <param name="inputs"> The inputs for the run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='StreamAsync(IEnumerable{ChatMessage},AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,string,string,IReadOnlyDictionary{string,string},TruncationStrategy,string,CancellationToken)']/*" />
-        public virtual async Task<Response> StreamAsync(IEnumerable<ChatMessage> input, AgentModel agentModel = null, IEnumerable<DeveloperMessage> instructions = null, IEnumerable<AgentToolDefinition> tools = null, ToolChoiceBehavior toolChoice = null, string agentId = null, string threadId = null, IReadOnlyDictionary<string, string> metadata = null, TruncationStrategy truncationStrategy = null, string userId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="inputs"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='StreamAsync(AgentConfigurationOptions,RunInputs,CancellationToken)']/*" />
+        public virtual async Task<Response> StreamAsync(AgentConfigurationOptions options, RunInputs inputs, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            StreamRequest streamRequest = new StreamRequest(
-                agentModel,
-                instructions?.ToList() as IReadOnlyList<DeveloperMessage> ?? new ChangeTrackingList<DeveloperMessage>(),
-                tools?.ToList() as IReadOnlyList<AgentToolDefinition> ?? new ChangeTrackingList<AgentToolDefinition>(),
-                toolChoice,
-                agentId,
-                input.ToList(),
-                threadId,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                truncationStrategy,
-                userId,
-                null);
+            StreamRequest streamRequest = new StreamRequest(options, inputs, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await StreamAsync(streamRequest.ToRequestContent(), context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> The most basic operation. </summary>
-        /// <param name="input"> The list of input messages for the run. </param>
-        /// <param name="agentModel"> The model definition for this agent. This is optional (not needed) when doing a run using persistent agent. </param>
-        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
-        /// <param name="tools"> A list of tool definitions available to the agent. </param>
-        /// <param name="toolChoice"> How the agent should choose among provided tools. </param>
-        /// <param name="agentId"> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </param>
-        /// <param name="threadId"> Optional identifier for an existing conversation thread. </param>
-        /// <param name="metadata"> Optional metadata associated with the run request. </param>
-        /// <param name="truncationStrategy"> Strategy for truncating messages when input exceeds model limits. </param>
-        /// <param name="userId"> Identifier for the user making the request. </param>
+        /// <param name="options"> The options for the agent completing the run. </param>
+        /// <param name="inputs"> The inputs for the run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='Stream(IEnumerable{ChatMessage},AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,string,string,IReadOnlyDictionary{string,string},TruncationStrategy,string,CancellationToken)']/*" />
-        public virtual Response Stream(IEnumerable<ChatMessage> input, AgentModel agentModel = null, IEnumerable<DeveloperMessage> instructions = null, IEnumerable<AgentToolDefinition> tools = null, ToolChoiceBehavior toolChoice = null, string agentId = null, string threadId = null, IReadOnlyDictionary<string, string> metadata = null, TruncationStrategy truncationStrategy = null, string userId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="inputs"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='Stream(AgentConfigurationOptions,RunInputs,CancellationToken)']/*" />
+        public virtual Response Stream(AgentConfigurationOptions options, RunInputs inputs, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            StreamRequest streamRequest = new StreamRequest(
-                agentModel,
-                instructions?.ToList() as IReadOnlyList<DeveloperMessage> ?? new ChangeTrackingList<DeveloperMessage>(),
-                tools?.ToList() as IReadOnlyList<AgentToolDefinition> ?? new ChangeTrackingList<AgentToolDefinition>(),
-                toolChoice,
-                agentId,
-                input.ToList(),
-                threadId,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                truncationStrategy,
-                userId,
-                null);
+            StreamRequest streamRequest = new StreamRequest(options, inputs, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Stream(streamRequest.ToRequestContent(), context);
             return response;
@@ -828,7 +736,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StreamAsync(IEnumerable{ChatMessage},AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,string,string,IReadOnlyDictionary{string,string},TruncationStrategy,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StreamAsync(AgentConfigurationOptions,RunInputs,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -838,12 +746,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='StreamAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='StreamAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> StreamAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.Stream");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.Stream");
             scope.Start();
             try
             {
@@ -867,7 +775,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Stream(IEnumerable{ChatMessage},AgentModel,IEnumerable{DeveloperMessage},IEnumerable{AgentToolDefinition},ToolChoiceBehavior,string,string,IReadOnlyDictionary{string,string},TruncationStrategy,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Stream(AgentConfigurationOptions,RunInputs,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -877,12 +785,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='Stream(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='Stream(RequestContent,RequestContext)']/*" />
         public virtual Response Stream(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.Stream");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.Stream");
             scope.Start();
             try
             {
@@ -904,7 +812,7 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRunAsync(string,CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRunAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<Run>> GetRunAsync(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -922,7 +830,7 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRun(string,CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRun(string,CancellationToken)']/*" />
         public virtual Response<Run> GetRun(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -954,12 +862,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRunAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRunAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetRunAsync(string runId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetRun");
             scope.Start();
             try
             {
@@ -995,12 +903,12 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRun(string,RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRun(string,RequestContext)']/*" />
         public virtual Response GetRun(string runId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetRun");
             scope.Start();
             try
             {
@@ -1019,13 +927,13 @@ namespace Azure.AI.Projects.OneDP
         /// @route("/agents/runs")
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRunsAsync(CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRunsAsync(CancellationToken)']/*" />
         public virtual AsyncPageable<Run> GetRunsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OneDP.Run.DeserializeRun(e), ClientDiagnostics, _pipeline, "Agents.GetRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OneDP.Run.DeserializeRun(e), ClientDiagnostics, _pipeline, "AgentsClient.GetRuns", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1033,13 +941,13 @@ namespace Azure.AI.Projects.OneDP
         /// @route("/agents/runs")
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRuns(CancellationToken)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRuns(CancellationToken)']/*" />
         public virtual Pageable<Run> GetRuns(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OneDP.Run.DeserializeRun(e), ClientDiagnostics, _pipeline, "Agents.GetRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OneDP.Run.DeserializeRun(e), ClientDiagnostics, _pipeline, "AgentsClient.GetRuns", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1061,12 +969,12 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRunsAsync(RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRunsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Agents.GetRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AgentsClient.GetRuns", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1088,12 +996,12 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRuns(RequestContext)']/*" />
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRuns(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetRuns(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Agents.GetRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AgentsClient.GetRuns", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateCreateAgentRequest(RequestContent content, RequestContext context)

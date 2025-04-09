@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects.OneDP
 {
-    internal partial class StreamRequest : IUtf8JsonSerializable, IJsonModel<StreamRequest>
+    public partial class RunOptions : IUtf8JsonSerializable, IJsonModel<RunOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StreamRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,17 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StreamRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RunOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("options"u8);
-            writer.WriteObjectValue(Options, options);
-            writer.WritePropertyName("inputs"u8);
-            writer.WriteObjectValue(Inputs, options);
+            if (Optional.IsDefined(TruncationStrategy))
+            {
+                writer.WritePropertyName("truncationStrategy"u8);
+                writer.WriteObjectValue(TruncationStrategy, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,19 +56,19 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        StreamRequest IJsonModel<StreamRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunOptions IJsonModel<RunOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StreamRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RunOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStreamRequest(document.RootElement, options);
+            return DeserializeRunOptions(document.RootElement, options);
         }
 
-        internal static StreamRequest DeserializeStreamRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RunOptions DeserializeRunOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,20 +76,18 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            AgentConfigurationOptions options0 = default;
-            RunInputs inputs = default;
+            TruncationStrategy truncationStrategy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("options"u8))
+                if (property.NameEquals("truncationStrategy"u8))
                 {
-                    options0 = AgentConfigurationOptions.DeserializeAgentConfigurationOptions(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("inputs"u8))
-                {
-                    inputs = RunInputs.DeserializeRunInputs(property.Value, options);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    truncationStrategy = TruncationStrategy.DeserializeTruncationStrategy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,46 +96,46 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StreamRequest(options0, inputs, serializedAdditionalRawData);
+            return new RunOptions(truncationStrategy, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StreamRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StreamRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StreamRequest IPersistableModel<StreamRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunOptions IPersistableModel<RunOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StreamRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStreamRequest(document.RootElement, options);
+                        return DeserializeRunOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StreamRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static StreamRequest FromResponse(Response response)
+        internal static RunOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStreamRequest(document.RootElement);
+            return DeserializeRunOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

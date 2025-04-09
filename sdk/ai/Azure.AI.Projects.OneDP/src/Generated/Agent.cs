@@ -46,50 +46,28 @@ namespace Azure.AI.Projects.OneDP
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Agent"/>. </summary>
-        /// <param name="name"> The name of the agent; used for display purposes and sent to the LLM to identify the agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Agent(string name)
+        /// <param name="creationOptions"> Options that were used to create this agent. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="creationOptions"/> is null. </exception>
+        public Agent(AgentCreationOptions creationOptions)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(creationOptions, nameof(creationOptions));
 
             Metadata = new ChangeTrackingDictionary<string, string>();
-            Name = name;
-            Instructions = new ChangeTrackingList<DeveloperMessage>();
-            Tools = new ChangeTrackingList<AgentToolDefinition>();
+            CreationOptions = creationOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="Agent"/>. </summary>
         /// <param name="agentId"> A unique identifier for the agent. </param>
         /// <param name="description"> A description of the agent; used for display purposes and to describe the agent. </param>
         /// <param name="metadata"> Arbitrary metadata associated with this agent. </param>
-        /// <param name="name"> The name of the agent; used for display purposes and sent to the LLM to identify the agent. </param>
-        /// <param name="agentModel">
-        /// The model definition for this agent. This is optional (not needed) when doing a run using persistent agent.
-        /// Please note <see cref="OneDP.AgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAgentModel"/> and <see cref="OpenAIAgentModel"/>.
-        /// </param>
-        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
-        /// <param name="tools">
-        /// A list of tool definitions available to the agent.
-        /// Please note <see cref="AgentToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
-        /// </param>
-        /// <param name="toolChoice">
-        /// How the agent should choose among provided tools.
-        /// Please note <see cref="ToolChoiceBehavior"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoToolChoiceBehavior"/>, <see cref="NoneToolChoiceBehavior"/> and <see cref="RequiredToolChoiceBehavior"/>.
-        /// </param>
+        /// <param name="creationOptions"> Options that were used to create this agent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Agent(string agentId, string description, IDictionary<string, string> metadata, string name, AgentModel agentModel, IList<DeveloperMessage> instructions, IList<AgentToolDefinition> tools, ToolChoiceBehavior toolChoice, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Agent(string agentId, string description, IDictionary<string, string> metadata, AgentCreationOptions creationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgentId = agentId;
             Description = description;
             Metadata = metadata;
-            Name = name;
-            AgentModel = agentModel;
-            Instructions = instructions;
-            Tools = tools;
-            ToolChoice = toolChoice;
+            CreationOptions = creationOptions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -104,27 +82,7 @@ namespace Azure.AI.Projects.OneDP
         public string Description { get; set; }
         /// <summary> Arbitrary metadata associated with this agent. </summary>
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> The name of the agent; used for display purposes and sent to the LLM to identify the agent. </summary>
-        public string Name { get; set; }
-        /// <summary>
-        /// The model definition for this agent. This is optional (not needed) when doing a run using persistent agent.
-        /// Please note <see cref="OneDP.AgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAgentModel"/> and <see cref="OpenAIAgentModel"/>.
-        /// </summary>
-        public AgentModel AgentModel { get; set; }
-        /// <summary> Instructions provided to guide how this agent operates. </summary>
-        public IList<DeveloperMessage> Instructions { get; }
-        /// <summary>
-        /// A list of tool definitions available to the agent.
-        /// Please note <see cref="AgentToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
-        /// </summary>
-        public IList<AgentToolDefinition> Tools { get; }
-        /// <summary>
-        /// How the agent should choose among provided tools.
-        /// Please note <see cref="ToolChoiceBehavior"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoToolChoiceBehavior"/>, <see cref="NoneToolChoiceBehavior"/> and <see cref="RequiredToolChoiceBehavior"/>.
-        /// </summary>
-        public ToolChoiceBehavior ToolChoice { get; set; }
+        /// <summary> Options that were used to create this agent. </summary>
+        public AgentCreationOptions CreationOptions { get; set; }
     }
 }
