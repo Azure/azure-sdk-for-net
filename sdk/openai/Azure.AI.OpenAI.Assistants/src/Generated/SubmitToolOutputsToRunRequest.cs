@@ -47,7 +47,7 @@ namespace Azure.AI.OpenAI.Assistants
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
-        /// <param name="toolOutputs"> The list of tool outputs requested by tool calls from the specified run. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolOutputs"/> is null. </exception>
         internal SubmitToolOutputsToRunRequest(IEnumerable<ToolOutput> toolOutputs)
         {
@@ -57,11 +57,13 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
-        /// <param name="toolOutputs"> The list of tool outputs requested by tool calls from the specified run. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="stream"> If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubmitToolOutputsToRunRequest(IReadOnlyList<ToolOutput> toolOutputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubmitToolOutputsToRunRequest(IReadOnlyList<ToolOutput> toolOutputs, bool? stream, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ToolOutputs = toolOutputs;
+            Stream = stream;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,7 +72,9 @@ namespace Azure.AI.OpenAI.Assistants
         {
         }
 
-        /// <summary> The list of tool outputs requested by tool calls from the specified run. </summary>
+        /// <summary> A list of tools for which the outputs are being submitted. </summary>
         public IReadOnlyList<ToolOutput> ToolOutputs { get; }
+        /// <summary> If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message. </summary>
+        public bool? Stream { get; }
     }
 }

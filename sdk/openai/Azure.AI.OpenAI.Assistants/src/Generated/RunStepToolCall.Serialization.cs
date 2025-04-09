@@ -80,8 +80,8 @@ namespace Azure.AI.OpenAI.Assistants
                 switch (discriminator.GetString())
                 {
                     case "code_interpreter": return RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
+                    case "file_search": return RunStepFileSearchToolCall.DeserializeRunStepFileSearchToolCall(element, options);
                     case "function": return RunStepFunctionToolCall.DeserializeRunStepFunctionToolCall(element, options);
-                    case "retrieval": return RunStepRetrievalToolCall.DeserializeRunStepRetrievalToolCall(element, options);
                 }
             }
             return UnknownRunStepToolCall.DeserializeUnknownRunStepToolCall(element, options);

@@ -76,13 +76,6 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("file_ids"u8);
-            writer.WriteStartArray();
-            foreach (var item in FileIds)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
             if (ExpiresAt != null)
@@ -129,6 +122,109 @@ namespace Azure.AI.OpenAI.Assistants
             else
             {
                 writer.WriteNull("failed_at");
+            }
+            if (IncompleteDetails != null)
+            {
+                writer.WritePropertyName("incomplete_details"u8);
+                writer.WriteStringValue(IncompleteDetails.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("incomplete_details");
+            }
+            if (Usage != null)
+            {
+                writer.WritePropertyName("usage"u8);
+                writer.WriteObjectValue(Usage, options);
+            }
+            else
+            {
+                writer.WriteNull("usage");
+            }
+            if (Optional.IsDefined(Temperature))
+            {
+                if (Temperature != null)
+                {
+                    writer.WritePropertyName("temperature"u8);
+                    writer.WriteNumberValue(Temperature.Value);
+                }
+                else
+                {
+                    writer.WriteNull("temperature");
+                }
+            }
+            if (Optional.IsDefined(TopP))
+            {
+                if (TopP != null)
+                {
+                    writer.WritePropertyName("top_p"u8);
+                    writer.WriteNumberValue(TopP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_p");
+                }
+            }
+            if (MaxPromptTokens != null)
+            {
+                writer.WritePropertyName("max_prompt_tokens"u8);
+                writer.WriteNumberValue(MaxPromptTokens.Value);
+            }
+            else
+            {
+                writer.WriteNull("max_prompt_tokens");
+            }
+            if (MaxCompletionTokens != null)
+            {
+                writer.WritePropertyName("max_completion_tokens"u8);
+                writer.WriteNumberValue(MaxCompletionTokens.Value);
+            }
+            else
+            {
+                writer.WriteNull("max_completion_tokens");
+            }
+            if (TruncationStrategy != null)
+            {
+                writer.WritePropertyName("truncation_strategy"u8);
+                writer.WriteObjectValue(TruncationStrategy, options);
+            }
+            else
+            {
+                writer.WriteNull("truncation_strategy");
+            }
+            if (ToolChoice != null)
+            {
+                writer.WritePropertyName("tool_choice"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ToolChoice);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ToolChoice, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            else
+            {
+                writer.WriteNull("tool_choice");
+            }
+            writer.WritePropertyName("parallel_tool_calls"u8);
+            writer.WriteBooleanValue(ParallelToolCalls);
+            if (ResponseFormat != null)
+            {
+                writer.WritePropertyName("response_format"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ResponseFormat);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ResponseFormat, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            else
+            {
+                writer.WriteNull("response_format");
             }
             if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
@@ -192,13 +288,22 @@ namespace Azure.AI.OpenAI.Assistants
             string model = default;
             string instructions = default;
             IReadOnlyList<ToolDefinition> tools = default;
-            IReadOnlyList<string> fileIds = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? expiresAt = default;
             DateTimeOffset? startedAt = default;
             DateTimeOffset? completedAt = default;
             DateTimeOffset? cancelledAt = default;
             DateTimeOffset? failedAt = default;
+            IncompleteRunDetails? incompleteDetails = default;
+            RunCompletionUsage usage = default;
+            float? temperature = default;
+            float? topP = default;
+            int? maxPromptTokens = default;
+            int? maxCompletionTokens = default;
+            TruncationObject truncationStrategy = default;
+            BinaryData toolChoice = default;
+            bool parallelToolCalls = default;
+            BinaryData responseFormat = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -269,16 +374,6 @@ namespace Azure.AI.OpenAI.Assistants
                     tools = array;
                     continue;
                 }
-                if (property.NameEquals("file_ids"u8))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    fileIds = array;
-                    continue;
-                }
                 if (property.NameEquals("created_at"u8))
                 {
                     createdAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
@@ -307,6 +402,101 @@ namespace Azure.AI.OpenAI.Assistants
                 if (property.NameEquals("failed_at"u8))
                 {
                     DeserializeNullableDateTimeOffset(property, ref failedAt);
+                    continue;
+                }
+                if (property.NameEquals("incomplete_details"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        incompleteDetails = null;
+                        continue;
+                    }
+                    incompleteDetails = new IncompleteRunDetails(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("usage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        usage = null;
+                        continue;
+                    }
+                    usage = RunCompletionUsage.DeserializeRunCompletionUsage(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("temperature"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        temperature = null;
+                        continue;
+                    }
+                    temperature = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("top_p"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topP = null;
+                        continue;
+                    }
+                    topP = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("max_prompt_tokens"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxPromptTokens = null;
+                        continue;
+                    }
+                    maxPromptTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("max_completion_tokens"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxCompletionTokens = null;
+                        continue;
+                    }
+                    maxCompletionTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("truncation_strategy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        truncationStrategy = null;
+                        continue;
+                    }
+                    truncationStrategy = TruncationObject.DeserializeTruncationObject(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("tool_choice"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        toolChoice = null;
+                        continue;
+                    }
+                    toolChoice = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("parallel_tool_calls"u8))
+                {
+                    parallelToolCalls = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("response_format"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        responseFormat = null;
+                        continue;
+                    }
+                    responseFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -341,13 +531,22 @@ namespace Azure.AI.OpenAI.Assistants
                 model,
                 instructions,
                 tools,
-                fileIds,
                 createdAt,
                 expiresAt,
                 startedAt,
                 completedAt,
                 cancelledAt,
                 failedAt,
+                incompleteDetails,
+                usage,
+                temperature,
+                topP,
+                maxPromptTokens,
+                maxCompletionTokens,
+                truncationStrategy,
+                toolChoice,
+                parallelToolCalls,
+                responseFormat,
                 metadata,
                 serializedAdditionalRawData);
         }

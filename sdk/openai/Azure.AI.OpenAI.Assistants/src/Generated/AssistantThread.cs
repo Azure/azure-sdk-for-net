@@ -48,14 +48,20 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="AssistantThread"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
+        /// <param name="toolResources">
+        /// A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type
+        /// of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list
+        /// of vector store IDs.
+        /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal AssistantThread(string id, DateTimeOffset createdAt, IReadOnlyDictionary<string, string> metadata)
+        internal AssistantThread(string id, DateTimeOffset createdAt, ToolResources toolResources, IReadOnlyDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             CreatedAt = createdAt;
+            ToolResources = toolResources;
             Metadata = metadata;
         }
 
@@ -63,13 +69,19 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always 'thread'. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
+        /// <param name="toolResources">
+        /// A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type
+        /// of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list
+        /// of vector store IDs.
+        /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssistantThread(string id, string @object, DateTimeOffset createdAt, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssistantThread(string id, string @object, DateTimeOffset createdAt, ToolResources toolResources, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Object = @object;
             CreatedAt = createdAt;
+            ToolResources = toolResources;
             Metadata = metadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -84,6 +96,12 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
         public DateTimeOffset CreatedAt { get; }
+        /// <summary>
+        /// A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type
+        /// of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list
+        /// of vector store IDs.
+        /// </summary>
+        public ToolResources ToolResources { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }

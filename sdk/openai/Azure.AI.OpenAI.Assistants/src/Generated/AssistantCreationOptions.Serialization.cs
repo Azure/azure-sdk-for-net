@@ -82,15 +82,60 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FileIds))
+            if (Optional.IsDefined(ToolResources))
             {
-                writer.WritePropertyName("file_ids"u8);
-                writer.WriteStartArray();
-                foreach (var item in FileIds)
+                if (ToolResources != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("tool_resources"u8);
+                    writer.WriteObjectValue(ToolResources, options);
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("tool_resources");
+                }
+            }
+            if (Optional.IsDefined(Temperature))
+            {
+                if (Temperature != null)
+                {
+                    writer.WritePropertyName("temperature"u8);
+                    writer.WriteNumberValue(Temperature.Value);
+                }
+                else
+                {
+                    writer.WriteNull("temperature");
+                }
+            }
+            if (Optional.IsDefined(TopP))
+            {
+                if (TopP != null)
+                {
+                    writer.WritePropertyName("top_p"u8);
+                    writer.WriteNumberValue(TopP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_p");
+                }
+            }
+            if (Optional.IsDefined(ResponseFormat))
+            {
+                if (ResponseFormat != null)
+                {
+                    writer.WritePropertyName("response_format"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ResponseFormat);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(ResponseFormat, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                else
+                {
+                    writer.WriteNull("response_format");
+                }
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -152,7 +197,10 @@ namespace Azure.AI.OpenAI.Assistants
             string description = default;
             string instructions = default;
             IList<ToolDefinition> tools = default;
-            IList<string> fileIds = default;
+            CreateToolResourcesOptions toolResources = default;
+            float? temperature = default;
+            float? topP = default;
+            BinaryData responseFormat = default;
             IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -207,18 +255,44 @@ namespace Azure.AI.OpenAI.Assistants
                     tools = array;
                     continue;
                 }
-                if (property.NameEquals("file_ids"u8))
+                if (property.NameEquals("tool_resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        toolResources = null;
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    toolResources = CreateToolResourcesOptions.DeserializeCreateToolResourcesOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("temperature"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(item.GetString());
+                        temperature = null;
+                        continue;
                     }
-                    fileIds = array;
+                    temperature = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("top_p"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topP = null;
+                        continue;
+                    }
+                    topP = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("response_format"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        responseFormat = null;
+                        continue;
+                    }
+                    responseFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -247,7 +321,10 @@ namespace Azure.AI.OpenAI.Assistants
                 description,
                 instructions,
                 tools ?? new ChangeTrackingList<ToolDefinition>(),
-                fileIds ?? new ChangeTrackingList<string>(),
+                toolResources,
+                temperature,
+                topP,
+                responseFormat,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

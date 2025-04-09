@@ -41,6 +41,18 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Stream))
+            {
+                if (Stream != null)
+                {
+                    writer.WritePropertyName("stream"u8);
+                    writer.WriteBooleanValue(Stream.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stream");
+                }
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,6 +91,7 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             IReadOnlyList<ToolOutput> toolOutputs = default;
+            bool? stream = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,13 +106,23 @@ namespace Azure.AI.OpenAI.Assistants
                     toolOutputs = array;
                     continue;
                 }
+                if (property.NameEquals("stream"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        stream = null;
+                        continue;
+                    }
+                    stream = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubmitToolOutputsToRunRequest(toolOutputs, serializedAdditionalRawData);
+            return new SubmitToolOutputsToRunRequest(toolOutputs, stream, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubmitToolOutputsToRunRequest>.Write(ModelReaderWriterOptions options)

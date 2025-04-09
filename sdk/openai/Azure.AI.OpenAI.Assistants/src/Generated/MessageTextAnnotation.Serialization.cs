@@ -38,10 +38,6 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStringValue(Type);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            writer.WritePropertyName("start_index"u8);
-            writer.WriteNumberValue(StartIndex);
-            writer.WritePropertyName("end_index"u8);
-            writer.WriteNumberValue(EndIndex);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -108,9 +108,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="completedAt"> The Unix timestamp, in seconds, representing when this completed. </param>
         /// <param name="cancelledAt"> The Unix timestamp, in seconds, representing when this was cancelled. </param>
         /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
+        /// <param name="usage"> Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RunStep(string id, string @object, RunStepType type, string assistantId, string threadId, string runId, RunStepStatus status, RunStepDetails stepDetails, RunStepError lastError, DateTimeOffset createdAt, DateTimeOffset? expiredAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunStep(string id, string @object, RunStepType type, string assistantId, string threadId, string runId, RunStepStatus status, RunStepDetails stepDetails, RunStepError lastError, DateTimeOffset createdAt, DateTimeOffset? expiredAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, RunStepCompletionUsage usage, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Object = @object;
@@ -126,6 +127,7 @@ namespace Azure.AI.OpenAI.Assistants
             CompletedAt = completedAt;
             CancelledAt = cancelledAt;
             FailedAt = failedAt;
+            Usage = usage;
             Metadata = metadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -166,6 +168,8 @@ namespace Azure.AI.OpenAI.Assistants
         public DateTimeOffset? CancelledAt { get; }
         /// <summary> The Unix timestamp, in seconds, representing when this failed. </summary>
         public DateTimeOffset? FailedAt { get; }
+        /// <summary> Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`. </summary>
+        public RunStepCompletionUsage Usage { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }

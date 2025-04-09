@@ -18,7 +18,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="RunStepRetrievalToolCall"/>.
+        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/> and <see cref="RunStepFunctionToolCall"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolCalls"/> is null. </exception>
         internal RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls)
@@ -35,7 +35,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="RunStepRetrievalToolCall"/>.
+        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/> and <see cref="RunStepFunctionToolCall"/>.
         /// </param>
         internal RunStepToolCallDetails(RunStepType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<RunStepToolCall> toolCalls) : base(type, serializedAdditionalRawData)
         {
@@ -50,7 +50,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// A list of tool call details for this run step.
         /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="RunStepRetrievalToolCall"/>.
+        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/> and <see cref="RunStepFunctionToolCall"/>.
         /// </summary>
         public IReadOnlyList<RunStepToolCall> ToolCalls { get; }
     }

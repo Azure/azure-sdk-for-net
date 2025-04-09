@@ -48,7 +48,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="InternalMessageTextFilePathDetails"/>. </summary>
         /// <param name="fileId"> The ID of the specific file that the citation is from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        internal InternalMessageTextFilePathDetails(string fileId)
+        public InternalMessageTextFilePathDetails(string fileId)
         {
             Argument.AssertNotNull(fileId, nameof(fileId));
 
@@ -70,6 +70,6 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> The ID of the specific file that the citation is from. </summary>
-        public string FileId { get; }
+        public string FileId { get; set; }
     }
 }

@@ -44,6 +44,18 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ToolResources))
+            {
+                if (ToolResources != null)
+                {
+                    writer.WritePropertyName("tool_resources"u8);
+                    writer.WriteObjectValue(ToolResources, options);
+                }
+                else
+                {
+                    writer.WriteNull("tool_resources");
+                }
+            }
             if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
@@ -99,7 +111,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            IList<ThreadInitializationMessage> messages = default;
+            IList<ThreadMessageOptions> messages = default;
+            CreateToolResourcesOptions toolResources = default;
             IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -111,12 +124,22 @@ namespace Azure.AI.OpenAI.Assistants
                     {
                         continue;
                     }
-                    List<ThreadInitializationMessage> array = new List<ThreadInitializationMessage>();
+                    List<ThreadMessageOptions> array = new List<ThreadMessageOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreadInitializationMessage.DeserializeThreadInitializationMessage(item, options));
+                        array.Add(ThreadMessageOptions.DeserializeThreadMessageOptions(item, options));
                     }
                     messages = array;
+                    continue;
+                }
+                if (property.NameEquals("tool_resources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        toolResources = null;
+                        continue;
+                    }
+                    toolResources = CreateToolResourcesOptions.DeserializeCreateToolResourcesOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -139,7 +162,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssistantThreadCreationOptions(messages ?? new ChangeTrackingList<ThreadInitializationMessage>(), metadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AssistantThreadCreationOptions(messages ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssistantThreadCreationOptions>.Write(ModelReaderWriterOptions options)

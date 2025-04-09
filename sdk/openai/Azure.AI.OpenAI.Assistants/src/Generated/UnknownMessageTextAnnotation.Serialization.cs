@@ -59,8 +59,6 @@ namespace Azure.AI.OpenAI.Assistants
             }
             string type = "Unknown";
             string text = default;
-            int startIndex = default;
-            int endIndex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -75,23 +73,13 @@ namespace Azure.AI.OpenAI.Assistants
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("start_index"u8))
-                {
-                    startIndex = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("end_index"u8))
-                {
-                    endIndex = property.Value.GetInt32();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMessageTextAnnotation(type, text, startIndex, endIndex, serializedAdditionalRawData);
+            return new UnknownMessageTextAnnotation(type, text, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageTextAnnotation>.Write(ModelReaderWriterOptions options)

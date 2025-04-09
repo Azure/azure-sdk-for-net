@@ -26,6 +26,9 @@ namespace Azure.AI.OpenAI.Assistants
         private const string FineTuneResultsValue = "fine-tune-results";
         private const string AssistantsValue = "assistants";
         private const string AssistantsOutputValue = "assistants_output";
+        private const string BatchValue = "batch";
+        private const string BatchOutputValue = "batch_output";
+        private const string VisionValue = "vision";
 
         /// <summary> Indicates a file is used for fine tuning input. </summary>
         public static OpenAIFilePurpose FineTune { get; } = new OpenAIFilePurpose(FineTuneValue);
@@ -35,6 +38,12 @@ namespace Azure.AI.OpenAI.Assistants
         public static OpenAIFilePurpose Assistants { get; } = new OpenAIFilePurpose(AssistantsValue);
         /// <summary> Indicates a file is used as output by assistants. </summary>
         public static OpenAIFilePurpose AssistantsOutput { get; } = new OpenAIFilePurpose(AssistantsOutputValue);
+        /// <summary> Indicates a file is used as input to . </summary>
+        public static OpenAIFilePurpose Batch { get; } = new OpenAIFilePurpose(BatchValue);
+        /// <summary> Indicates a file is used as output by a vector store batch operation. </summary>
+        public static OpenAIFilePurpose BatchOutput { get; } = new OpenAIFilePurpose(BatchOutputValue);
+        /// <summary> Indicates a file is used as input to a vision operation. </summary>
+        public static OpenAIFilePurpose Vision { get; } = new OpenAIFilePurpose(VisionValue);
         /// <summary> Determines if two <see cref="OpenAIFilePurpose"/> values are the same. </summary>
         public static bool operator ==(OpenAIFilePurpose left, OpenAIFilePurpose right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OpenAIFilePurpose"/> values are not the same. </summary>
