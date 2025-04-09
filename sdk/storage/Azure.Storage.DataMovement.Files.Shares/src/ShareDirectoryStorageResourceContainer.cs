@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
@@ -105,6 +106,38 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override async Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
         {
+            await ShareDirectoryClient.CreateIfNotExistsAsync(
+                metadata: default,
+                smbProperties: default,
+                filePermission: default,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override async Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            Response<ShareDirectoryProperties> response = await ShareDirectoryClient.GetPropertiesAsync(
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+            if (ResourceProperties != default)
+            {
+                ResourceProperties.AddToStorageResourceItemProperties(response.Value);
+            }
+            else
+            {
+                ResourceProperties = response.Value.ToStorageResourceItemProperties();
+            }
+            return ResourceProperties;
+        }
+
+        protected override async Task CreateIfNotExistsAsync(
+            StorageResourceContainerProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+        {
+            // todo: look into this more
+            IDictionary<string, string> metadata = ResourceOptions?.GetFileMetadata(sourceProperties?.RawProperties);
+            string filePermission = ResourceOptions?.GetFilePermission(sourceProperties?.RawProperties);
+            FileSmbProperties smbProperties = ResourceOptions?.GetFileSmbProperties(sourceProperties);
+
             await ShareDirectoryClient.CreateIfNotExistsAsync(
                 metadata: default,
                 smbProperties: default,
