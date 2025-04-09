@@ -32,7 +32,7 @@ namespace MgmtTypeSpec
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline { get; }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string fooName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -45,8 +45,6 @@ namespace MgmtTypeSpec
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
             uri.AppendPath(fooName, true);
-            uri.AppendPath("/foos/", false);
-            uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.SetValue("Content-Type", "application/json");
