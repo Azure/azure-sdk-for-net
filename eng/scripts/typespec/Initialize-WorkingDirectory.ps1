@@ -66,8 +66,15 @@ function Initialize-Package($packageName) {
 
             New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
             Write-Host "Copying package.json and package-lock.json to $OutputDirectory"
-            Copy-Item "./package.json" "$OutputDirectory/$packageName/package.json" -Force
-            Copy-Item "./package-lock.json" "$OutputDirectory/$packageName/package-lock.json" -Force
+            
+            $targetPath = Join-Path $OutputDirectory $packageName
+            # Create the destination directory if it doesn't exist
+            if (-not (Test-Path -Path $targetPath)) {
+                New-Item -ItemType Directory -Path $targetPath -Force | Out-Null
+            }
+
+            Copy-Item "./package.json" -Destination (Join-Path $targetPath "package.json") -Force
+            Copy-Item "./package-lock.json" -Destination (Join-Path $targetPath "package-lock.json") -Force
         }
 
         Invoke-LoggedCommand "npm list --all" -GroupOutput
