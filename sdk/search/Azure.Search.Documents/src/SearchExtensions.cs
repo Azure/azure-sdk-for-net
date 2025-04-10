@@ -20,14 +20,15 @@ public static class SearchExtensions
     /// </summary>
     /// <param name="provider"></param>
     /// <param name="indexName"></param>
+    /// <param name="options"></param>
     /// <returns></returns>
-    public static SearchClient GetSearchClient(this ConnectionProvider provider, string indexName)
+    public static SearchClient GetSearchClient(this ConnectionProvider provider, string indexName, SearchClientOptions? options = null)
     {
-        SearchClient searchClient = provider.Subclients.GetClient(() => CreateSearchClient(provider, indexName), null);
+        SearchClient searchClient = provider.Subclients.GetClient(() => CreateSearchClient(provider, indexName), new SearchClientKey(indexName, options));
         return searchClient;
     }
 
-    private static SearchClient CreateSearchClient(this ConnectionProvider provider, string indexName)
+    private static SearchClient CreateSearchClient(this ConnectionProvider provider, string indexName, SearchClientOptions? options = null)
     {
         ClientConnection connection = provider.GetConnection(typeof(SearchClient).FullName!);
         if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
@@ -35,22 +36,23 @@ public static class SearchExtensions
             throw new InvalidOperationException("Invalid URI.");
         }
         return connection.Authentication == ClientAuthenticationMethod.Credential
-            ? new SearchClient(uri, indexName, connection.Credential as TokenCredential)
-            : new SearchClient(uri, indexName, new AzureKeyCredential(connection.ApiKeyCredential!));
+            ? new SearchClient(uri, indexName, connection.Credential as TokenCredential, options)
+            : new SearchClient(uri, indexName, new AzureKeyCredential(connection.ApiKeyCredential!), options);
     }
 
     /// <summary>
     /// Gets the search client.
     /// </summary>
     /// <param name="provider"></param>
+    /// <param name="options"></param>
     /// <returns></returns>
-    public static SearchIndexClient GetSearchIndexClient(this ConnectionProvider provider)
+    public static SearchIndexClient GetSearchIndexClient(this ConnectionProvider provider, SearchClientOptions? options = null)
     {
-        SearchIndexClient searchIndexClient = provider.Subclients.GetClient(() => CreateSearchIndexClient(provider), null);
+        SearchIndexClient searchIndexClient = provider.Subclients.GetClient(() => CreateSearchIndexClient(provider), new SearchIndexClientKey(options));
         return searchIndexClient;
     }
 
-    private static SearchIndexClient CreateSearchIndexClient(this ConnectionProvider provider)
+    private static SearchIndexClient CreateSearchIndexClient(this ConnectionProvider provider, SearchClientOptions? options = null)
     {
         ClientConnection connection = provider.GetConnection(typeof(SearchIndexClient).FullName!);
         if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
@@ -58,22 +60,23 @@ public static class SearchExtensions
             throw new InvalidOperationException("Invalid URI.");
         }
         return connection.Authentication == ClientAuthenticationMethod.Credential
-            ? new SearchIndexClient(uri, connection.Credential as TokenCredential)
-            : new SearchIndexClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
+            ? new SearchIndexClient(uri, connection.Credential as TokenCredential, options)
+            : new SearchIndexClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!), options);
     }
 
     /// <summary>
     /// Gets the search client.
     /// </summary>
     /// <param name="provider"></param>
+    /// <param name="options"></param>
     /// <returns></returns>
-    public static SearchIndexerClient GetSearchIndexerClient(this ConnectionProvider provider)
+    public static SearchIndexerClient GetSearchIndexerClient(this ConnectionProvider provider, SearchClientOptions? options = null)
     {
-        SearchIndexerClient searchIndexerClient = provider.Subclients.GetClient(() => CreateSearchIndexerClient(provider), null);
+        SearchIndexerClient searchIndexerClient = provider.Subclients.GetClient(() => CreateSearchIndexerClient(provider), new SearchIndexerClientKey(options));
         return searchIndexerClient;
     }
 
-    private static SearchIndexerClient CreateSearchIndexerClient(this ConnectionProvider provider)
+    private static SearchIndexerClient CreateSearchIndexerClient(this ConnectionProvider provider, SearchClientOptions? options = null)
     {
         ClientConnection connection = provider.GetConnection(typeof(SearchIndexClient).FullName!);
         if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
@@ -81,7 +84,13 @@ public static class SearchExtensions
             throw new InvalidOperationException("Invalid URI.");
         }
         return connection.Authentication == ClientAuthenticationMethod.Credential
-            ? new SearchIndexerClient(uri, connection.Credential as TokenCredential)
-            : new SearchIndexerClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
+            ? new SearchIndexerClient(uri, connection.Credential as TokenCredential, options)
+            : new SearchIndexerClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!), options);
     }
+
+    private record SearchClientKey(string IndexName, SearchClientOptions? Options = null) : IEquatable<object>;
+
+    private record SearchIndexClientKey(SearchClientOptions? Options = null) : IEquatable<object>;
+
+    private record SearchIndexerClientKey(SearchClientOptions? Options = null) : IEquatable<object>;
 }

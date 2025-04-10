@@ -93,9 +93,9 @@ namespace Azure.Search.Documents
     }
     public static partial class SearchExtensions
     {
-        public static Azure.Search.Documents.SearchClient GetSearchClient(this System.ClientModel.Primitives.ConnectionProvider provider, string indexName) { throw null; }
-        public static Azure.Search.Documents.Indexes.SearchIndexClient GetSearchIndexClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
-        public static Azure.Search.Documents.Indexes.SearchIndexerClient GetSearchIndexerClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
+        public static Azure.Search.Documents.SearchClient GetSearchClient(this System.ClientModel.Primitives.ConnectionProvider provider, string indexName, Azure.Search.Documents.SearchClientOptions? options = null) { throw null; }
+        public static Azure.Search.Documents.Indexes.SearchIndexClient GetSearchIndexClient(this System.ClientModel.Primitives.ConnectionProvider provider, Azure.Search.Documents.SearchClientOptions? options = null) { throw null; }
+        public static Azure.Search.Documents.Indexes.SearchIndexerClient GetSearchIndexerClient(this System.ClientModel.Primitives.ConnectionProvider provider, Azure.Search.Documents.SearchClientOptions? options = null) { throw null; }
     }
     public static partial class SearchFilter
     {
