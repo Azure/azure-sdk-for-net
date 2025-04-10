@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace EventGridSourceGenerator
+namespace Azure.EventGrid.Messaging.SourceGeneration
 {
     /// <summary>
     /// This class generates the SystemEventNames constant values as well as the SystemEventExtensions which contains a mapping

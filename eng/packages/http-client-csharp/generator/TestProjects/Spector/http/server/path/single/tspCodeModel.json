@@ -7,6 +7,7 @@
  "clients": [
   {
    "$id": "2",
+   "kind": "client",
    "name": "SingleClient",
    "namespace": "Server.Path.Single",
    "doc": "Illustrates server with a single path parameter @server",
@@ -60,7 +61,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Server.Path.Single"
+   "crossLanguageDefinitionId": "Server.Path.Single",
+   "apiVersions": []
   }
  ]
 }
