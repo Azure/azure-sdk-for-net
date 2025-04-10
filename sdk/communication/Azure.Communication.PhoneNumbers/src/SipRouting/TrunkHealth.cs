@@ -5,9 +5,9 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    /// <summary> SIP Ping related properties. </summary>
-    [CodeGenClient("Ping")]
-    public partial class SipPing
+    /// <summary> SIP Health related properties. </summary>
+    [CodeGenClient("Health")]
+    public partial class TrunkHealth
     {
     }
 }

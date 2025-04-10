@@ -9,27 +9,27 @@ using System.Text.Json;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    public partial class SipHealth
+    public partial class TrunkHealth
     {
-        internal static SipHealth DeserializeSipHealth(JsonElement element)
+        internal static TrunkHealth DeserializeTrunkHealth(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SipTls tls = default;
-            SipPing ping = default;
+            TlsHealth tls = default;
+            PingHealth ping = default;
             OverallHealth overall = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tls"u8))
                 {
-                    tls = SipTls.DeserializeSipTls(property.Value);
+                    tls = TlsHealth.DeserializeTlsHealth(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ping"u8))
                 {
-                    ping = SipPing.DeserializeSipPing(property.Value);
+                    ping = PingHealth.DeserializePingHealth(property.Value);
                     continue;
                 }
                 if (property.NameEquals("overall"u8))
@@ -38,15 +38,15 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     continue;
                 }
             }
-            return new SipHealth(tls, ping, overall);
+            return new TrunkHealth(tls, ping, overall);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SipHealth FromResponse(Response response)
+        internal static TrunkHealth FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSipHealth(document.RootElement);
+            return DeserializeTrunkHealth(document.RootElement);
         }
     }
 }

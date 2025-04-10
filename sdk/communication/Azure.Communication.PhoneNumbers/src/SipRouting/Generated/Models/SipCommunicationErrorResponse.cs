@@ -6,19 +6,18 @@
 #nullable disable
 
 using System;
-using Azure.Communication.PhoneNumbers.SipRouting;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     /// <summary> The Communication Services error. </summary>
-    internal partial class CommunicationErrorResponse
+    internal partial class SipCommunicationErrorResponse
     {
-        /// <summary> Initializes a new instance of <see cref="CommunicationErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SipCommunicationErrorResponse"/>. </summary>
         /// <param name="error"> The Communication Services error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal CommunicationErrorResponse(SipRouting.CommunicationError error)
+        internal SipCommunicationErrorResponse(CommunicationError error)
         {
-            SipRouting.Argument.AssertNotNull(error, nameof(error));
+            Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
         }

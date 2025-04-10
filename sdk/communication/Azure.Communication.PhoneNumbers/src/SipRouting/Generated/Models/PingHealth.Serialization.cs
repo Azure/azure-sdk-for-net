@@ -9,32 +9,32 @@ using System.Text.Json;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    public partial class SipTls
+    public partial class PingHealth
     {
-        internal static SipTls DeserializeSipTls(JsonElement element)
+        internal static PingHealth DeserializePingHealth(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            TlsStatus status = default;
+            PingStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
                 {
-                    status = new TlsStatus(property.Value.GetString());
+                    status = new PingStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new SipTls(status);
+            return new PingHealth(status);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SipTls FromResponse(Response response)
+        internal static PingHealth FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSipTls(document.RootElement);
+            return DeserializePingHealth(document.RootElement);
         }
     }
 }

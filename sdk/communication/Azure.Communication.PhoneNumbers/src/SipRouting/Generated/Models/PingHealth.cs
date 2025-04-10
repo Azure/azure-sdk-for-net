@@ -8,11 +8,11 @@
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     /// <summary> The status of SIP OPTIONS message sent by Trunk. </summary>
-    public partial class SipPing
+    public partial class PingHealth
     {
-        /// <summary> Initializes a new instance of <see cref="SipPing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PingHealth"/>. </summary>
         /// <param name="status"> The status of SIP OPTIONS message sent by Trunk. </param>
-        internal SipPing(PingStatus status)
+        internal PingHealth(PingStatus status)
         {
             Status = status;
         }

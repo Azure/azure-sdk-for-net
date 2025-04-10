@@ -10,14 +10,14 @@ using System;
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     /// <summary> Represents health state of a SIP trunk for routing calls. </summary>
-    public partial class SipHealth
+    public partial class TrunkHealth
     {
-        /// <summary> Initializes a new instance of <see cref="SipHealth"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrunkHealth"/>. </summary>
         /// <param name="tls"> The status of the TLS connections of the Trunk. </param>
         /// <param name="ping"> The status of SIP OPTIONS message sent by Trunk. </param>
         /// <param name="overall"> The overall health status of Trunk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tls"/>, <paramref name="ping"/> or <paramref name="overall"/> is null. </exception>
-        internal SipHealth(SipTls tls, SipPing ping, OverallHealth overall)
+        internal TrunkHealth(TlsHealth tls, PingHealth ping, OverallHealth overall)
         {
             Argument.AssertNotNull(tls, nameof(tls));
             Argument.AssertNotNull(ping, nameof(ping));
@@ -29,9 +29,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         }
 
         /// <summary> The status of the TLS connections of the Trunk. </summary>
-        public SipTls Tls { get; }
+        public TlsHealth Tls { get; }
         /// <summary> The status of SIP OPTIONS message sent by Trunk. </summary>
-        public SipPing Ping { get; }
+        public PingHealth Ping { get; }
         /// <summary> The overall health status of Trunk. </summary>
         public OverallHealth Overall { get; }
     }

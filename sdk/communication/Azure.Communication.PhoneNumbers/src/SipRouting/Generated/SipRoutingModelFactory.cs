@@ -22,7 +22,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="privacyHeader"> SIP Privacy header. Default value is id. </param>
         /// <param name="ipAddressVersion"> IP address version used by the trunk. Default value is ipv4. </param>
         /// <returns> A new <see cref="SipRouting.SipTrunk"/> instance for mocking. </returns>
-        public static SipTrunk SipTrunk(int sipSignalingPort = default, bool? enabled = null, SipHealth health = null, bool? directTransfer = null, PrivacyHeader? privacyHeader = null, IpAddressVersion? ipAddressVersion = null)
+        public static SipTrunk SipTrunk(int sipSignalingPort = default, bool? enabled = null, TrunkHealth health = null, bool? directTransfer = null, PrivacyHeader? privacyHeader = null, IpAddressVersion? ipAddressVersion = null)
         {
             return new SipTrunk(
                 sipSignalingPort,
@@ -33,13 +33,13 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 ipAddressVersion);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SipRouting.SipHealth"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SipRouting.TrunkHealth"/>. </summary>
         /// <param name="tls"> The status of the TLS connections of the Trunk. </param>
         /// <param name="ping"> The status of SIP OPTIONS message sent by Trunk. </param>
         /// <param name="overall"> The overall health status of Trunk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tls"/>, <paramref name="ping"/> or <paramref name="overall"/> is null. </exception>
-        /// <returns> A new <see cref="SipRouting.SipHealth"/> instance for mocking. </returns>
-        public static SipHealth SipHealth(SipTls tls = null, SipPing ping = null, OverallHealth overall = null)
+        /// <returns> A new <see cref="SipRouting.TrunkHealth"/> instance for mocking. </returns>
+        public static TrunkHealth TrunkHealth(TlsHealth tls = null, PingHealth ping = null, OverallHealth overall = null)
         {
             if (tls == null)
             {
@@ -54,30 +54,30 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 throw new ArgumentNullException(nameof(overall));
             }
 
-            return new SipHealth(tls, ping, overall);
+            return new TrunkHealth(tls, ping, overall);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SipRouting.SipTls"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SipRouting.TlsHealth"/>. </summary>
         /// <param name="status"> The status of the TLS connections of the Trunk. </param>
-        /// <returns> A new <see cref="SipRouting.SipTls"/> instance for mocking. </returns>
-        public static SipTls SipTls(TlsStatus status = default)
+        /// <returns> A new <see cref="SipRouting.TlsHealth"/> instance for mocking. </returns>
+        public static TlsHealth TlsHealth(TlsStatus status = default)
         {
-            return new SipTls(status);
+            return new TlsHealth(status);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SipRouting.SipPing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SipRouting.PingHealth"/>. </summary>
         /// <param name="status"> The status of SIP OPTIONS message sent by Trunk. </param>
-        /// <returns> A new <see cref="SipRouting.SipPing"/> instance for mocking. </returns>
-        public static SipPing SipPing(PingStatus status = default)
+        /// <returns> A new <see cref="SipRouting.PingHealth"/> instance for mocking. </returns>
+        public static PingHealth PingHealth(PingStatus status = default)
         {
-            return new SipPing(status);
+            return new PingHealth(status);
         }
 
         /// <summary> Initializes a new instance of <see cref="SipRouting.OverallHealth"/>. </summary>
         /// <param name="status"> The overall health status of Trunk. </param>
         /// <param name="reason"> The reason overall status of Trunk is inactive. </param>
         /// <returns> A new <see cref="SipRouting.OverallHealth"/> instance for mocking. </returns>
-        public static OverallHealth OverallHealth(OverallHealthStatus status = default, InactiveStatusReason? reason = null)
+        public static OverallHealth OverallHealth(OverallHealthStatus status = default, UnhealthyStatusReason? reason = null)
         {
             return new OverallHealth(status, reason);
         }

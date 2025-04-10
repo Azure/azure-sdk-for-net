@@ -8,11 +8,11 @@
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     /// <summary> The status of the TLS connections of the Trunk. </summary>
-    public partial class SipTls
+    public partial class TlsHealth
     {
-        /// <summary> Initializes a new instance of <see cref="SipTls"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TlsHealth"/>. </summary>
         /// <param name="status"> The status of the TLS connections of the Trunk. </param>
-        internal SipTls(TlsStatus status)
+        internal TlsHealth(TlsStatus status)
         {
             Status = status;
         }

@@ -20,7 +20,9 @@ generation1-convenience-client: true
 ```
 
 # The types with Update suffix, used in API are not used for SDK, to keep the things simple. Therefore, they are removed from autorest.
+
 ### Change SipConfigurationUpdate to SipConfiguration
+
 ``` yaml
 directive:
   from: swagger-document
@@ -30,6 +32,7 @@ directive:
 ```
 
 ### Remove TrunkUpdate type
+
 ``` yaml
 directive:
   from: swagger-document
@@ -39,6 +42,7 @@ directive:
 ```
 
 ### Remove SipConfigurationUpdate type
+
 ``` yaml
 directive:
   from: swagger-document
@@ -48,10 +52,21 @@ directive:
 ```
 
 ### Move all the models to the main namespace
+
 ```yaml
 directive:
   from: swagger-document
   where: $.definitions.*
   transform: >
     $["x-namespace"] = "Azure.Communication.PhoneNumbers.SipRouting"
+```
+
+### Directive renaming "inactiveStatusReason" enum to "unhealthyStatusReason"
+
+```yaml
+directive:
+    - from: swagger-document
+      where: "$.definitions.OverallHealth"
+      transform: >
+          $.properties.reason["x-ms-enum"].name = "unhealthyStatusReason";
 ```

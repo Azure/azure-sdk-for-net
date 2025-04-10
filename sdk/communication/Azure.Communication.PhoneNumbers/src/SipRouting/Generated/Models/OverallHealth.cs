@@ -20,7 +20,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <summary> Initializes a new instance of <see cref="OverallHealth"/>. </summary>
         /// <param name="status"> The overall health status of Trunk. </param>
         /// <param name="reason"> The reason overall status of Trunk is inactive. </param>
-        internal OverallHealth(OverallHealthStatus status, InactiveStatusReason? reason)
+        internal OverallHealth(OverallHealthStatus status, UnhealthyStatusReason? reason)
         {
             Status = status;
             Reason = reason;
@@ -29,6 +29,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <summary> The overall health status of Trunk. </summary>
         public OverallHealthStatus Status { get; }
         /// <summary> The reason overall status of Trunk is inactive. </summary>
-        public InactiveStatusReason? Reason { get; }
+        public UnhealthyStatusReason? Reason { get; }
     }
 }

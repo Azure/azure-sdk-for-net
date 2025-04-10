@@ -17,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="directTransfer"> When enabled, removes Azure Communication Services from the signaling path on call transfer and sets the SIP Refer-To header to the trunk's FQDN. By default false. </param>
         /// <param name="privacyHeader"> SIP Privacy header. Default value is id. </param>
         /// <param name="ipAddressVersion"> IP address version used by the trunk. Default value is ipv4. </param>
-        internal SipTrunk(int sipSignalingPort, bool? enabled, SipHealth health, bool? directTransfer, PrivacyHeader? privacyHeader, IpAddressVersion? ipAddressVersion)
+        internal SipTrunk(int sipSignalingPort, bool? enabled, TrunkHealth health, bool? directTransfer, PrivacyHeader? privacyHeader, IpAddressVersion? ipAddressVersion)
         {
             SipSignalingPort = sipSignalingPort;
             Enabled = enabled;
@@ -32,7 +32,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <summary> Enabled flag. </summary>
         public bool? Enabled { get; set; }
         /// <summary> Represents health state of a SIP trunk for routing calls. </summary>
-        public SipHealth Health { get; }
+        public TrunkHealth Health { get; }
         /// <summary> When enabled, removes Azure Communication Services from the signaling path on call transfer and sets the SIP Refer-To header to the trunk's FQDN. By default false. </summary>
         public bool? DirectTransfer { get; set; }
         /// <summary> SIP Privacy header. Default value is id. </summary>

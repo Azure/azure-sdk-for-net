@@ -18,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 return null;
             }
             OverallHealthStatus status = default;
-            InactiveStatusReason? reason = default;
+            UnhealthyStatusReason? reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -32,7 +32,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     {
                         continue;
                     }
-                    reason = new InactiveStatusReason(property.Value.GetString());
+                    reason = new UnhealthyStatusReason(property.Value.GetString());
                     continue;
                 }
             }

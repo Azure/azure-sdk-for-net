@@ -48,7 +48,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             }
             int sipSignalingPort = default;
             bool? enabled = default;
-            SipHealth health = default;
+            TrunkHealth health = default;
             bool? directTransfer = default;
             PrivacyHeader? privacyHeader = default;
             IpAddressVersion? ipAddressVersion = default;
@@ -74,7 +74,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     {
                         continue;
                     }
-                    health = SipHealth.DeserializeSipHealth(property.Value);
+                    health = TrunkHealth.DeserializeTrunkHealth(property.Value);
                     continue;
                 }
                 if (property.NameEquals("directTransfer"u8))
