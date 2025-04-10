@@ -1,7 +1,7 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-#if NET
+#if NET6_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +22,7 @@ internal static class TracerProviderBuilderExtensions
     /// </summary>
     /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
     /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-#if NET
+#if NET6_0_OR_GREATER
     [RequiresUnreferencedCode(SqlClientInstrumentation.SqlClientTrimmingUnsupportedMessage)]
 #endif
     public static TracerProviderBuilder AddSqlClientInstrumentation(this TracerProviderBuilder builder)
@@ -34,7 +34,7 @@ internal static class TracerProviderBuilderExtensions
     /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
     /// <param name="configureSqlClientTraceInstrumentationOptions">Callback action for configuring <see cref="SqlClientTraceInstrumentationOptions"/>.</param>
     /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-#if NET
+#if NET6_0_OR_GREATER
     [RequiresUnreferencedCode(SqlClientInstrumentation.SqlClientTrimmingUnsupportedMessage)]
 #endif
     public static TracerProviderBuilder AddSqlClientInstrumentation(
@@ -49,9 +49,10 @@ internal static class TracerProviderBuilderExtensions
     /// <param name="name">Name which is used when retrieving options.</param>
     /// <param name="configureSqlClientTraceInstrumentationOptions">Callback action for configuring <see cref="SqlClientTraceInstrumentationOptions"/>.</param>
     /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-#if NET
+#if NET6_0_OR_GREATER
     [RequiresUnreferencedCode(SqlClientInstrumentation.SqlClientTrimmingUnsupportedMessage)]
 #endif
+
     public static TracerProviderBuilder AddSqlClientInstrumentation(
         this TracerProviderBuilder builder,
         string? name,
@@ -69,8 +70,8 @@ internal static class TracerProviderBuilderExtensions
         builder.AddInstrumentation(sp =>
         {
             var sqlOptions = sp.GetRequiredService<IOptionsMonitor<SqlClientTraceInstrumentationOptions>>().Get(name);
-            SqlClientInstrumentation.TracingOptions = sqlOptions;
-            return SqlClientInstrumentation.AddTracingHandle();
+
+            return new SqlClientInstrumentation(sqlOptions);
         });
 
         builder.AddSource(SqlActivitySourceHelper.ActivitySourceName);
