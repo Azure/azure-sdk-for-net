@@ -9,6 +9,7 @@ using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using OpenAI.Chat;
+using static Azure.AI.OpenAI.AzureOpenAIClientOptions;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -70,5 +71,36 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
             $"No connections found for '{ConnectionType.AzureOpenAI}'. At least one connection is required. Please add a new connection in the Azure AI Foundry portal by following the instructions here: https://aka.ms/azsdk/azure-ai-projects/how-to/connections-add",
             ex.Message);
         Console.WriteLine(ex.Message);
+    }
+
+    [Test]
+    public void ReturnsDistinctClientsWhenOptionsDiffer()
+    {
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        AIProjectClient client = new AIProjectClient(connectionString);
+
+        var options1 = new AzureOpenAIClientOptions(ServiceVersion.V2024_06_01);
+        ChatClient chatClient1 = client.GetAzureOpenAIChatClient(modelDeploymentName, options1);
+
+        var options2 = new AzureOpenAIClientOptions(ServiceVersion.V2024_10_21);
+        ChatClient chatClient2 = client.GetAzureOpenAIChatClient(modelDeploymentName, options2);
+
+        Assert.AreNotSame(chatClient1, chatClient2);
+    }
+
+    [Test]
+    public void ReturnsSameClientWhenOptionsAreSame()
+    {
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        AIProjectClient client = new AIProjectClient(connectionString);
+
+        var options = new AzureOpenAIClientOptions();
+
+        ChatClient chatClient1 = client.GetAzureOpenAIChatClient(modelDeploymentName, options);
+        ChatClient chatClient2 = client.GetAzureOpenAIChatClient(modelDeploymentName, options);
+
+        Assert.AreSame(chatClient1, chatClient2);
     }
 }

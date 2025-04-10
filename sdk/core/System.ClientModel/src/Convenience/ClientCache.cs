@@ -14,7 +14,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ClientCache
 {
-    private readonly Dictionary<ClientCacheKey, ClientEntry> _clients = new();
+    private readonly Dictionary<(Type, IEquatable<object>?), ClientEntry> _clients = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 
     private readonly int _maxSize;
@@ -34,15 +34,14 @@ public class ClientCache
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
     /// <param name="createClient">A factory function to create the client if not cached.</param>
-    /// <param name="id">An identifier for the client instance.</param>
-    /// <param name="options">Client options.</param>
+    /// <param name="key">An equality-comparable key representing the client configuration.</param>
     /// <returns>The cached or newly created client instance.</returns>
-    public T GetClient<T>(Func<T> createClient, string? id, ClientPipelineOptions? options = null) where T : class
+    public T GetClient<T>(Func<T> createClient, IEquatable<object>? key) where T : class
     {
-        var key = new ClientCacheKey(typeof(T), id ?? string.Empty, options);
+        var cacheKey = (typeof(T), key);
 
         // If the client exists, update its timestamp.
-        if (_clients.TryGetValue(key, out var cached))
+        if (_clients.TryGetValue(cacheKey, out var cached))
         {
             cached.LastUsed = Stopwatch.GetTimestamp();
             return (T)cached.Client;
@@ -53,7 +52,7 @@ public class ClientCache
         try
         {
             T created = createClient();
-            _clients[key] = new ClientEntry(created, Stopwatch.GetTimestamp());
+            _clients[cacheKey] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
             // After insertion, if cache exceeds the limit, perform cleanup.
             if (_clients.Count > _maxSize)

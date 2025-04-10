@@ -25,9 +25,9 @@ public static class AzureOpenAIExtensions
     {
         ChatClient chatClient = provider.Subclients.GetClient(() =>
         {
-            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider, options), null, options);
+            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider, options), new AzureOpenAIClientKey(options));
             return provider.CreateChatClient(aoaiClient, deploymentName);
-        }, deploymentName, options);
+        }, new ChatClientKey(deploymentName, options));
 
         return chatClient;
     }
@@ -43,9 +43,9 @@ public static class AzureOpenAIExtensions
     {
         EmbeddingClient embeddingClient = provider.Subclients.GetClient(() =>
         {
-            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider, options), null, options);
+            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider, options), (IEquatable<object>)new AzureOpenAIClientKey(options));
             return provider.CreateEmbeddingClient(aoaiClient, deploymentName);
-        }, deploymentName, options);
+        }, new EmbeddingClientKey(deploymentName, options));
 
         return embeddingClient;
     }
@@ -77,4 +77,10 @@ public static class AzureOpenAIExtensions
         EmbeddingClient embedding = client.GetEmbeddingClient(deploymentName ?? connection.Locator);
         return embedding;
     }
+
+    private record AzureOpenAIClientKey(AzureOpenAIClientOptions? Options) : IEquatable<object>;
+
+    private record ChatClientKey(string? DeploymentName, AzureOpenAIClientOptions? Options) : IEquatable<object>;
+
+    private record EmbeddingClientKey(string? DeploymentName, AzureOpenAIClientOptions? Options) : IEquatable<object>;
 }

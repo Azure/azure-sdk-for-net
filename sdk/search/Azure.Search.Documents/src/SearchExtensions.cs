@@ -23,7 +23,7 @@ public static class SearchExtensions
     /// <returns></returns>
     public static SearchClient GetSearchClient(this ConnectionProvider provider, string indexName)
     {
-        SearchClient searchClient = provider.Subclients.GetClient(() => CreateSearchClient(provider, indexName), indexName);
+        SearchClient searchClient = provider.Subclients.GetClient(() => CreateSearchClient(provider, indexName), null);
         return searchClient;
     }
 
