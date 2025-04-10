@@ -71,10 +71,10 @@ public class FileTests : AoaiTestBase<OpenAIFileClient>
         OpenAIFileClient client = GetTestClient(GetTestClientOptions(version));
         AzureFileExpirationOptions expirationOptions = new(3600, AzureFileExpirationAnchor.CreatedAt);
         OpenAIFile file = await client.UploadFileAsync(
-            BinaryData.FromString(@"{""text"":""hello, there, world!""}"),
+            BinaryData.FromString(data: @"{""text"":""hello, there, world!""}"),
             "test_file_delete_me.jsonl",
             FileUploadPurpose.Batch,
-            expirationOptions);
+            expirationOptions: expirationOptions);
         Validate(file);
     }
 
