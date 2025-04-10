@@ -13,13 +13,13 @@ namespace Azure.AI.Assistants
     /// <summary> Client options for AssistantsClient. </summary>
     public partial class AssistantsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.Vlatest;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2025-05-15-preview". </summary>
-            V2025_05_15_Preview = 1,
+            /// <summary> Service version "latest". </summary>
+            Vlatest = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.AI.Assistants
         {
             Version = version switch
             {
-                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
+                ServiceVersion.Vlatest => "latest",
                 _ => throw new NotSupportedException()
             };
         }

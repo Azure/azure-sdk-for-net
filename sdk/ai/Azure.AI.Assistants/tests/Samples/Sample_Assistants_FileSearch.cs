@@ -20,13 +20,13 @@ public partial class Sample_Assistants_FileSearch : SamplesBase<AIAssistantsTest
     {
         #region Snippet:AssistantsFilesSearchExample_CreateClient
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AssistantsUploadAgentFilesToUse
         // Upload a file and wait for it to be processed
@@ -106,13 +106,13 @@ public partial class Sample_Assistants_FileSearch : SamplesBase<AIAssistantsTest
     public void FilesSearchExample()
     {
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AssistantsUploadAgentFilesToUse_Sync
         // Upload a file and wait for it to be processed
         System.IO.File.WriteAllText(

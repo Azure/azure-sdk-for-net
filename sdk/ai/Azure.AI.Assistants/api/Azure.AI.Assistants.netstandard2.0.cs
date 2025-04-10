@@ -283,12 +283,14 @@ namespace Azure.AI.Assistants
     public partial class AssistantsClient
     {
         protected AssistantsClient() { }
-        public AssistantsClient(string connectionString, Azure.Core.TokenCredential credential) { }
-        public AssistantsClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Assistants.AssistantsClientOptions options) { }
-        public AssistantsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.AzureKeyCredential credential) { }
-        public AssistantsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.AzureKeyCredential credential, Azure.AI.Assistants.AssistantsClientOptions options) { }
-        public AssistantsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
-        public AssistantsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Assistants.AssistantsClientOptions options) { }
+        public AssistantsClient(string endpoint, Azure.AzureKeyCredential credential) { }
+        public AssistantsClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Assistants.AssistantsClientOptions options) { }
+        public AssistantsClient(string endpoint, Azure.Core.TokenCredential credential) { }
+        public AssistantsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Assistants.AssistantsClientOptions options) { }
+        public AssistantsClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public AssistantsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Assistants.AssistantsClientOptions options) { }
+        public AssistantsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public AssistantsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Assistants.AssistantsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CancelRun(string threadId, string runId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Assistants.ThreadRun> CancelRun(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -447,10 +449,10 @@ namespace Azure.AI.Assistants
     }
     public partial class AssistantsClientOptions : Azure.Core.ClientOptions
     {
-        public AssistantsClientOptions(Azure.AI.Assistants.AssistantsClientOptions.ServiceVersion version = Azure.AI.Assistants.AssistantsClientOptions.ServiceVersion.V2025_05_15_Preview) { }
+        public AssistantsClientOptions(Azure.AI.Assistants.AssistantsClientOptions.ServiceVersion version = Azure.AI.Assistants.AssistantsClientOptions.ServiceVersion.Vlatest) { }
         public enum ServiceVersion
         {
-            V2025_05_15_Preview = 1,
+            Vlatest = 1,
         }
     }
     public partial class AssistantsNamedToolChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.AssistantsNamedToolChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.AssistantsNamedToolChoice>
@@ -2998,8 +3000,8 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AIAssistantsClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Assistants.AssistantsClient, Azure.AI.Assistants.AssistantsClientOptions> AddAssistantsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Assistants.AssistantsClient, Azure.AI.Assistants.AssistantsClientOptions> AddAssistantsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Assistants.AssistantsClient, Azure.AI.Assistants.AssistantsClientOptions> AddAssistantsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Assistants.AssistantsClient, Azure.AI.Assistants.AssistantsClientOptions> AddAssistantsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Assistants.AssistantsClient, Azure.AI.Assistants.AssistantsClientOptions> AddAssistantsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

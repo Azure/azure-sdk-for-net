@@ -4,10 +4,10 @@
 
 Synchronous sample:
 ```C# Snippet:AssistantsVectorStoreBatchFileSearchCreateVectorStore
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var filePath = GetFile();
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
 VectorStore vectorStore = client.CreateVectorStore(
     name: "sample_vector_store"
@@ -39,10 +39,10 @@ Assistant assistant = client.CreateAssistant(
 
 Asynchronous sample:
 ```C# Snippet:AssistantsVectorStoreBatchFileAsyncSearchCreateVectorStore
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var filePath = GetFile();
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
 VectorStore vectorStore = await client.CreateVectorStoreAsync(
     name: "sample_vector_store"

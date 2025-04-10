@@ -2,10 +2,10 @@
 
 1. First we need to create assistant client and read the environment variables that will be used in the next steps.
 ```C# Snippet:AssistantsVectorStoreBatchEnterpriseFileSearch_CreateClient_Async
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var blobURI = System.Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
 2. Next we will use the preexisting Azure Blob Asset ID to create the `VectorStoreDataSource`.  We will use it to create `VectorStore`, which will needed to create `FileSearchToolResource`.

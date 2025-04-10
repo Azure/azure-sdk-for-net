@@ -4,10 +4,10 @@
 
 Synchronous sample:
 ```C# Snippet:Sample_Assistant_Multiple_Messages_Create
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var assistantClient = new AssistantsClient(
-    connectionString,
+    projectEndpoint,
     new DefaultAzureCredential());
 
 Assistant assistant = assistantClient.CreateAssistant(
@@ -19,10 +19,10 @@ Assistant assistant = assistantClient.CreateAssistant(
 
 Asynchronous sample:
 ```C# Snippet:Sample_Assistant_Multiple_Messages_CreateAsync
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var assistantClient = new AssistantsClient(
-    connectionString,
+    projectEndpoint,
     new DefaultAzureCredential());
 
 Assistant assistant = await assistantClient.CreateAssistantAsync(

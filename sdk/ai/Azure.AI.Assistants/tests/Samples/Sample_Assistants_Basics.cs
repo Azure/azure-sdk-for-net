@@ -19,13 +19,13 @@ public partial class Sample_Assistants_Basics : SamplesBase<AIAssistantsTestEnvi
     {
         #region Snippet:AssistantsOverviewCreateAgentClient
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
 
         // Step 1: Create an agent
@@ -111,13 +111,13 @@ public partial class Sample_Assistants_Basics : SamplesBase<AIAssistantsTestEnvi
     public void BasicExampleSync()
     {
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
         // Step 1: Create an agent
         #region Snippet:AssistantsOverviewCreateAgentSync

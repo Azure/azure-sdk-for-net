@@ -4,9 +4,9 @@ In this example we will demonstrate the assistant streaming support.
 
 1. First we need to create assistant client and read the environment variables that will be used in the next steps.
 ```C# Snippet:AssistantsStreamingAsync_CreateClient
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 2. We will create assistant with the Interpreter tool support. It is needed to allow fow writing mathematical formulas in [LaTeX](https://en.wikipedia.org/wiki/LaTeX) format.
 

@@ -4,10 +4,10 @@ In the enterprise file search, as opposed to regular file search, we are assumin
 
 1. First we need to create assistant client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:AssistantsEnterpriseFileSearch_CreateProject
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
 2. To create assistant capable of using Enterprise file search, we will create `VectorStoreDataSource` and will supply it to `VectorStore` constructor. The ID of the created vector store will be used in the `FileSearchToolResource` used for assistant creation. 

@@ -26,14 +26,14 @@ public partial class Sample_Assistants_Vector_Store_Batch_File_Search : SamplesB
     {
         #region Snippet:AssistantsVectorStoreBatchFileAsyncSearchCreateVectorStore
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var filePath = GetFile();
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
         VectorStore vectorStore = await client.CreateVectorStoreAsync(
             name: "sample_vector_store"
@@ -114,14 +114,14 @@ public partial class Sample_Assistants_Vector_Store_Batch_File_Search : SamplesB
     {
         #region Snippet:AssistantsVectorStoreBatchFileSearchCreateVectorStore
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var filePath = GetFile();
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
         VectorStore vectorStore = client.CreateVectorStore(
             name: "sample_vector_store"

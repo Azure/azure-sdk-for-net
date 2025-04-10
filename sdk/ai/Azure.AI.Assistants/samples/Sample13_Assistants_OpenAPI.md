@@ -11,9 +11,9 @@ private static string GetFile([CallerFilePath] string pth = "")
 
 1. First we need to create assistant client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:AssistantsOpenAPICallingExample_CreateClient
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AssistantsClient client = new(connectionString, new AzureCliCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 var file_path = GetFile();
 ```
 

@@ -4,13 +4,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Assistants.Tests;
@@ -31,13 +29,13 @@ public partial class Sample_Assistants_OpenAPI : SamplesBase<AIAssistantsTestEnv
     {
         #region Snippet:AssistantsOpenAPICallingExample_CreateClient
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AssistantsClient client = new(connectionString, new AzureCliCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         var file_path = GetFile();
         #endregion
 
@@ -116,13 +114,13 @@ public partial class Sample_Assistants_OpenAPI : SamplesBase<AIAssistantsTestEnv
     public void OpenAPICallingExample()
     {
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AssistantsClient client = new(connectionString, new AzureCliCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         var file_path = GetFile();
 
         #region Snippet:AssistantsOpenAPISyncDefineFunctionTools

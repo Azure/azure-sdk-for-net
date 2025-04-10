@@ -10,7 +10,7 @@ In this example we will use the existing Azure AI Search Index as a tool for an 
 
 1. First we need to create an assistant and read the environment variables, which will be used in the next steps.
 ```C# Snippet:AssistantsAzureAISearchExample_CreateProjectClient
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID");
 ```
@@ -31,7 +31,7 @@ ToolResources toolResource = new()
     AzureAISearch = searchResource
 };
 
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
 Assistant assistant = client.CreateAssistant(
    model: modelDeploymentName,
@@ -55,7 +55,7 @@ ToolResources toolResource = new()
     AzureAISearch = searchResource
 };
 
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
 Assistant assistant = await client.CreateAssistantAsync(
    model: modelDeploymentName,

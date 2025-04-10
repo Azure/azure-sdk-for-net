@@ -104,11 +104,11 @@ After we have tested the function and made sure it works, please make sure that 
 In the example below we are calling function "foo", which responds "Bar". 
 1. We create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. Plus we need to read in environment variables to get necessary parameters.
 ```C# Snippet:AssistantsAzureFunctionsDefineFunctionTools
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
 AzureFunctionToolDefinition azureFnTool = new(
     name: "foo",

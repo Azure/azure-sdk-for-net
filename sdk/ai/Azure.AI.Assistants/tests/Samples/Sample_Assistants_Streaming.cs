@@ -17,13 +17,13 @@ namespace Azure.AI.Assistants.Tests
         {
             #region Snippet:AssistantsStreamingAsync_CreateClient
 #if SNIPPET
-            var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+            var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-            AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+            AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
             #endregion
             #region Snippet:AssistantsStreamingAsync_CreateAgent
             Assistant assistant = await client.CreateAssistantAsync(
@@ -69,13 +69,13 @@ namespace Azure.AI.Assistants.Tests
         public void Streaming()
         {
 #if SNIPPET
-            var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+            var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-            AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+            AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
             #region Snippet:AssistantsStreaming_CreateAgent
             Assistant assistant = client.CreateAssistant(
                 model: modelDeploymentName,

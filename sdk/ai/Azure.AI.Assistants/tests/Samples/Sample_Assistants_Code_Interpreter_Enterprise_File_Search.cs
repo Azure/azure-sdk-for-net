@@ -19,17 +19,17 @@ public partial class Sample_Assistants_Code_Interpreter_Enterprise_File_Search :
     {
         #region Snippet:AssistantsCodeInterpreterEnterpriseSearch_CreateClient
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         // For now we will take the File URI from the environment variables.
         // In future we may want to upload file to Azure here.
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AssistantsCodeInterpreterEnterpriseSearchAsync_CreateAgent
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
@@ -96,17 +96,17 @@ public partial class Sample_Assistants_Code_Interpreter_Enterprise_File_Search :
     public void CodeInterpreterEnterpriseSearchSync()
     {
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         // For now we will take the File URI from the environment variables.
         // In future we may want to upload file to Azure here.
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AssistantsCodeInterpreterEnterpriseSearch_CreateAgent
         List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
         Assistant assistant = client.CreateAssistant(

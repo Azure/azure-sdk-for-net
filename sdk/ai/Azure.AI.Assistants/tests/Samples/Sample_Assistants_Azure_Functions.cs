@@ -20,16 +20,16 @@ public partial class Sample_Assistants_Azure_Functions : SamplesBase<AIAssistant
     {
         #region Snippet:AssistantsAzureFunctionsDefineFunctionTools
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
 #endif
 
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
         AzureFunctionToolDefinition azureFnTool = new(
             name: "foo",
@@ -139,16 +139,16 @@ public partial class Sample_Assistants_Azure_Functions : SamplesBase<AIAssistant
     public void AzureFunctionCallingExample()
     {
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
 #endif
 
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
         AzureFunctionToolDefinition azureFnTool = new(
             name: "foo",
