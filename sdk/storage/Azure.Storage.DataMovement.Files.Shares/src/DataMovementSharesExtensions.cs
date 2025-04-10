@@ -176,7 +176,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                    rawProperties.TryGetValue(propertyKey, out object value) &&
                    value is T typedValue
                    ? typedValue
-                   : default;
+                   : null;
         }
 
         public static FilePosixProperties GetFilePosixProperties(
