@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Azure.AI.Projects;
 using Azure.AI.Projects.OneDP;
 using Azure.Identity;
 using Microsoft.Identity.Client;
@@ -12,6 +13,60 @@ namespace AgentSampleApp
         {
             await RunEphemeralAgentAsync();
             await RunPersistentAgentAsync();
+        }
+
+        public static async Task SimpleRunEphemeralAgentAsync()
+        {
+            string? endpoint = Environment.GetEnvironmentVariable("AI_PROJECT_ENDPOINT");
+            if (string.IsNullOrEmpty(endpoint))
+            {
+                throw new InvalidOperationException("AI_PROJECT_ENDPOINT environment variable is not set.");
+            }
+
+            AIProjectClient aiProjectClient = new AIProjectClient(
+                new Uri(endpoint),
+                new DefaultAzureCredential()
+            );
+
+            AgentsClient agentsClient = aiProjectClient.GetAgentsClient();
+            Run run = (await agentsClient.RunAsync(
+                modelId: "gpt-4o",
+                instructions: "you are a helpful agent",
+                message: "Tell me a joke"
+            )).Value;
+
+            foreach (var textMessage in run.RunOutputs.GetTextMessages())
+            {
+                Console.WriteLine("AGENT: " + textMessage);
+            }
+        }
+
+        public static async Task SimpleRunPersistentAgentAsync()
+        {
+            string? endpoint = Environment.GetEnvironmentVariable("AI_PROJECT_ENDPOINT");
+            if (string.IsNullOrEmpty(endpoint))
+            {
+                throw new InvalidOperationException("AI_PROJECT_ENDPOINT environment variable is not set.");
+            }
+
+            AIProjectClient aiProjectClient = new AIProjectClient(
+                new Uri(endpoint),
+                new DefaultAzureCredential()
+            );
+
+            AgentsClient agentsClient = aiProjectClient.GetAgentsClient();
+            Agent agent = (await agentsClient.CreateAgentAsync(
+                displayName: "PersistentAgent",
+                modelId: "gpt-4o",
+                instructions: "You're a helpful assistant.")).Value;
+
+            Response<Run> runResponse = await agentsClient.RunAsync(agentId: agent.AgentId, message: "Tell me a joke");
+            foreach (var textMessage in runResponse.Value.RunOutputs.GetTextMessages())
+            {
+                Console.WriteLine("AGENT: " + textMessage);
+            }
+
+            agentsClient.DeleteAgent(agent.AgentId);
         }
 
         public static async Task RunEphemeralAgentAsync()
