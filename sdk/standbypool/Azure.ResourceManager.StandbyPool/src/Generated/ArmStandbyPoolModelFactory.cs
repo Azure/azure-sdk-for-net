@@ -16,55 +16,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStandbyPoolModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyContainerGroupPoolRuntimeViewData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolRuntimeViewData"/> instance for mocking. </returns>
-        public static StandbyContainerGroupPoolRuntimeViewData StandbyContainerGroupPoolRuntimeViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StandbyContainerGroupPoolRuntimeViewProperties properties = null)
-        {
-            return new StandbyContainerGroupPoolRuntimeViewData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/>. </summary>
-        /// <param name="instanceCountSummary"> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </param>
-        /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
-        /// <returns> A new <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/> instance for mocking. </returns>
-        public static StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary = null, StandbyProvisioningState? provisioningState = null)
-        {
-            instanceCountSummary ??= new List<ContainerGroupInstanceCountSummary>();
-
-            return new StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary?.ToList(), provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupInstanceCountSummary"/>. </summary>
-        /// <param name="instanceCountsByState"> The count of pooled resources in each state. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupInstanceCountSummary"/> instance for mocking. </returns>
-        public static ContainerGroupInstanceCountSummary ContainerGroupInstanceCountSummary(IEnumerable<PoolResourceStateCount> instanceCountsByState = null)
-        {
-            instanceCountsByState ??= new List<PoolResourceStateCount>();
-
-            return new ContainerGroupInstanceCountSummary(instanceCountsByState?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PoolResourceStateCount"/>. </summary>
-        /// <param name="state"> The state that the pooled resources count is for. </param>
-        /// <param name="count"> The count of pooled resources in the given state. </param>
-        /// <returns> A new <see cref="Models.PoolResourceStateCount"/> instance for mocking. </returns>
-        public static PoolResourceStateCount PoolResourceStateCount(string state = null, long count = default)
-        {
-            return new PoolResourceStateCount(state, count, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyContainerGroupPoolData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyVirtualMachinePoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -72,12 +24,12 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolData"/> instance for mocking. </returns>
-        public static StandbyContainerGroupPoolData StandbyContainerGroupPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StandbyContainerGroupPoolProperties properties = null)
+        /// <returns> A new <see cref="StandbyPool.StandbyVirtualMachinePoolData"/> instance for mocking. </returns>
+        public static StandbyVirtualMachinePoolData StandbyVirtualMachinePoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StandbyVirtualMachinePoolProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StandbyContainerGroupPoolData(
+            return new StandbyVirtualMachinePoolData(
                 id,
                 name,
                 resourceType,
@@ -88,14 +40,42 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolProperties"/>. </summary>
-        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
-        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachinePoolProperties"/>. </summary>
+        /// <param name="elasticityProfile"> Specifies the elasticity profile of the standby virtual machine pools. </param>
+        /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
+        /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.StandbyContainerGroupPoolProperties"/> instance for mocking. </returns>
-        public static StandbyContainerGroupPoolProperties StandbyContainerGroupPoolProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile = null, StandbyContainerGroupProperties containerGroupProperties = null, StandbyProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolProperties"/> instance for mocking. </returns>
+        public static StandbyVirtualMachinePoolProperties StandbyVirtualMachinePoolProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile = null, StandbyVirtualMachineState virtualMachineState = default, ResourceIdentifier attachedVirtualMachineScaleSetId = null, StandbyProvisioningState? provisioningState = null)
         {
-            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, provisioningState, serializedAdditionalRawData: null);
+            return new StandbyVirtualMachinePoolProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyVirtualMachineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="StandbyPool.StandbyVirtualMachineData"/> instance for mocking. </returns>
+        public static StandbyVirtualMachineData StandbyVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StandbyVirtualMachineProperties properties = null)
+        {
+            return new StandbyVirtualMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachineProperties"/>. </summary>
+        /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.StandbyVirtualMachineProperties"/> instance for mocking. </returns>
+        public static StandbyVirtualMachineProperties StandbyVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId = null, StandbyProvisioningState? provisioningState = null)
+        {
+            return new StandbyVirtualMachineProperties(virtualMachineResourceId, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyVirtualMachinePoolRuntimeViewData"/>. </summary>
@@ -143,34 +123,16 @@ namespace Azure.ResourceManager.StandbyPool.Models
             return new StandbyVirtualMachineInstanceCountSummary(zone, instanceCountsByState?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyVirtualMachineData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="StandbyPool.StandbyVirtualMachineData"/> instance for mocking. </returns>
-        public static StandbyVirtualMachineData StandbyVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StandbyVirtualMachineProperties properties = null)
+        /// <summary> Initializes a new instance of <see cref="Models.PoolResourceStateCount"/>. </summary>
+        /// <param name="state"> The state that the pooled resources count is for. </param>
+        /// <param name="count"> The count of pooled resources in the given state. </param>
+        /// <returns> A new <see cref="Models.PoolResourceStateCount"/> instance for mocking. </returns>
+        public static PoolResourceStateCount PoolResourceStateCount(string state = null, long count = default)
         {
-            return new StandbyVirtualMachineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
+            return new PoolResourceStateCount(state, count, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachineProperties"/>. </summary>
-        /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.StandbyVirtualMachineProperties"/> instance for mocking. </returns>
-        public static StandbyVirtualMachineProperties StandbyVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId = null, StandbyProvisioningState? provisioningState = null)
-        {
-            return new StandbyVirtualMachineProperties(virtualMachineResourceId, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyVirtualMachinePoolData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyContainerGroupPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -178,12 +140,12 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="StandbyPool.StandbyVirtualMachinePoolData"/> instance for mocking. </returns>
-        public static StandbyVirtualMachinePoolData StandbyVirtualMachinePoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StandbyVirtualMachinePoolProperties properties = null)
+        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolData"/> instance for mocking. </returns>
+        public static StandbyContainerGroupPoolData StandbyContainerGroupPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StandbyContainerGroupPoolProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StandbyVirtualMachinePoolData(
+            return new StandbyContainerGroupPoolData(
                 id,
                 name,
                 resourceType,
@@ -194,15 +156,53 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachinePoolProperties"/>. </summary>
-        /// <param name="elasticityProfile"> Specifies the elasticity profile of the standby virtual machine pools. </param>
-        /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
-        /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolProperties"/>. </summary>
+        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
+        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolProperties"/> instance for mocking. </returns>
-        public static StandbyVirtualMachinePoolProperties StandbyVirtualMachinePoolProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile = null, StandbyVirtualMachineState virtualMachineState = default, ResourceIdentifier attachedVirtualMachineScaleSetId = null, StandbyProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.StandbyContainerGroupPoolProperties"/> instance for mocking. </returns>
+        public static StandbyContainerGroupPoolProperties StandbyContainerGroupPoolProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile = null, StandbyContainerGroupProperties containerGroupProperties = null, StandbyProvisioningState? provisioningState = null)
         {
-            return new StandbyVirtualMachinePoolProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, provisioningState, serializedAdditionalRawData: null);
+            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyContainerGroupPoolRuntimeViewData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolRuntimeViewData"/> instance for mocking. </returns>
+        public static StandbyContainerGroupPoolRuntimeViewData StandbyContainerGroupPoolRuntimeViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StandbyContainerGroupPoolRuntimeViewProperties properties = null)
+        {
+            return new StandbyContainerGroupPoolRuntimeViewData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/>. </summary>
+        /// <param name="instanceCountSummary"> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </param>
+        /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
+        /// <returns> A new <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/> instance for mocking. </returns>
+        public static StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary = null, StandbyProvisioningState? provisioningState = null)
+        {
+            instanceCountSummary ??= new List<ContainerGroupInstanceCountSummary>();
+
+            return new StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary?.ToList(), provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupInstanceCountSummary"/>. </summary>
+        /// <param name="instanceCountsByState"> The count of pooled resources in each state. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupInstanceCountSummary"/> instance for mocking. </returns>
+        public static ContainerGroupInstanceCountSummary ContainerGroupInstanceCountSummary(IEnumerable<PoolResourceStateCount> instanceCountsByState = null)
+        {
+            instanceCountsByState ??= new List<PoolResourceStateCount>();
+
+            return new ContainerGroupInstanceCountSummary(instanceCountsByState?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override ModelReaderWriterContext Context => new LocalContext();
 
+        protected override string CollectionTypeName => "List<Object>";
+
         protected override List<object> GetModelInstance()
         {
             return
@@ -66,8 +68,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(List<object>);
 
                 protected override Type ItemType => typeof(object);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<object>();
 
