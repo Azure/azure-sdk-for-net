@@ -8,7 +8,7 @@ csharp: true
 library-name: IotFirmwareDefense
 namespace: Azure.ResourceManager.IotFirmwareDefense
 require: https://github.com/Azure/azure-rest-api-specs/blob/9b3e29902644a7bb9317d68f249c7cb8b11d82cf/specification/fist/resource-manager/readme.md
-#require: file:///C:/Users/mikekennedy/git/github/Azure/azure-rest-api-specs-pr/specification/fist/resource-manager/readme.md
+tag: package-2025-04-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
