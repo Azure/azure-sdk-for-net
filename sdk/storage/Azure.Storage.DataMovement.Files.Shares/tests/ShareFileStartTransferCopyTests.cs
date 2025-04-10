@@ -51,7 +51,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         private readonly string _defaultOwner = "0";
         private readonly string _defaultGroup = "0";
         private readonly string _defaultMode = "0664";
-        private readonly string _defaultFileType = "Regular";
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
 
         public ShareFileStartTransferCopyTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
@@ -189,7 +188,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return InstrumentClient(new ShareFileClient(sasBuilder.ToUri(), GetOptions()));
         }
 
-        private async Task<ShareFileClient> CreateFileClientWithNFSAsync(
+        private async Task<ShareFileClient> CreateFileClientWithNfsAsync(
             ShareClient container,
             long? objectLength = null,
             bool createResource = false,
@@ -698,8 +697,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             [Values(DataMovementTestConstants.KB, 8 * DataMovementTestConstants.MB)] long size)
         {
             // Arrange
-            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareNFSAsync();
-            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareNFSAsync();
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareNfsAsync();
 
             DateTimeOffset sourceFileCreatedOn = _defaultFileCreatedOn;
             DateTimeOffset sourceFileLastWrittenOn = _defaultFileLastWrittenOn;
@@ -722,7 +721,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
 
             // Create source file with properties
-            ShareFileClient sourceClient = await CreateFileClientWithNFSAsync(
+            ShareFileClient sourceClient = await CreateFileClientWithNfsAsync(
                 container: source.Container,
                 objectLength: size,
                 createResource: true,
@@ -731,7 +730,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new ShareFileStorageResourceOptions() { IsNfs = true });
 
             // Create destination file
-            ShareFileClient destinationClient = await CreateFileClientWithNFSAsync(
+            ShareFileClient destinationClient = await CreateFileClientWithNfsAsync(
                 container: destination.Container,
                 createResource: false);
             StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient,
@@ -746,7 +745,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 sourceResource,
                 destinationResource,
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3000));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -770,7 +769,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(sourceOwner, destinationProperties.PosixProperties.Owner);
                 Assert.AreEqual(sourceGroup, destinationProperties.PosixProperties.Group);
                 Assert.AreEqual(sourceFileMode, destinationProperties.PosixProperties.FileMode.ToOctalFileMode());
-                Assert.AreEqual(_defaultFileType, destinationProperties.PosixProperties.FileType.ToString());
             }
             else
             {
@@ -779,7 +777,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(_defaultOwner, destinationProperties.PosixProperties.Owner);
                 Assert.AreEqual(_defaultGroup, destinationProperties.PosixProperties.Group);
                 Assert.AreEqual(_defaultMode, destinationProperties.PosixProperties.FileMode.ToOctalFileMode());
-                Assert.AreEqual(_defaultFileType, destinationProperties.PosixProperties.FileType.ToString());
             }
         }
     }

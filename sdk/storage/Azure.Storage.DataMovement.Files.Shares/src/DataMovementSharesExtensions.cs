@@ -201,19 +201,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         ? (string)group
                         : default
                     : default;
-                NfsFileType? FileType = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileType, out object fileType) == true
-                    ? (NfsFileType?)fileType
-                    : default;
-                long? LinkCount = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LinkCount, out object linkCount) == true
-                    ? (long?)linkCount
-                    : default;
 
                 return FilesModelFactory.FilePosixProperties(
                     fileMode: FileMode,
                     owner: Owner,
                     group: Group,
-                    fileType: FileType ?? NfsFileType.Regular,
-                    linkCount: LinkCount);
+                    fileType: NfsFileType.Regular,
+                    linkCount: default);
             }
             return new();
         }
@@ -320,14 +314,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileMode, fileProperties.PosixProperties.FileMode);
             }
-            if (fileProperties.PosixProperties.FileType != default)
-            {
-                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileType, fileProperties.PosixProperties.FileType);
-            }
-            if (fileProperties.PosixProperties.LinkCount != default)
-            {
-                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.LinkCount, fileProperties.PosixProperties.LinkCount);
-            }
             return new StorageResourceItemProperties()
             {
                 ResourceLength = fileProperties.ContentLength,
@@ -412,14 +398,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (fileProperties.PosixProperties.FileMode != default)
             {
                 existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileMode, fileProperties.PosixProperties.FileMode);
-            }
-            if (fileProperties.PosixProperties.FileType != default)
-            {
-                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileType, fileProperties.PosixProperties.FileType);
-            }
-            if (fileProperties.PosixProperties.LinkCount != default)
-            {
-                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.LinkCount, fileProperties.PosixProperties.LinkCount);
             }
         }
 
