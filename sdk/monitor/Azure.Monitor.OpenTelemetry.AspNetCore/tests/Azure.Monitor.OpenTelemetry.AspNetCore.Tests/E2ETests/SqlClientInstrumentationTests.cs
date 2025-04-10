@@ -179,7 +179,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             serviceCollection.Configure<SqlClientTraceInstrumentationOptions>(options =>
             {
                 options.SetDbStatementForText = captureTextCommandContent;
-                //options.SetDbStatementForStoredProcedure = captureStoredProcedureCommandName;  // TODO: THIS WAS REMOVED: https://github.com/open-telemetry/opentelemetry-dotnet-contrib/pull/2284
+                options.SetDbStatementForStoredProcedure = captureStoredProcedureCommandName;
                 if (shouldEnrich)
                 {
                     options.Enrich = ActivityEnrichment;
