@@ -4,8 +4,10 @@
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Azure.Generator.Mgmt.Primitives
 {
@@ -21,6 +23,9 @@ namespace Azure.Generator.Mgmt.Primitives
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
             ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
         };
+        private static readonly HashSet<Type> _knownTypes = _idToTypeMap.Values.Select(x => x.FrameworkType).ToHashSet();
+
+        public static bool IsKnownManagementType(Type type) => _knownTypes.Contains(type);
 
         public static bool TryGetManagementType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToTypeMap.TryGetValue(id, out type);
     }

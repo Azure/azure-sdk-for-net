@@ -7,10 +7,17 @@ using Azure.Generator.Mgmt.Primitives;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
+using System.ClientModel.Primitives;
+using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management
 {
@@ -54,6 +61,28 @@ namespace Azure.Generator.Management
                 return new SystemObjectTypeProvider(replacedType.FrameworkType, model);
             }
             return base.CreateModelCore(model);
+        }
+
+        /// <inheritdoc/>
+        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        {
+            if (KnownManagementTypes.IsKnownManagementType(valueType))
+            {
+                return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Serialize), [value]).Terminate();
+            }
+            return base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
+        }
+
+        /// <inheritdoc/>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+        {
+            if (KnownManagementTypes.IsKnownManagementType(valueType))
+            {
+                return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), [element], [valueType], false);
+            }
+            return base.DeserializeJsonValue(valueType, element, format);
         }
     }
 }
