@@ -19,7 +19,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
 
         public record GeneratorResult
         {
-            internal ModelReaderWriterContextGenerationSpec? ContextFile { get; set; }
+            internal ModelReaderWriterContextGenerationSpec? GenerationSpec { get; set; }
             public ImmutableArray<Diagnostic> Diagnostics { get; set; }
         }
 
@@ -107,7 +107,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
 
             return new()
             {
-                ContextFile = generatedSpecs,
+                GenerationSpec = generatedSpecs,
                 Diagnostics = diagnostics
             };
         }
