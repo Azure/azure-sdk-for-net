@@ -10,7 +10,7 @@
    "name": "InvalidAuth",
    "namespace": "Authentication.ApiKey",
    "crossLanguageDefinitionId": "Authentication.ApiKey.InvalidAuth",
-   "usage": "Error,Json,Exception",
+   "usage": "Json,Exception",
    "decorators": [],
    "properties": [
     {
@@ -45,6 +45,7 @@
  "clients": [
   {
    "$id": "7",
+   "kind": "client",
    "name": "ApiKeyClient",
    "namespace": "Authentication.ApiKey",
    "doc": "Illustrates clients generated with ApiKey authentication.",
@@ -163,7 +164,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Authentication.ApiKey"
+   "crossLanguageDefinitionId": "Authentication.ApiKey",
+   "apiVersions": []
   }
  ],
  "auth": {

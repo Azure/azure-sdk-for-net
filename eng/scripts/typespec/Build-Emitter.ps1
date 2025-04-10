@@ -1,9 +1,7 @@
 #Requires -Version 7.0
 
 param(
-    [string] $BuildNumber,
     [string] $OutputDirectory,
-    [switch] $Prerelease,
     [switch] $TargetNpmJsFeed
 )
 
@@ -12,65 +10,41 @@ Set-StrictMode -Version 3.0
 . "$PSScriptRoot/../../common/scripts/common.ps1"
 Set-ConsoleEncoding
 
-$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
-$mgmtPackageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp-mgmt"
-$outputPath = $OutputDirectory ? $OutputDirectory : (Join-Path $packageRoot "artifacts" "build")
-$mgmtOutputPath = $OutputDirectory ? $OutputDirectory : (Join-Path $mgmtPackageRoot "artifacts" "build")
-
 function Build-Emitter {
     param (
         [string]$packageRoot,
-        [string]$outputPath
+        [string]$outputPath,
+        [hashtable]$overrides
     )
 
     Push-Location $packageRoot
     try {
         Write-Host "Working in $PWD"
-        
+
         $outputPath = New-Item -ItemType Directory -Force -Path $outputPath | Select-Object -ExpandProperty FullName
 
-        $emitterVersion = (npm pkg get version).Trim('"')
-
-        if ($BuildNumber) {
-            # set package versions
-            $versionTag = $Prerelease ? "-alpha" : "-beta"
-
-            $emitterVersion = "$($emitterVersion.Split('-')[0])$versionTag.$BuildNumber"
-            Write-Host "Setting output variable 'emitterVersion' to $emitterVersion"
-            Write-Host "##vso[task.setvariable variable=emitterVersion;isoutput=true]$emitterVersion"
-        }
-
         # build and pack the emitter
-        Invoke-LoggedCommand "npm install @types/node --save-dev" -GroupOutput
         Invoke-LoggedCommand "npm run build" -GroupOutput
-
-        if ($BuildNumber) {
-            Write-Host "Updating version package.json to the new emitter version`n"
-            Invoke-LoggedCommand "npm pkg set version=$emitterVersion"
-        }
 
         # remove any existing tarballs
         Remove-Item -Path "./*.tgz" -Force | Out-Null
-        
+
         #pack the emitter
         Invoke-LoggedCommand "npm pack"
         $file = Get-ChildItem -Filter "*.tgz" | Select-Object -ExpandProperty FullName
 
-        # ensure the packages directory exists
-        New-Item -ItemType Directory -Force -Path "$outputPath/packages" | Out-Null
+        Write-Host "Copying $file to $outputPath"
+        Copy-Item $file -Destination $outputPath
 
-        Write-Host "Copying $file to $outputPath/packages"
-        Copy-Item $file -Destination "$outputPath/packages"
-
-        if ($TargetNpmJsFeed) {
-            $overrides = @{}
-        }
-        else {
+        if (!$TargetNpmJsFeed) {
             $feedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry"
 
-            $overrides = @{
-                "@azure-typespec/http-client-csharp" = "$feedUrl/@azure-typespec/http-client-csharp/-/http-client-csharp-$emitterVersion.tgz"
-            }
+            $packageJson = Get-Content -Path "./package.json" | ConvertFrom-Json
+            $packageVersion = $packageJson.version
+            $packageName = $packageJson.name
+
+            $unscopedName = $packageName.Split("/")[1]
+            $overrides[$packageName] = "$feedUrl/$packageName/-/$unscopedName-$packageVersion.tgz"
         }
     }
     finally {
@@ -78,6 +52,15 @@ function Build-Emitter {
     }
 }
 
-Build-Emitter -packageRoot $packageRoot -outputPath $outputPath
+$overrides = @{}
 
-Build-Emitter -packageRoot $mgmtPackageRoot -outputPath $mgmtOutputPath
+$outputPath = $OutputDirectory ? $OutputDirectory : (Join-Path $RepoRoot "artifacts" "emitters")
+New-Item -ItemType Directory -Force -Path $outputPath | Out-Null
+
+$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
+Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
+
+$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp-mgmt"
+Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
+
+$overrides | ConvertTo-Json | Out-File -FilePath "$outputPath/overrides.json" -Encoding utf8 -Force
