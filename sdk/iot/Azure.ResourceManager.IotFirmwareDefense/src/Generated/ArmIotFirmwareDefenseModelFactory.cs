@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -951,6 +952,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 binaryCount,
                 analysisTimeSeconds,
                 rootFileSystems);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary" />. </summary>
+        /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
+        /// <param name="fileSize"> Firmware file size in bytes. </param>
+        /// <param name="extractedFileCount"> Extracted file count. </param>
+        /// <param name="componentCount"> Components count. </param>
+        /// <param name="binaryCount"> Binary count. </param>
+        /// <param name="analysisTimeSeconds"> Time used for analysis. </param>
+        /// <param name="rootFileSystems"> The number of root file systems found. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FirmwareSummary FirmwareSummary(long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems)
+        {
+            return FirmwareSummary(provisioningState: default, extractedSize: extractedSize, fileSize: fileSize, extractedFileCount: extractedFileCount, componentCount: componentCount, binaryCount: binaryCount, analysisTimeSeconds: analysisTimeSeconds, rootFileSystems: rootFileSystems);
         }
     }
 }
