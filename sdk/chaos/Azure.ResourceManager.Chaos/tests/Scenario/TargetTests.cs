@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Chaos.Tests
     public class TargetTests : ChaosManagementTestBase
     {
         public TargetTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Playback)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Chaos.Tests
                 TestConstants.ComputeNamespace,
                 TestConstants.VmssResourceName,
                 this.VmssName);
+            ChaosTargetData data = new ChaosTargetData
+            {
+                Properties = { },
+            };
             var createUpdateTargetResponse = await targetCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 TestConstants.VmssTargetName,
