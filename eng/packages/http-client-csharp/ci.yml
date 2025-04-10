@@ -48,7 +48,8 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
-    EmitterPackageJsonPath: eng/azure-typespec-emitter-package.json
+    EmitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
+    EmitterPackageName: http-client-csharp
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src

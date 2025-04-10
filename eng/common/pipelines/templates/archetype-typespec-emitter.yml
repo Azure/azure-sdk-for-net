@@ -71,6 +71,10 @@ parameters:
   type: string
   default: ""
 
+- name: EmitterPackageName
+  type: string
+  default: ""  
+
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
@@ -207,13 +211,13 @@ extends:
               if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                --package-json '$(buildArtifactsPath)/${{ parameters.EmitterPackageName }}/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
                 --overrides '$(buildArtifactsPath)/overrides.json'
               } else {
                 tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                --package-json '$(buildArtifactsPath)/${{ parameters.EmitterPackageName }}/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}'
               }
