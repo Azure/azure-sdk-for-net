@@ -12,10 +12,28 @@ try {
     Write-Host 'Checking generated files difference...'
     git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
     if ($LastExitCode -ne 0) {
-        Write-Error 'Generated codes are not up to date. Please run: eng/packages/http-client-csharp/eng/scripts/Generate.ps1'
+        Write-Error 'Generated codes of Azure plugin are not up to date. Please run: eng/packages/http-client-csharp/eng/scripts/Generate.ps1'
         exit 1
     }
-    Write-Host 'Done. No change is detected.'
+    Write-Host 'Done for Azure plugin. No change is detected.'
+}
+finally {
+    Pop-Location
+}
+
+$mgmtPackageRoot = Resolve-Path "$PSScriptRoot../../../packages/http-client-csharp-mgmt"
+Push-Location $mgmtPackageRoot
+
+try {
+    & "$mgmtPackageRoot/eng/scripts/Generate.ps1"
+
+    Write-Host 'Checking generated files difference...'
+    git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
+    if ($LastExitCode -ne 0) {
+        Write-Error 'Generated codes of mgmt plugin are not up to date. Please run: eng/packages/http-client-csharp/eng/scripts/Generate.ps1'
+        exit 1
+    }
+    Write-Host 'Done for mgmt plugin. No change is detected.'
 }
 finally {
     Pop-Location
