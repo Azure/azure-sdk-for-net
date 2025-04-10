@@ -62,6 +62,11 @@ namespace System.ClientModel
 }
 namespace System.ClientModel.Primitives
 {
+    public static partial class ActivityExtensions
+    {
+        public static System.Diagnostics.Activity MarkFailed(this System.Diagnostics.Activity activity, System.Exception? exception) { throw null; }
+        public static System.Diagnostics.Activity? StartClientActivity(this System.Diagnostics.ActivitySource activitySource, System.ClientModel.Primitives.ClientPipelineOptions options, string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal, System.Diagnostics.ActivityContext parentContext = default(System.Diagnostics.ActivityContext), System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object?>>? tags = null) { throw null; }
+    }
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         internal ApiKeyAuthenticationPolicy() { }
@@ -85,7 +90,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientCache
     {
-        public ClientCache() { }
+        public ClientCache(int maxSize = 100) { }
         public T GetClient<T>(System.Func<T> createClient, string? id) where T : class { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -136,6 +141,7 @@ namespace System.ClientModel.Primitives
     {
         public ClientPipelineOptions() { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
+        public bool? EnableDistributedTracing { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
@@ -176,7 +182,7 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class ConnectionProvider
     {
-        protected ConnectionProvider() { }
+        protected ConnectionProvider(int maxCacheSize = 100) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.ClientModel.Primitives.ClientCache Subclients { get { throw null; } }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections();

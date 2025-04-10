@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas;
 using System.Collections.Generic;
@@ -9,7 +10,8 @@ using System.Collections.Generic;
 namespace System.ClientModel.SourceGeneration.Tests
 {
     [ModelReaderWriterBuildable(typeof(ReadOnlyMemory<JsonModel>))]
-    internal partial class BasicContext : ModelReaderWriterContext
+    [ModelReaderWriterBuildable(typeof(List<BaseModel>))]
+    public partial class BasicContext : ModelReaderWriterContext
     {
         partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
         {

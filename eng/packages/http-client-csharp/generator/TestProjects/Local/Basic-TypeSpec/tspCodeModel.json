@@ -1215,7 +1215,7 @@
       "type": {
        "$id": "143",
        "kind": "array",
-       "name": "Array",
+       "name": "Array1",
        "valueType": {
         "$id": "144",
         "kind": "int32",
@@ -1254,7 +1254,7 @@
       "type": {
        "$id": "149",
        "kind": "array",
-       "name": "Array",
+       "name": "Array1",
        "valueType": {
         "$id": "150",
         "kind": "int32",
@@ -2121,11 +2121,11 @@
   {
    "$id": "269",
    "kind": "model",
-   "name": "ProjectedModel",
+   "name": "RenamedModel",
    "namespace": "BasicTypeSpec",
-   "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithProjectedName",
+   "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithClientName",
    "usage": "Output,Spread,Json",
-   "doc": "this is a model with a projected name",
+   "doc": "this is a model with a client name",
    "decorators": [],
    "properties": [
     {
@@ -2133,7 +2133,7 @@
      "kind": "property",
      "name": "name",
      "serializedName": "name",
-     "doc": "name of the ModelWithProjectedName",
+     "doc": "name of the ModelWithClientName",
      "type": {
       "$id": "271",
       "kind": "string",
@@ -2146,7 +2146,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithProjectedName.name",
+     "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithClientName.name",
      "serializationOptions": {
       "$id": "272",
       "json": {
@@ -2171,6 +2171,7 @@
  "clients": [
   {
    "$id": "275",
+   "kind": "client",
    "name": "BasicTypeSpecClient",
    "namespace": "BasicTypeSpec",
    "doc": "This is a sample typespec project.",
@@ -3498,8 +3499,8 @@
       },
       {
        "$id": "393",
-       "name": "projectedModel",
-       "nameInRequest": "projectedModel",
+       "name": "renamedModel",
+       "nameInRequest": "renamedModel",
        "type": {
         "$ref": "269"
        },
@@ -3653,14 +3654,14 @@
        "headers": [],
        "isErrorResponse": false,
        "contentTypes": [
-        "application/json",
-        "application/json",
-        "application/json",
-        "application/json",
-        "application/json",
-        "application/json",
-        "application/json",
-        "application/json"
+        "text/plain",
+        "text/plain",
+        "text/plain",
+        "text/plain",
+        "text/plain",
+        "text/plain",
+        "text/plain",
+        "text/plain"
        ]
       }
      ],
@@ -3878,7 +3879,11 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "BasicTypeSpec"
+   "crossLanguageDefinitionId": "BasicTypeSpec",
+   "apiVersions": [
+    "2024-07-16-preview",
+    "2024-08-16-preview"
+   ]
   }
  ],
  "auth": {
