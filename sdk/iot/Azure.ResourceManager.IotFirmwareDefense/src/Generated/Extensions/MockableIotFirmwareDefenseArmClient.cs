@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
 
         /// <summary>
         /// Gets an object representing a <see cref="FirmwareAnalysisSummaryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier(string,string,string,string,FirmwareAnalysisSummaryType)" /> to create a <see cref="FirmwareAnalysisSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirmwareAnalysisSummaryResource"/> object. </returns>

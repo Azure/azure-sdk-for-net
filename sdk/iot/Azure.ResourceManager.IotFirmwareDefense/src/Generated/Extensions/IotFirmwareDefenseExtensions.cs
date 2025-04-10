@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.IotFirmwareDefense.Mocking;
+using Azure.ResourceManager.IotFirmwareDefense.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary>
         /// Gets an object representing a <see cref="FirmwareAnalysisSummaryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier(string,string,string,string,FirmwareAnalysisSummaryType)" /> to create a <see cref="FirmwareAnalysisSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareAnalysisSummaryResource(ResourceIdentifier)"/> instead.</description>

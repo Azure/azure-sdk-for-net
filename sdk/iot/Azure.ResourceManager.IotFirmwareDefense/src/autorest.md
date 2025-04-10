@@ -60,6 +60,7 @@ override-operation-name:
 rename-mapping:
   GenerateUploadUrlRequest: FirmwareUploadUrlRequest
   Workspace: FirmwareAnalysisWorkspace
+  WorkspaceProvisioningState: ProvisioningState
 
   CryptoCertificate: CryptoCertificateResult
   CryptoKey: CryptoKeyResult
@@ -87,5 +88,20 @@ rename-mapping:
   StatusMessage: FirmwareAnalysisStatusMessage
   PairedKey: CryptoPairedKey
   UrlToken: FirmwareUrlToken
+
+directive:
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.BinaryHardeningResource.properties.properties["x-ms-client-flatten"] = true
+      $.CryptoCertificateResource.properties.properties["x-ms-client-flatten"] = true
+      $.CryptoKeyResource.properties.properties["x-ms-client-flatten"] = true
+      $.CveResource.properties.properties["x-ms-client-flatten"] = true
+      $.PasswordHashResource.properties.properties["x-ms-client-flatten"] = true
+      $.SbomComponentResource.properties.properties["x-ms-client-flatten"] = true
+      $.UsageMetricResource.properties.properties["x-ms-client-flatten"] = true
+      $.BinaryHardeningSummaryResource.properties.properties["x-ms-client-flatten"] = true
+      $.CryptoCertificateSummaryResource.properties.properties["x-ms-client-flatten"] = true
+      $.SummaryResource.properties.properties["x-ms-client-flatten"] = true
 
 ```
