@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="DataReplicationTask"/>. </summary>
         internal DataReplicationTask()
         {
-            ChildrenWorkflows = new ChangeTrackingList<DataReplicationWorkflowData>();
+            ChildrenJobs = new ChangeTrackingList<DataReplicationJobData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationTask"/>. </summary>
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="startOn"> Gets or sets the start time. </param>
         /// <param name="endOn"> Gets or sets the end time. </param>
         /// <param name="customProperties"> Task model custom properties. </param>
-        /// <param name="childrenWorkflows"> Gets or sets the list of children workflow models. </param>
+        /// <param name="childrenJobs"> Gets or sets the list of children job models. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationTask(string taskName, DataReplicationTaskState? state, DateTimeOffset? startOn, DateTimeOffset? endOn, TaskModelCustomProperties customProperties, IReadOnlyList<DataReplicationWorkflowData> childrenWorkflows, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationTask(string taskName, DataReplicationTaskState? state, DateTimeOffset? startOn, DateTimeOffset? endOn, DataReplicationTaskCustomProperties customProperties, IReadOnlyList<DataReplicationJobData> childrenJobs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskName = taskName;
             State = state;
             StartOn = startOn;
             EndOn = endOn;
             CustomProperties = customProperties;
-            ChildrenWorkflows = childrenWorkflows;
+            ChildrenJobs = childrenJobs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the end time. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> Task model custom properties. </summary>
-        internal TaskModelCustomProperties CustomProperties { get; }
+        internal DataReplicationTaskCustomProperties CustomProperties { get; }
         /// <summary> Gets or sets the instance type. </summary>
         public string CustomInstanceType
         {
             get => CustomProperties?.InstanceType;
         }
 
-        /// <summary> Gets or sets the list of children workflow models. </summary>
-        public IReadOnlyList<DataReplicationWorkflowData> ChildrenWorkflows { get; }
+        /// <summary> Gets or sets the list of children job models. </summary>
+        public IReadOnlyList<DataReplicationJobData> ChildrenJobs { get; }
     }
 }
