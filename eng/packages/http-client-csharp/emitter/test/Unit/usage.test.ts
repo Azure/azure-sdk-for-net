@@ -58,11 +58,11 @@ describe("Test Usage", () => {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    const fooInfo = root.Models.find((model) => model.name === "FooInfo");
-    const batchCreateFooListItemsRequest = root.Models.find(
+    const fooInfo = root.models.find((model) => model.name === "FooInfo");
+    const batchCreateFooListItemsRequest = root.models.find(
       (model) => model.name === "BatchCreateFooListItemsRequest"
     );
-    const batchCreateTextListItemsResponse = root.Models.find(
+    const batchCreateTextListItemsResponse = root.models.find(
       (model) => model.name === "BatchCreateTextListItemsResponse"
     );
     ok(fooInfo);
@@ -107,7 +107,7 @@ describe("Test Usage", () => {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    const fooModel = root.Models.find((model) => model.name === "Foo");
+    const fooModel = root.models.find((model) => model.name === "Foo");
     ok(fooModel);
     strictEqual(
       fooModel.usage,
@@ -166,10 +166,10 @@ describe("Test Usage", () => {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    const baseModel = root.Models.find(
+    const baseModel = root.models.find(
       (model) => model.name === "BaseModelWithDiscriminator"
     );
-    const derivedModel = root.Models.find(
+    const derivedModel = root.models.find(
       (model) => model.name === "DerivedModelWithDiscriminatorA"
     );
     ok(baseModel);
@@ -235,13 +235,13 @@ describe("Test Usage", () => {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    const baseModel = root.Models.find(
+    const baseModel = root.models.find(
       (model) => model.name === "BaseModelWithDiscriminator"
     );
-    const derivedModel = root.Models.find(
+    const derivedModel = root.models.find(
       (model) => model.name === "DerivedModelWithDiscriminatorA"
     );
-    const nestedModel = root.Models.find(
+    const nestedModel = root.models.find(
       (model) => model.name === "NestedModel"
     );
     ok(baseModel);
@@ -401,7 +401,7 @@ interface LegacyLro {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    const radiologyInsightsInferenceResult = root.Models.find(
+    const radiologyInsightsInferenceResult = root.models.find(
       (model) => model.name === "RadiologyInsightsInferenceResult"
     );
     ok(radiologyInsightsInferenceResult);
