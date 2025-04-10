@@ -122,6 +122,7 @@ steps:
           scriptLocation: inlineScript
           scriptType: pscore
           inlineScript: |
+            eng/common/scripts/Import-AzModules.ps1  # Support post scripts using az powershell instead of az cli
             $env:ARM_OIDC_TOKEN = $env:idToken
             $scriptPath = '$(Agent.TempDirectory)/${{ parameters.SelfContainedPostScript }}'
             Write-Host "Executing self contained test resources post script '$scriptPath'"

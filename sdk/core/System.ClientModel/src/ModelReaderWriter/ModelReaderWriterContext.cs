@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
@@ -19,7 +20,7 @@ public abstract class ModelReaderWriterContext
     {
         if (!TryGetTypeBuilder(type, out ModelReaderWriterTypeBuilder? builder))
         {
-            throw new InvalidOperationException($"No ModelBuilder found for {type.Name}.");
+            throw new InvalidOperationException($"No {nameof(ModelReaderWriterTypeBuilder)} found for {type.ToFriendlyName()}.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.");
         }
         return builder!;
     }
