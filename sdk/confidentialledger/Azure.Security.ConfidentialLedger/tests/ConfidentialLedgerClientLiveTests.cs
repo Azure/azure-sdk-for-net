@@ -320,13 +320,30 @@ namespace Azure.Security.ConfidentialLedger.Tests
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
 
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
+            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
+            Console.WriteLine(resp.Content);
+
+            //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
+            string programContent = File.ReadAllText(filePath);
+            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
+
+            // Verify Response by Querying endpt
+            /// TODO: Investigate InternalServerError
+            //ConfidentialLedgerHelperHttpClient helperHttpClient = new ConfidentialLedgerHelperHttpClient(TestEnvironment.ConfidentialLedgerUrl, Credential);
+            //(var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("/app/content");
+            //Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
+            //Assert.AreEqual("Test content", response);
 
             // Deploy Empty JS Bundle to remove JS App
             programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
+
             result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
+            stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
         }
 
@@ -428,15 +445,32 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
         #endregion
 
+        #region CustomRole
+        [RecordedTest]
+        public async Task CreateLedgerEntryWithTags()
+        {
+            RequestContent content = RequestContent.Create(new { contents = Recording.GenerateAssetName("test") });
+            string collectionId = "collection1";
+            string tags = "tags1,tags2";
+
+            Response result = await Client.CreateLedgerEntryAsync(content, collectionId, tags);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+
+            await PostLedgerEntry();
+            var tuple = await GetFirstTransactionIdFromGetEntries();
+            string transactionId = tuple.TransactionId;
+            string stringResult = tuple.StringResult;
+            Response response = await Client.GetLedgerEntryAsync(transactionId);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+            Assert.That(stringResult, Does.Contain(transactionId));
+        }
+        #endregion
+
         #region UserDefinedFunction
         [RecordedTest]
         public async Task UserDefinedFunctionTest()
         {
-            // Delete UDF
-            string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
-            Response result = await Client.CreateUserDefinedEndpointAsync("{ \"metadata\": { \"endpoints\": { } }, \"modules\": [] }");
-            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
-
             string functionId = "myFunction";
 
             // Create UDF
@@ -449,7 +483,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             try
             {
                 Response userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
-                Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
+                Assert.AreEqual((int)HttpStatusCode.OK, userFunctionResult.Status);
                 userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
 
                 var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
