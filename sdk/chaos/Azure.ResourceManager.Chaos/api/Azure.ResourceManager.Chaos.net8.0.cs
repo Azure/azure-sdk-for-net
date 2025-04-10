@@ -323,8 +323,6 @@ namespace Azure.ResourceManager.Chaos
     }
     public partial class ChaosTargetData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosTargetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosTargetData>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This constructor no longer works in all API versions.", false)]
         public ChaosTargetData(System.Collections.Generic.IDictionary<string, System.BinaryData> properties) { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Properties { get { throw null; } }
