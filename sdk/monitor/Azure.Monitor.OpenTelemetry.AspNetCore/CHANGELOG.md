@@ -21,6 +21,14 @@
   - OpenTelemetry.Instrumentation.AspNetCore 1.11.1
   - OpenTelemetry.Instrumentation.Http 1.11.1
 
+* Updated the code of vendored instrumentation library `OpenTelemetry.Instrumentation.SqlClient` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.11.0-beta.2](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/Instrumentation.SqlClient-1.11.0-beta.2/src/OpenTelemetry.Instrumentation.SqlClient).
+  ([#48608](https://github.com/Azure/azure-sdk-for-net/pull/48608))
+
+* Updated the code of vendored resource detector library `OpenTelemetry.Resources.Azure` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.11.0-beta.2](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/Resources.Azure-1.11.0-beta.2/src/OpenTelemetry.Resources.Azure).
+  ([#48608](https://github.com/Azure/azure-sdk-for-net/pull/48608))
+
 ## 1.3.0-beta.2 (2024-10-11)
 
 ### Bugs Fixed

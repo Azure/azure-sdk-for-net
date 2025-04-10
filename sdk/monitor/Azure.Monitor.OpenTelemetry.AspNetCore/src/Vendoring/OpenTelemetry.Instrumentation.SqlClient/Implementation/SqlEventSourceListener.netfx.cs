@@ -29,14 +29,9 @@ internal sealed class SqlEventSourceListener : EventListener
     internal const int BeginExecuteEventId = 1;
     internal const int EndExecuteEventId = 2;
 
-    private readonly SqlClientTraceInstrumentationOptions options;
+    private readonly AsyncLocal<long> beginTimestamp = new();
     private EventSource? adoNetEventSource;
     private EventSource? mdsEventSource;
-
-    public SqlEventSourceListener(SqlClientTraceInstrumentationOptions? options = null)
-    {
-        this.options = options ?? new SqlClientTraceInstrumentationOptions();
-    }
 
     public override void Dispose()
     {
@@ -88,6 +83,29 @@ internal sealed class SqlEventSourceListener : EventListener
         }
     }
 
+    private static (bool HasError, string? ErrorNumber, string? ExceptionType) ExtractErrorFromEvent(EventWrittenEventArgs eventData)
+    {
+        var compositeState = (int)eventData.Payload[1];
+
+        if ((compositeState & 0b001) != 0b001)
+        {
+            if ((compositeState & 0b010) == 0b010)
+            {
+                var errorNumber = $"{eventData.Payload[2]}";
+                var exceptionType = eventData.EventSource.Name == MdsEventSourceName
+                    ? "Microsoft.Data.SqlClient.SqlException"
+                    : "System.Data.SqlClient.SqlException";
+                return (true, errorNumber, exceptionType);
+            }
+            else
+            {
+                return (true, null, null);
+            }
+        }
+
+        return (false, null, null);
+    }
+
     private void OnBeginExecute(EventWrittenEventArgs eventData)
     {
         /*
@@ -106,38 +124,49 @@ internal sealed class SqlEventSourceListener : EventListener
                 (https://github.com/dotnet/SqlClient/blob/f4568ce68da21db3fe88c0e72e1287368aaa1dc8/src/Microsoft.Data.SqlClient/netcore/src/Microsoft/Data/SqlClient/SqlCommand.cs#L6641)
          */
 
+        if (SqlClientInstrumentation.TracingHandles == 0 && SqlClientInstrumentation.MetricHandles == 0)
+        {
+            return;
+        }
+
+        var options = SqlClientInstrumentation.TracingOptions;
+
         if (eventData.Payload.Count < 4)
         {
             SqlClientInstrumentationEventSource.Log.InvalidPayload(nameof(SqlEventSourceListener), nameof(this.OnBeginExecute));
             return;
         }
 
+        var dataSource = (string)eventData.Payload[1];
+        var databaseName = (string)eventData.Payload[2];
+        var startTags = SqlActivitySourceHelper.GetTagListFromConnectionInfo(dataSource, databaseName, options, out var activityName);
         var activity = SqlActivitySourceHelper.ActivitySource.StartActivity(
-            SqlActivitySourceHelper.ActivityName,
+            activityName,
             ActivityKind.Client,
             default(ActivityContext),
-            SqlActivitySourceHelper.CreationTags);
+            startTags);
 
         if (activity == null)
         {
             // There is no listener or it decided not to sample the current request.
+            this.beginTimestamp.Value = Stopwatch.GetTimestamp();
             return;
         }
 
-        string? databaseName = (string)eventData.Payload[2];
-
-        activity.DisplayName = databaseName;
-
         if (activity.IsAllDataRequested)
         {
-            activity.SetTag(SemanticConventions.AttributeDbName, databaseName);
-
-            this.options.AddConnectionLevelDetailsToActivity((string)eventData.Payload[1], activity);
-
-            string commandText = (string)eventData.Payload[3];
-            if (!string.IsNullOrEmpty(commandText) && this.options.SetDbStatementForText)
+            var commandText = (string)eventData.Payload[3];
+            if (!string.IsNullOrEmpty(commandText) && options.SetDbStatementForText)
             {
-                activity.SetTag(SemanticConventions.AttributeDbStatement, commandText);
+                if (options.EmitOldAttributes)
+                {
+                    activity.SetTag(SemanticConventions.AttributeDbStatement, commandText);
+                }
+
+                if (options.EmitNewAttributes)
+                {
+                    activity.SetTag(SemanticConventions.AttributeDbQueryText, commandText);
+                }
             }
         }
     }
@@ -151,9 +180,20 @@ internal sealed class SqlEventSourceListener : EventListener
             [2] -> SqlExceptionNumber
          */
 
+        if (SqlClientInstrumentation.TracingHandles == 0 && SqlClientInstrumentation.MetricHandles == 0)
+        {
+            return;
+        }
+
         if (eventData.Payload.Count < 3)
         {
             SqlClientInstrumentationEventSource.Log.InvalidPayload(nameof(SqlEventSourceListener), nameof(this.OnEndExecute));
+            return;
+        }
+
+        if (SqlClientInstrumentation.TracingHandles == 0 && SqlClientInstrumentation.MetricHandles != 0)
+        {
+            this.RecordDuration(null, eventData);
             return;
         }
 
@@ -167,13 +207,15 @@ internal sealed class SqlEventSourceListener : EventListener
         {
             if (activity.IsAllDataRequested)
             {
-                int compositeState = (int)eventData.Payload[1];
-                if ((compositeState & 0b001) != 0b001)
+                var (hasError, errorNumber, exceptionType) = ExtractErrorFromEvent(eventData);
+
+                if (hasError)
                 {
-                    if ((compositeState & 0b010) == 0b010)
+                    if (errorNumber != null && exceptionType != null)
                     {
-                        var errorText = $"SqlExceptionNumber {eventData.Payload[2]} thrown.";
-                        activity.SetStatus(ActivityStatusCode.Error, errorText);
+                        activity.SetStatus(ActivityStatusCode.Error, errorNumber);
+                        activity.SetTag(SemanticConventions.AttributeDbResponseStatusCode, errorNumber);
+                        activity.SetTag(SemanticConventions.AttributeErrorType, exceptionType);
                     }
                     else
                     {
@@ -185,7 +227,49 @@ internal sealed class SqlEventSourceListener : EventListener
         finally
         {
             activity.Stop();
+            this.RecordDuration(activity, eventData);
         }
+    }
+
+    private void RecordDuration(Activity? activity, EventWrittenEventArgs eventData)
+    {
+        if (SqlClientInstrumentation.MetricHandles == 0)
+        {
+            return;
+        }
+
+        var tags = default(TagList);
+
+        if (activity != null && activity.IsAllDataRequested)
+        {
+            foreach (var name in SqlActivitySourceHelper.SharedTagNames)
+            {
+                var value = activity.GetTagItem(name);
+                if (value != null)
+                {
+                    tags.Add(name, value);
+                }
+            }
+        }
+        else
+        {
+            tags.Add(SemanticConventions.AttributeDbSystem, SqlActivitySourceHelper.MicrosoftSqlServerDatabaseSystemName);
+
+            var (hasError, errorNumber, exceptionType) = ExtractErrorFromEvent(eventData);
+
+            if (hasError)
+            {
+                if (errorNumber != null && exceptionType != null)
+                {
+                    tags.Add(SemanticConventions.AttributeDbResponseStatusCode, errorNumber);
+                    tags.Add(SemanticConventions.AttributeErrorType, exceptionType);
+                }
+            }
+        }
+
+        var duration = activity?.Duration.TotalSeconds
+            ?? SqlActivitySourceHelper.CalculateDurationFromTimestamp(this.beginTimestamp.Value);
+        SqlActivitySourceHelper.DbClientOperationDuration.Record(duration, tags);
     }
 }
 #endif
