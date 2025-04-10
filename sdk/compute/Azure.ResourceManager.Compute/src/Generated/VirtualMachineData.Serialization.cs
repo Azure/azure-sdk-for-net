@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag"u8);
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag);
             }
             if (Optional.IsDefined(Placement))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Compute
                     managedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
+                if (property.NameEquals("eTag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;

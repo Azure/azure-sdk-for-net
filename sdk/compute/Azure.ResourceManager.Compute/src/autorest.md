@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/883abbe08d313739069c0007eb820aa0a0710748/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/79114932d0c6c1a18f730f307c6620b15fec0d9d/specification/compute/resource-manager/readme.md
 #tag: package-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -553,4 +553,13 @@ directive:
               "$ref": "#/definitions/Placement",
               "description": "The virtual machine automatic zone placement feature."
             };
+  - from: ComputeRP.json            
+    where: $.definitions.VirtualMachineScaleSetVMExtension.properties.name
+    transform: delete $["x-ms-client-name"]
+  - from: ComputeRP.json
+    where: $.definitions.VirtualMachineScaleSetExtension.properties.name
+    transform: delete $["x-ms-client-name"]
+  - from: ComputeRP.json
+    where: $.definitions
+    transform: delete $["Expand"]
 ```

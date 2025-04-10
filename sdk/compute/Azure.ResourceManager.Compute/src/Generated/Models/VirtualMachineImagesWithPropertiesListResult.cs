@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImagesWithPropertiesListResult"/>. </summary>
-        /// <param name="value"> The list of virtual machine images. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of virtual machine images. Call ListNext() with this URI to fetch the next page of virtual machine images. </param>
+        /// <param name="value"> The VirtualMachineImage items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineImagesWithPropertiesListResult(IReadOnlyList<VirtualMachineImage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineImagesWithPropertiesListResult(IReadOnlyList<VirtualMachineImage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of virtual machine images. </summary>
+        /// <summary> The VirtualMachineImage items on this page. </summary>
         public IReadOnlyList<VirtualMachineImage> Value { get; }
-        /// <summary> The URI to fetch the next page of virtual machine images. Call ListNext() with this URI to fetch the next page of virtual machine images. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
