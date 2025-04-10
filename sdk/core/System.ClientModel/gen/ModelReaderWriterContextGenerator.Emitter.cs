@@ -14,23 +14,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
     {
         internal void Emit(ModelReaderWriterContextGenerationSpec contextGenerationSpec)
         {
-            Dictionary<string, int> nameCounts = [];
-
-            foreach (var typeRef in contextGenerationSpec.GetAllTypeRefs())
-            {
-                AddOrIncrement(nameCounts, typeRef.TypeCaseName);
-            }
-
-            HashSet<TypeRef> dupeTypes = [];
-            foreach (var typeRef in contextGenerationSpec.GetAllTypeRefs())
-            {
-                if (nameCounts[typeRef.TypeCaseName] > 1)
-                {
-                    dupeTypes.Add(typeRef);
-                }
-            }
-
-            EmitContextClass(contextGenerationSpec, dupeTypes);
+            EmitContextClass(contextGenerationSpec);
 
             foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
             {
@@ -38,9 +22,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             }
         }
 
-        private void EmitContextClass(
-            ModelReaderWriterContextGenerationSpec contextGenerationSpec,
-            HashSet<TypeRef> dupeTypes)
+        private void EmitContextClass(ModelReaderWriterContextGenerationSpec contextGenerationSpec)
         {
             var contextName = contextGenerationSpec.Type.Name;
             var namespaces = GetNameSpaces(contextGenerationSpec);
@@ -53,17 +35,13 @@ internal sealed partial class ModelReaderWriterContextGenerator
             {
                 builder.AppendLine(indent, $"using {nameSpace};");
             }
-            Dictionary<TypeRef, (string TypeCase, string CamelCase)> dupeAliases = [];
-            Dictionary<string, int> nameCounts = [];
-            foreach (var dupe in dupeTypes)
+            foreach (var typeRef in contextGenerationSpec.GetAllTypeRefs())
             {
-                var dupeTypeCase = dupe.TypeCaseName;
-                nameCounts.TryGetValue(dupeTypeCase, out var count);
-                nameCounts[dupeTypeCase] = ++count;
-                var alias = $"{dupeTypeCase}{count}";
-                dupeAliases.Add(dupe, (alias, alias.ToCamelCase()));
-                builder.AppendLine(indent, $"using {alias} = {dupe.Namespace}.{dupeTypeCase.Remove(dupeTypeCase.Length - 1)};");
-                builder.AppendLine(indent, $"using {alias}_Builder = {dupe.Namespace}.{dupeTypeCase}Builder;");
+                if (typeRef.Alias is null)
+                    continue;
+
+                builder.AppendLine(indent, $"using {typeRef.Alias} = {typeRef.Namespace}.{typeRef.TypeCaseName.Remove(typeRef.TypeCaseName.Length - 1)};");
+                builder.AppendLine(indent, $"using {typeRef.Alias}_Builder = {typeRef.Namespace}.{typeRef.TypeCaseName}Builder;");
             }
             builder.AppendLine();
 
@@ -93,10 +71,10 @@ internal sealed partial class ModelReaderWriterContextGenerator
                     builder.Append(indent, "private ");
                     string typeCase;
                     string camelCase;
-                    if (dupeAliases.TryGetValue(modelInfo.Type, out var alias))
+                    if (modelInfo.Type.Alias is not null)
                     {
-                        typeCase = $"{alias.TypeCase}_Builder";
-                        camelCase = $"_{alias.CamelCase}_Builder";
+                        typeCase = $"{modelInfo.Type.Alias}_Builder";
+                        camelCase = $"_{modelInfo.Type.Alias}_Builder";
                     }
                     else
                     {
@@ -130,10 +108,10 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 {
                     string typeofName;
                     string camelCase;
-                    if (dupeAliases.TryGetValue(modelInfo.Type, out var alias))
+                    if (modelInfo.Type.Alias is not null)
                     {
-                        typeofName = alias.TypeCase;
-                        camelCase = $"_{alias.CamelCase}_Builder";
+                        typeofName = modelInfo.Type.Alias;
+                        camelCase = $"_{modelInfo.Type.Alias}_Builder";
                     }
                     else
                     {

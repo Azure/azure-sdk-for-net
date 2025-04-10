@@ -16,9 +16,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         private void AssertMultiDimensionalArray(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"{expectation.TypeName}[,]"));
-            var arrayModel = dict[$"{expectation.TypeName}[,]"];
-            Assert.AreEqual($"{expectation.TypeName}[,]", arrayModel.Type.Name);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}[,]", out var arrayModel));
+            Assert.AreEqual($"{expectation.TypeName}[,]", arrayModel!.Type.Name);
             Assert.AreEqual(expectation.Namespace, arrayModel.Type.Namespace);
             Assert.IsNotNull(arrayModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.MultiDimensionalArray, arrayModel.Kind);
@@ -27,9 +26,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_d1_", arrayModel.Type.CamelCaseName);
             Assert.AreEqual(expectation.Context, arrayModel.ContextType);
 
-            var itemModel = dict[expectation.TypeName];
-            Assert.IsNotNull(itemModel);
-            Assert.AreEqual(itemModel.Type, arrayModel.Type.ItemType);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, arrayModel.Type.ItemType);
             expectation.ModelValidation(itemModel);
         }
     }

@@ -14,20 +14,18 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         internal static void AssertList(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"List<{expectation.TypeName}>"));
-            var listJsonModel = dict[$"List<{expectation.TypeName}>"];
-            Assert.AreEqual($"List<{expectation.TypeName}>", listJsonModel.Type.Name);
-            Assert.AreEqual("System.Collections.Generic", listJsonModel.Type.Namespace);
-            Assert.IsNotNull(listJsonModel.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.IList, listJsonModel.Kind);
-            Assert.AreEqual($"List_{expectation.TypeName}_", listJsonModel.Type.TypeCaseName);
-            Assert.AreEqual($"list_{expectation.TypeName}_", listJsonModel.Type.CamelCaseName);
-            Assert.AreEqual(0, listJsonModel.Type.ArrayRank);
-            Assert.AreEqual(s_localContext, listJsonModel.ContextType);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.List<{expectation.TypeName}>", out var listModel));
+            Assert.AreEqual($"List<{expectation.TypeName}>", listModel!.Type.Name);
+            Assert.AreEqual("System.Collections.Generic", listModel.Type.Namespace);
+            Assert.IsNotNull(listModel.Type.ItemType);
+            Assert.AreEqual(TypeBuilderKind.IList, listModel.Kind);
+            Assert.AreEqual($"List_{expectation.TypeName}_", listModel.Type.TypeCaseName);
+            Assert.AreEqual($"list_{expectation.TypeName}_", listModel.Type.CamelCaseName);
+            Assert.AreEqual(0, listModel.Type.ArrayRank);
+            Assert.AreEqual(s_localContext, listModel.ContextType);
 
-            var itemModel = dict[expectation.TypeName];
-            Assert.IsNotNull(itemModel);
-            Assert.AreEqual(itemModel.Type, listJsonModel.Type.ItemType);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, listModel.Type.ItemType);
             expectation.ModelValidation(itemModel);
         }
     }

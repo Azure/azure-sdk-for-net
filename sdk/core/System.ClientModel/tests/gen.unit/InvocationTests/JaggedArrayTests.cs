@@ -16,9 +16,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         private void AssertJaggedArray(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"{expectation.TypeName}[][]"));
-            var arrayArrayModel = dict[$"{expectation.TypeName}[][]"];
-            Assert.AreEqual($"{expectation.TypeName}[][]", arrayArrayModel.Type.Name);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}[][]", out var arrayArrayModel));
+            Assert.AreEqual($"{expectation.TypeName}[][]", arrayArrayModel!.Type.Name);
             Assert.AreEqual(expectation.Namespace, arrayArrayModel.Type.Namespace);
             Assert.IsNotNull(arrayArrayModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.Array, arrayArrayModel.Kind);
@@ -35,8 +34,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual($"{expectation.TypeName}_Array_", genericArgument.TypeCaseName);
             Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_", genericArgument.CamelCaseName);
 
-            var arrayModel = dict[$"{expectation.TypeName}[]"];
-            Assert.AreEqual($"{expectation.TypeName}[]", arrayModel.Type.Name);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}[]", out var arrayModel));
+            Assert.AreEqual($"{expectation.TypeName}[]", arrayModel!.Type.Name);
             Assert.AreEqual(expectation.Namespace, arrayModel.Type.Namespace);
             Assert.IsNotNull(arrayModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.Array, arrayModel.Kind);
@@ -45,9 +44,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_", arrayModel.Type.CamelCaseName);
             Assert.AreEqual(expectation.Context, arrayModel.ContextType);
 
-            var itemModel = dict[expectation.TypeName];
-            Assert.IsNotNull(itemModel);
-            Assert.AreEqual(itemModel.Type, arrayModel.Type.ItemType);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, arrayModel.Type.ItemType);
             expectation.ModelValidation(itemModel);
         }
     }

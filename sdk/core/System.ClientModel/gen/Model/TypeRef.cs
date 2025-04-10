@@ -1,19 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 
 namespace System.ClientModel.SourceGeneration;
 
 internal sealed class TypeRef : IEquatable<TypeRef>
 {
-    public TypeRef(string name, string nameSpace, string assembly, TypeRef? itemType = default, int arrayRank = 0)
+    public TypeRef(string name, string nameSpace, string assembly, TypeRef? itemType = default, int arrayRank = 0, string? alias = null)
     {
         Name = name;
         Namespace = nameSpace;
         ItemType = itemType;
         Assembly = assembly;
         ArrayRank = arrayRank;
+        Alias = alias;
     }
 
     public string Name { get; }
@@ -21,6 +23,7 @@ internal sealed class TypeRef : IEquatable<TypeRef>
     public TypeRef? ItemType { get; }
     public string Assembly { get; }
     public int ArrayRank { get; }
+    public string? Alias { get; }
 
     private string? _typeCaseName;
     public string TypeCaseName => _typeCaseName ??= Name.ToIdentifier(false);
@@ -28,8 +31,9 @@ internal sealed class TypeRef : IEquatable<TypeRef>
     private string? _camelCaseName;
     public string CamelCaseName => _camelCaseName ??= TypeCaseName.ToCamelCase();
 
-    internal static TypeRef FromTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache)
+    internal static TypeRef FromTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache, Dictionary<ITypeSymbol, string> dupes)
     {
+        dupes.TryGetValue(symbol, out string alias);
         if (symbol is INamedTypeSymbol namedTypeSymbol)
         {
             var itemSymbol = namedTypeSymbol.GetItemSymbol(symbolToKindCache);
@@ -38,17 +42,19 @@ internal sealed class TypeRef : IEquatable<TypeRef>
                 symbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat),
                 symbol.ContainingNamespace.ToDisplayString(),
                 symbol.ContainingAssembly.ToDisplayString(),
-                itemSymbol is null ? null : FromTypeSymbol(itemSymbol, symbolToKindCache));
+                itemSymbol is null ? null : FromTypeSymbol(itemSymbol, symbolToKindCache, dupes),
+                alias: alias);
         }
         else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
         {
-            var elementType = FromTypeSymbol(arrayTypeSymbol.ElementType, symbolToKindCache);
+            var elementType = FromTypeSymbol(arrayTypeSymbol.ElementType, symbolToKindCache, dupes);
             return new TypeRef(
                 arrayTypeSymbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat).RemoveAsterisks(),
                 elementType.Namespace,
                 elementType.Assembly,
                 elementType,
-                arrayTypeSymbol.Rank);
+                arrayTypeSymbol.Rank,
+                alias: alias);
         }
         else
         {

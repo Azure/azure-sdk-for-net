@@ -178,13 +178,35 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             .SelectMany(typeSymbol => GetRecursiveGenericTypes(typeSymbol, data.SymbolToKindCache))
             .Distinct(SymbolEqualityComparer.Default);
 
+        Dictionary<string, int> dupeCounts = [];
+        Dictionary<ITypeSymbol, string> aliases = [];
+        HashSet<ITypeSymbol> visited = [];
+        var allTypes = data.ReferencedContexts.Concat(data.TypeBuilders);
+        foreach (var typeSymbol in allTypes)
+        {
+            if (visited.Contains(typeSymbol))
+                continue;
+
+            visited.Add(typeSymbol);
+
+            if (typeSymbol.GetItemSymbol(data.SymbolToKindCache) is not null)
+                continue;
+
+            var typeName = typeSymbol.Name;
+            if (dupeCounts.TryGetValue(typeName, out var count))
+            {
+                aliases.Add(typeSymbol, $"{typeName}_{count++}");
+            }
+            dupeCounts[typeName] = count;
+        }
+
         var typeGenerationSpecs = builders
             .Select(symbol =>
             {
                 if (symbol is not ITypeSymbol typeSymbol)
                     return null;
 
-                var type = TypeRef.FromTypeSymbol(typeSymbol, data.SymbolToKindCache);
+                var type = TypeRef.FromTypeSymbol(typeSymbol, data.SymbolToKindCache, aliases);
                 var itemType = type.GetInnerItemType();
 
                 if (!HasAccessibleParameterlessConstructor(typeSymbol, data.SymbolToKindCache) && itemType.IsSameAssembly(contextType))
@@ -211,7 +233,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                     Modifier = "internal",
                     Type = type,
                     Kind = data.SymbolToKindCache.Get(typeSymbol),
-                    PersistableModelProxy = proxy is null ? null : TypeRef.FromTypeSymbol(proxy, data.SymbolToKindCache),
+                    PersistableModelProxy = proxy is null ? null : TypeRef.FromTypeSymbol(proxy, data.SymbolToKindCache, aliases),
                     ContextType = referencedContexts.ContainsKey(type.Assembly) ? referencedContexts[type.Assembly] : contextType,
                 };
             })

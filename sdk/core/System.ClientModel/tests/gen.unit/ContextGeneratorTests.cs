@@ -644,12 +644,11 @@ namespace TestProject
             Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
             Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
 
-            var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
+            var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => $"{t.Type.GetInnerItemType().Namespace}.{t.Type.Name}", t => t);
             ListTests.AssertList(s_modelExpectations[JsonModel], dict);
 
-            Assert.IsTrue(dict.ContainsKey(JsonModel));
-            var item = dict[JsonModel];
-            AssertJsonModel(item.Type);
+            Assert.IsTrue(dict.TryGetValue($"TestProject.{JsonModel}", out var item));
+            AssertJsonModel(item!.Type);
 
             Assert.AreEqual(1, result.Diagnostics.Length);
             Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);

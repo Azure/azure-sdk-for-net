@@ -14,9 +14,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         internal static void AssertListOfList(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"List<List<{expectation.TypeName}>>"));
-            var listListJsonModel = dict[$"List<List<{expectation.TypeName}>>"];
-            Assert.AreEqual($"List<List<{expectation.TypeName}>>", listListJsonModel.Type.Name);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.List<List<{expectation.TypeName}>>", out var listListJsonModel));
+            Assert.AreEqual($"List<List<{expectation.TypeName}>>", listListJsonModel!.Type.Name);
             Assert.AreEqual("System.Collections.Generic", listListJsonModel.Type.Namespace);
             Assert.IsNotNull(listListJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.IList, listListJsonModel.Kind);
@@ -33,8 +32,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual($"List_{expectation.TypeName}_", genericArgument.TypeCaseName);
             Assert.AreEqual($"list_{expectation.TypeName}_", genericArgument.CamelCaseName);
 
-            var listModel = dict[$"List<{expectation.TypeName}>"];
-            Assert.AreEqual($"List<{expectation.TypeName}>", listModel.Type.Name);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.List<{expectation.TypeName}>", out var listModel));
+            Assert.AreEqual($"List<{expectation.TypeName}>", listModel!.Type.Name);
             Assert.AreEqual("System.Collections.Generic", listModel.Type.Namespace);
             Assert.IsNotNull(listModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.IList, listModel.Kind);
@@ -43,9 +42,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual($"list_{expectation.TypeName}_", listModel.Type.CamelCaseName);
             Assert.AreEqual(s_localContext, listModel.ContextType);
 
-            var itemModel = dict[expectation.TypeName];
-            Assert.IsNotNull(itemModel);
-            Assert.AreEqual(itemModel.Type, listModel.Type.ItemType);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, listModel.Type.ItemType);
             expectation.ModelValidation(itemModel);
         }
     }

@@ -14,9 +14,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         private void AssertReadOnlyMemory(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"ReadOnlyMemory<{expectation.TypeName}>"));
-            var romJsonModel = dict[$"ReadOnlyMemory<{expectation.TypeName}>"];
-            Assert.AreEqual($"ReadOnlyMemory<{expectation.TypeName}>", romJsonModel.Type.Name);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.ReadOnlyMemory<{expectation.TypeName}>", out var romJsonModel));
+            Assert.AreEqual($"ReadOnlyMemory<{expectation.TypeName}>", romJsonModel!.Type.Name);
             Assert.AreEqual("System", romJsonModel.Type.Namespace);
             Assert.IsNotNull(romJsonModel.Type.ItemType);
             Assert.AreEqual(TypeBuilderKind.ReadOnlyMemory, romJsonModel.Kind);
@@ -25,9 +24,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual(0, romJsonModel.Type.ArrayRank);
             Assert.AreEqual(s_localContext, romJsonModel.ContextType);
 
-            var itemModel = dict[expectation.TypeName];
-            Assert.IsNotNull(itemModel);
-            Assert.AreEqual(itemModel.Type, romJsonModel.Type.ItemType);
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, romJsonModel.Type.ItemType);
             expectation.ModelValidation(itemModel);
         }
     }
