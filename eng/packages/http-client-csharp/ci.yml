@@ -21,10 +21,10 @@ pr:
       - eng/scripts/typespec
 
 parameters:
-  - name: BuildPrereleaseVersion
-    displayName: "Build prerelease version"
-    type: boolean
-    default: true
+  # - name: BuildPrereleaseVersion
+  #   displayName: "Build prerelease version"
+  #   type: boolean
+  #   default: true
   - name: UseTypeSpecNext
     displayName: "Use TypeSpec Next"
     type: boolean
@@ -52,7 +52,7 @@ extends:
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src
-    BuildPrereleaseVersion: ${{ parameters.BuildPrereleaseVersion }}
+    BuildPrereleaseVersion: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:

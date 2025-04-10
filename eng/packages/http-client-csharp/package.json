@@ -1,6 +1,6 @@
 {
   "name": "@azure-typespec/http-client-csharp",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "main": "dist/emitter/index.js",
   "exports": {
