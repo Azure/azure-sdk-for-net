@@ -11,7 +11,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     public abstract class MrwCollectionTests<TCollection, TElement> : MrwTestBase<TCollection>
     {
         protected abstract void CompareModels(TElement model, TElement model2, string format);
-        protected virtual void Reverse(ref TCollection collection, ref IEnumerable enumerable) { }
+
+        protected abstract string CollectionTypeName { get; }
 
         protected virtual string GetJsonCollectionType() => GetCollectionType();
 
@@ -19,6 +20,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             => CompareEnumerable(GetEnumerable(expected!), GetEnumerable(actual!), format, 0);
 
         protected virtual bool IsWriteOrderDeterministic => true;
+
         protected virtual bool IsRoundTripOrderDeterministic => true;
 
         protected override string GetJsonFolderName()
@@ -38,7 +40,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(JsonPayload), typeof(TCollection)));
             Assert.IsNotNull(ex);
-            Assert.AreEqual($"{typeof(TCollection).Name} does not implement IPersistableModel", ex!.Message);
+            Assert.AreEqual($"{CollectionTypeName} does not implement IPersistableModel", ex!.Message);
         }
 
         [Test]
@@ -46,7 +48,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(Instance!));
             Assert.IsNotNull(ex);
-            Assert.AreEqual($"{typeof(TCollection).Name} does not implement IPersistableModel", ex!.Message);
+            Assert.AreEqual($"{CollectionTypeName} does not implement IPersistableModel", ex!.Message);
         }
 
         [Test]
@@ -54,7 +56,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(Instance!, ModelReaderWriterOptions.Xml));
             Assert.IsNotNull(ex);
-            Assert.AreEqual($"{typeof(TCollection).Name} does not implement IPersistableModel", ex!.Message);
+            Assert.AreEqual($"{CollectionTypeName} does not implement IPersistableModel", ex!.Message);
         }
 
         protected override void RoundTripTest(string format, RoundTripStrategy<TCollection> strategy)

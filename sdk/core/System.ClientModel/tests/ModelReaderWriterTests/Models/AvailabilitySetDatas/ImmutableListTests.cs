@@ -5,13 +5,14 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
     public class ImmutableListTests : MrwCollectionTests<ImmutableList<AvailabilitySetData>, AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "List";
+
+        protected override string CollectionTypeName => "ImmutableList<AvailabilitySetData>";
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
@@ -49,8 +50,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(ImmutableList<AvailabilitySetData>.Builder);
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => ImmutableList<AvailabilitySetData>.Empty.ToBuilder();
 

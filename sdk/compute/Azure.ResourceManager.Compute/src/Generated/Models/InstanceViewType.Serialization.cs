@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             InstanceViewType.InstanceView => "instanceView",
             InstanceViewType.UserData => "userData",
+            InstanceViewType.ResiliencyView => "resiliencyView",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InstanceViewType value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "instanceView")) return InstanceViewType.InstanceView;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "userData")) return InstanceViewType.UserData;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "resiliencyView")) return InstanceViewType.ResiliencyView;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InstanceViewType value.");
         }
     }
