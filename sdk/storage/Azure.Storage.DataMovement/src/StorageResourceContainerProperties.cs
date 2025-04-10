@@ -8,31 +8,31 @@ using System.ComponentModel;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Properties of a Storage Resource.
+    /// Properties of a Storage Resource Container.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class StorageResourceContainerProperties
     {
         /// <summary>
-        /// The type of the Storage Resource.
+        /// The Uri of the Storage Resource Container.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ProviderId { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary>
-        /// The HTTP ETag of the Storage Resource.
+        /// The HTTP ETag of the Storage Resource Container.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ETag? ETag { get; set; }
 
         /// <summary>
-        /// The Last Modified Time of the Storage Resource.
+        /// The Last Modified Time of the Storage Resource Container.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DateTimeOffset? LastModifiedTime { get; set; }
 
         /// <summary>
-        /// Dictionary of the properties associated with this resource.
+        /// Dictionary of the properties associated with this resource Container.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IDictionary<string, object> RawProperties { get; set; }

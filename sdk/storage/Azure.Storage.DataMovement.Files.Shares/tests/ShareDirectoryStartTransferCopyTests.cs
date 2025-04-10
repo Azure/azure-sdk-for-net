@@ -256,6 +256,53 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             }
         }
 
+        private async Task CreateShareFileAsyncNFS(
+            ShareClient container,
+            long? objectLength = null,
+            string objectName = null,
+            Stream contents = default,
+            TransferPropertiesTestType propertiesType = default,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            objectName ??= GetNewObjectName();
+            if (!objectLength.HasValue)
+            {
+                throw new InvalidOperationException($"Cannot create share file without size specified. Specify {nameof(objectLength)}.");
+            }
+            ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
+
+            string permissionKey = default;
+            if (propertiesType == TransferPropertiesTestType.Preserve)
+            {
+                PermissionInfo permissionInfo = await container.CreatePermissionAsync(new ShareFilePermission() { Permission = _defaultPermissions }, cancellationToken);
+                permissionKey = permissionInfo.FilePermissionKey;
+            }
+            await fileClient.CreateAsync(
+                maxSize: objectLength.Value,
+                options: new ShareFileCreateOptions()
+                {
+                    HttpHeaders = new ShareFileHttpHeaders()
+                    {
+                        ContentLanguage = _defaultContentLanguage,
+                        ContentDisposition = _defaultContentDisposition,
+                        CacheControl = _defaultCacheControl
+                    },
+                    Metadata = _defaultMetadata,
+                    SmbProperties = new FileSmbProperties()
+                    {
+                        FileCreatedOn = _defaultFileCreatedOn,
+                        FileLastWrittenOn = _defaultFileLastWrittenOn,
+                    },
+                },
+                cancellationToken: cancellationToken);
+
+            if (contents != default)
+            {
+                await fileClient.UploadAsync(contents, cancellationToken: cancellationToken);
+            }
+        }
+
         private async Task CreateDirectoryTreeAsync(ShareClient container, string directoryPath, CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -375,21 +422,41 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [TestCase(true)]
         [TestCase(false)]
         [TestCase(null)]
-        public async Task ShareDirectoryToShareDirectory_PreserveNFS(bool? filePermissions)
+        public async Task ShareDirectoryToShareDirectory_PreserveSMB(bool? filePermissions)
         {
             // Arrange
-            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareNFSAsync();
-            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareNFSAsync();
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
 
-            // Create transfer to do a AwaitCompletion
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            TransferOperation transfer = await CreateStartTransfer(
-                source.Container,
-                destination.Container,
-                1,
-                filePermissions,
-                options: options);
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+            await CreateDirectoryInSourceAsync(source.Container, sourcePrefix);
+            await CreateDirectoryInDestinationAsync(destination.Container, destPrefix);
+            await CreateDirectoryTree(source.Container, sourcePrefix, DataMovementTestConstants.KB);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { IsNfs = false });
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                new ShareFileStorageResourceOptions() { IsNfs = false, FilePermissions = filePermissions });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -405,42 +472,79 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.AreEqual(TransferState.Completed, transfer.Status.State);
         }
 
-        public async Task<TransferOperation> CreateStartTransfer(
-            ShareClient sourceContainer,
-            ShareClient destinationContainer,
-            int concurrency,
-            bool? filePermissions = null,
-            TransferOptions options = default,
-            int size = DataMovementTestConstants.KB)
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareDirectoryToShareDirectory_PreserveNFS(bool? filePermissions)
         {
             // Arrange
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareNFSAsync();
+            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareNFSAsync();
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             string sourcePrefix = "sourceFolder";
             string destPrefix = "destFolder";
-            await CreateDirectoryInSourceAsync(sourceContainer, sourcePrefix);
-            await CreateDirectoryInDestinationAsync(destinationContainer, destPrefix);
-            await CreateDirectoryTree(sourceContainer, sourcePrefix, size);
+            await CreateDirectoryInSourceAsync(source.Container, sourcePrefix);
+            await CreateDirectoryInDestinationAsync(destination.Container, destPrefix);
+            await CreateDirectoryTreeNFS(source.Container, sourcePrefix, DataMovementTestConstants.KB);
 
             // Create storage resource containers
             StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
-                sourceContainer.GetDirectoryClient(sourcePrefix),
-                new ShareFileStorageResourceOptions() { Nfs = true});
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { IsNfs = true });
 
             StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
-                destinationContainer.GetDirectoryClient(destPrefix),
-                new ShareFileStorageResourceOptions() { Nfs = true, FilePermissions = filePermissions });
+                destination.Container.GetDirectoryClient(destPrefix),
+                new ShareFileStorageResourceOptions() { IsNfs = true, FilePermissions = filePermissions });
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                MaximumConcurrency = concurrency,
+                MaximumConcurrency = 1,
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 
             // Start transfer and await for completion.
-            return await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceResource,
                 destinationResource,
                 options).ConfigureAwait(false);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3000));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+        }
+
+        private async Task CreateDirectoryTreeNFS(
+            ShareClient client,
+            string sourcePrefix,
+            int size)
+        {
+            string itemName1 = string.Join("/", sourcePrefix, "item1");
+            string itemName2 = string.Join("/", sourcePrefix, "item2");
+            await CreateShareFileAsyncNFS(client, size, itemName1);
+            await CreateShareFileAsyncNFS(client, size, itemName2);
+
+            string subDirPath = string.Join("/", sourcePrefix, "bar");
+            await CreateDirectoryInSourceAsync(client, subDirPath);
+            string itemName3 = string.Join("/", subDirPath, "item3");
+            await CreateShareFileAsyncNFS(client, size, itemName3);
+
+            string subDirPath2 = string.Join("/", sourcePrefix, "pik");
+            await CreateDirectoryInSourceAsync(client, subDirPath2);
+            string itemName4 = string.Join("/", subDirPath2, "item4");
+            await CreateShareFileAsyncNFS(client, size, itemName4);
         }
     }
 }

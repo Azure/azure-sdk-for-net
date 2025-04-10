@@ -31,6 +31,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ResourceOptions = options ?? new ShareFileStorageResourceOptions();
         }
 
+        internal ShareDirectoryStorageResourceContainer(
+            ShareDirectoryClient shareDirectoryClient,
+            StorageResourceContainerProperties properties,
+            ShareFileStorageResourceOptions options = default)
+            : this(shareDirectoryClient, options)
+        {
+            ResourceProperties = properties;
+        }
+
         protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
             List<string> pathSegments = path.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
@@ -48,10 +57,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             // Set the ShareFileTraits to send when listing.
-            ShareFileTraits traits = ShareFileTraits.Attributes;
-            if (ResourceOptions?.FilePermissions ?? false)
+            ShareFileTraits traits = new();
+            if (!ResourceOptions?.IsNfs ?? true)
             {
-                traits |= ShareFileTraits.PermissionKey;
+                traits = ShareFileTraits.Attributes;
+                if (ResourceOptions?.FilePermissions ?? false)
+                {
+                    traits |= ShareFileTraits.PermissionKey;
+                }
             }
             ShareClient parentDestinationShare = default;
             if (destinationContainer != default)
@@ -118,7 +131,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<ShareDirectoryProperties> response = await ShareDirectoryClient.GetPropertiesAsync(
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-            ResourceProperties.ProviderId = ProviderId;
             if (ResourceProperties != default)
             {
                 ResourceProperties.AddToStorageResourceItemProperties(response.Value);
@@ -127,6 +139,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
             }
+            ResourceProperties.Uri = Uri;
             return ResourceProperties;
         }
 
