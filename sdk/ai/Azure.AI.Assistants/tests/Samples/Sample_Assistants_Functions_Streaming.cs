@@ -184,7 +184,7 @@ public partial class Sample_Assistants_Functions_Streaming : SamplesBase<AIAssis
     public void FunctionCallingWithStreamingExample()
     {
 #if SNIPPET
-        var connectprojectEndpointionString = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
