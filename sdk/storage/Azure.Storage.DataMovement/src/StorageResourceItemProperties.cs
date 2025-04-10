@@ -14,10 +14,10 @@ namespace Azure.Storage.DataMovement
     public class StorageResourceItemProperties
     {
         /// <summary>
-        /// Whether the file is local.
+        /// The Uri of the resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsLocal { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary>
         /// The length of the resource.

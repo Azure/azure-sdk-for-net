@@ -186,7 +186,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (options?.IsNfs ?? false)
             {
                 // Only set NFS permissions if Copy transfer and FilePermissions is on.
-                bool setPermissions = (!sourceProperties?.IsLocal ?? false) && (options?.FilePermissions ?? false);
+                bool setPermissions = (!sourceProperties?.Uri.IsFile ?? false) && (options?.FilePermissions ?? false);
 
                 NfsFileMode FileMode = setPermissions
                     ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true

@@ -252,7 +252,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
             }
-            ResourceProperties.IsLocal = false;
+            ResourceProperties.Uri = Uri;
             return ResourceProperties;
         }
 
