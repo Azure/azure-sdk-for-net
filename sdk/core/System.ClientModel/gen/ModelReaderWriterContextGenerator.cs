@@ -139,25 +139,15 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         var contextSymbol = data.Contexts[0]!;
 
         string assemblyName = data.Assembly.Name;
-        var contextType = new TypeRef(contextSymbol.Name, contextSymbol.ContainingNamespace.ToDisplayString(), contextSymbol.ContainingAssembly.ToDisplayString());
-
-        var referencedContexts = data.ReferencedContexts.ToImmutableDictionary(
-            refContext => refContext.ContainingAssembly.ToDisplayString(),
-            refContext => new TypeRef(refContext.Name, refContext.ContainingNamespace.ToDisplayString(), refContext.ContainingAssembly.ToDisplayString()));
+        var contextType = TypeRef.FromTypeSymbol(contextSymbol, data.SymbolToKindCache);
 
         var builders = data.TypeBuilders
             .SelectMany(typeSymbol => GetRecursiveGenericTypes(typeSymbol, data.SymbolToKindCache))
             .Distinct(SymbolEqualityComparer.Default);
 
-        Dictionary<string, int> dupeCounts = [];
-        Dictionary<ITypeSymbol, string> aliases = [];
-        HashSet<ITypeSymbol> visited = [];
-        var allTypes = data.ReferencedContexts.Concat(data.TypeBuilders);
-        foreach (var typeSymbol in allTypes)
-        {
-            CheckForDupe(typeSymbol, data.SymbolToKindCache, dupeCounts, aliases, visited);
-        }
-        RemoveNonDupe(aliases, dupeCounts);
+        var referencedContexts = data.ReferencedContexts.ToImmutableDictionary(
+            refContext => refContext.ContainingAssembly.ToDisplayString(),
+            refContext => TypeRef.FromTypeSymbol(refContext, data.SymbolToKindCache));
 
         var typeGenerationSpecs = builders
             .Select(symbol =>
@@ -165,7 +155,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                 if (symbol is not ITypeSymbol typeSymbol)
                     return null;
 
-                var type = TypeRef.FromTypeSymbol(typeSymbol, data.SymbolToKindCache, aliases);
+                var type = TypeRef.FromTypeSymbol(typeSymbol, data.SymbolToKindCache);
                 var itemType = type.GetInnerItemType();
 
                 if (!HasAccessibleParameterlessConstructor(typeSymbol, data.SymbolToKindCache) && itemType.IsSameAssembly(contextType))
@@ -192,7 +182,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                     Modifier = "internal",
                     Type = type,
                     Kind = data.SymbolToKindCache.Get(typeSymbol),
-                    PersistableModelProxy = proxy is null ? null : TypeRef.FromTypeSymbol(proxy, data.SymbolToKindCache, aliases),
+                    PersistableModelProxy = proxy is null ? null : TypeRef.FromTypeSymbol(proxy, data.SymbolToKindCache),
                     ContextType = referencedContexts.ContainsKey(type.Assembly) ? referencedContexts[type.Assembly] : contextType,
                 };
             })
@@ -216,22 +206,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         OnSourceEmitting?.Invoke(contextGenerationSpec);
         Emitter emitter = new(context);
         emitter.Emit(contextGenerationSpec);
-    }
-
-    private void RemoveNonDupe(Dictionary<ITypeSymbol, string> aliases, Dictionary<string, int> dupeCounts)
-    {
-        List<ITypeSymbol> typesToRemove = [];
-        foreach (var kvp in aliases)
-        {
-            if (dupeCounts.TryGetValue(kvp.Key.Name, out var count) && count == 1)
-            {
-                typesToRemove.Add(kvp.Key);
-            }
-        }
-        foreach (var type in typesToRemove)
-        {
-            aliases.Remove(type);
-        }
     }
 
     private static ImmutableArray<INamedTypeSymbol> GetContextsFromDependencies(Compilation compilation)
@@ -261,32 +235,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         }
 
         return matchingTypes.ToImmutableArray();
-    }
-
-    private static void CheckForDupe(
-        ITypeSymbol typeSymbol,
-        TypeSymbolKindCache cache,
-        Dictionary<string, int> dupeCounts,
-        Dictionary<ITypeSymbol, string> aliases,
-        HashSet<ITypeSymbol> visited)
-    {
-        if (visited.Contains(typeSymbol))
-            return;
-
-        visited.Add(typeSymbol);
-
-        var itemSymbol = typeSymbol.GetItemSymbol(cache);
-        if (itemSymbol is not null)
-        {
-            CheckForDupe(itemSymbol, cache, dupeCounts, aliases, visited);
-            return;
-        }
-
-        var typeName = typeSymbol.Name;
-        dupeCounts.TryGetValue(typeName, out var count);
-        aliases.Add(typeSymbol, $"{typeName}_{count++}");
-        dupeCounts[typeName] = count;
-        return;
     }
 
     /// <summary>

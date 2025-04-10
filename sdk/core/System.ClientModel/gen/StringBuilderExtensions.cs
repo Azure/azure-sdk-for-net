@@ -7,23 +7,23 @@ namespace System.ClientModel.SourceGeneration;
 
 internal static class StringBuilderExtensions
 {
-    public static void AppendLine(this StringBuilder builder, int indent, string value)
+    public static void Ident(this StringBuilder builder, int indent)
     {
         if (indent > 0)
         {
             builder.Append(' ', indent * 4);
         }
+    }
 
+    public static void AppendLine(this StringBuilder builder, int indent, string value)
+    {
+        builder.Ident(indent);
         builder.AppendLine(value);
     }
 
     public static void Append(this StringBuilder builder, int indent, string value)
     {
-        if (indent > 0)
-        {
-            builder.Append(' ', indent * 4);
-        }
-
+        builder.Ident(indent);
         builder.Append(value);
     }
 
@@ -58,5 +58,10 @@ internal static class StringBuilderExtensions
         }
         builder.Append(elementName);
         builder.Append('>', rank);
+    }
+
+    public static void AppendType(this StringBuilder builder, Type type)
+    {
+        type.WriteFullyQualifiedName(builder);
     }
 }
