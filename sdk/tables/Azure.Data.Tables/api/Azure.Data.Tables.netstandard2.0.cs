@@ -7,6 +7,28 @@ namespace Azure.Data.Tables
         string RowKey { get; set; }
         System.DateTimeOffset? Timestamp { get; set; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TableAudience : System.IEquatable<Azure.Data.Tables.TableAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TableAudience(string value) { throw null; }
+        public static Azure.Data.Tables.TableAudience AzureCosmosChina { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzureCosmosGovernment { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzureCosmosPublicCloud { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzureStorageChina { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzureStorageGovernment { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzureStoragePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Data.Tables.TableAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.Tables.TableAudience left, Azure.Data.Tables.TableAudience right) { throw null; }
+        public static implicit operator Azure.Data.Tables.TableAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Data.Tables.TableAudience left, Azure.Data.Tables.TableAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class TableClient
     {
         protected TableClient() { }
@@ -60,6 +82,7 @@ namespace Azure.Data.Tables
     public partial class TableClientOptions : Azure.Core.ClientOptions
     {
         public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2020_12_06) { }
+        public Azure.Data.Tables.TableAudience? Audience { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public enum ServiceVersion
         {
