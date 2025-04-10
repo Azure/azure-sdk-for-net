@@ -25,7 +25,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns></returns>
         public static Response<TokenInformation> GetSecurityPin(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent securityPinContent, CancellationToken cancellationToken)
         {
-            return GetSecurityPin(resourceGroupResource, vaultName, securityPinContent, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSecurityPin(vaultName, securityPinContent, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns></returns>
         public static Task<Response<TokenInformation>> GetSecurityPinAsync(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent securityPinContent, CancellationToken cancellationToken)
         {
-            return GetSecurityPinAsync(resourceGroupResource, vaultName, securityPinContent, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSecurityPinAsync(vaultName, securityPinContent, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
     }
 }
