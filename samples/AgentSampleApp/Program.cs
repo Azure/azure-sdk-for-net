@@ -60,8 +60,8 @@ namespace AgentSampleApp
                 modelId: "gpt-4o",
                 instructions: "You're a helpful assistant.")).Value;
 
-            Response<Run> runResponse = await agentsClient.RunAsync(agentId: agent.AgentId, message: "Tell me a joke");
-            foreach (var textMessage in runResponse.Value.RunOutputs.GetTextMessages())
+            Run run = (await agentsClient.RunAsync(agentId: agent.AgentId, message: "Tell me a joke")).Value;
+            foreach (var textMessage in run.RunOutputs.GetTextMessages())
             {
                 Console.WriteLine("AGENT: " + textMessage);
             }
