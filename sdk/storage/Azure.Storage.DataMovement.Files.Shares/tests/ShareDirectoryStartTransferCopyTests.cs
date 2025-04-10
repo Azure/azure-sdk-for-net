@@ -256,7 +256,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             }
         }
 
-        private async Task CreateShareFileAsyncNFS(
+        private async Task CreateShareFileAsyncNfs(
             ShareClient container,
             long? objectLength = null,
             string objectName = null,
@@ -479,8 +479,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public async Task ShareDirectoryToShareDirectory_PreserveNFS(bool? filePermissions)
         {
             // Arrange
-            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareNFSAsync();
-            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareNFSAsync();
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareNfsAsync();
 
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
@@ -488,7 +488,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destPrefix = "destFolder";
             await CreateDirectoryInSourceAsync(source.Container, sourcePrefix);
             await CreateDirectoryInDestinationAsync(destination.Container, destPrefix);
-            await CreateDirectoryTreeNFS(source.Container, sourcePrefix, DataMovementTestConstants.KB);
+            await CreateDirectoryTreeNfs(source.Container, sourcePrefix, DataMovementTestConstants.KB);
 
             // Create storage resource containers
             StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
@@ -526,25 +526,25 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.AreEqual(TransferState.Completed, transfer.Status.State);
         }
 
-        private async Task CreateDirectoryTreeNFS(
+        private async Task CreateDirectoryTreeNfs(
             ShareClient client,
             string sourcePrefix,
             int size)
         {
             string itemName1 = string.Join("/", sourcePrefix, "item1");
             string itemName2 = string.Join("/", sourcePrefix, "item2");
-            await CreateShareFileAsyncNFS(client, size, itemName1);
-            await CreateShareFileAsyncNFS(client, size, itemName2);
+            await CreateShareFileAsyncNfs(client, size, itemName1);
+            await CreateShareFileAsyncNfs(client, size, itemName2);
 
             string subDirPath = string.Join("/", sourcePrefix, "bar");
             await CreateDirectoryInSourceAsync(client, subDirPath);
             string itemName3 = string.Join("/", subDirPath, "item3");
-            await CreateShareFileAsyncNFS(client, size, itemName3);
+            await CreateShareFileAsyncNfs(client, size, itemName3);
 
             string subDirPath2 = string.Join("/", sourcePrefix, "pik");
             await CreateDirectoryInSourceAsync(client, subDirPath2);
             string itemName4 = string.Join("/", subDirPath2, "item4");
-            await CreateShareFileAsyncNFS(client, size, itemName4);
+            await CreateShareFileAsyncNfs(client, size, itemName4);
         }
     }
 }
