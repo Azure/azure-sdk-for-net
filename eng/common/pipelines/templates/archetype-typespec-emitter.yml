@@ -203,18 +203,18 @@ extends:
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
-                --emitter-package-json-path "$(Build.SourcesDirectory)/${{ parameters.EmitterPackageJsonPath }}" `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
                 --overrides '$(buildArtifactsPath)/overrides.json' `
                 --version '$(emitterVersion)'
               } else {
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
-                --emitter-package-json-path "$(Build.SourcesDirectory)/${{ parameters.EmitterPackageJsonPath }}" `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
                 --version '$(emitterVersion)'
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
-            workingDirectory: $(Build.SourcesDirectory)
+            workingDirectory: $(Build.SourcesDirectory)/eng
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:
