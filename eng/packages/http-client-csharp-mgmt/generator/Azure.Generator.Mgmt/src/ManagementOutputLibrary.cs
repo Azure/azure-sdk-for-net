@@ -24,12 +24,12 @@ namespace Azure.Generator.Management
             var collections = new List<ResourceCollectionClientProvider>();
             foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
-                BuildResourceCore(result, client);
+                BuildResourceCore(resources, collections, client);
             }
-            return result;
+            return (resources, collections);
         }
 
-        private static void BuildResourceCore(List<ResourceClientProvider> result, Microsoft.TypeSpec.Generator.Input.InputClient client)
+        private static void BuildResourceCore(List<ResourceClientProvider> resources, List<ResourceCollectionClientProvider> collections, Microsoft.TypeSpec.Generator.Input.InputClient client)
         {
             // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
             var resourceMetadata = client.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
@@ -45,7 +45,7 @@ namespace Azure.Generator.Management
 
             foreach (var child in client.Children)
             {
-                BuildResourceCore(result, child);
+                BuildResourceCore(resources, collections, child);
             }
         }
 
