@@ -239,5 +239,10 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobContainerClient,
                 options);
         }
+
+        protected override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(new StorageResourceContainerProperties());
+        }
     }
 }

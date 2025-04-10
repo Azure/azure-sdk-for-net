@@ -22,6 +22,17 @@ namespace Azure.Storage.DataMovement
             };
         }
 
+        internal static StorageResourceContainerProperties ToStorageResourceContainerProperties(
+            this StorageResourceItemProperties properties)
+        {
+            return new StorageResourceContainerProperties()
+            {
+                ETag = properties.ETag,
+                LastModifiedTime = properties.LastModifiedTime,
+                RawProperties = properties.RawProperties
+            };
+        }
+
         public static StreamToUriJobPart ToStreamToUriJobPartAsync(
             this TransferJobInternal baseJob,
             JobPartPlanHeader header,

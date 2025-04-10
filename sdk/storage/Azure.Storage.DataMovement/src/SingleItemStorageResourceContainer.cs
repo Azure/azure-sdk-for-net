@@ -58,5 +58,11 @@ namespace Azure.Storage.DataMovement
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             yield return _resourceItem;
         }
+
+        protected internal async override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            StorageResourceItemProperties property = await _resourceItem.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            return property.ToStorageResourceContainerProperties();
+        }
     }
 }
