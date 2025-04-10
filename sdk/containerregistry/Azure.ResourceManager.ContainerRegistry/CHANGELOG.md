@@ -1,14 +1,15 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.3.0-beta.3 (2025-04-10)
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2024-11-preview' to 'package-2025-03-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cb262725d128f6dfec4622cca03bc9e04e2d0f1f/specification/containerregistry/resource-manager/readme.md.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Updated the Swagger to accurately match the actual service behavior. Corrected the classification of some methods that are synchronous but were incorrectly marked as Long-running operations (LRO).
+- Updated the Swagger to remove extra status codes that are never returned by some methods, particularly the 202 status code used for LRO.
 
 ## 1.3.0-beta.2 (2025-01-24)
 

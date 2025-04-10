@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ContainerRegistry.Models;
@@ -353,14 +352,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             }
             Assert.AreEqual(1, taskCount);
             // Update the task
-            lro = await task.UpdateAsync(WaitUntil.Completed, new ContainerRegistryTaskPatch()
+            var patch = await task.UpdateAsync(new ContainerRegistryTaskPatch()
             {
                 TimeoutInSeconds = 900
             });
-            ContainerRegistryTaskResource taskFromUpdate = lro.Value;
+            ContainerRegistryTaskResource taskFromUpdate = patch.Value;
             Assert.AreEqual(900, taskFromUpdate.Data.TimeoutInSeconds);
             // Schedule a run from task
-            var runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryTaskRunContent(taskFromUpdate.Data.Id)
+            var scheduleRun = await registry.ScheduleRunAsync(new ContainerRegistryTaskRunContent(taskFromUpdate.Data.Id)
             {
                 OverrideTaskStepProperties = new ContainerRegistryOverrideTaskStepProperties()
                 {
@@ -371,12 +370,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
                     }
                 }
             });
-            ContainerRegistryRunResource run1 = runLro.Value;
+            ContainerRegistryRunResource run1 = scheduleRun.Value;
             Assert.AreEqual("cf1", run1.Data.RunId);
             // Cancel the run
-            await run1.CancelAsync(WaitUntil.Completed);
+            await run1.CancelAsync();
             // Schedule a docker build run
-            runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
+            scheduleRun = await registry.ScheduleRunAsync(new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 IsArchiveEnabled = false,
                 ImageNames = { "testimage1:tag1", "testimage2:tag2" },
@@ -387,10 +386,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
                 AgentConfiguration = new ContainerRegistryAgentProperties() { Cpu = 2 },
                 SourceLocation = "https://github.com/azure/acr-builder.git"
             });
-            ContainerRegistryRunResource run2 = runLro.Value;
+            ContainerRegistryRunResource run2 = scheduleRun.Value;
             Assert.AreEqual("cf2", run2.Data.RunId);
             // Schedule a file based task run
-            runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryFileTaskRunContent("abc.yaml", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
+            scheduleRun = await registry.ScheduleRunAsync(new ContainerRegistryFileTaskRunContent("abc.yaml", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 IsArchiveEnabled = false,
                 Values =
@@ -402,7 +401,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
                 AgentConfiguration = new ContainerRegistryAgentProperties() { Cpu = 2 },
                 SourceLocation = "https://github.com/azure/acr-builder.git"
             });
-            ContainerRegistryRunResource run3 = runLro.Value;
+            ContainerRegistryRunResource run3 = scheduleRun.Value;
             Assert.AreEqual("cf3", run3.Data.RunId);
             // Schedule an encoded task run
             string taskString =
@@ -414,7 +413,7 @@ steps:
 key1: value1
 key2: value2
 ".Replace("\r\n", "\n");
-            runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
+            scheduleRun = await registry.ScheduleRunAsync(new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 IsArchiveEnabled = false,
                 EncodedValuesContent = Convert.ToBase64String(Encoding.UTF8.GetBytes(valuesString)),
@@ -422,7 +421,7 @@ key2: value2
                 AgentConfiguration = new ContainerRegistryAgentProperties() { Cpu = 2 },
                 SourceLocation = "https://github.com/azure/acr-builder.git"
             });
-            ContainerRegistryRunResource run4 = runLro.Value;
+            ContainerRegistryRunResource run4 = scheduleRun.Value;
             Assert.AreEqual("cf4", run4.Data.RunId);
             // List runs
             var runCount = 0;
@@ -479,7 +478,7 @@ key2: value2
 version: v1.1.0
 steps:
   - cmd: docker images".Replace("\r\n", "\n");
-            var runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
+            var runLro = await registry.ScheduleRunAsync(new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 AgentPoolName = agentPoolName,
                 IsArchiveEnabled = false,
