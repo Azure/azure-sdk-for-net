@@ -14,7 +14,27 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         internal static void AssertList(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.List<{expectation.TypeName}>", out var listModel));
+            TypeBuilderSpec listModel = ValidateBuilder(expectation.Namespace, expectation, dict);
+
+            if (invocationDuped)
+            {
+                var dupedListModel = ValidateBuilder("TestProject1", expectation, dict);
+                Assert.AreEqual($"List<{expectation.TypeName}_0>", listModel.Type.Alias);
+                Assert.AreEqual($"List<{expectation.TypeName}_1>", dupedListModel.Type.Alias);
+            }
+            else
+            {
+                Assert.IsNull(listModel.Type.Alias);
+            }
+
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, listModel.Type.ItemType);
+            expectation.ModelValidation(itemModel);
+        }
+
+        private static TypeBuilderSpec ValidateBuilder(string lookupName, ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
+        {
+            Assert.IsTrue(dict.TryGetValue($"{lookupName}.List<{expectation.TypeName}>", out var listModel));
             Assert.AreEqual($"List<{expectation.TypeName}>", listModel!.Type.Name);
             Assert.AreEqual("System.Collections.Generic", listModel.Type.Namespace);
             Assert.IsNotNull(listModel.Type.ItemType);
@@ -23,26 +43,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual($"list_{expectation.TypeName}_", listModel.Type.CamelCaseName);
             Assert.AreEqual(0, listModel.Type.ArrayRank);
             Assert.AreEqual(s_localContext, listModel.ContextType);
-            Assert.IsNull(listModel.Type.Alias);
-
-            if (invocationDuped)
-            {
-                Assert.IsTrue(dict.TryGetValue($"TestProject1.List<{expectation.TypeName}>", out var dupedListModel));
-                Assert.AreEqual($"List<{expectation.TypeName}>", dupedListModel!.Type.Name);
-                Assert.AreEqual("System.Collections.Generic", dupedListModel.Type.Namespace);
-                Assert.IsNotNull(dupedListModel.Type.ItemType);
-                Assert.AreEqual(TypeBuilderKind.IList, dupedListModel.Kind);
-                Assert.AreEqual($"List_{expectation.TypeName}_", dupedListModel.Type.TypeCaseName);
-                Assert.AreEqual($"list_{expectation.TypeName}_", dupedListModel.Type.CamelCaseName);
-                Assert.AreEqual(0, dupedListModel.Type.ArrayRank);
-                Assert.AreEqual(s_localContext, dupedListModel.ContextType);
-                Assert.IsNotNull(dupedListModel.Type.Alias);
-                Assert.AreEqual($"List<{expectation.TypeName}_0>", dupedListModel.Type.Alias);
-            }
-
-            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
-            Assert.AreEqual(itemModel!.Type, listModel.Type.ItemType);
-            expectation.ModelValidation(itemModel);
+            return listModel;
         }
     }
 }

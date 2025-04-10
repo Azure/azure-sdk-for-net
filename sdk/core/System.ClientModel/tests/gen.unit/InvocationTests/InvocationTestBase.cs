@@ -385,8 +385,8 @@ namespace TestProject1
                     builderValidator = s_builderValidators[dupeFullName];
                     builderValidator(dupeTypeModel!);
 
-                    Assert.IsNull(typeModel!.Type.Alias);
-                    Assert.AreEqual($"{type}_0", dupeTypeModel!.Type.Alias);
+                    Assert.AreEqual($"{type}_0", typeModel!.Type.Alias);
+                    Assert.AreEqual($"{type}_1", dupeTypeModel!.Type.Alias);
                 }
 
                 if (type == LocalBaseModel)
@@ -399,6 +399,8 @@ namespace TestProject1
                         var dupeFullName = $"TestProject1.{type}";
                         Assert.IsNotNull(dict[dupeFullName].PersistableModelProxy);
                         AssertUnknownLocalBaseModel(dict[dupeFullName].PersistableModelProxy!, "TestProject1");
+                        Assert.AreEqual($"Unknown{type}_0", dict[fullName].PersistableModelProxy!.Alias);
+                        Assert.AreEqual($"Unknown{type}_1", dict[dupeFullName].PersistableModelProxy!.Alias);
                     }
                 }
 

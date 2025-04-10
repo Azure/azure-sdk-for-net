@@ -113,35 +113,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         context.RegisterSourceOutput(combined, ReportDiagnosticAndEmitSource);
     }
 
-    private static ImmutableArray<INamedTypeSymbol> GetContextsFromDependencies(Compilation compilation)
-    {
-        var targetBaseType = compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
-
-        if (targetBaseType is null)
-        {
-            return ImmutableArray<INamedTypeSymbol>.Empty;
-        }
-
-        List<INamedTypeSymbol> matchingTypes = [];
-
-        foreach (var reference in compilation.References)
-        {
-            var symbol = compilation.GetAssemblyOrModuleSymbol(reference) as IAssemblySymbol;
-            if (symbol is null)
-                continue;
-
-            foreach (var type in GetAllTypes(symbol.GlobalNamespace))
-            {
-                if (type.TypeKind == TypeKind.Class && type.DeclaredAccessibility == Accessibility.Public && type.InheritsFrom(targetBaseType))
-                {
-                    matchingTypes.Add(type);
-                }
-            }
-        }
-
-        return matchingTypes.ToImmutableArray();
-    }
-
     private void ReportDiagnosticAndEmitSource(
         SourceProductionContext context,
         (ImmutableArray<INamedTypeSymbol?> Contexts,
@@ -186,6 +157,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         {
             CheckForDupe(typeSymbol, data.SymbolToKindCache, dupeCounts, aliases, visited);
         }
+        RemoveNonDupe(aliases, dupeCounts);
 
         var typeGenerationSpecs = builders
             .Select(symbol =>
@@ -246,6 +218,51 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         emitter.Emit(contextGenerationSpec);
     }
 
+    private void RemoveNonDupe(Dictionary<ITypeSymbol, string> aliases, Dictionary<string, int> dupeCounts)
+    {
+        List<ITypeSymbol> typesToRemove = [];
+        foreach (var kvp in aliases)
+        {
+            if (dupeCounts.TryGetValue(kvp.Key.Name, out var count) && count == 1)
+            {
+                typesToRemove.Add(kvp.Key);
+            }
+        }
+        foreach (var type in typesToRemove)
+        {
+            aliases.Remove(type);
+        }
+    }
+
+    private static ImmutableArray<INamedTypeSymbol> GetContextsFromDependencies(Compilation compilation)
+    {
+        var targetBaseType = compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
+
+        if (targetBaseType is null)
+        {
+            return ImmutableArray<INamedTypeSymbol>.Empty;
+        }
+
+        List<INamedTypeSymbol> matchingTypes = [];
+
+        foreach (var reference in compilation.References)
+        {
+            var symbol = compilation.GetAssemblyOrModuleSymbol(reference) as IAssemblySymbol;
+            if (symbol is null)
+                continue;
+
+            foreach (var type in GetAllTypes(symbol.GlobalNamespace))
+            {
+                if (type.TypeKind == TypeKind.Class && type.DeclaredAccessibility == Accessibility.Public && type.InheritsFrom(targetBaseType))
+                {
+                    matchingTypes.Add(type);
+                }
+            }
+        }
+
+        return matchingTypes.ToImmutableArray();
+    }
+
     private static void CheckForDupe(
         ITypeSymbol typeSymbol,
         TypeSymbolKindCache cache,
@@ -266,10 +283,8 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         }
 
         var typeName = typeSymbol.Name;
-        if (dupeCounts.TryGetValue(typeName, out var count))
-        {
-            aliases.Add(typeSymbol, $"{typeName}_{count++}");
-        }
+        dupeCounts.TryGetValue(typeName, out var count);
+        aliases.Add(typeSymbol, $"{typeName}_{count++}");
         dupeCounts[typeName] = count;
         return;
     }

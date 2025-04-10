@@ -14,7 +14,27 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         private void AssertReadOnlyMemory(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.ReadOnlyMemory<{expectation.TypeName}>", out var romJsonModel));
+            TypeBuilderSpec romJsonModel = ValidateBuilder(expectation.Namespace, expectation, dict);
+
+            if (invocationDuped)
+            {
+                var dupedRomJsonModel = ValidateBuilder("TestProject1", expectation, dict);
+                Assert.AreEqual($"ReadOnlyMemory<{expectation.TypeName}_0>", romJsonModel.Type.Alias);
+                Assert.AreEqual($"ReadOnlyMemory<{expectation.TypeName}_1>", dupedRomJsonModel.Type.Alias);
+            }
+            else
+            {
+                Assert.IsNull(romJsonModel.Type.Alias);
+            }
+
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, romJsonModel.Type.ItemType);
+            expectation.ModelValidation(itemModel);
+        }
+
+        private static TypeBuilderSpec ValidateBuilder(string lookupName, ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
+        {
+            Assert.IsTrue(dict.TryGetValue($"{lookupName}.ReadOnlyMemory<{expectation.TypeName}>", out var romJsonModel));
             Assert.AreEqual($"ReadOnlyMemory<{expectation.TypeName}>", romJsonModel!.Type.Name);
             Assert.AreEqual("System", romJsonModel.Type.Namespace);
             Assert.IsNotNull(romJsonModel.Type.ItemType);
@@ -23,10 +43,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual($"readOnlyMemory_{expectation.TypeName}_", romJsonModel.Type.CamelCaseName);
             Assert.AreEqual(0, romJsonModel.Type.ArrayRank);
             Assert.AreEqual(s_localContext, romJsonModel.ContextType);
-
-            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
-            Assert.AreEqual(itemModel!.Type, romJsonModel.Type.ItemType);
-            expectation.ModelValidation(itemModel);
+            return romJsonModel;
         }
     }
 }
