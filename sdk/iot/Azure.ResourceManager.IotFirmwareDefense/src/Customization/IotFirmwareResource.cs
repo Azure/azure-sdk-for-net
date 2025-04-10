@@ -17,8 +17,37 @@ using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
+    /// <summary>
+    /// A Class representing an IotFirmware along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotFirmwareResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotFirmwareResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FirmwareAnalysisWorkspaceResource"/> using the GetIotFirmware method.
+    /// </summary>
     public partial class IotFirmwareResource
     {
+        /// <summary>
+        /// Get an analysis result summary of a firmware by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Summaries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareAnalysisSummaryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FirmwareAnalysisSummaryResource>> GetFirmwareAnalysisSummaryAsync(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
@@ -26,6 +55,29 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             return await GetFirmwareAnalysisSummaryAsync(new FirmwareAnalysisSummaryType(summaryName.ToString()), cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Get an analysis result summary of a firmware by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Summaries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareAnalysisSummaryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FirmwareAnalysisSummaryResource> GetFirmwareAnalysisSummary(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default) =>

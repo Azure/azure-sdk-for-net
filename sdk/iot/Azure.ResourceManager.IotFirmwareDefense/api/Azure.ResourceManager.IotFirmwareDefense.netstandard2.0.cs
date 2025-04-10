@@ -3,13 +3,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     public partial class FirmwareAnalysisSummaryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>, System.Collections.IEnumerable
     {
         protected FirmwareAnalysisSummaryCollection() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType summaryType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType summaryType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> Get(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> Get(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType summaryType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>> GetAsync(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>> GetAsync(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType summaryType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.NullableResponse<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> GetIfExists(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> GetIfExists(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType summaryType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>> GetIfExistsAsync(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>> GetIfExistsAsync(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType summaryType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>.GetEnumerator() { throw null; }
@@ -32,6 +44,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         protected FirmwareAnalysisSummaryResource() { }
         public virtual Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName summaryName) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType summaryType) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -163,7 +177,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.CryptoKey> GetCryptoKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.CryptoKey> GetCryptoKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryCollection GetFirmwareAnalysisSummaries() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> GetFirmwareAnalysisSummary(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource> GetFirmwareAnalysisSummary(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType summaryType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>> GetFirmwareAnalysisSummaryAsync(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>> GetFirmwareAnalysisSummaryAsync(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType summaryType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash> GetPasswordHashes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash> GetPasswordHashesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -265,6 +283,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? workspaceProvisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?), Azure.ResourceManager.IotFirmwareDefense.Models.IotFirmwareDefenseSku sku = null) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProperties FirmwareProperties(string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = default(long?), Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatus? status = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatusMessage> statusMessages = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary FirmwareSummary(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?), long? extractedSize = default(long?), long? fileSize = default(long?), long? extractedFileCount = default(long?), long? componentCount = default(long?), long? binaryCount = default(long?), long? analysisTimeSeconds = default(long?), long? rootFileSystems = default(long?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary FirmwareSummary(long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareUriToken FirmwareUriToken(System.Uri uri = null) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.IotFirmwareData IotFirmwareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProperties properties = null) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash PasswordHash(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResult properties = null) { throw null; }
@@ -653,6 +673,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatusMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatusMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FirmwareAnalysisSummaryName : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FirmwareAnalysisSummaryName(string value) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName BinaryHardening { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName CryptoCertificate { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName CryptoKey { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName Cve { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName Firmware { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName left, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName left, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class FirmwareAnalysisSummaryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryProperties>
     {
         protected FirmwareAnalysisSummaryProperties() { }
@@ -722,6 +763,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public FirmwareProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState Accepted { get { throw null; } }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState Analyzing { get { throw null; } }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState Canceled { get { throw null; } }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState Extracting { get { throw null; } }

@@ -60,7 +60,6 @@ override-operation-name:
 rename-mapping:
   GenerateUploadUrlRequest: FirmwareUploadUrlRequest
   Workspace: FirmwareAnalysisWorkspace
-  WorkspaceProvisioningState: ProvisioningState
 
   CryptoCertificate: CryptoCertificateResult
   CryptoKey: CryptoKeyResult
@@ -103,5 +102,7 @@ directive:
       $.BinaryHardeningSummaryResource.properties.properties["x-ms-client-flatten"] = true
       $.CryptoCertificateSummaryResource.properties.properties["x-ms-client-flatten"] = true
       $.SummaryResource.properties.properties["x-ms-client-flatten"] = true
+      $.Workspace.properties.properties["x-ms-client-flatten"] = true
+      $.Firmware.properties.properties["x-ms-client-flatten"] = true
 
 ```
