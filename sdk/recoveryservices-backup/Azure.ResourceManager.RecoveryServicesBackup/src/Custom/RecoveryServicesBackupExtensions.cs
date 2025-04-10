@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="securityPinContent"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Response<TokenInformation> GetSecurityPin(ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent securityPinContent, CancellationToken cancellationToken)
+        public static Response<TokenInformation> GetSecurityPin(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent securityPinContent, CancellationToken cancellationToken)
         {
             return GetSecurityPin(resourceGroupResource, vaultName, securityPinContent, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="securityPinContent"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task<Response<TokenInformation>> GetSecurityPinAsync(ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent securityPinContent, CancellationToken cancellationToken)
+        public static Task<Response<TokenInformation>> GetSecurityPinAsync(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent securityPinContent, CancellationToken cancellationToken)
         {
             return GetSecurityPinAsync(resourceGroupResource, vaultName, securityPinContent, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
