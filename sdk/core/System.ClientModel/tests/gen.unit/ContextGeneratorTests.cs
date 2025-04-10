@@ -645,7 +645,7 @@ namespace TestProject
             Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
 
             var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => $"{t.Type.GetInnerItemType().Namespace}.{t.Type.Name}", t => t);
-            ListTests.AssertList(s_modelExpectations[JsonModel], dict);
+            ListTests.AssertList(s_modelExpectations[JsonModel], false, dict);
 
             Assert.IsTrue(dict.TryGetValue($"TestProject.{JsonModel}", out var item));
             AssertJsonModel(item!.Type);

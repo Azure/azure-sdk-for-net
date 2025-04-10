@@ -184,20 +184,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         var allTypes = data.ReferencedContexts.Concat(data.TypeBuilders);
         foreach (var typeSymbol in allTypes)
         {
-            if (visited.Contains(typeSymbol))
-                continue;
-
-            visited.Add(typeSymbol);
-
-            if (typeSymbol.GetItemSymbol(data.SymbolToKindCache) is not null)
-                continue;
-
-            var typeName = typeSymbol.Name;
-            if (dupeCounts.TryGetValue(typeName, out var count))
-            {
-                aliases.Add(typeSymbol, $"{typeName}_{count++}");
-            }
-            dupeCounts[typeName] = count;
+            CheckForDupe(typeSymbol, data.SymbolToKindCache, dupeCounts, aliases, visited);
         }
 
         var typeGenerationSpecs = builders
@@ -257,6 +244,34 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         OnSourceEmitting?.Invoke(contextGenerationSpec);
         Emitter emitter = new(context);
         emitter.Emit(contextGenerationSpec);
+    }
+
+    private static void CheckForDupe(
+        ITypeSymbol typeSymbol,
+        TypeSymbolKindCache cache,
+        Dictionary<string, int> dupeCounts,
+        Dictionary<ITypeSymbol, string> aliases,
+        HashSet<ITypeSymbol> visited)
+    {
+        if (visited.Contains(typeSymbol))
+            return;
+
+        visited.Add(typeSymbol);
+
+        var itemSymbol = typeSymbol.GetItemSymbol(cache);
+        if (itemSymbol is not null)
+        {
+            CheckForDupe(itemSymbol, cache, dupeCounts, aliases, visited);
+            return;
+        }
+
+        var typeName = typeSymbol.Name;
+        if (dupeCounts.TryGetValue(typeName, out var count))
+        {
+            aliases.Add(typeSymbol, $"{typeName}_{count++}");
+        }
+        dupeCounts[typeName] = count;
+        return;
     }
 
     /// <summary>

@@ -85,4 +85,19 @@ namespace System.ClientModel.SourceGeneration.Tests.SubNamespace
 
         BinaryData IPersistableModel<BaseJsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
     }
+
+//#pragma warning disable SA1402 // File may only contain a single type
+//    internal class AvailabilitySetData : IJsonModel<AvailabilitySetData>
+//#pragma warning restore SA1402 // File may only contain a single type
+//    {
+//        public AvailabilitySetData Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new AvailabilitySetData();
+
+//        public AvailabilitySetData Create(BinaryData data, ModelReaderWriterOptions options) => new AvailabilitySetData();
+
+//        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+//        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+
+//        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+//    }
 }

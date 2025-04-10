@@ -12,7 +12,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override List<TypeValidation> TypeValidations => [AssertReadOnlyMemory];
 
-        private void AssertReadOnlyMemory(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
+        private void AssertReadOnlyMemory(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.ReadOnlyMemory<{expectation.TypeName}>", out var romJsonModel));
             Assert.AreEqual($"ReadOnlyMemory<{expectation.TypeName}>", romJsonModel!.Type.Name);

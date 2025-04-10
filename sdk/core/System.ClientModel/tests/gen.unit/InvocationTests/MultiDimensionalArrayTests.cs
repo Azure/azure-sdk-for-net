@@ -14,7 +14,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string InitializeObject => "new {0} {{ }}";
 
-        private void AssertMultiDimensionalArray(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
+        private void AssertMultiDimensionalArray(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}[,]", out var arrayModel));
             Assert.AreEqual($"{expectation.TypeName}[,]", arrayModel!.Type.Name);

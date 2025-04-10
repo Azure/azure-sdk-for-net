@@ -12,7 +12,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string TypeStringFormat => "List<{0}>";
 
-        internal static void AssertList(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
+        internal static void AssertList(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict)
         {
             Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.List<{expectation.TypeName}>", out var listModel));
             Assert.AreEqual($"List<{expectation.TypeName}>", listModel!.Type.Name);
@@ -23,6 +23,22 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             Assert.AreEqual($"list_{expectation.TypeName}_", listModel.Type.CamelCaseName);
             Assert.AreEqual(0, listModel.Type.ArrayRank);
             Assert.AreEqual(s_localContext, listModel.ContextType);
+            Assert.IsNull(listModel.Type.Alias);
+
+            if (invocationDuped)
+            {
+                Assert.IsTrue(dict.TryGetValue($"TestProject1.List<{expectation.TypeName}>", out var dupedListModel));
+                Assert.AreEqual($"List<{expectation.TypeName}>", dupedListModel!.Type.Name);
+                Assert.AreEqual("System.Collections.Generic", dupedListModel.Type.Namespace);
+                Assert.IsNotNull(dupedListModel.Type.ItemType);
+                Assert.AreEqual(TypeBuilderKind.IList, dupedListModel.Kind);
+                Assert.AreEqual($"List_{expectation.TypeName}_", dupedListModel.Type.TypeCaseName);
+                Assert.AreEqual($"list_{expectation.TypeName}_", dupedListModel.Type.CamelCaseName);
+                Assert.AreEqual(0, dupedListModel.Type.ArrayRank);
+                Assert.AreEqual(s_localContext, dupedListModel.ContextType);
+                Assert.IsNotNull(dupedListModel.Type.Alias);
+                Assert.AreEqual($"List<{expectation.TypeName}_0>", dupedListModel.Type.Alias);
+            }
 
             Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
             Assert.AreEqual(itemModel!.Type, listModel.Type.ItemType);

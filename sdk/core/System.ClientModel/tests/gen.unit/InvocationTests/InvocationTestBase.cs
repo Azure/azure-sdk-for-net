@@ -16,7 +16,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
         internal const string AvailabilitySetData = "AvailabilitySetData";
         internal const string BaseModel = "BaseModel";
         internal const string LocalBaseModel = "LocalBaseModel";
-        internal delegate void TypeValidation(ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict);
+        internal delegate void TypeValidation(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict);
 
         internal readonly struct ModelExpectation
         {
@@ -406,7 +406,7 @@ namespace TestProject1
                 {
                     foreach (var validation in validations)
                     {
-                        validation(s_modelExpectations[type], dict);
+                        validation(s_modelExpectations[type], dupeModel, dict);
                     }
                 }
             }
