@@ -212,7 +212,7 @@ extends:
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
-            workingDirectory: $(Build.SourcesDirectory)/eng
+            workingDirectory: $(Build.SourcesDirectory)
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:
