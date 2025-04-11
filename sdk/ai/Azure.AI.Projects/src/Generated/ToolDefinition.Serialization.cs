@@ -79,6 +79,7 @@ namespace Azure.AI.Projects
                 {
                     case "azure_ai_search": return AzureAISearchToolDefinition.DeserializeAzureAISearchToolDefinition(element, options);
                     case "azure_function": return AzureFunctionToolDefinition.DeserializeAzureFunctionToolDefinition(element, options);
+                    case "bing_custom_search": return BingCustomSearchToolDefinition.DeserializeBingCustomSearchToolDefinition(element, options);
                     case "bing_grounding": return BingGroundingToolDefinition.DeserializeBingGroundingToolDefinition(element, options);
                     case "code_interpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
                     case "fabric_dataagent": return MicrosoftFabricToolDefinition.DeserializeMicrosoftFabricToolDefinition(element, options);

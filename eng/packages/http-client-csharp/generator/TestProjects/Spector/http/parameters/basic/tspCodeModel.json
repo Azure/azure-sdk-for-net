@@ -7,10 +7,11 @@
   {
    "$id": "2",
    "kind": "model",
-   "name": "SimpleRequest",
-   "namespace": "Parameters.Basic.ImplicitBody",
-   "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous",
-   "usage": "Spread,Json",
+   "name": "User",
+   "namespace": "Parameters.Basic.ExplicitBody",
+   "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User",
+   "usage": "Input,Json",
+   "doc": "This is a simple model.",
    "decorators": [],
    "properties": [
     {
@@ -30,7 +31,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.name",
+     "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User.name",
      "serializationOptions": {
       "$id": "5",
       "json": {
@@ -44,11 +45,10 @@
   {
    "$id": "7",
    "kind": "model",
-   "name": "User",
-   "namespace": "Parameters.Basic.ExplicitBody",
-   "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User",
-   "usage": "Input,Json",
-   "doc": "This is a simple model.",
+   "name": "SimpleRequest",
+   "namespace": "Parameters.Basic.ImplicitBody",
+   "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous",
+   "usage": "Spread,Json",
    "decorators": [],
    "properties": [
     {
@@ -68,7 +68,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User.name",
+     "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.name",
      "serializationOptions": {
       "$id": "10",
       "json": {
@@ -83,6 +83,7 @@
  "clients": [
   {
    "$id": "12",
+   "kind": "client",
    "name": "BasicClient",
    "namespace": "Parameters.Basic",
    "doc": "Test for basic parameters cases.",
@@ -120,239 +121,250 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Parameters.Basic"
-  },
-  {
-   "$id": "17",
-   "name": "ExplicitBody",
-   "namespace": "Parameters.Basic.ExplicitBody",
-   "operations": [
+   "crossLanguageDefinitionId": "Parameters.Basic",
+   "apiVersions": [],
+   "children": [
     {
-     "$id": "18",
-     "name": "simple",
-     "resourceName": "ExplicitBody",
-     "accessibility": "public",
+     "$id": "17",
+     "kind": "client",
+     "name": "ExplicitBody",
+     "namespace": "Parameters.Basic.ExplicitBody",
+     "operations": [
+      {
+       "$id": "18",
+       "name": "simple",
+       "resourceName": "ExplicitBody",
+       "accessibility": "public",
+       "parameters": [
+        {
+         "$id": "19",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$id": "20",
+          "kind": "constant",
+          "valueType": {
+           "$id": "21",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "value": "application/json",
+          "decorators": []
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": true,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "22",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "2"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "responses": [
+        {
+         "$id": "23",
+         "statusCodes": [
+          204
+         ],
+         "headers": [],
+         "isErrorResponse": false
+        }
+       ],
+       "httpMethod": "PUT",
+       "uri": "{endpoint}",
+       "path": "/parameters/basic/explicit-body/simple",
+       "requestMediaTypes": [
+        "application/json"
+       ],
+       "bufferResponse": true,
+       "generateProtocolMethod": true,
+       "generateConvenienceMethod": true,
+       "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple",
+       "decorators": []
+      }
+     ],
      "parameters": [
       {
-       "$id": "19",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
+       "$id": "24",
+       "name": "endpoint",
+       "nameInRequest": "endpoint",
+       "doc": "Service host",
        "type": {
-        "$id": "20",
-        "kind": "constant",
-        "valueType": {
-         "$id": "21",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
+        "$id": "25",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
        },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": true,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "22",
-       "name": "body",
-       "nameInRequest": "body",
-       "type": {
-        "$ref": "7"
-       },
-       "location": "Body",
+       "location": "Uri",
        "isApiVersion": false,
        "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
        "isRequired": true,
-       "kind": "Method",
-       "decorators": [],
-       "skipUrlEncoding": false
+       "isEndpoint": true,
+       "skipUrlEncoding": false,
+       "explode": false,
+       "kind": "Client",
+       "defaultValue": {
+        "$id": "26",
+        "type": {
+         "$id": "27",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "value": "http://localhost:3000"
+       }
       }
      ],
-     "responses": [
-      {
-       "$id": "23",
-       "statusCodes": [
-        204
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "PUT",
-     "uri": "{endpoint}",
-     "path": "/parameters/basic/explicit-body/simple",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple",
-     "decorators": []
-    }
-   ],
-   "parent": "BasicClient",
-   "parameters": [
-    {
-     "$id": "24",
-     "name": "endpoint",
-     "nameInRequest": "endpoint",
-     "doc": "Service host",
-     "type": {
-      "$id": "25",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "location": "Uri",
-     "isApiVersion": false,
-     "isContentType": false,
-     "isRequired": true,
-     "isEndpoint": true,
-     "skipUrlEncoding": false,
-     "explode": false,
-     "kind": "Client",
-     "defaultValue": {
-      "$id": "26",
-      "type": {
-       "$id": "27",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "value": "http://localhost:3000"
+     "decorators": [],
+     "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody",
+     "apiVersions": [],
+     "parent": {
+      "$ref": "12"
      }
-    }
-   ],
-   "decorators": [],
-   "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody"
-  },
-  {
-   "$id": "28",
-   "name": "ImplicitBody",
-   "namespace": "Parameters.Basic.ImplicitBody",
-   "operations": [
+    },
     {
-     "$id": "29",
-     "name": "simple",
-     "resourceName": "ImplicitBody",
-     "accessibility": "public",
+     "$id": "28",
+     "kind": "client",
+     "name": "ImplicitBody",
+     "namespace": "Parameters.Basic.ImplicitBody",
+     "operations": [
+      {
+       "$id": "29",
+       "name": "simple",
+       "resourceName": "ImplicitBody",
+       "accessibility": "public",
+       "parameters": [
+        {
+         "$id": "30",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$id": "31",
+          "kind": "constant",
+          "valueType": {
+           "$id": "32",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "value": "application/json",
+          "decorators": []
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": true,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "33",
+         "name": "simpleRequest",
+         "nameInRequest": "simpleRequest",
+         "type": {
+          "$ref": "7"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Spread",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "responses": [
+        {
+         "$id": "34",
+         "statusCodes": [
+          204
+         ],
+         "headers": [],
+         "isErrorResponse": false
+        }
+       ],
+       "httpMethod": "PUT",
+       "uri": "{endpoint}",
+       "path": "/parameters/basic/implicit-body/simple",
+       "requestMediaTypes": [
+        "application/json"
+       ],
+       "bufferResponse": true,
+       "generateProtocolMethod": true,
+       "generateConvenienceMethod": true,
+       "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple",
+       "decorators": []
+      }
+     ],
      "parameters": [
       {
-       "$id": "30",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
+       "$id": "35",
+       "name": "endpoint",
+       "nameInRequest": "endpoint",
+       "doc": "Service host",
        "type": {
-        "$id": "31",
-        "kind": "constant",
-        "valueType": {
-         "$id": "32",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
+        "$id": "36",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
        },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": true,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "33",
-       "name": "simpleRequest",
-       "nameInRequest": "simpleRequest",
-       "type": {
-        "$ref": "2"
-       },
-       "location": "Body",
+       "location": "Uri",
        "isApiVersion": false,
        "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
        "isRequired": true,
-       "kind": "Spread",
-       "decorators": [],
-       "skipUrlEncoding": false
+       "isEndpoint": true,
+       "skipUrlEncoding": false,
+       "explode": false,
+       "kind": "Client",
+       "defaultValue": {
+        "$id": "37",
+        "type": {
+         "$id": "38",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "value": "http://localhost:3000"
+       }
       }
      ],
-     "responses": [
-      {
-       "$id": "34",
-       "statusCodes": [
-        204
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "PUT",
-     "uri": "{endpoint}",
-     "path": "/parameters/basic/implicit-body/simple",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple",
-     "decorators": []
-    }
-   ],
-   "parent": "BasicClient",
-   "parameters": [
-    {
-     "$id": "35",
-     "name": "endpoint",
-     "nameInRequest": "endpoint",
-     "doc": "Service host",
-     "type": {
-      "$id": "36",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "location": "Uri",
-     "isApiVersion": false,
-     "isContentType": false,
-     "isRequired": true,
-     "isEndpoint": true,
-     "skipUrlEncoding": false,
-     "explode": false,
-     "kind": "Client",
-     "defaultValue": {
-      "$id": "37",
-      "type": {
-       "$id": "38",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "value": "http://localhost:3000"
+     "decorators": [],
+     "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody",
+     "apiVersions": [],
+     "parent": {
+      "$ref": "12"
      }
     }
-   ],
-   "decorators": [],
-   "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody"
+   ]
   }
  ]
 }
