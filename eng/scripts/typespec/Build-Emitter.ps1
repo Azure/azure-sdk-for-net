@@ -45,6 +45,8 @@ function Build-Emitter {
 
             $unscopedName = $packageName.Split("/")[1]
             $overrides[$packageName] = "$feedUrl/$packageName/-/$unscopedName-$packageVersion.tgz"
+
+            Write-Host "Adding $packageName to overrides with URL $overrides[$packageName]"
         }
     }
     finally {
@@ -62,5 +64,7 @@ Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $over
 
 # $packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp-mgmt"
 # Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
+
+Write-Host "Writing overrides to $outputPath/overrides.json"
 
 $overrides | ConvertTo-Json | Out-File -FilePath "$outputPath/overrides.json" -Encoding utf8 -Force
