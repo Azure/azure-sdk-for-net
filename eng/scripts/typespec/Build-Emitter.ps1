@@ -2,7 +2,8 @@
 
 param(
     [string] $OutputDirectory,
-    [switch] $TargetNpmJsFeed
+    [switch] $TargetNpmJsFeed,
+    [string] $emitterPackagePath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -58,11 +59,13 @@ $overrides = @{}
 $outputPath = $OutputDirectory ? $OutputDirectory : (Join-Path $RepoRoot "artifacts" "emitters")
 New-Item -ItemType Directory -Force -Path $outputPath | Out-Null
 
-$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
-Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
+# strip leading slash from emitterPackagePath if it exists
+if ($emitterPackagePath.StartsWith("/")) {
+    $emitterPackagePath = $emitterPackagePath.Substring(1)
+}
 
-# $packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp-mgmt"
-# Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
+$packageRoot = Join-Path $RepoRoot $emitterPackagePath
+Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
 
 Write-Host "Writing overrides to $outputPath/overrides.json"
 

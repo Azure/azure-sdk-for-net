@@ -7,7 +7,8 @@ param(
     [Parameter(Mandatory = $true, ParameterSetName = 'Consume')]
     [string] $BuildArtifactsPath,
     [string] $PrereleaseSuffix,
-    [switch] $UseTypeSpecNext
+    [switch] $UseTypeSpecNext,
+    [string] $emitterPackagePath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -20,8 +21,13 @@ if ($UseTypeSpecNext) {
     Write-Host "##vso[build.addbuildtag]typespec_next"
 }
 
-function Initialize-Package($packageName) {
-    $packageRoot = Resolve-Path "$RepoRoot/eng/packages/$packageName"
+function Initialize-Package($emitterPackagePath) {
+    # strip leading slash from emitterPackagePath if it exists
+    if ($emitterPackagePath.StartsWith("/")) {
+        $emitterPackagePath = $emitterPackagePath.Substring(1)
+    }
+    
+    $packageRoot = Join-Path $RepoRoot $emitterPackagePath
     Push-Location $packageRoot
     try {
         if (Test-Path "./node_modules") {
@@ -44,11 +50,20 @@ function Initialize-Package($packageName) {
             # them available to other build jobs by copying them to the artifacts directory
             $emitterVersion = (npm pkg get version).Trim('"')
 
+            $lockFilesPath = Join-Path $OutputDirectory "lock-files"
+
+            New-Item -ItemType Directory -Force -Path $lockFilesPath | Out-Null
+
+            Write-Host "Copying package.json and package-lock.json to $lockFilesPath"
+
+            Copy-Item "./package.json" -Destination (Join-Path $lockFilesPath "package.json") -Force
+            Copy-Item "./package-lock.json" -Destination (Join-Path $lockFilesPath "package-lock.json") -Force
+
             if ($PrereleaseSuffix) {
                 # set package versions
                 $emitterVersion = "$($emitterVersion.Split('-')[0])$PrereleaseSuffix"
                 Write-Host "Updating version package.json to the new emitter version`n"
-                Invoke-LoggedCommand "npm pkg set version=$emitterVersion"
+                Invoke-LoggedCommand "npm pkg set version=$emitterVersion" $lockFilesPath
             }
 
             if ($UseTypeSpecNext) {
@@ -57,28 +72,19 @@ function Initialize-Package($packageName) {
                 }
 
                 Write-Host "Using TypeSpec.Next"
-                Invoke-LoggedCommand "npx -y @azure-tools/typespec-bump-deps@latest --add-npm-overrides package.json"
-                Invoke-LoggedCommand "npm install"
+                Invoke-LoggedCommand "npx -y @azure-tools/typespec-bump-deps@latest --add-npm-overrides package.json" $lockFilesPath
+                Invoke-LoggedCommand "npm install" $lockFilesPath
             }
             else {
-                Invoke-LoggedCommand "npm ci"
+                Invoke-LoggedCommand "npm ci" $lockFilesPath
             }
-
-            $lockFilesPath = Join-Path $OutputDirectory "lock-files"
-
-            New-Item -ItemType Directory -Force -Path $lockFilesPath | Out-Null
-            
-            Write-Host "Copying package.json and package-lock.json to $lockFilesPath"
-
-            Copy-Item "./package.json" -Destination (Join-Path $lockFilesPath "package.json") -Force
-            Copy-Item "./package-lock.json" -Destination (Join-Path $lockFilesPath "package-lock.json") -Force
         }
 
-        Invoke-LoggedCommand "npm list --all" -GroupOutput
+        Invoke-LoggedCommand "npm list --all" $lockFilesPath -GroupOutput
     }
     finally {
         Pop-Location
     }
 }
 
-Initialize-Package 'http-client-csharp'
+Initialize-Package $emitterPackagePath
