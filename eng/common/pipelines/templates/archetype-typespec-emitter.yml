@@ -440,7 +440,6 @@ extends:
               filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
               arguments: > 
                 -BuildArtifactsPath '$(buildArtifactsPath)'
-                -PackageName '$(EmitterPackageName)'
 
           - task: PowerShell@2
             displayName: 'Run test script'
