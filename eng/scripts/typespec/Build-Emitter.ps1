@@ -60,7 +60,7 @@ New-Item -ItemType Directory -Force -Path $outputPath | Out-Null
 $packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
 Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
 
-$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp-mgmt"
-Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
+# $packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp-mgmt"
+# Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
 
 $overrides | ConvertTo-Json | Out-File -FilePath "$outputPath/overrides.json" -Encoding utf8 -Force
