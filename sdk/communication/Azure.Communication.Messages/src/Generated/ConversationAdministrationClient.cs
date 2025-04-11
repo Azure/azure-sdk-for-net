@@ -44,7 +44,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Creates a new conversation. This is only for create operation. </summary>
         /// <param name="conversation"> The conversation details. </param>
-        /// <param name="initialMessage"> An intial message within the conversation. </param>
+        /// <param name="initialMessage"> An initial message within the conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversation"/> is null. </exception>
         /// <include file="Docs/ConversationAdministrationClient.xml" path="doc/members/member[@name='CreateConversationAsync(CommunicationConversation,ConversationMessage,CancellationToken)']/*" />
@@ -60,7 +60,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Creates a new conversation. This is only for create operation. </summary>
         /// <param name="conversation"> The conversation details. </param>
-        /// <param name="initialMessage"> An intial message within the conversation. </param>
+        /// <param name="initialMessage"> An initial message within the conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversation"/> is null. </exception>
         /// <include file="Docs/ConversationAdministrationClient.xml" path="doc/members/member[@name='CreateConversation(CommunicationConversation,ConversationMessage,CancellationToken)']/*" />

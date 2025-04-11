@@ -57,7 +57,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of <see cref="CreateConversationRequest1"/>. </summary>
         /// <param name="conversation"> The conversation details. </param>
-        /// <param name="initialMessage"> An intial message within the conversation. </param>
+        /// <param name="initialMessage"> An initial message within the conversation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CreateConversationRequest1(CommunicationConversation conversation, ConversationMessage initialMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,7 +73,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> The conversation details. </summary>
         public CommunicationConversation Conversation { get; }
-        /// <summary> An intial message within the conversation. </summary>
+        /// <summary> An initial message within the conversation. </summary>
         public ConversationMessage InitialMessage { get; }
     }
 }

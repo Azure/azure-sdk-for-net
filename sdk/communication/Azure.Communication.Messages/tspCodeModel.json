@@ -5717,7 +5717,7 @@
      "kind": "property",
      "name": "initialMessage",
      "serializedName": "initialMessage",
-     "doc": "An intial message within the conversation.",
+     "doc": "An initial message within the conversation.",
      "type": {
       "$ref": "707"
      },
@@ -7725,17 +7725,73 @@
      "generateProtocolMethod": true,
      "generateConvenienceMethod": true,
      "crossLanguageDefinitionId": "ClientForAcsMessages.NotificationMessagesClient.downloadMedia",
-     "decorators": []
+     "decorators": [],
+     "examples": [
+      {
+       "$id": "963",
+       "kind": "http",
+       "name": "Download media",
+       "description": "Download media",
+       "filePath": "2025-04-01-preview/Stream_GetMedia.json",
+       "parameters": [
+        {
+         "$id": "964",
+         "parameter": {
+          "$ref": "943"
+         },
+         "value": {
+          "$id": "965",
+          "kind": "string",
+          "type": {
+           "$ref": "944"
+          },
+          "value": "2025-04-01-preview"
+         }
+        },
+        {
+         "$id": "966",
+         "parameter": {
+          "$ref": "947"
+         },
+         "value": {
+          "$id": "967",
+          "kind": "string",
+          "type": {
+           "$ref": "948"
+          },
+          "value": "d19e68ec-bdd6-4a50-8dfb-cbb1642df6ab"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "968",
+         "response": {
+          "$ref": "955"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "969",
+          "kind": "string",
+          "type": {
+           "$ref": "956"
+          },
+          "value": "<binary_media_data>"
+         }
+        }
+       ]
+      }
+     ]
     }
    ],
    "parameters": [
     {
-     "$id": "963",
+     "$id": "970",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "The communication resource, for example https://my-resource.communication.azure.com",
      "type": {
-      "$id": "964",
+      "$id": "971",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -7760,25 +7816,25 @@
    ]
   },
   {
-   "$id": "965",
+   "$id": "972",
    "kind": "client",
    "name": "MessageTemplateClient",
    "namespace": "Azure.Communication.Messages",
    "operations": [
     {
-     "$id": "966",
+     "$id": "973",
      "name": "getTemplates",
      "resourceName": "MessageTemplateItem",
      "doc": "List all templates for given Azure Communication Services channel",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "967",
+       "$id": "974",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "968",
+        "$id": "975",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7792,9 +7848,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "969",
+        "$id": "976",
         "type": {
-         "$id": "970",
+         "$id": "977",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7805,17 +7861,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "971",
+       "$id": "978",
        "name": "channelId",
        "nameInRequest": "channelId",
        "doc": "The registration ID of the channel.",
        "type": {
-        "$id": "972",
+        "$id": "979",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "973",
+         "$id": "980",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7834,12 +7890,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "974",
+       "$id": "981",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "975",
+        "$id": "982",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -7856,17 +7912,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "976",
+       "$id": "983",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "977",
+        "$id": "984",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "978",
+         "$id": "985",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7885,14 +7941,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "979",
+       "$id": "986",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "980",
+        "$id": "987",
         "kind": "constant",
         "valueType": {
-         "$id": "981",
+         "$id": "988",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7914,7 +7970,7 @@
      ],
      "responses": [
       {
-       "$id": "982",
+       "$id": "989",
        "statusCodes": [
         200
        ],
@@ -7923,17 +7979,17 @@
        },
        "headers": [
         {
-         "$id": "983",
+         "$id": "990",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "984",
+          "$id": "991",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "985",
+           "$id": "992",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7954,12 +8010,12 @@
      "path": "/messages/channels/{channelId}/templates",
      "bufferResponse": true,
      "paging": {
-      "$id": "986",
+      "$id": "993",
       "itemPropertySegments": [
        "value"
       ],
       "nextLink": {
-       "$id": "987",
+       "$id": "994",
        "responseSegments": [
         "nextLink"
        ],
@@ -7974,12 +8030,12 @@
    ],
    "parameters": [
     {
-     "$id": "988",
+     "$id": "995",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "The communication resource, for example https://my-resource.communication.azure.com",
      "type": {
-      "$id": "989",
+      "$id": "996",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -8004,25 +8060,25 @@
    ]
   },
   {
-   "$id": "990",
+   "$id": "997",
    "kind": "client",
    "name": "ConversationAdministrationClient",
    "namespace": "Azure.Communication.Messages",
    "operations": [
     {
-     "$id": "991",
+     "$id": "998",
      "name": "createConversation",
      "resourceName": "Conversation",
      "doc": "Creates a new conversation. This is only for create operation.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "992",
+       "$id": "999",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "993",
+        "$id": "1000",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8036,9 +8092,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "994",
+        "$id": "1001",
         "type": {
-         "$id": "995",
+         "$id": "1002",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8049,15 +8105,15 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "996",
+       "$id": "1003",
        "name": "contentType",
        "nameInRequest": "Content-Type",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$id": "997",
+        "$id": "1004",
         "kind": "constant",
         "valueType": {
-         "$id": "998",
+         "$id": "1005",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8077,14 +8133,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "999",
+       "$id": "1006",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1000",
+        "$id": "1007",
         "kind": "constant",
         "valueType": {
-         "$id": "1001",
+         "$id": "1008",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8104,7 +8160,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1002",
+       "$id": "1009",
        "name": "createConversationRequest1",
        "nameInRequest": "createConversationRequest1",
        "type": {
@@ -8123,7 +8179,7 @@
      ],
      "responses": [
       {
-       "$id": "1003",
+       "$id": "1010",
        "statusCodes": [
         201
        ],
@@ -8150,19 +8206,19 @@
      "decorators": []
     },
     {
-     "$id": "1004",
+     "$id": "1011",
      "name": "getConversation",
      "resourceName": "Conversation",
      "doc": "Gets the details of a specific conversation.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1005",
+       "$id": "1012",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1006",
+        "$id": "1013",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8176,9 +8232,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1007",
+        "$id": "1014",
         "type": {
-         "$id": "1008",
+         "$id": "1015",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8189,12 +8245,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1009",
+       "$id": "1016",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1010",
+        "$id": "1017",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8211,17 +8267,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1011",
+       "$id": "1018",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1012",
+        "$id": "1019",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1013",
+         "$id": "1020",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8240,14 +8296,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1014",
+       "$id": "1021",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1015",
+        "$id": "1022",
         "kind": "constant",
         "valueType": {
-         "$id": "1016",
+         "$id": "1023",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8269,7 +8325,7 @@
      ],
      "responses": [
       {
-       "$id": "1017",
+       "$id": "1024",
        "statusCodes": [
         200
        ],
@@ -8278,17 +8334,17 @@
        },
        "headers": [
         {
-         "$id": "1018",
+         "$id": "1025",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1019",
+          "$id": "1026",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1020",
+           "$id": "1027",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8314,19 +8370,19 @@
      "decorators": []
     },
     {
-     "$id": "1021",
+     "$id": "1028",
      "name": "deleteConversation",
      "resourceName": "Conversation",
      "doc": "Deletes a specific conversation.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1022",
+       "$id": "1029",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1023",
+        "$id": "1030",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8340,9 +8396,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1024",
+        "$id": "1031",
         "type": {
-         "$id": "1025",
+         "$id": "1032",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8353,12 +8409,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1026",
+       "$id": "1033",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1027",
+        "$id": "1034",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8375,12 +8431,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1028",
+       "$id": "1035",
        "name": "repeatabilityRequestId",
        "nameInRequest": "Repeatability-Request-ID",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1029",
+        "$id": "1036",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8397,17 +8453,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1030",
+       "$id": "1037",
        "name": "repeatabilityFirstSent",
        "nameInRequest": "Repeatability-First-Sent",
        "doc": "Specifies the date and time at which the request was first created.",
        "type": {
-        "$id": "1031",
+        "$id": "1038",
         "kind": "utcDateTime",
         "name": "utcDateTime",
         "encode": "rfc7231",
         "wireType": {
-         "$id": "1032",
+         "$id": "1039",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8427,17 +8483,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1033",
+       "$id": "1040",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1034",
+        "$id": "1041",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1035",
+         "$id": "1042",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8456,14 +8512,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1036",
+       "$id": "1043",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1037",
+        "$id": "1044",
         "kind": "constant",
         "valueType": {
-         "$id": "1038",
+         "$id": "1045",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8485,13 +8541,13 @@
      ],
      "responses": [
       {
-       "$id": "1039",
+       "$id": "1046",
        "statusCodes": [
         204
        ],
        "headers": [
         {
-         "$id": "1040",
+         "$id": "1047",
          "name": "repeatabilityResult",
          "nameInResponse": "Repeatability-Result",
          "doc": "Indicates whether the repeatable request was accepted or rejected.",
@@ -8500,17 +8556,17 @@
          }
         },
         {
-         "$id": "1041",
+         "$id": "1048",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1042",
+          "$id": "1049",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1043",
+           "$id": "1050",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8533,19 +8589,19 @@
      "decorators": []
     },
     {
-     "$id": "1044",
+     "$id": "1051",
      "name": "terminateConversation",
      "resourceName": "ConversationAdministrationClient",
      "doc": "Terminates a specific conversation.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1045",
+       "$id": "1052",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1046",
+        "$id": "1053",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8559,9 +8615,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1047",
+        "$id": "1054",
         "type": {
-         "$id": "1048",
+         "$id": "1055",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8572,12 +8628,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1049",
+       "$id": "1056",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1050",
+        "$id": "1057",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8594,12 +8650,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1051",
+       "$id": "1058",
        "name": "repeatabilityRequestId",
        "nameInRequest": "Repeatability-Request-ID",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1052",
+        "$id": "1059",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8616,17 +8672,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1053",
+       "$id": "1060",
        "name": "repeatabilityFirstSent",
        "nameInRequest": "Repeatability-First-Sent",
        "doc": "Specifies the date and time at which the request was first created.",
        "type": {
-        "$id": "1054",
+        "$id": "1061",
         "kind": "utcDateTime",
         "name": "utcDateTime",
         "encode": "rfc7231",
         "wireType": {
-         "$id": "1055",
+         "$id": "1062",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8646,17 +8702,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1056",
+       "$id": "1063",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1057",
+        "$id": "1064",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1058",
+         "$id": "1065",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8675,14 +8731,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1059",
+       "$id": "1066",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1060",
+        "$id": "1067",
         "kind": "constant",
         "valueType": {
-         "$id": "1061",
+         "$id": "1068",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8704,13 +8760,13 @@
      ],
      "responses": [
       {
-       "$id": "1062",
+       "$id": "1069",
        "statusCodes": [
         200
        ],
        "headers": [
         {
-         "$id": "1063",
+         "$id": "1070",
          "name": "repeatabilityResult",
          "nameInResponse": "Repeatability-Result",
          "doc": "Indicates whether the repeatable request was accepted or rejected.",
@@ -8719,17 +8775,17 @@
          }
         },
         {
-         "$id": "1064",
+         "$id": "1071",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1065",
+          "$id": "1072",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1066",
+           "$id": "1073",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8752,19 +8808,19 @@
      "decorators": []
     },
     {
-     "$id": "1067",
+     "$id": "1074",
      "name": "listConversations",
      "resourceName": "Conversation",
      "doc": "Retrieves list of conversations.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1068",
+       "$id": "1075",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1069",
+        "$id": "1076",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8778,9 +8834,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1070",
+        "$id": "1077",
         "type": {
-         "$id": "1071",
+         "$id": "1078",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8791,12 +8847,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1072",
+       "$id": "1079",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "1073",
+        "$id": "1080",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -8813,12 +8869,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1074",
+       "$id": "1081",
        "name": "participantId",
        "nameInRequest": "participantId",
        "doc": "The participant user ID",
        "type": {
-        "$id": "1075",
+        "$id": "1082",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8835,17 +8891,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1076",
+       "$id": "1083",
        "name": "channelId",
        "nameInRequest": "channelId",
        "doc": "The id of channel",
        "type": {
-        "$id": "1077",
+        "$id": "1084",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1078",
+         "$id": "1085",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8864,17 +8920,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1079",
+       "$id": "1086",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1080",
+        "$id": "1087",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1081",
+         "$id": "1088",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8893,14 +8949,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1082",
+       "$id": "1089",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1083",
+        "$id": "1090",
         "kind": "constant",
         "valueType": {
-         "$id": "1084",
+         "$id": "1091",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8922,7 +8978,7 @@
      ],
      "responses": [
       {
-       "$id": "1085",
+       "$id": "1092",
        "statusCodes": [
         200
        ],
@@ -8931,17 +8987,17 @@
        },
        "headers": [
         {
-         "$id": "1086",
+         "$id": "1093",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1087",
+          "$id": "1094",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1088",
+           "$id": "1095",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8962,12 +9018,12 @@
      "path": "/messages/conversations",
      "bufferResponse": true,
      "paging": {
-      "$id": "1089",
+      "$id": "1096",
       "itemPropertySegments": [
        "value"
       ],
       "nextLink": {
-       "$id": "1090",
+       "$id": "1097",
        "responseSegments": [
         "nextLink"
        ],
@@ -8977,22 +9033,533 @@
      "generateProtocolMethod": true,
      "generateConvenienceMethod": true,
      "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listConversations",
-     "decorators": []
+     "decorators": [],
+     "examples": [
+      {
+       "$id": "1098",
+       "kind": "http",
+       "name": "Retrieves list of conversations",
+       "description": "Retrieves list of conversations",
+       "filePath": "2025-04-01-preview/ConversationThread_ListConversations.json",
+       "parameters": [
+        {
+         "$id": "1099",
+         "parameter": {
+          "$ref": "1075"
+         },
+         "value": {
+          "$id": "1100",
+          "kind": "string",
+          "type": {
+           "$ref": "1076"
+          },
+          "value": "2025-04-01-preview"
+         }
+        },
+        {
+         "$id": "1101",
+         "parameter": {
+          "$ref": "1079"
+         },
+         "value": {
+          "$id": "1102",
+          "kind": "number",
+          "type": {
+           "$ref": "1080"
+          },
+          "value": 25
+         }
+        },
+        {
+         "$id": "1103",
+         "parameter": {
+          "$ref": "1083"
+         },
+         "value": {
+          "$id": "1104",
+          "kind": "string",
+          "type": {
+           "$ref": "1084"
+          },
+          "value": "0f0eb78e-a576-1dfc-b414-0f0756de3338"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "1105",
+         "response": {
+          "$ref": "1092"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "1106",
+          "kind": "model",
+          "type": {
+           "$ref": "896"
+          },
+          "value": {
+           "$id": "1107",
+           "value": {
+            "$id": "1108",
+            "kind": "array",
+            "type": {
+             "$ref": "898"
+            },
+            "value": [
+             {
+              "$id": "1109",
+              "kind": "model",
+              "type": {
+               "$ref": "623"
+              },
+              "value": {
+               "$id": "1110",
+               "id": {
+                "$id": "1111",
+                "kind": "string",
+                "type": {
+                 "$ref": "625"
+                },
+                "value": "19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"
+               },
+               "topic": {
+                "$id": "1112",
+                "kind": "string",
+                "type": {
+                 "$ref": "629"
+                },
+                "value": "Test"
+               },
+               "deliveryChannelIds": {
+                "$id": "1113",
+                "kind": "array",
+                "type": {
+                 "$ref": "633"
+                },
+                "value": [
+                 {
+                  "$id": "1114",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "634"
+                  },
+                  "value": "0f0eb78e-a576-1dfc-b414-0f0756de3338"
+                 }
+                ]
+               },
+               "outboundDeliveryStrategy": {
+                "$id": "1115",
+                "kind": "string",
+                "type": {
+                 "$ref": "96"
+                },
+                "value": "allParticipants"
+               },
+               "participants": {
+                "$id": "1116",
+                "kind": "array",
+                "type": {
+                 "$ref": "641"
+                },
+                "value": [
+                 {
+                  "$id": "1117",
+                  "kind": "model",
+                  "type": {
+                   "$ref": "695"
+                  },
+                  "value": {
+                   "$id": "1118",
+                   "id": {
+                    "$id": "1119",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "647"
+                    },
+                    "value": "8:acs:uuid2"
+                   },
+                   "displayName": {
+                    "$id": "1120",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "651"
+                    },
+                    "value": "Customer"
+                   },
+                   "kind": {
+                    "$id": "1121",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "697"
+                    },
+                    "value": "external"
+                   },
+                   "contacts": {
+                    "$id": "1122",
+                    "kind": "array",
+                    "type": {
+                     "$ref": "702"
+                    },
+                    "value": [
+                     {
+                      "$id": "1123",
+                      "kind": "model",
+                      "type": {
+                       "$ref": "687"
+                      },
+                      "value": {
+                       "$id": "1124",
+                       "id": {
+                        "$id": "1125",
+                        "kind": "string",
+                        "type": {
+                         "$ref": "667"
+                        },
+                        "value": "12345678901"
+                       },
+                       "kind": {
+                        "$id": "1126",
+                        "kind": "string",
+                        "type": {
+                         "$ref": "689"
+                        },
+                        "value": "whatsApp"
+                       }
+                      }
+                     },
+                     {
+                      "$id": "1127",
+                      "kind": "model",
+                      "type": {
+                       "$ref": "671"
+                      },
+                      "value": {
+                       "$id": "1128",
+                       "id": {
+                        "$id": "1129",
+                        "kind": "string",
+                        "type": {
+                         "$ref": "667"
+                        },
+                        "value": "8:acs:uuid2"
+                       },
+                       "kind": {
+                        "$id": "1130",
+                        "kind": "string",
+                        "type": {
+                         "$ref": "673"
+                        },
+                        "value": "communication"
+                       }
+                      }
+                     }
+                    ]
+                   }
+                  }
+                 },
+                 {
+                  "$id": "1131",
+                  "kind": "model",
+                  "type": {
+                   "$ref": "655"
+                  },
+                  "value": {
+                   "$id": "1132",
+                   "id": {
+                    "$id": "1133",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "647"
+                    },
+                    "value": "8:acs:uuid1"
+                   },
+                   "displayName": {
+                    "$id": "1134",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "651"
+                    },
+                    "value": "Support"
+                   },
+                   "kind": {
+                    "$id": "1135",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "657"
+                    },
+                    "value": "internal"
+                   },
+                   "contact": {
+                    "$id": "1136",
+                    "kind": "model",
+                    "type": {
+                     "$ref": "671"
+                    },
+                    "value": {
+                     "$id": "1137",
+                     "id": {
+                      "$id": "1138",
+                      "kind": "string",
+                      "type": {
+                       "$ref": "667"
+                      },
+                      "value": "8:acs:uuid1"
+                     },
+                     "kind": {
+                      "$id": "1139",
+                      "kind": "string",
+                      "type": {
+                       "$ref": "673"
+                      },
+                      "value": "communication"
+                     }
+                    }
+                   }
+                  }
+                 }
+                ]
+               }
+              }
+             },
+             {
+              "$id": "1140",
+              "kind": "model",
+              "type": {
+               "$ref": "623"
+              },
+              "value": {
+               "$id": "1141",
+               "id": {
+                "$id": "1142",
+                "kind": "string",
+                "type": {
+                 "$ref": "625"
+                },
+                "value": "19:111dfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"
+               },
+               "topic": {
+                "$id": "1143",
+                "kind": "string",
+                "type": {
+                 "$ref": "629"
+                },
+                "value": "Test"
+               },
+               "deliveryChannelIds": {
+                "$id": "1144",
+                "kind": "array",
+                "type": {
+                 "$ref": "633"
+                },
+                "value": [
+                 {
+                  "$id": "1145",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "634"
+                  },
+                  "value": "0f0eb78e-a576-1dfc-b414-0f0756de3338"
+                 }
+                ]
+               },
+               "outboundDeliveryStrategy": {
+                "$id": "1146",
+                "kind": "string",
+                "type": {
+                 "$ref": "96"
+                },
+                "value": "allParticipants"
+               },
+               "participants": {
+                "$id": "1147",
+                "kind": "array",
+                "type": {
+                 "$ref": "641"
+                },
+                "value": [
+                 {
+                  "$id": "1148",
+                  "kind": "model",
+                  "type": {
+                   "$ref": "695"
+                  },
+                  "value": {
+                   "$id": "1149",
+                   "id": {
+                    "$id": "1150",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "647"
+                    },
+                    "value": "8:acs:uuid3"
+                   },
+                   "displayName": {
+                    "$id": "1151",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "651"
+                    },
+                    "value": "Customer"
+                   },
+                   "kind": {
+                    "$id": "1152",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "697"
+                    },
+                    "value": "external"
+                   },
+                   "contacts": {
+                    "$id": "1153",
+                    "kind": "array",
+                    "type": {
+                     "$ref": "702"
+                    },
+                    "value": [
+                     {
+                      "$id": "1154",
+                      "kind": "model",
+                      "type": {
+                       "$ref": "687"
+                      },
+                      "value": {
+                       "$id": "1155",
+                       "id": {
+                        "$id": "1156",
+                        "kind": "string",
+                        "type": {
+                         "$ref": "667"
+                        },
+                        "value": "12331112222"
+                       },
+                       "kind": {
+                        "$id": "1157",
+                        "kind": "string",
+                        "type": {
+                         "$ref": "689"
+                        },
+                        "value": "whatsApp"
+                       }
+                      }
+                     },
+                     {
+                      "$id": "1158",
+                      "kind": "model",
+                      "type": {
+                       "$ref": "671"
+                      },
+                      "value": {
+                       "$id": "1159",
+                       "id": {
+                        "$id": "1160",
+                        "kind": "string",
+                        "type": {
+                         "$ref": "667"
+                        },
+                        "value": "8:acs:uuid3"
+                       },
+                       "kind": {
+                        "$id": "1161",
+                        "kind": "string",
+                        "type": {
+                         "$ref": "673"
+                        },
+                        "value": "communication"
+                       }
+                      }
+                     }
+                    ]
+                   }
+                  }
+                 },
+                 {
+                  "$id": "1162",
+                  "kind": "model",
+                  "type": {
+                   "$ref": "655"
+                  },
+                  "value": {
+                   "$id": "1163",
+                   "id": {
+                    "$id": "1164",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "647"
+                    },
+                    "value": "8:acs:uuid3"
+                   },
+                   "displayName": {
+                    "$id": "1165",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "651"
+                    },
+                    "value": "Support"
+                   },
+                   "kind": {
+                    "$id": "1166",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "657"
+                    },
+                    "value": "internal"
+                   },
+                   "contact": {
+                    "$id": "1167",
+                    "kind": "model",
+                    "type": {
+                     "$ref": "671"
+                    },
+                    "value": {
+                     "$id": "1168",
+                     "id": {
+                      "$id": "1169",
+                      "kind": "string",
+                      "type": {
+                       "$ref": "667"
+                      },
+                      "value": "8:acs:uuid3"
+                     },
+                     "kind": {
+                      "$id": "1170",
+                      "kind": "string",
+                      "type": {
+                       "$ref": "673"
+                      },
+                      "value": "communication"
+                     }
+                    }
+                   }
+                  }
+                 }
+                ]
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
     },
     {
-     "$id": "1091",
+     "$id": "1171",
      "name": "listMessages",
      "resourceName": "ConversationMessageItem",
      "doc": "Retrieves list of conversation messages.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1092",
+       "$id": "1172",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1093",
+        "$id": "1173",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9006,9 +9573,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1094",
+        "$id": "1174",
         "type": {
-         "$id": "1095",
+         "$id": "1175",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -9019,12 +9586,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1096",
+       "$id": "1176",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1097",
+        "$id": "1177",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9041,12 +9608,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1098",
+       "$id": "1178",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "1099",
+        "$id": "1179",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -9063,12 +9630,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1100",
+       "$id": "1180",
        "name": "participantId",
        "nameInRequest": "participantId",
        "doc": "The participant user ID",
        "type": {
-        "$id": "1101",
+        "$id": "1181",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9085,17 +9652,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1102",
+       "$id": "1182",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1103",
+        "$id": "1183",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1104",
+         "$id": "1184",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9114,14 +9681,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1105",
+       "$id": "1185",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1106",
+        "$id": "1186",
         "kind": "constant",
         "valueType": {
-         "$id": "1107",
+         "$id": "1187",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9143,7 +9710,7 @@
      ],
      "responses": [
       {
-       "$id": "1108",
+       "$id": "1188",
        "statusCodes": [
         200
        ],
@@ -9152,17 +9719,17 @@
        },
        "headers": [
         {
-         "$id": "1109",
+         "$id": "1189",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1110",
+          "$id": "1190",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1111",
+           "$id": "1191",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9183,12 +9750,12 @@
      "path": "/messages/conversations/{conversationId}/messages",
      "bufferResponse": true,
      "paging": {
-      "$id": "1112",
+      "$id": "1192",
       "itemPropertySegments": [
        "value"
       ],
       "nextLink": {
-       "$id": "1113",
+       "$id": "1193",
        "responseSegments": [
         "nextLink"
        ],
@@ -9198,22 +9765,241 @@
      "generateProtocolMethod": true,
      "generateConvenienceMethod": true,
      "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listMessages",
-     "decorators": []
+     "decorators": [],
+     "examples": [
+      {
+       "$id": "1194",
+       "kind": "http",
+       "name": "Retrieves list of conversation messages",
+       "description": "Retrieves list of conversation messages",
+       "filePath": "2025-04-01-preview/ConversationThread_ListMessages.json",
+       "parameters": [
+        {
+         "$id": "1195",
+         "parameter": {
+          "$ref": "1172"
+         },
+         "value": {
+          "$id": "1196",
+          "kind": "string",
+          "type": {
+           "$ref": "1173"
+          },
+          "value": "2025-04-01-preview"
+         }
+        },
+        {
+         "$id": "1197",
+         "parameter": {
+          "$ref": "1176"
+         },
+         "value": {
+          "$id": "1198",
+          "kind": "string",
+          "type": {
+           "$ref": "1177"
+          },
+          "value": "19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "1199",
+         "response": {
+          "$ref": "1188"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "1200",
+          "kind": "model",
+          "type": {
+           "$ref": "906"
+          },
+          "value": {
+           "$id": "1201",
+           "value": {
+            "$id": "1202",
+            "kind": "array",
+            "type": {
+             "$ref": "908"
+            },
+            "value": [
+             {
+              "$id": "1203",
+              "kind": "model",
+              "type": {
+               "$ref": "719"
+              },
+              "value": {
+               "$id": "1204",
+               "id": {
+                "$id": "1205",
+                "kind": "string",
+                "type": {
+                 "$ref": "721"
+                },
+                "value": "1593108077690"
+               },
+               "sequenceId": {
+                "$id": "1206",
+                "kind": "number",
+                "type": {
+                 "$ref": "725"
+                },
+                "value": 6
+               },
+               "message": {
+                "$id": "1207",
+                "kind": "model",
+                "type": {
+                 "$ref": "734"
+                },
+                "value": {
+                 "$id": "1208",
+                 "kind": {
+                  "$id": "1209",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "139"
+                  },
+                  "value": "text"
+                 },
+                 "content": {
+                  "$id": "1210",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "739"
+                  },
+                  "value": "My order did not arrive"
+                 }
+                }
+               },
+               "senderDisplayName": {
+                "$id": "1211",
+                "kind": "string",
+                "type": {
+                 "$ref": "800"
+                },
+                "value": "Jane"
+               },
+               "createdOn": {
+                "$id": "1212",
+                "kind": "string",
+                "type": {
+                 "$ref": "808"
+                },
+                "value": "2020-06-25T18:01:17.6900000Z"
+               },
+               "senderCommunicationIdentifier": {
+                "$id": "1213",
+                "kind": "string",
+                "type": {
+                 "$ref": "804"
+                },
+                "value": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+               }
+              }
+             },
+             {
+              "$id": "1214",
+              "kind": "model",
+              "type": {
+               "$ref": "719"
+              },
+              "value": {
+               "$id": "1215",
+               "id": {
+                "$id": "1216",
+                "kind": "string",
+                "type": {
+                 "$ref": "721"
+                },
+                "value": "1593107077690"
+               },
+               "sequenceId": {
+                "$id": "1217",
+                "kind": "number",
+                "type": {
+                 "$ref": "725"
+                },
+                "value": 5
+               },
+               "message": {
+                "$id": "1218",
+                "kind": "model",
+                "type": {
+                 "$ref": "734"
+                },
+                "value": {
+                 "$id": "1219",
+                 "kind": {
+                  "$id": "1220",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "139"
+                  },
+                  "value": "text"
+                 },
+                 "content": {
+                  "$id": "1221",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "739"
+                  },
+                  "value": "Hi I need help"
+                 }
+                }
+               },
+               "senderDisplayName": {
+                "$id": "1222",
+                "kind": "string",
+                "type": {
+                 "$ref": "800"
+                },
+                "value": "Jane"
+               },
+               "createdOn": {
+                "$id": "1223",
+                "kind": "string",
+                "type": {
+                 "$ref": "808"
+                },
+                "value": "2020-06-25T17:44:37.6830000Z"
+               },
+               "senderCommunicationIdentifier": {
+                "$id": "1224",
+                "kind": "string",
+                "type": {
+                 "$ref": "804"
+                },
+                "value": "8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
     },
     {
-     "$id": "1114",
+     "$id": "1225",
      "name": "addParticipants",
      "resourceName": "ConversationAdministrationClient",
      "doc": "Adds participants to a specific conversation.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1115",
+       "$id": "1226",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1116",
+        "$id": "1227",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9227,9 +10013,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1117",
+        "$id": "1228",
         "type": {
-         "$id": "1118",
+         "$id": "1229",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -9240,12 +10026,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1119",
+       "$id": "1230",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1120",
+        "$id": "1231",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9262,12 +10048,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1121",
+       "$id": "1232",
        "name": "repeatabilityRequestId",
        "nameInRequest": "Repeatability-Request-ID",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1122",
+        "$id": "1233",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9284,17 +10070,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1123",
+       "$id": "1234",
        "name": "repeatabilityFirstSent",
        "nameInRequest": "Repeatability-First-Sent",
        "doc": "Specifies the date and time at which the request was first created.",
        "type": {
-        "$id": "1124",
+        "$id": "1235",
         "kind": "utcDateTime",
         "name": "utcDateTime",
         "encode": "rfc7231",
         "wireType": {
-         "$id": "1125",
+         "$id": "1236",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9314,17 +10100,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1126",
+       "$id": "1237",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1127",
+        "$id": "1238",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1128",
+         "$id": "1239",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9343,15 +10129,15 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1129",
+       "$id": "1240",
        "name": "contentType",
        "nameInRequest": "Content-Type",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$id": "1130",
+        "$id": "1241",
         "kind": "constant",
         "valueType": {
-         "$id": "1131",
+         "$id": "1242",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9371,14 +10157,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1132",
+       "$id": "1243",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1133",
+        "$id": "1244",
         "kind": "constant",
         "valueType": {
-         "$id": "1134",
+         "$id": "1245",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9398,7 +10184,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1135",
+       "$id": "1246",
        "name": "options",
        "nameInRequest": "options",
        "doc": "Details of the payload for adding participants to a conversation.",
@@ -9418,7 +10204,7 @@
      ],
      "responses": [
       {
-       "$id": "1136",
+       "$id": "1247",
        "statusCodes": [
         207
        ],
@@ -9427,7 +10213,7 @@
        },
        "headers": [
         {
-         "$id": "1137",
+         "$id": "1248",
          "name": "repeatabilityResult",
          "nameInResponse": "Repeatability-Result",
          "doc": "Indicates whether the repeatable request was accepted or rejected.",
@@ -9436,17 +10222,17 @@
          }
         },
         {
-         "$id": "1138",
+         "$id": "1249",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1139",
+          "$id": "1250",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1140",
+           "$id": "1251",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9472,22 +10258,226 @@
      "generateProtocolMethod": true,
      "generateConvenienceMethod": true,
      "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.addParticipants",
-     "decorators": []
+     "decorators": [],
+     "examples": [
+      {
+       "$id": "1252",
+       "kind": "http",
+       "name": "Adds participants to a specific conversation",
+       "description": "Adds participants to a specific conversation",
+       "filePath": "2025-04-01-preview/ConversationThread_AddParticipants.json",
+       "parameters": [
+        {
+         "$id": "1253",
+         "parameter": {
+          "$ref": "1226"
+         },
+         "value": {
+          "$id": "1254",
+          "kind": "string",
+          "type": {
+           "$ref": "1227"
+          },
+          "value": "2025-04-01-preview"
+         }
+        },
+        {
+         "$id": "1255",
+         "parameter": {
+          "$ref": "1230"
+         },
+         "value": {
+          "$id": "1256",
+          "kind": "string",
+          "type": {
+           "$ref": "1231"
+          },
+          "value": "19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"
+         }
+        },
+        {
+         "$id": "1257",
+         "parameter": {
+          "$ref": "1246"
+         },
+         "value": {
+          "$id": "1258",
+          "kind": "model",
+          "type": {
+           "$ref": "812"
+          },
+          "value": {
+           "$id": "1259",
+           "participants": {
+            "$id": "1260",
+            "kind": "array",
+            "type": {
+             "$ref": "814"
+            },
+            "value": [
+             {
+              "$id": "1261",
+              "kind": "model",
+              "type": {
+               "$ref": "695"
+              },
+              "value": {
+               "$id": "1262",
+               "displayName": {
+                "$id": "1263",
+                "kind": "string",
+                "type": {
+                 "$ref": "651"
+                },
+                "value": "Customer"
+               },
+               "kind": {
+                "$id": "1264",
+                "kind": "string",
+                "type": {
+                 "$ref": "697"
+                },
+                "value": "external"
+               },
+               "contacts": {
+                "$id": "1265",
+                "kind": "array",
+                "type": {
+                 "$ref": "702"
+                },
+                "value": [
+                 {
+                  "$id": "1266",
+                  "kind": "model",
+                  "type": {
+                   "$ref": "687"
+                  },
+                  "value": {
+                   "$id": "1267",
+                   "id": {
+                    "$id": "1268",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "667"
+                    },
+                    "value": "12345678901"
+                   },
+                   "kind": {
+                    "$id": "1269",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "689"
+                    },
+                    "value": "whatsApp"
+                   }
+                  }
+                 }
+                ]
+               }
+              }
+             },
+             {
+              "$id": "1270",
+              "kind": "model",
+              "type": {
+               "$ref": "655"
+              },
+              "value": {
+               "$id": "1271",
+               "displayName": {
+                "$id": "1272",
+                "kind": "string",
+                "type": {
+                 "$ref": "651"
+                },
+                "value": "Support"
+               },
+               "kind": {
+                "$id": "1273",
+                "kind": "string",
+                "type": {
+                 "$ref": "657"
+                },
+                "value": "internal"
+               },
+               "contact": {
+                "$id": "1274",
+                "kind": "model",
+                "type": {
+                 "$ref": "671"
+                },
+                "value": {
+                 "$id": "1275",
+                 "id": {
+                  "$id": "1276",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "667"
+                  },
+                  "value": "8:acs:uuid1"
+                 },
+                 "kind": {
+                  "$id": "1277",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "673"
+                  },
+                  "value": "communication"
+                 }
+                }
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "1278",
+         "response": {
+          "$ref": "1247"
+         },
+         "statusCode": 207,
+         "bodyValue": {
+          "$id": "1279",
+          "kind": "model",
+          "type": {
+           "$ref": "817"
+          },
+          "value": {
+           "$id": "1280",
+           "invalidParticipants": {
+            "$id": "1281",
+            "kind": "array",
+            "type": {
+             "$ref": "819"
+            },
+            "value": []
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
     },
     {
-     "$id": "1141",
+     "$id": "1282",
      "name": "removeParticipants",
      "resourceName": "ConversationAdministrationClient",
      "doc": "remove a participant from a conversation",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1142",
+       "$id": "1283",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1143",
+        "$id": "1284",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9501,9 +10491,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1144",
+        "$id": "1285",
         "type": {
-         "$id": "1145",
+         "$id": "1286",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -9514,12 +10504,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1146",
+       "$id": "1287",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1147",
+        "$id": "1288",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9536,12 +10526,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1148",
+       "$id": "1289",
        "name": "repeatabilityRequestId",
        "nameInRequest": "Repeatability-Request-ID",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1149",
+        "$id": "1290",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9558,17 +10548,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1150",
+       "$id": "1291",
        "name": "repeatabilityFirstSent",
        "nameInRequest": "Repeatability-First-Sent",
        "doc": "Specifies the date and time at which the request was first created.",
        "type": {
-        "$id": "1151",
+        "$id": "1292",
         "kind": "utcDateTime",
         "name": "utcDateTime",
         "encode": "rfc7231",
         "wireType": {
-         "$id": "1152",
+         "$id": "1293",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9588,17 +10578,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1153",
+       "$id": "1294",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1154",
+        "$id": "1295",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1155",
+         "$id": "1296",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9617,15 +10607,15 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1156",
+       "$id": "1297",
        "name": "contentType",
        "nameInRequest": "Content-Type",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$id": "1157",
+        "$id": "1298",
         "kind": "constant",
         "valueType": {
-         "$id": "1158",
+         "$id": "1299",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9645,14 +10635,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1159",
+       "$id": "1300",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1160",
+        "$id": "1301",
         "kind": "constant",
         "valueType": {
-         "$id": "1161",
+         "$id": "1302",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9672,7 +10662,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1162",
+       "$id": "1303",
        "name": "options",
        "nameInRequest": "options",
        "doc": "Details of the request body for removing participants from a conversation.",
@@ -9692,7 +10682,7 @@
      ],
      "responses": [
       {
-       "$id": "1163",
+       "$id": "1304",
        "statusCodes": [
         207
        ],
@@ -9701,7 +10691,7 @@
        },
        "headers": [
         {
-         "$id": "1164",
+         "$id": "1305",
          "name": "repeatabilityResult",
          "nameInResponse": "Repeatability-Result",
          "doc": "Indicates whether the repeatable request was accepted or rejected.",
@@ -9710,17 +10700,17 @@
          }
         },
         {
-         "$id": "1165",
+         "$id": "1306",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1166",
+          "$id": "1307",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1167",
+           "$id": "1308",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9746,22 +10736,121 @@
      "generateProtocolMethod": true,
      "generateConvenienceMethod": true,
      "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.removeParticipants",
-     "decorators": []
+     "decorators": [],
+     "examples": [
+      {
+       "$id": "1309",
+       "kind": "http",
+       "name": "remove a participant from a conversation",
+       "description": "remove a participant from a conversation",
+       "filePath": "2025-04-01-preview/ConversationThread_RemoveParticipants.json",
+       "parameters": [
+        {
+         "$id": "1310",
+         "parameter": {
+          "$ref": "1283"
+         },
+         "value": {
+          "$id": "1311",
+          "kind": "string",
+          "type": {
+           "$ref": "1284"
+          },
+          "value": "2025-04-01-preview"
+         }
+        },
+        {
+         "$id": "1312",
+         "parameter": {
+          "$ref": "1287"
+         },
+         "value": {
+          "$id": "1313",
+          "kind": "string",
+          "type": {
+           "$ref": "1288"
+          },
+          "value": "19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"
+         }
+        },
+        {
+         "$id": "1314",
+         "parameter": {
+          "$ref": "1303"
+         },
+         "value": {
+          "$id": "1315",
+          "kind": "model",
+          "type": {
+           "$ref": "858"
+          },
+          "value": {
+           "$id": "1316",
+           "participantIds": {
+            "$id": "1317",
+            "kind": "array",
+            "type": {
+             "$ref": "860"
+            },
+            "value": [
+             {
+              "$id": "1318",
+              "kind": "string",
+              "type": {
+               "$ref": "861"
+              },
+              "value": "8:acs:uuid2"
+             }
+            ]
+           }
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "1319",
+         "response": {
+          "$ref": "1304"
+         },
+         "statusCode": 207,
+         "bodyValue": {
+          "$id": "1320",
+          "kind": "model",
+          "type": {
+           "$ref": "864"
+          },
+          "value": {
+           "$id": "1321",
+           "invalidParticipants": {
+            "$id": "1322",
+            "kind": "array",
+            "type": {
+             "$ref": "866"
+            },
+            "value": []
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
     },
     {
-     "$id": "1168",
+     "$id": "1323",
      "name": "analyzeConversation",
      "resourceName": "ConversationAdministrationClient",
      "doc": "Get AI Analysis of a conversation.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1169",
+       "$id": "1324",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1170",
+        "$id": "1325",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9775,9 +10864,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1171",
+        "$id": "1326",
         "type": {
-         "$id": "1172",
+         "$id": "1327",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -9788,12 +10877,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1173",
+       "$id": "1328",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1174",
+        "$id": "1329",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9810,12 +10899,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1175",
+       "$id": "1330",
        "name": "repeatabilityRequestId",
        "nameInRequest": "Repeatability-Request-ID",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1176",
+        "$id": "1331",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9832,17 +10921,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1177",
+       "$id": "1332",
        "name": "repeatabilityFirstSent",
        "nameInRequest": "Repeatability-First-Sent",
        "doc": "Specifies the date and time at which the request was first created.",
        "type": {
-        "$id": "1178",
+        "$id": "1333",
         "kind": "utcDateTime",
         "name": "utcDateTime",
         "encode": "rfc7231",
         "wireType": {
-         "$id": "1179",
+         "$id": "1334",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9862,17 +10951,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1180",
+       "$id": "1335",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1181",
+        "$id": "1336",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1182",
+         "$id": "1337",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9891,14 +10980,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1183",
+       "$id": "1338",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1184",
+        "$id": "1339",
         "kind": "constant",
         "valueType": {
-         "$id": "1185",
+         "$id": "1340",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9920,7 +11009,7 @@
      ],
      "responses": [
       {
-       "$id": "1186",
+       "$id": "1341",
        "statusCodes": [
         200
        ],
@@ -9929,7 +11018,7 @@
        },
        "headers": [
         {
-         "$id": "1187",
+         "$id": "1342",
          "name": "repeatabilityResult",
          "nameInResponse": "Repeatability-Result",
          "doc": "Indicates whether the repeatable request was accepted or rejected.",
@@ -9938,17 +11027,17 @@
          }
         },
         {
-         "$id": "1188",
+         "$id": "1343",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1189",
+          "$id": "1344",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1190",
+           "$id": "1345",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9971,17 +11060,83 @@
      "generateProtocolMethod": true,
      "generateConvenienceMethod": true,
      "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.analyzeConversation",
-     "decorators": []
+     "decorators": [],
+     "examples": [
+      {
+       "$id": "1346",
+       "kind": "http",
+       "name": "Get AI Analysis of a conversation",
+       "description": "Get AI Analysis of a conversation",
+       "filePath": "2025-04-01-preview/ConversationThread_AnalyzeConversation.json",
+       "parameters": [
+        {
+         "$id": "1347",
+         "parameter": {
+          "$ref": "1324"
+         },
+         "value": {
+          "$id": "1348",
+          "kind": "string",
+          "type": {
+           "$ref": "1325"
+          },
+          "value": "2025-04-01-preview"
+         }
+        },
+        {
+         "$id": "1349",
+         "parameter": {
+          "$ref": "1328"
+         },
+         "value": {
+          "$id": "1350",
+          "kind": "string",
+          "type": {
+           "$ref": "1329"
+          },
+          "value": "19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "1351",
+         "response": {
+          "$ref": "1341"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "1352",
+          "kind": "model",
+          "type": {
+           "$ref": "869"
+          },
+          "value": {
+           "$id": "1353",
+           "summary": {
+            "$id": "1354",
+            "kind": "string",
+            "type": {
+             "$ref": "871"
+            },
+            "value": "The customer needs help."
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
     }
    ],
    "parameters": [
     {
-     "$id": "1191",
+     "$id": "1355",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "The communication resource, for example https://my-resource.communication.azure.com",
      "type": {
-      "$id": "1192",
+      "$id": "1356",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -10003,25 +11158,25 @@
    ]
   },
   {
-   "$id": "1193",
+   "$id": "1357",
    "kind": "client",
    "name": "ConversationThreadClient",
    "namespace": "Azure.Communication.Messages",
    "operations": [
     {
-     "$id": "1194",
+     "$id": "1358",
      "name": "addParticipants",
      "resourceName": "ConversationThreadClient",
      "doc": "Adds participants to a specific conversation.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1195",
+       "$id": "1359",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1196",
+        "$id": "1360",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10035,9 +11190,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1197",
+        "$id": "1361",
         "type": {
-         "$id": "1198",
+         "$id": "1362",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -10048,12 +11203,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1199",
+       "$id": "1363",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1200",
+        "$id": "1364",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10070,12 +11225,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1201",
+       "$id": "1365",
        "name": "repeatabilityRequestId",
        "nameInRequest": "Repeatability-Request-ID",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1202",
+        "$id": "1366",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10092,17 +11247,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1203",
+       "$id": "1367",
        "name": "repeatabilityFirstSent",
        "nameInRequest": "Repeatability-First-Sent",
        "doc": "Specifies the date and time at which the request was first created.",
        "type": {
-        "$id": "1204",
+        "$id": "1368",
         "kind": "utcDateTime",
         "name": "utcDateTime",
         "encode": "rfc7231",
         "wireType": {
-         "$id": "1205",
+         "$id": "1369",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10122,17 +11277,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1206",
+       "$id": "1370",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1207",
+        "$id": "1371",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1208",
+         "$id": "1372",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10151,15 +11306,15 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1209",
+       "$id": "1373",
        "name": "contentType",
        "nameInRequest": "Content-Type",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$id": "1210",
+        "$id": "1374",
         "kind": "constant",
         "valueType": {
-         "$id": "1211",
+         "$id": "1375",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10179,14 +11334,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1212",
+       "$id": "1376",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1213",
+        "$id": "1377",
         "kind": "constant",
         "valueType": {
-         "$id": "1214",
+         "$id": "1378",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10206,7 +11361,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1215",
+       "$id": "1379",
        "name": "options",
        "nameInRequest": "options",
        "doc": "Details of the payload for adding participants to a conversation.",
@@ -10226,7 +11381,7 @@
      ],
      "responses": [
       {
-       "$id": "1216",
+       "$id": "1380",
        "statusCodes": [
         207
        ],
@@ -10235,7 +11390,7 @@
        },
        "headers": [
         {
-         "$id": "1217",
+         "$id": "1381",
          "name": "repeatabilityResult",
          "nameInResponse": "Repeatability-Result",
          "doc": "Indicates whether the repeatable request was accepted or rejected.",
@@ -10244,17 +11399,17 @@
          }
         },
         {
-         "$id": "1218",
+         "$id": "1382",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1219",
+          "$id": "1383",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1220",
+           "$id": "1384",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10283,19 +11438,19 @@
      "decorators": []
     },
     {
-     "$id": "1221",
+     "$id": "1385",
      "name": "removeParticipants",
      "resourceName": "ConversationThreadClient",
      "doc": "remove a participant from a conversation",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1222",
+       "$id": "1386",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1223",
+        "$id": "1387",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10309,9 +11464,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1224",
+        "$id": "1388",
         "type": {
-         "$id": "1225",
+         "$id": "1389",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -10322,12 +11477,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1226",
+       "$id": "1390",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1227",
+        "$id": "1391",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10344,12 +11499,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1228",
+       "$id": "1392",
        "name": "repeatabilityRequestId",
        "nameInRequest": "Repeatability-Request-ID",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1229",
+        "$id": "1393",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10366,17 +11521,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1230",
+       "$id": "1394",
        "name": "repeatabilityFirstSent",
        "nameInRequest": "Repeatability-First-Sent",
        "doc": "Specifies the date and time at which the request was first created.",
        "type": {
-        "$id": "1231",
+        "$id": "1395",
         "kind": "utcDateTime",
         "name": "utcDateTime",
         "encode": "rfc7231",
         "wireType": {
-         "$id": "1232",
+         "$id": "1396",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10396,17 +11551,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1233",
+       "$id": "1397",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1234",
+        "$id": "1398",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1235",
+         "$id": "1399",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10425,15 +11580,15 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1236",
+       "$id": "1400",
        "name": "contentType",
        "nameInRequest": "Content-Type",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$id": "1237",
+        "$id": "1401",
         "kind": "constant",
         "valueType": {
-         "$id": "1238",
+         "$id": "1402",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10453,14 +11608,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1239",
+       "$id": "1403",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1240",
+        "$id": "1404",
         "kind": "constant",
         "valueType": {
-         "$id": "1241",
+         "$id": "1405",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10480,7 +11635,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1242",
+       "$id": "1406",
        "name": "options",
        "nameInRequest": "options",
        "doc": "Details of the request body for removing participants from a conversation.",
@@ -10500,7 +11655,7 @@
      ],
      "responses": [
       {
-       "$id": "1243",
+       "$id": "1407",
        "statusCodes": [
         207
        ],
@@ -10509,7 +11664,7 @@
        },
        "headers": [
         {
-         "$id": "1244",
+         "$id": "1408",
          "name": "repeatabilityResult",
          "nameInResponse": "Repeatability-Result",
          "doc": "Indicates whether the repeatable request was accepted or rejected.",
@@ -10518,17 +11673,17 @@
          }
         },
         {
-         "$id": "1245",
+         "$id": "1409",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1246",
+          "$id": "1410",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1247",
+           "$id": "1411",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10557,19 +11712,19 @@
      "decorators": []
     },
     {
-     "$id": "1248",
+     "$id": "1412",
      "name": "listConversations",
      "resourceName": "Conversation",
      "doc": "Retrieves list of conversations.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1249",
+       "$id": "1413",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1250",
+        "$id": "1414",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10583,9 +11738,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1251",
+        "$id": "1415",
         "type": {
-         "$id": "1252",
+         "$id": "1416",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -10596,12 +11751,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1253",
+       "$id": "1417",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "1254",
+        "$id": "1418",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10618,12 +11773,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1255",
+       "$id": "1419",
        "name": "participantId",
        "nameInRequest": "participantId",
        "doc": "The participant user ID",
        "type": {
-        "$id": "1256",
+        "$id": "1420",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10640,17 +11795,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1257",
+       "$id": "1421",
        "name": "channelId",
        "nameInRequest": "channelId",
        "doc": "The id of channel",
        "type": {
-        "$id": "1258",
+        "$id": "1422",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1259",
+         "$id": "1423",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10669,17 +11824,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1260",
+       "$id": "1424",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1261",
+        "$id": "1425",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1262",
+         "$id": "1426",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10698,14 +11853,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1263",
+       "$id": "1427",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1264",
+        "$id": "1428",
         "kind": "constant",
         "valueType": {
-         "$id": "1265",
+         "$id": "1429",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10727,7 +11882,7 @@
      ],
      "responses": [
       {
-       "$id": "1266",
+       "$id": "1430",
        "statusCodes": [
         200
        ],
@@ -10736,17 +11891,17 @@
        },
        "headers": [
         {
-         "$id": "1267",
+         "$id": "1431",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1268",
+          "$id": "1432",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1269",
+           "$id": "1433",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10767,12 +11922,12 @@
      "path": "/messages/conversations",
      "bufferResponse": true,
      "paging": {
-      "$id": "1270",
+      "$id": "1434",
       "itemPropertySegments": [
        "value"
       ],
       "nextLink": {
-       "$id": "1271",
+       "$id": "1435",
        "responseSegments": [
         "nextLink"
        ],
@@ -10785,19 +11940,19 @@
      "decorators": []
     },
     {
-     "$id": "1272",
+     "$id": "1436",
      "name": "listMessages",
      "resourceName": "ConversationMessageItem",
      "doc": "Retrieves list of conversation messages.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1273",
+       "$id": "1437",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1274",
+        "$id": "1438",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10811,9 +11966,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1275",
+        "$id": "1439",
         "type": {
-         "$id": "1276",
+         "$id": "1440",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -10824,12 +11979,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1277",
+       "$id": "1441",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1278",
+        "$id": "1442",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10846,12 +12001,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1279",
+       "$id": "1443",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "1280",
+        "$id": "1444",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10868,12 +12023,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1281",
+       "$id": "1445",
        "name": "participantId",
        "nameInRequest": "participantId",
        "doc": "The participant user ID",
        "type": {
-        "$id": "1282",
+        "$id": "1446",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10890,17 +12045,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1283",
+       "$id": "1447",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1284",
+        "$id": "1448",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1285",
+         "$id": "1449",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10919,14 +12074,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1286",
+       "$id": "1450",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1287",
+        "$id": "1451",
         "kind": "constant",
         "valueType": {
-         "$id": "1288",
+         "$id": "1452",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10948,7 +12103,7 @@
      ],
      "responses": [
       {
-       "$id": "1289",
+       "$id": "1453",
        "statusCodes": [
         200
        ],
@@ -10957,17 +12112,17 @@
        },
        "headers": [
         {
-         "$id": "1290",
+         "$id": "1454",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1291",
+          "$id": "1455",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1292",
+           "$id": "1456",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10988,12 +12143,12 @@
      "path": "/messages/conversations/{conversationId}/messages",
      "bufferResponse": true,
      "paging": {
-      "$id": "1293",
+      "$id": "1457",
       "itemPropertySegments": [
        "value"
       ],
       "nextLink": {
-       "$id": "1294",
+       "$id": "1458",
        "responseSegments": [
         "nextLink"
        ],
@@ -11006,19 +12161,19 @@
      "decorators": []
     },
     {
-     "$id": "1295",
+     "$id": "1459",
      "name": "sendMessage",
      "resourceName": "ConversationThreadClient",
      "doc": "Sends a conversation message from Business to User.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1296",
+       "$id": "1460",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1297",
+        "$id": "1461",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11032,9 +12187,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1298",
+        "$id": "1462",
         "type": {
-         "$id": "1299",
+         "$id": "1463",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -11045,12 +12200,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1300",
+       "$id": "1464",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1301",
+        "$id": "1465",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11067,12 +12222,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1302",
+       "$id": "1466",
        "name": "repeatabilityRequestId",
        "nameInRequest": "Repeatability-Request-ID",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1303",
+        "$id": "1467",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11089,17 +12244,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1304",
+       "$id": "1468",
        "name": "repeatabilityFirstSent",
        "nameInRequest": "Repeatability-First-Sent",
        "doc": "Specifies the date and time at which the request was first created.",
        "type": {
-        "$id": "1305",
+        "$id": "1469",
         "kind": "utcDateTime",
         "name": "utcDateTime",
         "encode": "rfc7231",
         "wireType": {
-         "$id": "1306",
+         "$id": "1470",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11119,17 +12274,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1307",
+       "$id": "1471",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1308",
+        "$id": "1472",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1309",
+         "$id": "1473",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11148,15 +12303,15 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1310",
+       "$id": "1474",
        "name": "contentType",
        "nameInRequest": "Content-Type",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$id": "1311",
+        "$id": "1475",
         "kind": "constant",
         "valueType": {
-         "$id": "1312",
+         "$id": "1476",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11176,14 +12331,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1313",
+       "$id": "1477",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1314",
+        "$id": "1478",
         "kind": "constant",
         "valueType": {
-         "$id": "1315",
+         "$id": "1479",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11203,7 +12358,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1316",
+       "$id": "1480",
        "name": "options",
        "nameInRequest": "options",
        "doc": "Details of the conversation message to send.",
@@ -11223,7 +12378,7 @@
      ],
      "responses": [
       {
-       "$id": "1317",
+       "$id": "1481",
        "statusCodes": [
         200
        ],
@@ -11232,7 +12387,7 @@
        },
        "headers": [
         {
-         "$id": "1318",
+         "$id": "1482",
          "name": "repeatabilityResult",
          "nameInResponse": "Repeatability-Result",
          "doc": "Indicates whether the repeatable request was accepted or rejected.",
@@ -11241,17 +12396,17 @@
          }
         },
         {
-         "$id": "1319",
+         "$id": "1483",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1320",
+          "$id": "1484",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1321",
+           "$id": "1485",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11280,19 +12435,19 @@
      "decorators": []
     },
     {
-     "$id": "1322",
+     "$id": "1486",
      "name": "analyzeConversation",
      "resourceName": "ConversationThreadClient",
      "doc": "Get AI Analysis of a conversation.",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "1323",
+       "$id": "1487",
        "name": "apiVersion",
        "nameInRequest": "api-version",
        "doc": "The API version to use for this operation.",
        "type": {
-        "$id": "1324",
+        "$id": "1488",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11306,9 +12461,9 @@
        "isRequired": true,
        "kind": "Client",
        "defaultValue": {
-        "$id": "1325",
+        "$id": "1489",
         "type": {
-         "$id": "1326",
+         "$id": "1490",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -11319,12 +12474,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1327",
+       "$id": "1491",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1328",
+        "$id": "1492",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11341,12 +12496,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1329",
+       "$id": "1493",
        "name": "repeatabilityRequestId",
        "nameInRequest": "Repeatability-Request-ID",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1330",
+        "$id": "1494",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11363,17 +12518,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1331",
+       "$id": "1495",
        "name": "repeatabilityFirstSent",
        "nameInRequest": "Repeatability-First-Sent",
        "doc": "Specifies the date and time at which the request was first created.",
        "type": {
-        "$id": "1332",
+        "$id": "1496",
         "kind": "utcDateTime",
         "name": "utcDateTime",
         "encode": "rfc7231",
         "wireType": {
-         "$id": "1333",
+         "$id": "1497",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11393,17 +12548,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1334",
+       "$id": "1498",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1335",
+        "$id": "1499",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1336",
+         "$id": "1500",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11422,14 +12577,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1337",
+       "$id": "1501",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "1338",
+        "$id": "1502",
         "kind": "constant",
         "valueType": {
-         "$id": "1339",
+         "$id": "1503",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11451,7 +12606,7 @@
      ],
      "responses": [
       {
-       "$id": "1340",
+       "$id": "1504",
        "statusCodes": [
         200
        ],
@@ -11460,7 +12615,7 @@
        },
        "headers": [
         {
-         "$id": "1341",
+         "$id": "1505",
          "name": "repeatabilityResult",
          "nameInResponse": "Repeatability-Result",
          "doc": "Indicates whether the repeatable request was accepted or rejected.",
@@ -11469,17 +12624,17 @@
          }
         },
         {
-         "$id": "1342",
+         "$id": "1506",
          "name": "clientRequestId",
          "nameInResponse": "x-ms-client-request-id",
          "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "type": {
-          "$id": "1343",
+          "$id": "1507",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "1344",
+           "$id": "1508",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11507,12 +12662,12 @@
    ],
    "parameters": [
     {
-     "$id": "1345",
+     "$id": "1509",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "The communication resource, for example https://my-resource.communication.azure.com",
      "type": {
-      "$id": "1346",
+      "$id": "1510",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -11535,15 +12690,15 @@
   }
  ],
  "auth": {
-  "$id": "1347",
+  "$id": "1511",
   "oAuth2": {
-   "$id": "1348",
+   "$id": "1512",
    "scopes": [
     "https://communication.azure.com/.default"
    ]
   },
   "apiKey": {
-   "$id": "1349",
+   "$id": "1513",
    "name": "Authorization",
    "in": "header",
    "prefix": "Bearer"

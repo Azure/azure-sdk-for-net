@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Communication.Messages.Models.Channels;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -388,7 +389,7 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_AddParticipants_ShortVersion()
+        public void Example_ConversationAdministrationClient_AddParticipants_AddsParticipantsToASpecificConversation()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
@@ -398,16 +399,30 @@ DisplayName = "<displayName>",
             {
 new
 {
+displayName = "Customer",
+kind = "external",
+contacts = new object[]
+{
+new
+{
+id = "12345678901",
+kind = "whatsApp",
+}
+},
+},
+new
+{
+displayName = "Support",
 kind = "internal",
 contact = new
 {
+id = "8:acs:uuid1",
 kind = "communication",
-id = "<id>",
 },
 }
             },
             });
-            Response response = client.AddParticipants("<conversationId>", content);
+            Response response = client.AddParticipants("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id").ToString());
@@ -415,7 +430,7 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_AddParticipants_ShortVersion_Async()
+        public async Task Example_ConversationAdministrationClient_AddParticipants_AddsParticipantsToASpecificConversation_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
@@ -425,146 +440,84 @@ id = "<id>",
             {
 new
 {
-kind = "internal",
-contact = new
+displayName = "Customer",
+kind = "external",
+contacts = new object[]
 {
-kind = "communication",
-id = "<id>",
-},
-}
-            },
-            });
-            Response response = await client.AddParticipantsAsync("<conversationId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_AddParticipants_ShortVersion_Convenience()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
-            {
-new InternalConversationParticipant(new CommunicationContact("<id>"))
-            });
-            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_AddParticipants_ShortVersion_Convenience_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
-            {
-new InternalConversationParticipant(new CommunicationContact("<id>"))
-            });
-            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_AddParticipants_AllParameters()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                participants = new object[]
-            {
 new
 {
-kind = "internal",
-contact = new
-{
-kind = "communication",
-id = "<id>",
-},
-displayName = "<displayName>",
+id = "12345678901",
+kind = "whatsApp",
 }
-            },
-            });
-            Response response = client.AddParticipants("<conversationId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_AddParticipants_AllParameters_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                participants = new object[]
-            {
+},
+},
 new
 {
+displayName = "Support",
 kind = "internal",
 contact = new
 {
+id = "8:acs:uuid1",
 kind = "communication",
-id = "<id>",
 },
-displayName = "<displayName>",
 }
             },
             });
-            Response response = await client.AddParticipantsAsync("<conversationId>", content);
+            Response response = await client.AddParticipantsAsync("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_AddParticipants_AllParameters_Convenience()
+        public void Example_ConversationAdministrationClient_AddParticipants_AddsParticipantsToASpecificConversation_Convenience()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalConversationParticipant(new CommunicationContact("<id>"))
+new ExternalConversationParticipant(new ConversationContact[]
 {
-DisplayName = "<displayName>",
+new WhatsAppContact("12345678901")
+})
+{
+DisplayName = "Customer",
+},
+new InternalConversationParticipant(new CommunicationContact("8:acs:uuid1"))
+{
+DisplayName = "Support",
 }
             });
-            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
+            Response<AddParticipantsResult> response = client.AddParticipants("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_AddParticipants_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAdministrationClient_AddParticipants_AddsParticipantsToASpecificConversation_Convenience_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalConversationParticipant(new CommunicationContact("<id>"))
+new ExternalConversationParticipant(new ConversationContact[]
 {
-DisplayName = "<displayName>",
+new WhatsAppContact("12345678901")
+})
+{
+DisplayName = "Customer",
+},
+new InternalConversationParticipant(new CommunicationContact("8:acs:uuid1"))
+{
+DisplayName = "Support",
 }
             });
-            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
+            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_RemoveParticipants_ShortVersion()
+        public void Example_ConversationAdministrationClient_RemoveParticipants_RemoveAParticipantFromAConversation()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
@@ -572,10 +525,10 @@ DisplayName = "<displayName>",
             {
                 participantIds = new object[]
             {
-"<participantIds>"
+"8:acs:uuid2"
             },
             });
-            Response response = client.RemoveParticipants("<conversationId>", content);
+            Response response = client.RemoveParticipants("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id").ToString());
@@ -583,7 +536,7 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_RemoveParticipants_ShortVersion_Async()
+        public async Task Example_ConversationAdministrationClient_RemoveParticipants_RemoveAParticipantFromAConversation_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
@@ -591,10 +544,10 @@ DisplayName = "<displayName>",
             {
                 participantIds = new object[]
             {
-"<participantIds>"
+"8:acs:uuid2"
             },
             });
-            Response response = await client.RemoveParticipantsAsync("<conversationId>", content);
+            Response response = await client.RemoveParticipantsAsync("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id").ToString());
@@ -602,97 +555,31 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_RemoveParticipants_ShortVersion_Convenience()
+        public void Example_ConversationAdministrationClient_RemoveParticipants_RemoveAParticipantFromAConversation_Convenience()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "8:acs:uuid2" });
+            Response<RemoveParticipantsResult> response = client.RemoveParticipants("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_RemoveParticipants_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAdministrationClient_RemoveParticipants_RemoveAParticipantFromAConversation_Convenience_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "8:acs:uuid2" });
+            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_RemoveParticipants_AllParameters()
+        public void Example_ConversationAdministrationClient_AnalyzeConversation_GetAIAnalysisOfAConversation()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                participantIds = new object[]
-            {
-"<participantIds>"
-            },
-            });
-            Response response = client.RemoveParticipants("<conversationId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_RemoveParticipants_AllParameters_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                participantIds = new object[]
-            {
-"<participantIds>"
-            },
-            });
-            Response response = await client.RemoveParticipantsAsync("<conversationId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_RemoveParticipants_AllParameters_Convenience()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_RemoveParticipants_AllParameters_Convenience_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_AnalyzeConversation_ShortVersion()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            Response response = client.AnalyzeConversation("<conversationId>", null);
+            Response response = client.AnalyzeConversation("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("summary").ToString());
@@ -700,11 +587,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_ShortVersion_Async()
+        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_GetAIAnalysisOfAConversation_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
+            Response response = await client.AnalyzeConversationAsync("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("summary").ToString());
@@ -712,71 +599,29 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_AnalyzeConversation_ShortVersion_Convenience()
+        public void Example_ConversationAdministrationClient_AnalyzeConversation_GetAIAnalysisOfAConversation_Convenience()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_GetAIAnalysisOfAConversation_Convenience_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_AnalyzeConversation_AllParameters()
+        public void Example_Conversation_GetConversations_RetrievesListOfConversations()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response response = client.AnalyzeConversation("<conversationId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("summary").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_AllParameters_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("summary").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAdministrationClient_AnalyzeConversation_AllParameters_Convenience()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_AllParameters_Convenience_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Conversation_GetConversations_ShortVersion()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            foreach (BinaryData item in client.GetConversations(null, null, null, null))
+            foreach (BinaryData item in client.GetConversations(25, null, Guid.Parse("0f0eb78e-a576-1dfc-b414-0f0756de3338"), null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -785,11 +630,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Conversation_GetConversations_ShortVersion_Async()
+        public async Task Example_Conversation_GetConversations_RetrievesListOfConversations_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            await foreach (BinaryData item in client.GetConversationsAsync(null, null, null, null))
+            await foreach (BinaryData item in client.GetConversationsAsync(25, null, Guid.Parse("0f0eb78e-a576-1dfc-b414-0f0756de3338"), null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -798,7 +643,7 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Conversation_GetConversations_ShortVersion_Convenience()
+        public void Example_Conversation_GetConversations_RetrievesListOfConversations_Convenience()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
@@ -809,7 +654,7 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Conversation_GetConversations_ShortVersion_Convenience_Async()
+        public async Task Example_Conversation_GetConversations_RetrievesListOfConversations_Convenience_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
@@ -820,71 +665,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Conversation_GetConversations_AllParameters()
+        public void Example_ConversationMessageItem_GetMessages_RetrievesListOfConversationMessages()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            foreach (BinaryData item in client.GetConversations(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("topic").ToString());
-                Console.WriteLine(result.GetProperty("deliveryChannelIds")[0].ToString());
-                Console.WriteLine(result.GetProperty("outboundDeliveryStrategy").ToString());
-                Console.WriteLine(result.GetProperty("participants")[0].GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("participants")[0].GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("participants")[0].GetProperty("kind").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Conversation_GetConversations_AllParameters_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            await foreach (BinaryData item in client.GetConversationsAsync(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("topic").ToString());
-                Console.WriteLine(result.GetProperty("deliveryChannelIds")[0].ToString());
-                Console.WriteLine(result.GetProperty("outboundDeliveryStrategy").ToString());
-                Console.WriteLine(result.GetProperty("participants")[0].GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("participants")[0].GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("participants")[0].GetProperty("kind").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Conversation_GetConversations_AllParameters_Convenience()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            foreach (CommunicationConversation item in client.GetConversations(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Conversation_GetConversations_AllParameters_Convenience_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            await foreach (CommunicationConversation item in client.GetConversationsAsync(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessageItem_GetMessages_ShortVersion()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            foreach (BinaryData item in client.GetMessages("<conversationId>", null, null, null))
+            foreach (BinaryData item in client.GetMessages("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -896,11 +681,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessageItem_GetMessages_ShortVersion_Async()
+        public async Task Example_ConversationMessageItem_GetMessages_RetrievesListOfConversationMessages_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", null, null, null))
+            await foreach (BinaryData item in client.GetMessagesAsync("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -912,80 +697,22 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessageItem_GetMessages_ShortVersion_Convenience()
+        public void Example_ConversationMessageItem_GetMessages_RetrievesListOfConversationMessages_Convenience()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            foreach (ConversationMessageItem item in client.GetMessages("<conversationId>"))
+            foreach (ConversationMessageItem item in client.GetMessages("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessageItem_GetMessages_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationMessageItem_GetMessages_RetrievesListOfConversationMessages_Convenience_Async()
         {
             ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessageItem_GetMessages_AllParameters()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            foreach (BinaryData item in client.GetMessages("<conversationId>", 1234, "<participantId>", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("sequenceId").ToString());
-                Console.WriteLine(result.GetProperty("message").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("senderDisplayName").ToString());
-                Console.WriteLine(result.GetProperty("senderCommunicationIdentifier").ToString());
-                Console.WriteLine(result.GetProperty("createdOn").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessageItem_GetMessages_AllParameters_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", 1234, "<participantId>", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("sequenceId").ToString());
-                Console.WriteLine(result.GetProperty("message").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("senderDisplayName").ToString());
-                Console.WriteLine(result.GetProperty("senderCommunicationIdentifier").ToString());
-                Console.WriteLine(result.GetProperty("createdOn").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessageItem_GetMessages_AllParameters_Convenience()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessageItem_GetMessages_AllParameters_Convenience_Async()
-        {
-            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
-
-            await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
+            await foreach (ConversationMessageItem item in client.GetMessagesAsync("19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"))
             {
             }
         }
