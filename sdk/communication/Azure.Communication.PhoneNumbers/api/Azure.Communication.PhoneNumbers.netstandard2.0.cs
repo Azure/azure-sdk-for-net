@@ -350,23 +350,6 @@ namespace Azure.Communication.PhoneNumbers
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExpandEnum : System.IEquatable<Azure.Communication.PhoneNumbers.SipRouting.ExpandEnum>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExpandEnum(string value) { throw null; }
-        public static Azure.Communication.PhoneNumbers.SipRouting.ExpandEnum TrunksHealth { get { throw null; } }
-        public bool Equals(Azure.Communication.PhoneNumbers.SipRouting.ExpandEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.PhoneNumbers.SipRouting.ExpandEnum left, Azure.Communication.PhoneNumbers.SipRouting.ExpandEnum right) { throw null; }
-        public static implicit operator Azure.Communication.PhoneNumbers.SipRouting.ExpandEnum (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.PhoneNumbers.SipRouting.ExpandEnum left, Azure.Communication.PhoneNumbers.SipRouting.ExpandEnum right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IpAddressVersion : System.IEquatable<Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion>
     {
         private readonly object _dummy;
@@ -513,6 +496,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     }
     public partial class SipTrunk
     {
+        public SipTrunk(int sipSignalingPort) { }
         public SipTrunk(string fqdn, int sipSignalingPort) { }
         public bool? DirectTransfer { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }

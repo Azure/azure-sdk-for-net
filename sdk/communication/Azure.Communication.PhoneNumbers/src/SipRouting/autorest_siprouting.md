@@ -65,8 +65,44 @@ directive:
 
 ```yaml
 directive:
-    - from: swagger-document
-      where: "$.definitions.OverallHealth"
-      transform: >
-          $.properties.reason["x-ms-enum"].name = "unhealthyStatusReason";
+  from: swagger-document
+  where: "$.definitions.OverallHealth"
+  transform: >
+    $.properties.reason["x-ms-enum"].name = "unhealthyStatusReason";
+```
+
+### Directive deleting "CommunicationErrorResponse"
+
+```yaml
+directive:
+  from: swagger-document
+  where: "$.definitions"
+  transform: >
+    delete $.CommunicationErrorResponse
+```
+
+### Directives deleting default response
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths.*[?(@.operationId == "SipRouting_Get")].responses
+  transform: >
+    delete $.default
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths.*[?(@.operationId == "SipRouting_Update")].responses
+  transform: >
+    delete $.default
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths.*[?(@.operationId == "SipRouting_TestRoutesWithNumber")].responses
+  transform: >
+    delete $.default
 ```

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     /// <summary> The ExpandEnum. </summary>
-    public readonly partial struct ExpandEnum : IEquatable<ExpandEnum>
+    internal readonly partial struct ExpandEnum : IEquatable<ExpandEnum>
     {
         private readonly string _value;
 
