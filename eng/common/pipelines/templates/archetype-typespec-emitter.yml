@@ -108,12 +108,12 @@ extends:
                 -PrereleaseSuffix "-alpha.$(Build.BuildNumber)"
                 -OutputDirectory "$(Build.ArtifactStagingDirectory)"
                 -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
-                -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
+                -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
             ${{ else }}:
               arguments: >
                 -OutputDirectory "$(Build.ArtifactStagingDirectory)"
                 -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
-                -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
+                -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
 
         - task: PowerShell@2
           displayName: 'Run build script'
@@ -124,7 +124,7 @@ extends:
             arguments: >
               -OutputDirectory "$(Build.ArtifactStagingDirectory)/packages"
               -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
-              -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
+              -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
 
         - pwsh: |
             $sourceBranch = '$(Build.SourceBranch)'
@@ -310,7 +310,7 @@ extends:
               Paths:
               - "/*"
               - "!SessionRecords"
-              
+
           - download: current
             displayName: Download pipeline artifacts
 
@@ -453,7 +453,7 @@ extends:
               filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
               arguments: > 
                 -BuildArtifactsPath '$(buildArtifactsPath)/lock-files'
-                -EmitterPackagePath ${{ parameters.EmitterPackagePath }}
+                -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
 
           - task: PowerShell@2
             displayName: 'Run test script'
@@ -463,6 +463,7 @@ extends:
               arguments: >
                 $(TestArguments)
                 -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+                -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:
