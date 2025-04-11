@@ -67,13 +67,10 @@ parameters:
   type: object
   default: []
 
+# The path to the emitter package json file.
 - name: EmitterPackageJsonPath
   type: string
   default: "eng/emitter-package.json"
-
-- name: EmitterPackageName
-  type: string
-  default: ""  
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -171,7 +168,7 @@ extends:
           # Create authenticated .npmrc file for publishing to devops
           - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
             parameters:
-              npmrcPath: $(buildArtifactsPath)/packages/.npmrc
+              npmrcPath: $(Build.SourcesDirectory)/.npmrc
               registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/
 
           # publish to devops feed
@@ -182,7 +179,7 @@ extends:
                 npm publish $file --verbose --access public
               }
             displayName: Publish to DevOps feed
-            workingDirectory: $(buildArtifactsPath)/packages
+            workingDirectory: $(buildArtifactsPath)/lock-files
 
           - ${{ if parameters.PublishPublic }}:
             # publish to npmjs.org using ESRP
@@ -211,18 +208,18 @@ extends:
               if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/${{ parameters.EmitterPackageName }}/package.json' `
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
                 --overrides '$(buildArtifactsPath)/overrides.json'
               } else {
                 tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/${{ parameters.EmitterPackageName }}/package.json' `
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
-            workingDirectory: $(buildArtifactsPath)/packages
+            workingDirectory: $(Build.SourcesDirectory)
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:
