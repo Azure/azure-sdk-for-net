@@ -443,7 +443,7 @@ extends:
               pwsh: true
               filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
               arguments: > 
-                -BuildArtifactsPath '$(buildArtifactsPath)'
+                -BuildArtifactsPath '$(buildArtifactsPath)/lock-files'
 
           - task: PowerShell@2
             displayName: 'Run test script'
