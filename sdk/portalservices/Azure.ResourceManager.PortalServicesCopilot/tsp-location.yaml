@@ -1,3 +1,3 @@
-directory: specification/portalservices/TypeSpecDirectory
-commit: https://github.com/Azure/azure-rest-api-specs/blob/ef196785552a7e79e5db813cb513bd94c8e7b1e1/specification/portalservices/CopilotSettings.Management/tspconfig.yaml
+directory: specification/portalservices/CopilotSettings.Management
+commit: ef196785552a7e79e5db813cb513bd94c8e7b1e1
 repo: Azure/azure-rest-api-specs
