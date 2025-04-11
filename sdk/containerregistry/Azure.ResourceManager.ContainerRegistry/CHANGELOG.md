@@ -5,11 +5,25 @@
 ### Features Added
 
 - Upgraded api-version tag from 'package-2024-11-preview' to 'package-2025-03-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cb262725d128f6dfec4622cca03bc9e04e2d0f1f/specification/containerregistry/resource-manager/readme.md.
+- Added new struct `RoleAssignmentMode`.
+- Added new class `SourceRegistryCredentials`.
+- Added new attribute `RoleAssignmentMode` in `ContainerRegistryData` and `ContainerRegistryPatch`.
+- Added new attribute `SourceRegistry` in `ContainerRegistryCredentials`.
 
 ### Breaking Changes
 
-- Updated the Swagger to accurately match the actual service behavior. Corrected the classification of some methods that are synchronous but were incorrectly marked as Long-running operations (LRO).
-- Updated the Swagger to remove extra status codes that are never returned by some methods, particularly the 202 status code used for LRO.
+- Changed the signature of the following methods in `ContainerRegistryResource`
+    - `ScheduleRun`
+    - `ScheduleRunAsync`
+- Changed the signature of the following methods in `ContainerRegistryRunResource`
+    - `Cancel`
+    - `CancelAsync`
+    - `Update`
+    - `UpdateAsync`
+- Changed the signature of the following methods in `ContainerRegistryTaskResource`
+    - `Update`
+    - `UpdateAsync`
+- Removed the attribute `SourceRegistryLoginMode` from `ContainerRegistryCredentials`
 
 ## 1.3.0-beta.2 (2025-01-24)
 
