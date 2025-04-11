@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/migration.assessment/ci.mgmt.yml
-    - sdk/migration.assessment/Azure.ResourceManager.Migration.Assessment/
+    - sdk/migrationassessment/ci.mgmt.yml
+    - sdk/migrationassessment/Azure.ResourceManager.Migration.Assessment/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: migration.assessment
+    ServiceDirectory: migrationassessment
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Migration.Assessment
