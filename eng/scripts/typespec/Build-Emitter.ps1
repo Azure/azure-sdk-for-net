@@ -47,7 +47,7 @@ function Build-Emitter {
             $unscopedName = $packageName.Split("/")[1]
             $overrides[$packageName] = "$feedUrl/$packageName/-/$unscopedName-$packageVersion.tgz"
 
-            Write-Host "Adding $packageName to overrides with URL $overrides[$packageName]"
+            Write-Host "Adding $packageName to overrides with URL $($overrides[$packageName])"
         }
     }
     finally {
