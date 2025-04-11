@@ -168,7 +168,7 @@ extends:
           # Create authenticated .npmrc file for publishing to devops
           - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
             parameters:
-              npmrcPath: $(buildArtifactsPath)/.npmrc
+              npmrcPath: $(buildArtifactsPath)/packages/.npmrc
               registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/
 
           # publish to devops feed
@@ -205,7 +205,7 @@ extends:
             displayName: Install tsp-client
 
           - pwsh: |
-              Copy-Item "$(buildArtifactsPath)/.nmrc" "./.nmrc" -Force
+              Copy-Item "$(buildArtifactsPath)/packages/.npmrc" "./.npmrc" -Force
               if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files `

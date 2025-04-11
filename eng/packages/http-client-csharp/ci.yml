@@ -19,10 +19,6 @@ pr:
       - eng/scripts/typespec
 
 parameters:
-  # - name: BuildPrereleaseVersion
-  #   displayName: "Build prerelease version"
-  #   type: boolean
-  #   default: true
   - name: UseTypeSpecNext
     displayName: "Use TypeSpec Next"
     type: boolean
