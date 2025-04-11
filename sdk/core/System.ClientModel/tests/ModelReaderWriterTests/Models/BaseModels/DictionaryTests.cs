@@ -13,6 +13,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
     {
         protected override ModelReaderWriterContext Context => new LocalContext();
 
+        protected override string CollectionTypeName => "Dictionary<String, BaseModel>";
+
         protected override Dictionary<string, BaseModel> GetModelInstance()
         {
             return new()
@@ -68,8 +70,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
                 protected override Type BuilderType => typeof(Dictionary<string, BaseModel>);
 
                 protected override Type ItemType => typeof(BaseModel);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Dictionary<string, BaseModel>();
 

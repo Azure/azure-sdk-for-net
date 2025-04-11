@@ -4,13 +4,14 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
     public class ListOfDictionaryTests : MrwCollectionTests<List<Dictionary<string, AvailabilitySetData>>, AvailabilitySetData>
     {
         protected override ModelReaderWriterContext Context => new LocalContext();
+
+        protected override string CollectionTypeName => "List<Dictionary<String, AvailabilitySetData>>";
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
             => AvailabilitySetDataTests.CompareAvailabilitySetData(model, model2, format);
@@ -54,8 +55,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(List<Dictionary<string, AvailabilitySetData>>);
 
                 protected override Type ItemType => typeof(Dictionary<string, AvailabilitySetData>);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<Dictionary<string, AvailabilitySetData>>();
 
