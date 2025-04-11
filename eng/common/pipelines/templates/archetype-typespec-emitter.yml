@@ -205,14 +205,14 @@ extends:
             displayName: Install tsp-client
 
           - pwsh: |
-              Write-Host "Overrides location: $(Build.ArtifactStagingDirectory)/packages/overrides.json"
-              if (Test-Path -Path '$(Build.ArtifactStagingDirectory)/packages/overrides.json') {
+              Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
+              if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
-                --overrides '$(Build.ArtifactStagingDirectory)/packages/overrides.json'
+                --overrides '$(buildArtifactsPath)/packages/overrides.json'
               } else {
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
