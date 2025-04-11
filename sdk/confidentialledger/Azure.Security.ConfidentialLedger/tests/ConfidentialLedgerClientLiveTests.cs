@@ -418,7 +418,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRole";
+            string roleName = "TestRole1";
 
             // Add Custom Role
             var rolesParam = new RolesParam
@@ -496,9 +496,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
                 // Validate Fetched user function with Added function Id
                 Assert.AreEqual(functionId, functionData.Id);
+                Console.WriteLine(functionData.Id);
             }
             finally
             {
+                Console.WriteLine(functionId);
                 Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
                 Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
             }
