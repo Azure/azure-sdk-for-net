@@ -86,7 +86,9 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             }
         });
 
-        var cacheProvider = context.CompilationProvider.Select((compilation, _) => new TypeSymbolKindCache());
+        var symbolToKindCacheProvider = context.CompilationProvider.Select((compilation, _) => new TypeSymbolKindCache());
+
+        var symbolToTypeRefCacheProvider = context.CompilationProvider.Select((compilation, _) => new TypeSymbolTypeRefCache());
 
         var attributeInvocations = attributeInfos
             .SelectMany((infos, _) => infos.Where(info => info.Symbol is ITypeSymbol).Select(info => (ITypeSymbol)info.Symbol!))
@@ -107,8 +109,15 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             .Combine(modelInfoTypes)
             .Combine(assemblyNameProvider)
             .Combine(referencedTypes)
-            .Combine(cacheProvider)
-            .Select((data, _) => (data.Left.Left.Left.Left, data.Left.Left.Left.Right, data.Left.Left.Right, data.Left.Right, data.Right));
+            .Combine(symbolToKindCacheProvider)
+            .Combine(symbolToTypeRefCacheProvider)
+            .Select((data, _) => (
+                data.Left.Left.Left.Left.Left,
+                data.Left.Left.Left.Left.Right,
+                data.Left.Left.Left.Right,
+                data.Left.Left.Right,
+                data.Left.Right,
+                data.Right));
 
         context.RegisterSourceOutput(combined, ReportDiagnosticAndEmitSource);
     }
@@ -119,7 +128,8 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             ImmutableArray<ITypeSymbol> TypeBuilders,
             IAssemblySymbol Assembly,
             ImmutableArray<INamedTypeSymbol> ReferencedContexts,
-            TypeSymbolKindCache SymbolToKindCache) data)
+            TypeSymbolKindCache SymbolToKindCache,
+            TypeSymbolTypeRefCache SymbolToTypeRefCache) data)
     {
         if (data.Contexts.Length > 1)
         {
@@ -139,7 +149,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         var contextSymbol = data.Contexts[0]!;
 
         string assemblyName = data.Assembly.Name;
-        var contextType = TypeRef.FromTypeSymbol(contextSymbol, data.SymbolToKindCache);
+        var contextType = data.SymbolToTypeRefCache.Get(contextSymbol, data.SymbolToKindCache);
 
         var builders = data.TypeBuilders
             .SelectMany(typeSymbol => GetRecursiveGenericTypes(typeSymbol, data.SymbolToKindCache))
@@ -147,7 +157,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         var referencedContexts = data.ReferencedContexts.ToImmutableDictionary(
             refContext => refContext.ContainingAssembly.ToDisplayString(),
-            refContext => TypeRef.FromTypeSymbol(refContext, data.SymbolToKindCache));
+            refContext => data.SymbolToTypeRefCache.Get(refContext, data.SymbolToKindCache));
 
         var typeGenerationSpecs = builders
             .Select(symbol =>
@@ -155,7 +165,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                 if (symbol is not ITypeSymbol typeSymbol)
                     return null;
 
-                var type = TypeRef.FromTypeSymbol(typeSymbol, data.SymbolToKindCache);
+                var type = data.SymbolToTypeRefCache.Get(typeSymbol, data.SymbolToKindCache);
                 var itemType = type.GetInnerItemType();
 
                 if (!HasAccessibleParameterlessConstructor(typeSymbol, data.SymbolToKindCache) && itemType.IsSameAssembly(contextType))
@@ -182,7 +192,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                     Modifier = "internal",
                     Type = type,
                     Kind = data.SymbolToKindCache.Get(typeSymbol),
-                    PersistableModelProxy = proxy is null ? null : TypeRef.FromTypeSymbol(proxy, data.SymbolToKindCache),
+                    PersistableModelProxy = proxy is null ? null : data.SymbolToTypeRefCache.Get(proxy, data.SymbolToKindCache),
                     ContextType = referencedContexts.ContainsKey(type.Assembly) ? referencedContexts[type.Assembly] : contextType,
                 };
             })

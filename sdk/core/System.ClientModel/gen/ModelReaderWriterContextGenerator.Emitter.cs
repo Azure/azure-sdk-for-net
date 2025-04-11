@@ -70,7 +70,8 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.Append("<");
                 builder.AppendType(typeof(Type));
                 builder.Append(", ");
-                builder.AppendLine($"{s_modelReaderWriterContext}> s_referenceContexts = new()");
+                builder.Append(s_modelReaderWriterContext);
+                builder.AppendLine("> s_referenceContexts = new()");
                 builder.AppendLine(indent, "{");
                 indent++;
                 foreach (var referencedContext in contextGenerationSpec.ReferencedContexts)
@@ -167,7 +168,8 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.Append(", ");
             builder.AppendType(typeof(Func<>));
             builder.Append("<");
-            builder.AppendLine($"{s_modelReaderWriterTypeBuilder}>> factories);");
+            builder.Append(s_modelReaderWriterTypeBuilder);
+            builder.AppendLine(">> factories);");
 
             indent--;
             builder.AppendLine(indent, "}");
