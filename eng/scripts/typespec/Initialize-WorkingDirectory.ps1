@@ -64,9 +64,10 @@ function Initialize-Package($packageName) {
                 Invoke-LoggedCommand "npm ci"
             }
 
-            New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
-
             $lockFilesPath = Join-Path $OutputDirectory "lock-files"
+
+            New-Item -ItemType Directory -Force -Path $lockFilesPath | Out-Null
+            
             Write-Host "Copying package.json and package-lock.json to $lockFilesPath"
 
             Copy-Item "./package.json" -Destination (Join-Path $lockFilesPath "package.json") -Force
