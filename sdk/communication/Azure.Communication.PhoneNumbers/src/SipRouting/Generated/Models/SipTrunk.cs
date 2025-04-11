@@ -12,13 +12,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     {
         /// <summary> Initializes a new instance of <see cref="SipTrunk"/>. </summary>
         /// <param name="sipSignalingPort"> Gets or sets SIP signaling port of the trunk. </param>
-        public SipTrunk(int sipSignalingPort)
-        {
-            SipSignalingPort = sipSignalingPort;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SipTrunk"/>. </summary>
-        /// <param name="sipSignalingPort"> Gets or sets SIP signaling port of the trunk. </param>
         /// <param name="enabled"> Enabled flag. </param>
         /// <param name="health"> Represents health state of a SIP trunk for routing calls. </param>
         /// <param name="directTransfer"> When enabled, removes Azure Communication Services from the signaling path on call transfer and sets the SIP Refer-To header to the trunk's FQDN. By default false. </param>

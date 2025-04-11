@@ -496,7 +496,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     }
     public partial class SipTrunk
     {
-        public SipTrunk(int sipSignalingPort) { }
         public SipTrunk(string fqdn, int sipSignalingPort) { }
         public bool? DirectTransfer { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
