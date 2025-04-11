@@ -67,9 +67,14 @@ parameters:
   type: object
   default: []
 
-- name: EmitterPackageJsonPath
+# The path to the emitter package json file.
+- name: EmitterPackageJsonOutputPath
   type: string
-  default: ""
+  default: "eng/emitter-package.json"
+
+# The relative path to the emitter package.
+- name: EmitterPackagePath
+  type: string
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -98,7 +103,17 @@ extends:
           inputs:
             pwsh: true
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
-            arguments: -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
+            ${{ if parameters.BuildPrereleaseVersion }}:
+              arguments: >
+                -PrereleaseSuffix "-alpha.$(Build.BuildNumber)"
+                -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+                -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
+                -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
+            ${{ else }}:
+              arguments: >
+                -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+                -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
+                -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
 
         - task: PowerShell@2
           displayName: 'Run build script'
@@ -107,10 +122,9 @@ extends:
             pwsh: true
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Build-Emitter.ps1
             arguments: >
-              -BuildNumber "$(Build.BuildNumber)"
-              -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+              -OutputDirectory "$(Build.ArtifactStagingDirectory)/packages"
               -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
-              -Prerelease:$${{ parameters.BuildPrereleaseVersion }}
+              -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
 
         - pwsh: |
             $sourceBranch = '$(Build.SourceBranch)'
@@ -138,7 +152,7 @@ extends:
     # Publish stage
     # Responsible for publishing the packages in `build_artifacts/packages` and producing `emitter-package-lock.json`
     # Produces the artifact `publish_artifacts` which contains the following:
-    #   emitter-package.json: Created using the package json from the build step. 
+    #   emitter-package.json: Created using the package json from the build step.
     #   emitter-package-lock.json: Created by calling `npm install` using `emitter-package.json`
     - ${{ if parameters.ShouldPublish }}:
       - stage: Publish
@@ -198,20 +212,25 @@ extends:
             displayName: Install tsp-client
 
           - pwsh: |
-              if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
+              Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
+
+              if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --output-dir '$(Build.ArtifactStagingDirectory)' `
-                --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}' `
-                --overrides '$(buildArtifactsPath)/overrides.json'
+                --output-dir '$(Build.SourcesDirectory)' `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}' `
+                --overrides '$(buildArtifactsPath)/packages/overrides.json'
               } else {
+                Write-Host "No overrides.json found. Running tsp-client without overrides."
+                
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --output-dir '$(Build.ArtifactStagingDirectory)' `
-                --emitter-package-json-path  '${{ parameters.EmitterPackageJsonPath }}'
+                --output-dir '$(Build.SourcesDirectory)' `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
+            workingDirectory: $(Build.SourcesDirectory)
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:
@@ -243,11 +262,8 @@ extends:
             displayName: Download pipeline artifacts
 
           - pwsh: |
-              Write-Host "Copying emitter-package.json to $(Build.SourcesDirectory)/eng"
-              Copy-Item $(publishArtifactsPath)/emitter-package.json $(Build.SourcesDirectory)/eng/ -Force
-
-              Write-Host "Copying emitter-package-lock.json to $(Build.SourcesDirectory)/eng"
-              Copy-Item $(publishArtifactsPath)/emitter-package-lock.json $(Build.SourcesDirectory)/eng/ -Force
+              Write-Host "Copying *emitter-package*.json to $(Build.SourcesDirectory)/eng"
+              Copy-Item $(publishArtifactsPath)/*emitter-package*.json $(Build.SourcesDirectory)/eng/ -Force
             displayName: Copy emitter-package json files
 
           - ${{ parameters.InitializationSteps }}
@@ -435,7 +451,9 @@ extends:
             inputs:
               pwsh: true
               filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
-              arguments: -BuildArtifactsPath '$(buildArtifactsPath)'
+              arguments: > 
+                -BuildArtifactsPath '$(buildArtifactsPath)/lock-files'
+                -EmitterPackagePath {{ parameters.EmitterPackagePath }}
 
           - task: PowerShell@2
             displayName: 'Run test script'
