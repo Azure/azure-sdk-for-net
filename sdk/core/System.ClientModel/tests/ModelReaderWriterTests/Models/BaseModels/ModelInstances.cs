@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+#if SOURCE_GENERATOR
+using System.ClientModel.SourceGeneration.Tests;
+#else
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+#endif
 using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
@@ -69,6 +73,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
         {
             var expectedRawData = GetRawData(expected);
             var actualRawData = GetRawData(actual);
+
+            Assert.AreEqual("UnknownBaseModel", actual.GetType().Name);
 
             Assert.AreEqual(expected.Name!, actual.Name!);
             Assert.AreEqual(expected.Kind!, actual.Kind!);

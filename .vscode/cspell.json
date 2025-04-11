@@ -353,7 +353,11 @@
         "cbor",
         "ccfs",
         "cose",
-        "scitt"
+        "Jwks",
+        "PHDR",
+        "PKIX",
+        "scitt",
+        "tstr"
       ]
     },
     {
@@ -1209,6 +1213,7 @@
       "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
       "words": [
         "dras",
+        "fqdns",
         "nics",
         "reprotect"
       ]

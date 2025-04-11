@@ -11,15 +11,9 @@ namespace _Type.Model.Visibility.Models
 {
     public partial class VisibilityModel
     {
-        public VisibilityModel(int queryProp, IEnumerable<string> createProp, IEnumerable<int> updateProp, bool deleteProp) => throw null;
+        public VisibilityModel(IEnumerable<string> createProp, IEnumerable<int> updateProp, bool deleteProp) => throw null;
 
         public string ReadProp => throw null;
-
-        public int QueryProp
-        {
-            get => throw null;
-            set => throw null;
-        }
 
         public IList<string> CreateProp => throw null;
 
