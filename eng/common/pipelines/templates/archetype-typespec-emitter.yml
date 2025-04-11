@@ -103,11 +103,11 @@ extends:
               arguments: >
                 -PrereleaseSuffix "-alpha.$(Build.BuildNumber)"
                 -OutputDirectory "$(Build.ArtifactStagingDirectory)"
-                -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
+                -UseTypeSpecNext:${{ parameters.UseTypeSpecNext }}
             ${{ else }}:
               arguments: >
                 -OutputDirectory "$(Build.ArtifactStagingDirectory)"
-                -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
+                -UseTypeSpecNext:${{ parameters.UseTypeSpecNext }}
 
         - task: PowerShell@2
           displayName: 'Run build script'
@@ -117,7 +117,7 @@ extends:
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Build-Emitter.ps1
             arguments: >
               -OutputDirectory "$(Build.ArtifactStagingDirectory)/packages"
-              -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
+              -TargetNpmJsFeed:${{ parameters.PublishPublic }}
 
         - pwsh: |
             $sourceBranch = '$(Build.SourceBranch)'
