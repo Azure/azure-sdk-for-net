@@ -93,5 +93,4 @@ directive:
       $.SbomComponentResource.properties.properties["x-ms-client-flatten"] = true;
       $.Workspace.properties.properties["x-ms-client-flatten"] = true;
       $.Firmware.properties.properties["x-ms-client-flatten"] = true;
-
 ```

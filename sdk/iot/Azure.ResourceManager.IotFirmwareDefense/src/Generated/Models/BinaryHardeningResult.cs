@@ -51,11 +51,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningResult"/>. </summary>
-        public BinaryHardeningResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BinaryHardeningResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
