@@ -54,7 +54,7 @@ function Initialize-Package($emitterPackagePath) {
                 # set package versions
                 $emitterVersion = "$($emitterVersion.Split('-')[0])$PrereleaseSuffix"
                 Write-Host "Updating version package.json to the new emitter version`n"
-                Invoke-LoggedCommand "npm pkg set version=$emitterVersion" $lockFilesPath
+                Invoke-LoggedCommand "npm pkg set version=$emitterVersion"
             }
 
             if ($UseTypeSpecNext) {
