@@ -56,8 +56,8 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> Custom Serialization schema type. </summary>
         public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue, CustomContentType);
 
-        ///// <summary> Protobuf Serialization schema type. </summary>
-        //public static SchemaFormat Protobuf { get; } = new SchemaFormat(ProtobufValue);
+        /// <summary> Protobuf Serialization schema type. </summary>
+        public static SchemaFormat Protobuf { get; } = new SchemaFormat(ProtobufValue);
 
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
