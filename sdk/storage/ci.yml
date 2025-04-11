@@ -11,6 +11,8 @@ trigger:
     - sdk/storage/
     - sdk/storage/Azure.Storage.DataMovement/
     - sdk/storage/Azure.Storage.DataMovement.Blobs/
+    exclude:
+    - sdk/storage/Azure.ResourceManager.Storage/
     - sdk/storage/Azure.Storage.DataMovement.Files/
     exclude:
     - sdk/storage/Azure.ResourceManager.Storage/

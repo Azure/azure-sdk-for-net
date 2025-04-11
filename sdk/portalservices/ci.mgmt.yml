@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/portalservicescopilot/ci.mgmt.yml
-    - sdk/portalservicescopilot/Azure.ResourceManager.PortalServicesCopilot/
+    - sdk/portalservices/ci.mgmt.yml
+    - sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: portalservicescopilot
+    ServiceDirectory: portalservices
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.PortalServicesCopilot

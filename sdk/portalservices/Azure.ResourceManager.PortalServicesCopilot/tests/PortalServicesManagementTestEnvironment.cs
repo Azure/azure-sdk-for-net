@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.PortalServicesCopilot.Tests
 {
-    public class PortalServicesCopilotManagementTestEnvironment : TestEnvironment
+    public class PortalServicesManagementTestEnvironment : TestEnvironment
     {
     }
 }

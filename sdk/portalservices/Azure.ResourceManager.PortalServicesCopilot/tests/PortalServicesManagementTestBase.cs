@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.PortalServicesCopilot.Tests
 {
-    public class PortalServicesCopilotManagementTestBase : ManagementRecordedTestBase<PortalServicesCopilotManagementTestEnvironment>
+    public class PortalServicesManagementTestBase : ManagementRecordedTestBase<PortalServicesManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected PortalServicesCopilotManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected PortalServicesManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected PortalServicesCopilotManagementTestBase(bool isAsync)
+        protected PortalServicesManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

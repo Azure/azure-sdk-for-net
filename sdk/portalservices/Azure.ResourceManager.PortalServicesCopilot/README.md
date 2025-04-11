@@ -1,4 +1,4 @@
-# Microsoft Azure PortalServicesCopilot management client library for .NET
+# Microsoft Azure PortalServices management client library for .NET
 
 **[Describe the service briefly first.]**
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure PortalServicesCopilot management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure PortalServices management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.PortalServicesCopilot --prerelease
