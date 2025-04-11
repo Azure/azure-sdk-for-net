@@ -206,6 +206,7 @@ extends:
 
           - pwsh: |
               Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
+
               if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files `
@@ -214,10 +215,12 @@ extends:
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
                 --overrides '$(buildArtifactsPath)/packages/overrides.json'
               } else {
+                Write-Host "No overrides.json found. Running tsp-client without overrides."
+                
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
-                --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}'
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
             workingDirectory: $(Build.SourcesDirectory)
