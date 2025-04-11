@@ -21,10 +21,6 @@ if ($EmitterPackagePath.StartsWith("/")) {
 $packageRoot = Resolve-Path "$RepoRoot/$EmitterPackagePath"
 $testResultsPath = $OutputDirectory ? $OutputDirectory : (Join-Path $packageRoot "artifacts" "test")
 
-# restore the package.json and package-lock.json files to their original state
-Write-Host "Restoring package.json and package-lock.json to their original state"
-Invoke-LoggedCommand "git restore package.json package-lock.json"
-
 $errors = @()
 
 function Build-Emitter {
@@ -32,6 +28,10 @@ function Build-Emitter {
         [string]$packageRoot,
         [string]$testResultsPath
     )
+
+        # restore the package.json and package-lock.json files to their original state
+        Write-Host "Restoring package.json and package-lock.json to their original state"
+        Invoke-LoggedCommand "git restore package.json package-lock.json"
 
         if ($UnitTests) {
             # test the emitter
