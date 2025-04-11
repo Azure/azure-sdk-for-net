@@ -17,6 +17,7 @@ sample-gen:
   clear-output-folder: true
   skipped-operations:
   - InformationProtectionPolicies_CreateOrUpdate
+  - SqlVulnerabilityAssessmentBaselineRules_Add
   - InformationProtectionPolicies_List
   - SubAssessments_ListAll
   - Assessments_List
