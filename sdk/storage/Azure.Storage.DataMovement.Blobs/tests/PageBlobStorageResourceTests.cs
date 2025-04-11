@@ -1615,6 +1615,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(metadata, Is.EqualTo(metadataResult));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.Verify(b => b.Uri, Times.Once());
             mock.VerifyNoOtherCalls();
         }
 
@@ -1657,6 +1658,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(rawProperties, Is.EqualTo(result.RawProperties));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Never());
+            mock.Verify(b => b.Uri, Times.Once());
             mock.VerifyNoOtherCalls();
         }
 

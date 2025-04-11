@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_VaultGet()
+        public async Task Get_GetsTheVault()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Vault_Get.json
-            // this example is just showing the usage of "Vault_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Vault_Get.json
+            // this example is just showing the usage of "VaultModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_VaultDelete()
+        public async Task Delete_DeletesTheVault()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Vault_Delete.json
-            // this example is just showing the usage of "Vault_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Vault_Delete.json
+            // this example is just showing the usage of "VaultModel_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_VaultUpdate()
+        public async Task Update_UpdatesTheVault()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Vault_Update.json
-            // this example is just showing the usage of "Vault_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Vault_Update.json
+            // this example is just showing the usage of "VaultModel_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 },
                 Properties = new DataReplicationVaultProperties
                 {
-                    VaultType = DataReplicationReplicationVaultType.DisasterRecovery,
+                    VaultType = DataReplicationVaultType.DisasterRecovery,
                 },
             };
             ArmOperation<DataReplicationVaultResource> lro = await dataReplicationVault.UpdateAsync(WaitUntil.Completed, patch);
