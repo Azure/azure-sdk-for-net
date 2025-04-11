@@ -70,7 +70,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void VerifyProtobufToContentType()
         {
-            Assert.AreEqual(ContentType.Protobuf, SchemaFormat.Protobuf.ToContentType());
+            Assert.AreEqual(ProtobufContentType, SchemaFormat.Protobuf.ContentType);
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void VerifyProtobufFromContentType()
         {
-            var fromContentType = SchemaFormat.FromContentType("text/vnd.ms.protobuf");
+            var fromContentType = SchemaFormat.FromContentType(ProtobufContentType);
             Assert.AreEqual(SchemaFormat.Protobuf, fromContentType);
         }
     }

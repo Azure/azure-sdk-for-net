@@ -27,7 +27,6 @@ namespace Azure.Data.SchemaRegistry
         private const string AvroContentTypeValue = "Avro";
         private const string JsonContentTypeValue = "Json";
         private const string CustomContentTypeValue = "utf-8";
-        private const string ProtobufContentTypeValue = "vnd.ms.protobuf";
 
         /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -57,7 +56,7 @@ namespace Azure.Data.SchemaRegistry
         public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue, CustomContentType);
 
         /// <summary> Protobuf Serialization schema type. </summary>
-        public static SchemaFormat Protobuf { get; } = new SchemaFormat(ProtobufValue);
+        public static SchemaFormat Protobuf { get; } = new SchemaFormat(ProtobufValue, ProtobufContentType);
 
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
@@ -96,6 +95,10 @@ namespace Azure.Data.SchemaRegistry
                     default:
                         break;
                 }
+            }
+            if (contentTypeParameterValue[0] == ProtobufContentType)
+            {
+                return Protobuf;
             }
             return new SchemaFormat(contentTypeValue);
         }
