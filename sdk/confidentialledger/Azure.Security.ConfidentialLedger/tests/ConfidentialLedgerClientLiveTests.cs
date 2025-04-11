@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -326,10 +327,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
-            Console.WriteLine(resp.Content);
+            Console.WriteLine("resp", resp.Content);
 
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-            string programContent = File.ReadAllText(filePath);
+            string programContent = new StreamReader(filePath).ReadToEnd();
+            Console.WriteLine("program content", programContent);
+            Console.WriteLine("response content", resp.Content.ToString());
             Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
 
             // Verify Response by Querying endpt
@@ -496,7 +499,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
                 // Validate Fetched user function with Added function Id
                 Assert.AreEqual(functionId, functionData.Id);
-                Console.WriteLine(functionData.Id);
             }
             finally
             {
