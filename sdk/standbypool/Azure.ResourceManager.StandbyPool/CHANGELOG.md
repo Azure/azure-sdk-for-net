@@ -8,22 +8,6 @@
 - Exposing StandbyPool Health Status for both Virtual Machine and Container Group Standby Pools in GetRuntimeView API.
 - Exposing StandbyPool Prediction Information for both Virtual Machine and Container Group Standby Pools in GetRuntimeView API.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0 (2024-09-10)
 
 ### Features Added
