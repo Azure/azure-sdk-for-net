@@ -69,7 +69,7 @@ parameters:
 
 - name: EmitterPackageJsonPath
   type: string
-  default: ""
+  default: "eng/emitter-package.json"
 
 - name: EmitterPackageName
   type: string
@@ -208,22 +208,18 @@ extends:
             displayName: Install tsp-client
 
           - pwsh: |
-              $emitterPath = '${{ parameters.EmitterPackageJsonPath }}'
-              if ([string]::IsNullOrEmpty($emitterPath)) {
-                $emitterPath = "eng/emitter-package.json"
-              }
               if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/${{ parameters.EmitterPackageName }}/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
-                --emitter-package-json-path '$emitterPath' `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
                 --overrides '$(buildArtifactsPath)/overrides.json'
               } else {
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/${{ parameters.EmitterPackageName }}/package.json' `
                 --output-dir '$(Build.SourcesDirectory)' `
-                --emitter-package-json-path '$emitterPath'
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonPath }}' `
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
             workingDirectory: $(buildArtifactsPath)/packages
