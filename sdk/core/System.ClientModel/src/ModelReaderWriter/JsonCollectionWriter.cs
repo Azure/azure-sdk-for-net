@@ -34,7 +34,7 @@ internal class JsonCollectionWriter : CollectionWriter
         }
         else
         {
-            throw new InvalidOperationException($"{model.GetType().Name} does not implement IJsonModel or IEnumerable<IJsonModel>");
+            throw new InvalidOperationException($"{model.GetType().ToFriendlyName()} does not implement IJsonModel or IEnumerable<IJsonModel>");
         }
     }
 
