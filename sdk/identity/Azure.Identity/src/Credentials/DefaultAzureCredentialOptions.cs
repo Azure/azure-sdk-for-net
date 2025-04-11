@@ -261,6 +261,12 @@ namespace Azure.Identity
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
 
         /// <summary>
+        /// Specifies whether broker authentication, via <see cref="InteractiveBrowserCredential"/>, will be attempted as part of the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// Note that the broker authentication flow will only be attempted if the application has a reference to the Azure.Identity.Broker package.
+        /// </summary>
+        public bool ExcludeBrokerCredential { get; set; }
+
+        /// <summary>
         /// Specifies whether the <see cref="AzureCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>
         public bool ExcludeAzureCliCredential { get; set; }
@@ -318,6 +324,7 @@ namespace Azure.Identity
 #pragma warning restore CS0618 // Type or member is obsolete
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
                 dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
+                dacClone.ExcludeBrokerCredential = ExcludeBrokerCredential;
             }
 
             return clone;

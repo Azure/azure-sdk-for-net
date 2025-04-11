@@ -10,7 +10,7 @@
    "name": "InvalidAuth",
    "namespace": "Authentication.OAuth2",
    "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth",
-   "usage": "Error,Json,Exception",
+   "usage": "Json,Exception",
    "decorators": [],
    "properties": [
     {
@@ -45,6 +45,7 @@
  "clients": [
   {
    "$id": "7",
+   "kind": "client",
    "name": "OAuth2Client",
    "namespace": "Authentication.OAuth2",
    "doc": "Illustrates clients generated with OAuth2 authentication.",
@@ -163,7 +164,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Authentication.OAuth2"
+   "crossLanguageDefinitionId": "Authentication.OAuth2",
+   "apiVersions": []
   }
  ],
  "auth": {
