@@ -26,7 +26,7 @@ function Initialize-Package($emitterPackagePath) {
     if ($emitterPackagePath.StartsWith("/")) {
         $emitterPackagePath = $emitterPackagePath.Substring(1)
     }
-    
+
     $packageRoot = Join-Path $RepoRoot $emitterPackagePath
     Push-Location $packageRoot
     try {
@@ -50,15 +50,6 @@ function Initialize-Package($emitterPackagePath) {
             # them available to other build jobs by copying them to the artifacts directory
             $emitterVersion = (npm pkg get version).Trim('"')
 
-            $lockFilesPath = Join-Path $OutputDirectory "lock-files"
-
-            New-Item -ItemType Directory -Force -Path $lockFilesPath | Out-Null
-
-            Write-Host "Copying package.json and package-lock.json to $lockFilesPath"
-
-            Copy-Item "./package.json" -Destination (Join-Path $lockFilesPath "package.json") -Force
-            Copy-Item "./package-lock.json" -Destination (Join-Path $lockFilesPath "package-lock.json") -Force
-
             if ($PrereleaseSuffix) {
                 # set package versions
                 $emitterVersion = "$($emitterVersion.Split('-')[0])$PrereleaseSuffix"
@@ -72,15 +63,24 @@ function Initialize-Package($emitterPackagePath) {
                 }
 
                 Write-Host "Using TypeSpec.Next"
-                Invoke-LoggedCommand "npx -y @azure-tools/typespec-bump-deps@latest --add-npm-overrides package.json" $lockFilesPath
-                Invoke-LoggedCommand "npm install" $lockFilesPath
+                Invoke-LoggedCommand "npx -y @azure-tools/typespec-bump-deps@latest --add-npm-overrides package.json"
+                Invoke-LoggedCommand "npm install"
             }
             else {
-                Invoke-LoggedCommand "npm ci" $lockFilesPath
+                Invoke-LoggedCommand "npm ci"
             }
         }
 
-        Invoke-LoggedCommand "npm list --all" $lockFilesPath -GroupOutput
+        $lockFilesPath = Join-Path $OutputDirectory "lock-files"
+
+        New-Item -ItemType Directory -Force -Path $lockFilesPath | Out-Null
+
+        Write-Host "Copying package.json and package-lock.json to $lockFilesPath"
+
+        Copy-Item "./package.json" -Destination (Join-Path $lockFilesPath "package.json") -Force
+        Copy-Item "./package-lock.json" -Destination (Join-Path $lockFilesPath "package-lock.json") -Force
+
+        Invoke-LoggedCommand "npm list --all" -GroupOutput
     }
     finally {
         Pop-Location
