@@ -48,6 +48,9 @@ function Build-Emitter {
             $unscopedName = $packageName.Split("/")[1]
             $overrides[$packageName] = "$feedUrl/$packageName/-/$unscopedName-$packageVersion.tgz"
         }
+
+        # restore the package.json and package-lock.json files to their original state
+        git restore package.json package-lock.json
     }
     finally {
         Pop-Location
@@ -63,7 +66,6 @@ New-Item -ItemType Directory -Force -Path $outputPath | Out-Null
 if ($emitterPackagePath.StartsWith("/")) {
     $emitterPackagePath = $emitterPackagePath.Substring(1)
 }
-
 $packageRoot = Join-Path $RepoRoot $emitterPackagePath
 Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
 
