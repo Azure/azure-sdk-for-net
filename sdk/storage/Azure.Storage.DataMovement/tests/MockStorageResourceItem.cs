@@ -96,6 +96,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             return Task.FromResult(new StorageResourceItemProperties()
             {
+                Uri = Uri,
                 ResourceLength = Length ?? 0,
                 ETag = new ETag("etag"),
                 LastModifiedTime = DateTimeOffset.UtcNow

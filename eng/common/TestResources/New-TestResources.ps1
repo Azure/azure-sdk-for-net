@@ -657,6 +657,7 @@ $serialized
 '`@ | ConvertFrom-Json -AsHashtable
 # Set global variables that aren't always passed as parameters
 `$ResourceGroupName = `$parameters.ResourceGroupName
+`$AdditionalParameters = `$parameters.AdditionalParameters
 `$DeploymentOutputs = `$parameters.DeploymentOutputs
 $postDeploymentScript `@parameters
 "@
