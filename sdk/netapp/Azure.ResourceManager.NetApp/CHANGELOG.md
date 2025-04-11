@@ -3,6 +3,15 @@
 ## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
+- Upgraded api-version tag from 'package-2024-09-01' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/d7a38bf0c0b5fbd9e893e05ad0a7dbee18ac3a8d/specification/netapp/resource-manager/readme.md.
+- Added `GetNetAppResourceUsages` and `GetNetAppResourceUsage`
+- Added `GetNetAppResourceUsages` and `GetNetAppResourceUsage`
+- Added `FederatedClientId` to `NetAppEncryptionIdentity` to support Cross Tennant CMK
+- Added `NfsV4IdDomain`, `MultiAdStatus` to `NetAppAccountData.cs`
+- Added `DestinationReplications` to `NetAppReplicationObject`
+- Added support for ANF Migration Assistant with operations `PeerExternalCluster`, `AuthorizeExternalReplication`, `FinalizeExternalReplication`, `PerformReplicationTransfer` on `NetAppVolumeResource`
+- Added `IsLargeVolume` to  `NetAppBackupData`
+- `IsRestoring` in `NetAppVolumeData` and `NetAppVolumeGroupVolume` is no longer a requred parameter
 
 ### Breaking Changes
 
