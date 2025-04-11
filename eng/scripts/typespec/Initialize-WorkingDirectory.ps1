@@ -34,8 +34,8 @@ function Initialize-Package($packageName) {
 
             $BuildArtifactsPath = Resolve-Path $BuildArtifactsPath
             Write-Host "Using package.json and package-lock.json from $BuildArtifactsPath"
-            Copy-Item "$BuildArtifactsPath/$packageName/package.json" './package.json' -Force
-            Copy-Item "$BuildArtifactsPath/$packageName/package-lock.json" './package-lock.json' -Force
+            Copy-Item "$BuildArtifactsPath/package.json" './package.json' -Force
+            Copy-Item "$BuildArtifactsPath/package-lock.json" './package-lock.json' -Force
 
             Invoke-LoggedCommand "npm ci"
         }
@@ -65,16 +65,12 @@ function Initialize-Package($packageName) {
             }
 
             New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
-            Write-Host "Copying package.json and package-lock.json to $OutputDirectory"
-            
-            $targetPath = Join-Path $OutputDirectory $packageName
-            # Create the destination directory if it doesn't exist
-            if (-not (Test-Path -Path $targetPath)) {
-                New-Item -ItemType Directory -Path $targetPath -Force | Out-Null
-            }
 
-            Copy-Item "./package.json" -Destination (Join-Path $targetPath "package.json") -Force
-            Copy-Item "./package-lock.json" -Destination (Join-Path $targetPath "package-lock.json") -Force
+            $lockFilesPath = Join-Path $OutputDirectory "lock-files"
+            Write-Host "Copying package.json and package-lock.json to $lockFilesPath"
+
+            Copy-Item "./package.json" -Destination (Join-Path $lockFilesPath "package.json") -Force
+            Copy-Item "./package-lock.json" -Destination (Join-Path $lockFilesPath "package-lock.json") -Force
         }
 
         Invoke-LoggedCommand "npm list --all" -GroupOutput
@@ -85,4 +81,3 @@ function Initialize-Package($packageName) {
 }
 
 Initialize-Package 'http-client-csharp'
-Initialize-Package 'http-client-csharp-mgmt'
