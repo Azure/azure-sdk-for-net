@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<CveResourceData> value = default;
+            IReadOnlyList<CveResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CveResourceData> array = new List<CveResourceData>();
+                    List<CveResult> array = new List<CveResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CveResourceData.DeserializeCveResourceData(item, options));
+                        array.Add(CveResult.DeserializeCveResult(item, options));
                     }
                     value = array;
                     continue;

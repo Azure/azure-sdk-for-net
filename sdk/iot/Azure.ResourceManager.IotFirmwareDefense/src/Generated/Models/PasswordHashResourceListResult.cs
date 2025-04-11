@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: PasswordHashResourceListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PasswordHashResourceListResult(IEnumerable<PasswordHash> value)
+        internal PasswordHashResourceListResult(IEnumerable<PasswordHashResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: PasswordHashResourceListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PasswordHashResourceListResult(IReadOnlyList<PasswordHash> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PasswordHashResourceListResult(IReadOnlyList<PasswordHashResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// The PasswordHashResource items on this page
         /// Serialized Name: PasswordHashResourceListResult.value
         /// </summary>
-        public IReadOnlyList<PasswordHash> Value { get; }
+        public IReadOnlyList<PasswordHashResult> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: PasswordHashResourceListResult.nextLink

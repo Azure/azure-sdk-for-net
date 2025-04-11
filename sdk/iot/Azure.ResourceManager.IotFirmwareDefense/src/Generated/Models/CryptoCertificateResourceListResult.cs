@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: CryptoCertificateResourceListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CryptoCertificateResourceListResult(IEnumerable<CryptoCertificate> value)
+        internal CryptoCertificateResourceListResult(IEnumerable<CryptoCertificateResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: CryptoCertificateResourceListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CryptoCertificateResourceListResult(IReadOnlyList<CryptoCertificate> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CryptoCertificateResourceListResult(IReadOnlyList<CryptoCertificateResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// The CryptoCertificateResource items on this page
         /// Serialized Name: CryptoCertificateResourceListResult.value
         /// </summary>
-        public IReadOnlyList<CryptoCertificate> Value { get; }
+        public IReadOnlyList<CryptoCertificateResult> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: CryptoCertificateResourceListResult.nextLink

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: BinaryHardeningResourceListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal BinaryHardeningResourceListResult(IEnumerable<BinaryHardeningResourceData> value)
+        internal BinaryHardeningResourceListResult(IEnumerable<BinaryHardeningResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: BinaryHardeningResourceListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BinaryHardeningResourceListResult(IReadOnlyList<BinaryHardeningResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BinaryHardeningResourceListResult(IReadOnlyList<BinaryHardeningResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// The BinaryHardeningResource items on this page
         /// Serialized Name: BinaryHardeningResourceListResult.value
         /// </summary>
-        public IReadOnlyList<BinaryHardeningResourceData> Value { get; }
+        public IReadOnlyList<BinaryHardeningResult> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: BinaryHardeningResourceListResult.nextLink

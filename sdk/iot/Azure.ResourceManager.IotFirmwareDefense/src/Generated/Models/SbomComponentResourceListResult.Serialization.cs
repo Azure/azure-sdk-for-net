@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<SbomComponent> value = default;
+            IReadOnlyList<SbomComponentResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SbomComponent> array = new List<SbomComponent>();
+                    List<SbomComponentResult> array = new List<SbomComponentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SbomComponent.DeserializeSbomComponent(item, options));
+                        array.Add(SbomComponentResult.DeserializeSbomComponentResult(item, options));
                     }
                     value = array;
                     continue;

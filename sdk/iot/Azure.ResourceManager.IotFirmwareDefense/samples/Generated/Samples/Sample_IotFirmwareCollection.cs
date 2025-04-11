@@ -43,21 +43,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             string firmwareId = "00000000-0000-0000-0000-000000000000";
             IotFirmwareData data = new IotFirmwareData
             {
-                Properties = new FirmwareProperties
-                {
-                    FileName = "dmnqhyxssutvnewntlb",
-                    Vendor = "hymojocxpxqhtblioaavylnzyg",
-                    Model = "wmyfbyjsggbvxcuin",
-                    Version = "nhtxzslgcbtptu",
-                    Description = "sqt",
-                    FileSize = 30L,
-                    Status = FirmwareAnalysisStatus.Pending,
-                    StatusMessages = {new FirmwareAnalysisStatusMessage
+                FileName = "dmnqhyxssutvnewntlb",
+                Vendor = "hymojocxpxqhtblioaavylnzyg",
+                Model = "wmyfbyjsggbvxcuin",
+                Version = "nhtxzslgcbtptu",
+                Description = "sqt",
+                FileSize = 30L,
+                Status = FirmwareAnalysisStatus.Pending,
+                StatusMessages = {new FirmwareAnalysisStatusMessage
 {
 ErrorCode = 20L,
 Message = "edtylkjvj",
 }},
-                },
             };
             ArmOperation<IotFirmwareResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firmwareId, data);
             IotFirmwareResource result = lro.Value;
@@ -94,10 +91,7 @@ Message = "edtylkjvj",
 
             // invoke the operation
             string firmwareId = "umrkdttp";
-            IotFirmwareData data = new IotFirmwareData
-            {
-                Properties = new FirmwareProperties(),
-            };
+            IotFirmwareData data = new IotFirmwareData();
             ArmOperation<IotFirmwareResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firmwareId, data);
             IotFirmwareResource result = lro.Value;
 

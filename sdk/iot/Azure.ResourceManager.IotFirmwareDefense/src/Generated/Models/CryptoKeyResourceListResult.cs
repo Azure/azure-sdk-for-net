@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: CryptoKeyResourceListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CryptoKeyResourceListResult(IEnumerable<CryptoKey> value)
+        internal CryptoKeyResourceListResult(IEnumerable<CryptoKeyResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: CryptoKeyResourceListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CryptoKeyResourceListResult(IReadOnlyList<CryptoKey> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CryptoKeyResourceListResult(IReadOnlyList<CryptoKeyResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// The CryptoKeyResource items on this page
         /// Serialized Name: CryptoKeyResourceListResult.value
         /// </summary>
-        public IReadOnlyList<CryptoKey> Value { get; }
+        public IReadOnlyList<CryptoKeyResult> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: CryptoKeyResourceListResult.nextLink

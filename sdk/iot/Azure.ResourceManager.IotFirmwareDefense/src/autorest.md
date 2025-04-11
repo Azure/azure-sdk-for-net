@@ -17,9 +17,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: true
 use-model-reader-writer: true
 
-mgmt-debug: 
+mgmt-debug:
   show-serialized-names: true
 
 format-by-name-rules:
@@ -60,24 +61,16 @@ override-operation-name:
 rename-mapping:
   GenerateUploadUrlRequest: FirmwareUploadUrlRequest
   Workspace: FirmwareAnalysisWorkspace
-
-  CryptoCertificate: CryptoCertificateResult
-  CryptoKey: CryptoKeyResult
-  PasswordHash: PasswordHashResult
-  SbomComponent: SbomComponentResult
-  UsageMetricData: UsageMetricResult
-
-  BinaryHardeningResource: BinaryHardeningResourceData
-  CryptoCertificateResource: CryptoCertificate
-  CryptoKeyResource: CryptoKey
-  CveResource: CveResourceData
-  PasswordHashResource: PasswordHash
-  SbomComponentResource: SbomComponent
-  UsageMetricResource: UsageMetric
-
+  BinaryHardeningResource: BinaryHardeningResult
   BinaryHardeningSummaryResource: BinaryHardeningSummary
+  CveResource: CveResult
+  PasswordHashResource: PasswordHashResult
+  SbomComponentResource: SbomComponentResult
   SummaryType: FirmwareAnalysisSummaryType
+  CryptoCertificateResource: CryptoCertificateResult
   CryptoCertificateSummaryResource: CryptoCertificateSummary
+  CryptoKeyResource: CryptoKeyResult
+  CryptoKeyResource.properties.cryptoKeyId: CryptoKeyId
   CryptoKeySummaryResource: CryptoKeySummary
   Firmware: IotFirmware
   ProvisioningState: FirmwareProvisioningState
@@ -89,20 +82,16 @@ rename-mapping:
   UrlToken: FirmwareUrlToken
 
 directive:
-  - from: swagger-document
+  - from: iotfirmwaredefense.json
     where: $.definitions
     transform: >
-      $.BinaryHardeningResource.properties.properties["x-ms-client-flatten"] = true
-      $.CryptoCertificateResource.properties.properties["x-ms-client-flatten"] = true
-      $.CryptoKeyResource.properties.properties["x-ms-client-flatten"] = true
-      $.CveResource.properties.properties["x-ms-client-flatten"] = true
-      $.PasswordHashResource.properties.properties["x-ms-client-flatten"] = true
-      $.SbomComponentResource.properties.properties["x-ms-client-flatten"] = true
-      $.UsageMetricResource.properties.properties["x-ms-client-flatten"] = true
-      $.BinaryHardeningSummaryResource.properties.properties["x-ms-client-flatten"] = true
-      $.CryptoCertificateSummaryResource.properties.properties["x-ms-client-flatten"] = true
-      $.SummaryResource.properties.properties["x-ms-client-flatten"] = true
-      $.Workspace.properties.properties["x-ms-client-flatten"] = true
-      $.Firmware.properties.properties["x-ms-client-flatten"] = true
+      $.BinaryHardeningResource.properties.properties["x-ms-client-flatten"] = true;
+      $.CryptoCertificateResource.properties.properties["x-ms-client-flatten"] = true;
+      $.CryptoKeyResource.properties.properties["x-ms-client-flatten"] = true;
+      $.CveResource.properties.properties["x-ms-client-flatten"] = true;
+      $.PasswordHashResource.properties.properties["x-ms-client-flatten"] = true;
+      $.SbomComponentResource.properties.properties["x-ms-client-flatten"] = true;
+      $.Workspace.properties.properties["x-ms-client-flatten"] = true;
+      $.Firmware.properties.properties["x-ms-client-flatten"] = true;
 
 ```

@@ -7,14 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary>
-    /// SBOM component of a firmware.
-    /// Serialized Name: SbomComponent
+    /// The object representing a firmware analysis SBOM component result resource
+    /// Serialized Name: SbomComponentResource
     /// </summary>
-    public partial class SbomComponentResult
+    public partial class SbomComponentResult : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -55,32 +57,36 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SbomComponentResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="componentId">
         /// ID for the component.
-        /// Serialized Name: SbomComponent.componentId
+        /// Serialized Name: SbomComponentResource.properties.componentId
         /// </param>
         /// <param name="componentName">
         /// Name for the component.
-        /// Serialized Name: SbomComponent.componentName
+        /// Serialized Name: SbomComponentResource.properties.componentName
         /// </param>
         /// <param name="version">
         /// Version for the component.
-        /// Serialized Name: SbomComponent.version
+        /// Serialized Name: SbomComponentResource.properties.version
         /// </param>
         /// <param name="license">
         /// License for the component.
-        /// Serialized Name: SbomComponent.license
+        /// Serialized Name: SbomComponentResource.properties.license
         /// </param>
         /// <param name="filePaths">
         /// File paths related to the component. Note, relatedFiles should be used instead of this property.
-        /// Serialized Name: SbomComponent.filePaths
+        /// Serialized Name: SbomComponentResource.properties.filePaths
         /// </param>
         /// <param name="provisioningState">
         /// The status of the last operation.
-        /// Serialized Name: SbomComponent.provisioningState
+        /// Serialized Name: SbomComponentResource.properties.provisioningState
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SbomComponentResult(string componentId, string componentName, string version, string license, IList<string> filePaths, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SbomComponentResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentId, string componentName, string version, string license, IList<string> filePaths, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ComponentId = componentId;
             ComponentName = componentName;
@@ -93,32 +99,32 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary>
         /// ID for the component.
-        /// Serialized Name: SbomComponent.componentId
+        /// Serialized Name: SbomComponentResource.properties.componentId
         /// </summary>
         public string ComponentId { get; set; }
         /// <summary>
         /// Name for the component.
-        /// Serialized Name: SbomComponent.componentName
+        /// Serialized Name: SbomComponentResource.properties.componentName
         /// </summary>
         public string ComponentName { get; set; }
         /// <summary>
         /// Version for the component.
-        /// Serialized Name: SbomComponent.version
+        /// Serialized Name: SbomComponentResource.properties.version
         /// </summary>
         public string Version { get; set; }
         /// <summary>
         /// License for the component.
-        /// Serialized Name: SbomComponent.license
+        /// Serialized Name: SbomComponentResource.properties.license
         /// </summary>
         public string License { get; set; }
         /// <summary>
         /// File paths related to the component. Note, relatedFiles should be used instead of this property.
-        /// Serialized Name: SbomComponent.filePaths
+        /// Serialized Name: SbomComponentResource.properties.filePaths
         /// </summary>
         public IList<string> FilePaths { get; }
         /// <summary>
         /// The status of the last operation.
-        /// Serialized Name: SbomComponent.provisioningState
+        /// Serialized Name: SbomComponentResource.properties.provisioningState
         /// </summary>
         public FirmwareProvisioningState? ProvisioningState { get; }
     }

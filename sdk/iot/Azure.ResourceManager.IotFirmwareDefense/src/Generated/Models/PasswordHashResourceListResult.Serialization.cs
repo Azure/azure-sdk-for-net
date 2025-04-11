@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<PasswordHash> value = default;
+            IReadOnlyList<PasswordHashResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<PasswordHash> array = new List<PasswordHash>();
+                    List<PasswordHashResult> array = new List<PasswordHashResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PasswordHash.DeserializePasswordHash(item, options));
+                        array.Add(PasswordHashResult.DeserializePasswordHashResult(item, options));
                     }
                     value = array;
                     continue;

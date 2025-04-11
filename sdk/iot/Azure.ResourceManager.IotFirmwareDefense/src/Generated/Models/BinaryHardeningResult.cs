@@ -7,14 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary>
-    /// Binary hardening of a firmware.
-    /// Serialized Name: BinaryHardeningResult
+    /// The object representing a firmware analysis binary hardening result resource
+    /// Serialized Name: BinaryHardeningResource
     /// </summary>
-    public partial class BinaryHardeningResult
+    public partial class BinaryHardeningResult : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -54,40 +56,44 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="binaryHardeningId">
         /// ID for the binary hardening result.
-        /// Serialized Name: BinaryHardeningResult.binaryHardeningId
+        /// Serialized Name: BinaryHardeningResource.properties.binaryHardeningId
         /// </param>
         /// <param name="securityHardeningFeatures">
         /// The security hardening features of the binary.
-        /// Serialized Name: BinaryHardeningResult.securityHardeningFeatures
+        /// Serialized Name: BinaryHardeningResource.properties.securityHardeningFeatures
         /// </param>
         /// <param name="executableArchitecture">
         /// The architecture of the binary being reported on.
-        /// Serialized Name: BinaryHardeningResult.executableArchitecture
+        /// Serialized Name: BinaryHardeningResource.properties.executableArchitecture
         /// </param>
         /// <param name="filePath">
         /// The path to the binary in the firmware.
-        /// Serialized Name: BinaryHardeningResult.filePath
+        /// Serialized Name: BinaryHardeningResource.properties.filePath
         /// </param>
         /// <param name="executableClass">
         /// The executable class to indicate 32 or 64 bit.
-        /// Serialized Name: BinaryHardeningResult.executableClass
+        /// Serialized Name: BinaryHardeningResource.properties.executableClass
         /// </param>
         /// <param name="runpath">
         /// The runpath property of the uploaded binary, which is a method of specifying additional paths to load objects at runtime.
-        /// Serialized Name: BinaryHardeningResult.runpath
+        /// Serialized Name: BinaryHardeningResource.properties.runpath
         /// </param>
         /// <param name="rpath">
         /// The rpath property of the uploaded binary, which is a deprecated method of specifying additional paths to load objects at runtime.
-        /// Serialized Name: BinaryHardeningResult.rpath
+        /// Serialized Name: BinaryHardeningResource.properties.rpath
         /// </param>
         /// <param name="provisioningState">
         /// The status of the last operation.
-        /// Serialized Name: BinaryHardeningResult.provisioningState
+        /// Serialized Name: BinaryHardeningResource.properties.provisioningState
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BinaryHardeningResult(string binaryHardeningId, BinaryHardeningFeatures securityHardeningFeatures, string executableArchitecture, string filePath, ExecutableClass? executableClass, string runpath, string rpath, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BinaryHardeningResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string binaryHardeningId, BinaryHardeningFeatures securityHardeningFeatures, string executableArchitecture, string filePath, ExecutableClass? executableClass, string runpath, string rpath, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BinaryHardeningId = binaryHardeningId;
             SecurityHardeningFeatures = securityHardeningFeatures;
@@ -102,42 +108,42 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary>
         /// ID for the binary hardening result.
-        /// Serialized Name: BinaryHardeningResult.binaryHardeningId
+        /// Serialized Name: BinaryHardeningResource.properties.binaryHardeningId
         /// </summary>
         public string BinaryHardeningId { get; set; }
         /// <summary>
         /// The security hardening features of the binary.
-        /// Serialized Name: BinaryHardeningResult.securityHardeningFeatures
+        /// Serialized Name: BinaryHardeningResource.properties.securityHardeningFeatures
         /// </summary>
         public BinaryHardeningFeatures SecurityHardeningFeatures { get; set; }
         /// <summary>
         /// The architecture of the binary being reported on.
-        /// Serialized Name: BinaryHardeningResult.executableArchitecture
+        /// Serialized Name: BinaryHardeningResource.properties.executableArchitecture
         /// </summary>
         public string ExecutableArchitecture { get; set; }
         /// <summary>
         /// The path to the binary in the firmware.
-        /// Serialized Name: BinaryHardeningResult.filePath
+        /// Serialized Name: BinaryHardeningResource.properties.filePath
         /// </summary>
         public string FilePath { get; set; }
         /// <summary>
         /// The executable class to indicate 32 or 64 bit.
-        /// Serialized Name: BinaryHardeningResult.executableClass
+        /// Serialized Name: BinaryHardeningResource.properties.executableClass
         /// </summary>
         public ExecutableClass? ExecutableClass { get; set; }
         /// <summary>
         /// The runpath property of the uploaded binary, which is a method of specifying additional paths to load objects at runtime.
-        /// Serialized Name: BinaryHardeningResult.runpath
+        /// Serialized Name: BinaryHardeningResource.properties.runpath
         /// </summary>
         public string Runpath { get; set; }
         /// <summary>
         /// The rpath property of the uploaded binary, which is a deprecated method of specifying additional paths to load objects at runtime.
-        /// Serialized Name: BinaryHardeningResult.rpath
+        /// Serialized Name: BinaryHardeningResource.properties.rpath
         /// </summary>
         public string Rpath { get; set; }
         /// <summary>
         /// The status of the last operation.
-        /// Serialized Name: BinaryHardeningResult.provisioningState
+        /// Serialized Name: BinaryHardeningResource.properties.provisioningState
         /// </summary>
         public FirmwareProvisioningState? ProvisioningState { get; }
     }

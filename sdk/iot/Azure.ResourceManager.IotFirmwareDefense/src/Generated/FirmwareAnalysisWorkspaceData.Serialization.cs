@@ -37,16 +37,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            writer.WriteEndObject();
         }
 
         FirmwareAnalysisWorkspaceData IJsonModel<FirmwareAnalysisWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +72,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 return null;
             }
-            WorkspaceProperties properties = default;
             IotFirmwareDefenseSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -77,19 +79,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = WorkspaceProperties.DeserializeWorkspaceProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -142,6 +136,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new FirmwareProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -155,8 +170,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties,
                 sku,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

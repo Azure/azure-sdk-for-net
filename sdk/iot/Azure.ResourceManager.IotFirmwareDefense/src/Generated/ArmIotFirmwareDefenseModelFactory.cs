@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="workspaceProvisioningState">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: Workspace.properties
-        /// </param>
         /// <param name="sku">
         /// The SKU (Stock Keeping Unit) assigned to this resource.
         /// Serialized Name: Workspace.sku
         /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the resource.
+        /// Serialized Name: Workspace.properties.provisioningState
+        /// </param>
         /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/> instance for mocking. </returns>
-        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, FirmwareProvisioningState? workspaceProvisioningState = null, IotFirmwareDefenseSku sku = null)
+        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IotFirmwareDefenseSku sku = null, FirmwareProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 systemData,
                 tags,
                 location,
-                workspaceProvisioningState != null ? new WorkspaceProperties(workspaceProvisioningState, serializedAdditionalRawData: null) : null,
                 sku,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -54,19 +54,61 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: Firmware.properties
+        /// <param name="fileName">
+        /// File name for a firmware that user uploaded.
+        /// Serialized Name: Firmware.properties.fileName
+        /// </param>
+        /// <param name="vendor">
+        /// Firmware vendor.
+        /// Serialized Name: Firmware.properties.vendor
+        /// </param>
+        /// <param name="model">
+        /// Firmware model.
+        /// Serialized Name: Firmware.properties.model
+        /// </param>
+        /// <param name="version">
+        /// Firmware version.
+        /// Serialized Name: Firmware.properties.version
+        /// </param>
+        /// <param name="description">
+        /// User-specified description of the firmware.
+        /// Serialized Name: Firmware.properties.description
+        /// </param>
+        /// <param name="fileSize">
+        /// File size of the uploaded firmware image.
+        /// Serialized Name: Firmware.properties.fileSize
+        /// </param>
+        /// <param name="status">
+        /// The status of firmware scan.
+        /// Serialized Name: Firmware.properties.status
+        /// </param>
+        /// <param name="statusMessages">
+        /// A list of errors or other messages generated during firmware analysis
+        /// Serialized Name: Firmware.properties.statusMessages
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the resource.
+        /// Serialized Name: Firmware.properties.provisioningState
         /// </param>
         /// <returns> A new <see cref="IotFirmwareDefense.IotFirmwareData"/> instance for mocking. </returns>
-        public static IotFirmwareData IotFirmwareData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FirmwareProperties properties = null)
+        public static IotFirmwareData IotFirmwareData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = null, FirmwareAnalysisStatus? status = null, IEnumerable<FirmwareAnalysisStatusMessage> statusMessages = null, FirmwareProvisioningState? provisioningState = null)
         {
+            statusMessages ??= new List<FirmwareAnalysisStatusMessage>();
+
             return new IotFirmwareData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                fileName,
+                vendor,
+                model,
+                version,
+                description,
+                fileSize,
+                status,
+                statusMessages?.ToList(),
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -125,64 +167,51 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: BinaryHardeningResource.properties
+        /// <param name="binaryHardeningId">
+        /// ID for the binary hardening result.
+        /// Serialized Name: BinaryHardeningResource.properties.binaryHardeningId
         /// </param>
-        /// <returns> A new <see cref="Models.BinaryHardeningResourceData"/> instance for mocking. </returns>
-        public static BinaryHardeningResourceData BinaryHardeningResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryHardeningResult properties = null)
+        /// <param name="securityHardeningFeatures">
+        /// The security hardening features of the binary.
+        /// Serialized Name: BinaryHardeningResource.properties.securityHardeningFeatures
+        /// </param>
+        /// <param name="executableArchitecture">
+        /// The architecture of the binary being reported on.
+        /// Serialized Name: BinaryHardeningResource.properties.executableArchitecture
+        /// </param>
+        /// <param name="filePath">
+        /// The path to the binary in the firmware.
+        /// Serialized Name: BinaryHardeningResource.properties.filePath
+        /// </param>
+        /// <param name="executableClass">
+        /// The executable class to indicate 32 or 64 bit.
+        /// Serialized Name: BinaryHardeningResource.properties.executableClass
+        /// </param>
+        /// <param name="runpath">
+        /// The runpath property of the uploaded binary, which is a method of specifying additional paths to load objects at runtime.
+        /// Serialized Name: BinaryHardeningResource.properties.runpath
+        /// </param>
+        /// <param name="rpath">
+        /// The rpath property of the uploaded binary, which is a deprecated method of specifying additional paths to load objects at runtime.
+        /// Serialized Name: BinaryHardeningResource.properties.rpath
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the last operation.
+        /// Serialized Name: BinaryHardeningResource.properties.provisioningState
+        /// </param>
+        /// <returns> A new <see cref="Models.BinaryHardeningResult"/> instance for mocking. </returns>
+        public static BinaryHardeningResult BinaryHardeningResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string binaryHardeningId = null, BinaryHardeningFeatures securityHardeningFeatures = null, string executableArchitecture = null, string filePath = null, ExecutableClass? executableClass = null, string runpath = null, string rpath = null, FirmwareProvisioningState? provisioningState = null)
         {
-            return new BinaryHardeningResourceData(
+            return new BinaryHardeningResult(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningResult"/>. </summary>
-        /// <param name="binaryHardeningId">
-        /// ID for the binary hardening result.
-        /// Serialized Name: BinaryHardeningResult.binaryHardeningId
-        /// </param>
-        /// <param name="securityHardeningFeatures">
-        /// The security hardening features of the binary.
-        /// Serialized Name: BinaryHardeningResult.securityHardeningFeatures
-        /// </param>
-        /// <param name="executableArchitecture">
-        /// The architecture of the binary being reported on.
-        /// Serialized Name: BinaryHardeningResult.executableArchitecture
-        /// </param>
-        /// <param name="filePath">
-        /// The path to the binary in the firmware.
-        /// Serialized Name: BinaryHardeningResult.filePath
-        /// </param>
-        /// <param name="executableClass">
-        /// The executable class to indicate 32 or 64 bit.
-        /// Serialized Name: BinaryHardeningResult.executableClass
-        /// </param>
-        /// <param name="runpath">
-        /// The runpath property of the uploaded binary, which is a method of specifying additional paths to load objects at runtime.
-        /// Serialized Name: BinaryHardeningResult.runpath
-        /// </param>
-        /// <param name="rpath">
-        /// The rpath property of the uploaded binary, which is a deprecated method of specifying additional paths to load objects at runtime.
-        /// Serialized Name: BinaryHardeningResult.rpath
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: BinaryHardeningResult.provisioningState
-        /// </param>
-        /// <returns> A new <see cref="Models.BinaryHardeningResult"/> instance for mocking. </returns>
-        public static BinaryHardeningResult BinaryHardeningResult(string binaryHardeningId = null, BinaryHardeningFeatures securityHardeningFeatures = null, string executableArchitecture = null, string filePath = null, ExecutableClass? executableClass = null, string runpath = null, string rpath = null, FirmwareProvisioningState? provisioningState = null)
-        {
-            return new BinaryHardeningResult(
                 binaryHardeningId,
                 securityHardeningFeatures,
                 executableArchitecture,
@@ -194,83 +223,70 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CveResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: CveResource.properties
-        /// </param>
-        /// <returns> A new <see cref="Models.CveResourceData"/> instance for mocking. </returns>
-        public static CveResourceData CveResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CveResult properties = null)
-        {
-            return new CveResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
         /// <param name="cveId">
         /// ID of the CVE result.
-        /// Serialized Name: CveResult.cveId
+        /// Serialized Name: CveResource.properties.cveId
         /// </param>
         /// <param name="componentId">
         /// ID of the affected SBOM component.
-        /// Serialized Name: CveResult.componentId
+        /// Serialized Name: CveResource.properties.componentId
         /// </param>
         /// <param name="componentName">
         /// Name of the affected SBOM component.
-        /// Serialized Name: CveResult.componentName
+        /// Serialized Name: CveResource.properties.componentName
         /// </param>
         /// <param name="componentVersion">
         /// Version of the affected SBOM component.
-        /// Serialized Name: CveResult.componentVersion
+        /// Serialized Name: CveResource.properties.componentVersion
         /// </param>
         /// <param name="severity">
         /// Severity of the CVE.
-        /// Serialized Name: CveResult.severity
+        /// Serialized Name: CveResource.properties.severity
         /// </param>
         /// <param name="cveName">
         /// Name of the CVE.
-        /// Serialized Name: CveResult.cveName
+        /// Serialized Name: CveResource.properties.cveName
         /// </param>
         /// <param name="effectiveCvssScore">
         /// The most recent CVSS score of the CVE.
-        /// Serialized Name: CveResult.effectiveCvssScore
+        /// Serialized Name: CveResource.properties.effectiveCvssScore
         /// </param>
         /// <param name="effectiveCvssVersion">
         /// The version of the effectiveCvssScore property.
-        /// Serialized Name: CveResult.effectiveCvssVersion
+        /// Serialized Name: CveResource.properties.effectiveCvssVersion
         /// </param>
         /// <param name="cvssScores">
         /// All known CVSS scores for the CVE.
-        /// Serialized Name: CveResult.cvssScores
+        /// Serialized Name: CveResource.properties.cvssScores
         /// </param>
         /// <param name="links">
         /// The list of reference links for the CVE.
-        /// Serialized Name: CveResult.links
+        /// Serialized Name: CveResource.properties.links
         /// </param>
         /// <param name="description">
         /// The CVE description.
-        /// Serialized Name: CveResult.description
+        /// Serialized Name: CveResource.properties.description
         /// </param>
         /// <param name="provisioningState">
         /// The status of the last operation.
-        /// Serialized Name: CveResult.provisioningState
+        /// Serialized Name: CveResource.properties.provisioningState
         /// </param>
         /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
-        public static CveResult CveResult(string cveId = null, string componentId = null, string componentName = null, string componentVersion = null, string severity = null, string cveName = null, float? effectiveCvssScore = null, int? effectiveCvssVersion = null, IEnumerable<CvssScore> cvssScores = null, IEnumerable<CveLink> links = null, string description = null, FirmwareProvisioningState? provisioningState = null)
+        public static CveResult CveResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cveId = null, string componentId = null, string componentName = null, string componentVersion = null, string severity = null, string cveName = null, float? effectiveCvssScore = null, int? effectiveCvssVersion = null, IEnumerable<CvssScore> cvssScores = null, IEnumerable<CveLink> links = null, string description = null, FirmwareProvisioningState? provisioningState = null)
         {
             cvssScores ??= new List<CvssScore>();
             links ??= new List<CveLink>();
 
             return new CveResult(
+                id,
+                name,
+                resourceType,
+                systemData,
                 cveId,
                 componentId,
                 componentName,
@@ -301,119 +317,106 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CveLink(href, label, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CryptoCertificate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CryptoCertificateResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: CryptoCertificateResource.properties
-        /// </param>
-        /// <returns> A new <see cref="Models.CryptoCertificate"/> instance for mocking. </returns>
-        public static CryptoCertificate CryptoCertificate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CryptoCertificateResult properties = null)
-        {
-            return new CryptoCertificate(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CryptoCertificateResult"/>. </summary>
         /// <param name="cryptoCertId">
         /// ID for the certificate result.
-        /// Serialized Name: CryptoCertificate.cryptoCertId
+        /// Serialized Name: CryptoCertificateResource.properties.cryptoCertId
         /// </param>
         /// <param name="certificateName">
         /// Name of the certificate.
-        /// Serialized Name: CryptoCertificate.certificateName
+        /// Serialized Name: CryptoCertificateResource.properties.certificateName
         /// </param>
         /// <param name="subject">
         /// Subject information of the certificate.
-        /// Serialized Name: CryptoCertificate.subject
+        /// Serialized Name: CryptoCertificateResource.properties.subject
         /// </param>
         /// <param name="issuer">
         /// Issuer information of the certificate.
-        /// Serialized Name: CryptoCertificate.issuer
+        /// Serialized Name: CryptoCertificateResource.properties.issuer
         /// </param>
         /// <param name="issuedOn">
         /// Issue date for the certificate.
-        /// Serialized Name: CryptoCertificate.issuedDate
+        /// Serialized Name: CryptoCertificateResource.properties.issuedDate
         /// </param>
         /// <param name="expireOn">
         /// Expiration date for the certificate.
-        /// Serialized Name: CryptoCertificate.expirationDate
+        /// Serialized Name: CryptoCertificateResource.properties.expirationDate
         /// </param>
         /// <param name="certificateRole">
         /// Role of the certificate (Root CA, etc)
-        /// Serialized Name: CryptoCertificate.certificateRole
+        /// Serialized Name: CryptoCertificateResource.properties.certificateRole
         /// </param>
         /// <param name="signatureAlgorithm">
         /// The signature algorithm used in the certificate.
-        /// Serialized Name: CryptoCertificate.signatureAlgorithm
+        /// Serialized Name: CryptoCertificateResource.properties.signatureAlgorithm
         /// </param>
         /// <param name="certificateKeySize">
         /// Size of the certificate's key in bits
-        /// Serialized Name: CryptoCertificate.certificateKeySize
+        /// Serialized Name: CryptoCertificateResource.properties.certificateKeySize
         /// </param>
         /// <param name="certificateKeyAlgorithm">
         /// Key algorithm used in the certificate.
-        /// Serialized Name: CryptoCertificate.certificateKeyAlgorithm
+        /// Serialized Name: CryptoCertificateResource.properties.certificateKeyAlgorithm
         /// </param>
         /// <param name="encoding">
         /// Encoding used for the certificate.
-        /// Serialized Name: CryptoCertificate.encoding
+        /// Serialized Name: CryptoCertificateResource.properties.encoding
         /// </param>
         /// <param name="serialNumber">
         /// Serial number of the certificate.
-        /// Serialized Name: CryptoCertificate.serialNumber
+        /// Serialized Name: CryptoCertificateResource.properties.serialNumber
         /// </param>
         /// <param name="fingerprint">
         /// Fingerprint of the certificate.
-        /// Serialized Name: CryptoCertificate.fingerprint
+        /// Serialized Name: CryptoCertificateResource.properties.fingerprint
         /// </param>
         /// <param name="certificateUsage">
         /// List of functions the certificate can fulfill.
-        /// Serialized Name: CryptoCertificate.certificateUsage
+        /// Serialized Name: CryptoCertificateResource.properties.certificateUsage
         /// </param>
         /// <param name="filePaths">
         /// List of files where this certificate was found.
-        /// Serialized Name: CryptoCertificate.filePaths
+        /// Serialized Name: CryptoCertificateResource.properties.filePaths
         /// </param>
         /// <param name="pairedKey">
         /// A matching paired private key.
-        /// Serialized Name: CryptoCertificate.pairedKey
+        /// Serialized Name: CryptoCertificateResource.properties.pairedKey
         /// </param>
         /// <param name="isExpired">
         /// Indicates if the certificate is expired.
-        /// Serialized Name: CryptoCertificate.isExpired
+        /// Serialized Name: CryptoCertificateResource.properties.isExpired
         /// </param>
         /// <param name="isSelfSigned">
         /// Indicates if the certificate is self-signed.
-        /// Serialized Name: CryptoCertificate.isSelfSigned
+        /// Serialized Name: CryptoCertificateResource.properties.isSelfSigned
         /// </param>
         /// <param name="isWeakSignature">
         /// Indicates the signature algorithm used is insecure according to NIST guidance.
-        /// Serialized Name: CryptoCertificate.isWeakSignature
+        /// Serialized Name: CryptoCertificateResource.properties.isWeakSignature
         /// </param>
         /// <param name="isShortKeySize">
         /// Indicates the certificate's key size is considered too small to be secure for the key algorithm according to NIST guidance.
-        /// Serialized Name: CryptoCertificate.isShortKeySize
+        /// Serialized Name: CryptoCertificateResource.properties.isShortKeySize
         /// </param>
         /// <param name="provisioningState">
         /// The status of the last operation.
-        /// Serialized Name: CryptoCertificate.provisioningState
+        /// Serialized Name: CryptoCertificateResource.properties.provisioningState
         /// </param>
         /// <returns> A new <see cref="Models.CryptoCertificateResult"/> instance for mocking. </returns>
-        public static CryptoCertificateResult CryptoCertificateResult(string cryptoCertId = null, string certificateName = null, CryptoCertificateEntity subject = null, CryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string certificateRole = null, string signatureAlgorithm = null, long? certificateKeySize = null, string certificateKeyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<CertificateUsage> certificateUsage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isExpired = null, bool? isSelfSigned = null, bool? isWeakSignature = null, bool? isShortKeySize = null, FirmwareProvisioningState? provisioningState = null)
+        public static CryptoCertificateResult CryptoCertificateResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cryptoCertId = null, string certificateName = null, CryptoCertificateEntity subject = null, CryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string certificateRole = null, string signatureAlgorithm = null, long? certificateKeySize = null, string certificateKeyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<CertificateUsage> certificateUsage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isExpired = null, bool? isSelfSigned = null, bool? isWeakSignature = null, bool? isShortKeySize = null, FirmwareProvisioningState? provisioningState = null)
         {
             certificateUsage ??= new List<CertificateUsage>();
             filePaths ??= new List<string>();
 
             return new CryptoCertificateResult(
+                id,
+                name,
+                resourceType,
+                systemData,
                 cryptoCertId,
                 certificateName,
                 subject,
@@ -438,71 +441,58 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CryptoKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CryptoKeyResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: CryptoKeyResource.properties
-        /// </param>
-        /// <returns> A new <see cref="Models.CryptoKey"/> instance for mocking. </returns>
-        public static CryptoKey CryptoKey(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CryptoKeyResult properties = null)
-        {
-            return new CryptoKey(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CryptoKeyResult"/>. </summary>
         /// <param name="cryptoKeyId">
         /// ID for the key result.
-        /// Serialized Name: CryptoKey.cryptoKeyId
+        /// Serialized Name: CryptoKeyResource.properties.cryptoKeyId
         /// </param>
         /// <param name="keyType">
         /// Type of the key (public or private).
-        /// Serialized Name: CryptoKey.keyType
+        /// Serialized Name: CryptoKeyResource.properties.keyType
         /// </param>
         /// <param name="cryptoKeySize">
         /// Size of the key in bits.
-        /// Serialized Name: CryptoKey.cryptoKeySize
+        /// Serialized Name: CryptoKeyResource.properties.cryptoKeySize
         /// </param>
         /// <param name="keyAlgorithm">
         /// Key algorithm name.
-        /// Serialized Name: CryptoKey.keyAlgorithm
+        /// Serialized Name: CryptoKeyResource.properties.keyAlgorithm
         /// </param>
         /// <param name="usage">
         /// Functions the key can fulfill.
-        /// Serialized Name: CryptoKey.usage
+        /// Serialized Name: CryptoKeyResource.properties.usage
         /// </param>
         /// <param name="filePaths">
         /// List of files where this key was found.
-        /// Serialized Name: CryptoKey.filePaths
+        /// Serialized Name: CryptoKeyResource.properties.filePaths
         /// </param>
         /// <param name="pairedKey">
         /// A matching paired key or certificate.
-        /// Serialized Name: CryptoKey.pairedKey
+        /// Serialized Name: CryptoKeyResource.properties.pairedKey
         /// </param>
         /// <param name="isShortKeySize">
         /// Indicates the key size is considered too small to be secure for the algorithm according to NIST guidance.
-        /// Serialized Name: CryptoKey.isShortKeySize
+        /// Serialized Name: CryptoKeyResource.properties.isShortKeySize
         /// </param>
         /// <param name="provisioningState">
         /// The status of the last operation.
-        /// Serialized Name: CryptoKey.provisioningState
+        /// Serialized Name: CryptoKeyResource.properties.provisioningState
         /// </param>
         /// <returns> A new <see cref="Models.CryptoKeyResult"/> instance for mocking. </returns>
-        public static CryptoKeyResult CryptoKeyResult(string cryptoKeyId = null, CryptoKeyType? keyType = null, long? cryptoKeySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isShortKeySize = null, FirmwareProvisioningState? provisioningState = null)
+        public static CryptoKeyResult CryptoKeyResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cryptoKeyId = null, CryptoKeyType? keyType = null, long? cryptoKeySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isShortKeySize = null, FirmwareProvisioningState? provisioningState = null)
         {
             usage ??= new List<string>();
             filePaths ??= new List<string>();
 
             return new CryptoKeyResult(
+                id,
+                name,
+                resourceType,
+                systemData,
                 cryptoKeyId,
                 keyType,
                 cryptoKeySize,
@@ -515,64 +505,51 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PasswordHash"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PasswordHashResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: PasswordHashResource.properties
+        /// <param name="passwordHashId">
+        /// ID for password hash
+        /// Serialized Name: PasswordHashResource.properties.passwordHashId
         /// </param>
-        /// <returns> A new <see cref="Models.PasswordHash"/> instance for mocking. </returns>
-        public static PasswordHash PasswordHash(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PasswordHashResult properties = null)
+        /// <param name="filePath">
+        /// File path of the password hash
+        /// Serialized Name: PasswordHashResource.properties.filePath
+        /// </param>
+        /// <param name="salt">
+        /// Salt of the password hash
+        /// Serialized Name: PasswordHashResource.properties.salt
+        /// </param>
+        /// <param name="hash">
+        /// Hash of the password
+        /// Serialized Name: PasswordHashResource.properties.hash
+        /// </param>
+        /// <param name="context">
+        /// Context of password hash
+        /// Serialized Name: PasswordHashResource.properties.context
+        /// </param>
+        /// <param name="username">
+        /// User name of password hash
+        /// Serialized Name: PasswordHashResource.properties.username
+        /// </param>
+        /// <param name="algorithm">
+        /// Algorithm of the password hash
+        /// Serialized Name: PasswordHashResource.properties.algorithm
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the last operation.
+        /// Serialized Name: PasswordHashResource.properties.provisioningState
+        /// </param>
+        /// <returns> A new <see cref="Models.PasswordHashResult"/> instance for mocking. </returns>
+        public static PasswordHashResult PasswordHashResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null, FirmwareProvisioningState? provisioningState = null)
         {
-            return new PasswordHash(
+            return new PasswordHashResult(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PasswordHashResult"/>. </summary>
-        /// <param name="passwordHashId">
-        /// ID for password hash
-        /// Serialized Name: PasswordHash.passwordHashId
-        /// </param>
-        /// <param name="filePath">
-        /// File path of the password hash
-        /// Serialized Name: PasswordHash.filePath
-        /// </param>
-        /// <param name="salt">
-        /// Salt of the password hash
-        /// Serialized Name: PasswordHash.salt
-        /// </param>
-        /// <param name="hash">
-        /// Hash of the password
-        /// Serialized Name: PasswordHash.hash
-        /// </param>
-        /// <param name="context">
-        /// Context of password hash
-        /// Serialized Name: PasswordHash.context
-        /// </param>
-        /// <param name="username">
-        /// User name of password hash
-        /// Serialized Name: PasswordHash.username
-        /// </param>
-        /// <param name="algorithm">
-        /// Algorithm of the password hash
-        /// Serialized Name: PasswordHash.algorithm
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: PasswordHash.provisioningState
-        /// </param>
-        /// <returns> A new <see cref="Models.PasswordHashResult"/> instance for mocking. </returns>
-        public static PasswordHashResult PasswordHashResult(string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null, FirmwareProvisioningState? provisioningState = null)
-        {
-            return new PasswordHashResult(
                 passwordHashId,
                 filePath,
                 salt,
@@ -584,58 +561,45 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SbomComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SbomComponentResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: SbomComponentResource.properties
-        /// </param>
-        /// <returns> A new <see cref="Models.SbomComponent"/> instance for mocking. </returns>
-        public static SbomComponent SbomComponent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SbomComponentResult properties = null)
-        {
-            return new SbomComponent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SbomComponentResult"/>. </summary>
         /// <param name="componentId">
         /// ID for the component.
-        /// Serialized Name: SbomComponent.componentId
+        /// Serialized Name: SbomComponentResource.properties.componentId
         /// </param>
         /// <param name="componentName">
         /// Name for the component.
-        /// Serialized Name: SbomComponent.componentName
+        /// Serialized Name: SbomComponentResource.properties.componentName
         /// </param>
         /// <param name="version">
         /// Version for the component.
-        /// Serialized Name: SbomComponent.version
+        /// Serialized Name: SbomComponentResource.properties.version
         /// </param>
         /// <param name="license">
         /// License for the component.
-        /// Serialized Name: SbomComponent.license
+        /// Serialized Name: SbomComponentResource.properties.license
         /// </param>
         /// <param name="filePaths">
         /// File paths related to the component. Note, relatedFiles should be used instead of this property.
-        /// Serialized Name: SbomComponent.filePaths
+        /// Serialized Name: SbomComponentResource.properties.filePaths
         /// </param>
         /// <param name="provisioningState">
         /// The status of the last operation.
-        /// Serialized Name: SbomComponent.provisioningState
+        /// Serialized Name: SbomComponentResource.properties.provisioningState
         /// </param>
         /// <returns> A new <see cref="Models.SbomComponentResult"/> instance for mocking. </returns>
-        public static SbomComponentResult SbomComponentResult(string componentId = null, string componentName = null, string version = null, string license = null, IEnumerable<string> filePaths = null, FirmwareProvisioningState? provisioningState = null)
+        public static SbomComponentResult SbomComponentResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string componentId = null, string componentName = null, string version = null, string license = null, IEnumerable<string> filePaths = null, FirmwareProvisioningState? provisioningState = null)
         {
             filePaths ??= new List<string>();
 
             return new SbomComponentResult(
+                id,
+                name,
+                resourceType,
+                systemData,
                 componentId,
                 componentName,
                 version,
@@ -952,6 +916,57 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 binaryCount,
                 analysisTimeSeconds,
                 rootFileSystems);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResult" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="passwordHashId"> ID for password hash. </param>
+        /// <param name="filePath"> File path of the password hash. </param>
+        /// <param name="salt"> Salt of the password hash. </param>
+        /// <param name="hash"> Hash of the password. </param>
+        /// <param name="context"> Context of password hash. </param>
+        /// <param name="username"> User name of password hash. </param>
+        /// <param name="algorithm"> Algorithm of the password hash. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResult" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PasswordHashResult PasswordHashResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm)
+        {
+            return PasswordHashResult(id: id, name: name, resourceType: resourceType, systemData: systemData, passwordHashId: passwordHashId, filePath: filePath, salt: salt, hash: hash, context: context, username: username, algorithm: algorithm, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResult" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="componentId"> ID for the component. </param>
+        /// <param name="componentName"> Name for the component. </param>
+        /// <param name="version"> Version for the component. </param>
+        /// <param name="license"> License for the component. </param>
+        /// <param name="filePaths"> File paths related to the component. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResult" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SbomComponentResult SbomComponentResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentId, string componentName, string version, string license, IEnumerable<string> filePaths)
+        {
+            return SbomComponentResult(id: id, name: name, resourceType: resourceType, systemData: systemData, componentId: componentId, componentName: componentName, version: version, license: license, filePaths: filePaths, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisWorkspaceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisWorkspaceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FirmwareProvisioningState? provisioningState)
+        {
+            return FirmwareAnalysisWorkspaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: default, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary" />. </summary>

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<CryptoCertificate> value = default;
+            IReadOnlyList<CryptoCertificateResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CryptoCertificate> array = new List<CryptoCertificate>();
+                    List<CryptoCertificateResult> array = new List<CryptoCertificateResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CryptoCertificate.DeserializeCryptoCertificate(item, options));
+                        array.Add(CryptoCertificateResult.DeserializeCryptoCertificateResult(item, options));
                     }
                     value = array;
                     continue;

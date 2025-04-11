@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<BinaryHardeningResourceData> value = default;
+            IReadOnlyList<BinaryHardeningResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<BinaryHardeningResourceData> array = new List<BinaryHardeningResourceData>();
+                    List<BinaryHardeningResult> array = new List<BinaryHardeningResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryHardeningResourceData.DeserializeBinaryHardeningResourceData(item, options));
+                        array.Add(BinaryHardeningResult.DeserializeBinaryHardeningResult(item, options));
                     }
                     value = array;
                     continue;

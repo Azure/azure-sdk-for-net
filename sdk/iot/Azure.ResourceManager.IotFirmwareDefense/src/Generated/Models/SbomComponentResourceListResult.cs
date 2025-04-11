@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: SbomComponentResourceListResult.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SbomComponentResourceListResult(IEnumerable<SbomComponent> value)
+        internal SbomComponentResourceListResult(IEnumerable<SbomComponentResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: SbomComponentResourceListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SbomComponentResourceListResult(IReadOnlyList<SbomComponent> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SbomComponentResourceListResult(IReadOnlyList<SbomComponentResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// The SbomComponentResource items on this page
         /// Serialized Name: SbomComponentResourceListResult.value
         /// </summary>
-        public IReadOnlyList<SbomComponent> Value { get; }
+        public IReadOnlyList<SbomComponentResult> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: SbomComponentResourceListResult.nextLink

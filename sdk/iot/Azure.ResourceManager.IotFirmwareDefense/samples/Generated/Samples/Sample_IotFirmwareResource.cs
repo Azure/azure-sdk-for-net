@@ -235,7 +235,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BinaryHardeningResourceData item in iotFirmware.GetBinaryHardeningResultsAsync())
+            await foreach (BinaryHardeningResult item in iotFirmware.GetBinaryHardeningResultsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -265,7 +265,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BinaryHardeningResourceData item in iotFirmware.GetBinaryHardeningResultsAsync())
+            await foreach (BinaryHardeningResult item in iotFirmware.GetBinaryHardeningResultsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -295,7 +295,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CveResourceData item in iotFirmware.GetCommonVulnerabilitiesAndExposuresAsync())
+            await foreach (CveResult item in iotFirmware.GetCommonVulnerabilitiesAndExposuresAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -325,7 +325,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CveResourceData item in iotFirmware.GetCommonVulnerabilitiesAndExposuresAsync())
+            await foreach (CveResult item in iotFirmware.GetCommonVulnerabilitiesAndExposuresAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -355,7 +355,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CryptoCertificate item in iotFirmware.GetCryptoCertificatesAsync())
+            await foreach (CryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -385,7 +385,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CryptoCertificate item in iotFirmware.GetCryptoCertificatesAsync())
+            await foreach (CryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -415,7 +415,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CryptoKey item in iotFirmware.GetCryptoKeysAsync())
+            await foreach (CryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -445,7 +445,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CryptoKey item in iotFirmware.GetCryptoKeysAsync())
+            await foreach (CryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -475,7 +475,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PasswordHash item in iotFirmware.GetPasswordHashesAsync())
+            await foreach (PasswordHashResult item in iotFirmware.GetPasswordHashesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -505,7 +505,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PasswordHash item in iotFirmware.GetPasswordHashesAsync())
+            await foreach (PasswordHashResult item in iotFirmware.GetPasswordHashesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -535,7 +535,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SbomComponent item in iotFirmware.GetSbomComponentsAsync())
+            await foreach (SbomComponentResult item in iotFirmware.GetSbomComponentsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -565,7 +565,7 @@ Message = "edtylkjvj",
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SbomComponent item in iotFirmware.GetSbomComponentsAsync())
+            await foreach (SbomComponentResult item in iotFirmware.GetSbomComponentsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
