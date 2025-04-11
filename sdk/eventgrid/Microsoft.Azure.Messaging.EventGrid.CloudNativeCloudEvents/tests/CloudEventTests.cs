@@ -1,23 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Messaging.EventGrid;
+using CloudNative.CloudEvents.SystemTextJson;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
-using Azure.Messaging.EventGrid;
-using CloudNative.CloudEvents;
-using CloudNative.CloudEvents.SystemTextJson;
-using NUnit.Framework;
 using CloudEvent = CloudNative.CloudEvents.CloudEvent;
 
 namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
