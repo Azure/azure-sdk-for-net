@@ -20,6 +20,7 @@ using Azure.Data.ConfidentialLedger.Tests.Helper;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
+using static Azure.Security.ConfidentialLedger.Tests.ConfidentialLedgerClientLiveTests;
 
 namespace Azure.Security.ConfidentialLedger.Tests
 {
@@ -339,12 +340,18 @@ namespace Azure.Security.ConfidentialLedger.Tests
             //Assert.AreEqual("Test content", response);
 
             // Deploy Empty JS Bundle to remove JS App
-            programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
-
-            result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
-            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
+            using RequestContent content = RequestContent.Create(new
+            {
+                metadata = new
+                {
+                    endpoints = new
+                    {
+                    },
+                },
+                modules = new List<object>()
+            });
+            Response response = await Client.CreateUserDefinedEndpointAsync(content);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.Status);
         }
 
         [RecordedTest]
@@ -477,13 +484,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var functionParam = new UserFunctionParam
             {
                 Code= "export function main() { return true }",
-                Id = functionId
+                Id = "myFunction"
             };
 
             try
             {
                 Response userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
-                Assert.AreEqual((int)HttpStatusCode.OK, userFunctionResult.Status);
+                Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
                 userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
 
                 var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
