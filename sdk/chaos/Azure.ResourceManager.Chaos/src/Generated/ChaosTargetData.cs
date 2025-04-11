@@ -51,6 +51,16 @@ namespace Azure.ResourceManager.Chaos
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetData"/>. </summary>
+        /// <param name="properties"> The properties of the target resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public ChaosTargetData(IDictionary<string, BinaryData> properties)
+        {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChaosTargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
