@@ -28,14 +28,16 @@ if (connections?.Value == null || connections.Value.Count == 0)
 
 ConnectionResponse connection = connections.Value[0];
 
-AISearchIndexResource indexList = new(connection.Id, "sample_index");
-indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
-ToolResources searchResource = new ToolResources
+AzureAISearchResource searchResource = new(
+    connection.Id,
+    "sample_index",
+    5,
+    "category eq 'sleeping bag'",
+    AzureAISearchQueryType.Simple
+);
+ToolResources toolResource = new()
 {
-    AzureAISearch = new AzureAISearchResource
-    {
-        IndexList = { indexList }
-    }
+    AzureAISearch = searchResource
 };
 
 AgentsClient agentClient = projectClient.GetAgentsClient();
@@ -45,7 +47,7 @@ Agent agent = agentClient.CreateAgent(
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
    tools: [new AzureAISearchToolDefinition()],
-   toolResources: searchResource);
+   toolResources: toolResource);
 ```
 
 Asynchronous sample:
@@ -59,14 +61,16 @@ if (connections?.Value == null || connections.Value.Count == 0)
 
 ConnectionResponse connection = connections.Value[0];
 
-AISearchIndexResource indexList = new(connection.Id, "sample_index");
-indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
-ToolResources searchResource = new()
+AzureAISearchResource searchResource = new(
+    connection.Id,
+    "sample_index",
+    5,
+    "category eq 'sleeping bag'",
+    AzureAISearchQueryType.Simple
+);
+ToolResources toolResource = new()
 {
-    AzureAISearch = new AzureAISearchResource
-    {
-        IndexList = { indexList }
-    }
+    AzureAISearch = searchResource
 };
 
 AgentsClient agentClient = projectClient.GetAgentsClient();
@@ -75,8 +79,8 @@ Agent agent = await agentClient.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
-   tools: [ new AzureAISearchToolDefinition() ],
-   toolResources: searchResource);
+   tools: [new AzureAISearchToolDefinition()],
+   toolResources: toolResource);
 ```
 
 3. Now we will create a `ThreadRun`.
@@ -105,7 +109,7 @@ ThreadMessage message = await agentClient.CreateMessageAsync(
     "What is the temperature rating of the cozynights sleeping bag?");
 ```
 
-4. In our search we have used an index containing "embedding", "token", "url" and also "title" fields. This allowed us to get reference title and url. In the code below we are reading and printing out the stream output. We skip the reference placeholder, because the following message update will return the actual reference, which will be printed to the output.
+4. In our search we have used an index containing "embedding", "token", "category" and also "title" fields. This allowed us to get reference title and url. In the code below, we iterate messages in chronological order and replace the reference placeholders by url and title.
 
 Synchronous sample:
 ```C# Snippet:AzureAISearchStreamingExample_PrintMessages
