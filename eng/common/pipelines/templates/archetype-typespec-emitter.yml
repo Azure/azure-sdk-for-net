@@ -119,7 +119,7 @@ extends:
             pwsh: true
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Build-Emitter.ps1
             arguments: >
-              -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+              -OutputDirectory "$(Build.ArtifactStagingDirectory)/packages"
               -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
 
         - pwsh: |
@@ -441,7 +441,9 @@ extends:
             inputs:
               pwsh: true
               filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
-              arguments: -BuildArtifactsPath '$(buildArtifactsPath)'
+              arguments: > 
+                -BuildArtifactsPath '$(buildArtifactsPath)'
+                -PackageName '$(EmitterPackageName)'
 
           - task: PowerShell@2
             displayName: 'Run test script'
