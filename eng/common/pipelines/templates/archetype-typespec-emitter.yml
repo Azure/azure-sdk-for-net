@@ -179,7 +179,7 @@ extends:
                 npm publish $file --verbose --access public
               }
             displayName: Publish to DevOps feed
-            workingDirectory: $(buildArtifactsPath)/lock-files
+            workingDirectory: $(buildArtifactsPath)/packages
 
           - ${{ if parameters.PublishPublic }}:
             # publish to npmjs.org using ESRP
