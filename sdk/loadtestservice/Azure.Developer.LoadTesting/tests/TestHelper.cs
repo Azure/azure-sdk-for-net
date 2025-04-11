@@ -79,6 +79,72 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                 );
         }
 
+        public void SetupTestProfile(LoadTestAdministrationClient loadTestAdministrationClient, string testProfileId, string testId, string targetResourceId)
+        {
+            loadTestAdministrationClient.CreateOrUpdateTestProfile(
+                testProfileId,
+                RequestContent.Create(
+                        new
+                        {
+                            displayName = "Dotnet Testing Framework Loadtest",
+                            description = "This test was created through loadtesting C# SDK",
+                            testId = testId,
+                            targetResourceId = targetResourceId,
+                            targetResourceConfigurations = new
+                            {
+                                kind = "FunctionsFlexConsumption",
+                                configurations = new
+                                {
+                                    config1 = new
+                                    {
+                                        instanceMemoryMB = 2048,
+                                        httpConcurrency = 20
+                                    },
+                                    config2 = new
+                                    {
+                                        instanceMemoryMB = 4096,
+                                        httpConcurrency = 20
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
+        }
+
+        public async Task SetupTestProfileAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testProfileId, string testId, string targetResourceId)
+        {
+            await loadTestAdministrationClient.CreateOrUpdateTestProfileAsync(
+                testProfileId,
+                RequestContent.Create(
+                        new
+                        {
+                            displayName = "Dotnet Testing Framework Loadtest",
+                            description = "This test was created through loadtesting C# SDK",
+                            testId = testId,
+                            targetResourceId = targetResourceId,
+                            targetResourceConfigurations = new
+                            {
+                                kind = "FunctionsFlexConsumption",
+                                configurations = new
+                                {
+                                    config1 = new
+                                    {
+                                        instanceMemoryMB = 2048,
+                                        httpConcurrency = 20
+                                    },
+                                    config2 = new
+                                    {
+                                        instanceMemoryMB = 4096,
+                                        httpConcurrency = 20
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
+        }
+
         public async Task SetupLoadTestResourceAndTestScriptAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string filename)
         {
             await SetupLoadTestAsync(loadTestAdministrationClient, testId);

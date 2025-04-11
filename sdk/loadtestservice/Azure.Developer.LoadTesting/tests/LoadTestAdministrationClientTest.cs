@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
@@ -32,6 +33,12 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 await _testHelper.SetupTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
             }
+
+            if (RequiresTestProfile())
+            {
+                _testProfileId = $"{_testProfileId}2";
+                await _testHelper.SetupTestProfileAsync(_loadTestAdministrationClient, _testProfileId, _testId, TestEnvironment.TargetResourceId);
+            }
         }
 
         [TearDown]
@@ -39,6 +46,7 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             if (!SkipTearDown())
             {
+                await _loadTestAdministrationClient.DeleteTestProfileAsync(_testProfileId);
                 await _loadTestAdministrationClient.DeleteTestAsync(_testId);
             }
         }
@@ -343,6 +351,80 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
             Assert.IsTrue(fileUploadOperation.HasValue);
             Assert.IsTrue(fileUploadOperation.HasCompleted);
+        }
+
+        [Test]
+        [Category(REQUIRES_LOAD_TEST)]
+        public async Task CreateOrUpdateTestProfile()
+        {
+            _targetResourceId = TestEnvironment.TargetResourceId;
+            Response response = await _loadTestAdministrationClient.CreateOrUpdateTestProfileAsync(
+                _testProfileId,
+                RequestContent.Create(
+                        new
+                        {
+                            displayName = "Dotnet Testing Framework Loadtest",
+                            description = "This test was created through loadtesting C# SDK",
+                            testId = _testId,
+                            targetResourceId = _targetResourceId,
+                            targetResourceConfigurations = new
+                            {
+                                kind = "FunctionsFlexConsumption",
+                                configurations = new
+                                {
+                                    config1 = new
+                                    {
+                                        instanceMemoryMB = 2048,
+                                        httpConcurrency = 20
+                                    },
+                                    config2 = new
+                                    {
+                                        instanceMemoryMB = 4096,
+                                        httpConcurrency = 20
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
+            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
+            Assert.AreEqual(_testProfileId, jsonDocument.RootElement.GetProperty("testProfileId").ToString());
+        }
+
+        [Test]
+        [Category(REQUIRES_LOAD_TEST)]
+        [Category(REQUIRES_TEST_PROFILE)]
+        public async Task GetTestProfile()
+        {
+            var testProfileResponse = await _loadTestAdministrationClient.GetTestProfileAsync(_testProfileId);
+            var testProfile = testProfileResponse.Value;
+            Assert.NotNull(testProfile);
+            Assert.AreEqual(_testProfileId, testProfile.TestProfileId);
+            Assert.AreEqual(_targetResourceId, testProfile.TargetResourceId.ToString());
+        }
+
+        [Test]
+        [Category(REQUIRES_LOAD_TEST)]
+        [Category(REQUIRES_TEST_PROFILE)]
+        public async Task ListTestProfile()
+        {
+            var testProfilesResponse = _loadTestAdministrationClient.GetTestProfilesAsync();
+            Assert.NotNull(testProfilesResponse);
+            await foreach (var page in testProfilesResponse.AsPages())
+            {
+                foreach (var value in page.Values)
+                {
+                    Assert.NotNull(value.TestProfileId);
+                }
+            }
+        }
+
+        [Test]
+        [Category(REQUIRES_LOAD_TEST)]
+        [Category(REQUIRES_TEST_PROFILE)]
+        public async Task DeleteTestProfile()
+        {
+            Response response = await _loadTestAdministrationClient.DeleteTestProfileAsync(_testProfileId);
         }
     }
 }

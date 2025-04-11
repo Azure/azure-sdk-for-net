@@ -50,7 +50,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
                             httpConcurrency = 20
                         },
                         config2 = new {
-                            instanceMemoryMB = 2048,
+                            instanceMemoryMB = 4096,
                             httpConcurrency = 20
                         }
                     }
