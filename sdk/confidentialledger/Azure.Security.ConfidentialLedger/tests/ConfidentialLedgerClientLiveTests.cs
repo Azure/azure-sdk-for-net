@@ -327,12 +327,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
-            Console.WriteLine("resp", resp.Content);
+            Assert.AreEqual((int)HttpStatusCode.OK, resp.Status);
 
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-            string programContent = new StreamReader(filePath).ReadToEnd();
-            Console.WriteLine("program content", programContent);
-            Console.WriteLine("response content", resp.Content.ToString());
+            string programContent = new StreamReader(filePath, Encoding.UTF8).ReadToEnd();
             Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
 
             // Verify Response by Querying endpt
