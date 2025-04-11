@@ -8,7 +8,7 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
-namespace Azure.Projects;
+namespace Azure.Projects.Tooling;
 
 /// <summary>
 /// Azure Developer CLI helpers.
