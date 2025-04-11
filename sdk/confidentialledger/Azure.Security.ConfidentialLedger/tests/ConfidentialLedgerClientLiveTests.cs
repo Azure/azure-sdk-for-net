@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
@@ -328,10 +329,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
             Assert.AreEqual((int)HttpStatusCode.OK, resp.Status);
-
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-            string programContent = new StreamReader(filePath, Encoding.UTF8).ReadToEnd();
-            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
+            string programContent = new StreamReader(filePath).ReadToEnd();
+            Assert.AreEqual(programContent, resp.Content.ToString());
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
@@ -419,7 +419,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRole1";
+            string roleName = "UserTestRole";
 
             // Add Custom Role
             var rolesParam = new RolesParam
