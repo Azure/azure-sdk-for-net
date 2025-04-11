@@ -7,8 +7,6 @@ Project("{F6FAF93F-40F3-4E63-8090-0F0DE20FBEAD}") = "Azure.ResourceManager.Qumul
 EndProject
 Project("{F6FAF93F-40F3-4E63-8090-0F0DE20FBEAD}") = "Azure.ResourceManager.Qumulo.Tests", "tests\Azure.ResourceManager.Qumulo.Tests.csproj", "{891ADBB3-BC38-41A8-8140-19A44165DD6D}"
 EndProject
-Project("{F6FAF93F-40F3-4E63-8090-0F0DE20FBEAD}") = "Azure.ResourceManager.Qumulo.Samples", "samples\Azure.ResourceManager.Qumulo.Samples.csproj", "{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,17 +47,5 @@ Global
 		{891ADBB3-BC38-41A8-8140-19A44165DD6D}.Release|x64.Build.0 = Release|Any CPU
 		{891ADBB3-BC38-41A8-8140-19A44165DD6D}.Release|x86.ActiveCfg = Release|Any CPU
 		{891ADBB3-BC38-41A8-8140-19A44165DD6D}.Release|x86.Build.0 = Release|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Debug|x64.Build.0 = Debug|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Debug|x86.Build.0 = Debug|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Release|x64.ActiveCfg = Release|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Release|x64.Build.0 = Release|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Release|x86.ActiveCfg = Release|Any CPU
-		{F7F47177-24F9-45DA-B9B6-BA74FCE43FD6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
