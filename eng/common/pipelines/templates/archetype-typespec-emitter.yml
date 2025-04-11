@@ -205,8 +205,8 @@ extends:
             displayName: Install tsp-client
 
           - pwsh: |
-              npm config get registry
               Copy-Item "$(buildArtifactsPath)/packages/.npmrc" "./.npmrc" -Force
+              npm config get registry
               if (Test-Path -Path '$(buildArtifactsPath)/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files `
