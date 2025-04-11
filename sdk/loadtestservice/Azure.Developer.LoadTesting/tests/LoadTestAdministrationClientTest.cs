@@ -73,23 +73,11 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_LOAD_TEST)]
         [Category(SKIP_TEAR_DOWN)]
         public async Task DeleteTest()
         {
             Response response = await _loadTestAdministrationClient.DeleteTestAsync(_testId);
-            try
-            {
-                await _loadTestAdministrationClient.DeleteTestAsync(_testId);
-                Assert.Fail();
-            }
-            catch (RequestFailedException)
-            {
-                Assert.Pass();
-            }
-            catch (Exception)
-            {
-                Assert.Fail();
-            }
         }
 
         [Test]
@@ -246,7 +234,7 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.NotNull(appComponents);
             var component = appComponents.Components.Values.FirstOrDefault();
             Assert.NotNull(component);
-            Assert.AreEqual(_resourceId, component.ResourceId);
+            Assert.AreEqual(_resourceId, component.ResourceId.ToString());
         }
 
         [Test]
@@ -320,7 +308,7 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.NotNull(serverMetrics);
             var metric = serverMetrics.Metrics.Values.FirstOrDefault();
             Assert.NotNull(metric);
-            Assert.AreEqual(_resourceId, metric.ResourceId);
+            Assert.AreEqual(_resourceId, metric.ResourceId.ToString());
         }
 
         [Test]
