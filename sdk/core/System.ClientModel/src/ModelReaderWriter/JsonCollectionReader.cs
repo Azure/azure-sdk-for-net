@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections;
 using System.Diagnostics;
 using System.Text.Json;
@@ -60,7 +61,7 @@ internal class JsonCollectionReader : CollectionReader
         }
         else
         {
-            throw new InvalidOperationException($"Item type '{builder.GetItemType()?.Name}' must implement IJsonModel");
+            throw new InvalidOperationException($"Item type '{builder.GetItemType()?.ToFriendlyName()}' must implement IJsonModel");
         }
 
         while (reader.Read())
