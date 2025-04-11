@@ -31,10 +31,10 @@ function Build-Emitter {
 
         #pack the emitter
         Invoke-LoggedCommand "npm pack"
-        $file = Get-ChildItem -Filter "*.tgz" | Select-Object -ExpandProperty FullName
+        $packedfile = Get-ChildItem -Filter "*.tgz" | Select-Object -ExpandProperty FullName
 
-        Write-Host "Copying $file to $outputPath"
-        Copy-Item $file -Destination $outputPath
+        Write-Host "Copying $packedfile to $outputPath"
+        Copy-Item $packedfile -Destination $outputPath
 
         if (!$TargetNpmJsFeed) {
             $feedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry"
@@ -43,8 +43,10 @@ function Build-Emitter {
             $packageVersion = $packageJson.version
             $packageName = $packageJson.name
 
-            $unscopedName = $packageName.Split("/")[1]
-            $overrides[$packageName] = "$feedUrl/$packageName/-/$unscopedName-$packageVersion.tgz"
+            # get the packed file name from the tarball path
+            $packedFileName = $packedfile.Split("/")[-1]
+
+            $overrides[$packageName] = "$feedUrl/$packageName/-/$packedFileName-$packageVersion.tgz"
         }
     }
     finally {
