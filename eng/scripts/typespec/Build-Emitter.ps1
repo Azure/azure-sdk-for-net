@@ -69,3 +69,4 @@ Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $over
 Write-Host "Writing overrides to $outputPath/overrides.json"
 
 $overrides | ConvertTo-Json | Out-File -FilePath "$outputPath/overrides.json" -Encoding utf8 -Force
+Get-Content -Path "$outputPath/overrides.json" | Out-Host
