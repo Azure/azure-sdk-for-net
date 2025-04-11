@@ -1,0 +1,122 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_activate_etag_fail?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "415",
+        "Content-Type": "application/merge-patch+json",
+        "traceparent": "00-c40be718089d9deb717d98c727795f5a-df93877ef7fb3c62-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Inactive",
+        "displayName": "Test Metric ActivateExperimentMetricWithETagPreconditionFailed",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).ActivateExperimentMetricWithETagPreconditionFailed)",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "TestEvent"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "526",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Apr 2025 01:23:24 GMT",
+        "ETag": "\"R2DHqnWRi+4=\"",
+        "Last-Modified": "Tue, 08 Apr 2025 01:23:24 GMT",
+        "mise-correlation-id": "d490b9f3-0260-44de-b2e3-617e5adf9f5d",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "25743fe2-6399-46c2-96bc-656d3924d309",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "lifecycle": "Inactive",
+        "desiredDirection": "Increase",
+        "id": "test_metric_activate_etag_fail",
+        "displayName": "Test Metric ActivateExperimentMetricWithETagPreconditionFailed",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).ActivateExperimentMetricWithETagPreconditionFailed)",
+        "categories": [
+          "Test"
+        ],
+        "definition": {
+          "event": {
+            "eventName": "TestEvent"
+          },
+          "type": "EventCount"
+        },
+        "eTag": "R2DHqnWRi+4=",
+        "lastModifiedAt": "2025-04-08T01:23:24.53223+00:00"
+      }
+    },
+    {
+      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_activate_etag_fail?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "22",
+        "Content-Type": "application/merge-patch+json",
+        "If-Match": "\"some-other-value\"",
+        "traceparent": "00-97aed0c26535379576f4b63ed76cba5c-9478b7665f2edab4-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active"
+      },
+      "StatusCode": 412,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "161",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Apr 2025 01:23:24 GMT",
+        "mise-correlation-id": "9d840af2-5de0-42a9-b2cf-4b98e1091c00",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-error-code": "conditionNotMet",
+        "x-ms-request-id": "91af14d6-00d3-4e0b-bced-74aa351ee9c7",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "conditionNotMet",
+          "message": "The condition specified in the If-Match request header was not met.",
+          "target": null,
+          "details": [],
+          "innerError": null
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "ENDPOINT": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net",
+    "RandomSeed": "665593214"
+  }
+}

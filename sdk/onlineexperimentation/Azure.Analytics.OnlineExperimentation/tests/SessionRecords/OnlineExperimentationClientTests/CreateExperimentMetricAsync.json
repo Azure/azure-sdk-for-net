@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_create_or_update?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "229",
+        "Content-Type": "application/merge-patch+json",
+        "traceparent": "00-90ecfcffc638884fdba9a904f06e4015-9c7372ed9a19bf27-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "New Test Metric",
+        "description": "A metric created for testing purposes",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "TestEvent"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "340",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Apr 2025 01:24:20 GMT",
+        "ETag": "\"qOF7bCW8W7s=\"",
+        "Last-Modified": "Thu, 03 Apr 2025 01:21:46 GMT",
+        "mise-correlation-id": "b8833f68-0a44-47a7-bb70-7acfeaa71402",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "a6674066-4628-4f31-bac0-d8d250b1edce",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "lifecycle": "Active",
+        "desiredDirection": "Increase",
+        "id": "test_metric_create_or_update",
+        "displayName": "New Test Metric",
+        "description": "A metric created for testing purposes",
+        "categories": [
+          "Test"
+        ],
+        "definition": {
+          "event": {
+            "eventName": "TestEvent"
+          },
+          "type": "EventCount"
+        },
+        "eTag": "qOF7bCW8W7s=",
+        "lastModifiedAt": "2025-04-03T01:21:46.1771518+00:00"
+      }
+    }
+  ],
+  "Variables": {
+    "ENDPOINT": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net",
+    "RandomSeed": "106210471"
+  }
+}

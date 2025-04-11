@@ -1,0 +1,126 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics:validate?api-version=2025-05-31-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "287",
+        "Content-Type": "application/json",
+        "traceparent": "00-5e5259ce2f5bf3e7c137de7914d4e148-f85c5e73fddad0be-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "Invalid Metric",
+        "description": "An invalid metric for validation testing",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "ValidationEvent",
+            "filter": "this is not a valid filter expression."
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "1243",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Apr 2025 01:24:07 GMT",
+        "mise-correlation-id": "c2a16e83-11ce-4148-91c3-776d9ffe4d0c",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "435a2feb-06e2-43a4-bf1b-01fcbe793dda",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "result": "Invalid",
+        "diagnostics": [
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Missing name"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "Syntax of kind PathExpression is currently not supproted"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference 'this' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' is' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' not' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' a' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' valid' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' filter' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' expression' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference '' is not supported"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "ENDPOINT": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net",
+    "RandomSeed": "92686607"
+  }
+}
