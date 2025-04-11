@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Xml.Linq;
 using Azure.Projects.Core;
 using Azure.Provisioning.ServiceBus;
 
-namespace Azure.Projects.ServiceBus;
+namespace Azure.Projects;
 
 internal class ServiceBusSubscriptionFeature : AzureProjectFeature
 {

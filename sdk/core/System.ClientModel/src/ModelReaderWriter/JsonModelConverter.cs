@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -89,7 +90,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 
         if (iJsonModel is null)
         {
-            throw new InvalidOperationException($"Either {typeToConvert.Name} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
+            throw new InvalidOperationException($"Either {typeToConvert.ToFriendlyName()} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
         }
         return (IJsonModel<object>)iJsonModel.Create(ref reader, _options);
     }
