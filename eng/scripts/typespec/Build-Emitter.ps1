@@ -20,6 +20,7 @@ function Build-Emitter {
     Push-Location $packageRoot
     try {
         Write-Host "Working in $PWD"
+        Write-Host "TargetNpmJsFeed: $TargetNpmJsFeed"
 
         $outputPath = New-Item -ItemType Directory -Force -Path $outputPath | Select-Object -ExpandProperty FullName
 
