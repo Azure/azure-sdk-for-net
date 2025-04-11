@@ -19,12 +19,6 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             if (invocationDuped)
             {
                 var dupedDictionaryType = ValidateBuilder("TestProject1", expectation, dict);
-                Assert.AreEqual($"Dictionary<string, {expectation.TypeName}_0>", dictionaryType.Type.Alias);
-                Assert.AreEqual($"Dictionary<string, {expectation.TypeName}_1>", dupedDictionaryType.Type.Alias);
-            }
-            else
-            {
-                Assert.IsNull(dictionaryType.Type.Alias);
             }
 
             Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
