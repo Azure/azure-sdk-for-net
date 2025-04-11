@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
-        /// <param name="capacity"> The total capacity of the storage appliance. </param>
+        /// <param name="capacity"> The total capacity of the storage appliance. Measured in GiB. </param>
         /// <param name="capacityUsed"> The amount of storage consumed. </param>
-        /// <param name="clusterId"> The resource ID of the cluster this storage appliance is associated with. </param>
+        /// <param name="clusterId"> The resource ID of the cluster this storage appliance is associated with. Measured in GiB. </param>
         /// <param name="detailedStatus"> The detailed status of the storage appliance. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="managementIPv4Address"> The endpoint for the management interface of the storage appliance. </param>
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
         public AdministrativeCredentials AdministratorCredentials { get; set; }
-        /// <summary> The total capacity of the storage appliance. </summary>
+        /// <summary> The total capacity of the storage appliance. Measured in GiB. </summary>
         public long? Capacity { get; }
         /// <summary> The amount of storage consumed. </summary>
         public long? CapacityUsed { get; }
-        /// <summary> The resource ID of the cluster this storage appliance is associated with. </summary>
+        /// <summary> The resource ID of the cluster this storage appliance is associated with. Measured in GiB. </summary>
         public ResourceIdentifier ClusterId { get; }
         /// <summary> The detailed status of the storage appliance. </summary>
         public StorageApplianceDetailedStatus? DetailedStatus { get; }
