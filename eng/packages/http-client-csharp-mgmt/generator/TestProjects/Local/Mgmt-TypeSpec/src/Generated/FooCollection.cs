@@ -6,7 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
@@ -15,7 +19,7 @@ using Azure.ResourceManager.Resources;
 namespace MgmtTypeSpec
 {
     /// <summary></summary>
-    public partial class FooCollection : ArmCollection
+    public partial class FooCollection : ArmCollection, IEnumerable<FooResource>, IAsyncEnumerable<FooResource>
     {
         private ClientDiagnostics _fooClientDiagnostics;
         private Foos _fooRestClient;
@@ -40,6 +44,29 @@ namespace MgmtTypeSpec
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FooResource.ResourceType), id);
             }
+        }
+
+        /// <summary> List Foo resources by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+
+        /// <summary> List Foo resources by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator<FooResource> IEnumerable<FooResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<FooResource> IAsyncEnumerable<FooResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

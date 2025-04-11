@@ -38,9 +38,13 @@ namespace Azure.Generator.Management
                 var resource = new ResourceClientProvider(client);
                 ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
                 resources.Add(resource);
-                var collection = new ResourceCollectionClientProvider(client, resource);
-                ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
-                collections.Add(collection);
+                var isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var result) == true ? result.ToObjectFromJson<string>() == "true" : false;
+                if (!isSingleton)
+                {
+                    var collection = new ResourceCollectionClientProvider(client, resource);
+                    ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
+                    collections.Add(collection);
+                }
             }
 
             foreach (var child in client.Children)
