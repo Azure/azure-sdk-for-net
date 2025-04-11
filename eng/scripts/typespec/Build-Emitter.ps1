@@ -50,7 +50,8 @@ function Build-Emitter {
         }
 
         # restore the package.json and package-lock.json files to their original state
-        git restore package.json package-lock.json
+        Write-Host "Restoring package.json and package-lock.json to their original state"
+        Invoke-LoggedCommand "git restore package.json package-lock.json"
     }
     finally {
         Pop-Location
