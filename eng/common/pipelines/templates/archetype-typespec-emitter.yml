@@ -453,7 +453,7 @@ extends:
               filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
               arguments: > 
                 -BuildArtifactsPath '$(buildArtifactsPath)/lock-files'
-                -EmitterPackagePath {{ parameters.EmitterPackagePath }}
+                -EmitterPackagePath ${{ parameters.EmitterPackagePath }}
 
           - task: PowerShell@2
             displayName: 'Run test script'
