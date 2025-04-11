@@ -461,6 +461,7 @@ extends:
               arguments: >
                 $(TestArguments)
                 -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+                -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:

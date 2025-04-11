@@ -8,7 +8,7 @@ param(
     [string] $BuildArtifactsPath,
     [string] $PrereleaseSuffix,
     [switch] $UseTypeSpecNext,
-    [string] $emitterPackagePath
+    [string] $EmitterPackagePath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -88,4 +88,4 @@ function Initialize-Package($emitterPackagePath) {
     }
 }
 
-Initialize-Package $emitterPackagePath
+Initialize-Package $EmitterPackagePath

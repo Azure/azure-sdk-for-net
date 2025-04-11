@@ -4,7 +4,8 @@ param(
     [switch] $UnitTests,
     [switch] $GenerationChecks,
     [string] $Filter = ".",
-    [string] $OutputDirectory
+    [string] $OutputDirectory,
+    [string] $EmitterPackagePath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -12,10 +13,18 @@ Set-StrictMode -Version 3.0
 . "$PSScriptRoot/../../common/scripts/common.ps1"
 Set-ConsoleEncoding
 
-$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
-$mgmtPackageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp-mgmt"
+# strip leading slash from emitterPackagePath if it exists
+if ($EmitterPackagePath.StartsWith("/")) {
+    $EmitterPackagePath = $EmitterPackagePath.Substring(1)
+}
+
+$packageRoot = Resolve-Path "$RepoRoot/$EmitterPackagePath"
 $testResultsPath = $OutputDirectory ? $OutputDirectory : (Join-Path $packageRoot "artifacts" "test")
-$mgmtTestResultsPath = $OutputDirectory ? $OutputDirectory : (Join-Path $mgmtPackageRoot "artifacts" "test")
+
+# restore the package.json and package-lock.json files to their original state
+Write-Host "Restoring package.json and package-lock.json to their original state"
+Invoke-LoggedCommand "git restore package.json package-lock.json"
+
 $errors = @()
 
 function Build-Emitter {
@@ -51,26 +60,11 @@ function Build-Emitter {
         }
 }
 
-
 Push-Location $packageRoot
+
 try {
     Build-Emitter -packageRoot $packageRoot -testResultsPath $testResultsPath
-}
-finally {
-    Pop-Location
-}
 
-
-Push-Location $mgmtPackageRoot
-try {
-    Build-Emitter -packageRoot $mgmtPackageRoot -testResultsPath $mgmtTestResultsPath
-}
-finally {
-    Pop-Location
-}
-
-Push-Location $packageRoot
-try {
     if ($UnitTests) {
         Invoke-LoggedCommand "$packageRoot/eng/scripts/Get-Spector-Coverage.ps1" -GroupOutput
 
