@@ -168,10 +168,16 @@ function Set-ApiViewCommentForPR {
   $apiviewEndpoint = "$APIViewHost/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$HeadCommitish"
   LogDebug "Get APIView information for PR using endpoint: $apiviewEndpoint"
 
+  $correlationId = [System.Guid]::NewGuid().ToString()
+  $headers = @{
+    "x-correlation-id" = $correlationId
+  }
+  LogInfo "Correlation ID: $correlationId"
+
   $commentText = @()
   $commentText += "## API Change Check"
   try {
-    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
+    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -Headers $headers -MaximumRetryCount 3
     LogInfo "OperationId: $($response.Headers['X-Operation-Id'])"
     if ($response.StatusCode -ne 200) {
       LogInfo "API changes are not detected in this pull request."
@@ -235,7 +241,7 @@ function Set-ApiViewCommentForPR {
 # Helper function used to create API review requests for Spec generation SDKs pipelines
 function Create-API-Review {
   param (
-    [string]$apiviewEndpoint = "https://apiview.dev/PullRequest/DetectAPIChanges",
+    [string]$apiviewEndpoint = "https://apiview.dev/api/PullRequests/CreateAPIRevisionIfAPIHasChanges",
     [string]$specGenSDKArtifactPath,
     [string]$apiviewArtifactName,
     [string]$buildId,
@@ -275,7 +281,7 @@ function Create-API-Review {
         LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully.`n$($response.Content)"
       }
       elseif ($response.StatusCode -eq 208) {
-        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version."
+        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version.`n$($response.Content)"
       }
       else {
         LogError "Failed to create API review request. $($response)"
