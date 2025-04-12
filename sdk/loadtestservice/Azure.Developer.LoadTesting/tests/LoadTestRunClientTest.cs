@@ -21,13 +21,23 @@ namespace Azure.Developer.LoadTesting.Tests
             _loadTestAdministrationClient = CreateAdministrationClient();
             _loadTestRunClient = CreateRunClient();
 
-            await _testHelper.SetupLoadTestAsync(_loadTestAdministrationClient, _testId);
-            await _testHelper.SetupTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName, waitUntil: WaitUntil.Completed);
+            await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
+
+            if (RequiresTestProfile() || RequiresTestProfileRun())
+            {
+                _testProfileId = $"{_testProfileId}2";
+               await _testHelper.SetupTestProfileAsync(_loadTestAdministrationClient, _testProfileId, _testId, TestEnvironment.TargetResourceId);
+            }
 
             if (RequiresTestRun())
             {
-                await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
                 _testRunOperation = await _testHelper.SetupTestRunAsync(_loadTestRunClient, _testRunId, _testId, WaitUntil.Started);
+            }
+
+            if (RequiresTestProfileRun())
+            {
+                _testProfileRunId = $"{_testProfileRunId}2";
+                _testProfileRunOperation = await _testHelper.SetupTestProfileRunAsync(_loadTestRunClient, _testProfileRunId, _testProfileId, WaitUntil.Started);
             }
         }
 
@@ -36,17 +46,24 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             if (!CheckForSkipDeleteTestRun())
             {
-                await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
+                try
+                {
+                    await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
+                }
+                catch (Exception)
+                {
+                    // Swallow exception if deletion fails, e.x. not found
+                }
             }
 
+            await _loadTestRunClient.DeleteTestProfileRunAsync(_testProfileRunId);
+            await _loadTestAdministrationClient.DeleteTestProfileAsync(_testProfileId);
             await _loadTestAdministrationClient.DeleteTestAsync(_testId);
         }
 
         [Test]
         public async Task BeginTestRun_WaitUntilCompleted()
         {
-            await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
-
             TestRunResultOperation testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
                 WaitUntil.Completed, _testRunId, RequestContent.Create(
                     new
@@ -67,8 +84,6 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task BeginTestRun_PollOperation()
         {
-            await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
-
             var testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
                    WaitUntil.Completed, _testRunId, RequestContent.Create(
                         new
@@ -333,6 +348,85 @@ namespace Azure.Developer.LoadTesting.Tests
                     Assert.NotNull(item.Data);
                 }
             }
+        }
+
+        [Test]
+        [Category(REQUIRES_TEST_PROFILE)]
+        public async Task BeginTestProfileRun_WaitUntilCompleted()
+        {
+            _testProfileRunId = $"{_testProfileRunId}w";
+            var testProfileRunOperation = await _loadTestRunClient.BeginTestProfileRunAsync(
+                WaitUntil.Completed, _testProfileRunId, RequestContent.Create(
+                    new
+                    {
+                        testProfileId = _testProfileId,
+                        displayName = "TestProfileRun created from dotnet test framework"
+                    }
+                ));
+
+            var jsonDocument = JsonDocument.Parse(testProfileRunOperation.Value.ToString());
+            Assert.AreEqual(_testProfileRunId, jsonDocument.RootElement.GetProperty("testProfileRunId").ToString());
+            Assert.AreEqual(_testProfileId, jsonDocument.RootElement.GetProperty("testProfileId").ToString());
+            Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
+            Assert.IsTrue(testProfileRunOperation.HasValue);
+            Assert.IsTrue(testProfileRunOperation.HasCompleted);
+        }
+
+        [Test]
+        [Category(REQUIRES_TEST_PROFILE)]
+        public async Task BeginTestProfileRun_PollOperation()
+        {
+            _testProfileRunId = $"{_testProfileRunId}p";
+            var testProfileRunOperation = await _loadTestRunClient.BeginTestProfileRunAsync(
+                WaitUntil.Started, _testProfileRunId, RequestContent.Create(
+                    new
+                    {
+                        testProfileId = _testProfileId,
+                        displayName = "TestProfileRun created from dotnet test framework"
+                    }
+                ));
+            await testProfileRunOperation.WaitForCompletionAsync();
+
+            var jsonDocument = JsonDocument.Parse(testProfileRunOperation.Value.ToString());
+            Assert.AreEqual(_testProfileRunId, jsonDocument.RootElement.GetProperty("testProfileRunId").ToString());
+            Assert.AreEqual(_testProfileId, jsonDocument.RootElement.GetProperty("testProfileId").ToString());
+            Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
+            Assert.IsTrue(testProfileRunOperation.HasValue);
+            Assert.IsTrue(testProfileRunOperation.HasCompleted);
+        }
+
+        [Test]
+        [Category(REQUIRES_TEST_PROFILE_RUN)]
+        public async Task GetTestProfileRun()
+        {
+            var testProfileRunResponse = await _loadTestRunClient.GetTestProfileRunAsync(_testProfileRunId);
+            var testProfileRun = testProfileRunResponse.Value;
+            Assert.NotNull(testProfileRun);
+            Assert.AreEqual(_testProfileRunId, testProfileRun.TestProfileRunId);
+            Assert.AreEqual(_testProfileId, testProfileRun.TestProfileId);
+        }
+
+        [Test]
+        [Category(REQUIRES_TEST_PROFILE_RUN)]
+        public async Task ListTestProfileRuns()
+        {
+            var pagedResponse = _loadTestRunClient.GetTestProfileRunsAsync();
+            await foreach (var page in pagedResponse.AsPages())
+            {
+                foreach (var testProfileRun in page.Values)
+                {
+                    Assert.AreEqual(_testProfileId, testProfileRun.TestProfileId);
+                    Assert.AreEqual(_testProfileRunId, testProfileRun.TestProfileRunId);
+                }
+            }
+        }
+
+        [Test]
+        [Category(REQUIRES_TEST_PROFILE_RUN)]
+        public async Task DeleteTestProfileRun()
+        {
+            Response response = await _loadTestRunClient.DeleteTestProfileRunAsync(_testProfileRunId);
+            Assert.NotNull(response);
         }
     }
 }

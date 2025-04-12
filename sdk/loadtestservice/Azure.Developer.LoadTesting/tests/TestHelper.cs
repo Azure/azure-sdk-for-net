@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -86,8 +87,8 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                 RequestContent.Create(
                         new
                         {
-                            displayName = "Dotnet Testing Framework Loadtest",
-                            description = "This test was created through loadtesting C# SDK",
+                            displayName = "Dotnet Testing Framework TestProfile",
+                            description = "This test profile was created through loadtesting C# SDK",
                             testId = testId,
                             targetResourceId = targetResourceId,
                             targetResourceConfigurations = new
@@ -119,8 +120,8 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                 RequestContent.Create(
                         new
                         {
-                            displayName = "Dotnet Testing Framework Loadtest",
-                            description = "This test was created through loadtesting C# SDK",
+                            displayName = "Dotnet Testing Framework TestProfile",
+                            description = "This test profile was created through loadtesting C# SDK",
                             testId = testId,
                             targetResourceId = targetResourceId,
                             targetResourceConfigurations = new
@@ -201,6 +202,28 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                     {
                         testId = testId,
                         displayName = "Run created from dotnet testing framework"
+                    }
+                ));
+        }
+
+        public Operation<BinaryData> SetupTestProfileRun(LoadTestRunClient loadTestRunClient, string testProfileRunId, string testProfileId, WaitUntil waitUntil)
+        {
+            return loadTestRunClient.BeginTestProfileRun(waitUntil, testProfileRunId, RequestContent.Create(
+                    new
+                    {
+                        testProfileId = testProfileId,
+                        displayName = "TestProfileRun created from dotnet test framework"
+                    }
+                ));
+        }
+
+        public async Task<Operation<BinaryData>> SetupTestProfileRunAsync(LoadTestRunClient loadTestRunClient, string testProfileRunId, string testProfileId, WaitUntil waitUntil)
+        {
+            return await loadTestRunClient.BeginTestProfileRunAsync(waitUntil, testProfileRunId, RequestContent.Create(
+                    new
+                    {
+                        testProfileId = testProfileId,
+                        displayName = "TestProfileRun created from dotnet test framework"
                     }
                 ));
         }

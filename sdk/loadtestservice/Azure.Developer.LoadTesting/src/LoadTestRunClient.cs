@@ -149,7 +149,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginTestProfileRunAsync");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginTestProfileRun");
             scope.Start();
 
             if (timeSpan == null)
