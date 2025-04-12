@@ -449,10 +449,10 @@ namespace Azure.AI.Assistants
     }
     public partial class AssistantsClientOptions : Azure.Core.ClientOptions
     {
-        public AssistantsClientOptions(Azure.AI.Assistants.AssistantsClientOptions.ServiceVersion version = Azure.AI.Assistants.AssistantsClientOptions.ServiceVersion.Vlatest) { }
+        public AssistantsClientOptions(Azure.AI.Assistants.AssistantsClientOptions.ServiceVersion version = Azure.AI.Assistants.AssistantsClientOptions.ServiceVersion.V2025_05_15_Preview) { }
         public enum ServiceVersion
         {
-            Vlatest = 1,
+            V2025_05_15_Preview = 1,
         }
     }
     public partial class AssistantsNamedToolChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.AssistantsNamedToolChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.AssistantsNamedToolChoice>
