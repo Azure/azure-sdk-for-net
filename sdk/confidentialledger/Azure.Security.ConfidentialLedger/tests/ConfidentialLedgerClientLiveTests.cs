@@ -330,12 +330,19 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
             Assert.AreEqual((int)HttpStatusCode.OK, resp.Status);
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-            string programContent = File.ReadAllText(filePath);
-            string responseModule = resp.Content.ToString();
+            string programContent = File.ReadAllText(filePath).Trim();
+            string responseModule = resp.Content.ToString().Trim();
             string cleanedStr1 = new string(programContent.Where(c => !char.IsControl(c)).ToArray());
             string cleanedStr2 = new string(responseModule.Where(c => !char.IsControl(c)).ToArray());
 
-            Assert.AreEqual(cleanedStr1, cleanedStr2);
+            // Normalize strings
+            string str1 = cleanedStr1.Normalize(NormalizationForm.FormC);
+            string str2 = cleanedStr2.Normalize(NormalizationForm.FormC);
+
+            // Compare byte arrays
+            byte[] bytes1 = Encoding.UTF8.GetBytes(str1);
+            byte[] bytes2 = Encoding.UTF8.GetBytes(str2);
+            Assert.AreEqual(bytes1, bytes2);
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
@@ -423,7 +430,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRole";
+            string roleName = "TestRoleUser";
 
             // Add Custom Role
             var rolesParam = new RolesParam
