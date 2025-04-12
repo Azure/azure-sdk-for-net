@@ -1,19 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.CodeAnalysis;
-
 namespace System.ClientModel.SourceGeneration;
 
 internal sealed class TypeRef : IEquatable<TypeRef>
 {
-    public TypeRef(string name, string nameSpace, string assembly, TypeRef? itemType = default, int arrayRank = 0)
+    public TypeRef(string name, string nameSpace, string assembly, string fullyQualifiedName, TypeRef? itemType = default, int arrayRank = 0)
     {
         Name = name;
         Namespace = nameSpace;
         ItemType = itemType;
         Assembly = assembly;
         ArrayRank = arrayRank;
+        FullyQualifiedName = fullyQualifiedName;
     }
 
     public string Name { get; }
@@ -21,34 +20,13 @@ internal sealed class TypeRef : IEquatable<TypeRef>
     public TypeRef? ItemType { get; }
     public string Assembly { get; }
     public int ArrayRank { get; }
+    public string FullyQualifiedName { get; }
 
-    internal static TypeRef FromINamedTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache)
-    {
-        if (symbol is INamedTypeSymbol namedTypeSymbol)
-        {
-            var itemSymbol = namedTypeSymbol.GetItemSymbol(symbolToKindCache);
+    private string? _typeCaseName;
+    public string TypeCaseName => _typeCaseName ??= Name.ToIdentifier(false);
 
-            return new TypeRef(
-                symbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat),
-                symbol.ContainingNamespace.ToDisplayString(),
-                symbol.ContainingAssembly.ToDisplayString(),
-                itemSymbol is null ? null : FromINamedTypeSymbol(itemSymbol, symbolToKindCache));
-        }
-        else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
-        {
-            var elementType = FromINamedTypeSymbol(arrayTypeSymbol.ElementType, symbolToKindCache);
-            return new TypeRef(
-                arrayTypeSymbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat).RemoveAsterisks(),
-                elementType.Namespace,
-                elementType.Assembly,
-                elementType,
-                arrayTypeSymbol.Rank);
-        }
-        else
-        {
-            throw new NotSupportedException($"Unexpected type {symbol.GetType()}");
-        }
-    }
+    private string? _camelCaseName;
+    public string CamelCaseName => _camelCaseName ??= TypeCaseName.ToCamelCase();
 
     internal bool IsSameAssembly(TypeRef other) => Assembly.Equals(other.Assembly, StringComparison.Ordinal);
 
