@@ -19,8 +19,8 @@ namespace Azure.Core.TestFramework
 {
     [NonParallelizable]
     public abstract class RecordedTestBase : ClientTestBase
-        public TestRecording Recording { get; private set; }
     {
+        public TestRecording Recording { get; private set; }
 
         private static string EmptyGuid = Guid.Empty.ToString();
 
