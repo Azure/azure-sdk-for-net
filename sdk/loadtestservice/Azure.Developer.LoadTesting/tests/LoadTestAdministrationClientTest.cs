@@ -23,13 +23,13 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             _loadTestAdministrationClient = CreateAdministrationClient();
 
-            // NOTE: Both load test or test file requires a load test first.
-            if (RequiresLoadTest() || RequiresTestFile())
+            // NOTE: Load test, test file and test profile requires a load test first.
+            if (RequiresLoadTest() || RequiresTestFile() || RequiresTestProfile())
             {
                 await _testHelper.SetupLoadTestAsync(_loadTestAdministrationClient, _testId);
             }
 
-            if (RequiresTestFile())
+            if (RequiresTestFile() || RequiresTestProfile())
             {
                 await _testHelper.SetupTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
             }
@@ -392,7 +392,6 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
-        [Category(REQUIRES_LOAD_TEST)]
         [Category(REQUIRES_TEST_PROFILE)]
         public async Task GetTestProfile()
         {
@@ -404,7 +403,6 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
-        [Category(REQUIRES_LOAD_TEST)]
         [Category(REQUIRES_TEST_PROFILE)]
         public async Task ListTestProfile()
         {

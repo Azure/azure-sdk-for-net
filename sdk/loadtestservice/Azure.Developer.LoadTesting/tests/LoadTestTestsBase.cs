@@ -28,13 +28,13 @@ namespace Azure.Developer.LoadTesting.Tests
         internal string _targetResourceId;
         internal const string SKIP_SET_UP = "SkipSetUp";
         internal const string SKIP_TEAR_DOWN = "SkipTearDown";
-        internal const string SKIP_TEST_RUN = "SkipTestRun";
         internal const string SKIP_DELETE_TEST_RUN = "SkipDeleteTestRun";
         internal TestRunResultOperation _testRunOperation;
 
         internal const string REQUIRES_LOAD_TEST = "RequiresLoadTest";
         internal const string REQUIRES_TEST_FILE = "RequiresTestFile";
         internal const string REQUIRES_TEST_PROFILE = "RequiresTestProfile";
+        internal const string REQUIRES_TEST_RUN = "RequiresTestRun";
 
         internal bool RequiresLoadTest()
         {
@@ -54,22 +54,16 @@ namespace Azure.Developer.LoadTesting.Tests
             return categories != null && categories.Contains(REQUIRES_TEST_PROFILE);
         }
 
-        internal bool CheckForSkipSetUp()
+        internal bool RequiresTestRun()
         {
             var categories = CurrentContext.Test.Properties["Category"];
-            return categories != null && categories.Contains(SKIP_SET_UP);
+            return categories != null && categories.Contains(REQUIRES_TEST_RUN);
         }
 
         internal bool SkipTearDown()
         {
             var categories = CurrentContext.Test.Properties["Category"];
             return categories != null && categories.Contains(SKIP_TEAR_DOWN);
-        }
-
-        internal bool CheckForSkipTestRun()
-        {
-            var categories = CurrentContext.Test.Properties["Category"];
-            return categories != null && categories.Contains(SKIP_TEST_RUN);
         }
 
         internal bool CheckForSkipDeleteTestRun()

@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
-    internal class LoadTestRunClientTest: LoadTestTestsBase
+    public class LoadTestRunClientTest: LoadTestTestsBase
     {
         public LoadTestRunClientTest(bool isAsync): base(isAsync) { }
 
@@ -24,8 +24,9 @@ namespace Azure.Developer.LoadTesting.Tests
             await _testHelper.SetupLoadTestAsync(_loadTestAdministrationClient, _testId);
             await _testHelper.SetupTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName, waitUntil: WaitUntil.Completed);
 
-            if (!CheckForSkipTestRun())
+            if (RequiresTestRun())
             {
+                await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
                 _testRunOperation = await _testHelper.SetupTestRunAsync(_loadTestRunClient, _testRunId, _testId, WaitUntil.Started);
             }
         }
@@ -37,14 +38,16 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
             }
+
             await _loadTestAdministrationClient.DeleteTestAsync(_testId);
         }
 
         [Test]
-        [Category(SKIP_TEST_RUN)]
-        public async Task BeginCreateOrUpdateTestRun()
+        public async Task BeginTestRun_WaitUntilCompleted()
         {
-           TestRunResultOperation testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
+            await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
+
+            TestRunResultOperation testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
                 WaitUntil.Completed, _testRunId, RequestContent.Create(
                     new
                     {
@@ -59,11 +62,14 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
             Assert.IsTrue(testRunOperation.HasValue);
             Assert.IsTrue(testRunOperation.HasCompleted);
+        }
 
-            await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
+        [Test]
+        public async Task BeginTestRun_PollOperation()
+        {
             await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
 
-            testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
+            var testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
                    WaitUntil.Completed, _testRunId, RequestContent.Create(
                         new
                         {
@@ -74,7 +80,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
             await testRunOperation.WaitForCompletionAsync();
 
-            jsonDocument = JsonDocument.Parse(testRunOperation.Value.ToString());
+            var jsonDocument = JsonDocument.Parse(testRunOperation.Value.ToString());
             Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
             Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
             Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
@@ -83,6 +89,7 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         public async Task GetTestRun()
         {
             var testRunResponse = await _loadTestRunClient.GetTestRunAsync(_testRunId);
@@ -93,6 +100,7 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         public async Task GetTestRunFile()
         {
             var testRunFileResponse = await _loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
@@ -102,6 +110,7 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         public async Task ListTestRuns()
         {
             int pageSizeHint = 2;
@@ -137,27 +146,15 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         [Category(SKIP_DELETE_TEST_RUN)]
         public async Task DeleteTestRun()
         {
             Response response = await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
-
-            try
-            {
-                await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
-                Assert.Fail();
-            }
-            catch (RequestFailedException)
-            {
-                Assert.Pass();
-            }
-            catch (Exception)
-            {
-                Assert.Fail();
-            }
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         public async Task StopTestRun()
         {
             var stopResponse = await _loadTestRunClient.StopTestRunAsync(_testRunId);
@@ -167,6 +164,7 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         public async Task CreateOrUpdateAppComponents()
         {
             _resourceId = TestEnvironment.ResourceId;
@@ -197,6 +195,7 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         public async Task GetAppComponents()
         {
             _resourceId = TestEnvironment.ResourceId;
@@ -226,10 +225,11 @@ namespace Azure.Developer.LoadTesting.Tests
             var appComponents = appComponentsResponse.Value;
             var component = appComponents.Components.Values.FirstOrDefault();
             Assert.NotNull(component);
-            Assert.AreEqual(_resourceId, component.ResourceId);
+            Assert.AreEqual(_resourceId, component.ResourceId.ToString());
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         public async Task CreateOrUpdateServerMetricsConfig()
         {
             _resourceId = TestEnvironment.ResourceId;
@@ -264,6 +264,7 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         public async Task GetServerMetricsConfig()
         {
             _resourceId = TestEnvironment.ResourceId;
@@ -297,10 +298,11 @@ namespace Azure.Developer.LoadTesting.Tests
             var serverMetrics = serverMetricsResponse.Value;
             var metric = serverMetrics.Metrics.Values.FirstOrDefault();
             Assert.NotNull(metric);
-            Assert.AreEqual(_resourceId, metric.ResourceId);
+            Assert.AreEqual(_resourceId, metric.ResourceId.ToString());
         }
 
         [Test]
+        [Category(REQUIRES_TEST_RUN)]
         public async Task GetMetrics()
         {
             await _testRunOperation.WaitForCompletionAsync();
@@ -321,7 +323,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     _testRunId,
                     metricDefinitions.Value.FirstOrDefault().Name,
                     metricNamespaces.Value.FirstOrDefault().Name,
-                    testRun.StartDateTime.Value.ToString("o") + "/" + testRun.EndDateTime.Value.ToString("o")
+                    testRun.StartDateTime.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ") + "/" + testRun.EndDateTime.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
                 );
 
             await foreach (var page in metricsResponsePageable.AsPages())

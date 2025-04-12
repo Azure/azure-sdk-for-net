@@ -1752,7 +1752,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNull(timespan, nameof(timespan));
 
-            RequestContent content = body.ToRequestContent();
+            RequestContent content = body?.ToRequestContent();
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context);
@@ -1781,7 +1781,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNull(timespan, nameof(timespan));
 
-            RequestContent content = body.ToRequestContent();
+            RequestContent content = body?.ToRequestContent();
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context);
