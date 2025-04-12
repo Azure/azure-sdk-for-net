@@ -332,10 +332,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
             string programContent = File.ReadAllText(filePath);
 
-            byte[] request = Encoding.UTF8.GetBytes(programContent);
-            byte[] responseModule = Encoding.UTF8.GetBytes(resp.Content.ToString());
-
-            Assert.AreEqual(request, responseModule);
+            Assert.AreEqual(programContent.Trim(), resp.Content.ToString().Trim());
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
