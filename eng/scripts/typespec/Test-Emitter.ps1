@@ -85,7 +85,7 @@ try {
         # run E2E Test for TypeSpec emitter
         try
         {
-            & "$RepoRoot/eng/scripts/typespec/Check-CodeGeneration.ps1" -Filter $Filter -Reset
+            & "$RepoRoot/eng/scripts/typespec/Check-CodeGeneration.ps1" $packageRoot -Filter $Filter -Reset
         }
         catch
         {
