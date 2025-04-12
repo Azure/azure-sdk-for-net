@@ -20,6 +20,7 @@ using Azure.Core;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Azure.Core.TestFramework;
+using System.Text.RegularExpressions;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -387,7 +388,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
                 ShareFilePermission fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
-                Assert.AreEqual(sourcePermission.Permission, fullPermission.Permission);
+
+                string sourcePermissionStr = RemoveSacl(sourcePermission.Permission);
+                string destPermissionStr = RemoveSacl(fullPermission.Permission);
+                Assert.AreEqual(sourcePermissionStr, destPermissionStr);
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNfs)
             {
@@ -432,6 +436,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
             }
+        }
+
+        // removes the SACL from the SDDL string, which is only used for auditing
+        private string RemoveSacl(string sddl)
+        {
+            return Regex.Replace(sddl, @"S:.*$", "", RegexOptions.IgnoreCase).Trim();
         }
 
         private ShareFileStorageResourceOptions GetShareFileStorageResourceOptions(TransferPropertiesTestType type)

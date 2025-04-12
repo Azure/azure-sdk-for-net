@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
             string filePermission = _options?.GetFilePermission(sourceProperties);
-            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
             FilePosixProperties posixProperties = _options?.GetFilePosixProperties(sourceProperties);
             // Call Set Properties
             // if transfer is not empty and original File Attribute contains ReadOnly
@@ -278,9 +278,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             if (sourceResource is ShareFileStorageResource)
             {
-                if (_options?.FilePermissions ?? false)
+                ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
+                // both source and destination must be SMB and destination FilePermission option must be set.
+                if ((!sourceShareFile._options?.IsNfs ?? true) && (!_options?.IsNfs ?? true) && (_options?.FilePermissions ?? false))
                 {
-                    ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
                     string permissionsValue = sourceProperties?.RawProperties?.GetPermission();
                     string destinationPermissionKey = sourceProperties?.RawProperties?.GetDestinationPermissionKey();
                     // Get / Set the permission key if preserve is set to true,

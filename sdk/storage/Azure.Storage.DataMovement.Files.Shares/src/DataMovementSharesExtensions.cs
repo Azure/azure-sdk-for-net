@@ -158,39 +158,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public static FileSmbProperties GetFileSmbProperties(
             this ShareFileStorageResourceOptions options,
-            StorageResourceItemProperties properties)
-        {
-            return new()
-            {
-                FileAttributes = (options?.IsNfs ?? false)
-                    ? default
-                    : GetPropertyValue<NtfsFileAttributes>(
-                        options?._isFileAttributesSet ?? false,
-                        options?.FileAttributes,
-                        properties?.RawProperties,
-                        DataMovementConstants.ResourceProperties.FileAttributes),
-                FileCreatedOn = GetPropertyValue<DateTimeOffset>(
-                    options?._isFileCreatedOnSet ?? false,
-                    options?.FileCreatedOn,
-                    properties?.RawProperties,
-                    DataMovementConstants.ResourceProperties.CreationTime),
-                FileLastWrittenOn = GetPropertyValue<DateTimeOffset>(
-                    options?._isFileLastWrittenOnSet ?? false,
-                    options?.FileLastWrittenOn,
-                    properties?.RawProperties,
-                    DataMovementConstants.ResourceProperties.LastWrittenOn),
-                FileChangedOn = (options?.IsNfs ?? false)
-                    ? default
-                    : GetPropertyValue<DateTimeOffset>(
-                        options?._isFileChangedOnSet ?? false,
-                        options?.FileChangedOn,
-                        properties?.RawProperties,
-                        DataMovementConstants.ResourceProperties.ChangedOnTime)
-            };
-        }
-
-        public static FileSmbProperties GetFileSmbProperties(
-            this ShareFileStorageResourceOptions options,
             StorageResourceContainerProperties properties)
         {
             // Only set permissions if Copy transfer and FilePermissions is on.
