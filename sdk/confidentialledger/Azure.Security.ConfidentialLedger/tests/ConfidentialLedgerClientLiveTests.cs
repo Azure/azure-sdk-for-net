@@ -330,8 +330,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
             Assert.AreEqual((int)HttpStatusCode.OK, resp.Status);
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-            string programContent = new StreamReader(filePath).ReadToEnd();
-            Assert.AreEqual(programContent, resp.Content.ToString());
+            string programContent = File.ReadAllText(filePath);
+
+            byte[] request = Encoding.UTF8.GetBytes(programContent);
+            byte[] responseModule = Encoding.UTF8.GetBytes(resp.Content.ToString());
+
+            Assert.AreEqual(request, responseModule);
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
