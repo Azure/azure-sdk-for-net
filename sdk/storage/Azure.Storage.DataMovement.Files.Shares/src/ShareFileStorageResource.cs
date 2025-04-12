@@ -80,7 +80,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(properties?.RawProperties);
             IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
-            string filePermission = _options?.GetFilePermission(properties?.RawProperties);
+            string filePermission = _options?.GetFilePermission(properties);
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
             FilePosixProperties posixProperties = _options?.GetFilePosixProperties(properties);
 
@@ -119,6 +119,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
+            string filePermission = _options?.GetFilePermission(sourceProperties);
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
             FilePosixProperties posixProperties = _options?.GetFilePosixProperties(sourceProperties);
             // Call Set Properties
@@ -131,6 +132,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 await ShareFileClient.SetHttpHeadersAsync(new()
                 {
                     HttpHeaders = httpHeaders,
+                    FilePermission = new() { Permission = filePermission },
                     SmbProperties = smbProperties,
                     PosixProperties = posixProperties
                 },

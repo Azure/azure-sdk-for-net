@@ -58,12 +58,20 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             // Set the ShareFileTraits to send when listing.
             ShareFileTraits traits = new();
-            if (!ResourceOptions?.IsNfs ?? true)
+
+            if (destinationContainer is ShareDirectoryStorageResourceContainer)
             {
-                traits = ShareFileTraits.Attributes;
-                if (ResourceOptions?.FilePermissions ?? false)
+                ShareDirectoryStorageResourceContainer destinationStorageResourceContainer
+                    = destinationContainer as ShareDirectoryStorageResourceContainer;
+                ShareFileStorageResourceOptions destinationOptions = destinationStorageResourceContainer.ResourceOptions;
+                // both source and destination must be SMB
+                if ((!ResourceOptions?.IsNfs ?? true) && (!destinationOptions?.IsNfs ?? true))
                 {
-                    traits |= ShareFileTraits.PermissionKey;
+                    traits = ShareFileTraits.Attributes;
+                    if (destinationOptions?.FilePermissions ?? false)
+                    {
+                        traits |= ShareFileTraits.PermissionKey;
+                    }
                 }
             }
             ShareClient parentDestinationShare = default;
@@ -151,7 +159,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             IDictionary<string, string> metadata = ResourceOptions?.GetFileMetadata(sourceProperties?.RawProperties);
-            string filePermission = ResourceOptions?.GetFilePermission(sourceProperties?.RawProperties);
+            string filePermission = ResourceOptions?.GetFilePermission(sourceProperties);
             FileSmbProperties smbProperties = ResourceOptions?.GetFileSmbProperties(sourceProperties);
             FilePosixProperties filePosixProperties = ResourceOptions?.GetFilePosixProperties(sourceProperties);
 

@@ -42,6 +42,8 @@ namespace Azure.Storage.DataMovement.Tests
             Preserve = 1,
             NoPreserve = 2,
             NewProperties = 3,
+            PreserveNfs = 4,
+            PreserveNfsNoPermissions = 5,
         }
 
         /// <summary>

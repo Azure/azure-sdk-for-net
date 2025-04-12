@@ -53,12 +53,41 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public static string GetFilePermission(
             this ShareFileStorageResourceOptions options,
-            IDictionary<string, object> properties)
-            => (options?.FilePermissions ?? false)
-                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
-                        ? (string) permission
+            StorageResourceItemProperties sourceProperties)
+        {
+            if (options?.IsNfs ?? false)
+            {
+                return default;
+            }
+
+            // Only set permissions if Copy transfer and FilePermissions is on.
+            bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+
+            return setPermissions
+                    ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
+                        ? (string)permission
                         : default
                     : default;
+        }
+
+        public static string GetFilePermission(
+            this ShareFileStorageResourceOptions options,
+            StorageResourceContainerProperties sourceProperties)
+        {
+            if (options?.IsNfs ?? false)
+            {
+                return default;
+            }
+
+            // Only set permissions if Copy transfer and FilePermissions is on.
+            bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+
+            return setPermissions
+                    ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
+                        ? (string)permission
+                        : default
+                    : default;
+        }
 
         public static string GetSourcePermissionKey(
             this IDictionary<string, object> properties)
@@ -86,7 +115,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string permissionKeyValue = destinationPermissionKey;
             if (string.IsNullOrEmpty(permissionKeyValue))
             {
-                permissionKeyValue = (options?.FilePermissions ?? false)
+                // Only set permissions if Copy transfer and FilePermissions is on.
+                bool setPermissions = (!properties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+
+                permissionKeyValue = setPermissions
                     ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
                         ? (string) permissionKeyObject
                         : default
@@ -108,14 +140,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     options?._isFileCreatedOnSet ?? false,
                     options?.FileCreatedOn,
                     properties?.RawProperties,
-                    DataMovementConstants.ResourceProperties.CreationTime
-                ),
+                    DataMovementConstants.ResourceProperties.CreationTime),
                 FileLastWrittenOn = GetPropertyValue<DateTimeOffset>(
                     options?._isFileLastWrittenOnSet ?? false,
                     options?.FileLastWrittenOn,
                     properties?.RawProperties,
-                    DataMovementConstants.ResourceProperties.LastWrittenOn
-                ),
+                    DataMovementConstants.ResourceProperties.LastWrittenOn),
                 FileChangedOn = (options?.IsNfs ?? false)
                     ? default
                     : GetPropertyValue<DateTimeOffset>(
@@ -143,14 +173,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     options?._isFileCreatedOnSet ?? false,
                     options?.FileCreatedOn,
                     properties?.RawProperties,
-                    DataMovementConstants.ResourceProperties.CreationTime
-                ),
+                    DataMovementConstants.ResourceProperties.CreationTime),
                 FileLastWrittenOn = GetPropertyValue<DateTimeOffset>(
                     options?._isFileLastWrittenOnSet ?? false,
                     options?.FileLastWrittenOn,
                     properties?.RawProperties,
-                    DataMovementConstants.ResourceProperties.LastWrittenOn
-                ),
+                    DataMovementConstants.ResourceProperties.LastWrittenOn),
                 FileChangedOn = (options?.IsNfs ?? false)
                     ? default
                     : GetPropertyValue<DateTimeOffset>(
@@ -165,7 +193,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             this ShareFileStorageResourceOptions options,
             StorageResourceContainerProperties properties)
         {
-            string permissionKeyValue = (options?.FilePermissions ?? false)
+            // Only set permissions if Copy transfer and FilePermissions is on.
+            bool setPermissions = (!properties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+
+            string permissionKeyValue = setPermissions
                 ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
                     ? (string)permissionKeyObject
                     : default
@@ -186,14 +217,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     options?._isFileCreatedOnSet ?? false,
                     options?.FileCreatedOn,
                     properties?.RawProperties,
-                    DataMovementConstants.ResourceProperties.CreationTime
-                ),
+                    DataMovementConstants.ResourceProperties.CreationTime),
                 FileLastWrittenOn = GetPropertyValue<DateTimeOffset>(
                     options?._isFileLastWrittenOnSet ?? false,
                     options?.FileLastWrittenOn,
                     properties?.RawProperties,
-                    DataMovementConstants.ResourceProperties.LastWrittenOn
-                ),
+                    DataMovementConstants.ResourceProperties.LastWrittenOn),
                 FileChangedOn = (options?.IsNfs ?? false)
                     ? default
                     : GetPropertyValue<DateTimeOffset>(
@@ -227,7 +256,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (options?.IsNfs ?? false)
             {
                 // Only set NFS permissions if Copy transfer and FilePermissions is on.
-                bool setPermissions = (!sourceProperties?.Uri.IsFile ?? false) && (options?.FilePermissions ?? false);
+                bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
 
                 NfsFileMode FileMode = setPermissions
                     ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
@@ -257,31 +286,33 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public static FilePosixProperties GetFilePosixProperties(
             this ShareFileStorageResourceOptions options,
-            StorageResourceContainerProperties properties)
+            StorageResourceContainerProperties sourceProperties)
         {
-            if (options?.IsNfs != true)
+            if (options?.IsNfs ?? false)
             {
-                return new();
-            }
+                // Only set NFS permissions if Copy transfer and FilePermissions is on.
+                bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
 
-            return new()
-            {
-                FileMode = (options?.FilePermissions ?? false)
-                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
-                        ? (NfsFileMode)fileMode
+                return new()
+                {
+                    FileMode = setPermissions
+                        ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
+                            ? (NfsFileMode)fileMode
+                            : default
+                        : default,
+                    Owner = setPermissions
+                        ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Owner, out object owner) == true
+                            ? (string)owner
+                            : default
+                        : default,
+                    Group = setPermissions
+                        ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Group, out object group) == true
+                            ? (string)group
+                            : default
                         : default
-                    : default,
-                Owner = (options?.FilePermissions ?? false)
-                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Owner, out object owner) == true
-                        ? (string)owner
-                        : default
-                    : default,
-                Group = (options?.FilePermissions ?? false)
-                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Group, out object group) == true
-                        ? (string)group
-                        : default
-                    : default
-            };
+                };
+            }
+            return new();
         }
 
         internal static ShareFileUploadRangeOptions ToShareFileUploadRangeOptions(

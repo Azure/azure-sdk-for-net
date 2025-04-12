@@ -70,9 +70,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             service ??= clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumFile, options);
+            ShareServiceClient sasService = new ShareServiceClient(service.GenerateAccountSasUri(
+                Sas.AccountSasPermissions.All,
+                clientBuilder.Recording.UtcNow.AddDays(1),
+                Sas.AccountSasResourceTypes.All),
+                clientBuilder.GetOptions());
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             shareName ??= clientBuilder.GetNewShareName();
-            ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
+            ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(sasService.GetShareClient(shareName));
             return await DisposingShare.CreateNfsAsync(share, metadata);
         }
     }
