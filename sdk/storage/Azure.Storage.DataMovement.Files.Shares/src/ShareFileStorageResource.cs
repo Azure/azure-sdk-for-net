@@ -276,6 +276,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
         {
+            // Copy transfer
             if (sourceResource is ShareFileStorageResource)
             {
                 ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;

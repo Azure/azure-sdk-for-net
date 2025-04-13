@@ -59,6 +59,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // Set the ShareFileTraits to send when listing.
             ShareFileTraits traits = new();
 
+            // Copy transfer
             if (destinationContainer is ShareDirectoryStorageResourceContainer)
             {
                 ShareDirectoryStorageResourceContainer destinationStorageResourceContainer
