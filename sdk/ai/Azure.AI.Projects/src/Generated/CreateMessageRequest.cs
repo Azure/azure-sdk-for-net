@@ -55,11 +55,12 @@ namespace Azure.AI.Projects
         /// conversation.
         /// </param>
         /// <param name="content">
-        /// The textual content of the initial message. Currently, robust input including images and annotated text may only be provided via
-        /// a separate call to the create message API.
+        /// The content of the initial message. This may be:
+        /// - A basic string, if you only need text, or
+        /// - An array of typed content blocks (text, image_file, image_url, etc.)
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal CreateMessageRequest(MessageRole role, string content)
+        internal CreateMessageRequest(MessageRole role, BinaryData content)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -79,13 +80,14 @@ namespace Azure.AI.Projects
         /// conversation.
         /// </param>
         /// <param name="content">
-        /// The textual content of the initial message. Currently, robust input including images and annotated text may only be provided via
-        /// a separate call to the create message API.
+        /// The content of the initial message. This may be:
+        /// - A basic string, if you only need text, or
+        /// - An array of typed content blocks (text, image_file, image_url, etc.)
         /// </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateMessageRequest(MessageRole role, string content, IReadOnlyList<MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateMessageRequest(MessageRole role, BinaryData content, IReadOnlyList<MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
             Content = content;
@@ -109,10 +111,49 @@ namespace Azure.AI.Projects
         /// </summary>
         public MessageRole Role { get; }
         /// <summary>
-        /// The textual content of the initial message. Currently, robust input including images and annotated text may only be provided via
-        /// a separate call to the create message API.
+        /// The content of the initial message. This may be:
+        /// - A basic string, if you only need text, or
+        /// - An array of typed content blocks (text, image_file, image_url, etc.)
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description><see cref="string"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="IList{T}"/> where <c>T</c> is of type <see cref="MessageInputContentBlock"/></description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
-        public string Content { get; }
+        public BinaryData Content { get; }
         /// <summary> A list of files attached to the message, and the tools they should be added to. </summary>
         public IReadOnlyList<MessageAttachment> Attachments { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>

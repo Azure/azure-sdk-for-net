@@ -42,18 +42,61 @@ namespace Azure.AI.Projects
         /// conversation.
         /// </param>
         /// <param name="content">
-        /// The textual content of the initial message. Currently, robust input including images and annotated text may only be provided via
-        /// a separate call to the create message API.
+        /// The content of the initial message. This may be:
+        /// - A basic string, if you only need text, or
+        /// - An array of typed content blocks (text, image_file, image_url, etc.)
         /// </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Projects.ThreadMessageOptions"/> instance for mocking. </returns>
-        public static ThreadMessageOptions ThreadMessageOptions(MessageRole role = default, string content = null, IEnumerable<MessageAttachment> attachments = null, IDictionary<string, string> metadata = null)
+        public static ThreadMessageOptions ThreadMessageOptions(MessageRole role = default, BinaryData content = null, IEnumerable<MessageAttachment> attachments = null, IDictionary<string, string> metadata = null)
         {
             attachments ??= new List<MessageAttachment>();
             metadata ??= new Dictionary<string, string>();
 
             return new ThreadMessageOptions(role, content, attachments?.ToList(), metadata, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageInputTextBlock"/>. </summary>
+        /// <param name="text"> The plain text content for this block. </param>
+        /// <returns> A new <see cref="Projects.MessageInputTextBlock"/> instance for mocking. </returns>
+        public static MessageInputTextBlock MessageInputTextBlock(string text = null)
+        {
+            return new MessageInputTextBlock(MessageBlockType.Text, serializedAdditionalRawData: null, text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageInputImageFileBlock"/>. </summary>
+        /// <param name="imageFile"> Information about the referenced image file, including file ID and optional detail level. </param>
+        /// <returns> A new <see cref="Projects.MessageInputImageFileBlock"/> instance for mocking. </returns>
+        public static MessageInputImageFileBlock MessageInputImageFileBlock(MessageImageFileParam imageFile = null)
+        {
+            return new MessageInputImageFileBlock(MessageBlockType.ImageFile, serializedAdditionalRawData: null, imageFile);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageImageFileParam"/>. </summary>
+        /// <param name="fileId"> The ID of the previously uploaded image file. </param>
+        /// <param name="detail"> Optional detail level for the image (auto, low, or high). </param>
+        /// <returns> A new <see cref="Projects.MessageImageFileParam"/> instance for mocking. </returns>
+        public static MessageImageFileParam MessageImageFileParam(string fileId = null, ImageDetailLevel? detail = null)
+        {
+            return new MessageImageFileParam(fileId, detail, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageInputImageUrlBlock"/>. </summary>
+        /// <param name="imageUrl"> Information about the external image URL, including the URL and optional detail level. </param>
+        /// <returns> A new <see cref="Projects.MessageInputImageUrlBlock"/> instance for mocking. </returns>
+        public static MessageInputImageUrlBlock MessageInputImageUrlBlock(MessageImageUrlParam imageUrl = null)
+        {
+            return new MessageInputImageUrlBlock(MessageBlockType.ImageUrl, serializedAdditionalRawData: null, imageUrl);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageImageUrlParam"/>. </summary>
+        /// <param name="url"> The publicly accessible URL of the external image. </param>
+        /// <param name="detail"> Optional detail level for the image (auto, low, or high). Defaults to 'auto' if not specified. </param>
+        /// <returns> A new <see cref="Projects.MessageImageUrlParam"/> instance for mocking. </returns>
+        public static MessageImageUrlParam MessageImageUrlParam(string url = null, ImageDetailLevel? detail = null)
+        {
+            return new MessageImageUrlParam(url, detail, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.MessageIncompleteDetails"/>. </summary>
