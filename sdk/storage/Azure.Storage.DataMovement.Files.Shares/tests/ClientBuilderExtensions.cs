@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return await DisposingShare.CreateAsync(share, metadata);
         }
 
-        public static async Task<DisposingShare> GetTestShareNfsAsync(
+        public static async Task<DisposingShare> GetTestShareSasNfsAsync(
             this SharesClientBuilder clientBuilder,
             ShareServiceClient service = default,
             string shareName = default,

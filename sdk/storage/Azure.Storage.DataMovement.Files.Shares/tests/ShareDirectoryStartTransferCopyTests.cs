@@ -589,8 +589,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public async Task ShareDirectoryToShareDirectory_PreserveNfs(bool? filePermissions)
         {
             // Arrange
-            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareNfsAsync();
-            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareNfsAsync();
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareSasNfsAsync();
 
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);

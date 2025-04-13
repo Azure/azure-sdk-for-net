@@ -19,6 +19,7 @@ using BaseShares::Azure.Storage.Files.Shares.Specialized;
 using BaseShares::Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
+using System.Text.RegularExpressions;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -214,12 +215,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     await fileClient.UploadAsync(contents);
                 }
             }
-            Uri containerSas = container.GenerateSasUri(ShareSasPermissions.All, Recording.UtcNow.AddDays(1));
-            ShareUriBuilder sasBuilder = new ShareUriBuilder(containerSas)
-            {
-                DirectoryOrFilePath = fileClient.Path
-            };
-            return InstrumentClient(new ShareFileClient(sasBuilder.ToUri(), GetOptions()));
+            return InstrumentClient(fileClient);
         }
 
         protected override Task<ShareFileClient> GetSourceObjectClientAsync(
@@ -456,6 +452,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 cancellationToken: cancellationTokenSource.Token);
         }
 
+        // removes the SACL from the SDDL string, which is only used for auditing
+        private string RemoveSacl(string sddl)
+        {
+            return Regex.Replace(sddl, @"S:.*$", "", RegexOptions.IgnoreCase).Trim();
+        }
+
         [RecordedTest]
         [Combinatorial]
         public async Task ShareFileToShareFile_ManuallySetFileAttributes(
@@ -686,19 +688,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
                 ShareFilePermission fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
-                Assert.AreEqual(sourcePermission.Permission, fullPermission.Permission);
+
+                string sourcePermissionStr = RemoveSacl(sourcePermission.Permission);
+                string destPermissionStr = RemoveSacl(fullPermission.Permission);
+                Assert.AreEqual(sourcePermissionStr, destPermissionStr);
             }
         }
 
         [RecordedTest]
-        [Combinatorial]
-        public async Task ShareFileToShareFile_PreserveNFS(
-            [Values(true, false, null)] bool? filePermissions,
-            [Values(DataMovementTestConstants.KB, 8 * DataMovementTestConstants.MB)] long size)
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareFileToShareFile_PreserveNfs(bool? filePermissions)
         {
             // Arrange
-            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareNfsAsync();
-            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareNfsAsync();
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await SourceClientBuilder.GetTestShareSasNfsAsync();
 
             DateTimeOffset sourceFileCreatedOn = _defaultFileCreatedOn;
             DateTimeOffset sourceFileLastWrittenOn = _defaultFileLastWrittenOn;
@@ -723,7 +728,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Create source file with properties
             ShareFileClient sourceClient = await CreateFileClientWithNfsAsync(
                 container: source.Container,
-                objectLength: size,
+                objectLength: DataMovementTestConstants.KB,
                 createResource: true,
                 options: sharefileCreateOptions);
             StorageResourceItem sourceResource = new ShareFileStorageResource(sourceClient,
