@@ -317,6 +317,14 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task UserDefinedEndpointsTest()
         {
+            await foreach (BinaryData functions in Client.GetUserDefinedFunctionsAsync())
+            {
+                JsonElement functiondata = JsonDocument.Parse(functions.ToStream()).RootElement;
+                string functionId = functiondata.GetProperty("id").ToString();
+                Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
+                Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
+            }
+
             // Deploy JS App
             string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
@@ -328,8 +336,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
-            Assert.AreEqual((int)HttpStatusCode.OK, resp.Status);
+            Console.WriteLine(resp.Content);
+
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
+            string programContent = File.ReadAllText(filePath);
+            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
@@ -339,18 +350,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             //Assert.AreEqual("Test content", response);
 
             // Deploy Empty JS Bundle to remove JS App
-            using RequestContent content = RequestContent.Create(new
-            {
-                metadata = new
-                {
-                    endpoints = new
-                    {
-                    },
-                },
-                modules = new List<object>()
-            });
-            Response response = await Client.CreateUserDefinedEndpointAsync(content);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.Status);
+            programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
+
+            result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
+            stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
+            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
         }
 
         [RecordedTest]
@@ -417,7 +422,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRoleUser1";
+            string roleName = "userread";
 
             // Add Custom Role
             var rolesParam = new RolesParam
@@ -451,9 +456,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
         #endregion
 
-        #region CustomRole
+        #region CreateLedgerEntryWithTags
         [RecordedTest]
-        public async Task CreateLedgerEntryWithTags()
+        public async Task CreateLedgerEntryWithTagsTest()
         {
             RequestContent content = RequestContent.Create(new { contents = Recording.GenerateAssetName("test") });
             string collectionId = "collection1";
@@ -477,6 +482,20 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task UserDefinedFunctionTest()
         {
+            // Deploy Empty JS Bundle to remove JS App
+            using RequestContent content = RequestContent.Create(new
+            {
+                metadata = new
+                {
+                    endpoints = new
+                    {
+                    },
+                },
+                modules = new List<object>()
+            });
+            Response response = await Client.CreateUserDefinedEndpointAsync(content);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.Status);
+
             string functionId = "myFunction";
 
             // Create UDF
