@@ -4,16 +4,18 @@
 
 ### Features Added
 
-- Added Client Methods to work with `TestProfiles` and `TestProfileRuns`
 - Added capabilities to support all changes present in Azure Load Testing API Version 2024-05-01-preview
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-- Models have been added for types
+- This release adds all the models for all the APIs supported by Azure Load Testing. Relevant new client method overloads are also added to work with these new methods
+- Added support for the following features:
+    - Support for specifying AutoStopCriteria for LoadTests
+    - Support for Quick Load Tests with `RequestsPerSecond` input
+    - Support for URL Tests with JSON Based Test Plans and Locust Tests using the `TestKind` field
+    - Support for multi region load tests to generate load from multiple regions
+    - Support for disabling Public IP Deployment for Private Load Tests using the `publicIpDisabled` field
+    - Support for uploading Zipped Artifacts as test input artifacts
+- Added Client Methods to work with `TestProfiles` and `TestProfileRuns`
+    - Added methods `CreateOrUpdateTestProfile`, `GetTestProfile`, `DeleteTestProfile` and `GetTestProfiles` along with their async variants to work with test profiles
+    - Added methods `BeginTestProfileRun`, `GetTestProfileRun`, `DeleteTestProfileRun` and `GetTestProfileRuns` along with their async variants to work with test profile runs
 
 ## 1.0.2 (2025-01-20)
 
