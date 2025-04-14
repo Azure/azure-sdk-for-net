@@ -44,7 +44,7 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
-    EmitterPackageJsonPath: eng/http-client-csharp-mgmt-emitter-package.json
+    EmitterPackageJsonOutputPath: eng/http-client-csharp-mgmt-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp-mgmt
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
@@ -62,6 +62,7 @@ extends:
            PublishDependsOnTest: ${{ parameters.PublishPublic }}
       ${{ else }}: # All automatic runs publish, but only CI of main goes public
         ShouldPublish: true
+        ShouldRegenerate: true
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
       RegenerationJobCount: 5
