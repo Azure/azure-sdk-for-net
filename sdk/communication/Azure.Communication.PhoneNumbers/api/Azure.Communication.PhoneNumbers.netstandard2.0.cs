@@ -352,7 +352,7 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class PhoneNumbersReservation
     {
-        public PhoneNumbersReservation(System.Guid id, System.Collections.Generic.IDictionary<string, Azure.Communication.PhoneNumbers.AvailablePhoneNumber> phoneNumbers) { }
+        public PhoneNumbersReservation(System.Guid id) { }
         public System.DateTimeOffset? ExpiresAt { get { throw null; } }
         public System.Guid Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.PhoneNumbers.AvailablePhoneNumber> PhoneNumbers { get { throw null; } }

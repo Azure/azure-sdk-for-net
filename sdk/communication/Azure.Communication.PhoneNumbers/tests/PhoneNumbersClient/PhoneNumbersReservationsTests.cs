@@ -62,7 +62,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             PhoneNumbersClient client = CreateClient();
             var reservationId = GetReservationId();
-            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            var reservation = new PhoneNumbersReservation(reservationId);
 
             var reservationResponse = await client.CreateOrUpdateReservationAsync(reservation).ConfigureAwait(false);
 
@@ -87,7 +87,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             PhoneNumbersClient client = CreateClient();
             var reservationId = GetReservationId();
-            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            var reservation = new PhoneNumbersReservation(reservationId);
 
             var reservationResponse = client.CreateOrUpdateReservation(reservation);
 
@@ -341,7 +341,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(phoneNumberToReserve.IsAgreementToNotResellRequired);
 
             var reservationId = GetReservationId();
-            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            var reservation = new PhoneNumbersReservation(reservationId);
             reservation.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = await client.CreateOrUpdateReservationAsync(reservation).ConfigureAwait(false);
@@ -382,7 +382,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(phoneNumberToReserve.IsAgreementToNotResellRequired);
 
             var reservationId = GetReservationId();
-            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            var reservation = new PhoneNumbersReservation(reservationId);
             reservation.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = client.CreateOrUpdateReservation(reservation);
@@ -418,7 +418,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var phoneNumberToReserve = availablePhoneNumbers.First();
 
             var reservationId = GetReservationId();
-            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            var reservation = new PhoneNumbersReservation(reservationId);
             reservation.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = await client.CreateOrUpdateReservationAsync(reservation).ConfigureAwait(false);
@@ -467,7 +467,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
             var reservationId = GetReservationId();
-            var reservation = new PhoneNumbersReservation(reservationId, new Dictionary<string, AvailablePhoneNumber>());
+            var reservation = new PhoneNumbersReservation(reservationId);
             reservation.AddPhoneNumber(phoneNumberToReserve);
 
             var reservationResponse = client.CreateOrUpdateReservation(reservation);

@@ -14,11 +14,13 @@ namespace Azure.Communication.PhoneNumbers
         /// Initializes a new instance of <see cref="PhoneNumbersReservation"/>.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="phoneNumbers"></param>
-        public PhoneNumbersReservation(Guid id, IDictionary<string, AvailablePhoneNumber> phoneNumbers)
+        public PhoneNumbersReservation(Guid id)
         {
             Id = id;
-            PhoneNumbers = new ChangeTrackingDictionary<string, AvailablePhoneNumber>(phoneNumbers ?? new Dictionary<string, AvailablePhoneNumber>());
+
+            // This needs to be initialized to an empty dictionary to ensure that the dictionary is never null when serializing to JSON.
+            IDictionary<string, AvailablePhoneNumber> dict = new Dictionary<string, AvailablePhoneNumber>();
+            PhoneNumbers = new ChangeTrackingDictionary<string, AvailablePhoneNumber>(dict);
         }
 
         /// <summary>
@@ -29,8 +31,9 @@ namespace Azure.Communication.PhoneNumbers
         /// </remarks>
         internal PhoneNumbersReservation()
         {
-            // Initializing it to an empty dictionary ensures that the dictionary is never null when serializing to JSON.
-            PhoneNumbers = new ChangeTrackingDictionary<string, AvailablePhoneNumber>((IDictionary<string, AvailablePhoneNumber>)new Dictionary<string, AvailablePhoneNumber>());;
+            // This needs to be initialized to an empty dictionary to ensure that the dictionary is never null when serializing to JSON.
+            IDictionary<string, AvailablePhoneNumber> dict = new Dictionary<string, AvailablePhoneNumber>();
+            PhoneNumbers = new ChangeTrackingDictionary<string, AvailablePhoneNumber>(dict);
         }
 
         /// <summary> The id of the reservation. </summary>
