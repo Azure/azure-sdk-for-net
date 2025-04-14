@@ -1,70 +1,68 @@
 {
  "$id": "1",
- "Name": "Server.Endpoint.NotDefined",
- "ApiVersions": [],
- "Enums": [],
- "Models": [],
- "Clients": [
+ "name": "Server.Endpoint.NotDefined",
+ "apiVersions": [],
+ "enums": [],
+ "models": [],
+ "clients": [
   {
    "$id": "2",
-   "Name": "NotDefinedClient",
-   "Namespace": "Server.Endpoint.NotDefined",
-   "Doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
-   "Operations": [
+   "kind": "client",
+   "name": "NotDefinedClient",
+   "namespace": "Server.Endpoint.NotDefined",
+   "doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
+   "operations": [
     {
      "$id": "3",
-     "Name": "valid",
-     "ResourceName": "NotDefined",
-     "Accessibility": "public",
-     "Parameters": [],
-     "Responses": [
+     "name": "valid",
+     "resourceName": "NotDefined",
+     "accessibility": "public",
+     "parameters": [],
+     "responses": [
       {
        "$id": "4",
-       "StatusCodes": [
+       "statusCodes": [
         200
        ],
-       "Headers": [],
-       "IsErrorResponse": false
+       "headers": [],
+       "isErrorResponse": false
       }
      ],
-     "HttpMethod": "HEAD",
-     "Uri": "{endpoint}",
-     "Path": "/server/endpoint/not-defined/valid",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid",
-     "Decorators": []
+     "httpMethod": "HEAD",
+     "uri": "{endpoint}",
+     "path": "/server/endpoint/not-defined/valid",
+     "bufferResponse": true,
+     "generateProtocolMethod": true,
+     "generateConvenienceMethod": true,
+     "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid",
+     "decorators": []
     }
    ],
-   "Protocol": {
-    "$id": "5"
-   },
-   "Parameters": [
+   "parameters": [
     {
-     "$id": "6",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "7",
+     "$id": "5",
+     "name": "endpoint",
+     "nameInRequest": "endpoint",
+     "doc": "Service host",
+     "type": {
+      "$id": "6",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
      },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client"
+     "location": "Uri",
+     "isApiVersion": false,
+     "isContentType": false,
+     "isRequired": true,
+     "isEndpoint": true,
+     "skipUrlEncoding": false,
+     "explode": false,
+     "kind": "Client"
     }
    ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Server.Endpoint.NotDefined"
+   "decorators": [],
+   "crossLanguageDefinitionId": "Server.Endpoint.NotDefined",
+   "apiVersions": []
   }
  ]
 }

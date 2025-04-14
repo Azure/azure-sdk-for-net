@@ -151,6 +151,13 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         $pkgProp.CIParameters["BuildSnippets"] = $true
       }
     }
+    # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
+    # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
+    else {
+      $pkgProp.CIParameters["CheckAOTCompat"] = $false
+      $pkgProp.CIParameters["AOTTestInputs"] = @()
+      $pkgProp.CIParameters["BuildSnippets"] = $true
+    }
 
     $allPackageProps += $pkgProp
   }

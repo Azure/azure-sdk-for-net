@@ -1,16 +1,22 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2025-03-31)
+
+### Features Added
+
+- Aligned with the latest changes (Feb 25) of the IETF draft: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
+- Updated receipt verification logic.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0-beta.2 (2024-03-27)
 

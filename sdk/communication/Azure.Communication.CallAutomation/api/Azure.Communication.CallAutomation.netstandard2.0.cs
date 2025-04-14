@@ -151,11 +151,10 @@ namespace Azure.Communication.CallAutomation
         public enum ServiceVersion
         {
             V2023_03_06 = 1,
-            V2023_06_15_Preview = 2,
-            V2023_10_15 = 3,
-            V2023_10_03_Preview = 4,
-            V2024_09_01_Preview = 5,
-            V2025_03_30_Preview = 6,
+            V2023_10_15 = 2,
+            V2024_04_15 = 3,
+            V2024_09_15 = 4,
+            V2025_03_30_Preview = 5,
         }
     }
     public abstract partial class CallAutomationEventBase
@@ -211,6 +210,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.CreateCallResult CreateCallResult(Azure.Communication.CallAutomation.CallConnection callConnection = null, Azure.Communication.CallAutomation.CallConnectionProperties callConnectionProperties = null) { throw null; }
         public static Azure.Communication.CallAutomation.DtmfResult DtmfResult(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.DtmfTone> tones = null) { throw null; }
         public static Azure.Communication.CallAutomation.HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
+        public static Azure.Communication.CallAutomation.IncomingCall IncomingCall(Azure.Communication.CommunicationIdentifier to = null, Azure.Communication.CommunicationIdentifier from = null, string callerDisplayName = null, string serverCallId = null, Azure.Communication.CallAutomation.CustomCallingContext customContext = null, string incomingCallContext = null, Azure.Communication.CommunicationIdentifier onBehalfOfCallee = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.MediaStreamingFailed MediaStreamingFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null) { throw null; }
         public static Azure.Communication.CallAutomation.MediaStreamingStarted MediaStreamingStarted(Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.MediaStreamingStopped MediaStreamingStopped(Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
@@ -706,8 +706,13 @@ namespace Azure.Communication.CallAutomation
         public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
         public void AddSipUui(string value) { }
-        public void AddSipX(string key, string value) { }
+        public void AddSipX(string key, string value, Azure.Communication.CallAutomation.CustomCallingContext.SipHeaderPrefix prefix = Azure.Communication.CallAutomation.CustomCallingContext.SipHeaderPrefix.XMSCustom) { }
         public void AddVoip(string key, string value) { }
+        public enum SipHeaderPrefix
+        {
+            XMSCustom = 0,
+            X = 1,
+        }
     }
     public partial class DtmfResult : Azure.Communication.CallAutomation.RecognizeResult
     {

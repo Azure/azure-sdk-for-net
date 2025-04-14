@@ -6,19 +6,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Azure.Core;
-using Azure.Data.AppConfiguration;
 using Azure.Identity;
 using Azure.Messaging.ServiceBus;
-using Azure.Projects.AppConfiguration;
-using Azure.Projects.AppService;
-using Azure.Projects.KeyVault;
+using Azure.Projects.Core;
 using Azure.Projects.Ofx;
-using Azure.Projects.OpenAI;
-using Azure.Projects.ServiceBus;
-using Azure.Projects.Storage;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
@@ -62,7 +55,7 @@ public class ConnectionTests
         TestConnectionStore store = new();
         ProjectInfrastructure infrastructure = new(store, projectId);
         infrastructure.AddFeature(new AppConfigurationFeature());
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
         infrastructure.Build();
 
         ProjectClient project = new(projectId, store.Provider);
