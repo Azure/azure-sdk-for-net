@@ -12,7 +12,7 @@ tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
   skipped-operations:
     # Not support generate samples from customized operations
