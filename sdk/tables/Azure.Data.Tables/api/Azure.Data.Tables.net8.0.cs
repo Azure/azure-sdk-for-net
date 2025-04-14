@@ -13,12 +13,9 @@ namespace Azure.Data.Tables
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TableAudience(string value) { throw null; }
-        public static Azure.Data.Tables.TableAudience AzureCosmosChina { get { throw null; } }
-        public static Azure.Data.Tables.TableAudience AzureCosmosGovernment { get { throw null; } }
-        public static Azure.Data.Tables.TableAudience AzureCosmosPublicCloud { get { throw null; } }
-        public static Azure.Data.Tables.TableAudience AzureStorageChina { get { throw null; } }
-        public static Azure.Data.Tables.TableAudience AzureStorageGovernment { get { throw null; } }
-        public static Azure.Data.Tables.TableAudience AzureStoragePublicCloud { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzureChina { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzureGovernment { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.Data.Tables.TableAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

@@ -10,6 +10,11 @@ namespace Azure.Data.Tables
     public readonly struct TableAudience : IEquatable<TableAudience>
     {
         private readonly string _value;
+
+        private const string AzureChinaValue = "AzureChina";
+        private const string AzureGovernmentValue = "AzureGov";
+        private const string AzurePublicCloudValue = "AzurePublic";
+
         private const string AzureStorageChinaValue = "https://storage.azure.cn";
         private const string AzureStorageGovernmentValue = "https://storage.azure.us";
         private const string AzureStoragePublicCloudValue = "https://storage.azure.com";
@@ -30,23 +35,14 @@ namespace Azure.Data.Tables
             _value = value;
         }
 
-        /// <summary> The Azure Table storage authorization audience used to authenticate with the Azure China cloud. </summary>
-        public static TableAudience AzureStorageChina { get; } = new TableAudience(AzureStorageChinaValue);
+        /// <summary> The authorization audience used to authenticate with the Azure China cloud. </summary>
+        public static TableAudience AzureChina { get; } = new TableAudience(AzureChinaValue);
 
-        /// <summary> The Azure Table storage authorization audience used to authenticate with the Azure Government cloud. </summary>
-        public static TableAudience AzureStorageGovernment { get; } = new TableAudience(AzureStorageGovernmentValue);
+        /// <summary> The authorization audience used to authenticate with the Azure Government cloud. </summary>
+        public static TableAudience AzureGovernment { get; } = new TableAudience(AzureGovernmentValue);
 
-        /// <summary> The Azure Table storage authorization audience used to authenticate with the Azure Public cloud. </summary>
-        public static TableAudience AzureStoragePublicCloud { get; } = new TableAudience(AzureStoragePublicCloudValue);
-
-        /// <summary> The Azure Cosmos DB authorization audience used to authenticate with the Azure China cloud. </summary>
-        public static TableAudience AzureCosmosChina { get; } = new TableAudience(AzureCosmosChinaValue);
-
-        /// <summary> The Azure Cosmos DB authorization audience used to authenticate with the Azure Government cloud. </summary>
-        public static TableAudience AzureCosmosGovernment { get; } = new TableAudience(AzureCosmosGovernmentValue);
-
-        /// <summary> The Azure Cosmos DB authorization audience used to authenticate with the Azure Public cloud. </summary>
-        public static TableAudience AzureCosmosPublicCloud { get; } = new TableAudience(AzureCosmosPublicCloudValue);
+        /// <summary> The authorization audience used to authenticate with the Azure Public cloud. </summary>
+        public static TableAudience AzurePublicCloud { get; } = new TableAudience(AzurePublicCloudValue);
 
         /// <summary> Determines if two <see cref="TableAudience"/> values are the same. </summary>
         public static bool operator ==(TableAudience left, TableAudience right) => left.Equals(right);
@@ -66,5 +62,23 @@ namespace Azure.Data.Tables
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
+
+        internal string GetDefaultScope(bool isCosmosEndpoint)
+        {
+            var audience = _value switch
+            {
+                AzureChinaValue when isCosmosEndpoint => AzureCosmosChinaValue,
+                AzureGovernmentValue when isCosmosEndpoint => AzureCosmosGovernmentValue,
+                AzurePublicCloudValue when isCosmosEndpoint => AzureCosmosPublicCloudValue,
+                AzureChinaValue => AzureStorageChinaValue,
+                AzureGovernmentValue => AzureStorageGovernmentValue,
+                AzurePublicCloudValue => AzureStoragePublicCloudValue,
+                _ => _value
+            };
+
+            return audience.EndsWith("/", StringComparison.InvariantCultureIgnoreCase)
+                ? $"{audience}{TableConstants.DefaultScope}"
+                : $"{audience}/{TableConstants.DefaultScope}";
+        }
     }
 }

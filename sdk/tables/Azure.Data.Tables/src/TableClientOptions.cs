@@ -74,21 +74,5 @@ namespace Azure.Data.Tables
                 LoggedQueryParameters = { "api-version", "$format", "$filter", "$top", "$select" },
             }
         };
-
-        internal string GetDefaultScope(bool isCosmosEndpoint)
-        {
-            string audience = Audience?.ToString();
-            if (string.IsNullOrEmpty(audience))
-            {
-                // Use the appropriate default audience based on endpoint type
-                return isCosmosEndpoint
-                    ? $"{TableAudience.AzureCosmosPublicCloud}/{TableConstants.DefaultScope}"
-                    : $"{TableAudience.AzureStoragePublicCloud}/{TableConstants.DefaultScope}";
-            }
-
-            return audience.EndsWith("/", StringComparison.InvariantCultureIgnoreCase)
-                ? $"{audience}{TableConstants.DefaultScope}"
-                : $"{audience}/{TableConstants.DefaultScope}";
-        }
     }
 }
