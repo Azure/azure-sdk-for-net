@@ -137,7 +137,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_03_15_preview.Serialize(participant)
                 );
 
             return new AddParticipantFailed(internalObject);
@@ -154,7 +154,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_03_15_preview.Serialize(participant)
                 );
 
             return new AddParticipantSucceeded(internalObject);
@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation
                 sequenceNumber: sequenceNumber,
                 participants: participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer_2025_03_15_preview.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
                 resultInformation: resultInformation
                 );
 
@@ -190,7 +190,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_03_15_preview.Serialize(participant)
                 );
 
             return new RemoveParticipantFailed(internalObject);
@@ -207,7 +207,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_03_15_preview.Serialize(participant)
                 );
 
             return new RemoveParticipantSucceeded(internalObject);
@@ -247,8 +247,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                transferTarget: transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
-                transferee: transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
+                transferTarget: transferTarget == null ? null : CommunicationIdentifierSerializer_2025_03_15_preview.Serialize(transferTarget),
+                transferee: transferee == null ? null : CommunicationIdentifierSerializer_2025_03_15_preview.Serialize(transferee)
                 );
             return new CallTransferAccepted(internalEvent);
         }
