@@ -5,6 +5,7 @@ trigger:
   paths:
     include:
       - eng/packages/http-client-csharp
+      - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
 pr:
   branches:
@@ -16,6 +17,7 @@ pr:
   paths:
     include:
       - eng/packages/http-client-csharp
+      - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
 
 parameters:
@@ -42,8 +44,8 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
-    EmitterPackageJsonOutputPath: eng/http-client-csharp-emitter-package.json
-    EmitterPackagePath: eng/packages/http-client-csharp
+    EmitterPackageJsonPath: eng/http-client-csharp-mgmt-emitter-package.json
+    EmitterPackagePath: eng/packages/http-client-csharp-mgmt
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src
@@ -68,4 +70,4 @@ extends:
     TestMatrix:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
-        SpectorName: "http-client-csharp"
+        SpectorName: "http-client-csharp-mgmt"
