@@ -13,13 +13,5 @@ namespace Azure.Communication.Identity
     /// <summary> A communication identity with access token. </summary>
     public partial class CommunicationUserIdentifierAndToken
     {
-        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierAndToken"/>. </summary>
-        /// <param name="identity"> A communication identity. </param>
-        /// <param name="internalAccessToken"> An access token. </param>
-        internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity, CommunicationIdentityAccessToken internalAccessToken)
-        {
-            Identity = identity;
-            InternalAccessToken = internalAccessToken;
-        }
     }
 }

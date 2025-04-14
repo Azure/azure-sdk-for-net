@@ -14,7 +14,7 @@ namespace Azure.Communication.Identity
     {
         private readonly AccessToken? _accessToken;
 
-        internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity, CommunicationIdentityAccessToken accessToken, DateTimeOffset? lastTokenIssuedAt)
+        internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity, CommunicationIdentityAccessToken accessToken)
         {
             if (identity == null)
                 throw new ArgumentNullException(nameof(identity));
@@ -23,7 +23,7 @@ namespace Azure.Communication.Identity
             InternalAccessToken = accessToken;
             User = new CommunicationUserIdentifier(identity.Id);
             _accessToken = accessToken is null ? null : new AccessToken(accessToken.Token, accessToken.ExpiresOn);
-            LastTokenIssuedAt = lastTokenIssuedAt;
+            LastTokenIssuedAt = identity.LastTokenIssuedAt;
         }
 
         /// <summary>Deconstructs the <see cref="CommunicationUserIdentifierAndToken"/> into a user and token.</summary>

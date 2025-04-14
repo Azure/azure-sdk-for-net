@@ -531,7 +531,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task CreateUserWithCustomIdShouldFirstCreateThenGet()
+        public async Task CreateUserWithCustomIdShouldReturnExistingIdentity()
         {
             try
             {
@@ -539,12 +539,11 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationIdentityClient client = CreateClient();
                 Response<CommunicationUserIdentifier> createResponse = await client.CreateUserAsync(customId);
 
-                Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
-                    || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
+                Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status);
                 Assert.IsNotNull(createResponse.Value.Id);
 
                 Response<CommunicationUserIdentifier> getResponse = await client.CreateUserAsync(customId);
-                Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
+                Assert.AreEqual((int)HttpStatusCode.Created, getResponse.GetRawResponse().Status);
                 Assert.AreEqual(createResponse.Value.Id, getResponse.Value.Id);
             }
             catch (Exception ex)

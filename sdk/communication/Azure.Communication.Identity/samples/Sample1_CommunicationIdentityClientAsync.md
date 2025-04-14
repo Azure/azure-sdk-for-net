@@ -51,7 +51,7 @@ You will need to store the `identity` that is returned by Azure Communication Se
 The `CommunicationIdentityClient` allows you to create users with an associated customId. This customId can be used to map your application's user identities with Azure Communication Services identities.
 
 ```C# Snippet:CreateCommunicationUserWithCustomIdAsync
-Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(@for: "alice@contoso.com");
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
 CommunicationUserIdentifier user = userResponse.Value;
 Console.WriteLine($"User id: {user.Id}");
 ```
@@ -63,7 +63,7 @@ If you call the CreateUser method again with the same customId, it will return t
 The CommunicationIdentityClient can be used to retrieve details about a user. This includes the user's ID, customId ID, and the last time a token was issued for the user.
 
 ```C# Snippet:GetUserDetailAsync
-Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(@for: "alice@contoso.com");
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
 CommunicationUserIdentifier user = userResponse.Value;
 var userDetails = await client.GetUserDetailAsync(user);
 Console.WriteLine($"User id: {userDetails.Value.User.Id}");
